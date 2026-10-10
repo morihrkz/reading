@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yahoo! マップ / Yahoo! カーナビへの地点一括登録マニュアル</title>
+    <style>
+        :root {
+            --blue: #6b7a45;
+            --blue-dark: #3f4d24;
+            --blue-bg: #e8ecda;
+            --green: #3c5a3f;
+            --green-bg: #e7efe1;
+            --red: #97463c;
+            --amber: #8a6d1f;
+            --amber-bg: #f2ead2;
+            --ink: #35331f;
+            --sub: #746f5a;
+            --cream: #faf6ec;
+            --card: #fffcf3;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.9;
+            color: var(--ink);
+            font-size: 18px;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+            background-color: var(--cream);
+        }
+        h1 {
+            color: var(--blue-dark);
+            border-bottom: 4px solid var(--blue);
+            padding-bottom: 12px;
+            font-size: 28px;
+        }
+        .lead {
+            font-size: 17px;
+            color: var(--sub);
+            background: var(--card);
+            border-radius: 8px;
+            padding: 14px 18px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .keyfact {
+            background: var(--green-bg);
+            border: 1px solid #c3d4b8;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 18px 0 28px;
+            font-size: 16px;
+        }
+        .keyfact .kf-title {
+            display: block;
+            font-weight: bold;
+            color: var(--green);
+            margin-bottom: 6px;
+            font-size: 16px;
+        }
+        .keyfact .kf-title::before { content: "🔗 "; }
+        .overview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0 28px;
+        }
+        .overview a {
+            flex: 1 1 200px;
+            background: var(--card);
+            border: 2px solid var(--blue-bg);
+            border-radius: 10px;
+            padding: 12px 14px;
+            text-decoration: none;
+            color: var(--ink);
+            font-size: 15px;
+            transition: border-color .15s;
+        }
+        .overview a:hover { border-color: var(--blue); }
+        .overview .num {
+            display: inline-block;
+            background: var(--blue);
+            color: var(--card);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 13px;
+            margin-right: 6px;
+        }
+        h2 {
+            color: var(--card);
+            background-color: var(--blue);
+            padding: 14px 18px;
+            border-radius: 8px 8px 0 0;
+            font-size: 21px;
+            margin-top: 40px;
+            margin-bottom: 0;
+        }
+        .step-box {
+            background: var(--card);
+            padding: 24px 26px 20px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            margin-bottom: 16px;
+            border: 1px solid #ded6bd;
+            border-top: none;
+        }
+        .step-box > p.intro {
+            font-size: 16px;
+            color: var(--sub);
+            margin-top: 0;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px dashed #ded6bd;
+        }
+        ol {
+            padding-left: 0;
+            counter-reset: step;
+            list-style: none;
+            margin: 0;
+        }
+        ol > li {
+            counter-increment: step;
+            position: relative;
+            padding: 14px 14px 14px 52px;
+            margin-bottom: 10px;
+            background: #f5f1e4;
+            border-radius: 8px;
+            border-left: 4px solid var(--blue-bg);
+        }
+        ol > li::before {
+            content: counter(step);
+            position: absolute;
+            left: 12px;
+            top: 14px;
+            background: var(--blue);
+            color: var(--card);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        li .detail {
+            display: block;
+            margin-top: 8px;
+            font-size: 15px;
+            color: var(--sub);
+        }
+        li .why {
+            display: block;
+            margin-top: 8px;
+            font-size: 15px;
+            background: var(--blue-bg);
+            color: #4a5a2a;
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+        li .why::before {
+            content: "💡 ねらい: ";
+            font-weight: bold;
+        }
+        .important {
+            display: block;
+            margin-top: 8px;
+            color: var(--red);
+            font-weight: bold;
+            font-size: 15px;
+            background: #f2e2de;
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+        .important::before {
+            content: "⚠ 注意: ";
+        }
+        .tip {
+            display: block;
+            margin-top: 8px;
+            color: var(--amber);
+            font-weight: bold;
+            font-size: 15px;
+            background: var(--amber-bg);
+            border-radius: 6px;
+            padding: 8px 12px;
+        }
+        .tip::before {
+            content: "🔎 見つからないときは: ";
+        }
+        .badge {
+            display: inline-block;
+            background-color: var(--blue);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+        .checklist {
+            background: var(--green-bg);
+            border: 1px solid #c3d4b8;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-top: 18px;
+        }
+        .checklist .cl-title {
+            font-weight: bold;
+            color: var(--green);
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .checklist .cl-title::before {
+            content: "✅ ";
+        }
+        .checklist ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .checklist li {
+            padding: 8px 0 8px 34px;
+            position: relative;
+            font-size: 16px;
+            border-bottom: 1px dashed #d5e2cb;
+        }
+        .checklist li:last-child { border-bottom: none; }
+        .checklist input[type="checkbox"] {
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 20px;
+            height: 20px;
+            accent-color: var(--green);
+            cursor: pointer;
+        }
+        .checklist li label { cursor: pointer; }
+        .overall-checklist {
+            background: var(--card);
+            border: 2px solid var(--blue);
+            border-radius: 10px;
+            padding: 22px 26px;
+            margin-top: 44px;
+        }
+        .overall-checklist h2 {
+            margin: -22px -26px 18px;
+            border-radius: 8px 8px 0 0;
+        }
+        .overall-checklist ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .overall-checklist li {
+            padding: 10px 0 10px 36px;
+            position: relative;
+            font-size: 17px;
+            border-bottom: 1px solid #ece6d4;
+        }
+        .overall-checklist li:last-child { border-bottom: none; }
+        .overall-checklist input[type="checkbox"] {
+            position: absolute;
+            left: 0;
+            top: 11px;
+            width: 22px;
+            height: 22px;
+            accent-color: var(--blue);
+            cursor: pointer;
+        }
+        .refs {
+            margin-top: 40px;
+            font-size: 13px;
+            color: var(--sub);
+            background: var(--card);
+            border-radius: 8px;
+            padding: 14px 18px;
+            border: 1px solid #ded6bd;
+        }
+        .refs .r-title {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: var(--ink);
+        }
+        .refs a { color: var(--blue-dark); }
+        .footer {
+            margin-top: 40px;
+            font-size: 13px;
+            text-align: center;
+            color: var(--sub);
+            border-top: 1px solid #ded6bd;
+            padding-top: 12px;
+        }
+        .save-note {
+            font-size: 13px;
+            color: var(--sub);
+            text-align: center;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Yahoo! マップ / Yahoo! カーナビ　への地点一括登録マニュアル</h1>
+    <p class="lead">Windows PC で 28 件の地点を効率よく登録し、 iPhone の Yahoo! カーナビ / Yahoo! マップですぐに使えるようにするための全手順です。<br>各ステップの下にあるチェックボックスにチェックを入れながら進めれば、迷わず最後まで完了できます。</p>
+
+    <div class="keyfact">
+        <span class="kf-title">この作業の仕組み（まず知っておくこと）</span>
+        Yahoo! の「登録スポット」機能は、 <strong>Yahoo! 地図（ PC ブラウザ）・ Yahoo! マップ（スマホアプリ）・ Yahoo! カーナビ（スマホアプリ）の三つで共通</strong>のデータです。<strong>同じ Yahoo! JAPAN ID でログイン</strong>してさえいれば、どこか一ヶ所で登録した地点が自動的に他の二つにも反映されます。<strong>ログインを両方の端末・アプリで揃えること</strong>が今回の作業でいちばん重要なポイントになります。
+    </div>
+
+    <div class="overview">
+        <a href="#step0"><span class="num">0</span> 事前準備</a>
+        <a href="#step1"><span class="num">1</span>PC で一括登録</a>
+        <a href="#step2"><span class="num">2</span>iPhone で反映確認</a>
+        <a href="#step3"><span class="num">3</span> カーナビで使う</a>
+    </div>
+
+    <h2 id="step0">🔋 0. 事前準備（インストールとログイン）</h2>
+    <div class="step-box">
+        <p class="intro">今回の作業は「同じ Yahoo! JAPAN ID でログインする」ことが土台になります。まずアプリを揃え、ログインまで済ませてください。</p>
+        <ol>
+            <li>
+                iPhone の App Store で<strong>「 Yahoo! カーナビ」</strong>を検索してインストールします。
+                <span class="detail">Yahoo! JAPAN が提供している無料のカーナビアプリです。</span>
+            </li>
+            <li>
+                続けて<strong>「 Yahoo! マップ」</strong>を検索してインストールします。
+                <span class="detail">地点の検索・登録・整理を行うための地図アプリです。今回はこのアプリで約 30 件を登録します。</span>
+            </li>
+            <li>
+                <strong>Yahoo! カーナビ</strong>を起動し、メニューから <strong>Yahoo! JAPAN ID でログイン</strong>します。
+                <span class="detail">まだ Yahoo! JAPAN ID を持っていない場合は、この画面から新規作成できます。</span>
+                <span class="why">登録スポットの共有は Yahoo! JAPAN ID 単位で行われます。ログインしていない状態では、 PC で登録した地点がスマホ側に表示されません。</span>
+            </li>
+            <li>
+                <strong>Yahoo! マップ</strong>も起動し、<strong>同じ Yahoo! JAPAN ID</strong> でログインします。
+                <span class="important">Yahoo! カーナビと Yahoo! マップで、必ず「同一の」 Yahoo! JAPAN ID を使ってください。別の ID でログインすると、地点が共有されません。</span>
+            </li>
+        </ol>
+        <div class="checklist">
+            <span class="cl-title">ステップ 0 チェックリスト</span>
+            <ul>
+                <li><input type="checkbox" id="c0-1"><label for="c0-1">Yahoo! カーナビをインストールした</label></li>
+                <li><input type="checkbox" id="c0-2"><label for="c0-2">Yahoo! マップをインストールした</label></li>
+                <li><input type="checkbox" id="c0-3"><label for="c0-3">Yahoo! カーナビで Yahoo! JAPAN ID にログインした</label></li>
+                <li><input type="checkbox" id="c0-4"><label for="c0-4">Yahoo! マップで同じ Yahoo! JAPAN ID にログインした</label></li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 id="step1">💻 ステップ 1 ： Windows PC での一括登録</h2>
+    <div class="step-box">
+        <p class="intro">PC のブラウザ版「 Yahoo! 地図」を使い、キーボードで検索しながら約 30 件をテンポよく登録します。スマホで 1 件ずつ入力するより速く進められます。</p>
+        <ol>
+            <li>
+                PC のブラウザ（ Google Chrome や Edge など）で<strong>「 Yahoo! 地図」</strong>にアクセスします。
+                <span class="detail">アドレスバーに次の URL を直接入力するのが確実です：<br><a href="https://map.yahoo.co.jp/" target="_blank">https://map.yahoo.co.jp/</a></span>
+            </li>
+            <li>
+                画面右上（または左上）にある<strong>「ログイン」</strong>をクリックし、<strong>ステップ 0 と同じ Yahoo! JAPAN ID</strong> でログインします。
+                <span class="important">ここで別の ID を使ってしまうと、せっかく登録した 30 件が iPhone 側に一切表示されません。ログインしているアカウント名を画面で確認してから次に進んでください。</span>
+            </li>
+            <li>
+                画面上部の検索窓に、登録したい <strong>1 件目</strong>の地点情報（住所・施設名など）を入力して検索します。
+            </li>
+            <li>
+                検索結果の一覧、または地図上のピンをクリックし、詳細情報の中にある<strong>「登録する」（お気に入り登録のボタン、星やハートのアイコンの場合もあります）</strong>をクリックします。
+                <span class="detail">見当たらない場合は、地点名の周辺に表示される星マーク・オレンジ色のボタンを探してください。</span>
+            </li>
+            <li>
+                登録先のグループを選ぶ画面が出た場合は、わかりやすいグループ名（例：「よく行く場所」など）を選択、または新規に作成して保存します。
+                <span class="why">グループ分けしておくと、あとで Yahoo! マップ・ Yahoo! カーナビ側で一覧を見返すときに探しやすくなります。グループ分けが不要であれば「未分類」のままでもかまいません。</span>
+            </li>
+            <li>
+                手順 3 〜 5 を繰り返し、目的の<strong>約 30 件すべての地点</strong>を登録していきます。
+                <span class="detail">1 件登録するたびに検索窓の文字を消して、次の地点を検索してください。焦らず 1 件ずつで大丈夫です。</span>
+                <span class="tip">似た名前の施設が複数出てきた場合は、住所や地図上の位置を見比べて正しい方を選んでください。</span>
+            </li>
+            <li>
+                登録が終わったら、画面左側（または上部メニュー）の<strong>「登録スポット」「お気に入り」</strong>といった一覧画面を開き、約 30 件が正しく登録されているか数を数えて確認します。
+                <span class="detail">件数が合わない場合は、抜けている地点だけ手順 3 〜 5 を繰り返して追加してください。</span>
+            </li>
+        </ol>
+        <div class="checklist">
+            <span class="cl-title">ステップ 1 チェックリスト</span>
+            <ul>
+                <li><input type="checkbox" id="c1-1"><label for="c1-1">Yahoo! 地図に、ステップ 0 と同じ ID でログインした</label></li>
+                <li><input type="checkbox" id="c1-2"><label for="c1-2">約 30 件すべての地点を検索し「登録する」で追加した</label></li>
+                <li><input type="checkbox" id="c1-3"><label for="c1-3">必要に応じてグループ分けを行った</label></li>
+                <li><input type="checkbox" id="c1-4"><label for="c1-4">一覧画面で登録件数が約 30 件になっていることを確認した</label></li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 id="step2">📱 ステップ 2 ： iPhone での反映確認</h2>
+    <div class="step-box">
+        <p class="intro">PC で登録した地点は、同じ Yahoo! JAPAN ID でログインしていれば自動的に iPhone 側にも反映されます。ここでは「確かに反映されているか」を確認するだけです。</p>
+        <ol>
+            <li>
+                iPhone で<strong>「 Yahoo! マップ」</strong>アプリを開きます。
+                <span class="detail">すでに起動していた場合は、一度アプリを完全に閉じてから開き直すと確実です。</span>
+            </li>
+            <li>
+                画面下部のメニューから<strong>「登録済み」「登録スポット」</strong>など、保存した地点の一覧を表示する項目をタップします。
+            </li>
+            <li>
+                PC で登録した約 30 件の地点が、そのままリストに表示されていることを確認します。
+                <span class="important">表示されない場合は、 Yahoo! マップのログイン中アカウントがステップ 0 ・ 1 と同じ Yahoo! JAPAN ID になっているか、設定画面またはメニューから再確認してください。ログインアカウントが違っていることが最もよくある原因です。</span>
+            </li>
+            <li>
+                件数や中身に問題がなければ、続けて<strong>「 Yahoo! カーナビ」</strong>アプリも開き、同様にメニュー内の登録スポット一覧に約 30 件が表示されていることを確認します。
+                <span class="why">Yahoo! マップと Yahoo! カーナビは同じ登録スポットのデータを共有しています。片方で確認できれば、もう片方でも基本的に同じ内容が見えます。</span>
+            </li>
+        </ol>
+        <div class="checklist">
+            <span class="cl-title">ステップ 2 チェックリスト</span>
+            <ul>
+                <li><input type="checkbox" id="c2-1"><label for="c2-1">Yahoo! マップの「登録済み」一覧に約 30 件が表示されている</label></li>
+                <li><input type="checkbox" id="c2-2"><label for="c2-2">Yahoo! カーナビの登録スポット一覧にも約 30 件が表示されている</label></li>
+                <li><input type="checkbox" id="c2-3"><label for="c2-3">（表示されない場合）ログイン中の Yahoo! JAPAN ID を確認・統一した</label></li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 id="step3">🚗 ステップ 3 ： Yahoo! カーナビでの目的地設定</h2>
+    <div class="step-box">
+        <p class="intro">実際に車に乗る際、登録スポットの中から目的地を選んでナビを開始する手順です。この操作は使いたい地点ごとに毎回行います。</p>
+        <ol>
+            <li>
+                iPhone で<strong>「 Yahoo! カーナビ」</strong>アプリを開きます。
+            </li>
+            <li>
+                画面上部の検索窓のすぐ下（または検索窓をタップした際の候補欄）にある<strong>「登録スポット」</strong>をタップします。
+            </li>
+            <li>
+                表示された一覧の中から、<strong>目的地に設定したい地点</strong>をタップします。
+                <span class="detail">グループ分けしてある場合は、グループ名で絞り込んで探すと見つけやすくなります。</span>
+            </li>
+            <li>
+                ルート候補が表示されるので、希望のルートを選択し、<strong>「ナビ開始」</strong>をタップします。
+                <span class="detail">目的地が正しいか、画面上で一度確認してから走行を始めてください。</span>
+            </li>
+        </ol>
+        <div class="checklist">
+            <span class="cl-title">ステップ 3 チェックリスト</span>
+            <ul>
+                <li><input type="checkbox" id="c3-1"><label for="c3-1">Yahoo! カーナビの「登録スポット」から目的地を選べた</label></li>
+                <li><input type="checkbox" id="c3-2"><label for="c3-2">ルートが表示され、「ナビ開始」で走行を開始できた</label></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="overall-checklist">
+        <h2>🏁 全体まとめチェックリスト</h2>
+        <ul>
+            <li><input type="checkbox" id="all-1"><label for="all-1">0. iPhone に Yahoo! カーナビと Yahoo! マップをインストールし、同一 Yahoo! JAPAN ID でログインした</label></li>
+            <li><input type="checkbox" id="all-2"><label for="all-2">1. PC の Yahoo! 地図に同じ ID でログインし、約 30 件を「登録スポット」に登録した</label></li>
+            <li><input type="checkbox" id="all-3"><label for="all-3">2. iPhone の Yahoo! マップ／ Yahoo! カーナビ双方に約 30 件が反映されていることを確認した</label></li>
+            <li><input type="checkbox" id="all-4"><label for="all-4">3. Yahoo! カーナビの「登録スポット」から目的地を選んでナビを開始する手順を確認した</label></li>
+        </ul>
+        <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+    </div>
+
+    <div class="refs">
+        <span class="r-title">参考にした公式情報</span>
+        本マニュアルの手順は、以下の Yahoo! 公式ブログ・ヘルプ記事の内容をもとに作成しています。実際の画面の文言やボタンの位置はアプリのバージョンにより変わることがあります。
+        <br>・<a href="https://map.yahoo.co.jp/blog/archives/20230713_map_favorite.html" target="_blank">登録スポットの使い方（ Yahoo! マップ公式ブログ）</a>
+        <br>・ <a href="https://map.yahoo.co.jp/blog/archives/20150908_map_carnavi.html" target="_blank">Yahoo! 地図と Yahoo! カーナビ、あわせて使うと便利な機能のご紹介</a>
+        <br>・<a href="https://map.yahoo.co.jp/blog/archives/20150702_map_favbiz.html" target="_blank">よく行く場所をまとめて登録、地図の「お気に入り」で仕事効率をアップ！</a>
+    </div>
+
+    <div class="footer">
+        <p>作成日 : 2026 年 8 月 24 日 | 本マニュアルは個人利用を目的として作成されています。</p>
+    </div>
+
+</body>
+</html>

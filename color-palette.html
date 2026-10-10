@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Color Palette</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Helvetica Neue', 'Segoe UI', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    background: linear-gradient(135deg, #0288d1 0%, #29b6f6 45%, #fffdf5 100%);
+    min-height: 100vh;
+    padding: 60px 24px 80px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,202,40,0.35) 0%, rgba(255,202,40,0) 70%);
+    pointer-events: none;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    bottom: -15%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,112,67,0.25) 0%, rgba(255,112,67,0) 70%);
+    pointer-events: none;
+  }
+
+  header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 56px;
+    position: relative;
+    z-index: 1;
+  }
+
+  header .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #fffdf5;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    padding: 6px 16px;
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+    margin-bottom: 20px;
+  }
+
+  header h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 4px 24px rgba(2,136,209,0.4);
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  header p {
+    color: rgba(255,255,255,0.9);
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+
+  .grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 22px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(44,62,80,0.12), 0 2px 6px rgba(44,62,80,0.06);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(44,62,80,0.22), 0 6px 12px rgba(44,62,80,0.1);
+  }
+
+  .swatch {
+    height: 130px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+
+  .swatch::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0) 60%, rgba(0,0,0,0.12) 100%);
+  }
+
+  .swatch::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 55%);
+  }
+
+  .swatch .icon {
+    position: relative;
+    z-index: 2;
+    margin: 14px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+
+  .info {
+    padding: 16px 18px 20px;
+  }
+
+  .info .name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c3e50;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    text-transform: lowercase;
+  }
+
+  .info .hex {
+    font-family: 'SF Mono', 'Consolas', 'Menlo', monospace;
+    font-size: 13px;
+    color: #546e7a;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .info .hex .copy-hint {
+    font-size: 10px;
+    color: #29b6f6;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .card:hover .copy-hint {
+    opacity: 1;
+  }
+
+  .card.copied .copy-hint {
+    color: #ffa000;
+  }
+
+  /* light-background cards need a border to stay visible */
+  .card[data-light="true"] .swatch {
+    border-bottom: 1px solid #e3f2fb;
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #2c3e50;
+    color: #fffdf5;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 10;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    color: rgba(255,255,255,0.75);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="eyebrow">Color System</span>
+  <h1>Palette Showcase</h1>
+  <p>13 colors — クリックでHEXコードをコピー</p>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<div class="toast" id="toast">コピーしました</div>
+
+<footer>Generated palette · click any card to copy its hex code</footer>
+
+<script>
+  const colors = [
+    { name: "sky",          hex: "#29b6f6" },
+    { name: "sky-deep",     hex: "#0288d1" },
+    { name: "sun",          hex: "#ffca28" },
+    { name: "sun-deep",     hex: "#ffa000" },
+    { name: "coral",        hex: "#ff7043" },
+    { name: "cream",        hex: "#fffdf5" },
+    { name: "card",         hex: "#ffffff" },
+    { name: "ink",          hex: "#2c3e50" },
+    { name: "ink-soft",     hex: "#546e7a" },
+    { name: "line",         hex: "#e3f2fb" },
+    { name: "pause-bg",     hex: "#fff8e1" },
+    { name: "pause-border", hex: "#ffca28" },
+    { name: "accent-bg",    hex: "#f4f9f9" },
+  ];
+
+  function isLight(hex) {
+    const r = parseInt(hex.slice(1,3), 16);
+    const g = parseInt(hex.slice(3,5), 16);
+    const b = parseInt(hex.slice(5,7), 16);
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.75;
+  }
+
+  const grid = document.getElementById('grid');
+  const toast = document.getElementById('toast');
+
+  colors.forEach(c => {
+    const light = isLight(c.hex);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.setAttribute('data-light', light);
+
+    card.innerHTML = `
+      <div class="swatch" style="background:${c.hex};">
+        <div class="icon" style="color:${light ? '#2c3e50' : '#ffffff'}; background:${light ? 'rgba(44,62,80,0.08)' : 'rgba(255,255,255,0.25)'}; border-color:${light ? 'rgba(44,62,80,0.15)' : 'rgba(255,255,255,0.4)'};">✓</div>
+      </div>
+      <div class="info">
+        <div class="name">${c.name}</div>
+        <div class="hex">
+          <span>${c.hex.toUpperCase()}</span>
+          <span class="copy-hint">COPY</span>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      navigator.clipboard.writeText(c.hex).then(() => {
+        toast.textContent = `${c.name} (${c.hex}) をコピーしました`;
+        toast.classList.add('show');
+        card.classList.add('copied');
+        setTimeout(() => {
+          toast.classList.remove('show');
+          card.classList.remove('copied');
+        }, 1600);
+      });
+    });
+
+    grid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
