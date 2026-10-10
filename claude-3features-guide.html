@@ -3,175 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Claude 未活用機能の手順書 ― Research / Claude in Chrome / メモリ</title>
+<title>まだ使っていない三つの機能 ―― Research ・ Claude in Chrome ・メモリ</title>
 <style>
-  :root{
-    --ink:#1b2430;
-    --ink-soft:#4a586a;
-    --rule:#d5dce4;
-    --paper:#fbfcfd;
-    --panel:#f1f5f8;
-    --accent:#0f6f78;
-    --accent-soft:#e2f0f1;
-    --warn:#8a5a00;
-    --warn-soft:#fdf4e3;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0 auto;
-    max-width:1400px;
-    width:92%;
-    padding:48px 0 80px;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:"Hiragino Sans","ヒラギノ角ゴ ProN","Meiryo UI","Meiryo",system-ui,sans-serif;
-    font-size:16px;
-    line-height:1.9;
-    letter-spacing:.01em;
-  }
-  header{border-bottom:3px solid var(--ink);padding-bottom:18px;margin-bottom:8px;}
-  .eyebrow{
-    font-size:12px;letter-spacing:.22em;color:var(--accent);
-    font-weight:700;margin:0 0 10px;
-  }
-  h1{font-size:27px;line-height:1.5;margin:0 0 10px;font-weight:700;}
-  .lead{color:var(--ink-soft);font-size:15px;margin:0;max-width:64em;}
-  nav{
-    display:flex;flex-wrap:wrap;gap:10px;
-    margin:26px 0 44px;padding:0;list-style:none;
-  }
-  nav a{
-    display:inline-block;padding:6px 14px;border:1px solid var(--rule);
-    border-radius:2px;text-decoration:none;color:var(--ink);
-    font-size:13px;background:#fff;
-  }
-  nav a:hover{border-color:var(--accent);color:var(--accent);}
-  section{margin-bottom:56px;}
-  h2{
-    font-size:20px;margin:0 0 6px;font-weight:700;
-    padding-left:14px;border-left:6px solid var(--accent);
-  }
-  .sub{color:var(--ink-soft);font-size:14px;margin:0 0 22px;padding-left:20px;}
-  ol.steps{
-    list-style:none;counter-reset:s;margin:0;padding:0;
-    border-top:1px solid var(--rule);
-  }
-  ol.steps > li{
-    counter-increment:s;position:relative;
-    padding:16px 0 16px 58px;border-bottom:1px solid var(--rule);
-  }
-  ol.steps > li::before{
-    content:counter(s,decimal-leading-zero);
-    position:absolute;left:0;top:16px;
-    font-size:13px;font-weight:700;color:var(--accent);
-    font-variant-numeric:tabular-nums;letter-spacing:.06em;
-  }
-  .st{font-weight:700;display:block;margin-bottom:2px;}
-  code{
-    background:var(--panel);padding:2px 6px;border-radius:2px;
-    font-family:"SFMono-Regular",Consolas,"Courier New",monospace;font-size:13.5px;
-  }
-  .note,.warn{
-    margin:20px 0 0;padding:14px 18px;border-radius:2px;font-size:14.5px;
-  }
-  .note{background:var(--accent-soft);border-left:4px solid var(--accent);}
-  .warn{background:var(--warn-soft);border-left:4px solid var(--warn);color:#5d3f06;}
-  .note b,.warn b{display:block;margin-bottom:4px;}
-  table{border-collapse:collapse;width:100%;margin-top:12px;font-size:14.5px;}
-  th,td{border:1px solid var(--rule);padding:9px 12px;text-align:left;vertical-align:top;}
-  th{background:var(--panel);font-weight:700;white-space:nowrap;}
-  footer{
-    border-top:1px solid var(--rule);padding-top:16px;
-    font-size:13px;color:var(--ink-soft);
-  }
-  footer a{color:var(--accent);}
-  @media print{
-    body{width:100%;max-width:none;font-size:11pt;padding:0;background:#fff;}
-    nav{display:none;}
-    section{page-break-inside:avoid;}
-  }
+:root{
+  --bg:#f7f8f6;
+  --text:#242522;
+  --muted:#65695f;
+  --accent:#3d5a52;
+  --line:#d7dcd2;
+  --box:#eceee7;
+  --link:#3d5a52;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);line-height:2}
+a{color:var(--link)}
+a:hover{text-decoration:underline}
+.wrap{max-width:820px;margin:0 auto;padding:56px 26px 120px}
+.kicker{font-size:15px;letter-spacing:.12em;color:var(--accent);font-weight:700;margin:0 0 14px}
+h1{font-size:32px;line-height:1.6;margin:0 0 14px;font-weight:700;color:var(--text)}
+.subtitle{font-size:20px;color:var(--muted);line-height:1.8;margin:0 0 28px}
+.lede{border-left:3px solid var(--accent);padding-left:18px;margin:0 0 40px}
+.lede p{font-size:20px;color:var(--muted);margin:0 0 14px}
+.lede p:last-child{margin-bottom:0}
+.toc{background:var(--box);border:1px solid var(--line);padding:22px 26px;margin:0 0 46px}
+.toc>ol{columns:2;column-gap:32px;margin:0;padding-left:1.4em}
+.toc-title{font-size:15px;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 14px}
+.toc li{margin-bottom:7px;font-size:16.5px;break-inside:avoid}
+.toc li ol{margin-top:7px;margin-bottom:11px}
+.toc li li{font-size:15.5px;color:var(--muted);margin-bottom:5px}
+.toc a{color:var(--text);text-decoration:none}
+.toc a:hover{color:var(--accent);text-decoration:underline}
+h2{font-size:26px;line-height:1.5;margin:52px 0 20px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+h3{font-size:20px;margin:32px 0 12px}
+p{font-size:19px;margin:0 0 20px}
+strong{color:var(--accent)}
+ul,ol{margin:0 0 20px;padding-left:1.4em}
+li{font-size:19px;margin-bottom:9px}
+.box{background:var(--box);border:1px solid var(--line);padding:22px 24px;margin:0 0 28px;font-size:19px}
+table{border-collapse:collapse;width:100%;margin:0 0 28px;font-size:16px}
+th,td{border:1px solid var(--line);padding:10px 11px;text-align:left;vertical-align:top}
+th{background:var(--box)}
+sup{font-size:.72em}
+sup a{text-decoration:none}
+sup a:hover{text-decoration:underline}
+.refs{border-top:1px solid var(--line);margin-top:58px;padding-top:25px}
+.refs h2{border-bottom:none;margin-top:0;padding-bottom:0}
+.refs p{font-size:15.5px;line-height:1.65;margin:0 0 11px;overflow-wrap:anywhere;word-break:break-word}
+.refs em{font-style:italic}
+.refs ol{margin:0 0 11px}
+.refs li{font-size:15.5px;line-height:1.65;margin:0 0 11px;overflow-wrap:anywhere;word-break:break-word}
+.refs li>a:first-child{font-weight:700;text-decoration:none}
+.refs sup a{font-style:italic;font-weight:700}
+.refs li:target,sup:target{background:var(--box)}
+.note{font-size:15px;color:var(--muted);margin:20px 0 0}
+@media (max-width:480px){
+  .wrap{padding:36px 16px 90px}
+  h1{font-size:27px}
+  .toc>ol{columns:1}
+}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<header>
-  <p class="eyebrow">CLAUDE 活用メモ / 2026-08-17</p>
-  <h1>まだ使っていない三つの機能 ― Research・Claude in Chrome・メモリ</h1>
-  <p class="lead">日常的にお使いのチャット、Artifacts、Gmail連携、Claude Code に加えて、手をつけていない機能が三つあります。いずれも数分で使い始められます。</p>
-</header>
+<p class="kicker">Claude 活用メモ・機能ガイド</p>
+<h1>まだ使っていない三つの機能<br>―― Research ・ Claude in Chrome ・メモリ</h1>
+<p class="subtitle">Three Underused Claude Features: A Practical Guide to Research, Claude in Chrome, and Memory Management (Updated October 2026)</p>
 
-<nav>
-  <a href="#research">1. Research</a>
-  <a href="#chrome">2. Claude in Chrome</a>
-  <a href="#memory">3. メモリ</a>
-  <a href="#compare">使い分けの目安</a>
+<div class="lede">
+<p>日常的に使うチャット、 Artifacts 、 Gmail 連携、 Claude Code に加えて、まだ手をつけていない機能が三つあります。 Research 、 Claude in Chrome 、メモリです。</p>
+<p>この手順書は 2026 年 10 月 10 日時点の公式ヘルプセンターの記述に合わせて更新しました。とくにメモリは設定画面の構成が変わり、 Claude in Chrome は権限の既定値が変わっているため、以前の手順のままでは画面が合いません。</p>
+</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">Research （リサーチ）</a></li>
+<li><a href="#sec2">Claude in Chrome</a></li>
+<li><a href="#sec3">メモリ（記憶）の管理</a></li>
+<li><a href="#sec4">使い分けの目安</a></li>
+</ol>
 </nav>
 
-<section id="research">
-  <h2>1. Research （リサーチ）</h2>
-  <p class="sub">一つの問いから自動で何度も検索を重ね、出典付きの長いレポートを書き上げる機能。所要は数分から。</p>
-  <ol class="steps">
-    <li><span class="st">ウェブ検索をオンにする</span>これが前提条件です。オフのままでは Research は動きません。</li>
-    <li><span class="st">入力欄の左下「+」をクリックし、「Research」を選ぶ</span>オンになるとチャット下部に青いインジケーターが出ます。もう一度押せば解除されます。</li>
-    <li><span class="st">そのまま質問を投げる</span>あとは待つだけです。タブを開いたままにする必要はなく、別の作業に移って構いません。</li>
-    <li><span class="st">出典を確認する</span>本文の主張ごとに引用リンクが付くので、そこから原典に当たって裏を取ります。</li>
-  </ol>
-  <div class="note">
-    <b>向いている使い方</b>
-    静的サイトジェネレーターの比較、各国の政策比較、業界の競合調査など「複数の情報源をまたいで一本の報告にまとめる」種類の問い。逆に、単発の事実確認や天気の照会には過剰です。Gmail などを連携していれば、ウェブと自分のメールを突き合わせた調査もできます。
-  </div>
-</section>
+<h2 id="sec1">1. Research （リサーチ）</h2>
+<p>一つの問いから、 Claude が検索を何度も重ねて異なる角度から調べ、出典つきの報告にまとめる機能です。回答までに数分かかることがあります。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup></p>
+<ol>
+<li><strong>対象のプランと環境を確かめる</strong><br>Pro ・ Max ・ Team ・ Enterprise の有料プランで、ウェブ版、デスクトップ版、モバイル版のいずれからでも使えます。</li>
+<li><strong>ウェブ検索をオンにする</strong><br>これが前提条件です。オフのままでは Research は動きません。</li>
+<li><strong>入力欄の左下の「 + 」を押し、「 Research 」を選ぶ</strong><br>オンになるとチャット下部に青いインジケーターが出ます。もう一度押せば解除されます。</li>
+<li><strong>そのまま質問を投げる</strong><br>Claude が検索を段階的に重ねます。結果が出るまで数分かかることがあります。</li>
+<li><strong>出典を確認する</strong><br>本文の主張に引用が付くので、原典に当たって裏を取ります。</li>
+</ol>
+<div class="box">
+<strong>向いている使い方</strong><br>静的サイトジェネレーターの比較、各国の政策比較、業界の競合調査など、複数の情報源をまたいで一本の報告にまとめる種類の問いです。単発の事実確認や天気の照会には過剰です。 Google Workspace のコネクターで Gmail ・カレンダー・ Google ドキュメントをつないでいれば、ウェブとそれらの内容を突き合わせた調査もできます。
+</div>
+<div class="box">
+<strong>うまく動かないとき</strong><br>Research が使われていないようなら、 Claude に「リサーチ機能を使って」と直接頼みます。連携先を参照していないようなら、参照してほしい情報源を名指しして頼みます。また、 Research は通常の会話と同じ利用上限を使いますが、多数の情報源を取得するため、上限を速く消費することがあります。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup>
+</div>
 
-<section id="chrome">
-  <h2>2. Claude in Chrome</h2>
-  <p class="sub">Chrome のサイドパネルから、いま開いているページを読ませたり、クリックや入力を任せたりできる拡張機能。</p>
-  <ol class="steps">
-    <li><span class="st">Chrome ウェブストアから拡張機能を入れる</span>「Claude」を検索し、「Chrome に追加」。Claude のアカウントでサインインします。</li>
-    <li><span class="st">デスクトップアプリ側で有効にする</span>左下のイニシャル →「設定」→ コネクターの一覧から Claude in Chrome をオンに。</li>
-    <li><span class="st">ツールバーの Claude アイコンでサイドパネルを開く</span>閲覧中のタブの内容は、追加設定なしで読み取られます。</li>
-    <li><span class="st">やってほしい作業を書く</span>操作のたびに許可を求められます。「この操作だけ許可」が最も安全、「このサイトでは常に許可」は信頼できるサイトに限ります。</li>
-    <li><span class="st">許可の棚卸し</span>サイドパネル右上の三点メニュー →「拡張機能の設定」で、常に許可したサイトの一覧を確認・取り消しできます。</li>
-  </ol>
-  <div class="warn">
-    <b>注意点</b>
-    ページに仕込まれた指示で Claude が誤作動する「プロンプトインジェクション」の危険があります。機密情報を表示している間は開かない、金銭が動く操作は必ず自分で確認する、専用のブラウザープロファイルを分ける ― この三つを守ってください。なお Chrome 専用で、他の Chromium 系ブラウザーやモバイルでは動きません。金融・暗号資産系サイトは既定でブロックされています。
-  </div>
-  <div class="note">
-    <b>想定される出番</b>
-    XServer やお名前系の管理画面、GitHub の Settings 画面など「読み取って確認する」作業。DNS レコードの現状を一覧で読ませて計画書と突き合わせる、といった使い方が現実的です。
-  </div>
-</section>
+<h2 id="sec2">2. Claude in Chrome</h2>
+<p>Chrome のサイドパネルから、いま開いているページを読ませたり、クリックや入力を任せたりできる拡張機能です。サイドパネルは現在ベータ版です。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
+<ol>
+<li><strong>対象のプランとブラウザーを確かめる</strong><br>Pro ・ Max ・ Team ・ Enterprise の有料プランで使えます。対応するのは Google Chrome だけで、ほかの Chromium 系ブラウザーやモバイルでは動きません。</li>
+<li><strong>Chrome ウェブストアから拡張機能を入れる</strong><br>Claude の掲載ページで拡張機能を追加し、 Claude のアカウントでサインインします。パズルのピースのメニューからピン留めし、求められる権限を許可します。</li>
+<li><strong>デスクトップアプリから使う場合は、コネクターで有効にする</strong><br>「設定」→「コネクター」で Claude in Chrome を選び、「構成」から有効にします。会話ごとの既定はオフなので、使う会話で有効にします。</li>
+<li><strong>サイドパネルでやってほしい作業を書く</strong><br>サイドパネルの既定は「自動承認」モードです。 Claude は作業を続けながら各操作の安全性を自分で確認し、必要なときだけ承認を求めて止まります。モードは切り替えられ、選んだモードは次回以降も記憶されます。</li>
+<li><strong>Cowork の内蔵ブラウザーとの違いを知る</strong><br>Cowork には内蔵のブラウザーもあります。使うブラウザーは「設定」→ Cowork で選べます。 Max と Team ではサイドパネルが Cowork のセッションとして動きます。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></li>
+</ol>
+<div class="box">
+<strong>注意点</strong><br>ページに仕込まれた指示で Claude が誤作動する「プロンプトインジェクション」の危険は、安全性の確認機構があっても残ります。公式ヘルプも「なおリスクがある」と述べています。機密情報を表示している間は使わない、金銭が動く操作は必ず自分で確認する、専用のブラウザープロファイルを分ける、の三つを守ってください。 Team と Enterprise では、管理者がサイトの許可リスト・拒否リストで利用先を制限できます。
+</div>
+<div class="box">
+<strong>想定される出番</strong><br>サーバーの管理画面や GitHub の設定画面など、読み取って確認する作業です。 DNS レコードの現状を一覧で読ませて、計画書と突き合わせる使い方が現実的です。
+</div>
 
-<section id="memory">
-  <h2>3. メモリ（記憶）の管理</h2>
-  <p class="sub">プロジェクトの文脈が引き継がれているのはこの機能のおかげです。中身は自分で読めますし、書き換えられます。</p>
-  <ol class="steps">
-    <li><span class="st">中身を見る</span>「設定」→「機能 (Capabilities) 」→「メモリを表示・編集」。記憶している内容が一覧で出ます。</li>
-    <li><span class="st">チャットから直接足す・消す</span>会話の途中で「これを覚えておいて」「あれは忘れて」と言えば、その場で更新されます。設定画面を開く必要はありません。</li>
-    <li><span class="st">書き出して保管する</span>「記憶している内容を、そのままの形で書き出して」と頼めば全文が出ます。Obsidian の Vault に貼っておけばバックアップになります。</li>
-    <li><span class="st">ときどき棚卸しする</span>古い前提が残っていると誤った回答の元になります。半年に一度でも見直す価値があります。</li>
-  </ol>
-  <div class="note">
-    <b>ひとこと</b>
-    サイト移行のように何日もまたぐ仕事では、決定事項をこちらから明示的に「覚えておいて」と伝えておくと、次のセッションの立ち上がりが目に見えて速くなります。
-  </div>
-</section>
+<h2 id="sec3">3. メモリ（記憶）の管理</h2>
+<p>プロジェクトの文脈が引き継がれているのは、この機能のおかげです。中身は自分で読めますし、書き換えられます。 2026 年 8 月下旬に仕組みが「トピック」単位へ変わり、画面の場所も変わりました。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></p>
+<ol>
+<li><strong>対象のプランと既定値を確かめる</strong><br>Free ・ Pro ・ Max ではメモリは既定でオンです。 Team と Enterprise では、オーナーが許可するまで各メンバーはオフのままです。</li>
+<li><strong>中身を見る</strong><br>「設定」→「メモリ」を開くと、記憶している内容が「トピック」の一覧で出ます。トピックを選ぶと全文が読め、編集アイコンで書き換え、「削除」で消せます。以前の「設定」→「機能」→「メモリを表示・編集」は旧画面です。アカウントによっては旧画面のまま切り替わっていない場合があります。</li>
+<li><strong>チャットから直接足す・消す</strong><br>会話の途中で「これを覚えておいて」「あれは忘れて」と言えば、その場で更新されます。 Claude は会話が終わったあとにまとめるのではなく、会話中にトピックとして保存します。</li>
+<li><strong>デリケートな話題の扱いを決める</strong><br>健康・政治・宗教などのトピックは、既定では記憶されません。記憶させたい場合は、「設定」→「メモリ」で「デリケートなトピックを記憶に含める」をオンにします。</li>
+<li><strong>バックアップする</strong><br>メモリはデータのエクスポートに含まれます。旧メモリ専用の書き出しは、 2026 年 9 月 9 日で受付を終えました。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></li>
+<li><strong>ときどき棚卸しする</strong><br>古い前提が残っていると、誤った回答の元になります。半年に一度でも見直す価値があります。</li>
+</ol>
+<div class="box">
+<strong>知っておくと便利な操作</strong><br>一時停止は、記憶を残したまま、使うことも新しく作ることも止めます。停止中の会話は、再開しても記憶に追加されません。リセットは、プロジェクトのメモリを含めてすべてを削除し、元に戻せません。プロジェクトごとにメモリは独立していて、別のプロジェクトや通常のチャットとは混ざりません。記憶にも履歴にも残さない会話をしたいときは、ゴーストのアイコンでシークレットチャットを始めます。
+</div>
+<div class="box">
+<strong>Cowork との関係</strong><br>メモリはチャットと Cowork で共有されますが、 Cowork がクラウドで動く場合に限ります。ローカルの Cowork セッションはメモリを使いません。タスクごとにオフにするには、最初のメッセージを送る前に「 + 」メニューで切り替えます。タスクの開始後は変更できません。サイト移行のように何日もまたぐ仕事では、決定事項を「覚えておいて」と明示的に伝えておくと、次のセッションの立ち上がりが速くなります。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup>
+</div>
 
-<section id="compare">
-  <h2>使い分けの目安</h2>
-  <table>
-    <tr><th>やりたいこと</th><th>使うもの</th></tr>
-    <tr><td>事実を一つ確かめたい</td><td>通常のチャット（ウェブ検索）</td></tr>
-    <tr><td>複数の情報源をまとめた報告がほしい</td><td>Research</td></tr>
-    <tr><td>いま開いている画面を読ませたい・操作させたい</td><td>Claude in Chrome</td></tr>
-    <tr><td>長期の仕事の前提を引き継ぎたい</td><td>メモリ</td></tr>
-    <tr><td>手元のファイルを実際に書き換えたい</td><td>Claude Code （すでに活用中）</td></tr>
-  </table>
-</section>
+<h2 id="sec4">4. 使い分けの目安</h2>
+<table>
+<tr><th>やりたいこと</th><th>使うもの</th></tr>
+<tr><td>事実を一つ確かめたい</td><td>通常のチャット（ウェブ検索）</td></tr>
+<tr><td>複数の情報源をまとめた報告がほしい</td><td>Research</td></tr>
+<tr><td>いま開いている画面を読ませたい・操作させたい</td><td>Claude in Chrome</td></tr>
+<tr><td>長期の仕事の前提を引き継ぎたい</td><td>メモリ</td></tr>
+<tr><td>手元のファイルを実際に書き換えたい</td><td>Claude Code （すでに活用中）</td></tr>
+</table>
 
-<footer>
-  出典:Claude ヘルプセンター (support.claude.com) の各記事、および Chrome ウェブストアの掲載情報。仕様は変わることがあるため、表示が異なる場合は公式ドキュメントを優先してください。
-</footer>
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> Anthropic 「 Use research on Claude 」 , <em>Claude Help Center</em>, 2026 年 6 月 2 日更新。 <a href="https://support.claude.com/en/articles/11088861-use-research-on-claude">Claude ヘルプセンター</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> Anthropic 「 Get started with Claude in Chrome 」 , <em>Claude Help Center</em>, 2026 年 8 月 26 日更新。 <a href="https://support.claude.com/en/articles/12012173-get-started-with-claude-in-chrome">Claude ヘルプセンター</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> Anthropic 「 How does Claude's memory work? 」 , <em>Claude Help Center</em>, 2026 年 10 月 10 日閲覧。 <a href="https://support.claude.com/en/articles/11817273">Claude ヘルプセンター</a></li>
+</ol>
+</div>
 
+<p class="note">本稿は、 2026 年 10 月 10 日に確認した公式ヘルプセンターの記述に基づきます。機能の名称、画面の場所、既定値はアカウントやプランの展開状況によって異なり、変わることもあるため、表示が異なる場合は公式ドキュメントを優先してください。</p>
+
+</div>
 </body>
 </html>
