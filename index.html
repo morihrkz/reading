@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>作成文書</title>
-<meta name="description" content="作成文書">
+<meta name="description" content="作成文書の一覧">
 <style>
 :root{
   --bg:#f7f8f6;
@@ -27,6 +27,21 @@ h1{font-size:32px;line-height:1.6;font-weight:700;margin:0 0 14px;color:var(--te
 .lede p:last-child{margin-bottom:0}
 h2{font-size:26px;line-height:1.5;border-bottom:1px solid var(--line);padding-bottom:9px;margin:52px 0 20px}
 p{font-size:19px;margin:0 0 20px}
+.toc{display:flex;flex-wrap:wrap;gap:8px 10px;margin:0 0 8px}
+.toc a{font-size:16px;line-height:1.6;text-decoration:none;border:1px solid var(--line);background:var(--box);padding:4px 14px;border-radius:999px}
+.toc a:hover{border-color:var(--accent)}
+.toc span{color:var(--muted);font-size:14px;margin-left:4px}
+.sec-intro{color:var(--muted);font-size:17px;margin:0 0 16px}
+.cards{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:14px}
+.card{position:relative;background:var(--box);border:1px solid var(--line);border-left:4px solid var(--accent);padding:14px 22px 12px;transition:background .15s,border-color .15s}
+.card:hover{background:#fff;border-color:var(--accent)}
+.card a{font-size:20px;font-weight:700;line-height:1.6;text-decoration:none}
+.card a::after{content:"";position:absolute;inset:0}
+.card a:hover,.card a:focus-visible{text-decoration:underline}
+.card p{font-size:16px;line-height:1.9;margin:4px 0 6px}
+.tag,.lang{font-size:13px;letter-spacing:.06em;color:var(--accent);font-weight:700;display:block}
+.lang{color:var(--muted);font-weight:400}
+html{scroll-behavior:smooth}
 .box{background:var(--box);border:1px solid var(--line);padding:22px 24px;margin:0 0 28px;font-size:19px}
 .box strong{color:var(--accent)}
 .box a{text-decoration:none}
@@ -44,51 +59,72 @@ p{font-size:19px;margin:0 0 20px}
 <p class="kicker">ポータル</p>
 <h1>作成文書インデックス</h1>
 <p class="subtitle">A Reading Room</p>
-<div class="lede"><p>Created: 2026-10-10 / Updated: 2026-10-10</p></div>
-<h2 id="sec1">1. 収録文書</h2>
-<div class="box">
-<strong><a href="france-lycee-protests.html">フランスの高校生デモは「移民の暴動」なのか</a></strong><br>
-国際ニュース解説・事実確認。フランスで広がった高校生の抗議運動と、トランプ米大統領の発言を、報道に照らして検証します。日本語。
-</div>
-<div class="box">
-<strong><a href="norway-oil-fact-check.html">ノルウェーは石油を富に変えたか</a></strong><br>
-ファクトチェック・エネルギー政策。新聞記事「 Norway turned oil into wealth 」の事実の記述と中心的な主張が、確かめられる事実に支えられているかを検証します。日本語。
-</div>
-<div class="box">
-<strong><a href="norway-turned-oil-wealth.html" lang="en">Norway turned oil into wealth</a></strong><br>
-上の検証の対象になった New Straits Times 紙の記事の本文です。北海の石油を、ノルウェーがどのように国民の富へ変えたかを論じています。英語。
-</div>
-<div class="box">
-<strong><a href="cloudflare-hosting-plan.html">Cloudflare Workers で自分のサイトを公開する計画書</a></strong><br>
-計画書・ホスティング。独自ドメインを取らず、 GitHub Pages と同じ型の運用を Cloudflare Workers で実現するための工程と日程をまとめています。日本語。
-</div>
-<div class="box">
-<strong><a href="data-breach-causes-2026.html">漏洩は増えたのか、見えるようになったのか</a></strong><br>
-情報セキュリティ・インシデント分析。 2026 年秋に相次いだ個人情報流出の報道を、技術、攻撃、制度、組織の四つの視点から検討し、統計で確認できた範囲と仮説にとどまる範囲を区別します。日本語。
-</div>
-<div class="box">
-<strong><a href="claude-3features-guide.html">まだ使っていない三つの機能 ― Research・Claude in Chrome・メモリ</a></strong><br>
-手順書・Claude 活用。日常的に使っているチャットや Claude Code に加えて、まだ手をつけていない三つの機能を、数分で使い始められる手順でまとめています。日本語。
-</div>
-<div class="box">
-<strong><a href="claude-code-migration.html">Claude Code 環境移植ガイド (Windows 11 ⇔ Mac)</a></strong><br>
-実践ガイド・環境移行。Claude Code の設定と記憶を別の PC へ移すためのチェックリストです。ユーザー設定、プロジェクト設定、認証、 MCP サーバーなどの系統ごとに整理しています。日本語。
-</div>
-<div class="box">
-<strong><a href="static-site-migration.html">静的サイト移行の実務記録 ―― DNS 移管とネームサーバー設定</a></strong><br>
-実務記録・ウェブ運用。二年間更新していなかったウェブサイトを、レンタルサーバーから GitHub Pages へ移した記録です。作業だけでなく、次へ進んでよいと判断した根拠も残しています。日本語。
-</div>
-<div class="box">
-<strong><a href="yahoo_carnavi_import_manual.html">Yahoo! マップ / Yahoo! カーナビへの地点一括登録マニュアル</a></strong><br>
-操作マニュアル・カーナビ。 Windows PC で 28 件の地点を登録し、 iPhone の Yahoo! カーナビや Yahoo! マップですぐに使えるようにするまでの全手順を示します。日本語。
-</div>
-<div class="box">
-<strong><a href="color-palette.html" lang="en">Palette Showcase</a></strong><br>
-配色見本。 13 色のカラーパレットを一覧にしたページで、カードをクリックすると HEX コードをコピーできます。英語。
-</div>
-<h2 id="sec2">2. 文書どうしの関係</h2>
-<p>二つ目の検証文書と三つ目の英語の記事は、対になっています。検証文書は、三つ目の記事を対象にしています。先に記事を読むと、検証の論点がつかみやすくなります。ほかの文書は、それぞれ独立して読めます。</p>
-<p class="note">※ 各文書は個別の HTML ファイルで、上のリンクから開きます。内容は作成時点の調査にもとづくため、最新の状況とは異なる場合があります。</p>
+<div class="lede"><p>Created: 2026-10-10 / Updated: 2026-10-11 / 収録 11 点</p></div>
+<nav class="toc" aria-label="目次">
+<a href="#sec1">ニュース解説・検証・分析 <span>5</span></a>
+<a href="#sec2">手順書・計画書・実務記録 <span>5</span></a>
+<a href="#sec3">資料・見本 <span>1</span></a>
+<a href="#sec4">文書どうしの関係</a>
+</nav>
+<h2 id="sec1">1. ニュース解説・検証・分析</h2>
+<p class="sec-intro">報道や記事を調べ直し、事実と解釈を分けて検討した文書です。</p>
+<ul class="cards">
+<li class="card"><span class="tag">国際関係・時事分析</span>
+<a href="icc-akane-us-sanctions.html">国際刑事裁判所所長に対する米国の制裁措置 ―― 指定の理由と経緯をめぐる検討</a>
+<p>2026 年 8 月に米国が国際刑事裁判所の赤根智子所長を制裁対象に指定した件を、公式の理由と、 2025 年 2 月からの制裁拡大の経緯に照らして検討します。確認できる事実と筆者の解釈を区別して記しています。</p>
+<span class="lang">日本語</span></li>
+<li class="card"><span class="tag">国際ニュース解説・事実確認</span>
+<a href="france-lycee-protests.html">フランスの高校生デモは「移民の暴動」なのか</a>
+<p>フランスで広がった高校生の抗議運動と、トランプ米大統領の発言を、報道に照らして検証します。</p>
+<span class="lang">日本語</span></li>
+<li class="card"><span class="tag">ファクトチェック・エネルギー政策</span>
+<a href="norway-oil-fact-check.html">ノルウェーは石油を富に変えたか</a>
+<p>新聞記事「 Norway turned oil into wealth 」の事実の記述と中心的な主張が、確かめられる事実に支えられているかを検証します。</p>
+<span class="lang">日本語</span></li>
+<li class="card"><span class="tag">上の検証の対象になった New Straits Times 紙の記事の本文です</span>
+<a href="norway-turned-oil-wealth.html" lang="en">Norway turned oil into wealth</a>
+<p>北海の石油を、ノルウェーがどのように国民の富へ変えたかを論じています。</p>
+<span class="lang">英語</span></li>
+<li class="card"><span class="tag">情報セキュリティ・インシデント分析</span>
+<a href="data-breach-causes-2026.html">漏洩は増えたのか、見えるようになったのか</a>
+<p> 2026 年秋に相次いだ個人情報流出の報道を、技術、攻撃、制度、組織の四つの視点から検討し、統計で確認できた範囲と仮説にとどまる範囲を区別します。</p>
+<span class="lang">日本語</span></li>
+</ul>
+<h2 id="sec2">2. 手順書・計画書・実務記録</h2>
+<p class="sec-intro">手を動かすための手順、計画、作業の記録です。</p>
+<ul class="cards">
+<li class="card"><span class="tag">手順書・Claude 活用</span>
+<a href="claude-3features-guide.html">まだ使っていない三つの機能 ― Research・Claude in Chrome・メモリ</a>
+<p>日常的に使っているチャットや Claude Code に加えて、まだ手をつけていない三つの機能を、数分で使い始められる手順でまとめています。</p>
+<span class="lang">日本語</span></li>
+<li class="card"><span class="tag">実践ガイド・環境移行</span>
+<a href="claude-code-migration.html">Claude Code 環境移植ガイド (Windows 11 ⇔ Mac)</a>
+<p>Claude Code の設定と記憶を別の PC へ移すためのチェックリストです。ユーザー設定、プロジェクト設定、認証、 MCP サーバーなどの系統ごとに整理しています。</p>
+<span class="lang">日本語</span></li>
+<li class="card"><span class="tag">計画書・ホスティング</span>
+<a href="cloudflare-hosting-plan.html">Cloudflare Workers で自分のサイトを公開する計画書</a>
+<p>独自ドメインを取らず、 GitHub Pages と同じ型の運用を Cloudflare Workers で実現するための工程と日程をまとめています。</p>
+<span class="lang">日本語</span></li>
+<li class="card"><span class="tag">実務記録・ウェブ運用</span>
+<a href="static-site-migration.html">静的サイト移行の実務記録 ―― DNS 移管とネームサーバー設定</a>
+<p>二年間更新していなかったウェブサイトを、レンタルサーバーから GitHub Pages へ移した記録です。作業だけでなく、次へ進んでよいと判断した根拠も残しています。</p>
+<span class="lang">日本語</span></li>
+<li class="card"><span class="tag">操作マニュアル・カーナビ</span>
+<a href="yahoo_carnavi_import_manual.html">Yahoo! マップ / Yahoo! カーナビへの地点一括登録マニュアル</a>
+<p> Windows PC で 28 件の地点を登録し、 iPhone の Yahoo! カーナビや Yahoo! マップですぐに使えるようにするまでの全手順を示します。</p>
+<span class="lang">日本語</span></li>
+</ul>
+<h2 id="sec3">3. 資料・見本</h2>
+<p class="sec-intro">参照用の見本です。</p>
+<ul class="cards">
+<li class="card"><span class="tag">配色見本</span>
+<a href="color-palette.html" lang="en">Palette Showcase</a>
+<p> 13 色のカラーパレットを一覧にしたページで、カードをクリックすると HEX コードをコピーできます。</p>
+<span class="lang">英語</span></li>
+</ul>
+<h2 id="sec4">4. 文書どうしの関係</h2>
+<p>「ノルウェーは石油を富に変えたか」と「 Norway turned oil into wealth 」は、対になっています。前者の検証文書は、後者の記事を対象にしています。先に記事を読むと、検証の論点がつかみやすくなります。ほかの文書は、それぞれ独立して読めます。</p>
+<p class="note">※ 各文書は個別の HTML ファイルで、上のカードから開きます。内容は作成時点の調査にもとづくため、最新の状況とは異なる場合があります。</p>
 </div>
 </body>
 </html>
