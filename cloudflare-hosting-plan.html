@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cloudflare Workers で自分のサイトを公開する計画書</title>
+<style>
+:root{
+  --bg:#f7f8f6; --text:#242522; --muted:#65695f; --accent:#3d5a52;
+  --line:#d7dcd2; --box:#eceee7; --link:#3d5a52;
+}
+*{box-sizing:border-box;}
+body{background:var(--bg); color:var(--text); margin:0; line-height:2;}
+.wrap{max-width:820px; margin:0 auto; padding:56px 26px 120px;}
+.kicker{font-size:15px; letter-spacing:.14em; color:var(--accent); font-weight:bold; margin-bottom:14px;}
+h1{font-size:32px; line-height:1.6; color:var(--text); margin:0 0 14px; font-weight:bold;}
+.subtitle{font-size:20px; color:var(--muted); margin:0 0 28px; line-height:1.8;}
+.lede{font-size:20px; color:var(--muted); border-left:3px solid var(--accent); padding-left:18px; margin:0 0 40px;}
+.lede p{font-size:20px; margin:0 0 14px;}
+.lede p:last-child{margin-bottom:0;}
+.meta{border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--muted);
+  font-size:15px; line-height:1.9; padding:16px 0; margin:0 0 40px;}
+.toc{background:var(--box);border:1px solid var(--line);padding:22px 26px;margin:0 0 46px}
+.toc>ol{columns:2;column-gap:32px}
+.toc-title{font-size:15px;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 14px}
+.toc li{margin-bottom:7px;font-size:16.5px;break-inside:avoid}
+.toc li ol{margin-top:7px;margin-bottom:11px}
+.toc li li{font-size:15.5px;color:var(--muted);margin-bottom:5px}
+.toc a{color:var(--text);text-decoration:none}
+.toc a:hover{color:var(--accent);text-decoration:underline}
+h2{font-size:26px; line-height:1.5; border-bottom:1px solid var(--line); padding-bottom:9px; margin:52px 0 24px;}
+h3{font-size:20px; margin:32px 0 12px;}
+p{font-size:19px; margin:0 0 20px;}
+.box{background:var(--box); border:1px solid var(--line); padding:22px 24px; margin:0 0 28px; font-size:19px;}
+.box strong{color:var(--accent);}
+table{width:100%; border-collapse:collapse; margin:0 0 28px; font-size:16px;}
+th,td{border:1px solid var(--line); padding:10px 11px; vertical-align:top; text-align:left;}
+th{background:var(--box);}
+td ul{margin:0; padding-left:1.2em;}
+td li{font-size:16px; margin-bottom:6px;}
+ul,ol{padding-left:1.4em; margin:0 0 20px;}
+li{font-size:19px; margin-bottom:9px;}
+a{color:var(--link);}
+sup{font-size:.72em;}
+sup a{color:var(--link); text-decoration:none;}
+sup a:hover{text-decoration:underline;}
+strong{font-weight:bold;}
+code{font-size:.88em; background:var(--box); padding:.1em .3em;}
+pre{font-size:16px; background:var(--box); border:1px solid var(--line);
+  padding:16px 18px; margin:0 0 20px; overflow-x:auto; line-height:1.6;}
+pre code{background:none; padding:0;}
+.refs{border-top:1px solid var(--line); margin-top:58px; padding-top:25px;}
+.refs h2{border-bottom:none; margin-top:0; padding-bottom:0;}
+.refs p{font-size:15.5px; line-height:1.65; margin:0 0 11px; overflow-wrap:anywhere; word-break:break-word;}
+.refs em{font-style:italic;}
+.refs ol{margin:0 0 11px;}
+.refs li{font-size:15.5px; line-height:1.65; margin:0 0 11px; overflow-wrap:anywhere; word-break:break-word;}
+.refs li>a:first-child{font-weight:700; text-decoration:none;}
+.refs sup a{font-style:italic; font-weight:700;}
+.refs li:target, sup:target{background:var(--box);}
+.note{font-size:15px; color:var(--muted); margin-top:20px;}
+@media (max-width:480px){
+  .wrap{padding:36px 16px 90px;}
+  h1{font-size:27px;}
+  .toc>ol{columns:1}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="kicker">計画書・ホスティング</div>
+<h1>Cloudflare Workers で自分のサイトを公開する計画書<br>―― GitHub Pages と同じ、独自ドメインを持たない方式</h1>
+<p class="subtitle">A Launch Plan for Domain-Free Static Hosting: Publishing a Personal Site on Cloudflare Workers, Modeled on GitHub Pages</p>
+<div class="lede"><p>独自ドメインを取らず、リポジトリへの push だけで公開する。いま使っている GitHub Pages のサイトと同じ型の運用を、 Cloudflare の Workers で実現するための工程と日程をまとめた。結論を先に書くと、この方式ではネームサーバーの切り替えは要らず、工程は大幅に少なくなる。ただし、いまの用途なら GitHub Pages のままで足りる可能性も高く、その比較を 1.2 に置いた。</p></div>
+<div class="meta"><strong>【確認の範囲と限界】</strong> 2026 年 10 月 7 日に Cloudflare の公式ドキュメントで確認できた事項と、確認できていない事項を区別して書いた。確認できていないものは、本文中で「要確認」と明記している。公式ページの内容は、取得したページの要約で確認したもので、原文との逐語の照合はしていない。コマンドや設定値は、実作業の前に原典で照合してほしい。サイトの構成についての記述は、筆者が公開ページから取得した内容に基づく。 GitHub Pages の制限などは、 GitHub の公式ドキュメントの要約で確認した。</div>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">GitHub Pages の方式を Cloudflare に置き換える</a>
+<ol>
+<li><a href="#sec1-1">URL と運用の対応関係</a></li>
+<li><a href="#sec1-2">GitHub Pages と Cloudflare Workers の長所と短所</a></li>
+<li><a href="#sec1-3">ネームサーバーの切り替えが要らなくなる理由</a></li>
+<li><a href="#sec1-4">違いと注意点</a></li>
+</ol>
+</li>
+<li><a href="#sec2">計画の前提と設計方針</a>
+<ol>
+<li><a href="#sec2-1">前提条件</a></li>
+<li><a href="#sec2-2">順序を入れ替えてはいけない箇所</a></li>
+</ol>
+</li>
+<li><a href="#sec3">工程表</a>
+<ol>
+<li><a href="#sec3-1">工程の一覧</a></li>
+<li><a href="#sec3-2">日程の目安</a></li>
+</ol>
+</li>
+<li><a href="#sec4">各工程の作業内容</a></li>
+<li><a href="#sec5">公開後の運用と、後から独自ドメインを足すとき</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. GitHub Pages の方式を Cloudflare に置き換える</h2>
+<p>いま使っているサイトは、 <code>https://morihrkz.github.io/library/</code> という URL で公開されている。独自ドメインは持たず、 GitHub のアカウント名とリポジトリ名で URL が決まり、リポジトリへ push すれば公開される方式である。 Cloudflare の Workers にも、これと同じ型の運用がある。</p>
+
+<h3 id="sec1-1">1.1 URL と運用の対応関係</h3>
+<table>
+<thead>
+<tr><th>項目</th><th>GitHub Pages</th><th>Cloudflare Workers</th></tr>
+</thead>
+<tbody>
+<tr><td>公開 URL の型</td><td><code>アカウント名.github.io/リポジトリ名/</code></td><td><code>Worker名.アカウントのサブドメイン.workers.dev</code> <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><td>URL の決まり方</td><td>アカウント名とリポジトリ名</td><td>Worker 名と、アカウントごとのサブドメイン。後者はダッシュボードで変えられるが、変えると配下のすべての Worker の URL が変わる <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><td>独自ドメイン</td><td>不要</td><td>不要</td></tr>
+<tr><td>更新の流れ</td><td>push で公開</td><td>Git に接続すると、 push のたびに自動でデプロイされる <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><td>費用</td><td>無料</td><td>静的ファイルへの要求は無料で、回数の上限もない <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><td>URL のパス部分</td><td>リポジトリ名がパスになる(<code>/library/</code>)</td><td>先頭にパスは付かない。同じ形にしたければ、公開ディレクトリの下に <code>library</code> フォルダを作り、その中にファイルを置く（要確認）</td></tr>
+</tbody>
+</table>
+<p>Worker 名は、 63 文字以内で、英数字とハイフンだけを使い、ハイフンで始めることも終えることもできない。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> この名前が URL の先頭になるので、たとえば Worker を <code>library</code> と名付ければ、 <code>library.アカウントのサブドメイン.workers.dev</code> になる。</p>
+
+<h3 id="sec1-2">1.2 GitHub Pages と Cloudflare Workers の長所と短所</h3>
+<p>先に、二つの疑問に答えておく。「 Cloudflare Workers は GitHub の利用が必須なのか」と、「必須なら GitHub Pages のほうが単純ではないか」である。</p>
+<p>一つ目の答えは、<strong>必須ではない</strong>である。手元から <code>npx wrangler deploy</code> を実行すれば、 GitHub を介さずに公開できる。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> Git との接続は任意の機能で、対応する接続先は GitHub のほか、 GitLab と Cloudflare 自身のものがある。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 逆に GitHub Pages は、 GitHub のリポジトリのファイルをそのまま公開する仕組みで、リポジトリが前提になる。 <sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup></p>
+<p>二つ目の答えは、<strong>いまの用途なら、そのとおり</strong>である。公開リポジトリのまま、静的な HTML を、いまの規模で公開し続けるだけなら、追加の作業が要らない GitHub Pages のほうが単純である。 Cloudflare Workers を選ぶ理由は、下に挙げる Cloudflare 側の長所が、実際に必要になったときに生まれる。</p>
+<table>
+<thead>
+<tr><th>GitHub Pages</th><th>長所</th><th>短所</th></tr>
+</thead>
+<tbody>
+<tr><td>主な特徴</td>
+<td><ul>
+<li>すでに使っており、新しいアカウントも、追加の設定も要らない</li>
+<li>公開元は、ブランチのルートか <code>/docs</code> フォルダを選ぶだけ。ビルドが必要なら GitHub Actions も使える <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></li>
+<li>ファイルを置くだけで公開され、 <code>404.html</code> も置くだけで効く <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></li>
+<li>現に <code>.html</code> のリンクで構成したサイトが動いており、転送の差を気にしなくてよい</li>
+<li>依存先が GitHub だけで、増えない</li>
+</ul></td>
+<td><ul>
+<li>無料プランでは、公開リポジトリが前提になる。非公開のまま公開するには、有料プランが要る <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></li>
+<li>公開サイトは 1 GB まで、帯域は月 100 GB （目安）、ビルドは 1 時間に 10 回（目安）、デプロイは 10 分で打ち切られる <sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup></li>
+<li>事業のための、取引や SaaS を主な目的とするサイトは、用途として認められていない <sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup></li>
+<li>HTTP ヘッダーの指定や、サーバー側のリダイレクトができない（第三者の解説による。公式での確認はしていない。要確認）<sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></li>
+</ul></td></tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr><th>Cloudflare Workers</th><th>長所</th><th>短所</th></tr>
+</thead>
+<tbody>
+<tr><td>主な特徴</td>
+<td><ul>
+<li>GitHub が要らない。手元から直接公開でき、 Git に接続するかどうかは選べる <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup></li>
+<li>静的ファイルへの要求は無料で、回数の上限もない <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></li>
+<li><code>_redirects</code> と <code>_headers</code> で、リダイレクトとヘッダーを指定できる <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup></li>
+<li>Git に接続すると、ブランチごとにプレビュー用の URL が作られる <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></li>
+<li>後から、サイトにプログラムを足せる。機能の幅は Pages より広いと、 Cloudflare が説明している <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></li>
+</ul></td>
+<td><ul>
+<li>手順が多い。 Cloudflare のアカウント、 Node.js 、 wrangler 、設定ファイル、 Git 接続が要る。 GitHub Pages は、設定画面で選ぶだけで済む</li>
+<li>Git を使うなら、 GitHub と Cloudflare の二つに依存することになる</li>
+<li>無料プランのビルドは、月 3,000 分、同時 1 件までである <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></li>
+<li><code>/foo.html</code> が既定で <code>/foo</code> へ転送されるなど、 GitHub Pages と挙動が違い、確認が要る <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></li>
+<li>プレビュー用などの URL も公開されるので、置くものに注意が要る <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup></li>
+<li>非公開のリポジトリを接続できるかが、読んだ資料からは分からない（要確認）</li>
+</ul></td></tr>
+</tbody>
+</table>
+<p>どちらを選ぶかは、次の条件で考えるとよい。</p>
+<table>
+<thead>
+<tr><th>こういう場合は</th><th>向いているのは</th></tr>
+</thead>
+<tbody>
+<tr><td>公開リポジトリのまま、静的な HTML を、いまの規模で公開し続ける</td><td>GitHub Pages のまま。乗り換える理由が弱い</td></tr>
+<tr><td>リポジトリを公開したくない、または GitHub を使わずに公開したい</td><td>Cloudflare Workers （非公開リポジトリの扱いは要確認）</td></tr>
+<tr><td>HTTP ヘッダーやリダイレクトを、自分で制御したい</td><td>Cloudflare Workers</td></tr>
+<tr><td>帯域やビルドの目安を、気にしたくない</td><td>Cloudflare Workers</td></tr>
+<tr><td>将来、プログラムによる処理を足したい、または独自ドメインを Cloudflare に集約したい</td><td>Cloudflare Workers</td></tr>
+<tr><td>取引や事業を主な目的とするサイトにする</td><td>GitHub Pages は用途として認められていないので、 Cloudflare Workers 。ただし Cloudflare 側の利用条件は、確認できていない</td></tr>
+<tr><td>どちらが合うか分からない</td><td>二重に公開して試す。 GitHub Pages を止めずに済むので、損失はない</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec1-3">1.3 ネームサーバーの切り替えが要らなくなる理由</h3>
+<p>前の版では、独自ドメインを使う前提で、ネームサーバーを Cloudflare に切り替える工程を中心に組んでいた。その根拠は、 Workers では「ネームサーバーが Cloudflare に管理されていないドメイン」が使えず、 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> カスタムドメインの追加にも有効な Cloudflare のゾーンが必要だ、という点にある。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 比較表の「真価を発揮するには、ネームサーバーを Cloudflare 自体に切り替える構成が推奨される」という一文も、あくまで<strong>自分で取得した独自ドメインを載せる場合</strong>の話である。</p>
+<p><code>workers.dev</code> のホスト名は、 Cloudflare 自身が用意したものである。自分で取得したドメインではないので、利用者が DNS を設定する場面がなく、ネームサーバーを動かす必要もない（筆者の理解。公式の文言としては未確認）。 GitHub Pages で <code>github.io</code> のアドレスを使っているのと、同じ事情である。</p>
+<p>なお、 Cloudflare 自身は新規プロジェクトに Workers を勧めている。 Pages の公式ドキュメントの冒頭には、 Workers は Pages のほとんどの用途に対応し、より広い機能を持つこと、新規プロジェクトは Workers で始めることが書かれている。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup></p>
+
+<h3 id="sec1-4">1.4 違いと注意点</h3>
+<ul>
+<li><strong>URL は Cloudflare 側で決まる形になる。</strong>独自ドメインと違い、将来ほかの置き場へ移ると、 URL が変わる。読者や他のページからのリンクを維持したいなら、その時点で独自ドメインを取る意味が出てくる</li>
+<li><strong>アカウントのサブドメインを変えると、すべての Worker の URL が変わる。</strong>公開後は、むやみに変えない</li>
+<li><strong>公開用の URL は一つとは限らない。</strong> <code>workers.dev</code> の経路を止めても、版ごとの URL 、プレビュー用の URL 、デプロイごとの URL は止まらない。 <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 公開したくないものは、そもそも公開ディレクトリに置かない</li>
+<li><strong>.html で終わるリンクの扱いが、 GitHub Pages と違う。</strong>既定の設定では、 <code>/foo.html</code> への要求は <code>/foo</code> へ 307 で転送される。 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> いまのサイトは、相対リンクで <code>.html</code> のページをつないでいるので、転送を経由して表示されるはずだが、工程 5 で全ページを確かめる。ファイル名どおりに返したい場合は、設定で HTML の扱いを <code>"none"</code> にする方法がある</li>
+</ul>
+
+<h2 id="sec2">2. 計画の前提と設計方針</h2>
+<h3 id="sec2-1">2.1 前提条件</h3>
+<table>
+<thead>
+<tr><th>項目</th><th>前提</th></tr>
+</thead>
+<tbody>
+<tr><td>サイトの種類</td><td>いまの GitHub Pages のサイトと同じ、静的な HTML のサイト。公開ページの記述によれば、 2026 年版の索引に 75 本の記事があり、相対リンクで <code>.html</code> のページをつないでいる</td></tr>
+<tr><td>ドメイン</td><td>取得しない</td></tr>
+<tr><td>ホスティング</td><td>Cloudflare Workers の静的アセット</td></tr>
+<tr><td>公開 URL</td><td><code>Worker名.アカウントのサブドメイン.workers.dev</code></td></tr>
+<tr><td>ネームサーバー</td><td>変更しない。 Cloudflare に DNS のゾーンも作らない</td></tr>
+<tr><td>ソース管理</td><td>GitHub のリポジトリ。いまの <code>library</code> を流用するか、新規に作るかは工程 0 で決める</td></tr>
+<tr><td>期限</td><td>締切は定めない。公開予定日を L 日と置き、逆算した相対日程で示す</td></tr>
+</tbody>
+</table>
+<p>既存のリポジトリを流用する場合は、 GitHub Pages の公開を止めずに、同じファイルを Cloudflare にも公開できる。まず二重に公開して試し、うまく動いたあとで、どちらかに一本化するかを決めればよい。</p>
+
+<h3 id="sec2-2">2.2 順序を入れ替えてはいけない箇所</h3>
+<table>
+<thead>
+<tr><th>この順序</th><th>なぜ入れ替えてはいけないか</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>公開してよいファイルを決める → デプロイする</td>
+<td>公開ディレクトリに入っているファイルは、配信の対象になる。設定ファイルや下書きを公開したくなければ、別の場所に置くか、 <code>.assetsignore</code> で除外する <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></td>
+</tr>
+<tr>
+<td>ローカルで確認する → <code>workers.dev</code> へデプロイして確認する</td>
+<td>不具合が、ファイルにあるのか、配信設定にあるのかを切り分けるため</td>
+</tr>
+<tr>
+<td>Worker を一度デプロイして作る → Git に接続する</td>
+<td>Workers Builds は、既存の Worker に接続する形で案内されている。また、ダッシュボード上の Worker 名と設定ファイルの <code>name</code> が一致しないと、ビルドは失敗する <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup></td>
+</tr>
+<tr>
+<td>Cloudflare 側の検証を終える → GitHub Pages 側を止めるかどうかを決める</td>
+<td>止めると旧 URL が使えなくなり、旧 URL を知っている読者やリンクが切れる。新しい側で全ページを確かめてから決める</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="sec3">3. 工程表</h2>
+<h3 id="sec3-1">3.1 工程の一覧</h3>
+<table>
+<thead>
+<tr><th>工程</th><th>内容</th><th>完了条件</th></tr>
+</thead>
+<tbody>
+<tr><td>工程 0</td><td>Worker 名、リポジトリ、公開ディレクトリの構成の決定</td><td>三つの決定が文書に記録されている</td></tr>
+<tr><td>工程 1</td><td>Cloudflare のアカウント準備と、二要素認証の設定</td><td>二要素認証が有効</td></tr>
+<tr><td>工程 2</td><td>設定ファイルの作成と、ローカルでの確認</td><td>手元で全ページが表示される</td></tr>
+<tr><td>工程 3</td><td>初回デプロイと、 <code>workers.dev</code> での確認</td><td>標準 URL でトップページが表示される</td></tr>
+<tr><td>工程 4</td><td>Git への接続 (Workers Builds)</td><td>push で自動デプロイされる</td></tr>
+<tr><td>工程 5</td><td>検証（リンク、 <code>.html</code> の扱い、 404 、スマホ）</td><td>検証リストの全項目に合格</td></tr>
+<tr><td>工程 6</td><td>公開と運用への移行（二重公開の整理を含む）</td><td>公開後 1 日・ 1 週間・ 1 か月の確認が終わる</td></tr>
+</tbody>
+</table>
+<p>前の版にあった、ドメインの取得、ゾーンの追加、ネームサーバーの切り替え、 DNSSEC の操作は、すべて不要になった。そのため、待ち時間の工程もない。</p>
+
+<h3 id="sec3-2">3.2 日程の目安</h3>
+<p>公開予定日を L 日とし、逆算した。待ち時間がないので、実際には一日で済ませることもできるが、検証の余裕をみて約 1 週間で組んだ。</p>
+<table>
+<thead>
+<tr><th>日程</th><th>工程</th><th>所要時間の目安</th><th>備考</th></tr>
+</thead>
+<tbody>
+<tr><td>L-5</td><td>工程 0 、工程 1</td><td>各 1 〜 2 時間</td><td>決定事項を文書にして残す</td></tr>
+<tr><td>L-4</td><td>工程 2</td><td>1 〜 2 時間</td><td>公開するファイルの範囲もここで確定する</td></tr>
+<tr><td>L-3</td><td>工程 3</td><td>30 分</td><td>この日から <code>workers.dev</code> の URL で見られる</td></tr>
+<tr><td>L-3 〜 L-2</td><td>工程 4</td><td>30 分</td><td>空の変更を push して、自動デプロイを試す</td></tr>
+<tr><td>L-2 〜 L-1</td><td>工程 5</td><td>1 〜 2 時間</td><td>全ページのリンク確認を含む</td></tr>
+<tr><td>L</td><td>工程 6 （公開）</td><td>―</td><td>告知は検証が済んでから行う</td></tr>
+<tr><td>L+1 、 L+7 、 L+30</td><td>工程 6 （確認）</td><td>各 15 分</td><td>リンク切れと自動デプロイの状態を確認する</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec4">4. 各工程の作業内容</h2>
+<h3>工程 0 〜 1 : 決定とアカウント</h3>
+<p>工程 0 では、まず、そもそも乗り換えるかどうかを、 1.2 の表で判断する。乗り換える場合は、次の三つを決めて文書に残す。一つ目は Worker 名である。これが URL の先頭になるので、あとから変えると URL が変わる。二つ目はリポジトリで、いまの <code>library</code> を流用するか、新規に作るかを決める。三つ目は公開ディレクトリの構成で、リポジトリの直下をそのまま公開するか、公開用のフォルダを分けるか、 URL に <code>/library/</code> に相当するパスを付けるかを決める。</p>
+<p>工程 1 の Cloudflare のアカウント作成と認証情報の入力は、必ずご自身で行う。 Claude Code が代行できない作業である。二要素認証も有効にする。 GitHub のアカウントは、すでにお持ちのものを使う。</p>
+
+<h3>工程 2 : 設定ファイルの作成とローカル確認</h3>
+<p>スクリプトを持たない静的サイトの、最小の設定は次のとおりである（公式の例による）。 <code>name</code> は Worker の名前、 <code>compatibility_date</code> には実作業の日付を入れ、 <code>directory</code> に公開するファイルを置く場所を指定する。 <code>not_found_handling</code> を <code>"404-page"</code> にすると、一致するファイルがない要求に、最も近い <code>404.html</code> が 404 の状態で返る。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></p>
+<pre><code>{
+  "name": "library",
+  "compatibility_date": "2026-10-07",
+  "assets": {
+    "directory": "./public/",
+    "not_found_handling": "404-page"
+  }
+}
+</code></pre>
+<p>既存のリポジトリに、この設定ファイルを足す形が自然である。新規に雛形から作る場合は、公式の手順として、次のコマンドが案内されている。 Node.js が入っていることが前提になる。 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup></p>
+<pre><code>npm create cloudflare@latest -- my-static-site
+# 対話で Template に「Static site」を選び、「Deploy now」は「No」にする
+cd my-static-site
+npx wrangler dev        # ローカルで確認する
+</code></pre>
+<p>公開ディレクトリの中に、公開したくないファイルがある場合は、そのディレクトリの直下に <code>.assetsignore</code> を置く。書式は <code>.gitignore</code> と同じで、一致するファイルは、アップロードされない。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> リダイレクトとヘッダーは、同じディレクトリに <code>_redirects</code> と <code>_headers</code> を置いて指定できる。 <code>_redirects</code> の上限は、静的 2,000 件と動的 100 件の計 2,100 件である。 <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 規模の上限は、 1 回の版あたり 20,000 ファイル（無料プラン）、 1 ファイル 25 MiB である。 <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 75 本の記事なら、十分に収まる。</p>
+
+<h3>工程 3 : 初回デプロイと workers.dev での確認</h3>
+<p>初回の公開は、手元から次のコマンドを実行する。成功すると、 <code>workers.dev</code> の標準 URL でサイトが見られる。 Cloudflare アカウントへのログイン操作は、ご自身で行う。 <sup id="fnref-10-4"><a href="#ref-10">[10]</a></sup></p>
+<pre><code>npx wrangler deploy
+</code></pre>
+<p>アカウントのサブドメインをまだ決めていない場合は、初回のデプロイ中に設定を促される、と検索で確認した（公式の逐語での確認はしていない）。ここで決めた名前が、以後のすべての Worker の URL に入る。公開後に変えると URL が変わるので、落ち着いて決める。</p>
+
+<h3>工程 4 : Git への接続</h3>
+<p>ダッシュボードの Workers &amp; Pages で該当の Worker を開き、 Settings &gt; Builds &gt; Connect から GitHub のリポジトリを選ぶ。デプロイのコマンドの既定は <code>npx wrangler deploy</code> 、監視するブランチの既定は <code>main</code> 、ビルドのコマンドは任意である。ビルド工程のない静的サイトなら、ビルドのコマンドは空でよい。 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup><sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup></p>
+<p>接続後は、 push するたびに自動でデプロイされ、本番以外のブランチには、プレビュー用の URL が作られる。 GitHub のアプリは、ビルドしたいリポジトリだけに権限を絞るよう、公式が勧めている。 <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 無料プランのビルドは、月 3,000 分、同時 1 件、 1 回 20 分までである。 <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup> 非公開のリポジトリを接続できるかは、読んだ資料からは読み取れなかったので、必要なら公式で確認する（要確認）。</p>
+
+<h3>工程 5 : 検証</h3>
+<ul>
+<li>☐ トップページが表示され、文字化けがない</li>
+<li>☐ 索引から、全 75 本の記事へ移動でき、リンク切れがない</li>
+<li>☐ <code>.html</code> で終わるリンクが、転送を経由しても正しいページに着く</li>
+<li>☐ 存在しないパスで、用意した 404 ページが 404 の状態で返る</li>
+<li>☐ スマートフォンからのアクセスで、表示が崩れない</li>
+<li>☐ push すると自動でデプロイされ、変更が反映される</li>
+</ul>
+<p>リンクの確認は、手作業だと漏れやすいので、状態コードを一括で調べるとよい。次は、記事の一覧を <code>urls.txt</code> に一行ずつ書いて確認する例である。</p>
+<pre><code># Mac (zsh) / Linux
+while read u; do curl -s -o /dev/null -L -w "%{http_code} $u\n" "$u"; done &lt; urls.txt
+
+# Windows PowerShell 7
+Get-Content urls.txt | ForEach-Object { try { $r = Invoke-WebRequest $_ -MaximumRedirection 5; $r.StatusCode } catch { $_.Exception.Response.StatusCode.value__ }; $_ }
+</code></pre>
+<p>転送を経由する挙動が気になる場合や、 GitHub Pages とまったく同じ振る舞いにしたい場合は、設定の <code>assets</code> に <code>"html_handling": "none"</code> を足して試す。 <code>"none"</code> は、ファイルの完全一致だけを返す設定である。 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> ただし、このとき <code>/</code> へのアクセスで <code>index.html</code> が返るかは確認できていないので、必ず手元で試す（要確認）。</p>
+
+<h3>工程 6 : 公開と運用への移行</h3>
+<p>公開日の前日に、検証リストを再実施する。告知は、検証が済んでからにする。 GitHub Pages と二重に公開している場合は、どちらを正とするかを決める。 GitHub Pages を止めると、旧 URL が使えなくなる。旧 URL を知っている読者やリンクが残るなら、しばらく併存させるのが安全である。</p>
+<p>なお、 <code>workers.dev</code> の経路そのものを止める場合は、ダッシュボードの Settings &gt; Domains &amp; Routes で無効にするか、設定ファイルに <code>"workers_dev": false</code> を書く。ダッシュボードだけで止めて設定ファイルに書かないと、次回のデプロイで再び有効になる。 <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> ただし、独自ドメインを持たない今回の方式では、これを止めると、サイトにアクセスする手段がなくなる。止めてはならない。</p>
+
+<h2 id="sec5">5. 公開後の運用と、後から独自ドメインを足すとき</h2>
+<p>公開後の運用は、いまの GitHub Pages とほとんど変わらない。 HTML を更新して push すれば、公開される。次の点を、公開前に決めておくとよい。</p>
+<ul>
+<li>アカウントの保護 : 二要素認証を有効にし、回復手段を安全な場所に保管する</li>
+<li>サブドメインの扱い : アカウントのサブドメインを変えると、すべての Worker の URL が変わる。変えない前提で運用する</li>
+<li>更新手順 : 更新したら push する、という運用を文書にして残す</li>
+<li>撤退の経路 : 静的なファイルだけなので、 GitHub Pages に戻すのは容易である。リポジトリはそのまま残る</li>
+</ul>
+<div class="box"><strong>独自ドメインを後から足すとき</strong><br>将来、独自ドメインを取りたくなったら、次の作業が増える。 Cloudflare にゾーンを追加し、レジストラでネームサーバーを Cloudflare のものに切り替え、 DNSSEC を設定している既存のドメインなら先に無効にし、有効化を確認してから、 Worker のカスタムドメインに追加する。 <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup><sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup><sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup> Workers は、ネームサーバーが Cloudflare に管理されていないドメインをサポートしないので、 DNS を別の事業者に残す構成は選べない。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></div>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> Cloudflare. <em>workers.dev</em>. URL の形式、アカウントのサブドメインの変更、 Worker 名の制約、 <code>workers.dev</code> の経路を無効にする方法と、設定ファイルへの記載が必要なこと。 <a href="https://developers.cloudflare.com/workers/configuration/routing/workers-dev/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> Cloudflare. <em>Static Assets: Billing and limitations</em>. 静的ファイルへの要求は無料で上限がないこと。 <a href="https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <sup><a href="#fnref-3-5">e</a></sup> Cloudflare. <em>Workers Builds</em>. GitHub リポジトリの接続手順、 Worker 名と設定ファイルの <code>name</code> の一致、本番とプレビューのビルド。 <a href="https://developers.cloudflare.com/workers/ci-cd/builds/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> Cloudflare. <em>Migrate from Pages to Workers</em>. Workers はネームサーバーが Cloudflare に管理されていないドメインをサポートしないこと。 <a href="https://developers.cloudflare.com/workers/static-assets/migrate-from-pages/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-5">^ <sup><a href="#fnref-5-1">a</a></sup> <sup><a href="#fnref-5-2">b</a></sup> Cloudflare. <em>Workers: Custom Domains</em>. 有効なゾーンが前提であること、追加の手順、 DNS レコードと証明書の自動作成。 <a href="https://developers.cloudflare.com/workers/configuration/routing/custom-domains/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> Cloudflare. <em>Cloudflare Pages</em> のドキュメント冒頭 . 新規プロジェクトは Workers で始めるよう案内する記述。 WebFetch の要約で確認したもので、原文の逐語は未照合。 <a href="https://developers.cloudflare.com/pages/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> <sup><a href="#fnref-7-3">c</a></sup> Cloudflare. 静的アセットのルーティングの <em>HTML handling</em>. 既定で <code>/foo.html</code> が 307 で転送されること、 <code>html_handling</code> の四つの値。 <a href="https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> Cloudflare. <em>Static Assets: Binding</em>. <code>.assetsignore</code> の書式と、一致するファイルがアップロードされないこと。 <a href="https://developers.cloudflare.com/workers/static-assets/binding/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> Cloudflare. <em>Static Site Generation with Workers</em>. スクリプトを持たない静的サイトの最小設定、 <code>not_found_handling</code> 。 <a href="https://developers.cloudflare.com/workers/static-assets/routing/static-site-generation/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> <sup><a href="#fnref-10-3">c</a></sup> <sup><a href="#fnref-10-4">d</a></sup> Cloudflare. <em>Static Assets: Get started</em>. 雛形の作成、ローカル確認、 <code>wrangler deploy</code> 、 <code>workers.dev</code> での公開。 <a href="https://developers.cloudflare.com/workers/static-assets/get-started/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-11">^ <sup><a href="#fnref-11-1">a</a></sup> <sup><a href="#fnref-11-2">b</a></sup> Cloudflare. 静的アセットの <em>Redirects</em>. <code>_redirects</code> ファイルの書式と上限、 <code>_headers</code> ファイルへの言及。 <a href="https://developers.cloudflare.com/workers/static-assets/redirects/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-12"><a href="#fnref-12-1">^</a> Cloudflare. <em>Workers Builds: Configuration</em>. ビルド・デプロイのコマンドと監視ブランチの既定値。 <a href="https://developers.cloudflare.com/workers/ci-cd/builds/configuration/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-13">^ <sup><a href="#fnref-13-1">a</a></sup> <sup><a href="#fnref-13-2">b</a></sup> Cloudflare. <em>Workers Builds: Limits and pricing</em>. 無料プランのビルド時間、同時ビルド数、タイムアウト。 <a href="https://developers.cloudflare.com/workers/ci-cd/builds/limits-and-pricing/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-14"><a href="#fnref-14-1">^</a> Cloudflare. <em>Workers Builds: GitHub integration</em>. GitHub アプリの権限範囲の推奨、ビルドの契機。 <a href="https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/github-integration/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-15"><a href="#fnref-15-1">^</a> Cloudflare. <em>Workers Platform Limits</em>. 静的アセットの上限である、 1 版あたりのファイル数と 1 ファイルの大きさ。 <a href="https://developers.cloudflare.com/workers/platform/limits/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-16"><a href="#fnref-16-1">^</a> Cloudflare. <em>Set up a primary zone (full setup)</em>. ゾーンの追加とネームサーバーの切り替えの手順、有効化まで最大 24 時間。 <a href="https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-17"><a href="#fnref-17-1">^</a> Cloudflare. <em>DNSSEC</em>. 既存ドメインの導入前に DNSSEC を無効にする必要があること（検索結果の要約で確認。ページ本体は未精読）。 <a href="https://developers.cloudflare.com/dns/dnssec/">Cloudflare 公式ドキュメント</a></li>
+<li id="ref-18">^ <sup><a href="#fnref-18-1">a</a></sup> <sup><a href="#fnref-18-2">b</a></sup> GitHub. <em>GitHub Pages limits</em>. 公開サイトの大きさ、帯域、ビルド回数、デプロイの時間切れ、用途の制限。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits">GitHub 公式ドキュメント</a></li>
+<li id="ref-19"><a href="#fnref-19-1">^</a> GitHub. <em>What is GitHub Pages?</em> リポジトリのファイルをそのまま公開する静的サイトのホスティングであること。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages">GitHub 公式ドキュメント</a></li>
+<li id="ref-20"><a href="#fnref-20-1">^</a> GitHub. <em>Creating a GitHub Pages site</em> ほか。プラン別の利用条件（無料は公開リポジトリのみ）。検索結果の要約で確認したもので、ページ本体は未精読。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site">GitHub 公式ドキュメント</a></li>
+<li id="ref-21"><a href="#fnref-21-1">^</a> GitHub. <em>Configuring a publishing source for your GitHub Pages site</em>. 公開元のブランチとフォルダ、 GitHub Actions の利用。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">GitHub 公式ドキュメント</a></li>
+<li id="ref-22"><a href="#fnref-22-1">^</a> GitHub. <em>Creating a custom 404 page for your GitHub Pages site</em>. <code>404.html</code> を公開元に置くこと。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site">GitHub 公式ドキュメント</a></li>
+<li id="ref-23"><a href="#fnref-23-1">^</a> Opensource.com. <em>Redirect a GitHub Pages site with this HTTP hack</em>. GitHub Pages でサーバー側のリダイレクトやヘッダー指定ができない旨の第三者の解説（検索結果の要約で確認。公式での確認はしていない）。 <a href="https://opensource.com/article/19/7/permanently-redirect-github-pages">Opensource.com の記事</a></li>
+</ol>
+<p class="note">本稿は 2026 年 10 月 7 日時点の公式ドキュメントの確認に基づく計画書であり、実際の作業結果ではない。「要確認」と記した事項、および出典に「未精読」と付した事項は、実作業の前に原典で確かめること。料金プラン、画面の文言、各社の仕様は変更されうる。</p>
+</div>
+</div>
+</body>
+</html>
