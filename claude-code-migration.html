@@ -301,7 +301,7 @@ td.path{color:var(--accent);word-break:break-all}
 <h2 id="sec6">6. 前提環境（ Claude Code 本体のインストール）</h2>
 <ul>
 <li><strong>ネイティブインストーラーが推奨</strong>である。 Windows (PowerShell) は <code>irm https://claude.ai/install.ps1 | iex</code> 、 macOS ・ Linux ・ WSL は <code>curl -fsSL https://claude.ai/install.sh | bash</code> を実行する。 Node.js は不要で、バックグラウンドで自動更新される</li>
-<li>パッケージマネージャ経由も選べる： Mac は <code>brew install --cask claude-code</code>（約 1 週間遅れの stable 版。最新版を追うなら <code>claude-code@latest</code> ）、 Windows は <code>winget install Anthropic.ClaudeCode</code> 。ただしこれらは自動更新されないため、 <code>brew upgrade claude-code</code> や <code>winget upgrade Anthropic.ClaudeCode</code> で定期的に更新する</li>
+<li>パッケージマネージャ経由も選べる： Mac は <code>brew install --cask claude-code</code> （約 1 週間遅れの stable 版。最新版を追うなら <code>claude-code@latest</code> ）、 Windows は <code>winget install Anthropic.ClaudeCode</code> 。ただしこれらは自動更新されないため、 <code>brew upgrade claude-code</code> や <code>winget upgrade Anthropic.ClaudeCode</code> で定期的に更新する</li>
 <li>npm 版(<code>npm install -g @anthropic-ai/claude-code</code>)も引き続き使える。 Node.js 22 以降が前提だが、実体はネイティブバイナリで、実行時に Node.js は使わない</li>
 <li>Windows では Git for Windows は必須ではない。入れると Bash ツールが使え、入れない場合は PowerShell ツールで代替される</li>
 <li>インストール確認は <code>claude --version</code> 、診断は <code>claude doctor</code> 、手動更新は <code>claude update</code> である</li>
