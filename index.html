@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Quietly Moving Page</title>
+<style>
+  /* All motion is built from transform and opacity only.
+     Neither triggers layout or repaint; they need only GPU compositing.
+     No JavaScript is used, so no script runs on each animation frame. */
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    background: radial-gradient(ellipse at 50% 40%, #16224a 0%, #0a0f26 55%, #05070f 100%);
+    color: #e8ecff;
+    font-family: system-ui, "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+  }
+
+  /* Drifting glow orbs: just moving radial gradients (no blur filter) */
+  .glow {
+    position: fixed;
+    width: 60vmax; height: 60vmax;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform;
+  }
+  .glow.a {
+    left: -20vmax; top: -20vmax;
+    background: radial-gradient(circle, rgba(90,120,255,.35), transparent 65%);
+    animation: drift-a 40s ease-in-out infinite alternate;
+  }
+  .glow.b {
+    right: -25vmax; bottom: -25vmax;
+    background: radial-gradient(circle, rgba(255,110,190,.28), transparent 65%);
+    animation: drift-b 52s ease-in-out infinite alternate;
+  }
+  @keyframes drift-a { to { transform: translate3d(30vmax, 20vmax, 0) scale(1.15); } }
+  @keyframes drift-b { to { transform: translate3d(-30vmax, -15vmax, 0) scale(1.2); } }
+
+  /* Twinkling stars: only 24 elements, animating opacity alone */
+  .stars { position: fixed; inset: 0; pointer-events: none; }
+  .stars i {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: .15;
+    animation: twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle { 50% { opacity: .9; } }
+
+  /* Orbits: rotate the parent; the child planet is carried along with it */
+  .system {
+    position: relative;
+    width: min(80vmin, 640px);
+    aspect-ratio: 1;
+  }
+  .orbit {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(160,180,255,.18);
+    animation: spin linear infinite;
+    will-change: transform;
+  }
+  .orbit .planet {
+    position: absolute;
+    top: 0; left: 50%;
+    width: var(--s); height: var(--s);
+    margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff, var(--c) 55%, #000 140%);
+    box-shadow: 0 0 18px var(--c);
+  }
+  .o1 { inset: 30%; animation-duration: 14s; --s: 14px; --c: #7fd4ff; }
+  .o2 { inset: 15%; animation-duration: 28s; animation-direction: reverse; --s: 22px; --c: #ff9ad5; }
+  .o3 { inset: 0;   animation-duration: 56s; --s: 30px; --c: #ffd37a; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Center: scales up and down slowly, as if breathing */
+  .core {
+    position: absolute;
+    inset: 42%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #fff, #8aa4ff 45%, #3a4cc0 100%);
+    box-shadow: 0 0 60px 10px rgba(110,140,255,.5);
+    animation: breathe 6s ease-in-out infinite;
+    will-change: transform;
+  }
+  @keyframes breathe { 50% { transform: scale(1.18); } }
+
+  /* In hidden tabs, the browser automatically pauses CSS animation rendering */
+  /* For users who prefer reduced motion, stop the animations */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; }
+    .stars i { opacity: .5; }
+  }
+</style>
+</head>
+<body>
+  <div class="glow a"></div>
+  <div class="glow b"></div>
+
+  <div class="stars" aria-hidden="true">
+    <i style="left:6%;top:12%;animation-delay:-.4s"></i>
+    <i style="left:14%;top:68%;animation-delay:-2.1s"></i>
+    <i style="left:22%;top:30%;animation-delay:-3.3s"></i>
+    <i style="left:31%;top:84%;animation-delay:-1.2s"></i>
+    <i style="left:38%;top:9%;animation-delay:-2.8s"></i>
+    <i style="left:45%;top:52%;animation-delay:-.9s"></i>
+    <i style="left:52%;top:90%;animation-delay:-3.7s"></i>
+    <i style="left:58%;top:18%;animation-delay:-1.7s"></i>
+    <i style="left:64%;top:62%;animation-delay:-2.5s"></i>
+    <i style="left:71%;top:8%;animation-delay:-.2s"></i>
+    <i style="left:77%;top:41%;animation-delay:-3.1s"></i>
+    <i style="left:83%;top:76%;animation-delay:-1.5s"></i>
+    <i style="left:90%;top:24%;animation-delay:-2.3s"></i>
+    <i style="left:95%;top:58%;animation-delay:-.7s"></i>
+    <i style="left:3%;top:46%;animation-delay:-3.5s"></i>
+    <i style="left:11%;top:92%;animation-delay:-1.9s"></i>
+    <i style="left:27%;top:56%;animation-delay:-.1s"></i>
+    <i style="left:41%;top:34%;animation-delay:-2.9s"></i>
+    <i style="left:49%;top:6%;animation-delay:-1.1s"></i>
+    <i style="left:67%;top:88%;animation-delay:-3.9s"></i>
+    <i style="left:74%;top:70%;animation-delay:-2.2s"></i>
+    <i style="left:86%;top:4%;animation-delay:-.6s"></i>
+    <i style="left:92%;top:86%;animation-delay:-3.4s"></i>
+    <i style="left:19%;top:6%;animation-delay:-1.4s"></i>
+  </div>
+
+  <div class="system" aria-hidden="true">
+    <div class="orbit o3"><span class="planet"></span></div>
+    <div class="orbit o2"><span class="planet"></span></div>
+    <div class="orbit o1"><span class="planet"></span></div>
+    <div class="core"></div>
+  </div>
+</body>
+</html>
