@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>国内の主な経済圏の構成</title>
+<style>
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { max-width: 64rem; margin: 0 auto; padding: 0 1rem 2rem; line-height: 1.8; overflow-wrap: anywhere; }
+.title { border-bottom: solid #2A4D69 2.25pt; }
+h1 { font-size: 1.6rem; line-height: 1.4; }
+h2 { font-size: 1.3rem; line-height: 1.4; }
+h3 { font-size: 1.1rem; line-height: 1.4; }
+ul { padding-left: 1.4em; }
+li { margin-bottom: .4em; }
+.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1em 0; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: solid #BBBBBB 1pt; vertical-align: top; text-align: left; padding: .4em .6em; }
+thead th, tbody th { background: #E6EDF3; }
+.wide { min-width: 36rem; }
+
+@media (max-width: 640px) {
+ body { padding: 0 .75rem 1.5rem; line-height: 1.75; }
+ h1 { font-size: 1.35rem; }
+ h2 { font-size: 1.2rem; }
+ h3 { font-size: 1.05rem; }
+ th, td { padding: .35em .5em; }
+ .wide { min-width: 30rem; }
+
+ /* 経済圏の表: 行ごとのカード表示に切り替える */
+ .matrix.wide { min-width: 0; }
+ .matrix, .matrix tbody, .matrix tr, .matrix th, .matrix td { display: block; width: auto; }
+ .matrix thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+ .matrix tr { margin-bottom: 1rem; border: solid #BBBBBB 1pt; border-top: solid #2A4D69 3pt; }
+ .matrix th, .matrix td { border: none; }
+ .matrix tbody th { font-size: 1.05rem; padding: .5em .6em; }
+ .matrix td { position: relative; padding-left: 7.2em; border-top: solid #DDDDDD 1pt; min-height: 1.8em; }
+ .matrix td::before { content: attr(data-label); position: absolute; left: .6em; width: 6em; font-weight: bold; color: #2A4D69; font-size: .85em; line-height: 2.1; }
+}
+</style>
+</head>
+<body>
+<div class="title">
+<h1>国内の主な経済圏の構成（ 2026 年 10 月時点）</h1>
+</div>
+<p>基準日 : 2026 年 10 月 14 日（調査を行った日）／ 対象 : 日本国内で個人が利用できるサービス</p>
+<h2>この表の読み方</h2>
+<p>本表での「経済圏」は、一つの企業グループが、共通のポイントまたは共通の ID を軸にして、通信・決済・ポイント・銀行・証券のうち複数の種類のサービスを提供しているまとまりを指す。ここでの「決済」には、コード決済（スマートフォンに表示した QR コードやバーコードで支払う方式）とクレジットカードの両方を含め、表では二つの列に分けた。</p>
+<h3>行に立てた基準</h3>
+<p>次の三つを、すべての候補に同じに当てはめた。</p>
+<ul>
+ <li>通信・決済・ポイント・銀行・証券のうち、三種別以上を、自社グループまたは公式に明示された提携で提供している。</li>
+ <li>ポイントまたは共通の ID が、複数の種別にまたがって使えることを、公式の情報で確認できる。</li>
+ <li>上の二つを、公式の一次情報（企業の公式サイトや公式資料）で確認できる。</li>
+</ul>
+<p>行は五十音順に並べた。列は、「銀行」と「ネット銀行」、「証券会社」と「ネット証券会社」をそれぞれ一つにまとめ、「クレジットカード」を足した。五つの行すべてに、クレジットカードに当たるサービスがあるためである。ネット専業かどうかの区別は、欄の表記に含めていない。通信の列は、公式サイトに通信ブランドとして掲げられているものを載せた。</p>
+<h3>凡例</h3>
+<div class="table-wrap"><table>
+ <thead>
+  <tr><th scope="col">表示</th><th scope="col">意味</th></tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>サービスの公式表記</td>
+   <td>出典で、そのグループのサービスと確認できたもの。記号の付かないものは、そのグループの会社または自社ブランドである。</td>
+  </tr>
+  <tr>
+   <td>〔共同〕</td>
+   <td>そのグループの子会社（議決権の過半を持つ会社）だが、他社も出資している会社。出資比率は表の下の注に書く。</td>
+  </tr>
+  <tr>
+   <td>〔出資〕</td>
+   <td>そのグループが出資しているが、過半には届かない会社。出資比率は注に書く。</td>
+  </tr>
+  <tr>
+   <td>〔資本関係未確認〕</td>
+   <td>そのグループのサービスとして公式に掲載されているが、グループとの資本関係を確認できていないもの。</td>
+  </tr>
+  <tr>
+   <td>〔提携〕</td>
+   <td>業務提携や連携の関係にある他社のサービス。そのグループの会社ではない。資本関係を確認できたものは、注に書く。</td>
+  </tr>
+  <tr>
+   <td>〔完了未確認〕</td>
+   <td>再編の効力発生の予定日が基準日より前にあるが、完了したことを確認できていないもの。</td>
+  </tr>
+  <tr>
+   <td><code>―</code></td>
+   <td>そのグループに該当するサービスが無いことを、出典で確認できたもの。本表では該当する欄は無い。</td>
+  </tr>
+  <tr>
+   <td>未確認</td>
+   <td>確認できなかったもの。「無い」という意味ではない。</td>
+  </tr>
+ </tbody>
+</table></div>
+<p>欄の数は、サービスの使いやすさや還元率を示さない。また、同じ行にあるサービスのあいだで、ポイントの付与や特典の条件が共通とは限らない。表が示すのは、サービスがその関係で存在するかどうかだけである。</p>
+<h2>表</h2>
+<div class="table-wrap"><table class="matrix wide">
+ <thead>
+  <tr>
+   <th scope="col">グループ</th><th scope="col">通信</th><th scope="col">コード決済</th><th scope="col">クレジットカード</th><th scope="col">ポイント</th><th scope="col">銀行</th><th scope="col">証券</th>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <th scope="row">au （注 1 ）</th>
+   <td data-label="通信">au<br>UQ mobile<br>povo</td>
+   <td data-label="コード決済">au PAY</td>
+   <td data-label="クレジットカード">au PAY カード</td>
+   <td data-label="ポイント">Ponta ポイント〔提携〕</td>
+   <td data-label="銀行">au じぶん銀行〔共同〕〔完了未確認〕</td>
+   <td data-label="証券">三菱 UFJ e スマート証券〔提携〕</td>
+  </tr>
+  <tr>
+   <th scope="row">ソフトバンク／ PayPay （注 2 ）</th>
+   <td data-label="通信">ソフトバンク<br>Y!mobile （ワイモバイル）</td>
+   <td data-label="コード決済">PayPay 〔資本関係未確認〕</td>
+   <td data-label="クレジットカード">PayPay カード〔資本関係未確認〕</td>
+   <td data-label="ポイント">PayPay ポイント〔資本関係未確認〕</td>
+   <td data-label="銀行">PayPay 銀行〔資本関係未確認〕</td>
+   <td data-label="証券">PayPay 証券〔資本関係未確認〕</td>
+  </tr>
+  <tr>
+   <th scope="row">ドコモ（注 3 ）</th>
+   <td data-label="通信">ドコモ<br>ahamo</td>
+   <td data-label="コード決済">d 払い</td>
+   <td data-label="クレジットカード">d カード</td>
+   <td data-label="ポイント">d ポイント</td>
+   <td data-label="銀行">ドコモ SMTB ネット銀行〔共同〕</td>
+   <td data-label="証券">マネックス証券〔共同〕</td>
+  </tr>
+  <tr>
+   <th scope="row">三井住友（注 4 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">三井住友カード〔資本関係未確認〕</td>
+   <td data-label="ポイント">V ポイント</td>
+   <td data-label="銀行">三井住友銀行〔資本関係未確認〕</td>
+   <td data-label="証券">SBI 証券〔提携〕</td>
+  </tr>
+  <tr>
+   <th scope="row">楽天（注 5 ）</th>
+   <td data-label="通信">楽天モバイル</td>
+   <td data-label="コード決済">楽天ペイ</td>
+   <td data-label="クレジットカード">楽天カード〔共同〕〔完了未確認〕</td>
+   <td data-label="ポイント">楽天ポイント</td>
+   <td data-label="銀行">楽天銀行〔出資〕〔完了未確認〕</td>
+   <td data-label="証券">楽天証券〔共同〕〔完了未確認〕</td>
+  </tr>
+ </tbody>
+</table></div>
+<h3>欄の注</h3>
+<ul>
+ <li><strong>注 1 (au)</strong> : 三菱 UFJ e スマート証券は旧・ au カブコム証券で、 2025 年 2 月 1 日に商号を変更する予定と公式に発表された（ 2024 年 12 月）。商号とは、会社の名称のことである。同社は三菱 UFJ 銀行の 100% 子会社となる予定とされ、 au とは業務提携を続けると報じられた。 au じぶん銀行は、 KDDI 等が三菱 UFJ 銀行の持分 22% を取得して KDDI の 100% 子会社にする予定と、 2024 年 11 月に報じられた（完了予定は 2025 年 1 月末）。完了したことを示す資料は確認できていないため、〔共同〕〔完了未確認〕を付けた。 Ponta ポイントの運営会社はロイヤリティ マーケティングで、 KDDI との資本業務提携（ 2020 年）が報じられている。 2026 年時点の資本関係は確認できていない。</li>
+ <li><strong>注 2 （ソフトバンク／ PayPay ）</strong> : PayPay は、ソフトバンクとヤフー（現 LINE ヤフー）の合弁として、 2018 年 6 月に設立された会社とされる。 PayPay カードは 2022 年 10 月に、 PayPay 証券は 2025 年 4 月に、 PayPay 銀行は 2025 年 4 月に、 PayPay の連結子会社になったと二次情報にある。三井住友との提携は注 4 に書いた。 PayPay の公式サイトは、 PayPay カード・ PayPay 銀行・ PayPay 証券を PayPay のグループ企業として掲載している。 PayPay とソフトバンクの現在の議決権の関係は確認できていないため、行の名称を二つ並べ、 PayPay の各サービスには〔資本関係未確認〕を付けた。議決権とは、株主が会社の経営に関する決定に投じられる票のことで、合弁とは、複数の会社が共同で出資して設立した会社のことである。</li>
+ <li><strong>注 3 （ドコモ）</strong> : ドコモ SMTB ネット銀行（旧・住信 SBI ネット銀行。「 SMTB 」は正式な商号の一部）は、 2025 年 10 月 1 日にドコモの連結子会社（会計上、親会社の決算にまとめて含める会社）となり、 2026 年 8 月 3 日に商号を変更した。持株比率はドコモ 55.37% 、三井住友信託銀行 44.63% で、議決権は 50:50 とされる。マネックス証券は、ドコモマネックスホールディングス（中間持株会社。複数の事業会社の株式を持つ会社）の傘下にあり、ドコモが同社の株式の 51% 、マネックスグループが 49% を持つと報じられた（ 2024 年 1 月に手続き完了）。この比率は、公式の一次情報では確認できていない。</li>
+ <li><strong>注 4 （三井住友）</strong> : 三井住友カードは金融商品仲介業者（証券会社に代わって口座開設の取次ぎなどを行う業者）であり、 SBI 証券の口座の管理は SBI 証券が行う。行の名称は、三井住友カードと三井住友銀行を含む範囲を指す。三井住友のグループの範囲と、この 2 社の相互の資本関係は、確認できていないため、両方に〔資本関係未確認〕を付けた。ソフトバンクとは 2025 年 5 月に包括的な業務提携を発表しており、 PayPay ポイントと V ポイントの相互交換が 2026 年 3 月に始まったと報じられている。提携は確認できたが、通信サービスの提供とは読めないため、通信の欄は「未確認」とした。コード決済の欄も確認できなかった。 SMBC 日興証券の位置づけは確認できなかったため、証券の欄には入れていない。</li>
+ <li><strong>注 5 （楽天）</strong> : 2026 年 5 月 20 日に、楽天銀行が株式交付（自社の株式を対価として他社の株式を取得する方法）で楽天カードと楽天証券ホールディングスを子会社にする再編が発表され、効力発生日は 2026 年 10 月 1 日と予定された。楽天カードは、楽天グループ 85.01% 、みずほ銀行 14.99% の出資である。楽天証券は、楽天証券ホールディングスが 51% 、みずほ証券が 49% を出資している。株式交付の効力発生後（転換後）の楽天グループの持分は、楽天銀行の普通株の 49.94% で、みずほ銀行は 10.52% とされる。楽天銀行には〔出資〕を付けた。楽天ペイと楽天ポイントカードを運営する楽天ペイメントは、楽天グループが 95.28% 、楽天銀行が 4.72% を持つとされる。基準日の時点で、効力発生の完了を示す資料は確認できていない。</li>
+</ul>
+<h2>表からわかること・わからないこと</h2>
+<h3>表の事実</h3>
+<ul>
+ <li>五つの行のうち、三井住友を除く四つの行は、全列がサービス名で埋まった。三井住友の行は、通信とコード決済が「未確認」である。</li>
+ <li>銀行・証券の欄には、他社との共同出資または提携の関係にあるものが含まれる（ au の証券、ドコモの銀行と証券、三井住友の証券、楽天の証券）。</li>
+ <li>PayPay の各サービスは、 PayPay のグループ企業として掲載されているが、ソフトバンクとの現在の資本関係は確認できていない。</li>
+</ul>
+<h3>解釈</h3>
+<ul>
+ <li>付けた記号の種類が行ごとに異なるため、グループの結び付きの強さは行ごとに違う可能性があると読める（筆者の解釈）。</li>
+</ul>
+<h3>わからないこと</h3>
+<ul>
+ <li>三井住友の通信とコード決済について、「無い」のか、確認できなかっただけなのか。</li>
+ <li>欄の数や関係の種類が、使いやすさや還元率に与える影響。この表は扱っていない。</li>
+</ul>
+<h2>出典</h2>
+<p>種別の「一次」は企業の公式サイトや公式資料、「二次」は報道や解説を指す。</p>
+<div class="table-wrap"><table class="wide">
+ <thead>
+  <tr><th scope="col">対象</th><th scope="col">出典</th><th scope="col">種別</th><th scope="col">取得日</th></tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>楽天モバイル</td>
+   <td>楽天モバイル (https://network.mobile.rakuten.co.jp/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>楽天ペイ</td>
+   <td>楽天ペイ (https://pay.rakuten.co.jp/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>楽天カード、楽天ポイント、楽天ペイメント</td>
+   <td>楽天グループ 決算ハイライト、 2026 年 5 月 14 日(https://corp.rakuten.co.jp/news/press/2026/0514_01.html)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>楽天銀行、楽天証券、再編、出資比率</td>
+   <td>楽天銀行 (https://www.rakuten-bank.co.jp/)／ 楽天グループ フィンテック事業再編、 2026 年 5 月 20 日(https://corp.rakuten.co.jp/news/press/2026/0520_11.html)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>ソフトバンク</td>
+   <td>ソフトバンク (https://www.softbank.jp/mobile/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>Y!mobile （ワイモバイル）、 PayPay ポイント</td>
+   <td>Y!mobile (https://www.ymobile.jp/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>PayPay 、 PayPay カード、 PayPay 銀行、 PayPay 証券</td>
+   <td>PayPay (https://about.paypay.ne.jp/)／ PayPay 銀行 (https://www.paypay-bank.co.jp/company/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>PayPay の沿革、設立の経緯</td>
+   <td>edinetdb.jp (https://edinetdb.jp/company/E41128/history)</td>
+   <td>二次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>三井住友カード、三井住友銀行（ Olive 特典の提供元として記載）、 SBI 証券との連携</td>
+   <td>三井住友カード (https://www.smbc-card.com/mem/for_sbi/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>V ポイント</td>
+   <td>三井住友銀行 (https://www.smbc.co.jp/kojin/olive-account/guide/vpoint-up/)。ページの一部が文字化けしており、全文は読めていない</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>三井住友とソフトバンクの提携、ポイントの相互交換</td>
+   <td>bcnretail.com (https://www.bcnretail.com/market/detail/20250516_517813.html)／ watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/2129717.html)</td>
+   <td>二次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>ドコモ、 d ポイント、 d 払い、 d カード</td>
+   <td>ドコモ (https://www.docomo.ne.jp/corporate/ir/)／ d ポイント(https://dpoint.docomo.ne.jp/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>ahamo</td>
+   <td>ahamo (https://ahamo.com/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>ドコモ SMTB ネット銀行</td>
+   <td>住信 SBI ネット銀行（現・ドコモ SMTB ネット銀行） (https://www.netbk.co.jp/contents/company/press/2025/1219_004783.html)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>マネックス証券（グループ会社としての掲載）</td>
+   <td>ドコモ グループ各社 (https://www.docomo.ne.jp/corporate/about/group/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>マネックス証券（出資比率）</td>
+   <td>watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/1558823.html)</td>
+   <td>二次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>au 、 UQ mobile 、 povo</td>
+   <td>KDDI (https://www.kddi.com/corporate/kddi/public/)／ au (https://www.au.com/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>au PAY 、 Ponta ポイント</td>
+   <td>au 案内、 2025 年 11 月 28 日 (https://www.au.com/information/topic/auwallet/2025-048/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>au PAY カード</td>
+   <td>au (https://www.au.com/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>au じぶん銀行</td>
+   <td>au じぶん銀行(https://www.jibunbank.co.jp/)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>三菱 UFJ e スマート証券の商号変更</td>
+   <td>三菱 UFJ e スマート証券（旧・ au カブコム証券）お知らせ、 2024 年 12 月 24 日 (https://kabu.com/company/pressrelease/20241224_1.html)</td>
+   <td>一次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>au じぶん銀行と三菱 UFJ e スマート証券の再編</td>
+   <td>watch.impress.co.jp 、 2024 年 11 月 14 日 (https://www.watch.impress.co.jp/docs/news/1639554.html)</td>
+   <td>二次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>Ponta ポイントの運営会社と KDDI の提携（ 2020 年）</td>
+   <td>ロイヤリティ マーケティング (https://www.loyalty.co.jp/wp/wp-content/uploads/2020/05/200521.pdf)</td>
+   <td>二次</td>
+   <td>2026-10-14</td>
+  </tr>
+ </tbody>
+</table></div>
+<p>限界の節で述べた候補の検討に使った資料は、次のとおりである。</p>
+<div class="table-wrap"><table class="wide">
+ <thead>
+  <tr><th scope="col">対象</th><th scope="col">出典</th><th scope="col">種別</th><th scope="col">取得日</th></tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>野村証券</td>
+   <td>野村ホールディングスに関する検索結果（ポイントモール、地方銀行との仲介提携の記載）</td>
+   <td>二次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>三菱 UFJ 銀行と Ponta ポイントの連携</td>
+   <td>money-lifehack （ URL は記録していない）</td>
+   <td>二次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>イオン</td>
+   <td>イオン銀行のキャンペーン案内（ https://www.aeonbank.co.jp/campaign/investment/240104_01/、本文は取得できず、検索結果の要約のみ確認）／ paymentnavi （ URL は記録していない）</td>
+   <td>一次・二次</td>
+   <td>2026-10-14</td>
+  </tr>
+  <tr>
+   <td>セブン &amp; アイ</td>
+   <td>watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/2129717.html)</td>
+   <td>二次</td>
+   <td>2026-10-14</td>
+  </tr>
+ </tbody>
+</table></div>
+<h2>限界</h2>
+<h3>行に立てなかった候補</h3>
+<div class="table-wrap"><table class="wide">
+ <thead>
+  <tr><th scope="col">候補</th><th scope="col">理由（基準日時点）</th></tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>野村証券</td>
+   <td>通信・決済・共通のポイント・銀行の提供を、確認できなかった。顧客限定のポイントモールと、地方銀行との金融商品仲介の提携は確認できたが、軸となるポイントが複数の種別にまたがるとは確認できなかった。</td>
+  </tr>
+  <tr>
+   <td>三菱 UFJ</td>
+   <td>自社の通信・コード決済・共通ポイントを確認できなかった。三菱 UFJ 銀行は Ponta ポイントと連携しているが、これは他社のポイントとの連携である。</td>
+  </tr>
+  <tr>
+   <td>イオン</td>
+   <td>WAON 、イオン銀行、イオンモバイル、マネックス証券を通じた金融商品仲介などの記事を見つけたが、イオン銀行の公式ページ本文が取得できず、一次情報での確認を終えられなかった。</td>
+  </tr>
+  <tr>
+   <td>セブン &amp; アイ</td>
+   <td>2026 年 7 月 31 日に、 PayPay などとの資本業務提携と、 7iD （セブン &amp; アイの ID ）を PayPay ID へ統合する計画が報じられた。統合の時期と、 nanaco ・セブン銀行の扱いを確認できなかった。</td>
+  </tr>
+ </tbody>
+</table></div>
+<p>三井住友の行は、三井住友カードの公式ページで確認できたカードとポイントに加え、同ページが Olive 特典の提供元として記載する銀行と、提携の証券（ SBI 証券）を数えて立てた。銀行と証券の数え方に判断の余地があるため、境界の事例であり、通信とコード決済は確認できていない。イオンは、公式ページを取得できなかった点で差が付いた。このほか、 JR 東日本、メルカリ、 LINE ヤフーなどを同じ基準で検討する作業は行っていない。ほかにも、表に載せるべき経済圏が残っている可能性がある。</p>
+<h3>確認できなかった項目、基準日以後に変わりうる点</h3>
+<ul>
+ <li>楽天の再編は、 2026 年 10 月 1 日の効力発生を予定していた。基準日の時点で、完了した資料を確認できていない。完了後は、楽天銀行・楽天カード・楽天証券の関係が変わる。</li>
+ <li>PayPay とソフトバンクの現在の議決権の関係は確認できていない。 PayPay 銀行と PayPay 証券の子会社化の経緯は、二次情報でしか確認していない。</li>
+ <li>au じぶん銀行の完全子会社化が完了したかは、確認できていない。</li>
+ <li>Ponta ポイントの運営会社と KDDI の、 2026 年時点の資本関係は確認できていない。</li>
+ <li>ドコモ、マネックス証券の出資比率 (51% と 49%)は、公式の一次情報で確認できていない。</li>
+ <li>三井住友の SMBC 日興証券の位置づけ、コード決済の有無、通信の提供の有無は確認できていない。三井住友カードと三井住友銀行の相互の資本関係も確認できていない。</li>
+ <li>2026 年 7 月に発表された、セブン &amp; アイの 7iD の PayPay ID への統合は、時期を確認できていないため、表に反映していない。</li>
+ <li>会員数、取扱高、ポイントの還元率、特典の条件は、扱っていない。</li>
+</ul>
+</body>
+</html>
