@@ -5,15 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cloudflare Workers で自分のサイトを公開する計画書</title>
 <style>
-:root{
-  --bg:#f7f8f6; --text:#242522; --muted:#65695f; --accent:#3d5a52;
-  --line:#d7dcd2; --box:#eceee7; --link:#3d5a52;
-}
-*{box-sizing:border-box;}
-body{background:var(--bg); color:var(--text); margin:0; line-height:2;}
-.wrap{max-width:820px; margin:0 auto; padding:56px 26px 120px;}
+  body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { max-width: 52rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3;--link:#2a4d69}
 .kicker{font-size:15px; letter-spacing:.14em; color:var(--accent); font-weight:bold; margin-bottom:14px;}
-h1{font-size:32px; line-height:1.6; color:var(--text); margin:0 0 14px; font-weight:bold;}
 .subtitle{font-size:20px; color:var(--muted); margin:0 0 28px; line-height:1.8;}
 .lede{font-size:20px; color:var(--muted); border-left:3px solid var(--accent); padding-left:18px; margin:0 0 40px;}
 .lede p{font-size:20px; margin:0 0 14px;}
@@ -28,14 +37,9 @@ h1{font-size:32px; line-height:1.6; color:var(--text); margin:0 0 14px; font-wei
 .toc li li{font-size:15.5px;color:var(--muted);margin-bottom:5px}
 .toc a{color:var(--text);text-decoration:none}
 .toc a:hover{color:var(--accent);text-decoration:underline}
-h2{font-size:26px; line-height:1.5; border-bottom:1px solid var(--line); padding-bottom:9px; margin:52px 0 24px;}
-h3{font-size:20px; margin:32px 0 12px;}
 p{font-size:19px; margin:0 0 20px;}
 .box{background:var(--box); border:1px solid var(--line); padding:22px 24px; margin:0 0 28px; font-size:19px;}
 .box strong{color:var(--accent);}
-table{width:100%; border-collapse:collapse; margin:0 0 28px; font-size:16px;}
-th,td{border:1px solid var(--line); padding:10px 11px; vertical-align:top; text-align:left;}
-th{background:var(--box);}
 td ul{margin:0; padding-left:1.2em;}
 td li{font-size:16px; margin-bottom:6px;}
 ul,ol{padding-left:1.4em; margin:0 0 20px;}
@@ -45,12 +49,10 @@ sup{font-size:.72em;}
 sup a{color:var(--link); text-decoration:none;}
 sup a:hover{text-decoration:underline;}
 strong{font-weight:bold;}
-code{font-size:.88em; background:var(--box); padding:.1em .3em;}
 pre{font-size:16px; background:var(--box); border:1px solid var(--line);
   padding:16px 18px; margin:0 0 20px; overflow-x:auto; line-height:1.6;}
 pre code{background:none; padding:0;}
 .refs{border-top:1px solid var(--line); margin-top:58px; padding-top:25px;}
-.refs h2{border-bottom:none; margin-top:0; padding-bottom:0;}
 .refs p{font-size:15.5px; line-height:1.65; margin:0 0 11px; overflow-wrap:anywhere; word-break:break-word;}
 .refs em{font-style:italic;}
 .refs ol{margin:0 0 11px;}
@@ -60,14 +62,12 @@ pre code{background:none; padding:0;}
 .refs li:target, sup:target{background:var(--box);}
 .note{font-size:15px; color:var(--muted); margin-top:20px;}
 @media (max-width:480px){
-  .wrap{padding:36px 16px 90px;}
-  h1{font-size:27px;}
-  .toc>ol{columns:1}
+.toc>ol{columns:1}
 }
 </style>
 </head>
 <body>
-<div class="wrap">
+<main>
 <div class="kicker">計画書・ホスティング</div>
 <h1>Cloudflare Workers で自分のサイトを公開する計画書<br>―― GitHub Pages と同じ、独自ドメインを持たない方式</h1>
 <p class="subtitle">A Launch Plan for Domain-Free Static Hosting: Publishing a Personal Site on Cloudflare Workers, Modeled on GitHub Pages</p>
@@ -371,6 +371,6 @@ Get-Content urls.txt | ForEach-Object { try { $r = Invoke-WebRequest $_ -Maximum
 </ol>
 <p class="note">本稿は 2026 年 10 月 7 日時点の公式ドキュメントの確認に基づく計画書であり、実際の作業結果ではない。「要確認」と記した事項、および出典に「未精読」と付した事項は、実作業の前に原典で確かめること。料金プラン、画面の文言、各社の仕様は変更されうる。</p>
 </div>
-</div>
+</main>
 </body>
 </html>

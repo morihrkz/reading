@@ -5,18 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>静的サイト移行の実務記録―― DNS 移管とネームサーバー設定</title>
 <style>
-:root{
-  --bg:#f7f8f6; --text:#242522; --muted:#65695f; --accent:#3d5a52;
-  --line:#d7dcd2; --box:#eceee7; --link:#3d5a52;
-}
-*{box-sizing:border-box;}
-body{
-  background:var(--bg); color:var(--text); margin:0;
-  line-height:2;
-}
-.wrap{max-width:820px; margin:0 auto; padding:56px 26px 120px;}
+  body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { max-width: 52rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3;--link:#2a4d69}
 .kicker{font-size:15px; letter-spacing:.14em; color:var(--accent); font-weight:bold; margin-bottom:14px;}
-h1{font-size:32px; line-height:1.6; color:var(--text); margin:0 0 14px; font-weight:bold;}
 .subtitle{font-size:20px; color:var(--muted); margin:0 0 28px; line-height:1.8;}
 .meta{border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--muted);
   font-size:15px; line-height:1.9; padding:16px 0; margin:0 0 40px;}
@@ -29,17 +35,12 @@ h1{font-size:32px; line-height:1.6; color:var(--text); margin:0 0 14px; font-wei
 .toc li{margin-bottom:7px;font-size:16.5px}
 .toc a{color:var(--text);text-decoration:none}
 .toc a:hover{color:var(--accent);text-decoration:underline}
-h2{font-size:26px; line-height:1.5; border-bottom:1px solid var(--line); padding-bottom:9px; margin:52px 0 24px;}
-h3{font-size:20px; margin:32px 0 12px;}
 h4,h5{font-size:18px; margin:24px 0 10px;}
 p{font-size:19px; margin:0 0 20px;}
 .pull{font-size:22px; font-weight:bold; color:var(--accent); border-left:4px solid var(--accent);
   padding-left:20px; margin:34px 0;}
 .box{background:var(--box); border:1px solid var(--line); padding:22px 24px; margin:0 0 28px;}
 .box strong{color:var(--accent);}
-table{width:100%; border-collapse:collapse; margin:0 0 28px; font-size:16px;}
-th,td{border:1px solid var(--line); padding:10px 11px; vertical-align:top; text-align:left;}
-th{background:var(--box);}
 ul,ol{padding-left:1.4em; margin:0 0 20px;}
 li{margin-bottom:9px;}
 a{color:var(--link);}
@@ -48,7 +49,6 @@ sup.fnref a{color:var(--link); text-decoration:none;}
 sup.fnref a:hover{text-decoration:underline;}
 .fnback{font-size:14px; margin-left:4px; text-decoration:none;}
 .refs{border-top:1px solid var(--line); margin-top:58px; padding-top:25px;}
-.refs h2{border-bottom:none; margin-top:0; padding-bottom:0;}
 .refs ol{font-size:15.5px; line-height:1.65;}
 .refs li{margin-bottom:11px;}
 .refs em{font-style:italic;}
@@ -62,42 +62,33 @@ figure.diagram figcaption{font-size:15.5px; color:var(--muted); text-align:cente
 figure.diagram svg.dg-wide{display:block;}
 figure.diagram svg.dg-narrow{display:none;}
 @media (max-width:480px){
-  figure.diagram svg.dg-wide{display:none;}
-  figure.diagram svg.dg-narrow{display:block;}
+figure.diagram svg.dg-wide{display:none;}
+figure.diagram svg.dg-narrow{display:block;}
 }
 strong{font-weight:bold;}
 blockquote{border-left:3px solid var(--line); color:var(--muted); margin:0 0 20px; padding-left:18px; font-style:italic;}
 blockquote p{margin-bottom:10px;}
 blockquote p:last-child{margin-bottom:0;}
 hr{border:none; border-top:1px solid var(--line); margin:40px 0;}
-code{font-size:.88em; background:var(--box); padding:.1em .3em;}
 pre{font-size:16px; background:var(--box); border:1px solid var(--line);
   padding:16px 18px; margin:0 0 20px; overflow-x:auto; line-height:1.6;}
 pre code{background:none; padding:0;}
-@media (max-width:480px){
-  .wrap{padding:36px 16px 90px;}
-  h1{font-size:27px;}
-}
-.no-marker {
-  list-style: none;
-  padding-left: 0;
-}
 </style>
 </head>
 <body>
-<div class="wrap">
+<main>
 <div class="kicker">実務記録</div>
 <h1>静的サイト移行の実務記録<br>―― DNS 移管とネームサーバー設定</h1>
 <p class="subtitle">A Practical Record of Static Site Migration: DNS Transfer and Nameserver Configuration</p>
 <div class="lede"><p>二年間更新していなかった自社ウェブサイトを、レンタルサーバーから GitHub Pages へ移した記録。</p></div>
 <nav class="toc" aria-label="目次">
 <p class="toc-title">目次</p>
-<ul class="no-marker"><li><a href="#sec1">はじめに</a></li>
+<ol><li><a href="#sec1">はじめに</a></li>
 <li><a href="#sec2">なぜサーバーを移すことにしたのか</a></li>
 <li><a href="#sec3">先に調べる、特に DNS を</a></li>
 <li><a href="#sec4">ここからが本番、実際の移行作業</a></li>
 <li><a href="#sec5">終わってから、わかったこと</a></li>
-</ul>
+</ol>
 </nav>
 <h2 id="sec1">1. はじめに</h2>
 <p>「もとのサーバーから HTML ファイルを GitHub Pages に移し、ドメインの向き先を変える。」
@@ -872,6 +863,6 @@ JPRS の WHOIS で <code>pyx.co.jp</code> を検索したところ、 [ 状態 ]
 <p>費用の面では、月々のレンタルサーバー代が無くなり、かかるのはドメインの維持費用だけになった。これは移行の目的そのものではなく、動的サイトが必須でない場合の選択肢の多さにより、結果として生じた副次的な効果である。</p>
 <h3>移行後に残ったもの、消えたもの</h3>
 <p>移行を終えて実感するのは、サイト維持のためにおこなう作業の少なさである。 WordPress の管理画面で入力する必要がなくなり、サイトを更新するときは HTML ファイルを更新して GitHub へ push するという、ずっと小さな運用である。</p>
-</div>
+</main>
 </body>
 </html>
