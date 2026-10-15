@@ -6,18 +6,26 @@
 <title>国内の主な経済圏の構成</title>
 <style>
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-body { max-width: 64rem; margin: 0 auto; padding: 0 1rem 2rem; line-height: 1.8; overflow-wrap: anywhere; }
+body { margin: 0; padding: 0 1rem 2rem; line-height: 1.8; overflow-wrap: anywhere; }
 .title { border-bottom: solid #2A4D69 2.25pt; }
 h1 { font-size: 1.6rem; line-height: 1.4; }
 h2 { font-size: 1.3rem; line-height: 1.4; }
 h3 { font-size: 1.1rem; line-height: 1.4; }
-ul { padding-left: 1.4em; }
+ul, ol { padding-left: 1.4em; }
 li { margin-bottom: .4em; }
 .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1em 0; }
 table { width: 100%; border-collapse: collapse; }
 th, td { border: solid #BBBBBB 1pt; vertical-align: top; text-align: left; padding: .4em .6em; }
 thead th, tbody th { background: #E6EDF3; }
-.wide { min-width: 36rem; }
+.wide { min-width: 0; }
+/* 全ての表: 画面幅によらず、行ごとのカード表示にする */
+table, table tbody, table tr, table th, table td { display: block; width: auto; }
+table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+table tr { margin-bottom: 1rem; border: solid #BBBBBB 1pt; border-top: solid #2A4D69 3pt; }
+table th, table td { border: none; }
+table tbody th { font-size: 1.05rem; padding: .5em .6em; }
+table td { position: relative; padding-left: 9.2em; border-top: solid #DDDDDD 1pt; min-height: 1.8em; }
+table td::before { content: attr(data-label); position: absolute; left: .6em; width: 8em; font-weight: bold; color: #2A4D69; font-size: .85em; line-height: 2.1; }
 
 @media (max-width: 640px) {
  body { padding: 0 .75rem 1.5rem; line-height: 1.75; }
@@ -25,17 +33,6 @@ thead th, tbody th { background: #E6EDF3; }
  h2 { font-size: 1.2rem; }
  h3 { font-size: 1.05rem; }
  th, td { padding: .35em .5em; }
- .wide { min-width: 30rem; }
-
- /* 経済圏の表: 行ごとのカード表示に切り替える */
- .matrix.wide { min-width: 0; }
- .matrix, .matrix tbody, .matrix tr, .matrix th, .matrix td { display: block; width: auto; }
- .matrix thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
- .matrix tr { margin-bottom: 1rem; border: solid #BBBBBB 1pt; border-top: solid #2A4D69 3pt; }
- .matrix th, .matrix td { border: none; }
- .matrix tbody th { font-size: 1.05rem; padding: .5em .6em; }
- .matrix td { position: relative; padding-left: 7.2em; border-top: solid #DDDDDD 1pt; min-height: 1.8em; }
- .matrix td::before { content: attr(data-label); position: absolute; left: .6em; width: 6em; font-weight: bold; color: #2A4D69; font-size: .85em; line-height: 2.1; }
 }
 </style>
 </head>
@@ -98,46 +95,16 @@ thead th, tbody th { background: #E6EDF3; }
   </tr>
  </tbody>
 </table></div>
-<div class="table-wrap">
-<table class="wide">
- <thead>
-  <tr><th scope="col">表示</th><th scope="col">意味</th></tr>
- </thead>
- <tbody>
-  <tr>
-   <td>サービスの公式表記</td>
-   <td>出典で、そのグループのサービスと確認できたもの。記号の付かないものは、そのグループの会社または自社ブランドである。</td>
-  </tr>
-  <tr>
-   <td>〔共同〕</td>
-   <td>そのグループの子会社（議決権の過半を持つ会社）だが、他社も出資している会社。出資比率は表の下の注に書く。</td>
-  </tr>
-  <tr>
-   <td>〔出資〕</td>
-   <td>そのグループが出資しているが、過半には届かない会社。出資比率は注に書く。</td>
-  </tr>
-  <tr>
-   <td>〔資本関係未確認〕</td>
-   <td>そのグループのサービスとして公式に掲載されているが、グループとの資本関係を確認できていないもの。</td>
-  </tr>
-  <tr>
-   <td>〔提携〕</td>
-   <td>業務提携や連携の関係にある他社のサービス。そのグループの会社ではない。資本関係を確認できたものは、注に書く。</td>
-  </tr>
-  <tr>
-   <td>〔完了未確認〕</td>
-   <td>再編の効力発生の予定日が基準日より前にあるが、完了したことを確認できていないもの。</td>
-  </tr>
-  <tr>
-   <td><code>―</code></td>
-   <td>そのグループに該当するサービスが無いことを、出典で確認できたもの。本表では該当する欄は無い。</td>
-  </tr>
-  <tr>
-   <td>未確認</td>
-   <td>確認できなかったもの。「無い」という意味ではない。</td>
-  </tr>
- </tbody>
-</table></div>
+<ul>
+ <li><strong>サービスの公式表記</strong> :<br>出典で、そのグループのサービスと確認できたもの。記号の付かないものは、そのグループの会社または自社ブランドである。</li>
+ <li><strong>〔共同〕</strong> :<br>そのグループの子会社（議決権の過半を持つ会社）だが、他社も出資している会社。出資比率は表の下の注に書く。</li>
+ <li><strong>〔出資〕</strong> :<br>そのグループが出資しているが、過半には届かない会社。出資比率は注に書く。</li>
+ <li><strong>〔資本関係未確認〕</strong> :<br>そのグループのサービスとして公式に掲載されているが、グループとの資本関係を確認できていないもの。</li>
+ <li><strong>〔提携〕</strong> :<br>業務提携や連携の関係にある他社のサービス。そのグループの会社ではない。資本関係を確認できたものは、注に書く。</li>
+ <li><strong>〔完了未確認〕</strong> :<br>再編の効力発生の予定日が基準日より前にあるが、完了したことを確認できていないもの。</li>
+ <li><strong><code>―</code></strong> :<br>そのグループに該当するサービスが無いことを、出典で確認できたもの。本表では該当する欄は無い。</li>
+ <li><strong>未確認</strong> :<br>確認できなかったもの。「無い」という意味ではない。</li>
+</ul>
 <ul>
  <li><strong>注 1 (au)</strong> : 三菱 UFJ e スマート証券は旧・ au カブコム証券で、 2025 年 2 月 1 日に商号を変更する予定と公式に発表された（ 2024 年 12 月）。商号とは、会社の名称のことである。同社は三菱 UFJ 銀行の 100% 子会社となる予定とされ、 au とは業務提携を続けると報じられた。 au じぶん銀行は、 KDDI 等が三菱 UFJ 銀行の持分 22% を取得して KDDI の 100% 子会社にする予定と、 2024 年 11 月に報じられた（完了予定は 2025 年 1 月末）。完了したことを示す資料は確認できていないため、〔共同〕〔完了未確認〕を付けた。 Ponta ポイントの運営会社はロイヤリティ マーケティングで、 KDDI との資本業務提携（ 2020 年）が報じられている。 2026 年時点の資本関係は確認できていない。</li>
  <li><strong>注 2 （ソフトバンク／ PayPay ）</strong> : PayPay は、ソフトバンクとヤフー（現 LINE ヤフー）の合弁として、 2018 年 6 月に設立された会社とされる。 PayPay カードは 2022 年 10 月に、 PayPay 証券は 2025 年 4 月に、 PayPay 銀行は 2025 年 4 月に、 PayPay の連結子会社になったと二次情報にある。三井住友との提携は注 4 に書いた。 PayPay の公式サイトは、 PayPay カード・ PayPay 銀行・ PayPay 証券を PayPay のグループ企業として掲載している。 PayPay とソフトバンクの現在の議決権の関係は確認できていないため、行の名称を二つ並べ、 PayPay の各サービスには〔資本関係未確認〕を付けた。議決権とは、株主が会社の経営に関する決定に投じられる票のことで、合弁とは、複数の会社が共同で出資して設立した会社のことである。</li>
@@ -153,142 +120,142 @@ thead th, tbody th { background: #E6EDF3; }
  </thead>
  <tbody>
   <tr>
-   <td>楽天モバイル</td>
-   <td>楽天モバイル (https://network.mobile.rakuten.co.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">楽天モバイル</td>
+   <td data-label="出典">楽天モバイル (https://network.mobile.rakuten.co.jp/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>楽天ペイ</td>
-   <td>楽天ペイ (https://pay.rakuten.co.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">楽天ペイ</td>
+   <td data-label="出典">楽天ペイ (https://pay.rakuten.co.jp/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>楽天カード、楽天ポイント、楽天ペイメント</td>
-   <td>楽天グループ 決算ハイライト、 2026 年 5 月 14 日(https://corp.rakuten.co.jp/news/press/2026/0514_01.html)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">楽天カード、楽天ポイント、楽天ペイメント</td>
+   <td data-label="出典">楽天グループ 決算ハイライト、 2026 年 5 月 14 日(https://corp.rakuten.co.jp/news/press/2026/0514_01.html)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>楽天銀行、楽天証券、再編、出資比率</td>
-   <td>楽天銀行 (https://www.rakuten-bank.co.jp/)／ 楽天グループ フィンテック事業再編、 2026 年 5 月 20 日(https://corp.rakuten.co.jp/news/press/2026/0520_11.html)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">楽天銀行、楽天証券、再編、出資比率</td>
+   <td data-label="出典">楽天銀行 (https://www.rakuten-bank.co.jp/)／ 楽天グループ フィンテック事業再編、 2026 年 5 月 20 日(https://corp.rakuten.co.jp/news/press/2026/0520_11.html)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>ソフトバンク</td>
-   <td>ソフトバンク (https://www.softbank.jp/mobile/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">ソフトバンク</td>
+   <td data-label="出典">ソフトバンク (https://www.softbank.jp/mobile/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>Y!mobile （ワイモバイル）、 PayPay ポイント</td>
-   <td>Y!mobile (https://www.ymobile.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">Y!mobile （ワイモバイル）、 PayPay ポイント</td>
+   <td data-label="出典">Y!mobile (https://www.ymobile.jp/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>PayPay 、 PayPay カード、 PayPay 銀行、 PayPay 証券</td>
-   <td>PayPay (https://about.paypay.ne.jp/)／ PayPay 銀行 (https://www.paypay-bank.co.jp/company/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">PayPay 、 PayPay カード、 PayPay 銀行、 PayPay 証券</td>
+   <td data-label="出典">PayPay (https://about.paypay.ne.jp/)／ PayPay 銀行 (https://www.paypay-bank.co.jp/company/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>PayPay の沿革、設立の経緯</td>
-   <td>edinetdb.jp (https://edinetdb.jp/company/E41128/history)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">PayPay の沿革、設立の経緯</td>
+   <td data-label="出典">edinetdb.jp (https://edinetdb.jp/company/E41128/history)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>三井住友カード、三井住友銀行（ Olive 特典の提供元として記載）、 SBI 証券との連携</td>
-   <td>三井住友カード (https://www.smbc-card.com/mem/for_sbi/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">三井住友カード、三井住友銀行（ Olive 特典の提供元として記載）、 SBI 証券との連携</td>
+   <td data-label="出典">三井住友カード (https://www.smbc-card.com/mem/for_sbi/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>V ポイント</td>
-   <td>三井住友銀行 (https://www.smbc.co.jp/kojin/olive-account/guide/vpoint-up/)。ページの一部が文字化けしており、全文は読めていない</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">V ポイント</td>
+   <td data-label="出典">三井住友銀行 (https://www.smbc.co.jp/kojin/olive-account/guide/vpoint-up/)。ページの一部が文字化けしており、全文は読めていない</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>三井住友とソフトバンクの提携、ポイントの相互交換</td>
-   <td>bcnretail.com (https://www.bcnretail.com/market/detail/20250516_517813.html)／ watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/2129717.html)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">三井住友とソフトバンクの提携、ポイントの相互交換</td>
+   <td data-label="出典">bcnretail.com (https://www.bcnretail.com/market/detail/20250516_517813.html)／ watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/2129717.html)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>ドコモ、 d ポイント、 d 払い、 d カード</td>
-   <td>ドコモ (https://www.docomo.ne.jp/corporate/ir/)／ d ポイント(https://dpoint.docomo.ne.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">ドコモ、 d ポイント、 d 払い、 d カード</td>
+   <td data-label="出典">ドコモ (https://www.docomo.ne.jp/corporate/ir/)／ d ポイント(https://dpoint.docomo.ne.jp/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>ahamo</td>
-   <td>ahamo (https://ahamo.com/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">ahamo</td>
+   <td data-label="出典">ahamo (https://ahamo.com/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>ドコモ SMTB ネット銀行</td>
-   <td>住信 SBI ネット銀行（現・ドコモ SMTB ネット銀行） (https://www.netbk.co.jp/contents/company/press/2025/1219_004783.html)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">ドコモ SMTB ネット銀行</td>
+   <td data-label="出典">住信 SBI ネット銀行（現・ドコモ SMTB ネット銀行） (https://www.netbk.co.jp/contents/company/press/2025/1219_004783.html)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>マネックス証券（グループ会社としての掲載）</td>
-   <td>ドコモ グループ各社 (https://www.docomo.ne.jp/corporate/about/group/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">マネックス証券（グループ会社としての掲載）</td>
+   <td data-label="出典">ドコモ グループ各社 (https://www.docomo.ne.jp/corporate/about/group/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>マネックス証券（出資比率）</td>
-   <td>watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/1558823.html)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">マネックス証券（出資比率）</td>
+   <td data-label="出典">watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/1558823.html)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au 、 UQ mobile 、 povo</td>
-   <td>KDDI (https://www.kddi.com/corporate/kddi/public/)／ au (https://www.au.com/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au 、 UQ mobile 、 povo</td>
+   <td data-label="出典">KDDI (https://www.kddi.com/corporate/kddi/public/)／ au (https://www.au.com/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au PAY 、 Ponta ポイント</td>
-   <td>au 案内、 2025 年 11 月 28 日 (https://www.au.com/information/topic/auwallet/2025-048/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au PAY 、 Ponta ポイント</td>
+   <td data-label="出典">au 案内、 2025 年 11 月 28 日 (https://www.au.com/information/topic/auwallet/2025-048/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au PAY カード</td>
-   <td>au (https://www.au.com/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au PAY カード</td>
+   <td data-label="出典">au (https://www.au.com/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au じぶん銀行</td>
-   <td>au じぶん銀行(https://www.jibunbank.co.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au じぶん銀行</td>
+   <td data-label="出典">au じぶん銀行(https://www.jibunbank.co.jp/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>三菱 UFJ e スマート証券の商号変更</td>
-   <td>三菱 UFJ e スマート証券（旧・ au カブコム証券）お知らせ、 2024 年 12 月 24 日 (https://kabu.com/company/pressrelease/20241224_1.html)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">三菱 UFJ e スマート証券の商号変更</td>
+   <td data-label="出典">三菱 UFJ e スマート証券（旧・ au カブコム証券）お知らせ、 2024 年 12 月 24 日 (https://kabu.com/company/pressrelease/20241224_1.html)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au じぶん銀行と三菱 UFJ e スマート証券の再編</td>
-   <td>watch.impress.co.jp 、 2024 年 11 月 14 日 (https://www.watch.impress.co.jp/docs/news/1639554.html)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au じぶん銀行と三菱 UFJ e スマート証券の再編</td>
+   <td data-label="出典">watch.impress.co.jp 、 2024 年 11 月 14 日 (https://www.watch.impress.co.jp/docs/news/1639554.html)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>Ponta ポイントの運営会社と KDDI の提携（ 2020 年）</td>
-   <td>ロイヤリティ マーケティング (https://www.loyalty.co.jp/wp/wp-content/uploads/2020/05/200521.pdf)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">Ponta ポイントの運営会社と KDDI の提携（ 2020 年）</td>
+   <td data-label="出典">ロイヤリティ マーケティング (https://www.loyalty.co.jp/wp/wp-content/uploads/2020/05/200521.pdf)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
  </tbody>
 </table></div>
