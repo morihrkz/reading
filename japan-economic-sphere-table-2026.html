@@ -38,13 +38,13 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
 </head>
 <body>
 <div class="title">
-<h1>国内の主な経済圏の構成（基準日 : 2026 年 10 月 14 日）</h1>
+<h1>国内の主な経済圏の構成</h1>
 </div>
 <div class="table-wrap">
 <table class="matrix wide">
  <thead>
   <tr>
-   <th scope="col">グループ</th><th scope="col">通信</th><th scope="col">コード決済</th><th scope="col">クレジットカード</th><th scope="col">ポイント</th><th scope="col">銀行</th><th scope="col">証券</th>
+   <th scope="col">グループ</th><th scope="col">通信</th><th scope="col">コード決済</th><th scope="col">クレジットカード</th><th scope="col">ポイント</th><th scope="col">銀行</th><th scope="col">証券</th><th scope="col">保険</th>
   </tr>
  </thead>
  <tbody>
@@ -56,15 +56,17 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
    <td data-label="ポイント">Ponta ポイント〔提携〕</td>
    <td data-label="銀行">au じぶん銀行〔共同〕〔完了未確認〕</td>
    <td data-label="証券">三菱 UFJ e スマート証券〔提携〕</td>
+   <td data-label="保険">au フィナンシャルサービス（損害保険代理業）</td>
   </tr>
   <tr>
    <th scope="row">ソフトバンク／ PayPay （注 2 ）</th>
    <td data-label="通信">ソフトバンク<br>Y!mobile （ワイモバイル）</td>
-   <td data-label="コード決済">PayPay 〔資本関係未確認〕</td>
+   <td data-label="コード決済">PayPay</td>
    <td data-label="クレジットカード">PayPay カード〔資本関係未確認〕</td>
-   <td data-label="ポイント">PayPay ポイント〔資本関係未確認〕</td>
-   <td data-label="銀行">PayPay 銀行〔資本関係未確認〕</td>
-   <td data-label="証券">PayPay 証券〔資本関係未確認〕</td>
+   <td data-label="ポイント">PayPay ポイント</td>
+   <td data-label="銀行">PayPay 銀行〔出資〕〔完了未確認〕</td>
+   <td data-label="証券">PayPay 証券〔共同〕</td>
+   <td data-label="保険">PayPay 保険サービス〔資本関係未確認〕</td>
   </tr>
   <tr>
    <th scope="row">ドコモ（注 3 ）</th>
@@ -74,15 +76,17 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
    <td data-label="ポイント">d ポイント</td>
    <td data-label="銀行">ドコモ SMTB ネット銀行〔共同〕</td>
    <td data-label="証券">マネックス証券〔共同〕</td>
+   <td data-label="保険">ドコモ・インシュアランス〔資本関係未確認〕<br>日新火災海上保険（火災保険）〔提携〕</td>
   </tr>
   <tr>
    <th scope="row">三井住友（注 4 ）</th>
    <td data-label="通信">未確認</td>
    <td data-label="コード決済">未確認</td>
-   <td data-label="クレジットカード">三井住友カード〔資本関係未確認〕</td>
+   <td data-label="クレジットカード">三井住友カード</td>
    <td data-label="ポイント">V ポイント</td>
-   <td data-label="銀行">三井住友銀行〔資本関係未確認〕</td>
-   <td data-label="証券">SBI 証券〔提携〕</td>
+   <td data-label="銀行">三井住友銀行</td>
+   <td data-label="証券">SMBC 日興証券<br>SBI 証券〔提携〕</td>
+   <td data-label="保険">ライフネット生命〔出資〕</td>
   </tr>
   <tr>
    <th scope="row">楽天（注 5 ）</th>
@@ -92,6 +96,87 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
    <td data-label="ポイント">楽天ポイント</td>
    <td data-label="銀行">楽天銀行〔出資〕〔完了未確認〕</td>
    <td data-label="証券">楽天証券〔共同〕〔完了未確認〕</td>
+   <td data-label="保険">楽天生命保険<br>楽天損害保険<br>楽天少額短期保険</td>
+  </tr>
+  <tr>
+   <th scope="row">セブン＆アイ（注 6 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">セブン・カードサービス（セブンカード・プラス）〔出資〕〔完了未確認〕</td>
+   <td data-label="ポイント">nanaco ポイント〔出資〕〔完了未確認〕</td>
+   <td data-label="銀行">セブン銀行〔出資〕</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">セブン・フィナンシャルサービス（保険サービス事業）</td>
+  </tr>
+  <tr>
+   <th scope="row">三菱 UFJ （注 7 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">三菱 UFJ ニコス</td>
+   <td data-label="ポイント">未確認</td>
+   <td data-label="銀行">三菱 UFJ 銀行</td>
+   <td data-label="証券">三菱 UFJ e スマート証券</td>
+   <td data-label="保険">未確認</td>
+  </tr>
+  <tr>
+   <th scope="row">みずほ（注 8 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">みずほ楽天カード〔提携〕</td>
+   <td data-label="ポイント">未確認</td>
+   <td data-label="銀行">みずほ銀行</td>
+   <td data-label="証券">みずほ証券</td>
+   <td data-label="保険">未確認</td>
+  </tr>
+  <tr>
+   <th scope="row">りそな（注 9 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">りそなカード<br>みなとカード</td>
+   <td data-label="ポイント">未確認</td>
+   <td data-label="銀行">りそな銀行<br>埼玉りそな銀行<br>関西みらい銀行<br>みなと銀行</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">未確認</td>
+  </tr>
+  <tr>
+   <th scope="row">三井住友トラスト（注 10 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">未確認</td>
+   <td data-label="ポイント">未確認</td>
+   <td data-label="銀行">三井住友信託銀行<br>ドコモ SMTB ネット銀行〔出資〕</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">三井住友トラスト・ライフパートナーズ（保険代理店）</td>
+  </tr>
+  <tr>
+   <th scope="row">トヨタ（注 11 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">TOYOTA Wallet 〔資本関係未確認〕</td>
+   <td data-label="クレジットカード">TS CUBIC CARD 〔資本関係未確認〕</td>
+   <td data-label="ポイント">未確認</td>
+   <td data-label="銀行">未確認</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">あいおいニッセイ同和損保〔提携〕</td>
+  </tr>
+  <tr>
+   <th scope="row">イオン（注 12 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">AEON Pay 〔資本関係未確認〕</td>
+   <td data-label="クレジットカード">イオンカード〔資本関係未確認〕</td>
+   <td data-label="ポイント">未確認</td>
+   <td data-label="銀行">イオン銀行</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">イオン・アリアンツ生命保険〔共同〕<br>イオン保険サービス</td>
+  </tr>
+  <tr>
+   <th scope="row">ソニー（注 13 ）</th>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">未確認</td>
+   <td data-label="ポイント">未確認</td>
+   <td data-label="銀行">ソニー銀行</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">ソニー生命保険<br>ソニー損害保険</td>
   </tr>
  </tbody>
 </table></div>
@@ -106,11 +191,19 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
  <li><strong>未確認</strong> :<br>確認できなかったもの。「無い」という意味ではない。</li>
 </ul>
 <ul>
- <li><strong>注 1 (au)</strong> : 三菱 UFJ e スマート証券は旧・ au カブコム証券で、 2025 年 2 月 1 日に商号を変更する予定と公式に発表された（ 2024 年 12 月）。商号とは、会社の名称のことである。同社は三菱 UFJ 銀行の 100% 子会社となる予定とされ、 au とは業務提携を続けると報じられた。 au じぶん銀行は、 KDDI 等が三菱 UFJ 銀行の持分 22% を取得して KDDI の 100% 子会社にする予定と、 2024 年 11 月に報じられた（完了予定は 2025 年 1 月末）。完了したことを示す資料は確認できていないため、〔共同〕〔完了未確認〕を付けた。 Ponta ポイントの運営会社はロイヤリティ マーケティングで、 KDDI との資本業務提携（ 2020 年）が報じられている。 2026 年時点の資本関係は確認できていない。</li>
- <li><strong>注 2 （ソフトバンク／ PayPay ）</strong> : PayPay は、ソフトバンクとヤフー（現 LINE ヤフー）の合弁として、 2018 年 6 月に設立された会社とされる。 PayPay カードは 2022 年 10 月に、 PayPay 証券は 2025 年 4 月に、 PayPay 銀行は 2025 年 4 月に、 PayPay の連結子会社になったと二次情報にある。三井住友との提携は注 4 に書いた。 PayPay の公式サイトは、 PayPay カード・ PayPay 銀行・ PayPay 証券を PayPay のグループ企業として掲載している。 PayPay とソフトバンクの現在の議決権の関係は確認できていないため、行の名称を二つ並べ、 PayPay の各サービスには〔資本関係未確認〕を付けた。議決権とは、株主が会社の経営に関する決定に投じられる票のことで、合弁とは、複数の会社が共同で出資して設立した会社のことである。</li>
- <li><strong>注 3 （ドコモ）</strong> : ドコモ SMTB ネット銀行（旧・住信 SBI ネット銀行。「 SMTB 」は正式な商号の一部）は、 2025 年 10 月 1 日にドコモの連結子会社（会計上、親会社の決算にまとめて含める会社）となり、 2026 年 8 月 3 日に商号を変更した。持株比率はドコモ 55.37% 、三井住友信託銀行 44.63% で、議決権は 50:50 とされる。マネックス証券は、ドコモマネックスホールディングス（中間持株会社。複数の事業会社の株式を持つ会社）の傘下にあり、ドコモが同社の株式の 51% 、マネックスグループが 49% を持つと報じられた（ 2024 年 1 月に手続き完了）。この比率は、公式の一次情報では確認できていない。</li>
- <li><strong>注 4 （三井住友）</strong> : 三井住友カードは金融商品仲介業者（証券会社に代わって口座開設の取次ぎなどを行う業者）であり、 SBI 証券の口座の管理は SBI 証券が行う。行の名称は、三井住友カードと三井住友銀行を含む範囲を指す。三井住友のグループの範囲と、この 2 社の相互の資本関係は、確認できていないため、両方に〔資本関係未確認〕を付けた。ソフトバンクとは 2025 年 5 月に包括的な業務提携を発表しており、 PayPay ポイントと V ポイントの相互交換が 2026 年 3 月に始まったと報じられている。提携は確認できたが、通信サービスの提供とは読めないため、通信の欄は「未確認」とした。コード決済の欄も確認できなかった。 SMBC 日興証券の位置づけは確認できなかったため、証券の欄には入れていない。</li>
- <li><strong>注 5 （楽天）</strong> : 2026 年 5 月 20 日に、楽天銀行が株式交付（自社の株式を対価として他社の株式を取得する方法）で楽天カードと楽天証券ホールディングスを子会社にする再編が発表され、効力発生日は 2026 年 10 月 1 日と予定された。楽天カードは、楽天グループ 85.01% 、みずほ銀行 14.99% の出資である。楽天証券は、楽天証券ホールディングスが 51% 、みずほ証券が 49% を出資している。株式交付の効力発生後（転換後）の楽天グループの持分は、楽天銀行の普通株の 49.94% で、みずほ銀行は 10.52% とされる。楽天銀行には〔出資〕を付けた。楽天ペイと楽天ポイントカードを運営する楽天ペイメントは、楽天グループが 95.28% 、楽天銀行が 4.72% を持つとされる。基準日の時点で、効力発生の完了を示す資料は確認できていない。</li>
+ <li><strong>注 1 (au)</strong> : 三菱 UFJ e スマート証券は旧・ au カブコム証券で、 2025 年 2 月 1 日に商号を変更する予定と公式に発表された（ 2024 年 12 月）。商号とは、会社の名称のことである。同社は 2025 年 1 月 31 日に三菱 UFJ 銀行の 100% 子会社になったと、同社が公式に発表している。 au とは業務提携を続けると報じられた。 au じぶん銀行は、 KDDI 等が三菱 UFJ 銀行の持分 22% を取得して KDDI の 100% 子会社にする予定と、 2024 年 11 月に報じられた（完了予定は 2025 年 1 月末）。同時期に KDDI の 100% 子会社になったとする解説記事（二次情報）はあるが、公式の完了発表は確認できていないため、〔共同〕〔完了未確認〕を付けた。 Ponta ポイントの運営会社はロイヤリティ マーケティングで、 KDDI との資本業務提携（ 2020 年）が報じられている。 2019 年に KDDI が三菱商事からロイヤリティ マーケティングの株式 20% を取得したとも報じられた（二次情報）。 2026 年時点の資本関係は確認できていない。 au フィナンシャルサービスは損害保険代理業を行う会社で、 KDDI の連結子会社である au フィナンシャルホールディングスの傘下とされる（ KDDI は 2026 年 5 月 12 日に同社の上場準備の開始を決議した）。引受けを行う保険会社（ au 損害保険など）は確認できていない。</li>
+ <li><strong>注 2 （ソフトバンク／ PayPay ）</strong> : PayPay は、ソフトバンクとヤフー（現 LINE ヤフー）の合弁として、 2018 年 6 月に設立された会社とされる。 ソフトバンクは、 PayPay を自社の子会社と開示している（ 2026 年 3 月 11 日の開示。本文は読めておらず、検索結果の要約による）。 PayPay 銀行は、 2025 年 4 月 11 日時点の議決権比率が PayPay 47.10% 、三井住友銀行 46.57% で、 A 種優先株式を普通株式に転換した後は PayPay が 75.53% になると公表された。転換が実施されたかは確認できていないため、〔出資〕〔完了未確認〕を付けた。 PayPay 証券は、 PayPay が第三者割当増資を引き受けて 75.2% を持ち、みずほ証券が 24.8% を持つとされるため、〔共同〕を付けた（二次情報）。 PayPay カードは、 PayPay が大株主とされるが議決権比率を確認できていないため、〔資本関係未確認〕を付けた。 PayPay 保険サービスは、 LINE ヤフーグループの会社として PayPay ほけんの保険を扱うとされるが、資本関係を確認できていないため、〔資本関係未確認〕を付けた。 PayPay は、 2026 年 6 月 4 日に T&amp;D フィナンシャル生命保険の株式 70.2% を取得する方針を決議したが、完了は 2027 年 10 月の見込みで、基準日の時点で子会社ではないため、表には入れていない。三井住友との提携は注 4 に書いた。議決権とは、株主が会社の経営に関する決定に投じられる票のことで、合弁とは、複数の会社が共同で出資して設立した会社のことである。</li>
+ <li><strong>注 3 （ドコモ）</strong> : ドコモ SMTB ネット銀行（旧・住信 SBI ネット銀行。「 SMTB 」は正式な商号の一部）は、 2025 年 10 月 1 日にドコモの連結子会社（会計上、親会社の決算にまとめて含める会社）となり、 2026 年 8 月 3 日に商号を変更した。持株比率はドコモ 55.37% 、三井住友信託銀行 44.63% で、議決権は 50:50 とされる。マネックス証券は、ドコモマネックスホールディングス（中間持株会社。複数の事業会社の株式を持つ会社）の傘下にあり、ドコモが同社の株式の 51% 、マネックスグループが 49% を持つと報じられた（ 2024 年 1 月に手続き完了）。この比率は、公式の一次情報では確認できていない。保険は、ドコモ・インシュアランスが運営する「ドコモ スマート保険ナビ」と、 2026 年 3 月 25 日に始まった日新火災海上保険の火災保険による。ドコモ・インシュアランスの資本関係は確認できていないため〔資本関係未確認〕を付け、日新火災海上保険は提携先として〔提携〕を付けた。</li>
+ <li><strong>注 4 （三井住友）</strong> : 三井住友カードは金融商品仲介業者（証券会社に代わって口座開設の取次ぎなどを行う業者）であり、 SBI 証券の口座の管理は SBI 証券が行う。行の名称は、三井住友フィナンシャルグループの範囲を指す。三井住友カードは、同グループの 2026 年 3 月 31 日時点の主な子会社一覧で、議決権所有割合が 100% とされている。 SMBC 日興証券は、 2026 年 9 月 29 日の同社の発表で、三井住友フィナンシャルグループが株式の 100% を持つとされている。三井住友銀行は、同グループの中核の銀行として記載した。三井住友銀行は PayPay 銀行の議決権の 46.57% を持つ（注 2 ）。ライフネット生命は、 2023 年 8 月の資本業務提携で三井住友カードが第三者割当増資を引き受け、発行済株式の 5.75% を持つとされるため、〔出資〕を付けた（二次情報）。ソフトバンクとは 2025 年 5 月に包括的な業務提携を発表しており、 PayPay ポイントと V ポイントの相互交換が 2026 年 3 月に始まったと報じられている。提携は確認できたが、通信サービスの提供とは読めないため、通信の欄は「未確認」とした。コード決済の欄も確認できなかった。</li>
+ <li><strong>注 5 （楽天）</strong> : 2026 年 5 月 20 日に、楽天銀行が株式交付（自社の株式を対価として他社の株式を取得する方法）で楽天カードと楽天証券ホールディングスを子会社にする再編が発表され、効力発生日は 2026 年 10 月 1 日と予定された。楽天カードは、楽天グループ 85.01% 、みずほ銀行 14.99% の出資である。楽天証券は、楽天証券ホールディングスが 51% 、みずほ証券が 49% を出資している。株式交付の効力発生後（転換後）の楽天グループの持分は、楽天銀行の普通株の 49.94% で、みずほ銀行は 10.52% とされる。楽天銀行には〔出資〕を付けた。楽天ペイと楽天ポイントカードを運営する楽天ペイメントは、楽天グループが 95.28% 、楽天銀行が 4.72% を持つとされる。基準日の時点で、効力発生の完了を示す資料は確認できていない。 2026 年 10 月 16 日の再調査でも見つからなかった。楽天カードの臨時報告書には、楽天ペイメント株式の譲渡を 2026 年 9 月 30 日に実行する予定とあり（検索結果の要約による）、上の持株比率は変わる可能性がある。保険は、楽天インシュアランスホールディングスの傘下に、楽天生命保険、楽天損害保険、楽天少額短期保険などがある（ 2026 年 4 月の二次情報）。持株比率は確認できていない。</li>
+ <li><strong>注 6 （セブン＆アイ）</strong> : セブン銀行は、セブン‐イレブン・ジャパンが 2025 年 6 月 20 日付で保有割合を 39.9% にしたと開示されている (2025 年 3 月 31 日時点は 38.59%) 。過半に届かないため〔出資〕を付けた。セブン・カードサービス（ nanaco とセブンカード・プラスを運営）は、 2023 年 4 月 6 日に、セブン・フィナンシャルサービスが持つ株式（発行済株式総数の 98.9% ）をセブン銀行へ譲渡する契約が結ばれ、事業再編の実行日は 7 月 1 日と予定された。実行されたことを示す資料は確認できていないため、〔出資〕〔完了未確認〕を付けた。保険は、セブン・フィナンシャルサービスが保険サービス事業（保険代理）を行うと求人情報にあるだけで、出資関係と保険会社の名称は確認できていない。 nanaco ポイントは二次情報による。コード決済、通信、証券は確認できなかった。</li>
+ <li><strong>注 7 （三菱 UFJ ）</strong> : 三菱 UFJ ニコスは、 2017 年 10 月 1 日に三菱 UFJ フィナンシャル・グループの完全子会社になると報じられた（二次情報）。 2026 年時点の保有関係は確認できていない。三菱 UFJ 銀行は、公式ページの本文を取得できず、検索結果の要約で確認した。三菱 UFJ e スマート証券は、注 1 のとおり、 2025 年 1 月 31 日に三菱 UFJ 銀行の 100% 子会社になったと公式に発表されている。 au じぶん銀行は au の行に書いており、三菱 UFJ 銀行の持分 (22%) が移る予定だった（注 1 ）ため、この行には入れていない。 Ponta ポイントは、 2017 年に三菱東京 UFJ 銀行が 5% を出資する記事があるが、古い情報で現在の関係を確認できていないため、入れていない。通信、コード決済、保険は確認できなかった。</li>
+ <li><strong>注 8 （みずほ）</strong> : みずほ銀行とみずほ証券は、みずほフィナンシャルグループの会社として、二次情報の要約と 2026 年 5 月 20 日付の適時開示の題名から記載した。開示の本文は読めていない。みずほ楽天カードは、楽天カードとみずほ銀行が提携し、 2024 年 12 月に発行を始めたカードである。楽天との資本関係は注 5 を参照。楽天カードへの出資を引き揚げるという報道は 1 件の記事のみで、確認できていない。通信、コード決済、ポイント、保険は確認できなかった。みずほ証券は PayPay 証券の 24.8% を持つとされる（注 2 ）。保険会社との出資関係（第一生命など）は調べていない。</li>
+ <li><strong>注 9 （りそな）</strong> : りそなホールディングスの公式サイトのグループ会社一覧による。銀行は 4 行、カードは二社が載っている。証券会社とポイント専業の会社は、一覧に載っていなかった。「無い」という意味ではない。通信、コード決済、保険は確認できなかった。</li>
+ <li><strong>注 10 （三井住友トラスト）</strong> : 三井住友信託銀行は、三井住友トラストグループ（旧・三井住友トラスト・ホールディングス。 2024 年 10 月に商号を変更）の子会社として記載した（二次情報）。三井住友トラスト・ライフパートナーズは、同行が出資する保険代理店で、出資比率は 100% と有価証券報告書の関係会社一覧にある（ 2021 年〜 2022 年頃の二次情報で、現在の比率は確認できていない）。ドコモ SMTB ネット銀行は、注 3 のとおり三井住友信託銀行が 44.63% を持ち、議決権は 50:50 とされるため、〔出資〕を付けた。カード、証券、通信、コード決済、ポイントは確認できなかった。</li>
+ <li><strong>注 11 （トヨタ）</strong> : TOYOTA Wallet は、トヨタ自動車、トヨタファイナンシャルサービス (TFS) 、トヨタファイナンスの三社が展開するアプリとされる（ 2021 年 7 月時点の情報で、現在の提供状況は確認できていない）。 TS CUBIC CARD は、トヨタファイナンスが提供するカードとされる。トヨタファイナンスと TFS の資本関係は確認できていないため、〔資本関係未確認〕を付けた。銀行と証券は、日本の TFS グループで確認できなかった。あいおいニッセイ同和損保は、 TFS と連携して TOYOTA Wallet などを活用した保険の研究・開発を進めると発表しているため、〔提携〕を付けた（ 2021 年 12 月の同社の発表）。出資関係は確認できていない。米国の Toyota Financial Services は別の組織であり、混同しない。</li>
+ <li><strong>注 12 （イオン）</strong> : イオンの公式ページ（総合金融事業）に、イオンフィナンシャルサービス (AFS) とイオン銀行が載っている。持株比率はこのページに無く、 2026 年 2 月末にイオンが AFS の株式の 48.17% を持つという二次情報がある。イオン銀行の株主は AFS コーポレーション 100% （ 2025 年 3 月 31 日時点、二次情報）で、 2026 年 5 月に AFS コーポレーションを吸収合併すると沿革にあるが、実施済みかは確認できていない。イオンカードと AEON Pay は、 AFS の事業として二次情報にあるが、公式ページでは確認できていないため、〔資本関係未確認〕を付けた。 WAON は電子マネーで、 WAON のバリューイシュア事業を AFS が承継する決議（ 2024 年 10 月）があり、完了を確認できていないため、ポイントの欄には入れていない。イオンモバイル（通信）と証券は、公式ページに載っていなかった。イオン・アリアンツ生命保険は、 AFS が 2020 年 3 月に子会社化し、議決権所有割合は 60.0% とされた（ 2020 年 2 月の発表時点。二次情報）ため、〔共同〕を付けた。現在の比率と社名は確認できていない。イオン保険サービスは、 AFS の 100% 子会社として設立された経緯があるが、現在の比率は確認できていない。</li>
+ <li><strong>注 13 （ソニー）</strong> : ソニーフィナンシャルグループは、 2025 年 10 月 1 日のパーシャル・スピンオフ（親会社が子会社の株式の一部を株主に分配して独立させる方法）で、ソニーグループの持株比率が 16.40% になり、持分法適用関連会社になった（二次情報）。ソニー生命保険、ソニー損害保険、ソニー銀行は同社の傘下とされるが、各社の出資比率は確認できていない。銀行と保険以外は確認できなかった。</li>
 </ul>
 <p>出典（種別の「一次」は企業の公式サイトや公式資料、「二次」は報道や解説を指す。）</p>
 <div class="table-wrap">
@@ -257,17 +350,176 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
    <td data-label="種別">二次</td>
    <td data-label="取得日">2026-10-14</td>
   </tr>
+  <tr>
+   <td data-label="対象">セブン銀行の保有割合（ 39.9% ）、セブン・カードサービスの株式譲渡契約</td>
+   <td data-label="出典">セブン＆アイ・ホールディングス 適時開示、 2025 年 6 月 (https://www2.jpx.co.jp/disc/33820/140120250619593295.pdf)／同、 2023 年 4 月 (https://www2.jpx.co.jp/disc/33820/140120230405543375.pdf)。いずれも検索結果の要約のみで、本文は読んでいない</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">nanaco のセブン銀行傘下への集約</td>
+   <td data-label="出典">watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/1491920.html)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">三菱 UFJ ニコス</td>
+   <td data-label="出典">nihon-ma.co.jp (https://www.nihon-ma.co.jp/news/20171013_8306-4/)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">みずほ銀行、みずほ証券、楽天との提携</td>
+   <td data-label="出典">みずほフィナンシャルグループ 適時開示、 2026 年 5 月 20 日 (https://www2.jpx.co.jp/disc/58380/140120260520541703.pdf。本文は読んでいない)／ watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/2110362.html)</td>
+   <td data-label="種別">一次・二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">りそなグループの銀行、カード</td>
+   <td data-label="出典">りそなホールディングス グループ会社 (http://www.resona-gr.co.jp/holdings/about/outline/group/index.html)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">三井住友信託銀行</td>
+   <td data-label="出典">edinetdb.jp (https://edinetdb.jp/company/E03611/text?fy=2022)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">TOYOTA Wallet 、 TS CUBIC CARD</td>
+   <td data-label="出典">paymentnavi.com (https://paymentnavi.com/en/?p=101703)／三井住友銀行 ニュースリリース、 2021 年 7 月 (https://www.smbc.co.jp/news/pdf/j20210712_01.pdf)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">イオン銀行、イオンフィナンシャルサービス</td>
+   <td data-label="出典">イオン 総合金融事業 (https://www.aeon.info/company/group/)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">イオンの持株比率、 AFS コーポレーションの合併、 WAON の承継、イオンカード、 AEON Pay</td>
+   <td data-label="出典">kabutore.biz (https://www.kabutore.biz/genzaikabuka/okabunushi8570.html)／ finboard.jp (https://finboard.jp/companies/JP:8570/history)／ paymentnavi.com (https://paymentnavi.com/en/?p=152292)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">三菱 UFJ e スマート証券の 100% 子会社化の完了</td>
+   <td data-label="出典">三菱 UFJ e スマート証券 お知らせ、 2025 年 1 月 31 日 (https://kabu.com/company/pressrelease/20250131_1.html)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">au フィナンシャルサービス、 au フィナンシャルホールディングス</td>
+   <td data-label="出典">KDDI 適時開示、 2026 年 5 月 (https://newsroom.kddi.com/ir-news/assets/2026/kddi_ir-1149_4470/kddi_ir-1149_4470_pdf_01.pdf)。検索結果の要約のみ</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">ソフトバンクの PayPay 子会社の開示</td>
+   <td data-label="出典">ソフトバンク 適時開示、 2026 年 3 月 12 日 (https://www2.infomart.co.jp/web/jp/images/upload/3621/140120260312579398_22508309.pdf)。検索結果の要約のみ</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">PayPay 銀行の議決権比率</td>
+   <td data-label="出典">PayPay 銀行 お知らせ、 2025 年 4 月 (https://www.paypay-bank.co.jp/company/press/2025/0414.html)。検索結果の要約のみ</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">PayPay 証券の出資比率</td>
+   <td data-label="出典">nihon-ma.co.jp (https://www.nihon-ma.co.jp/news/20250210_9434-13/)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">PayPay の T&amp;D フィナンシャル生命保険の取得方針</td>
+   <td data-label="出典">ソフトバンクグループ (https://group.softbank/news/press/20260604)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">PayPay 保険サービス</td>
+   <td data-label="出典">techno-edge.net (https://www.techno-edge.net/release/prtimes2/20251215/22371.html)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">ドコモの火災保険（日新火災海上保険）</td>
+   <td data-label="出典">ドコモ お知らせ、 2026 年 3 月 25 日 (https://www.docomo.ne.jp/info/news_release/2026/03/25_00.html)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">三井住友カード、 SMBC 日興証券の 100% 保有</td>
+   <td data-label="出典">三井住友フィナンシャルグループ グループ会社 (https://www.smfg.co.jp/company/groupcompanies.html)／ SMBC 日興証券 お知らせ、 2026 年 9 月 29 日 (https://www.smbcnikko.co.jp/news/release/2026/pdf/260929_01.pdf)。いずれも検索結果の要約のみ</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">ライフネット生命への出資</td>
+   <td data-label="出典">nihon-ma.co.jp (https://www.nihon-ma.co.jp/news/20230830_7157/)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">楽天インシュアランスホールディングスと傘下の保険会社</td>
+   <td data-label="出典">paymentnavi.com (https://paymentnavi.com/?p=173160)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">セブン・フィナンシャルサービスの保険サービス事業</td>
+   <td data-label="出典">求人情報 (https://careerconnection.jp/job/A0223015300058-detail)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">三井住友トラスト・ライフパートナーズ、三井住友トラストグループの商号変更</td>
+   <td data-label="出典">edinetdb.jp (https://edinetdb.jp/company/E03611/text?fy=2022)／ kitaishihon.com (https://kitaishihon.com/company/8309/story)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">あいおいニッセイ同和損保と TFS の連携</td>
+   <td data-label="出典">あいおいニッセイ同和損保 お知らせ、 2021 年 12 月 (https://www.Aioinissaydowa.co.jp/corporate/about/news/pdf/2021/news_2021122300930.pdf)</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">イオン・アリアンツ生命保険、イオン保険サービス</td>
+   <td data-label="出典">nihon-ma.co.jp (https://www.nihon-ma.co.jp/news/20200204_8570-2/)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">ソニーフィナンシャルグループの構成、ソニーグループの持株比率</td>
+   <td data-label="出典">edinetdb.jp (https://edinetdb.jp/company/E05714/text?fy=2026)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
+  <tr>
+   <td data-label="対象">ロイヤリティ マーケティングへの KDDI の出資（ 2019 年）</td>
+   <td data-label="出典">newsweekjapan.jp (https://www.newsweekjapan.jp/articles/-/147556)／ bcnretail.com (https://www.bcnretail.com/market/detail/20191216_150102.html)</td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
+  </tr>
  </tbody>
 </table></div>
 <p>確認できなかった項目、基準日以後に変わりうる点</p>
 <ul>
  <li>楽天の再編は、 2026 年 10 月 1 日の効力発生を予定していた。基準日の時点で、完了した資料を確認できていない。完了後は、楽天銀行・楽天カード・楽天証券の関係が変わる。</li>
- <li>PayPay とソフトバンクの現在の議決権の関係は確認できていない。 PayPay 銀行と PayPay 証券の子会社化の経緯は、二次情報でしか確認していない。</li>
+ <li>PayPay の上場後の株主構成は確認できていない。 PayPay 銀行の優先株式の転換が実施されたか、 PayPay カードの議決権比率も確認できていない。 PayPay 証券の比率は二次情報でしか確認していない。</li>
  <li>au じぶん銀行の完全子会社化が完了したかは、確認できていない。</li>
  <li>Ponta ポイントの運営会社と KDDI の、 2026 年時点の資本関係は確認できていない。</li>
- <li>ドコモ、マネックス証券の出資比率 (51% と 49%)は、公式の一次情報で確認できていない。</li>
- <li>三井住友の SMBC 日興証券の位置づけ、コード決済の有無、通信の提供の有無は確認できていない。三井住友カードと三井住友銀行の相互の資本関係も確認できていない。</li>
+ <li>ドコモ、マネックス証券の出資比率 (51% と 49%) は、公式の一次情報で確認できていない。</li>
+ <li>三井住友のコード決済の有無、通信の提供の有無は確認できていない。</li>
  <li>2026 年 7 月に発表された、セブン &amp; アイの 7iD の PayPay ID への統合は、時期を確認できていないため、表に反映していない。</li>
+ <li>セブン＆アイ、三菱 UFJ 、みずほ、りそな、三井住友トラスト、トヨタ、イオン、ソニーの各行は、確認できた項目だけを入れており、「未確認」の欄が多い。一次情報の本文を読めていないものが含まれる（出典表に注記した）。</li>
+ <li>保険の欄は、保険会社の名称を中心に入れており、出資比率を確認できていないものが多い。三菱 UFJ 、みずほ、りそなは確認できなかった。保険会社との出資関係（みずほと第一生命など）は調べていない。</li>
+ <li>トヨタの TOYOTA Wallet は 2021 年時点の情報で、現在の提供状況を確認できていない。</li>
  <li>会員数、取扱高、ポイントの還元率、特典の条件は、扱っていない。</li>
 </ul>
 </body>
