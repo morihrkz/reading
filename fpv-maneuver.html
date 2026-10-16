@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FPV ドローンのマニューバ――操縦の仕組みと語の来歴</title>
+<style>
+  body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem 1rem 4rem; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+
+  /* 記事の構造部品（目次・脚注・図・参考文献）のための補足。配色は doc-html-style の配色表から選んだ */
+  .subtitle { color: #555; margin: 0 0 1rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
+  .toc { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 1.5rem 0; }
+  .toc > ol { columns: 2; column-gap: 2rem; margin: 0; }
+  .toc-title { font-weight: 700; color: #2a4d69; margin: 0 0 .5rem; }
+  .toc li { break-inside: avoid; margin-bottom: .3rem; }
+  .toc a { color: #222; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  sup { font-size: .72em; }
+  sup a { color: #2a4d69; text-decoration: none; }
+  figure { margin: 1rem 0; }
+  figure svg { width: 100%; height: auto; display: block; background: #fff; border: 1px solid #bbb; }
+  figcaption { color: #555; font-size: .9rem; margin-top: .4rem; }
+  .refs li { font-size: .9rem; overflow-wrap: anywhere; }
+  .refs li:target, sup:target { background: #e6edf3; }
+  @media (max-width: 480px) { .toc > ol { columns: 1; } }
+</style>
+</head>
+<body>
+<main>
+<p class="meta">航空・言語・ホビー工学</p>
+<h1>FPV ドローンのマニューバ<br>――操縦の仕組みと語の来歴</h1>
+<p class="subtitle">Flying by Camera Eye: How FPV Drone Maneuvers Work, and Where the Word Maneuver Comes From</p>
+<div class="lede">
+<p>機体の目の高さで見る映像の中で、ドローンが宙返りし、建物の壁面に沿って落ち、木のまわりを回る。 FPV （一人称視点）ドローンの動画では、こうした動きに、ロール、スプリット S 、パワーループといった名前がついている。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 本稿は、これらの技が機体のどんな動きで、操縦者のどんな操作から生まれるのかを整理し、そのうえで「マニューバ」という語そのものの来歴をたどる。</p><p>調べていくと、技の定義は出典ごとに揺れ、語源の説明も辞書ごとに経路が少しずつ違った。揺れていることは隠さず、確認できた範囲だけを書く。</p>
+</div>
+<div class="note"><strong>【方法と限界】</strong> 本稿は、確認できた事実と、そこから導いた筆者の解釈を、節を分けて書く。技の定義は販売元のブログやフォーラムの投稿が主な出典で、公的資料や書籍は確認できなかった。語源の専門辞典の本文も取得できなかった。制度の記述は 2026 年 10 月 16 日時点で、個別の法的助言ではない。</div>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">はじめに――四つの問い</a></li>
+<li><a href="#sec2">操縦の仕組み</a>
+<ol>
+<li><a href="#sec2-1">FPV とは何か</a></li>
+<li><a href="#sec2-2">四つの操作と三つの軸</a></li>
+<li><a href="#sec2-3">三つの飛行モード</a></li>
+<li><a href="#sec2-4">回転の速さを決める設定</a></li>
+</ol>
+</li>
+<li><a href="#sec3">主な技</a>
+<ol>
+<li><a href="#sec3-1">一つの軸を回す技――ロール、フリップ、ヨースピン</a></li>
+<li><a href="#sec3-2">有人機と同じ名前の技――スプリット S とインメルマンターン</a></li>
+<li><a href="#sec3-3">縦の円を描く技――パワーループ</a></li>
+<li><a href="#sec3-4">場所と組む技――ダイブ、オービット、トリッピー・スピン、ウォールタップ</a></li>
+<li><a href="#sec3-5">定義が割れる技――マティ・フリップとリワインド</a></li>
+</ol>
+</li>
+<li><a href="#sec4">技の名前の出どころ</a></li>
+<li><a href="#sec5">「マニューバ」の成り立ち</a>
+<ol>
+<li><a href="#sec5-1">語源の骨格</a></li>
+<li><a href="#sec5-2">フランス語での意味の移り変わり</a></li>
+<li><a href="#sec5-3">英語への入り方と綴り</a></li>
+<li><a href="#sec5-4">日本語での表記</a></li>
+<li><a href="#sec5-5">分野ごとの用法</a></li>
+<li><a href="#sec5-6">FPV の技を「マニューバ」と呼ぶ慣行の実態</a></li>
+</ol>
+</li>
+<li><a href="#sec6">語源と操縦は結びつくか</a></li>
+<li><a href="#sec7">日本の制度と安全</a>
+<ol>
+<li><a href="#sec7-1">航空法、登録、飛行禁止法</a></li>
+<li><a href="#sec7-2">FPV で引っかかりやすい二つの点</a></li>
+<li><a href="#sec7-3">危険性と、釣り合いの取り方</a></li>
+</ol>
+</li>
+<li><a href="#sec8">この記事の限界</a></li>
+<li><a href="#sec9">おわりに</a></li>
+</ol>
+</nav>
+<h2 id="sec1">1. はじめに――四つの問い</h2>
+
+<p>FPV （一人称視点）ドローンの動画では、宙返りや壁面の急降下といった動きに、ロール、スプリット S 、パワーループといった名前がついている。英語圏の解説ページには、こうした技名を並べた一覧がいくつもある。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 本稿は、この世界をめぐる四つの問いを順に扱う。</p>
+
+<ol>
+<li>FPV ドローンは、操縦者の手の動きをどのように機体の動きへ変えるのか。宙返りや横転の多くが、自動で水平に戻らない飛行モードで行われるのはなぜか。</li>
+<li>主な技では、機体は空中でどう動き、操縦者は何をしているのか。技の名前はどこから来たのか。</li>
+<li>「マニューバ」という語はどこから来て、どう意味を変えてきたのか。 FPV の技をこの語で呼ぶことに、語源の上で根拠はあるのか。それとも後から読み込んだものなのか。</li>
+<li>日本で FPV ドローンを飛ばすなら、どの法律と、どの危険を知っておくべきか。</li>
+</ol>
+
+<p>先に用語の断りをしておく。本稿の表題は「マニューバ」だが、調べた英語の解説ページでは、技の総称として「 trick 」（技、芸）を使う例が目立った。日本語圏での実際の使われ方は、今回の調査では確認できなかった。この点は 5.6 で詳しく述べる。</p>
+
+<h2 id="sec2">2. 操縦の仕組み</h2>
+
+<h3 id="sec2-1">2.1 FPV とは何か</h3>
+
+<p>FPV (First-person view) は、機体に載せたカメラの映像を、ゴーグルやモニターで見ながら操縦する方式である。百科事典の記述では、基本の構成は、機体側にカメラとアナログ映像の送信機、地上側に受信機と表示装置の組み合わせで、固定翼機とマルチコプター（回転翼が複数ある機体）が代表的な機体にあたる。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> この方式が広まったのは 2000 年代後半から 2010 年代初頭にかけてと説明されている。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> ただし、この百科事典の記事自身が根拠にしているのは、ゴーグルの紹介記事や 2009 年の入門ガイドなどで、学術的な文献ではない。</p>
+
+<p>FPV ドローンの楽しみ方は、主に二つに分かれる。 iFlight のブログによれば、フリースタイルは狭い角や木の下、障害物のまわり、小さな開口部を抜けながら技を行う飛び方で、レースは障害物コースを最短時間で回る競技である。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 映像制作でも使われ、 2021 年の映画『 Red Notice 』は、 FPV ドローンを多用した最初期のハリウッド作品の一つとされる。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></p>
+
+<h3 id="sec2-2">2.2 四つの操作と三つの軸</h3>
+
+<p>FPV ドローンの操縦は、ロール、ピッチ、ヨー、スロットルの四つの操作でできている。ロールは機体の前後方向の軸まわりの回転で、機体が左右に傾く。ピッチは左右方向の軸まわりの回転で、機首が上下に振れる。ヨーは上下方向の軸まわりの回転で、機首が左右を向く。四つの操作という構成と軸の呼び方は、航空機の一般的な説明に従ったもので、出典で確かめたのは次の二点にとどまる。ある解説は、ロールを「前後軸まわり」、フリップを「左右軸（ピッチ軸）まわり」の回転としている。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 別の解説は、ヨースピンを「ヨー軸まわりに機体を回す」動きとしている。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 四つ目のスロットルは、一般に推力の加減にあたるとされる。図 1 に、三つの軸と四つの操作の関係を示す。</p>
+
+<figure>
+<svg viewBox="0 0 640 260" role="img" aria-label="機体の三つの軸と四つの操作の模式図">
+<defs>
+<marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2a4d69"/></marker>
+</defs>
+<g stroke="#555" fill="none" stroke-width="2">
+<rect x="130" y="95" width="60" height="70" rx="6" fill="#e6edf3"/>
+<line x1="130" y1="95" x2="90" y2="55"/><line x1="190" y1="95" x2="230" y2="55"/>
+<line x1="130" y1="165" x2="90" y2="205"/><line x1="190" y1="165" x2="230" y2="205"/>
+<circle cx="85" cy="50" r="18"/><circle cx="235" cy="50" r="18"/>
+<circle cx="85" cy="210" r="18"/><circle cx="235" cy="210" r="18"/>
+</g>
+<g stroke="#2a4d69" stroke-width="2" fill="none" marker-end="url(#a1)">
+<line x1="160" y1="170" x2="160" y2="20"/>
+<line x1="60" y1="130" x2="260" y2="130"/>
+<path d="M115 130 A45 45 0 0 1 205 130"/>
+</g>
+<text x="168" y="30" font-size="14" fill="#222">ロール軸（前後）</text>
+<text x="40" y="250" font-size="14" fill="#222">上から見た機体（上が機首）</text>
+<text x="262" y="124" font-size="14" fill="#222">ピッチ軸（左右）</text>
+<text x="108" y="118" font-size="13" fill="#222">ヨー</text>
+<g stroke="#555" stroke-width="2" fill="none">
+<rect x="440" y="120" width="120" height="20" rx="6" fill="#e6edf3"/>
+</g>
+<g stroke="#2a4d69" stroke-width="2" fill="none" marker-end="url(#a1)">
+<line x1="500" y1="230" x2="500" y2="150"/>
+</g>
+<text x="440" y="110" font-size="14" fill="#222">横から見た機体</text>
+<text x="512" y="200" font-size="14" fill="#222">スロットル（推力）</text>
+</svg>
+<figcaption>図 1 　機体の三つの軸と四つの操作（模式図）。ロールは前後軸、ピッチは左右軸、ヨーは上下軸まわりの回転。スロットルは推力の加減にあたる。ヨー軸は紙面に垂直で、弧の矢印がその回転を表す。</figcaption>
+</figure>
+
+<h3 id="sec2-3">2.3 三つの飛行モード</h3>
+
+<p>機体制御ソフトウェア Betaflight の公式文書は、飛行モードを三つに分けて説明している。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
+
+<ul>
+<li>Acro (Rate) 。既定のモードで、「 Manual 」とも呼ばれる。自動で水平に戻さない。スティックは各軸の回転の速さを直接に制御し、スティックを中央に戻せば、機体はそのときの姿勢を保つ。</li>
+<li>Angle 。自動で水平を保つモード。スティックは傾きの角度を指示し、中央に戻せば水平飛行になる。機体の傾きや加速を測る加速度計に頼る。</li>
+<li>Horizon 。両者の中間。スティックが中央に近いときは Angle のように水平化し、大きく倒すほど Acro に近づく。</li>
+</ul>
+
+<p>別の解説も、 Acro は Rate や Manual とも呼ばれると述べている。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup> 呼称は一つに決まっておらず、「マニュアル」は手動一般と紛れやすいが、ここでは自動で水平に戻さないモードを指す。図 2 は、同じ操作をしたときの姿勢の違いを描いたものである。</p>
+
+<figure>
+<svg viewBox="0 0 640 250" role="img" aria-label="Angle モードと Acro モードの姿勢の違いの模式図">
+<g stroke="#555" stroke-width="2" fill="none">
+<line x1="30" y1="125" x2="610" y2="125" stroke-dasharray="4 5" stroke="#bbb"/>
+</g>
+<g stroke="#222" stroke-width="5" stroke-linecap="round">
+<line x1="60" y1="55" x2="130" y2="55"/>
+<line x1="250" y1="42" x2="320" y2="68"/>
+<line x1="450" y1="55" x2="520" y2="55"/>
+<line x1="60" y1="195" x2="130" y2="195"/>
+<line x1="250" y1="182" x2="320" y2="208"/>
+<line x1="450" y1="182" x2="520" y2="208"/>
+</g>
+<g fill="#2a4d69" font-size="14">
+<text x="40" y="28">スティック中央</text>
+<text x="235" y="28">スティックを倒す</text>
+<text x="430" y="28">スティックを中央に戻す</text>
+<text x="40" y="108">Angle （自動で水平に戻る）</text>
+<text x="40" y="236">Acro （傾いたまま保つ）</text>
+</g>
+</svg>
+<figcaption>図 2 　スティックを倒して戻したときの姿勢の違い（模式図）。上段の Angle は中央で水平に戻り、下段の Acro は傾いた姿勢を保つ。 Acro では、スティックを倒している間は回転が続く。</figcaption>
+</figure>
+
+<p>では、なぜ宙返りや横転は Acro で行われるのか。ある販売元の解説は、フリースタイルはすべて Acro で飛ばすと言い切り、 Angle や Horizon では完全なロールやフリップはできないと述べる。 <sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup> 別の販売元の案内も、技はすべて Acro で行うと書いている。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> どちらも販売側の資料で、断定が強い。しかも Betaflight の文書では、 Horizon は大きく倒すほど Acro に近づくとされ、 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 販売元の言い切りとの間には、確かめきれない隙間が残る。</p>
+
+<p><strong>筆者の解釈</strong><br>Horizon で一回転できるとする出典はなく、倒し方しだいでは回れる可能性も残る。そこで筆者は「多くの技は Acro で行われる」と読む。理由として考えられるのは、 Angle ではスティックが傾きの角度を指示することである。傾き角に上限があるなら、逆さまには向けられない。ただし、上限の有無は出典で確かめていない。 Acro ではスティックが回転の速さを決めるので、倒し続ければ何回転でも続けられる。</p>
+
+<h3 id="sec2-4">2.4 回転の速さを決める設定</h3>
+
+<p>Acro では、スティックの倒し量が回転の速さを決める。 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> Betaflight のレートの文書によれば、レートはスティックの位置を回転速度（度毎秒）に変える数式で、 RC Rate 、 Rate 、 Expo の三つの値が曲線の形を決める。この文書はモードには触れていないが、筆者は、 Acro の操作感がこの設定に左右されると考える。典型的な曲線は、中央付近では鈍く、端に向かって敏感になる。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 同じ文書は、最大の回転速度の目安として、レースで 550 〜 650 度毎秒、フリースタイルで 850 〜 1200 度毎秒という範囲を挙げている。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></p>
+
+<p>この数字から、一つの計算ができる。最大の速さで 360 度回るとすれば、一回転に要する時間は、 850 度毎秒で約 0.42 秒、 1200 度毎秒で約 0.30 秒である。ただし、これは最大の速さで回り続けたと仮定した筆者の計算であり、実機の所要時間を測ったものではない。</p>
+
+<p>同じ文書は、映像向けの飛び方では中央付近を平らにして滑らかさを優先するという考え方も示している。 <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup> 筆者の推測では、同じ名前の技でも、機体の設定しだいで映像の印象は変わりうる。</p>
+
+<h2 id="sec3">3. 主な技</h2>
+
+<p>ここからは、技ごとの定義を見ていく。先に、出典の性格を明らかにしておく。 FPV の技の定義を示した資料は、機体や部品の販売元のブログ、個人のブログ、フォーラムの投稿が中心で、公的な機関や学術資料は見つからなかった。そこで本稿は、独立した複数の出典の記述が一致する技を「定義がそろう技」、食い違う技を「定義が割れる技」として分けて書く。なお、本稿はどの技についても、操作の手順は扱わない。</p>
+
+<h3 id="sec3-1">3.1 一つの軸を回す技――ロール、フリップ、ヨースピン</h3>
+
+<p>最も基本的なのが、一つの軸だけを回す技である。ロールは機体を前後軸まわりに、左右どちらかへ 360 度回す。フリップは左右軸まわりに、前または後ろへ 360 度回す。この定義は複数の出典でそろう。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> iFlight の一覧は、ロールもフリップも最も易しい「 novice 」（初心者向け）の段に置いている。 <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup></p>
+
+<p>ヨースピンは、上下軸まわりに機体を回す技である。ある解説は「ヨー軸まわりに機体を回し、素早く回る動きをつくる」と書き、 <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> 別の一覧は「ずれることなくヨー軸で一回転する」と説明している。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 二つの出典はヨー軸まわりに回るという点で一致し、一つは位置がずれないことにも触れている。</p>
+
+<p><strong>筆者の解釈</strong><br>見た目はどうなるのか。百科事典はパン・チルト（首振り）のカメラを高度な構成に挙げている。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> そこから筆者は、基本の構成ではカメラが機体に固定されていると推定する。だとすれば、視聴者が見る映像は機体とともに回る。ロールでは水平線が傾いて回り、フリップでは空と地面が入れ替わり、ヨースピンでは景色が横へ流れる。一つの軸を回す技は、この見え方の違いで区別するとわかりやすい。</p>
+
+<h3 id="sec3-2">3.2 有人機と同じ名前の技――スプリット S とインメルマンターン</h3>
+
+<p>スプリット S とインメルマンターンは、有人機の曲技にもある名前である。まず有人機の側の定義を確認する。百科事典の記述では、スプリット S は、操縦者が機体を半ロール（横に半回転する動き）で逆さまにし、そこから下降しながら半ループ（縦に半円を描く動き）を描き、反対向きに、より低い高度で水平飛行に戻る機動である。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 空戦では、戦闘から離脱するときに使われるという。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 一方、インメルマンターンは、上昇しながら半ループを描いたあと半ロールで水平に戻り、反対向きに、より高い高度で飛ぶ機動で、スプリット S の対になる。 <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup><sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> スプリット S を「逆のインメルマンターン」と呼ぶこともあるという。 <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup> 図 3 に、この二つの軌跡を横から見た模式図で示す。</p>
+
+<figure>
+<svg viewBox="0 0 640 230" role="img" aria-label="スプリット S とインメルマンターンの軌跡の模式図">
+<defs>
+<marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2a4d69"/></marker>
+</defs>
+<g stroke="#2a4d69" stroke-width="3" fill="none" marker-end="url(#a3)">
+<path d="M30 50 H120 A40 40 0 0 1 120 130 H40"/>
+<path d="M350 130 H440 A40 40 0 0 0 440 50 H360"/>
+</g>
+<g fill="#222" font-size="14">
+<text x="30" y="30">スプリット S</text>
+<text x="350" y="22">インメルマンターン</text>
+<text x="30" y="75">半ロール</text>
+<text x="170" y="95">半ループで降下</text>
+<text x="30" y="155">反対向き・低い高度で終わる</text>
+<text x="350" y="42">半ロールで水平へ</text>
+<text x="350" y="72" font-size="13">反対向き・高い高度</text>
+<text x="350" y="155">半ループで上昇</text>
+</g>
+</svg>
+<figcaption>図 3 　スプリット S とインメルマンターンの軌跡（現代の曲技の定義による模式図）。機首は矢印の向きで、左右それぞれ出発点から反対向きに抜ける。</figcaption>
+</figure>
+
+<p>FPV での使われ方は、有人機の定義と大筋で一致する。スプリット S を、半ロールで逆さまになってから降下する動きとする解説が複数ある。 <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup><sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 一方、「半ループに続く降下」とだけ書き、半ロールを明示しない解説もある。 <sup id="fnref-6-4"><a href="#ref-6">[6]</a></sup> 同じ解説は、逆さまになって障害物の下を抜けながら向きを変える形も、別の型として挙げる。 <sup id="fnref-6-5"><a href="#ref-6">[6]</a></sup> つまり、半ロールを含めるかどうかと、障害物をどう使うかには、揺れがある。</p>
+
+<p>インメルマンターンについて、有人機の側は注意が要る。百科事典によれば、この名前には二つの機動が重なっている。第一次世界大戦で、急降下で攻撃したあと、敵のそばを通り過ぎて上昇し、失速（翼が十分な揚力を得られなくなること）の手前でラダー（方向舵）を踏み込んで機首を振り向け、再び敵と向き合って降下に入る戦術があった。現代の曲技の「上昇半ループ＋半ロール」は、その戦術の名前を借りた別の機動だとされる。 <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 名の由来は、第一次世界大戦のドイツのエース、マックス・インメルマン少尉である。 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup> ただし、同じ記事は、インメルマン本人がその機動を行ったことを直接には裏づけておらず、現代版が名前を借りたとする箇所には「出典が必要」の印が付いている。 FPV でのインメルマンターンは、一覧に一行の説明（上昇する半ループのあと、ロールで正立に戻る）があるだけで、現代の曲技の定義と同じ内容である。 <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> そのため、 FPV での使われ方は、本稿では詳しく扱わない。</p>
+
+<h3 id="sec3-3">3.3 縦の円を描く技――パワーループ</h3>
+
+<p>パワーループは、縦に一回転する技である。ある一覧は「円を描くように 360 度のループを完了する」と説明し、中級の技に分類している。 <sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup> 別の解説は、これをスプリット S の「より大きく大胆な兄弟」と呼び、半分ではなく一周を描く技だとする。 <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> ここまでは、出典がおおむね一致する。</p>
+
+<p>ところが、型には幅がある。ある解説は、逆さまになったところでロールやフリップを足して一周を完成させる型を挙げる。 <sup id="fnref-6-6"><a href="#ref-6">[6]</a></sup> ある一覧は、小さな隙間を通り抜けるパワーループを expert （上級者向け）の段に置く。 <sup id="fnref-4-5"><a href="#ref-4">[4]</a></sup> また、ある解説は、スロットルの入力が一周のあいだ変わり続け、入る高さと速さと出る高さと速さがそろうことが要点だと述べる。 <sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup> スロットルの細かな操作や戻る位置といった細部を述べた出典は、上の出典のほかにはなかった。</p>
+
+<p>名前の「パワー」が何を指すかは、確認できる出典がなかった。</p>
+
+<h3 id="sec3-4">3.4 場所と組む技――ダイブ、オービット、トリッピー・スピン、ウォールタップ</h3>
+
+<p>ここから先の技は、建物や木、壁といった場所があって成り立つ。そのぶん、出典の記述は薄くなる。</p>
+
+<p>ダイブは、建物の壁面に沿うものを含め、制御しながら降下し、引き起こす技である。ある一覧は「建物のダイブ」を、壁面に沿った制御された降下と説明する。 <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 別の解説は、機体を前へ傾けて制御された降下に入り、引き起こして回復する、と書く。 <sup id="fnref-6-7"><a href="#ref-6">[6]</a></sup> </p>
+
+<p>オービットは、対象のまわりを旋回する技である。ある一覧は、「一定の半径と一定の速さで、注目する点のまわりを回る」と説明する。 <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup> 別の案内は名前を挙げるだけなので、定義を述べた出典は一つしかない。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 機体の向きと進行方向をどう組み合わせるのか、対象を正面に捉え続けるのかは、確認できなかった。</p>
+
+<p>トリッピー・スピンは、逆さまのオービットとして説明される。ある一覧は、「逆さまのオービット（トリッピー・スピン）」を、一定のヨーで目標のまわりを逆さまに回る技と述べる。 <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup> 別の案内は、「トリッピー・スピン、オービット、サイクロン」を一つの項目にまとめている。 <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 逆さまのオービットという点では二つの出典が一致する。</p>
+
+<p>ウォールタップは、最も扱いに迷う技である。ある案内は、技の見出しに「ウォールタップと接触を伴う技」という区分を置くが、中身の説明はない。 <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 接触のさせ方や反動の使い方を述べた出典は、見つからなかった。フォーラムには、旋回中に「見えない壁にぶつかって跳ね返る」ような動きを述べた書き込みがあるが、名前はつけられておらず、ウォールタップとの関係は不明である。 <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> そのため、この技の動きと操作の要点は、本稿では書かない。接触を前提にする技は、とくに危害にもつながりうる。</p>
+
+<h3 id="sec3-5">3.5 定義が割れる技――マティ・フリップとリワインド</h3>
+
+<p>最後に、出典の記述が食い違う技を表で見る。どれが正しいかは決めない。誰が、どんな性格の資料に、どう書いたかを並べる。</p>
+
+<table>
+<tr><th>技</th><th>出典</th><th>記述の要旨</th><th>出典の性格</th></tr>
+<tr><td rowspan="5">マティ・フリップ</td><td>案内ページ（ 2021 年更新） <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td><td>「バックワード・スイング」と言い換える</td><td>販売元のサポート文書。説明文なし</td></tr>
+<tr><td>技の一覧 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td><td>障害物の上を後ろ向きに回り、ループを決める</td><td>販売元の一覧。日付なし</td></tr>
+<tr><td>ブログ（著者 David 、 2026 年 6 月）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td><td>物体から離れながら始める後方ループで、その上を越えて元の方向へ抜ける。名はマティ・スタンツに由来</td><td>出典の引用なし</td></tr>
+<tr><td>販売系ブログ（ 2026 年 3 月） <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup></td><td>バックフリップとヨースピンの組み合わせ。カナダ人操縦者マット・シャーウッドに由来</td><td>販売系</td></tr>
+<tr><td>フォーラムのスレッド（ 2024 年 7 〜 8 月） <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td>半分のマティ（または逆スプリット S ）から後ろ向きの失速へ入る動き、と書く</td><td>個人の投稿</td></tr>
+<tr><td rowspan="2">リワインド</td><td>技の一覧 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></td><td>横へずれたあと、後ろへ急に戻って進路を逆転させる</td><td>販売元の一覧</td></tr>
+<tr><td>フォーラム投稿（ 2024 年 8 月） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></td><td>「巻き戻し」の技の一群があり、旋回点のまわりを回ってから急に逆へ戻る（上級）</td><td>個人の投稿</td></tr>
+</table>
+
+<p>マティ・フリップでは、「後ろ向きの動き」を含むという点は複数の出典で重なる。しかし、ループなのか、フリップとヨーの組み合わせなのか、物体を越えるのか、失速へ入るのかといった中身は割れている。由来も、マティ・スタンツ、マット・シャーウッドと人物名が食い違う。このため、人名に由来するとされるが詳細は出典によって異なる、という線を越えては書けない。</p>
+
+<p>リワインドの出典が描くのは、進路や旋回を逆戻しにする動きである。名前の「巻き戻し」は共通しているが、何を巻き戻すかが違う。</p>
+
+<p>なお、ジューシー・フリックという技の名前も見かける。一覧には「素早いフリックと素早い復帰」という一行があり、 <sup id="fnref-2-10"><a href="#ref-2">[2]</a></sup> フォーラムにも名前は出てくる。 <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup> しかし、動きの定義を二つ以上の独立した出典で確かめることはできなかった。このため、この技は本稿では詳しく扱わなかった。</p>
+
+<h2 id="sec4">4. 技の名前の出どころ</h2>
+
+<p>技の名前は、どこから来たのか。出典で確認できた範囲で整理する。</p>
+
+<p>まず、有人機の曲技から借りた名前がある。スプリット S とインメルマンターンがそうである。ある解説は、スプリット S を有人機から借りた古典的な曲技と書いている。 <sup id="fnref-5-7"><a href="#ref-5">[5]</a></sup> インメルマンターンについては、歴史上の機動を描いた飛行教本の図が 1918 年のもので、 <sup id="fnref-10-4"><a href="#ref-10">[10]</a></sup> FPV が広まった 2000 年代後半よりずっと前である。 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup> 筆者は、借用の向きは有人機から FPV へだと推定する。</p>
+
+<p>次に、有人機との対応が確認できない名前がある。マティ・フリップは人名に由来するとされる。ただし、前章で見たとおり、人名は出典によって異なる。もう一つ、ヴァニー・ロールという名前を、案内ページは「後ろ向きのロール」と言い換えている。 <sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup> 名前の由来が出典に明記されていた例は、ほとんどなかった。ある一覧は、「ジャッキー・チェン」という技の名が、その武術家に由来すると書いている。 <sup id="fnref-2-11"><a href="#ref-2">[2]</a></sup> 名前の由来が出典で確認できたのは、ここまでである。</p>
+
+<p><strong>筆者の判断</strong><br>以上から言えるのは、次の範囲にとどまる。有人機の曲技から借りた名前は、スプリット S とインメルマンターンの二つが確認できた。有人機との対応が確認できない名前のうち、由来を出典で確かめられた例は、ごく少ない。どの名前がどちらの系統に属するかを、網羅的に仕分けることは、この調査ではできなかった。</p>
+
+<h2 id="sec5">5. 「マニューバ」の成り立ち</h2>
+
+<p>ここからは、語としての「マニューバ」を調べる。この章は事実の整理にあたり、筆者の解釈は次の章に回す。</p>
+
+<h3 id="sec5-1">5.1 語源の骨格</h3>
+
+<p>英語の maneuver （イギリス英語では manoeuvre ）は、フランス語から入った語である。 Wiktionary によれば、中期フランス語の manœuvre と manouvrer に由来し、さらにさかのぼると古フランス語の manovre （手仕事、肉体労働）、中世ラテン語の manopera または manuopera （手でなされる仕事）に行き着く。 <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 後者は、 manu （手で）と operari （働く）の組み合わせとされる。 <sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup> Dictionary.com も、ラテン語の manū operāre （手仕事をする）を起点とし、 operāre は「 operate 」の語根でもあると説明する。 <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> この骨格は、調べた英語とフランス語の辞書三種で一致していた。</p>
+
+<p>細部は少し違う。フランス語のウィクショナリーは、俗ラテン語の *manuopera という、文献に見つかっていない再建形を挙げ、 manus （手）と opera （仕事）の合成と説明する。 <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> つまり、経路を「中世ラテン語」とするか、「俗ラテン語」とするかが、辞書によって違う。さらに英語版の Wiktionary は、この語が 800 年のカール大帝の勅令集に、「雑用、手作業」の意味で初めて現れたとし、フランク語の「手仕事」を意味する語を、意味ごと写し取った翻訳借用だった可能性が高いと書く。 <sup id="fnref-14-3"><a href="#ref-14">[14]</a></sup> 動詞は、 manure と同じ語から別々に分かれた二重語でもあるという。 <sup id="fnref-14-4"><a href="#ref-14">[14]</a></sup></p>
+
+<h3 id="sec5-2">5.2 フランス語での意味の移り変わり</h3>
+
+<p>フランス語のウィクショナリーは、 manœuvre の意味を次の順に並べている。 <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 非熟練の労働者、手で器具を動かす操作、海事（索具や船の操り）、軍事（部隊の移動）、そして比喩としての策略である。ここで注意したいのは、この並びが歴史の順を示しているとは限らないことである。同じ項目の用例には、 1769 年の船の索具の用例、 1832 年の軍事演習の用例、そして 1883 年の「労働者」の用例が並ぶ。 <sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup> 労働者の意味の用例が、いちばん新しい。意味の並びを、そのまま時間の流れとして読んではならない。</p>
+
+<h3 id="sec5-3">5.3 英語への入り方と綴り</h3>
+
+<p>Dictionary.com は、英語での最初の記録を 1470 〜 1480 年とし、これは「手仕事」を表す以前の意味にあたると述べる。この意味では、中期フランス語から借りた maanorre という形が使われていた。現在の名詞の意味は 1750 〜 1760 年のものとされる。 <sup id="fnref-15-2"><a href="#ref-15">[15]</a></sup> 同じ辞書によれば、現在の主な意味は、部隊や艦船の計画的な移動、針路を変えること、そして巧みな、あるいはずる賢い動きである。 <sup id="fnref-15-3"><a href="#ref-15">[15]</a></sup></p>
+
+<p>綴りは、 maneuver がアメリカ式、 manoeuvre がイギリスなど英連邦式である。 manœuvre は古風な綴りで、 maneuvre と manoeuver は標準的でないとされる。 <sup id="fnref-14-5"><a href="#ref-14">[14]</a></sup> なお、本稿はこれ以外の辞書、たとえば Merriam-Webster 、 Etymonline 、 OED の本文を直接確かめることができなかった。これらは取得できなかった。この点は 8 章で改めて述べる。</p>
+
+<h3 id="sec5-4">5.4 日本語での表記</h3>
+
+<p>日本語の辞書での扱いは、少し様子が違う。国語辞典を収めたコトバンクの見出しは「マヌーバー」で、『デジタル大辞泉』は「作戦」「策略」「術策」、『精選版 日本国語大辞典』は「策略」「策動」「作戦」とし、「演習」の意味もあるとする。後者は『アルス新語辞典』（ 1930 年）を出典に挙げている。 <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup> 一方で、分野の用語辞典は操縦の意味を前に出す。パラグライダー用語辞典は、元は軍隊用語で、機動作戦、巧妙な手段の意味があり、パラグライダーでは機体を巧みに操作する技術を指すと説明する。 <sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup> 別の項目の「マニューバー」では、サーフィン用語集が、ライディング中の個々の動きの総称と定義する。 <sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup></p>
+
+<p>表記は、分野ごとに揺れている。国語辞典は「マヌーバー」、サーフィンは「マニューバー」、そして宇宙機関の公式発表は「マヌーバ」である。 2007 年 9 月 16 日の JAXA の報道資料は、月周回衛星「かぐや」の「軌道制御誤差補正マヌーバ（ΔVa1 ）」の実施を知らせ、その説明に、ロケットが投入した軌道の誤差を直す軌道制御を「軌道投入誤差修正マヌーバ」と呼んでいる。 <sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup> 本稿は表題と本文で「マニューバ」と書くが、これは辞書や JAXA の表記（マヌーバー、マヌーバ）とは異なる。この表記が辞書にどう載っているか、また「機動」という訳語との対応が辞書にあるかは、今回の調査では確認できなかった。</p>
+
+<h3 id="sec5-5">5.5 分野ごとの用法</h3>
+
+<p>以上をまとめると、辞書と公的資料で確認できる用法は次のとおりである。軍事では、部隊や艦船の計画的な移動と、大規模な演習。 <sup id="fnref-15-4"><a href="#ref-15">[15]</a></sup> 乗り物では、船や車両の針路を変える操作や、乗り物を操る制御された動き。 <sup id="fnref-15-5"><a href="#ref-15">[15]</a></sup><sup id="fnref-14-6"><a href="#ref-14">[14]</a></sup> 宇宙では、前述の軌道制御の操作。 <sup id="fnref-19-2"><a href="#ref-19">[19]</a></sup> 比喩では、策略や、ずる賢い動き。 <sup id="fnref-15-6"><a href="#ref-15">[15]</a></sup><sup id="fnref-17-3"><a href="#ref-17">[17]</a></sup> 英語の辞書は、さらに体や道具の巧みな動きや、発明者の名を冠した医療の手技も挙げている。 <sup id="fnref-14-7"><a href="#ref-14">[14]</a></sup> 航空、自動車、宇宙といった分野ごとの専門資料を、すべて当たったわけではない。</p>
+
+<h3 id="sec5-6">5.6 FPV の技を「マニューバ」と呼ぶ慣行の実態</h3>
+
+<p>最後に、 FPV の側から見る。調べた英語の解説では、技の総称は「 trick 」が優勢だった。 iFlight の寄稿は「 trick 」を全体で使い、「 maneuver 」は一度だけ現れる。 <sup id="fnref-4-6"><a href="#ref-4">[4]</a></sup> Rotor Riot の案内は「 freestyle tricks 」という見出しを置く。 <sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup> 個人ブログの Cédric Walter は「 figures 」を使う。 <sup id="fnref-6-8"><a href="#ref-6">[6]</a></sup> WREKD の一覧は、ページの題に「 tricks and manuevers 」（原文の綴り）とあり、本文は一行の要約を添えた一覧になっている。 <sup id="fnref-2-12"><a href="#ref-2">[2]</a></sup> ある販売系ブログは、スプリット S を「有人機から借りた古典的な曲技 (manoeuvre) 」と呼んでいる。 <sup id="fnref-5-8"><a href="#ref-5">[5]</a></sup> ただし、調べたのは数件のページにすぎず、傾向と呼べる程度にとどまる。</p>
+
+<p>日本語で FPV の技を解説した資料は、 2026 年 10 月 16 日の検索（二回）では見つからなかった。このため、日本の FPV の世界で、技を総称して「マニューバ」と呼ぶ慣行がどれほどあるのかは、確認できていない。</p>
+
+<h2 id="sec6">6. 語源と操縦は結びつくか</h2>
+
+<p>ここから先は、筆者の解釈である。事実の章とは別に書く。</p>
+
+<p>問いは、こうである。「手で巧みに操る」という語源が、いまの FPV の用法を説明する、あるいは裏づけるのか。それとも、物語としての魅力に引かれた読み込みにすぎないのか。判断の物差しは二つ置く。一つは、 FPV で今使われている意味が、語の歴史のどの段階の意味から来ているか。もう一つは、英語圏の FPV で実際にこの語が使われているか。</p>
+
+<p><strong>結びつくとする見方</strong><br>最も強い形で言えば、こうなる。語の最古層には「手」があり、フランス語にはその後も、手で器具を動かす操作という意味があった。 <sup id="fnref-16-4"><a href="#ref-16">[16]</a></sup> 英語の辞書にも、体や道具の巧みな動きという意味が載っている。 <sup id="fnref-14-8"><a href="#ref-14">[14]</a></sup> 分野の用語辞典は、パラグライダーでは機体を巧みに操作する技術、サーフィンでは個々の動きの総称として、この語を使うと記す。 <sup id="fnref-17-4"><a href="#ref-17">[17]</a></sup><sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup> 辞書には、乗り物を操る制御された動き <sup id="fnref-14-9"><a href="#ref-14">[14]</a></sup> や針路を変えること <sup id="fnref-15-7"><a href="#ref-15">[15]</a></sup> という語義もある。 FPV の側でも、 iFlight の寄稿に「 maneuvers 」の使用が一度あり、 <sup id="fnref-4-7"><a href="#ref-4">[4]</a></sup> WREKD の一覧の題にも「 manuevers 」がある。 <sup id="fnref-2-13"><a href="#ref-2">[2]</a></sup> 機体を手で巧みに動かすという FPV の用法は、これらの語義の続きにある。語源が過去の話でも、意味は切れていない、という主張である。</p>
+
+<p><strong>読み込みだとする見方</strong><br>これも最も強い形で言う。英語の最古の記録（ 1470 〜 1480 年）は「手仕事」の意味だったが、現在の名詞の意味が入ったのは 1750 〜 1760 年ごろで、その中心は部隊や艦船の移動と、巧みな、あるいはずる賢い動きである。 <sup id="fnref-15-8"><a href="#ref-15">[15]</a></sup> 辞書に載る「巧みな動き」が「手仕事」から連続して来たのか、軍事の意味から比喩として広がったのかは、手元の辞書では判別できない。そのうえ、語源が現在の意味を決めるわけではない。語源から現在の意味を導くと、この誤りに陥る。</p>
+
+<p><strong>中間の見方</strong><br>フランス語の項目の意味の並びは、労働者、手での器具の操作、船の操り、軍の動き、策略の順である。 <sup id="fnref-16-5"><a href="#ref-16">[16]</a></sup> 5.2 で見たとおり、この並びは歴史の順とは限らないので、「手による操作から軍の動きへ広がった」と読み切ることはできない。ただし、手による操作と船や軍の動きが、同じ語の意味として並んでいるのは事実である。そこから連想が生まれる余地はある。それは歴史の説明ではなく、比喩や修辞としての成り立ち方である。</p>
+
+<p><strong>筆者の判断</strong><br>二つの物差しを当てた結果を述べる。第一の物差し（意味の段階）には、次の三点が当たる。第二の物差し（用例）には、調べた数件の英語の解説で、技の総称が trick を主とし、この語はまれだったという結果が当たる。日本語圏の実態は未確認である。以上から、語源が FPV の用法を説明するとは言い切れない、というのが筆者の結論である。</p>
+
+<p><strong>成り立つ点</strong><br>語の最古層に「手」があること、操縦者が手で機体を巧みに動かしていること、そして近い分野の語義（パラグライダー、サーフィン）が操作や動作を指すこと。これらは確認できた。</p>
+
+<p><strong>確かめられない点</strong><br>辞書で確認できる範囲では、「巧みな動き」の語義が「手仕事」から連続して来たことを示す記述は見つからなかった。この語が航空や FPV に転用された時期と経緯も、確認できなかった。</p>
+
+<p><strong>読み込みになる点</strong><br>語源が FPV の用法を説明すると断定すること、また語源から FPV のマニューバの価値や正しさを導くことは、読み込みである。</p>
+
+<h2 id="sec7">7. 日本の制度と安全</h2>
+
+<p>日本で FPV ドローンを飛ばす読者が、まず知っておきたい制度をまとめる。取得日は 2026 年 10 月 16 日で、制度は同日の時点のものである。以下は一般的な案内であり、個別の法的助言ではない。実際に飛ばす前に、示した一次の出典と、管轄の機関で確認してほしい。</p>
+
+<h3 id="sec7-1">7.1 航空法、登録、飛行禁止法</h3>
+
+<table>
+<tr><th>法令・制度</th><th>確認できた内容（ 2026 年 10 月時点）</th><th>重さなどによる区分</th><th>一次の出典</th></tr>
+<tr><td>航空法（無人航空機の定義）</td><td>飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td>機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td>国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
+<tr><td>機体登録とリモート ID</td><td>令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td>100g 以上</td><td>国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
+<tr><td>飛行禁止空域</td><td>空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td>—</td><td>国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
+<tr><td>飛行の方法</td><td>全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td>25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td>同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
+<tr><td>小型無人機等飛行禁止法</td><td>対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td>重量の制限なし</td><td>神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
+</table>
+
+<h3 id="sec7-2">7.2 FPV で引っかかりやすい二つの点</h3>
+
+<p>FPV に特有の論点は、目視外飛行と電波である。まず目視外飛行（肉眼で機体を見ずに行う飛行）から述べる。国土交通省のページ自体には、 FPV やゴーグルへの言及が見当たらなかった。 <sup id="fnref-22-3"><a href="#ref-22">[22]</a></sup><sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup> 行政書士事務所の解説（ 2017 年公開、 2020 年更新）は、画面を常に見ながらの飛行は目視外飛行にあたり承認が要ること、レース用の FPV ゴーグルは目視外にあたること、屋内は規制の対象外であることを述べる。 <sup id="fnref-25-1"><a href="#ref-25">[25]</a></sup> これは民間の二次的な整理であり、現在の国土交通省の解釈と一致するかは、一次の文書では確認できなかった。 FPV の飛行が承認の対象になりうることを前提に、航空局の解釈と申請の案内で確かめてほしい。</p>
+
+<p>電波についても、確認できた範囲は限られる。総務省の 2026 年 7 月 10 日の報道資料によれば、ドローンの 5.8GHz 帯の無線について、特定実験試験局（免許などの手続を簡略にする趣旨の実験用の無線局）の制度で、 5755 〜 5795MHz は最大 1W 、 5795 〜 5815MHz は最大 25mW と定められている。使用期限は令和 9 年 3 月 31 日までで、使用できる地域は調査の途中だった。この帯域は ETC などの既存の無線システムと共用されている。 <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> ただし、趣味の FPV で使う映像送信機に、免許や資格が要るのかどうかという点は、一次の資料で確認できなかった。ここは、総務省または総合通信局（総務省の地方機関）に問い合わせるのが確実である。</p>
+
+<h3 id="sec7-3">7.3 危険性と、釣り合いの取り方</h3>
+
+<p>危険について、出典で確かめられたことを書く。製品評価技術基盤機構 (NITE) の 2025 年 6 月 26 日の発表では、 2020 年から 2024 年の 5 年間に、リチウムイオン電池搭載製品の事故は 1860 件あり、約 85% （ 1587 件）が火災事故に発展した。注意点として、高温の場所に放置しない、強い衝撃を与えない、膨らむなどの異常があれば使用をやめる、が挙がる。「リチウムポリマー」や「 Li-Po 」と書かれた製品にも、リチウムイオン電池が使われているという。 <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> これはドローン専用の統計ではないが、 FPV 機のバッテリーにも通じる注意である。機体の墜落や接触で電池に衝撃が加わる場面は、 FPV では珍しくないと思われる。これは筆者の推測である。</p>
+
+<p>壁や人の近くを飛ぶ技の危険性については、直接の統計を見つけられなかった。分かるのは次のことである。人や物件との距離が取れない飛行には承認が要る。 <sup id="fnref-22-4"><a href="#ref-22">[22]</a></sup> 有人機のスプリット S でさえ、降下しながら半ループを描くため、十分な高度がなければ完了できず、最小の安全高度は速度や機体の性質で変わると説明されている。 <sup id="fnref-9-5"><a href="#ref-9">[9]</a></sup> FPV でも、同じ技は高度と速度の余裕が前提になると考えられるが、これは筆者の推論である。</p>
+
+<p>FPV には、狭い隙間を抜けるフリースタイルやレース、映画の撮影といった魅力がある。 <sup id="fnref-4-8"><a href="#ref-4">[4]</a></sup><sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup> 同時に、機体の登録、飛行禁止空域、電池の取り扱いといった責任も伴う。魅力だけを語るのも、危険ばかりを強調するのも、実態からは離れる。</p>
+
+<h2 id="sec8">8. この記事の限界</h2>
+
+<ul>
+<li>技の定義の出典は、販売元や個人のブログ、フォーラムの投稿が中心で、公的機関や学術資料、書籍の本文を確認できなかった。このため「定義がそろう技」も、確立した定説とは言えない。</li>
+<li>語源の裏づけは、 Wiktionary 、 Dictionary.com 、フランス語のウィクショナリー、国語辞典が中心である。 Merriam-Webster 、 Etymonline 、 OED は取得できず、語源専門辞典や歴史的な用例を示す大規模な辞書による確認は、満たせなかった。英語での初出の年代は、 Dictionary.com の記述に依存している。</li>
+<li>日本語で FPV の技を解説した資料は見つからず、日本で技を「マニューバ」と総称する慣行の実態は不明である。「マニューバ」（長音なし）の辞書での扱いと、「機動」との訳語の対応も確認できなかった。</li>
+<li>ジューシー・フリックは定義を確認できず、詳しく扱わなかった。ヨースピンの細かな条件、オービットの操作、ダイブ中のスロットル、トリッピー・スピンが回る対象、ウォールタップの動きも確認できなかった。扱った技は裏づけの取れる主流のものに偏っている。</li>
+<li>FPV が目視外飛行にあたるかは二次的な資料しかなく、電波法上の免許・資格の扱いも一次資料で確認できなかった。小型無人機等飛行禁止法は警察機関のページに依拠しており、法令本文や警察庁の資料は確認しておらず、改正の施行日も不明である。制度は 2026 年 10 月 16 日の時点のもので、改正で変わりうる。</li>
+<li>「語源と操縦の結びつき」は筆者の解釈であり、辞書が述べていることではない。</li>
+</ul>
+
+<h2 id="sec9">9. おわりに</h2>
+
+<p>四つの問いに、確認できた範囲で答えておく。第一に、 FPV の操縦は、四つの操作が三つの軸の回転と推力に対応する仕組みで、宙返りなどが多く Acro で行われるのは、 Acro ではスティックが回転の速さを決め、 Angle では角度を指示する仕組みが一回転に向かないと考えられるからである。第二に、技の定義は、ロールやフリップのようにそろうものと、マティ・フリップやリワインドのように割れるものがあり、名前の由来を出典で確かめられた例は少ない。第三に、「マニューバ」の語源は手仕事に行き着くが、それが FPV の用法を決めるとは言えず、語源が FPV の用法を説明すると言い切る根拠は得られなかった。第四に、日本で飛ばすには、機体の登録、飛行の方法、電波、飛行禁止の区域の各面で確かめるべき点があり、危険としては、電池の事故と、技に必要な高度の余裕が出典から読み取れる。</p>
+
+
+
+<div class="refs">
+<h2 id="refs">参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> Rotor Riot Support 『 How do I do freestyle tricks? 』、 2021-10-26 更新。販売元のサポート文書で、技名の一覧が中心。取得日 2026-10-16 。 <a href="https://rotorriotsupport.helpscoutdocs.com/article/35-how-do-i-do-freestyle-tricks">Rotor Riot サポート文書</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <sup><a href="#fnref-2-6">f</a></sup> <sup><a href="#fnref-2-7">g</a></sup> <sup><a href="#fnref-2-8">h</a></sup> <sup><a href="#fnref-2-9">i</a></sup> <sup><a href="#fnref-2-10">j</a></sup> <sup><a href="#fnref-2-11">k</a></sup> <sup><a href="#fnref-2-12">l</a></sup> <sup><a href="#fnref-2-13">m</a></sup> WREKD Co. 『 a master list of fpv tricks and manuevers and how to do them 』（原文の綴り）。販売元の技の一覧で、公開日の表示なし（© 2026 ）。取得日 2026-10-16 。 <a href="https://wrekd.com/pages/a-master-list-of-fpv-tricks-and-manuevers-and-how-to-do-them">WREKD 技の一覧</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <sup><a href="#fnref-3-5">e</a></sup> <sup><a href="#fnref-3-6">f</a></sup> Wikipedia 『 First-person view (radio control) 』。 FPV の定義、基本構成、普及の時期。同記事の根拠は販売紹介サイトや 2009 年の入門ガイドなどで、手がかりとして使う。取得日 2026-10-16 。 <a href="https://en.wikipedia.org/wiki/First-person_view_(radio_control)">Wikipedia</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> <sup><a href="#fnref-4-3">c</a></sup> <sup><a href="#fnref-4-4">d</a></sup> <sup><a href="#fnref-4-5">e</a></sup> <sup><a href="#fnref-4-6">f</a></sup> <sup><a href="#fnref-4-7">g</a></sup> <sup><a href="#fnref-4-8">h</a></sup> iFlight 『 What is FPV freestyle and how is it different than drone racing? 』 (BMac による寄稿、 2022-10-19) 。メーカーのブログ。取得日 2026-10-16 。 <a href="https://www.iflight.com/en-WHAT-IS-FPV-FREESTYLE-AND-HOW-IS-IT-DIFFERENT-THAN-DRONE-RACING-blog1.html">iFlight ブログ</a></li>
+<li id="ref-5">^ <sup><a href="#fnref-5-1">a</a></sup> <sup><a href="#fnref-5-2">b</a></sup> <sup><a href="#fnref-5-3">c</a></sup> <sup><a href="#fnref-5-4">d</a></sup> <sup><a href="#fnref-5-5">e</a></sup> <sup><a href="#fnref-5-6">f</a></sup> <sup><a href="#fnref-5-7">g</a></sup> <sup><a href="#fnref-5-8">h</a></sup> Jayesh Jain 『 FPV Freestyle Tricks Tutorial: Rolls, Flips and Split-S 』、 zbotic.in 、 2026-03-11 。販売系のブログ。取得日 2026-10-16 。 <a href="https://zbotic.in/fpv-freestyle-tricks-tutorial-rolls-flips-and-split-s/">zbotic ブログ</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> <sup><a href="#fnref-6-3">c</a></sup> <sup><a href="#fnref-6-4">d</a></sup> <sup><a href="#fnref-6-5">e</a></sup> <sup><a href="#fnref-6-6">f</a></sup> <sup><a href="#fnref-6-7">g</a></sup> <sup><a href="#fnref-6-8">h</a></sup> Cédric Walter 『 Main freestyle quadcopter figures and how to do them 』、個人ブログ、 2023-08-25 公開、 2026-08-01 更新。取得日 2026-10-16 。 <a href="https://waltercedric.com/rc-helicopter-airplanes-fpv-drone/main-freestyle-quadcopter-figures-and-how-to-do-them/">Cédric Walter ブログ</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> <sup><a href="#fnref-7-3">c</a></sup> Betaflight プロジェクト『 Modes 』（公式文書）。 Acro (Rate) ・ Angle ・ Horizon の各モードの説明。取得日 2026-10-16 。 <a href="https://betaflight.com/docs/wiki/guides/current/Modes">Betaflight 公式文書</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> <sup><a href="#fnref-8-3">c</a></sup> Betaflight プロジェクト『 Rate Calculator 』（公式文書）。レート (RC Rate ・ Rate ・ Expo) と最大回転速度の目安。取得日 2026-10-16 。 <a href="https://betaflight.com/docs/wiki/guides/current/Rate-Calculator">Betaflight 公式文書</a></li>
+<li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> <sup><a href="#fnref-9-3">c</a></sup> <sup><a href="#fnref-9-4">d</a></sup> <sup><a href="#fnref-9-5">e</a></sup> Wikipedia 『 Split S 』。有人機の機動の定義。同記事が挙げる文献は Cescotti 『 Luftfahrt-Definitionen 』 (Motorbuch Verlag 、 1993) など。手がかりとして使う。取得日 2026-10-16 。 <a href="https://en.wikipedia.org/wiki/Split_S">Wikipedia</a></li>
+<li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> <sup><a href="#fnref-10-3">c</a></sup> <sup><a href="#fnref-10-4">d</a></sup> Wikipedia 『 Immelmann turn 』。同記事が挙げる文献は Wood & Sutton (2016) 、 McMinnies & Anderson 『 Practical Flying 』 (1997 、初版 1918) など。「出典が必要」の印が付く箇所がある。手がかりとして使う。取得日 2026-10-16 。 <a href="https://en.wikipedia.org/wiki/Immelmann_turn">Wikipedia</a></li>
+<li id="ref-11">^ <sup><a href="#fnref-11-1">a</a></sup> <sup><a href="#fnref-11-2">b</a></sup> <sup><a href="#fnref-11-3">c</a></sup> David 『 FPV Freestyle Trick Tutorial 2026 』、 UAVMODEL Insights 、 2026-06-06 。出典の引用なし。取得日 2026-10-16 。 <a href="https://blog.uavmodel.com/fpv-freestyle-trick-tutorial-2026-power-loops-split-s-and-matty-flip-progression-guide/">UAVMODEL ブログ</a></li>
+<li id="ref-12">^ <sup><a href="#fnref-12-1">a</a></sup> <sup><a href="#fnref-12-2">b</a></sup> IntoFPV フォーラム、スレッド thread-26738 (2024-08-23) 。個人の投稿。取得日 2026-10-16 。 <a href="https://intofpv.com/archive/index.php/thread-26738.html">IntoFPV フォーラム</a></li>
+<li id="ref-13">^ <sup><a href="#fnref-13-1">a</a></sup> <sup><a href="#fnref-13-2">b</a></sup> IntoFPV フォーラム、スレッド tid=26483 (2024-07-11 〜 2024-08-23) 。個人の投稿。取得日 2026-10-16 。 <a href="https://intofpv.com/printthread.php?tid=26483">IntoFPV フォーラム</a></li>
+<li id="ref-14">^ <sup><a href="#fnref-14-1">a</a></sup> <sup><a href="#fnref-14-2">b</a></sup> <sup><a href="#fnref-14-3">c</a></sup> <sup><a href="#fnref-14-4">d</a></sup> <sup><a href="#fnref-14-5">e</a></sup> <sup><a href="#fnref-14-6">f</a></sup> <sup><a href="#fnref-14-7">g</a></sup> <sup><a href="#fnref-14-8">h</a></sup> <sup><a href="#fnref-14-9">i</a></sup> Wiktionary （英語版）『 maneuver 』。語源、綴り、語義。協働編集の辞書。取得日 2026-10-16 。 <a href="https://en.wiktionary.org/wiki/maneuver">Wiktionary</a></li>
+<li id="ref-15">^ <sup><a href="#fnref-15-1">a</a></sup> <sup><a href="#fnref-15-2">b</a></sup> <sup><a href="#fnref-15-3">c</a></sup> <sup><a href="#fnref-15-4">d</a></sup> <sup><a href="#fnref-15-5">e</a></sup> <sup><a href="#fnref-15-6">f</a></sup> <sup><a href="#fnref-15-7">g</a></sup> <sup><a href="#fnref-15-8">h</a></sup> Dictionary.com 『 maneuver 』。語源（初出の年代を含む）と語義。取得日 2026-10-16 。 <a href="https://www.dictionary.com/browse/maneuver">Dictionary.com</a></li>
+<li id="ref-16">^ <sup><a href="#fnref-16-1">a</a></sup> <sup><a href="#fnref-16-2">b</a></sup> <sup><a href="#fnref-16-3">c</a></sup> <sup><a href="#fnref-16-4">d</a></sup> <sup><a href="#fnref-16-5">e</a></sup> Wiktionnaire （フランス語版）『 manœuvre 』。語源と語義の並び、用例（ 1769 年、 1832 年、 1883 年）。協働編集の辞書。取得日 2026-10-16 。 <a href="https://fr.wiktionary.org/wiki/manœuvre">Wiktionnaire</a></li>
+<li id="ref-17">^ <sup><a href="#fnref-17-1">a</a></sup> <sup><a href="#fnref-17-2">b</a></sup> <sup><a href="#fnref-17-3">c</a></sup> <sup><a href="#fnref-17-4">d</a></sup> コトバンク『マヌーバー』。『デジタル大辞泉』（小学館）、『精選版 日本国語大辞典』、パラグライダー用語辞典の各項目。取得日 2026-10-16 。 <a href="https://kotobank.jp/word/マヌーバー">コトバンク</a></li>
+<li id="ref-18">^ <sup><a href="#fnref-18-1">a</a></sup> <sup><a href="#fnref-18-2">b</a></sup> コトバンク『マニューバー』。サーフィン用語集（デジサーフ、セキノレーシングスポーツ）の項目。取得日 2026-10-16 。 <a href="https://kotobank.jp/word/マニューバー">コトバンク</a></li>
+<li id="ref-19">^ <sup><a href="#fnref-19-1">a</a></sup> <sup><a href="#fnref-19-2">b</a></sup> 宇宙航空研究開発機構 (JAXA) 『月周回衛星「かぐや (SELENE) 」の軌道制御誤差補正マヌーバ（ΔVa1 ）実施について』、報道資料、 2007-09-16 。取得日 2026-10-16 。 <a href="https://www.jaxa.jp/countdown/f13/topics/pdf/0916_0227_va1_j.pdf">JAXA 報道資料 (PDF)</a></li>
+<li id="ref-20"><a href="#fnref-20-1">^</a> 国土交通省航空局『無人航空機（ドローン・ラジコン機等）の飛行ルール』の、対象となる機体を扱うページ。取得日 2026-10-16 。 <a href="https://www.mlit.go.jp/koku/koku_fr10_000040.html">国土交通省</a></li>
+<li id="ref-21"><a href="#fnref-21-1">^</a> 国土交通省航空局の、無人航空機の登録制度に関する 1 枚資料（表題の明記なし。令和 8 年 5 月末時点の登録数を含む）。取得日 2026-10-16 。 <a href="https://www.mlit.go.jp/koku/content/001443264.pdf">国土交通省 公開 PDF</a></li>
+<li id="ref-22">^ <sup><a href="#fnref-22-1">a</a></sup> <sup><a href="#fnref-22-2">b</a></sup> <sup><a href="#fnref-22-3">c</a></sup> <sup><a href="#fnref-22-4">d</a></sup> 国土交通省航空局『無人航空機（ドローン・ラジコン機等）の飛行ルール』の、飛行禁止空域と飛行の方法を扱うページ。取得日 2026-10-16 。 <a href="https://www.mlit.go.jp/koku/koku_fr10_000041.html">国土交通省</a></li>
+<li id="ref-23">^ <sup><a href="#fnref-23-1">a</a></sup> <sup><a href="#fnref-23-2">b</a></sup> 国土交通省航空局『無人航空機（ドローン・ラジコン機等）の飛行ルール』の、飛行許可・承認を扱うページ。取得日 2026-10-16 。 <a href="https://www.mlit.go.jp/koku/koku_fr10_000042.html">国土交通省</a></li>
+<li id="ref-24"><a href="#fnref-24-1">^</a> 神奈川県警察本部警備部警備課『小型無人機等飛行禁止法について』、 2026-07-27 更新。取得日 2026-10-16 。 <a href="https://www.police.pref.kanagawa.jp/kurashi/anzen_machi/mese3013.html">神奈川県警察</a></li>
+<li id="ref-25"><a href="#fnref-25-1">^</a> 行政書士大森翔太事務所『 FPV は目視外飛行？』、 2017-01-10 公開、 2020-06-14 更新。民間の二次的な解説。取得日 2026-10-16 。 <a href="https://dronekyoka.com/fpv%E3%81%AF%E7%9B%AE%E8%A6%96%E5%A4%96%E9%A3%9B%E8%A1%8C%EF%BC%9F%EF%BD%9C%E3%81%9D%E3%82%82%E3%81%9D%E3%82%82%E7%9B%AE%E8%A6%96%E5%A4%96%E9%A3%9B%E8%A1%8C%E3%81%A3%E3%81%A6%E4%BD%95%EF%BC%9F/">事務所の記事</a></li>
+<li id="ref-26"><a href="#fnref-26-1">^</a> 総務省『 5.8GHz 帯特定実験試験局の使用可能地域に関するニーズ調査』、報道資料、 2026-07-10 。ページに文字の化けがあり、読み取れた範囲。取得日 2026-10-16 。 <a href="https://www.soumu.go.jp/menu_news/s-news/01kiban09_02000595.html">総務省 報道資料</a></li>
+<li id="ref-27"><a href="#fnref-27-1">^</a> 製品評価技術基盤機構 (NITE) 『「夏バテ（夏のバッテリー）」にご用心――「リチウムイオン電池搭載製品」の火災事故を防ぐ三つのポイント』、ニュースリリース、 2025-06-26 。取得日 2026-10-16 。 <a href="https://www.nite.go.jp/data/000158238.pdf">NITE 公開 PDF</a></li>
+</ol>
+</div>
+<p class="note">本稿は、公開されている資料を 2026 年 10 月 16 日に確認してまとめた読み物である。技の定義の多くは民間の資料に基づいており、確立した定説として示したものではない。制度は変わりうるので、実際に機体を飛ばす前に、示した一次の出典と管轄の機関で最新の内容を確認してほしい。</p>
+</main>
+</body>
+</html>
