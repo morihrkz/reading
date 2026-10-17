@@ -6,7 +6,8 @@
 <title>国内の主な経済圏の構成</title>
 <style>
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-body { margin: 0; padding: 0 1rem 2rem; line-height: 1.8; overflow-wrap: anywhere; }
+body { margin: 0; line-height: 1.8; overflow-wrap: anywhere; }
+main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
 .title { border-bottom: solid #2A4D69 2.25pt; }
 h1 { font-size: 1.6rem; line-height: 1.4; }
 h2 { font-size: 1.3rem; line-height: 1.4; }
@@ -28,7 +29,7 @@ table td { position: relative; padding-left: 9.2em; border-top: solid #DDDDDD 1p
 table td::before { content: attr(data-label); position: absolute; left: .6em; width: 8em; font-weight: bold; color: #2A4D69; font-size: .85em; line-height: 2.1; }
 
 @media (max-width: 640px) {
- body { padding: 0 .75rem 1.5rem; line-height: 1.75; }
+ body { line-height: 1.75; }
  h1 { font-size: 1.35rem; }
  h2 { font-size: 1.2rem; }
  h3 { font-size: 1.05rem; }
@@ -37,6 +38,7 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
 </style>
 </head>
 <body>
+<main>
 <div class="title">
 <h1>国内の主な経済圏の構成</h1>
 </div>
@@ -522,5 +524,6 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
  <li>トヨタの TOYOTA Wallet は 2021 年時点の情報で、現在の提供状況を確認できていない。</li>
  <li>会員数、取扱高、ポイントの還元率、特典の条件は、扱っていない。</li>
 </ul>
+</main>
 </body>
 </html>

@@ -28,7 +28,7 @@
     word-break: auto-phrase; overflow-wrap: anywhere; text-wrap: pretty;
   }
   main {
-    padding: 2.5rem max(1rem, env(safe-area-inset-right)) 5rem max(1rem, env(safe-area-inset-left));
+    padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0;
   }
   h1, h2, h3 { text-wrap: balance; scroll-margin-top: 1rem; }
   h1 { font-size: clamp(1.45rem, 6.2vw, 2rem); line-height: 1.4; border-bottom: 3px solid var(--accent); padding-bottom: .5rem; }
@@ -86,7 +86,6 @@
     box-shadow: 0 2px 6px rgba(0,0,0,.35);
   }
   @media (max-width: 40rem) {
-    main { padding-top: 1rem; padding-bottom: 5rem; padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right)); }
     h2 { margin-top: 2rem; padding: .35rem .6rem; font-size: 1.2rem; }
     table, tbody, tr, td { display: block; width: 100%; box-sizing: border-box; }
     thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }

@@ -6,7 +6,7 @@
 <title>過剰な生命保険契約の現状と防止策</title>
 <style>
   body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
-  main { padding: 2.5rem 1rem 4rem; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
   h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
@@ -22,7 +22,6 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 文書固有の部品(目次・脚注・参考文献)。配色は doc-html-style の配色表から選んだ */
-  .wrap { max-width: 56rem; margin: 0 auto; }
   .kicker { color: #2a4d69; font-weight: 700; font-size: .9rem; margin: 0 0 .3rem; }
   .subtitle { color: #555; font-size: .95rem; margin: .5rem 0 1.5rem; }
   .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
@@ -44,7 +43,6 @@
 </head>
 <body>
 <main>
-<div class="wrap">
 <p class="kicker">家計・生命保険の検証</p>
 <h1>過剰な生命保険契約の現状と防止策<br>――「がん保険は必要ない」という言説も含めて検証する</h1>
 <p class="subtitle">Excessive Life Insurance Contracts: Current Conditions, Preventive Measures, and the Claim That Cancer Insurance Is Unnecessary</p>
@@ -286,7 +284,6 @@
 </div>
 <p class="endnote">本稿は、公式統計・官公庁や業界団体の資料・学術論文の書誌と要旨に基づく検討であり、個別の契約の可否を断定する助言ではない。制度の数値は改定されうるため、判断にあたっては、各資料の最新版を確認する必要がある。</p>
 
-</div>
 </main>
 </body>
 </html>
