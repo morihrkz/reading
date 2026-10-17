@@ -21,6 +21,20 @@
   ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事型の本文サイズ */
+  p, li, .note, .must, .say { font-size: 19px; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -39,20 +53,20 @@
 
 <h2>1. 結論</h2>
 <p>「再起動が深く、シャットダウンは浅い」という前提が、各 OS で成り立つかどうかを先にまとめる。</p>
-<table>
+<table class="cards">
 <tr><th>OS</th><th>前提の当否</th><th>必要な設定</th></tr>
-<tr><td>Windows 11</td><td>成り立つ。シャットダウンは既定で「高速スタートアップ」という半休止状態の保存を伴い、再起動より浅い。</td><td>高速スタートアップを無効にする（第 3 章）。</td></tr>
-<tr><td>macOS 26</td><td>成り立たない。 Mac には Windows の高速スタートアップに相当する仕組みがなく、シャットダウンは再起動と同じく全プロセスと OS カーネルを終了する。</td><td>プロセスのクリア度合いを上げる設定は不要（第 4 章）。</td></tr>
+<tr><td data-label="OS">Windows 11</td><td data-label="前提の当否">成り立つ。シャットダウンは既定で「高速スタートアップ」という半休止状態の保存を伴い、再起動より浅い。</td><td data-label="必要な設定">高速スタートアップを無効にする（第 3 章）。</td></tr>
+<tr><td data-label="OS">macOS 26</td><td data-label="前提の当否">成り立たない。 Mac には Windows の高速スタートアップに相当する仕組みがなく、シャットダウンは再起動と同じく全プロセスと OS カーネルを終了する。</td><td data-label="必要な設定">プロセスのクリア度合いを上げる設定は不要（第 4 章）。</td></tr>
 </table>
 
 <h2>2. 前提の検証</h2>
 <h3>2.1 Windows</h3>
 <p>疑問の前提のうち、「再起動の方が深い」は正しい。ただし「終了時の時間を短縮するため」という理由づけは少し違う。短縮されるのは主に<strong>次回の起動時間</strong>であり、終了処理はむしろ休止ファイル(<code>hiberfil.sys</code>)への書き出しが加わる分、わずかに長くなることがある。</p>
-<table>
+<table class="cards">
 <tr><th>操作</th><th>ユーザーのアプリ・サインイン</th><th>OS カーネル・ドライバー</th></tr>
-<tr><td>再起動</td><td>すべて終了</td><td>すべて終了し、次回に一から読み込み直す</td></tr>
-<tr><td>シャットダウン（高速スタートアップ有効）</td><td>すべて終了</td><td>終了せず、状態を <code>hiberfil.sys</code> に保存して電源を切る。次回はそれを読み戻す</td></tr>
-<tr><td>シャットダウン（高速スタートアップ無効）</td><td>すべて終了</td><td>すべて終了（再起動と同等）</td></tr>
+<tr><td data-label="操作">再起動</td><td data-label="ユーザーのアプリ・サインイン">すべて終了</td><td data-label="OS カーネル・ドライバー">すべて終了し、次回に一から読み込み直す</td></tr>
+<tr><td data-label="操作">シャットダウン（高速スタートアップ有効）</td><td data-label="ユーザーのアプリ・サインイン">すべて終了</td><td data-label="OS カーネル・ドライバー">終了せず、状態を <code>hiberfil.sys</code> に保存して電源を切る。次回はそれを読み戻す</td></tr>
+<tr><td data-label="操作">シャットダウン（高速スタートアップ無効）</td><td data-label="ユーザーのアプリ・サインイン">すべて終了</td><td data-label="OS カーネル・ドライバー">すべて終了（再起動と同等）</td></tr>
 </table>
 <p>つまり、カーネルとドライバーの状態が持ち越されることが「浅い」の正体である。長時間のうちに溜まったドライバーの不調やメモリの断片化が、シャットダウンでは解消されにくい。</p>
 

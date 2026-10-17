@@ -54,6 +54,20 @@ sup a:hover{text-decoration:underline}
 @media (max-width:480px){
 .toc>ol{columns:1}
 }
+  /* 記事型の本文サイズ */
+  p, li, .note, .must, .say { font-size: 19px; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -118,16 +132,16 @@ sup a:hover{text-decoration:underline}
 <p>直接の契機は、 2024 年 11 月に ICC がイスラエルのネタニヤフ首相とガラント前国防相に逮捕状を出したことだと広く受け止められている。ロイター通信は、トランプ大統領が自身や側近の訴追を懸念していたとも報じた。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> ただし、制裁の発想自体は新しいものではない。第 1 期政権の 2020 年にも、米国はアフガニスタンでの捜査により米兵が訴追されることを強く懸念して、 ICC の検察官らに制裁を科している。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
 <h3 id="sec2-2">2.2 対象者の拡大</h3>
 <p>大統領令の発出以降、指定の対象は次のとおり段階的に広がった。愛知県弁護士会は、これを、検察官から次席検察官、判事、所長へと対象が広がったものと整理している。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
-<table>
+<table class="cards">
 <thead><tr><th>時期</th><th>対象・出来事</th></tr></thead>
 <tbody>
-<tr><td>2025 年 2 月</td><td>大統領令の発出。カリム・カーン検察官が制裁対象となる。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td>2025 年 6 月 5 日</td><td>判事 4 人を指定。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td>2025 年 8 月 20 日</td><td>判事および次席検察官の計 4 人を指定。 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
-<tr><td>2025 年 12 月 18 日</td><td>判事 2 人を指定。 <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td>2026 年 7 月 13 日</td><td>国務省が ICC を「解体」するための政府横断の運動を開始。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
-<tr><td>2026 年 8 月 18 日</td><td>赤根智子所長とアブドゥライェ・セイ上級法廷法律家を指定。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
-<tr><td>2026 年 10 月 9 日</td><td>ICC を機関として指定。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><td data-label="時期">2025 年 2 月</td><td data-label="対象・出来事">大統領令の発出。カリム・カーン検察官が制裁対象となる。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><td data-label="時期">2025 年 6 月 5 日</td><td data-label="対象・出来事">判事 4 人を指定。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><td data-label="時期">2025 年 8 月 20 日</td><td data-label="対象・出来事">判事および次席検察官の計 4 人を指定。 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><td data-label="時期">2025 年 12 月 18 日</td><td data-label="対象・出来事">判事 2 人を指定。 <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><td data-label="時期">2026 年 7 月 13 日</td><td data-label="対象・出来事">国務省が ICC を「解体」するための政府横断の運動を開始。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><td data-label="時期">2026 年 8 月 18 日</td><td data-label="対象・出来事">赤根智子所長とアブドゥライェ・セイ上級法廷法律家を指定。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><td data-label="時期">2026 年 10 月 9 日</td><td data-label="対象・出来事">ICC を機関として指定。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
 </tbody>
 </table>
 <p>この表の数え方によれば、機関指定の直前までに、個人としては判事と検察官の計 13 人が対象となっていた。国連ニュースも「 13 人の判事と検察官」と伝えている。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></p>

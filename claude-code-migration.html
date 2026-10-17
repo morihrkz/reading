@@ -56,6 +56,17 @@ td.path{color:var(--accent);word-break:break-all}
 @media (max-width:480px){
 .toc>ol{columns:1}
 }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -93,65 +104,65 @@ td.path{color:var(--accent);word-break:break-all}
 <h2 id="sec1">1. ユーザーレベル設定（ <code>~/.claude/</code> 配下）</h2>
 <p>全プロジェクト共通で効く、あなた個人の設定である。ホームディレクトリ配下にあるため、これが「移植の本丸」になる。</p>
 <div class="table-wrap">
-<table>
+<table class="cards">
 <thead>
 <tr><th>ファイル / ディレクトリ</th><th>内容</th><th>移植方法</th></tr>
 </thead>
 <tbody>
 <tr>
-<td class="path">~/.claude/CLAUDE.md</td>
-<td>グローバルなメモリ。プロジェクト横断で常に読み込まれる指示・好み</td>
-<td>同じ相対パスにファイルをコピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/CLAUDE.md</td>
+<td data-label="内容">グローバルなメモリ。プロジェクト横断で常に読み込まれる指示・好み</td>
+<td data-label="移植方法">同じ相対パスにファイルをコピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/settings.json</td>
-<td>権限（許可 / 拒否コマンド）、環境変数、モデル既定値などユーザー設定</td>
-<td>同じ相対パスにコピー。中身は JSON なのでそのまま持っていける</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/settings.json</td>
+<td data-label="内容">権限（許可 / 拒否コマンド）、環境変数、モデル既定値などユーザー設定</td>
+<td data-label="移植方法">同じ相対パスにコピー。中身は JSON なのでそのまま持っていける</td>
 </tr>
 <tr>
-<td class="path">~/.claude/skills/</td>
-<td>個人用スキル（ <code>skills/&lt;名前&gt;/SKILL.md</code> と付属ファイル）。現在は新規ワークフローの標準的な置き場所</td>
-<td>ディレクトリごとコピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/skills/</td>
+<td data-label="内容">個人用スキル（ <code>skills/&lt;名前&gt;/SKILL.md</code> と付属ファイル）。現在は新規ワークフローの標準的な置き場所</td>
+<td data-label="移植方法">ディレクトリごとコピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/commands/</td>
-<td>カスタムスラッシュコマンド（ <code>.md</code> ファイル群）。スキルと同じ仕組みに統合されており、既存ファイルはそのまま動く</td>
-<td>ディレクトリごとコピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/commands/</td>
+<td data-label="内容">カスタムスラッシュコマンド（ <code>.md</code> ファイル群）。スキルと同じ仕組みに統合されており、既存ファイルはそのまま動く</td>
+<td data-label="移植方法">ディレクトリごとコピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/rules/</td>
-<td>全プロジェクト共通のルール（トピック別の Markdown 。 <code>paths</code> で対象ファイルを絞ることもできる）</td>
-<td>ディレクトリごとコピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/rules/</td>
+<td data-label="内容">全プロジェクト共通のルール（トピック別の Markdown 。 <code>paths</code> で対象ファイルを絞ることもできる）</td>
+<td data-label="移植方法">ディレクトリごとコピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/agents/</td>
-<td>カスタムサブエージェント定義 (YAML frontmatter 付き Markdown)</td>
-<td>ディレクトリごとコピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/agents/</td>
+<td data-label="内容">カスタムサブエージェント定義 (YAML frontmatter 付き Markdown)</td>
+<td data-label="移植方法">ディレクトリごとコピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/workflows/<br><span class="sub">~/.claude/agent-memory/</span></td>
-<td>保存した動的ワークフロー(<code>.js</code>)と、サブエージェントの永続メモリ</td>
-<td>ディレクトリごとコピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/workflows/<br><span class="sub">~/.claude/agent-memory/</span></td>
+<td data-label="内容">保存した動的ワークフロー(<code>.js</code>)と、サブエージェントの永続メモリ</td>
+<td data-label="移植方法">ディレクトリごとコピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/output-styles/</td>
-<td>出力スタイル設定</td>
-<td>ディレクトリごとコピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/output-styles/</td>
+<td data-label="内容">出力スタイル設定</td>
+<td data-label="移植方法">ディレクトリごとコピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/keybindings.json</td>
-<td>キーバインドの上書き設定（存在する場合のみ）</td>
-<td>コピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/keybindings.json</td>
+<td data-label="内容">キーバインドの上書き設定（存在する場合のみ）</td>
+<td data-label="移植方法">コピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/themes/</td>
-<td>カスタムカラーテーマ（存在する場合のみ）</td>
-<td>ディレクトリごとコピー</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/themes/</td>
+<td data-label="内容">カスタムカラーテーマ（存在する場合のみ）</td>
+<td data-label="移植方法">ディレクトリごとコピー</td>
 </tr>
 <tr>
-<td class="path">~/.claude/plugins/</td>
-<td>インストール済みプラグイン（ <code>installed_plugins.json</code> を含む）</td>
-<td>コピーより、新 PC でプラグインを入れ直すほうが確実</td>
+<td class="path" data-label="ファイル / ディレクトリ">~/.claude/plugins/</td>
+<td data-label="内容">インストール済みプラグイン（ <code>installed_plugins.json</code> を含む）</td>
+<td data-label="移植方法">コピーより、新 PC でプラグインを入れ直すほうが確実</td>
 </tr>
 </tbody>
 </table>
@@ -194,60 +205,60 @@ td.path{color:var(--accent);word-break:break-all}
 <h2 id="sec3">3. プロジェクトレベル設定</h2>
 <p>各リポジトリ（プロジェクトフォルダ）内にある設定である。 Git リポジトリならクローンするだけで自動的に付いてくる。</p>
 <div class="table-wrap">
-<table>
+<table class="cards">
 <thead>
 <tr><th>ファイル</th><th>スコープ</th><th>Git 管理</th></tr>
 </thead>
 <tbody>
 <tr>
-<td class="path">CLAUDE.md<br><span class="sub">（または .claude/CLAUDE.md ）</span></td>
-<td>プロジェクト固有の指示。チーム共有</td>
-<td>する（コミット対象）</td>
+<td class="path" data-label="ファイル">CLAUDE.md<br><span class="sub">（または .claude/CLAUDE.md ）</span></td>
+<td data-label="スコープ">プロジェクト固有の指示。チーム共有</td>
+<td data-label="Git 管理">する（コミット対象）</td>
 </tr>
 <tr>
-<td class="path">.claude/settings.json</td>
-<td>チームで共有する権限設定・ MCP 設定など</td>
-<td>する</td>
+<td class="path" data-label="ファイル">.claude/settings.json</td>
+<td data-label="スコープ">チームで共有する権限設定・ MCP 設定など</td>
+<td data-label="Git 管理">する</td>
 </tr>
 <tr>
-<td class="path">.claude/settings.local.json</td>
-<td>個人限定の上書き設定（実験用など）</td>
-<td>しない（ gitignore 対象） - <strong>手動で移植が必要</strong></td>
+<td class="path" data-label="ファイル">.claude/settings.local.json</td>
+<td data-label="スコープ">個人限定の上書き設定（実験用など）</td>
+<td data-label="Git 管理">しない（ gitignore 対象） - <strong>手動で移植が必要</strong></td>
 </tr>
 <tr>
-<td class="path">.claude/rules/</td>
-<td>トピック別の指示。対象ファイルを絞ることもできる</td>
-<td>する</td>
+<td class="path" data-label="ファイル">.claude/rules/</td>
+<td data-label="スコープ">トピック別の指示。対象ファイルを絞ることもできる</td>
+<td data-label="Git 管理">する</td>
 </tr>
 <tr>
-<td class="path">.claude/skills/<br><span class="sub">.claude/commands/</span></td>
-<td>プロジェクト専用のスキル・コマンド</td>
-<td>する</td>
+<td class="path" data-label="ファイル">.claude/skills/<br><span class="sub">.claude/commands/</span></td>
+<td data-label="スコープ">プロジェクト専用のスキル・コマンド</td>
+<td data-label="Git 管理">する</td>
 </tr>
 <tr>
-<td class="path">.claude/agents/</td>
-<td>プロジェクト専用サブエージェント</td>
-<td>する</td>
+<td class="path" data-label="ファイル">.claude/agents/</td>
+<td data-label="スコープ">プロジェクト専用サブエージェント</td>
+<td data-label="Git 管理">する</td>
 </tr>
 <tr>
-<td class="path">.claude/output-styles/<br><span class="sub">.claude/workflows/</span></td>
-<td>チームで共有する出力スタイルと、保存した動的ワークフロー</td>
-<td>する</td>
+<td class="path" data-label="ファイル">.claude/output-styles/<br><span class="sub">.claude/workflows/</span></td>
+<td data-label="スコープ">チームで共有する出力スタイルと、保存した動的ワークフロー</td>
+<td data-label="Git 管理">する</td>
 </tr>
 <tr>
-<td class="path">.claude/agent-memory/<br><span class="sub">.claude/agent-memory-local/</span></td>
-<td>サブエージェントの永続メモリ（ <code>memory: project</code> は前者、 <code>memory: local</code> は後者に書かれる）</td>
-<td>前者はする、後者はしない - <strong>後者は手動で移植が必要</strong></td>
+<td class="path" data-label="ファイル">.claude/agent-memory/<br><span class="sub">.claude/agent-memory-local/</span></td>
+<td data-label="スコープ">サブエージェントの永続メモリ（ <code>memory: project</code> は前者、 <code>memory: local</code> は後者に書かれる）</td>
+<td data-label="Git 管理">前者はする、後者はしない - <strong>後者は手動で移植が必要</strong></td>
 </tr>
 <tr>
-<td class="path">CLAUDE.local.md</td>
-<td>個人用のプロジェクトメモ。 <code>CLAUDE.md</code> の後に読み込まれる</td>
-<td>しない - <strong>手動で移植が必要</strong></td>
+<td class="path" data-label="ファイル">CLAUDE.local.md</td>
+<td data-label="スコープ">個人用のプロジェクトメモ。 <code>CLAUDE.md</code> の後に読み込まれる</td>
+<td data-label="Git 管理">しない - <strong>手動で移植が必要</strong></td>
 </tr>
 <tr>
-<td class="path">.mcp.json</td>
-<td>プロジェクトスコープの MCP サーバー定義</td>
-<td>する（次章参照）</td>
+<td class="path" data-label="ファイル">.mcp.json</td>
+<td data-label="スコープ">プロジェクトスコープの MCP サーバー定義</td>
+<td data-label="Git 管理">する（次章参照）</td>
 </tr>
 </tbody>
 </table>
@@ -262,25 +273,25 @@ td.path{color:var(--accent);word-break:break-all}
 <h2 id="sec4">4. MCP サーバー設定</h2>
 <p>MCP (Model Context Protocol) サーバーの登録先は、スコープによってファイルが異なる。同じサーバーが複数のスコープにあるときは、ローカル、プロジェクト、ユーザーの順に優先され、設定は統合されない。</p>
 <div class="table-wrap">
-<table>
+<table class="cards">
 <thead>
 <tr><th>スコープ</th><th>保存場所</th><th>備考</th></tr>
 </thead>
 <tbody>
 <tr>
-<td>ローカル（既定。個人×プロジェクト）</td>
-<td class="path">~/.claude.json 内（そのプロジェクトのパスの下）</td>
-<td><code>claude mcp add</code> の既定。認証情報を含むサーバーや試験用に向く。 <code>.claude/settings.local.json</code> とは別物</td>
+<td data-label="スコープ">ローカル（既定。個人×プロジェクト）</td>
+<td class="path" data-label="保存場所">~/.claude.json 内（そのプロジェクトのパスの下）</td>
+<td data-label="備考"><code>claude mcp add</code> の既定。認証情報を含むサーバーや試験用に向く。 <code>.claude/settings.local.json</code> とは別物</td>
 </tr>
 <tr>
-<td>プロジェクト</td>
-<td class="path">.mcp.json</td>
-<td>リポジトリ直下。 Git でチーム共有可能。初回利用時に承認を求められる</td>
+<td data-label="スコープ">プロジェクト</td>
+<td class="path" data-label="保存場所">.mcp.json</td>
+<td data-label="備考">リポジトリ直下。 Git でチーム共有可能。初回利用時に承認を求められる</td>
 </tr>
 <tr>
-<td>ユーザー</td>
-<td class="path">~/.claude.json</td>
-<td>全プロジェクトで使う個人用サーバー(<code>--scope user</code>)。アプリの状態や UI 設定も同居</td>
+<td data-label="スコープ">ユーザー</td>
+<td class="path" data-label="保存場所">~/.claude.json</td>
+<td data-label="備考">全プロジェクトで使う個人用サーバー(<code>--scope user</code>)。アプリの状態や UI 設定も同居</td>
 </tr>
 </tbody>
 </table>

@@ -58,6 +58,17 @@ sup a:hover{text-decoration:underline}
 @media (max-width:480px){
 .toc>ol{columns:1}
 }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -98,12 +109,12 @@ sup a:hover{text-decoration:underline}
 <p>報道の集中は事実として確認できる。ブックオフの事案では、子会社の会員管理システムが第三者の不正アクセスを受け、氏名、生年月日、メールアドレス、住所、パスワードのハッシュ値などが取得された可能性があるという。公表された約 643 万件は会員番号の件数であり、実際の人数ではないと報じられている <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。 10 月 7 日にはクラウドサービス「 IDCF クラウド」がランサムウェア攻撃を受け、 495 の企業と自治体に影響が及んだ <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。民間事業者の集計によれば、 9 月 15 日から 10 月 9 日までに確認できた公表は 67 件にのぼる。ただし、この集計は網羅的でなく、件数の単位も「件」「人」「レコード」と各社で異なり、前年同期との比較もない <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。</p>
 <p>一方、年単位の統計は別の姿を示す。次の表に、本稿で確認できた主な数値を整理する。</p>
 
-<table>
+<table class="cards">
 <tr><th>指標</th><th>数値</th><th>前年との比較</th></tr>
-<tr><td>個人情報保護委員会が処理した民間事業者の漏えい等報告、 2025 年度</td><td>17,139 件 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></td><td>前年度は 19,056 件で過去最多。約 1 割の減少</td></tr>
-<tr><td>上場企業とその子会社が公表した漏えい、紛失事故、 2025 年</td><td>180 件、 158 社 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td><td>件数は 4.7% 減、社数は過去最多</td></tr>
-<tr><td>同、漏えいした個人情報の人数</td><td>3,063 万 6,910 人分 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup></td><td>93.1% 増。 100 万人以上の事故は 2 件から 6 件へ</td></tr>
-<tr><td>国内のランサムウェア被害報告、 2026 年上半期</td><td>123 件 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td><td>2020 年下半期の集計開始以降、半期で過去最多</td></tr>
+<tr><td data-label="指標">個人情報保護委員会が処理した民間事業者の漏えい等報告、 2025 年度</td><td data-label="数値">17,139 件 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></td><td data-label="前年との比較">前年度は 19,056 件で過去最多。約 1 割の減少</td></tr>
+<tr><td data-label="指標">上場企業とその子会社が公表した漏えい、紛失事故、 2025 年</td><td data-label="数値">180 件、 158 社 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td><td data-label="前年との比較">件数は 4.7% 減、社数は過去最多</td></tr>
+<tr><td data-label="指標">同、漏えいした個人情報の人数</td><td data-label="数値">3,063 万 6,910 人分 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup></td><td data-label="前年との比較">93.1% 増。 100 万人以上の事故は 2 件から 6 件へ</td></tr>
+<tr><td data-label="指標">国内のランサムウェア被害報告、 2026 年上半期</td><td data-label="数値">123 件 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td><td data-label="前年との比較">2020 年下半期の集計開始以降、半期で過去最多</td></tr>
 </table>
 
 <div class="box"><strong>前提の検証結果</strong><br>確認できたのは、大型事案の公表の集中、 1 件あたりの規模の拡大、ランサムウェア被害報告の過去最多である。確認できなかったのは、漏えい等の報告件数そのものの急増である。 2025 年度の報告件数も、 2025 年の上場企業の公表件数も、前年から減っている。したがって、本稿は「件数の増加」ではなく「規模の集中と可視化」を主題とする。</div>
@@ -140,12 +151,12 @@ sup a:hover{text-decoration:underline}
 <p>第一に、「件数が増えた」説は、少なくとも 2025 年については支持されない。個人情報保護委員会への報告件数も上場企業の公表件数も、前年から減っているからである <sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-4"><a href="#ref-6">[6]</a></sup> 。第二に、「隠せなくなった」説は、 2022 年の義務化という水準の変化を説明できても、 2024 年から 2025 年への変動や、 2026 年秋の集中は説明できない。両年とも同じ制度の下にあるからである。第三に、義務化の前後の件数推移を、本稿は確認できていない。したがって、制度変更の効果の大きさは検証できなかった。第四に、検知率の上昇の根拠である M-Trends は世界の対応事例の集計で、国内の検知状況をそのまま表すものではない <sup id="fnref-9-7"><a href="#ref-9">[9]</a></sup> 。</p>
 <p>以上を踏まえると、最も確からしい説明は、被害の裾が重くなる傾向と、報告と公表を促す制度の定着が併存し、そこに偶然の集中が重なったというものである。この説明のうち、 2025 年の規模の拡大は確立した事実に近い <sup id="fnref-6-5"><a href="#ref-6">[6]</a></sup> 。制度が公表を増やしたという因果は、未確定の仮説である。 2026 年秋の集中が偶然か構造かは、投機的な領域にとどまり、四半期ごとの統計が出るまで判断を保留すべきである。</p>
 
-<table>
+<table class="cards">
 <tr><th>主張</th><th>区分</th><th>根拠と限界</th></tr>
-<tr><td>2025 年の個人情報漏えいは大型化した</td><td>確立した事実に近い</td><td>TSR の調査で人数が 93.1% 増。ただし調査対象は上場企業とその子会社に限られる</td></tr>
-<tr><td>報告義務化により以前は表に出なかった事案が公表されるようになった</td><td>未確定の仮説</td><td>制度の存在は確認できるが、義務化前後の件数推移を確認できていない</td></tr>
-<tr><td>検知技術の普及で過去の侵害が見つかりやすくなった</td><td>未確定の仮説</td><td>世界の集計で自力検知が 43% から 52% に上昇。国内の実態は未確認</td></tr>
-<tr><td>2026 年秋の集中は構造的な増加の始まりである</td><td>投機的な理論</td><td>単発の期間であり、年単位の裏付けがない</td></tr>
+<tr><td data-label="主張">2025 年の個人情報漏えいは大型化した</td><td data-label="区分">確立した事実に近い</td><td data-label="根拠と限界">TSR の調査で人数が 93.1% 増。ただし調査対象は上場企業とその子会社に限られる</td></tr>
+<tr><td data-label="主張">報告義務化により以前は表に出なかった事案が公表されるようになった</td><td data-label="区分">未確定の仮説</td><td data-label="根拠と限界">制度の存在は確認できるが、義務化前後の件数推移を確認できていない</td></tr>
+<tr><td data-label="主張">検知技術の普及で過去の侵害が見つかりやすくなった</td><td data-label="区分">未確定の仮説</td><td data-label="根拠と限界">世界の集計で自力検知が 43% から 52% に上昇。国内の実態は未確認</td></tr>
+<tr><td data-label="主張">2026 年秋の集中は構造的な増加の始まりである</td><td data-label="区分">投機的な理論</td><td data-label="根拠と限界">単発の期間であり、年単位の裏付けがない</td></tr>
 </table>
 
 <p>制度の今後にも触れておく。 2026 年 7 月 17 日に公布された改正個人情報保護法は、課徴金制度を導入するが、対象は不適正利用、不適正取得、第三者提供制限違反、統計作成特例の違反の 4 類型で、サイバー攻撃による漏えいそのものは対象外と整理されている <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 。漏えい報告をめぐる抑止や誘因が、これで直ちに変わるとは言えない。</p>
@@ -171,15 +182,15 @@ sup a:hover{text-decoration:underline}
 <p>これらは、特定の組織の責任を問うものではない。委託先や基盤事業者は、それ自身が高度な標的であり、発注元と同じ課題を抱える。防衛の単位を一社の内側から、取引と基盤の連鎖全体へ広げることが、規模が大きくなる被害への現実的な応答になる、と筆者は考える。</p>
 
 <h2 id="sec7">7. 要点まとめ表</h2>
-<table>
+<table class="cards">
 <tr><th>主要原因</th><th>裏付けの区分</th><th>主な根拠</th><th>対策アプローチ、提案</th></tr>
-<tr><td>境界機器と認証情報を狙う侵入</td><td>確立した事実に近い</td><td>脆弱性悪用が最多の侵入経路。 VPN 機器経由が約 5 割</td><td>境界機器の資産管理と迅速な修正、ゼロトラストへの移行</td></tr>
-<tr><td>設定不備、 API 、シャドー IT</td><td>未確定の仮説</td><td>定量的な裏付けを確認できず</td><td>設定の継続的な点検。効果は検証が必要</td></tr>
-<tr><td>委託先、基盤事業者を介した侵害</td><td>複数事案で確認</td><td>第一興商、アスクル、 IDCF クラウドの事案</td><td>委託先の多要素認証と権限最小化を契約に組み込む</td></tr>
-<tr><td>生成 AI を使う攻撃</td><td>未確定の仮説</td><td>海外の自己報告あり。国内事案との因果は未確認</td><td>検知と対応の自動化の検討</td></tr>
-<tr><td>ランサムウェアの長期化</td><td>確立した事実に近い</td><td>報告 123 件で過去最多。復旧 1 か月以上が約 5 割</td><td>バックアップの分離、復旧演習、早期検知</td></tr>
-<tr><td>制度による可視化の進展</td><td>未確定の仮説</td><td>義務化は確認できるが推移は未確認</td><td>報告体制の整備。公表前提の危機管理</td></tr>
-<tr><td>人材とスキルの不足</td><td>世界では裏付けあり、国内は未確認</td><td>ISC2 調査でスキル不足を挙げた回答が 59%</td><td>外部委託と内製の役割分担の再設計</td></tr>
+<tr><td data-label="主要原因">境界機器と認証情報を狙う侵入</td><td data-label="裏付けの区分">確立した事実に近い</td><td data-label="主な根拠">脆弱性悪用が最多の侵入経路。 VPN 機器経由が約 5 割</td><td data-label="対策アプローチ、提案">境界機器の資産管理と迅速な修正、ゼロトラストへの移行</td></tr>
+<tr><td data-label="主要原因">設定不備、 API 、シャドー IT</td><td data-label="裏付けの区分">未確定の仮説</td><td data-label="主な根拠">定量的な裏付けを確認できず</td><td data-label="対策アプローチ、提案">設定の継続的な点検。効果は検証が必要</td></tr>
+<tr><td data-label="主要原因">委託先、基盤事業者を介した侵害</td><td data-label="裏付けの区分">複数事案で確認</td><td data-label="主な根拠">第一興商、アスクル、 IDCF クラウドの事案</td><td data-label="対策アプローチ、提案">委託先の多要素認証と権限最小化を契約に組み込む</td></tr>
+<tr><td data-label="主要原因">生成 AI を使う攻撃</td><td data-label="裏付けの区分">未確定の仮説</td><td data-label="主な根拠">海外の自己報告あり。国内事案との因果は未確認</td><td data-label="対策アプローチ、提案">検知と対応の自動化の検討</td></tr>
+<tr><td data-label="主要原因">ランサムウェアの長期化</td><td data-label="裏付けの区分">確立した事実に近い</td><td data-label="主な根拠">報告 123 件で過去最多。復旧 1 か月以上が約 5 割</td><td data-label="対策アプローチ、提案">バックアップの分離、復旧演習、早期検知</td></tr>
+<tr><td data-label="主要原因">制度による可視化の進展</td><td data-label="裏付けの区分">未確定の仮説</td><td data-label="主な根拠">義務化は確認できるが推移は未確認</td><td data-label="対策アプローチ、提案">報告体制の整備。公表前提の危機管理</td></tr>
+<tr><td data-label="主要原因">人材とスキルの不足</td><td data-label="裏付けの区分">世界では裏付けあり、国内は未確認</td><td data-label="主な根拠">ISC2 調査でスキル不足を挙げた回答が 59%</td><td data-label="対策アプローチ、提案">外部委託と内製の役割分担の再設計</td></tr>
 </table>
 
 <div class="refs">

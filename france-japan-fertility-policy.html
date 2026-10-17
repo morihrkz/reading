@@ -58,6 +58,17 @@ sup a:hover{text-decoration:underline}
 @media (max-width:480px){
 .toc>ol{columns:1}
 }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -106,11 +117,11 @@ sup a:hover{text-decoration:underline}
 <p>第三の仮定を変えると、結論は動きうる。もし成否を世代の出生率で測るなら、フランスの特徴は「上がったこと」より「ほとんど下がらなかったこと」になる <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。その場合、 1994 年から 2005 年の上昇を政策の成果とみなす根拠は、いっそう弱くなる。これは筆者の読みである。</p>
 <h2 id="sec3">3. 数字で見る二つの国</h2>
 <p>まず、争いのない事実を並べる。表は、直近の値を、取得できた年で比べたものである。</p>
-<table>
+<table class="cards">
 <tr><th>項目</th><th>フランス</th><th>日本</th></tr>
-<tr><td>期間合計特殊出生率（最新）</td><td>1.56 （ 2025 年、暫定） <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup></td><td>1.15 （ 2024 年） <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td>出生数</td><td>約 645,000 人（ 2025 年） <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup></td><td>686,061 人（ 2024 年） <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td>婚姻外で生まれた子の割合（ 2023 年）</td><td>58.5%<sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td><td>2.46%<sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><td data-label="項目">期間合計特殊出生率（最新）</td><td data-label="フランス">1.56 （ 2025 年、暫定） <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup></td><td data-label="日本">1.15 （ 2024 年） <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><td data-label="項目">出生数</td><td data-label="フランス">約 645,000 人（ 2025 年） <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup></td><td data-label="日本">686,061 人（ 2024 年） <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><td data-label="項目">婚姻外で生まれた子の割合（ 2023 年）</td><td data-label="フランス">58.5%<sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td><td data-label="日本">2.46%<sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
 </table>
 <p>最後の行が、この記事の核心の一つである。フランスでは、 2023 年に生まれた子の 58.5% が婚姻外の出生だった。ただしこの系列は、 2023 年に出生届の様式が改められたため断絶しており、 2022 年は 65.2% と、様式変更の影響を一部受けた値が公表されている <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 。日本は 2023 年に 17,860 人、割合は 2.46% である。 1994 年の 1.19% から、緩やかに上がってきた <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。 OECD （経済協力開発機構）の平均は 36.3% で、日本の約 2% はそれと比べて著しく低いと、東アジアの家族を概観した Raymo らの総説（ 2015 年）は述べている <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。</p>
 <p>この差には、帰結がある。 Toulemon らは、フランスでは婚姻が減っても出生率に影響しなかったと述べる。出産が婚姻の外で容易に起こるからである <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 。日本ではその逆に、出生の約 97.5% が婚姻内で起きている。この数字は、上の 2.46% から導かれる。 Raymo らの総説は、日本と韓国では、婚姻した女性の最終的な子ども数が置換水準の近くで安定していると整理している <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> 。社人研（国立社会保障・人口問題研究所）の第 16 回出生動向基本調査でも、夫婦の平均予定子ども数は 2.01 人で横ばいだった。妻が 45 歳から 49 歳の夫婦の最終的な出生子ども数は、 1.81 人（前回は 1.86 人）である <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。</p>

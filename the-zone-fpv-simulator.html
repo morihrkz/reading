@@ -21,6 +21,19 @@
   ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事型の本文サイズ */
+  p, li, .note, .must, .say { font-size: 19px; }
+  p { margin: 0 0 20px; }
+  /* 行見出し付きの表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
 </style>
 </head>
 <body>
@@ -34,7 +47,7 @@
 <div class="note">評価の数字と引用は、 2026 年 10 月 17 日時点で Steam のストアページとユーザーレビューから取得したものである。独立した第三者媒体によるレビュー記事は、今回の検索では見つからなかった。物理演算の正確さに関する評価は、ユーザーの体感と開発者自身の説明に基づく。</div>
 
 <h2>基本情報</h2>
-<table>
+<table class="cardrow">
 <tr><th>項目</th><th>内容</th></tr>
 <tr><th>開発・販売</th><td>Nils Vollenbruch (nils vo) 。開発者と販売元は同一人物</td></tr>
 <tr><th>公開</th><td>2025 年 3 月 7 日に Steam で早期アクセスとして公開</td></tr>
@@ -51,7 +64,7 @@
 <p>Nils Vollenbruch 氏は、 YouTube チャンネル「 nils vo 」で活動するフリースタイル FPV パイロットで、スポンサー契約も持つと紹介されている。チャンネルの内容そのものは、今回取得できなかった。ストアページには、基本操作に慣れるまで 2 〜 5 時間かかるとの注意書きがあり、「練習なしで遊べる楽しいゲームではなく、シミュレーション兼トレーニングの道具だ」と明記されている。</p>
 
 <h2>Steam での評価の全体像</h2>
-<table>
+<table class="cardrow">
 <tr><th>集計</th><th>結果</th></tr>
 <tr><th>全期間（ストアページ）</th><td>「非常に好評」、 438 件中 97% が好評</td></tr>
 <tr><th>直近 30 日（ストアページ）</th><td>非常に好評、 52 件中 100% が好評</td></tr>

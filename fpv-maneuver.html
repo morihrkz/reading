@@ -39,6 +39,31 @@
   .refs li { font-size: .9rem; overflow-wrap: anywhere; }
   .refs li:target, sup:target { background: #e6edf3; }
   @media (max-width: 480px) { .toc > ol { columns: 1; } }
+  /* 記事型の本文サイズ */
+  p, li, .note, .must, .say { font-size: 19px; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
+  /* 結合セルのある表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -267,15 +292,15 @@
 
 <p>最後に、出典の記述が食い違う技を表で見る。どれが正しいかは決めない。誰が、どんな性格の資料に、どう書いたかを並べる。</p>
 
-<table>
+<table class="cardspan">
 <tr><th>技</th><th>出典</th><th>記述の要旨</th><th>出典の性格</th></tr>
-<tr><td rowspan="5">マティ・フリップ</td><td>案内ページ（ 2021 年更新） <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td><td>「バックワード・スイング」と言い換える</td><td>販売元のサポート文書。説明文なし</td></tr>
-<tr><td>技の一覧 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td><td>障害物の上を後ろ向きに回り、ループを決める</td><td>販売元の一覧。日付なし</td></tr>
-<tr><td>ブログ（著者 David 、 2026 年 6 月）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td><td>物体から離れながら始める後方ループで、その上を越えて元の方向へ抜ける。名はマティ・スタンツに由来</td><td>出典の引用なし</td></tr>
-<tr><td>販売系ブログ（ 2026 年 3 月） <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup></td><td>バックフリップとヨースピンの組み合わせ。カナダ人操縦者マット・シャーウッドに由来</td><td>販売系</td></tr>
-<tr><td>フォーラムのスレッド（ 2024 年 7 〜 8 月） <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td>半分のマティ（または逆スプリット S ）から後ろ向きの失速へ入る動き、と書く</td><td>個人の投稿</td></tr>
-<tr><td rowspan="2">リワインド</td><td>技の一覧 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></td><td>横へずれたあと、後ろへ急に戻って進路を逆転させる</td><td>販売元の一覧</td></tr>
-<tr><td>フォーラム投稿（ 2024 年 8 月） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></td><td>「巻き戻し」の技の一群があり、旋回点のまわりを回ってから急に逆へ戻る（上級）</td><td>個人の投稿</td></tr>
+<tr data-group="マティ・フリップ"><td rowspan="5">マティ・フリップ</td><td data-label="出典">案内ページ（ 2021 年更新） <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td><td data-label="記述の要旨">「バックワード・スイング」と言い換える</td><td data-label="出典の性格">販売元のサポート文書。説明文なし</td></tr>
+<tr data-group="マティ・フリップ"><td data-label="出典">技の一覧 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td><td data-label="記述の要旨">障害物の上を後ろ向きに回り、ループを決める</td><td data-label="出典の性格">販売元の一覧。日付なし</td></tr>
+<tr data-group="マティ・フリップ"><td data-label="出典">ブログ（著者 David 、 2026 年 6 月）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td><td data-label="記述の要旨">物体から離れながら始める後方ループで、その上を越えて元の方向へ抜ける。名はマティ・スタンツに由来</td><td data-label="出典の性格">出典の引用なし</td></tr>
+<tr data-group="マティ・フリップ"><td data-label="出典">販売系ブログ（ 2026 年 3 月） <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup></td><td data-label="記述の要旨">バックフリップとヨースピンの組み合わせ。カナダ人操縦者マット・シャーウッドに由来</td><td data-label="出典の性格">販売系</td></tr>
+<tr data-group="マティ・フリップ"><td data-label="出典">フォーラムのスレッド（ 2024 年 7 〜 8 月） <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td data-label="記述の要旨">半分のマティ（または逆スプリット S ）から後ろ向きの失速へ入る動き、と書く</td><td data-label="出典の性格">個人の投稿</td></tr>
+<tr data-group="リワインド"><td rowspan="2">リワインド</td><td data-label="出典">技の一覧 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></td><td data-label="記述の要旨">横へずれたあと、後ろへ急に戻って進路を逆転させる</td><td data-label="出典の性格">販売元の一覧</td></tr>
+<tr data-group="リワインド"><td data-label="出典">フォーラム投稿（ 2024 年 8 月） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></td><td data-label="記述の要旨">「巻き戻し」の技の一群があり、旋回点のまわりを回ってから急に逆へ戻る（上級）</td><td data-label="出典の性格">個人の投稿</td></tr>
 </table>
 
 <p>マティ・フリップでは、「後ろ向きの動き」を含むという点は複数の出典で重なる。しかし、ループなのか、フリップとヨーの組み合わせなのか、物体を越えるのか、失速へ入るのかといった中身は割れている。由来も、マティ・スタンツ、マット・シャーウッドと人物名が食い違う。このため、人名に由来するとされるが詳細は出典によって異なる、という線を越えては書けない。</p>
@@ -356,13 +381,13 @@
 
 <h3 id="sec7-1">7.1 航空法、登録、飛行禁止法</h3>
 
-<table>
+<table class="cards">
 <tr><th>法令・制度</th><th>確認できた内容（ 2026 年 10 月時点）</th><th>重さなどによる区分</th><th>一次の出典</th></tr>
-<tr><td>航空法（無人航空機の定義）</td><td>飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td>機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td>国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
-<tr><td>機体登録とリモート ID</td><td>令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td>100g 以上</td><td>国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
-<tr><td>飛行禁止空域</td><td>空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td>—</td><td>国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
-<tr><td>飛行の方法</td><td>全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td>25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td>同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
-<tr><td>小型無人機等飛行禁止法</td><td>対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td>重量の制限なし</td><td>神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
+<tr><td data-label="法令・制度">航空法（無人航空機の定義）</td><td data-label="確認できた内容（ 2026 年 10 月時点）">飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td data-label="重さなどによる区分">機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td data-label="一次の出典">国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
+<tr><td data-label="法令・制度">機体登録とリモート ID</td><td data-label="確認できた内容（ 2026 年 10 月時点）">令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td data-label="重さなどによる区分">100g 以上</td><td data-label="一次の出典">国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
+<tr><td data-label="法令・制度">飛行禁止空域</td><td data-label="確認できた内容（ 2026 年 10 月時点）">空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td data-label="重さなどによる区分">—</td><td data-label="一次の出典">国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
+<tr><td data-label="法令・制度">飛行の方法</td><td data-label="確認できた内容（ 2026 年 10 月時点）">全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td data-label="重さなどによる区分">25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td data-label="一次の出典">同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
+<tr><td data-label="法令・制度">小型無人機等飛行禁止法</td><td data-label="確認できた内容（ 2026 年 10 月時点）">対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td data-label="重さなどによる区分">重量の制限なし</td><td data-label="一次の出典">神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
 </table>
 
 <h3 id="sec7-2">7.2 FPV で引っかかりやすい二つの点</h3>

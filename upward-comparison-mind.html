@@ -46,6 +46,20 @@
   .refs li > a:first-child { font-weight: 700; text-decoration: none; }
   .refs li:target, sup:target { background: #e6edf3; }
   @media (max-width: 480px) { .toc > ol { columns: 1; } }
+  /* 記事型の本文サイズ */
+  p, li, .note, .must, .say { font-size: 19px; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -155,11 +169,11 @@
 
 <h3 id="sec4-4">4.4 各方策の根拠の区分</h3>
 <p>本稿では、次の三つの区分を用いて各方策の根拠を示す。区分の基準は、独立した複数の研究またはメタ分析で一貫して支持されているかどうかに置いた。</p>
-<table>
+<table class="cards">
 <tr><th>方策・主張</th><th>区分</th><th>根拠の概要</th></tr>
-<tr><td>比較の対象として上方を選びやすい、比較の結果は対比として現れやすい</td><td>確立した事実（実験研究の範囲）</td><td>60 年以上の研究を整理したメタ分析で、主な傾向として確認された <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。対象は幅広い年齢で、高齢者に特化していない。数値は二次要約による。</td></tr>
-<tr><td>セルフ・コンパッションによる比較への向き合い方の変化</td><td>未確定の仮説</td><td>有望な結果はあるが、対象が若年層・学生に偏り、中高年の無作為化比較試験は確認できない <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 。自己改善動機に関する研究は間接的な示唆にとどまる <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。日誌研究では効果を支持しない結果もある <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 。</td></tr>
-<tr><td>比較の場と相手を選ぶ、類似性を意識する</td><td>未確定の仮説</td><td>比較の影響の強さに関する実験的知見から導かれる方向だが、日常の場面での検証が確認できない <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><td data-label="方策・主張">比較の対象として上方を選びやすい、比較の結果は対比として現れやすい</td><td data-label="区分">確立した事実（実験研究の範囲）</td><td data-label="根拠の概要">60 年以上の研究を整理したメタ分析で、主な傾向として確認された <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。対象は幅広い年齢で、高齢者に特化していない。数値は二次要約による。</td></tr>
+<tr><td data-label="方策・主張">セルフ・コンパッションによる比較への向き合い方の変化</td><td data-label="区分">未確定の仮説</td><td data-label="根拠の概要">有望な結果はあるが、対象が若年層・学生に偏り、中高年の無作為化比較試験は確認できない <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 。自己改善動機に関する研究は間接的な示唆にとどまる <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。日誌研究では効果を支持しない結果もある <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 。</td></tr>
+<tr><td data-label="方策・主張">比較の場と相手を選ぶ、類似性を意識する</td><td data-label="区分">未確定の仮説</td><td data-label="根拠の概要">比較の影響の強さに関する実験的知見から導かれる方向だが、日常の場面での検証が確認できない <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup></td></tr>
 </table>
 <p>この区分は、研究の強さの見立てであり、方策が筆者にとって効果があるかどうかを保証するものではない。区分の使い方について補足する。「未確定の仮説」とは、効果を示す研究はあるものの、その数が少ない、対象が限られる、結果が研究によって割れている、といった事情がある状態を指す。この区分にある方策は、試してみる価値の判断材料にはなりうるが、効果が確かめられたものとして扱うことはできない。筆者が実際に試す場合には、その効果を自分の生活の中で確かめる必要がある。研究が示せるのは、そのための出発点までである。</p>
 

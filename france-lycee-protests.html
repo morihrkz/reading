@@ -54,6 +54,31 @@ sup a:hover{text-decoration:underline}
 @media (max-width:480px){
 .toc>ol{columns:1}
 }
+  /* 記事型の本文サイズ */
+  p, li, .note, .must, .say { font-size: 19px; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
+  /* 結合セルのある表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -106,18 +131,18 @@ sup a:hover{text-decoration:underline}
 <h3 id="sec1-2">1.2 数字の読み方</h3>
 <p>逮捕者数や負傷者数は、報道によって大きく違います。数え方の違いに加えて、集計の日付も違うためです。主な数字を表にまとめます。</p>
 <div class="tablewrap">
-<table>
+<table class="cardspan">
 <thead><tr><th>項目</th><th>数字</th><th>時点・出所</th></tr></thead>
 <tbody>
-<tr><td rowspan="4">逮捕・拘束</td><td>1,949 人</td><td>10 月 1 日、内務省の発表。同日の司法省は、勾留中が 1,793 人で約 9 割が未成年としている。 <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><td>5,060 人</td><td>10 月 6 日までの累計で、うち 87% が未成年。 <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><td>約 6,100 人</td><td>10 月 6 日付の報道。多くが 18 歳未満で、 1,800 人超の訴追が発表され、うち 1,483 人が未成年。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><td>5,000 人超</td><td>9 月 28 日以降。 10 月 3 日付の日本の報道。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
-<tr><td rowspan="2">負傷</td><td>警察官・憲兵 715 人以上、 10 代の若者 215 人以上</td><td>10 月 6 日付の集計。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><td>生徒 170 人、教育関係の職員 65 人</td><td>10 月 1 日までの教育省の数字。 <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><td rowspan="3">学校</td><td>1,027 校に影響、 222 校が封鎖</td><td>10 月 1 日、内務省。 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><td>約 400 校が閉鎖（全国の高校は約 3,700 校）</td><td>10 月 2 日、県知事の命令による。 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><td>735 校に影響（内相） /1,207 校が混乱（教育相）</td><td>いずれも 10 月 2 日。省庁によって定義が違う。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-2-10"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr data-group="逮捕・拘束"><td rowspan="4">逮捕・拘束</td><td data-label="数字">1,949 人</td><td data-label="時点・出所">10 月 1 日、内務省の発表。同日の司法省は、勾留中が 1,793 人で約 9 割が未成年としている。 <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr data-group="逮捕・拘束"><td data-label="数字">5,060 人</td><td data-label="時点・出所">10 月 6 日までの累計で、うち 87% が未成年。 <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr data-group="逮捕・拘束"><td data-label="数字">約 6,100 人</td><td data-label="時点・出所">10 月 6 日付の報道。多くが 18 歳未満で、 1,800 人超の訴追が発表され、うち 1,483 人が未成年。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr data-group="逮捕・拘束"><td data-label="数字">5,000 人超</td><td data-label="時点・出所">9 月 28 日以降。 10 月 3 日付の日本の報道。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr data-group="負傷"><td rowspan="2">負傷</td><td data-label="数字">警察官・憲兵 715 人以上、 10 代の若者 215 人以上</td><td data-label="時点・出所">10 月 6 日付の集計。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr data-group="負傷"><td data-label="数字">生徒 170 人、教育関係の職員 65 人</td><td data-label="時点・出所">10 月 1 日までの教育省の数字。 <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr data-group="学校"><td rowspan="3">学校</td><td data-label="数字">1,027 校に影響、 222 校が封鎖</td><td data-label="時点・出所">10 月 1 日、内務省。 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr data-group="学校"><td data-label="数字">約 400 校が閉鎖（全国の高校は約 3,700 校）</td><td data-label="時点・出所">10 月 2 日、県知事の命令による。 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr data-group="学校"><td data-label="数字">735 校に影響（内相） /1,207 校が混乱（教育相）</td><td data-label="時点・出所">いずれも 10 月 2 日。省庁によって定義が違う。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-2-10"><a href="#ref-2">[2]</a></sup></td></tr>
 </tbody>
 </table>
 </div>
@@ -164,12 +189,12 @@ sup a:hover{text-decoration:underline}
 <h3 id="sec4-2">4.2 主張を、報じられた事実と突き合わせる</h3>
 <p>投稿の内容を三つに分け、それぞれを報道と照らします。</p>
 <div class="tablewrap">
-<table>
+<table class="cards">
 <thead><tr><th>主張</th><th>報道から言えること</th><th>評価</th></tr></thead>
 <tbody>
-<tr><td>「学校の話ではない」</td><td>要求は教員、校舎、学級規模、時間割、進学制度など、教育の条件に尽きる。移民政策や宗教に関する要求は、報じられていない。 <sup id="fnref-2-23"><a href="#ref-2">[2]</a></sup><sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup></td><td>報道とは合わない</td></tr>
-<tr><td>「制御不能な大量移民が原因」</td><td>拡大の経路は、 SNS を通じた模倣と、教員組合・農業系・エネルギー部門の合流だった。 <sup id="fnref-2-24"><a href="#ref-2">[2]</a></sup><sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 拘束者の大半は未成年だが、国籍や出自を示す数字は、どの報道にもない。</td><td>根拠は示されていない</td></tr>
-<tr><td>「イスラムが乗っ取ろうとしている」</td><td>政府側の説明は極左による政治利用であって、宗教的な主張や要求は報じられていない。 <sup id="fnref-2-25"><a href="#ref-2">[2]</a></sup> 参加者の宗教に関する数字も、どの報道にもない。</td><td>根拠は示されていない</td></tr>
+<tr><td data-label="主張">「学校の話ではない」</td><td data-label="報道から言えること">要求は教員、校舎、学級規模、時間割、進学制度など、教育の条件に尽きる。移民政策や宗教に関する要求は、報じられていない。 <sup id="fnref-2-23"><a href="#ref-2">[2]</a></sup><sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup></td><td data-label="評価">報道とは合わない</td></tr>
+<tr><td data-label="主張">「制御不能な大量移民が原因」</td><td data-label="報道から言えること">拡大の経路は、 SNS を通じた模倣と、教員組合・農業系・エネルギー部門の合流だった。 <sup id="fnref-2-24"><a href="#ref-2">[2]</a></sup><sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 拘束者の大半は未成年だが、国籍や出自を示す数字は、どの報道にもない。</td><td data-label="評価">根拠は示されていない</td></tr>
+<tr><td data-label="主張">「イスラムが乗っ取ろうとしている」</td><td data-label="報道から言えること">政府側の説明は極左による政治利用であって、宗教的な主張や要求は報じられていない。 <sup id="fnref-2-25"><a href="#ref-2">[2]</a></sup> 参加者の宗教に関する数字も、どの報道にもない。</td><td data-label="評価">根拠は示されていない</td></tr>
 </tbody>
 </table>
 </div>

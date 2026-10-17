@@ -13,13 +13,6 @@
     --link: #1a5a96; --line: #bbb; --line-soft: #e3e3e3; --card: #fff; --head: #e6edf3;
     --code: #eee; --note-bg: #fff6d6; --note-bd: #d9a400; --must-bg: #fde8e6; --must-bd: #c0392b;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #15191d; --fg: #e8e8e4; --muted: #b0b6bb; --accent: #8fb4d3; --on-accent: #0f1a24;
-      --link: #8fc1f0; --line: #4a5158; --line-soft: #343b41; --card: #1d2227; --head: #232e38;
-      --code: #2a3036; --note-bg: #35301a; --note-bd: #d9a400; --must-bg: #3b2321; --must-bd: #e57368;
-    }
-  }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
@@ -98,6 +91,9 @@
     td:first-child::before { display: none; }
     ul.check label { padding-left: .2rem; }
   }
+  /* 記事型の本文サイズ */
+  p, li, .note, .must, .say { font-size: 19px; }
+  p { margin: 0 0 20px; }
 </style>
 </head>
 <body>

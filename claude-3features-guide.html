@@ -57,6 +57,17 @@ sup a:hover{text-decoration:underline}
 @media (max-width:480px){
 .toc>ol{columns:1}
 }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -131,13 +142,13 @@ sup a:hover{text-decoration:underline}
 </div>
 
 <h2 id="sec4">4. 使い分けの目安</h2>
-<table>
+<table class="cards">
 <tr><th>やりたいこと</th><th>使うもの</th></tr>
-<tr><td>事実を一つ確かめたい</td><td>通常のチャット（ウェブ検索）</td></tr>
-<tr><td>複数の情報源をまとめた報告がほしい</td><td>Research</td></tr>
-<tr><td>いま開いている画面を読ませたい・操作させたい</td><td>Claude in Chrome</td></tr>
-<tr><td>長期の仕事の前提を引き継ぎたい</td><td>メモリ</td></tr>
-<tr><td>手元のファイルを実際に書き換えたい</td><td>Claude Code （すでに活用中）</td></tr>
+<tr><td data-label="やりたいこと">事実を一つ確かめたい</td><td data-label="使うもの">通常のチャット（ウェブ検索）</td></tr>
+<tr><td data-label="やりたいこと">複数の情報源をまとめた報告がほしい</td><td data-label="使うもの">Research</td></tr>
+<tr><td data-label="やりたいこと">いま開いている画面を読ませたい・操作させたい</td><td data-label="使うもの">Claude in Chrome</td></tr>
+<tr><td data-label="やりたいこと">長期の仕事の前提を引き継ぎたい</td><td data-label="使うもの">メモリ</td></tr>
+<tr><td data-label="やりたいこと">手元のファイルを実際に書き換えたい</td><td data-label="使うもの">Claude Code （すでに活用中）</td></tr>
 </table>
 
 <div class="refs">

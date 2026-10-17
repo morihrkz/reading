@@ -73,6 +73,17 @@ hr{border:none; border-top:1px solid var(--line); margin:40px 0;}
 pre{font-size:16px; background:var(--box); border:1px solid var(--line);
   padding:16px 18px; margin:0 0 20px; overflow-x:auto; line-height:1.6;}
 pre code{background:none; padding:0;}
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -191,7 +202,7 @@ pre code{background:none; padding:0;}
 <p><strong>「このサイトは、必ずしも WordPress の上に構築されている必要は無いのではないか。」</strong>
 これが、作り直しを検討した最初の動機だった。
 （なお、動的サイトを実現する手段は WordPress 以外にもあるが、便宜上、「動的サイト = WordPress 」としている。）</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>観点</th>
@@ -201,24 +212,24 @@ pre code{background:none; padding:0;}
 </thead>
 <tbody>
 <tr>
-<td>サーバー側の構成</td>
-<td>データベース・ PHP ・常時稼働のプロセス</td>
-<td>HTML/CSS/JS のファイルのみ</td>
+<td data-label="観点">サーバー側の構成</td>
+<td data-label="WordPress （動的サイト）">データベース・ PHP ・常時稼働のプロセス</td>
+<td data-label="静的サイト">HTML/CSS/JS のファイルのみ</td>
 </tr>
 <tr>
-<td>セキュリティ面の脅威</td>
-<td>プラグイン・ログイン画面・データベースへの問い合わせなどが攻撃対象となり得る</td>
-<td>実質的にほぼ無い（配信するだけ）</td>
+<td data-label="観点">セキュリティ面の脅威</td>
+<td data-label="WordPress （動的サイト）">プラグイン・ログイン画面・データベースへの問い合わせなどが攻撃対象となり得る</td>
+<td data-label="静的サイト">実質的にほぼ無い（配信するだけ）</td>
 </tr>
 <tr>
-<td>保守の手間</td>
-<td>継続的な更新・パッチ適用・バックアップ・監視</td>
-<td>サーバー側の保守は、ほぼ不要</td>
+<td data-label="観点">保守の手間</td>
+<td data-label="WordPress （動的サイト）">継続的な更新・パッチ適用・バックアップ・監視</td>
+<td data-label="静的サイト">サーバー側の保守は、ほぼ不要</td>
 </tr>
 <tr>
-<td>コンテンツ更新方法</td>
-<td>管理画面上での編集</td>
-<td>個別ファイルの編集と Git 操作</td>
+<td data-label="観点">コンテンツ更新方法</td>
+<td data-label="WordPress （動的サイト）">管理画面上での編集</td>
+<td data-label="静的サイト">個別ファイルの編集と Git 操作</td>
 </tr>
 </tbody>
 </table>
@@ -299,7 +310,7 @@ AI に相談しながら、現状の整理・技術選定・作業順序・想�
 <p>計画段階でいちばん時間を使ったのが、この一点だった。<strong>レンタルサーバーの契約をやめたとき、ドメインの DNS 設定を編集する手段と、ドメイン名から IP アドレスを引く「名前解決」の仕組みは、どうなるのか。</strong></p>
 <p>これは類推だけでは確定できない問題だった。 XServer の公式案内には、期限を超過したサーバーアカウントについて「凍結が行われるとホームページへのアクセスやメールの送受信が行えなくなります」とだけ書かれており、「 DNS レコードの管理ができなくなる」とは明記されていなかった。
 一方で、 XServer には管理画面が二種類あり、役割が分かれていることも分かった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>管理画面</th>
@@ -308,12 +319,12 @@ AI に相談しながら、現状の整理・技術選定・作業順序・想�
 </thead>
 <tbody>
 <tr>
-<td>XSever レンタルサーバー契約管理ページ https://secure.xserver.ne.jp/xapanel/xserver/index</td>
-<td>サーバーの各種設定（メールアカウント発行など含め）</td>
+<td data-label="管理画面">XSever レンタルサーバー契約管理ページ https://secure.xserver.ne.jp/xapanel/xserver/index</td>
+<td data-label="役割">サーバーの各種設定（メールアカウント発行など含め）</td>
 </tr>
 <tr>
-<td>XSever Domain 契約管理ページ https://secure.xserver.ne.jp/xapanel/xdomain/index</td>
-<td>ネームサーバーの管理、 DNS レコードの管理、 Whois 情報の管理</td>
+<td data-label="管理画面">XSever Domain 契約管理ページ https://secure.xserver.ne.jp/xapanel/xdomain/index</td>
+<td data-label="役割">ネームサーバーの管理、 DNS レコードの管理、 Whois 情報の管理</td>
 </tr>
 </tbody>
 </table>
@@ -413,7 +424,7 @@ ns4.xserver.jp.  ns5.xserver.jp.
 </figure>
 <h3>ホスティング先の選定： GitHub Pages を採用</h3>
 <p>静的サイトの置き場所として GitHub Pages と Cloudflare Pages を比較した。決め手は費用ではなく、<strong>変更点を少なく済ませられるかどうか</strong>だった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>比較項目</th>
@@ -423,19 +434,19 @@ ns4.xserver.jp.  ns5.xserver.jp.
 </thead>
 <tbody>
 <tr>
-<td>Apex ドメイン（ <code>pyx.co.jp</code> 自体）への設定</td>
-<td>A レコード 4 件を追加するだけ。 DNS の管理主体を変更する必要がない</td>
-<td>真価を発揮するには、通常ドメインのネームサーバーを Cloudflare 自体に切り替える構成が推奨される</td>
+<td data-label="比較項目">Apex ドメイン（ <code>pyx.co.jp</code> 自体）への設定</td>
+<td data-label="GitHub Pages">A レコード 4 件を追加するだけ。 DNS の管理主体を変更する必要がない</td>
+<td data-label="Cloudflare Pages">真価を発揮するには、通常ドメインのネームサーバーを Cloudflare 自体に切り替える構成が推奨される</td>
 </tr>
 <tr>
-<td>費用</td>
-<td>無料</td>
-<td>無料プランでもほぼ賄えるが、カスタムドメイン数などに制限がある</td>
+<td data-label="比較項目">費用</td>
+<td data-label="GitHub Pages">無料</td>
+<td data-label="Cloudflare Pages">無料プランでもほぼ賄えるが、カスタムドメイン数などに制限がある</td>
 </tr>
 <tr>
-<td>HTTPS</td>
-<td>リポジトリ設定で Enforce HTTPS を有効化。反映まで最大 24 時間程度</td>
-<td>自動発行・自動更新</td>
+<td data-label="比較項目">HTTPS</td>
+<td data-label="GitHub Pages">リポジトリ設定で Enforce HTTPS を有効化。反映まで最大 24 時間程度</td>
+<td data-label="Cloudflare Pages">自動発行・自動更新</td>
 </tr>
 </tbody>
 </table>
@@ -446,7 +457,7 @@ GitHub Pages なら、 Xserver Domain 側の DNS レコード設定画面で A �
 リポジトリは新規に <code>pyx-site</code> という名前で作成し、公開範囲は Public （公開）とした。無料プランでは、 Private （非公開）のリポジトリで GitHub Pages を有効化できないと、この段階で判明したためである。</p>
 <h3>全体の実施順序</h3>
 <p>サーバー契約の期限日から逆算し、作業を六つの工程に分けた。上から順に実行すれば、前提を満たさないまま先に進んでしまうことがない並びである。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>工程</th>
@@ -455,35 +466,35 @@ GitHub Pages なら、 Xserver Domain 側の DNS レコード設定画面で A �
 </thead>
 <tbody>
 <tr>
-<td>工程 1</td>
-<td>移行前の保全、 DNS レコードのバックアップ</td>
+<td data-label="工程">工程 1</td>
+<td data-label="内容">移行前の保全、 DNS レコードのバックアップ</td>
 </tr>
 <tr>
-<td>工程 2</td>
-<td>ネームサーバーを Xserver Domain へ切り替える</td>
+<td data-label="工程">工程 2</td>
+<td data-label="内容">ネームサーバーを Xserver Domain へ切り替える</td>
 </tr>
 <tr>
-<td>工程 3</td>
-<td>サイト構築と、切替前の完成確認</td>
+<td data-label="工程">工程 3</td>
+<td data-label="内容">サイト構築と、切替前の完成確認</td>
 </tr>
 <tr>
-<td>工程 4</td>
-<td>旧 WordPress 環境の削除</td>
+<td data-label="工程">工程 4</td>
+<td data-label="内容">旧 WordPress 環境の削除</td>
 </tr>
 <tr>
-<td>工程 5</td>
-<td>DNS 切替（ GitHub Pages への向け先変更）</td>
+<td data-label="工程">工程 5</td>
+<td data-label="内容">DNS 切替（ GitHub Pages への向け先変更）</td>
 </tr>
 <tr>
-<td>工程 6</td>
-<td>切替後の検証</td>
+<td data-label="工程">工程 6</td>
+<td data-label="内容">切替後の検証</td>
 </tr>
 </tbody>
 </table>
 <p>工程 1 と工程 2 は、 DNS に一切手を触れる前後の関係にあるため、必ずこの順で行う必要がある。一方、工程 2 （ネームサーバー切替）と工程 3 （サイト構築）は互いに独立しているため、並行して進めることができた。</p>
 <h3>順序を入れ替えてはいけない四箇所</h3>
 <p>作業の多くは前後させても支障ないが、次の四つは技術上・安全上の理由から順序が固定される。計画段階でここを洗い出しておいたことが、後の工程で実際に役立った。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>この順序</th>
@@ -492,20 +503,20 @@ GitHub Pages なら、 Xserver Domain 側の DNS レコード設定画面で A �
 </thead>
 <tbody>
 <tr>
-<td>現在の DNS 設定を控える → ネームサーバーを切り替える</td>
-<td>切り替えでレコードが引き継がれなかった場合、控えが無ければ何も復元できない</td>
+<td data-label="この順序">現在の DNS 設定を控える → ネームサーバーを切り替える</td>
+<td data-label="なぜ入れ替えてはいけないか">切り替えでレコードが引き継がれなかった場合、控えが無ければ何も復元できない</td>
 </tr>
 <tr>
-<td>標準 URL で動作を確認する → Custom domain を設定する</td>
-<td>Custom domain を設定すると、標準 URL は独自ドメインへ転送されるようになり、確認手段として使えなくなる</td>
+<td data-label="この順序">標準 URL で動作を確認する → Custom domain を設定する</td>
+<td data-label="なぜ入れ替えてはいけないか">Custom domain を設定すると、標準 URL は独自ドメインへ転送されるようになり、確認手段として使えなくなる</td>
 </tr>
 <tr>
-<td>GitHub 側で Custom domain を設定する → DNS レコードを設定する</td>
-<td>先に DNS だけを向けると、そのドメインで第三者にサイトをホストされる状態が生じうる（ GitHub 公式が明記している）</td>
+<td data-label="この順序">GitHub 側で Custom domain を設定する → DNS レコードを設定する</td>
+<td data-label="なぜ入れ替えてはいけないか">先に DNS だけを向けると、そのドメインで第三者にサイトをホストされる状態が生じうる（ GitHub 公式が明記している）</td>
 </tr>
 <tr>
-<td>新しいサイトの完成を確認する → 旧環境を削除する</td>
-<td>削除後は元に戻せない</td>
+<td data-label="この順序">新しいサイトの完成を確認する → 旧環境を削除する</td>
+<td data-label="なぜ入れ替えてはいけないか">削除後は元に戻せない</td>
 </tr>
 </tbody>
 </table>
@@ -520,7 +531,7 @@ dig +short A www.pyx.co.jp
 dig +short MX pyx.co.jp
 dig +short TXT pyx.co.jp
 </code></pre>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>タイプ</th>
@@ -530,29 +541,29 @@ dig +short TXT pyx.co.jp
 </thead>
 <tbody>
 <tr>
-<td>NS</td>
-<td>pyx.co.jp</td>
-<td>ns1.xserver.jp 〜 ns5.xserver.jp</td>
+<td data-label="タイプ">NS</td>
+<td data-label="ホスト名">pyx.co.jp</td>
+<td data-label="値">ns1.xserver.jp 〜 ns5.xserver.jp</td>
 </tr>
 <tr>
-<td>A</td>
-<td>pyx.co.jp</td>
-<td>（旧サーバーの IP アドレス）</td>
+<td data-label="タイプ">A</td>
+<td data-label="ホスト名">pyx.co.jp</td>
+<td data-label="値">（旧サーバーの IP アドレス）</td>
 </tr>
 <tr>
-<td>A</td>
-<td>www.pyx.co.jp</td>
-<td>（ apex と同一）</td>
+<td data-label="タイプ">A</td>
+<td data-label="ホスト名">www.pyx.co.jp</td>
+<td data-label="値">（ apex と同一）</td>
 </tr>
 <tr>
-<td>MX</td>
-<td>pyx.co.jp</td>
-<td>0 pyx.co.jp</td>
+<td data-label="タイプ">MX</td>
+<td data-label="ホスト名">pyx.co.jp</td>
+<td data-label="値">0 pyx.co.jp</td>
 </tr>
 <tr>
-<td>TXT</td>
-<td>pyx.co.jp</td>
-<td>SPF レコード（メール送信元の指定）</td>
+<td data-label="タイプ">TXT</td>
+<td data-label="ホスト名">pyx.co.jp</td>
+<td data-label="値">SPF レコード（メール送信元の指定）</td>
 </tr>
 </tbody>
 </table>
@@ -570,7 +581,7 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 </code></pre>
 <p>ここで、計画書にはなかった事実が一つ現れた。<strong>切り替えは成功したが、それまで設定されていた DNS レコードは、一件も引き継がれなかった。</strong>
 「切り替えたのだから、古い A レコードもそのまま新しい DNS に移るだろう」と考えていたら、ここで作業は止まっていたはずである。実際には、ゾーンを成立させるための NS と SOA は用意されたものの、設定したはずの A/MX/TXT は空だった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>レコード</th>
@@ -580,34 +591,34 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 </thead>
 <tbody>
 <tr>
-<td>NS</td>
-<td>ns1.xserver.jp 〜 ns5.xserver.jp</td>
-<td>ns1.xdomain.ne.jp 〜 ns3.xdomain.ne.jp （自動生成）</td>
+<td data-label="レコード">NS</td>
+<td data-label="切替前">ns1.xserver.jp 〜 ns5.xserver.jp</td>
+<td data-label="切替後の Xserver Domain 側">ns1.xdomain.ne.jp 〜 ns3.xdomain.ne.jp （自動生成）</td>
 </tr>
 <tr>
-<td>SOA</td>
-<td>—</td>
-<td>自動生成</td>
+<td data-label="レコード">SOA</td>
+<td data-label="切替前">—</td>
+<td data-label="切替後の Xserver Domain 側">自動生成</td>
 </tr>
 <tr>
-<td>A (pyx.co.jp)</td>
-<td>設定あり</td>
-<td>無し</td>
+<td data-label="レコード">A (pyx.co.jp)</td>
+<td data-label="切替前">設定あり</td>
+<td data-label="切替後の Xserver Domain 側">無し</td>
 </tr>
 <tr>
-<td>A (www.pyx.co.jp)</td>
-<td>設定あり</td>
-<td>無し</td>
+<td data-label="レコード">A (www.pyx.co.jp)</td>
+<td data-label="切替前">設定あり</td>
+<td data-label="切替後の Xserver Domain 側">無し</td>
 </tr>
 <tr>
-<td>MX</td>
-<td>設定あり</td>
-<td>無し</td>
+<td data-label="レコード">MX</td>
+<td data-label="切替前">設定あり</td>
+<td data-label="切替後の Xserver Domain 側">無し</td>
 </tr>
 <tr>
-<td>TXT (SPF)</td>
-<td>設定あり</td>
-<td>無し</td>
+<td data-label="レコード">TXT (SPF)</td>
+<td data-label="切替前">設定あり</td>
+<td data-label="切替後の Xserver Domain 側">無し</td>
 </tr>
 </tbody>
 </table>
@@ -625,7 +636,7 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 <p>この判断に伴う副作用として、 A レコードが存在しないため、キャッシュが切れ次第 <code>pyx.co.jp</code> は名前解決できなくなった。二年間放置されたサイトだったため実害はないと判断したが、この影響は 3-4 で改めて触れる。</p>
 <h5>反映が安定するまでの経過</h5>
 <p>切り替え直後は、通常の調べ方（リゾルバ経由）で確認するたびに、結果が異なった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>時刻</th>
@@ -635,29 +646,29 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 </thead>
 <tbody>
 <tr>
-<td>12:13</td>
-<td>リゾルバ</td>
-<td>www と TXT が消失して見える</td>
+<td data-label="時刻">12:13</td>
+<td data-label="照会先">リゾルバ</td>
+<td data-label="結果">www と TXT が消失して見える</td>
 </tr>
 <tr>
-<td>12:19</td>
-<td>リゾルバ</td>
-<td>TXT が復活して見える</td>
+<td data-label="時刻">12:19</td>
+<td data-label="照会先">リゾルバ</td>
+<td data-label="結果">TXT が復活して見える</td>
 </tr>
 <tr>
-<td>12:25</td>
-<td>リゾルバ</td>
-<td>www も復活して見える（＝旧ネームサーバーのキャッシュ）</td>
+<td data-label="時刻">12:25</td>
+<td data-label="照会先">リゾルバ</td>
+<td data-label="結果">www も復活して見える（＝旧ネームサーバーのキャッシュ）</td>
 </tr>
 <tr>
-<td>12:35</td>
-<td>権威サーバー直撃</td>
-<td>ゾーンは空。以後この判定は一度も揺れなかった</td>
+<td data-label="時刻">12:35</td>
+<td data-label="照会先">権威サーバー直撃</td>
+<td data-label="結果">ゾーンは空。以後この判定は一度も揺れなかった</td>
 </tr>
 <tr>
-<td>翌日</td>
-<td>権威 3 台＋リゾルバ全て</td>
-<td>一致。 apex は応答 0 件、 www は該当ドメイン無し</td>
+<td data-label="時刻">翌日</td>
+<td data-label="照会先">権威 3 台＋リゾルバ全て</td>
+<td data-label="結果">一致。 apex は応答 0 件、 www は該当ドメイン無し</td>
 </tr>
 </tbody>
 </table>
@@ -666,7 +677,7 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 しかし、レジストリの委任先からはすでに外れているため、通常の名前解決でそこへ到達することはない。<strong>「古い情報が残っている」ことと「古い情報が使われている」ことは別である。</strong></p>
 <p>原因は技術的な障害ではなく、<strong>誰に問い合わせているか</strong>だった。
 通常の調べ方は途中のキャッシュを経由するため、変更直後は古い情報と新しい情報が混ざる。一方、そのドメインの設定を実際に保持している権威サーバーへ直接尋ねると、答えは最初から一貫していた。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>調べ方</th>
@@ -676,14 +687,14 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 </thead>
 <tbody>
 <tr>
-<td>権威サーバーへ直接 <code>dig @ns1.xdomain.ne.jp …</code></td>
-<td>設定の実態。ゾーンに何が書かれているか</td>
-<td>受けない。変更した直後から確認できる</td>
+<td data-label="調べ方">権威サーバーへ直接 <code>dig @ns1.xdomain.ne.jp …</code></td>
+<td data-label="分かること">設定の実態。ゾーンに何が書かれているか</td>
+<td data-label="キャッシュの影響">受けない。変更した直後から確認できる</td>
 </tr>
 <tr>
-<td>通常の調べ方 <code>dig …</code>（ @ なし）</td>
-<td>世間から見えている状態。浸透が完了したか</td>
-<td>受ける。変更直後は旧情報と新情報が混在する</td>
+<td data-label="調べ方">通常の調べ方 <code>dig …</code>（ @ なし）</td>
+<td data-label="分かること">世間から見えている状態。浸透が完了したか</td>
+<td data-label="キャッシュの影響">受ける。変更直後は旧情報と新情報が混在する</td>
 </tr>
 </tbody>
 </table>
@@ -692,7 +703,7 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 さらに紛らわしいのは、「レコードが存在しない」という否定の答えもキャッシュされることである（ネガティブキャッシュ）。設定した直後に通常の方法で調べると「まだ無い」と表示されるのが普通で、これが一時間ほど続くこともある。ここで設定を疑って触り直すと、正しかったはずの設定を壊しかねない。</p>
 <h3>工程 3 : サイトを構築する</h3>
 <p>作業は AI に指示を出しながら進めた。新規リポジトリ <code>pyx-site</code> を作成し、準備中であることを示す一枚物のページを、プレビュー URL で確認できる状態にするまでが、この工程の範囲である。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>項目</th>
@@ -701,16 +712,16 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 </thead>
 <tbody>
 <tr>
-<td>構成</td>
-<td>依存パッケージなしの単一 <code>index.html</code> （ CSS/JavaScript を内包）。ビルド工程は無し</td>
+<td data-label="項目">構成</td>
+<td data-label="内容">依存パッケージなしの単一 <code>index.html</code> （ CSS/JavaScript を内包）。ビルド工程は無し</td>
 </tr>
 <tr>
-<td>表示内容</td>
-<td><code>PYX.CO.JP</code> と Something new is taking flight. の一言。都会の空を表現したビジュアルの中を、矢印キーまたはマウスポインタで操作できるドローンが飛ぶ、インタラクティブな演出</td>
+<td data-label="項目">表示内容</td>
+<td data-label="内容"><code>PYX.CO.JP</code> と Something new is taking flight. の一言。都会の空を表現したビジュアルの中を、矢印キーまたはマウスポインタで操作できるドローンが飛ぶ、インタラクティブな演出</td>
 </tr>
 <tr>
-<td>対応端末</td>
-<td>PC でのキーボード・マウス操作を前提とし、スマートフォン幅での表示も別途確認</td>
+<td data-label="項目">対応端末</td>
+<td data-label="内容">PC でのキーボード・マウス操作を前提とし、スマートフォン幅での表示も別途確認</td>
 </tr>
 </tbody>
 </table>
@@ -733,7 +744,7 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 <p>3-3 の完成条件をすべて満たしたことを確認したうえで、サーバー内の WordPress のデータベースとファイル一式を削除した。
 <strong>削除するのは WordPress のデータのみで、サーバー契約自体の解約は行わない。</strong>契約は期限日まで通常どおり継続し、自動更新が設定されていないため、期限日に自然に凍結される見込みである。</p>
 <p>この工程には、二つの影響があった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>影響</th>
@@ -742,12 +753,12 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 </thead>
 <tbody>
 <tr>
-<td>ロールバック手段が失われる</td>
-<td>削除後は、 A レコードを旧サーバーへ戻しても、表示すべき中身がもう存在しない。空のページかエラーが表示されるだけになる</td>
+<td data-label="影響">ロールバック手段が失われる</td>
+<td data-label="内容">削除後は、 A レコードを旧サーバーへ戻しても、表示すべき中身がもう存在しない。空のページかエラーが表示されるだけになる</td>
 </tr>
 <tr>
-<td><code>pyx.co.jp</code> は既に無反応になっていた</td>
-<td>工程 2 でゾーンを空のまま進める判断を採ったため (3-2) 、 A レコードが存在せず、この工程を待たずに <code>pyx.co.jp</code> は既に名前解決できない状態にあった</td>
+<td data-label="影響"><code>pyx.co.jp</code> は既に無反応になっていた</td>
+<td data-label="内容">工程 2 でゾーンを空のまま進める判断を採ったため (3-2) 、 A レコードが存在せず、この工程を待たずに <code>pyx.co.jp</code> は既に名前解決できない状態にあった</td>
 </tr>
 </tbody>
 </table>
@@ -759,7 +770,7 @@ GitHub 公式ドキュメントでは DNS プロバイダ側でドメインを�
 <p>リポジトリの Settings → Pages にある Custom domain 欄に <code>pyx.co.jp</code> を入力して保存すると、直下に DNS Check in progress と表示される。この時点ではまだ DNS 側を設定していないため、確認は失敗表示のままだが、想定どおりで異常ではない。
 保存と同時に、リポジトリ直下に <code>CNAME</code> ファイル（中身は <code>pyx.co.jp</code> の一行のみ）が GitHub 側で自動生成・コミットされた。</p>
 <p>続いて Xserver Domain 側の DNS レコード設定画面で、次の 5 件を追加した。工程 2 でゾーンを空のまま進めていたため (3-2) 、これは削除・書き換えを伴わない、純粋な追加作業だった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>タイプ</th>
@@ -769,29 +780,29 @@ GitHub 公式ドキュメントでは DNS プロバイダ側でドメインを�
 </thead>
 <tbody>
 <tr>
-<td>A</td>
-<td>@ （ pyx.co.jp 自体）</td>
-<td>185.199.108.153</td>
+<td data-label="タイプ">A</td>
+<td data-label="ホスト名">@ （ pyx.co.jp 自体）</td>
+<td data-label="値">185.199.108.153</td>
 </tr>
 <tr>
-<td>A</td>
-<td>@</td>
-<td>185.199.109.153</td>
+<td data-label="タイプ">A</td>
+<td data-label="ホスト名">@</td>
+<td data-label="値">185.199.109.153</td>
 </tr>
 <tr>
-<td>A</td>
-<td>@</td>
-<td>185.199.110.153</td>
+<td data-label="タイプ">A</td>
+<td data-label="ホスト名">@</td>
+<td data-label="値">185.199.110.153</td>
 </tr>
 <tr>
-<td>A</td>
-<td>@</td>
-<td>185.199.111.153</td>
+<td data-label="タイプ">A</td>
+<td data-label="ホスト名">@</td>
+<td data-label="値">185.199.111.153</td>
 </tr>
 <tr>
-<td>CNAME</td>
-<td>www</td>
-<td>（ GitHub のユーザー名） .github.io</td>
+<td data-label="タイプ">CNAME</td>
+<td data-label="ホスト名">www</td>
+<td data-label="値">（ GitHub のユーザー名） .github.io</td>
 </tr>
 </tbody>
 </table>
@@ -820,7 +831,7 @@ SSL 証明書の自動発行には最大 1 時間程度、反映には最大 24 
 <li>☐ スマートフォンからのアクセスでも表示が破綻しない</li>
 </ul>
 <p>ここまでで、当初の目的だった「サーバー契約期限までに、旧サイトの表示に依存しない形へ移行する」ことは達成できた。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>確認事項</th>
@@ -829,20 +840,20 @@ SSL 証明書の自動発行には最大 1 時間程度、反映には最大 24 
 </thead>
 <tbody>
 <tr>
-<td>ネームサーバーの Xserver Domain への切替</td>
-<td>済み</td>
+<td data-label="確認事項">ネームサーバーの Xserver Domain への切替</td>
+<td data-label="状態">済み</td>
 </tr>
 <tr>
-<td>旧 WordPress 環境の削除</td>
-<td>済み</td>
+<td data-label="確認事項">旧 WordPress 環境の削除</td>
+<td data-label="状態">済み</td>
 </tr>
 <tr>
-<td>GitHub Pages への DNS 切替・ HTTPS 化</td>
-<td>済み</td>
+<td data-label="確認事項">GitHub Pages への DNS 切替・ HTTPS 化</td>
+<td data-label="状態">済み</td>
 </tr>
 <tr>
-<td>ドメイン更新料の反映確認 (whois)</td>
-<td>済み</td>
+<td data-label="確認事項">ドメイン更新料の反映確認 (whois)</td>
+<td data-label="状態">済み</td>
 </tr>
 </tbody>
 </table>

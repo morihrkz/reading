@@ -21,6 +21,20 @@
   ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事型の本文サイズ */
+  p, li, .note, .must, .say { font-size: 19px; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -35,21 +49,21 @@
 <p>対象の機種は、チップに Apple M2 Max を使い、 CPU (計算を担う部品) が 12 コア (計算を分担する単位が 12 個)、 GPU (画像処理を担う部品) が 38 コア、メモリが 32 GB 、 OS が macOS 27.0.1 の MacBook Pro である。 Apple の仕様ページ (16 インチ、 2023 年モデル) には、同じ M2 Max が、 12 コアの CPU 、 38 コアの GPU と載っている [1] 。以下では、この機種の値と Apple の公式資料を使う。</p>
 <p>比べる相手は、「一般的な Windows PC 」である。ここでは、 Windows 11 が動くノート PC を指す。 NPU (AI 向けの専用演算回路) を積んだ Copilot+ PC かどうかで結論が変わる項目は、そのつど書く。</p>
 <p>各項目は、次の三つの区分で書き分ける。</p>
-<table>
+<table class="cards">
 <tr><th>区分</th><th>意味</th></tr>
-<tr><td>Mac でしか実現できない</td><td>Windows 側の公式情報と主要な第三者製品を確認し、同等の手段が見つからなかった。</td></tr>
-<tr><td>Windows でも可能だが Mac が有利</td><td>Windows 側にも手段があるが、手間や対応状況の差を、出典で示せる。</td></tr>
-<tr><td>Windows でも同等にできる</td><td>同等のことができると確認できた。</td></tr>
+<tr><td data-label="区分">Mac でしか実現できない</td><td data-label="意味">Windows 側の公式情報と主要な第三者製品を確認し、同等の手段が見つからなかった。</td></tr>
+<tr><td data-label="区分">Windows でも可能だが Mac が有利</td><td data-label="意味">Windows 側にも手段があるが、手間や対応状況の差を、出典で示せる。</td></tr>
+<tr><td data-label="区分">Windows でも同等にできる</td><td data-label="意味">同等のことができると確認できた。</td></tr>
 </table>
 <p>「 Windows ではできない」と言い切るには、 Windows 側の確認が要る。確認しきれなかった項目は、どの区分にも入れず、そのとおり書く。また、第 3 章は iPhone を、第 4 章は二台目の Mac か iPad を持つ人向けの話で、持っていない人には当てはまらない。</p>
 
 <h2>2. 手元の FPV ゲームは、 Mac で遊べるか</h2>
 <p>FPV (First Person View) とは、ドローンに積んだカメラの映像を見ながら操縦する遊び方である。ゲームでは、その操縦を画面上で練習する。 Steam (ゲームの販売・管理サービス) のストアページか開発元の公式サイトで、 Mac の動作環境を確認できた FPV 系のタイトルのうち、次の三つを取り上げる。網羅的な調査ではない。</p>
-<table>
+<table class="cards">
 <tr><th>タイトル</th><th>macOS に関する記載 (2026-10-16 確認)</th></tr>
-<tr><td>Uncrashed : FPV Drone Simulator</td><td>対応 OS は Windows と macOS 。 macOS の推奨環境は「最新の macOS 」と M1 以上のチップ。コントローラーかリモコンが必須 [2] 。</td></tr>
-<tr><td>Liftoff : FPV Drone Racing</td><td>対応 OS は Windows 、 macOS 、 SteamOS + Linux 。 macOS の推奨は macOS Big Sur (macOS の旧版の名前) 以降。リモコンかコントローラーが必須 [3] 。</td></tr>
-<tr><td>VelociDrone</td><td>開発元の公式サイトに Mac の動作環境の記載があり、プロセッサーの欄に「 Apple M 」とある [4] 。 Steam での掲載は確認できなかった。</td></tr>
+<tr><td data-label="タイトル">Uncrashed : FPV Drone Simulator</td><td data-label="macOS に関する記載 (2026-10-16 確認)">対応 OS は Windows と macOS 。 macOS の推奨環境は「最新の macOS 」と M1 以上のチップ。コントローラーかリモコンが必須 [2] 。</td></tr>
+<tr><td data-label="タイトル">Liftoff : FPV Drone Racing</td><td data-label="macOS に関する記載 (2026-10-16 確認)">対応 OS は Windows 、 macOS 、 SteamOS + Linux 。 macOS の推奨は macOS Big Sur (macOS の旧版の名前) 以降。リモコンかコントローラーが必須 [3] 。</td></tr>
+<tr><td data-label="タイトル">VelociDrone</td><td data-label="macOS に関する記載 (2026-10-16 確認)">開発元の公式サイトに Mac の動作環境の記載があり、プロセッサーの欄に「 Apple M 」とある [4] 。 Steam での掲載は確認できなかった。</td></tr>
 </table>
 <p>三つとも、ストアページや公式サイトに Mac の動作環境が載っている。記載から判断する限り、 Mac で遊べる可能性は高い。 Windows 側は、 Uncrashed と Liftoff が対応 OS として明記している [2][3] 。ただし、これは記載の確認であって、実際の動作の確認ではない。 Apple シリコン (Mac 用に Apple が作ったチップ) 上でそのまま動く版なのか、 Intel 向けの版を変換して動かしているのかは、確認できなかった。 macOS 27 での動作も、確認できなかった。</p>
 <p>操縦には、送信機 (手に持つ操縦用のリモコン) かゲームコントローラーが要る。 Bluetooth のコントローラーは、 Mac の「システム設定」の Bluetooth から接続する、と Apple は案内している [5] 。一方、 Uncrashed のストアページは「 Windows が認識するジョイスティックなら動く」と書いており、 Mac での扱いには触れていない [2] 。 Mac で、送信機が同じように認識されるかは、確認できなかった。手持ちの送信機が使えるかは、実際に接続して試すのが確実である。</p>
@@ -75,13 +89,13 @@
 <p>したがって、端末の中で AI を動かせること自体は、 Windows でも同等である。使える AI 機能の質や速さの差は、今回は示せていない。判定は「 Windows でも同等にできる」とする。</p>
 
 <h2>6. まとめ</h2>
-<table>
+<table class="cards">
 <tr><th>項目</th><th>判定</th><th>根拠の強さ</th></tr>
-<tr><td>FPV ゲーム (Mac で遊べるか)</td><td>区分なし (Mac での動作は記載の確認のみ。 Windows との動作の比較は未調査)</td><td>ストアページ・公式サイトの記載 [2][3][4]</td></tr>
-<tr><td>iPhone をカメラにする</td><td>区分なし (確認しきれなかった)</td><td>Apple は公式 [6] 、 Windows 側は報道 [9]</td></tr>
-<tr><td>iPhone の画面を Mac で操作する</td><td>区分なし (確認しきれなかった)</td><td>Apple は公式 [7] 、 Windows 側は報道 [8]</td></tr>
-<tr><td>一組のキーボードとマウスで複数の機器を操作する</td><td>Windows でも同等にできる</td><td>両方とも公式 [10][11]</td></tr>
-<tr><td>端末の中で AI を動かす</td><td>Windows でも同等にできる</td><td>両方とも公式 [12][13]</td></tr>
+<tr><td data-label="項目">FPV ゲーム (Mac で遊べるか)</td><td data-label="判定">区分なし (Mac での動作は記載の確認のみ。 Windows との動作の比較は未調査)</td><td data-label="根拠の強さ">ストアページ・公式サイトの記載 [2][3][4]</td></tr>
+<tr><td data-label="項目">iPhone をカメラにする</td><td data-label="判定">区分なし (確認しきれなかった)</td><td data-label="根拠の強さ">Apple は公式 [6] 、 Windows 側は報道 [9]</td></tr>
+<tr><td data-label="項目">iPhone の画面を Mac で操作する</td><td data-label="判定">区分なし (確認しきれなかった)</td><td data-label="根拠の強さ">Apple は公式 [7] 、 Windows 側は報道 [8]</td></tr>
+<tr><td data-label="項目">一組のキーボードとマウスで複数の機器を操作する</td><td data-label="判定">Windows でも同等にできる</td><td data-label="根拠の強さ">両方とも公式 [10][11]</td></tr>
+<tr><td data-label="項目">端末の中で AI を動かす</td><td data-label="判定">Windows でも同等にできる</td><td data-label="根拠の強さ">両方とも公式 [12][13]</td></tr>
 </table>
 <p>「 Mac でしか実現できない」と言える項目は、今回の調査では見つからなかった。「 Windows でも可能だが Mac が有利」と、出典で示せた項目もなかった。 Mac ならではかもしれない項目は、 iPhone との連携の二つにあるが、 Windows 側の公式な確認が足りないため、断定できない。 Mac の価値は、機能の有無よりも、 Apple の機器を持っている人にとっての手間の少なさにあるのかもしれない。ただし、これは筆者の推測であり、今回の資料では示せていない。なお、 Uncrashed と Liftoff は Windows 版も明記している [2][3] 。 VelociDrone の Windows 版は確認していない。ゲームの面で Mac が有利と示せる材料はない。</p>
 

@@ -58,6 +58,17 @@ sup a:hover{text-decoration:underline}
 @media (max-width:480px){
 .toc>ol{columns:1}
 }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -131,13 +142,13 @@ Sebastian Strangio らの論文は、国内の反対勢力と、国際社会か�
 <p>第二に、確度が中程度の点である。現在の関係は、政権の利害と、条件の付かない資金によって説明できる可能性が高い。ただし、裏付けとなる研究は少数で、動機は直接観察できない。これは未確定の仮説である。</p>
 <p>第三に、分からない点である。カンボジアが「脱却できない」のかどうかは、依存をどう定義するかで答えが変わる。さらに、将来の変化は、カンボジアの内部だけでなく、西側の出方にも左右される <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 。この点について、本稿は断定を避ける。記憶は教えられても、選ばれるのは取引である。これが現時点で、確認できた資料から言える範囲の答えである。</p>
 
-<table>
+<table class="cards">
 <tr><th>主張</th><th>区分</th><th>判断の根拠</th></tr>
-<tr><td>中国が 1970 年代にクメール・ルージュを支えた</td><td>確立した事実</td><td>公文書館資料と聞き取りに基づく研究、および複数の論考が一致する。</td></tr>
-<tr><td>中国が 1979 年から 1990 年も武器を供給した</td><td>確立に近いが、確認は一つの出典</td><td>本稿では Storey の論考でしか確認できていない。</td></tr>
-<tr><td>中国は政策を動かせなかった</td><td>未確定の仮説</td><td>一つの研究に拠り、追試や別の検証が確認できない。</td></tr>
-<tr><td>依存の原因は政権の生き残りである</td><td>未確定の仮説</td><td>研究はあるが、動機の直接の証拠がなく、評価が割れる余地がある。</td></tr>
-<tr><td>記憶は外交の決定因ではない</td><td>投機的な理論</td><td>観察による裏付けが乏しく、推論に拠る。</td></tr>
+<tr><td data-label="主張">中国が 1970 年代にクメール・ルージュを支えた</td><td data-label="区分">確立した事実</td><td data-label="判断の根拠">公文書館資料と聞き取りに基づく研究、および複数の論考が一致する。</td></tr>
+<tr><td data-label="主張">中国が 1979 年から 1990 年も武器を供給した</td><td data-label="区分">確立に近いが、確認は一つの出典</td><td data-label="判断の根拠">本稿では Storey の論考でしか確認できていない。</td></tr>
+<tr><td data-label="主張">中国は政策を動かせなかった</td><td data-label="区分">未確定の仮説</td><td data-label="判断の根拠">一つの研究に拠り、追試や別の検証が確認できない。</td></tr>
+<tr><td data-label="主張">依存の原因は政権の生き残りである</td><td data-label="区分">未確定の仮説</td><td data-label="判断の根拠">研究はあるが、動機の直接の証拠がなく、評価が割れる余地がある。</td></tr>
+<tr><td data-label="主張">記憶は外交の決定因ではない</td><td data-label="区分">投機的な理論</td><td data-label="判断の根拠">観察による裏付けが乏しく、推論に拠る。</td></tr>
 </table>
 
 

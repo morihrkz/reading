@@ -65,6 +65,17 @@ sup a:hover{text-decoration:underline}
 @media (max-width:480px){
 .toc>ol{columns:1}
 }
+  /* 表のカード化(幅 40rem 以下) */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -197,26 +208,26 @@ sup a:hover{text-decoration:underline}
 <figcaption>図 1 　プロキシ配下の通信経路と、二枚の証明書</figcaption>
 </figure>
 <p>どこまで厳しく確認するかは、 Cloudflare の「 SSL/TLS モード」で決まります。原典のサイトは最も厳格な Full (Strict) でした。このモードでは、オリジンの証明書が失効していると、 Cloudflare は接続そのものを拒否します。</p>
-<table>
+<table class="cards">
 <tr><th>項目</th><th>原典のサイトの構成</th></tr>
-<tr><td>公開先</td><td>GitHub Pages （ private リポジトリ、 GitHub Actions で配信）</td></tr>
-<tr><td>apex</td><td>A レコード 4 本、オレンジ雲（クリーン URL のために 2026 年 7 月 24 日に有効化）</td></tr>
-<tr><td>www</td><td>GitHub への CNAME 、グレー雲</td></tr>
-<tr><td>SSL/TLS モード</td><td>Full (Strict)</td></tr>
-<tr><td>大きなファイル</td><td>Cloudflare R2 （ファイル置き場）から配信</td></tr>
+<tr><td data-label="項目">公開先</td><td data-label="原典のサイトの構成">GitHub Pages （ private リポジトリ、 GitHub Actions で配信）</td></tr>
+<tr><td data-label="項目">apex</td><td data-label="原典のサイトの構成">A レコード 4 本、オレンジ雲（クリーン URL のために 2026 年 7 月 24 日に有効化）</td></tr>
+<tr><td data-label="項目">www</td><td data-label="原典のサイトの構成">GitHub への CNAME 、グレー雲</td></tr>
+<tr><td data-label="項目">SSL/TLS モード</td><td data-label="原典のサイトの構成">Full (Strict)</td></tr>
+<tr><td data-label="項目">大きなファイル</td><td data-label="原典のサイトの構成">Cloudflare R2 （ファイル置き場）から配信</td></tr>
 </table>
 
 <h2 id="sec4">4. 障害の発生： Error 526</h2>
 <p>2026 年 10 月 11 日の 10 時過ぎ、サイトを開くと Cloudflare のエラー画面が出ました。画面には三つの箱が並び、「ブラウザ」と「 Cloudflare 」は正常 (Working) 、いちばん右の「 Host 」だけがエラーです。 Cloudflare までは届いているのに、その先のオリジンで止まっている、という意味です。</p>
 <p>この「 526 」は、 Cloudflare が返すエラーの一つで、オリジンの証明書を検証できなかったことを示します。 Full (Strict) のモードで、証明書の失効、自己署名、ホスト名の不一致などがあると返されます。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
 <p>証明書の期限は 2026 年 10 月 9 日 19:20 （日本時間）でした。 Full (Strict) は失効した証明書を即座に拒否するため、この時刻から 526 が出ていたと考えられます。 Cloudflare の分析画面でも、 5xx 系のエラーは 10 月 9 日の区間から出始めており、内訳は 526 が 354 件で、ほぼすべてを占めていました。</p>
-<table>
+<table class="cards">
 <tr><th>日時</th><th>出来事</th></tr>
-<tr><td>2026 年 7 月 11 日</td><td>GitHub Pages の証明書を初回発行。まだプロキシ化前だったので成功</td></tr>
-<tr><td>7 月 24 日</td><td>apex をオレンジ雲に変更（クリーン URL 化）</td></tr>
-<tr><td>10 月 9 日 19:20</td><td>証明書が期限切れ。 526 が出始める</td></tr>
-<tr><td>10 月 11 日 朝</td><td>筆者がアクセスして初めて気づく</td></tr>
-<tr><td>10 月 11 日 10:39</td><td>暫定復旧。ダウンタイムはおよそ 39 時間</td></tr>
+<tr><td data-label="日時">2026 年 7 月 11 日</td><td data-label="出来事">GitHub Pages の証明書を初回発行。まだプロキシ化前だったので成功</td></tr>
+<tr><td data-label="日時">7 月 24 日</td><td data-label="出来事">apex をオレンジ雲に変更（クリーン URL 化）</td></tr>
+<tr><td data-label="日時">10 月 9 日 19:20</td><td data-label="出来事">証明書が期限切れ。 526 が出始める</td></tr>
+<tr><td data-label="日時">10 月 11 日 朝</td><td data-label="出来事">筆者がアクセスして初めて気づく</td></tr>
+<tr><td data-label="日時">10 月 11 日 10:39</td><td data-label="出来事">暫定復旧。ダウンタイムはおよそ 39 時間</td></tr>
 </table>
 <p>外形監視（外から定期的にサイトを見に行く仕組み）を入れていなかったため、気づけたのは筆者が自分でアクセスした時でした。ここに、後で触れる反省が集約されています。</p>
 
@@ -263,10 +274,10 @@ curl -sS -o /dev/null -w "%{http_code}\n" https://www.miraimirror.app/
 
 <h2 id="sec7">7. 再発防止：作業を自動化するか、構成を変えるか</h2>
 <p>復旧したとはいえ、構成は何も変わっていません。新しい証明書の期限も 90 日後で、このままでは同じ失敗が繰り返されます。 Let's Encrypt は失効の 30 日前までの更新を推奨しているため、実際には 60 日ごとの手作業になります。原典はここで二つの案を比べました。</p>
-<table>
+<table class="cards">
 <tr><th>案</th><th>内容</th><th>評価</th></tr>
-<tr><td>更新作業を GitHub Actions で自動化</td><td>グレー雲化 → Custom domain 再設定 → <code>approved</code> を待つ → Enforce HTTPS → オレンジ雲に戻す、を 60 日ごとに自動実行する</td><td>可能。ただし発行の遅れや失敗時の再試行を設計する必要があり、根本原因（プロキシと ACME の衝突）は残る</td></tr>
-<tr><td>Cloudflare Pages へ移行</td><td>証明書の発行と更新を Cloudflare に一本化する</td><td>採用。オレンジ雲を前提に作られているので、衝突が原理的に起きない</td></tr>
+<tr><td data-label="案">更新作業を GitHub Actions で自動化</td><td data-label="内容">グレー雲化 → Custom domain 再設定 → <code>approved</code> を待つ → Enforce HTTPS → オレンジ雲に戻す、を 60 日ごとに自動実行する</td><td data-label="評価">可能。ただし発行の遅れや失敗時の再試行を設計する必要があり、根本原因（プロキシと ACME の衝突）は残る</td></tr>
+<tr><td data-label="案">Cloudflare Pages へ移行</td><td data-label="内容">証明書の発行と更新を Cloudflare に一本化する</td><td data-label="評価">採用。オレンジ雲を前提に作られているので、衝突が原理的に起きない</td></tr>
 </table>
 <p>Cloudflare Pages は、 Cloudflare が提供する静的サイトのホスティングです。サイトのファイルを Cloudflare のエッジから直接配信し、カスタムドメインの証明書も Cloudflare が自動で発行、更新します。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></p>
 <p>決め手は三つありました。一つ目は、証明書の管理者が Cloudflare だけになり、根本原因が消えること。二つ目は、 URL の書き換えやリダイレクトのルール、 R2 、アクセス解析がどれもドメイン単位の設定なので、公開先が変わっても引き継げること。三つ目は、サイトを組み立てる工程はそのままで、アップロードの手順を差し替えるだけで済むことです。</p>
@@ -310,14 +321,14 @@ curl -sS -o /dev/null -w "%{http_code}\n" https://www.miraimirror.app/
 </div>
 <h3 id="sec10-3">10.3 切り替え後に全 URL を確認する</h3>
 <p>ルール修正後、 curl で全 URL のステータスコードをまとめて確認しました。ダッシュボードの見た目ではなく、実際の応答で確かめる点が肝心です。</p>
-<table>
+<table class="cards">
 <tr><th>URL</th><th>結果</th></tr>
-<tr><td><code>/</code> 、 <code>/app</code> 、 <code>/app/</code> 、 <code>/app?theme=dark</code></td><td>200 （アドレスバーは変化なし）</td></tr>
-<tr><td><code>/app.dc.html</code> 、 <code>/app.dc</code></td><td>301 → <code>/app</code></td></tr>
-<tr><td><code>/index.dc.html</code> 、 <code>/index.dc</code></td><td>301 → <code>/</code></td></tr>
-<tr><td><code>/manual/</code></td><td>200</td></tr>
-<tr><td><code>/nonexistent</code></td><td>404</td></tr>
-<tr><td><code>www.miraimirror.app</code></td><td>301 → apex</td></tr>
+<tr><td data-label="URL"><code>/</code> 、 <code>/app</code> 、 <code>/app/</code> 、 <code>/app?theme=dark</code></td><td data-label="結果">200 （アドレスバーは変化なし）</td></tr>
+<tr><td data-label="URL"><code>/app.dc.html</code> 、 <code>/app.dc</code></td><td data-label="結果">301 → <code>/app</code></td></tr>
+<tr><td data-label="URL"><code>/index.dc.html</code> 、 <code>/index.dc</code></td><td data-label="結果">301 → <code>/</code></td></tr>
+<tr><td data-label="URL"><code>/manual/</code></td><td data-label="結果">200</td></tr>
+<tr><td data-label="URL"><code>/nonexistent</code></td><td data-label="結果">404</td></tr>
+<tr><td data-label="URL"><code>www.miraimirror.app</code></td><td data-label="結果">301 → apex</td></tr>
 </table>
 
 <h2 id="sec11">11. 外形監視と後片付け</h2>
