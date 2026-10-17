@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Zone - FPV ドローンシミュレータの調査</title>
+<style>
+  body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>The Zone - FPV ドローンシミュレータの調査</h1>
+<p class="meta">調査日 : 2026 年 10 月 17 日 ／ 対象 : Steam 版 The Zone - FPV Drone Simulator ／ 開発 : Nils Vollenbruch (nils vo)</p>
+
+<h2>結論</h2>
+<p>The Zone は、実機の挙動に近い物理演算を最大の売りにした FPV ドローン練習用シミュレータで、 Steam のユーザー評価は非常に高い。良い評価は物理演算、マルチプレイ、軽快な動作に集中している。悪い評価は、コンテンツの少なさ、素朴なグラフィックスに対して重い GPU 負荷、細かい設定項目の不足に集まる。早期アクセス中の作品であり、「完成した総合シミュレータ」ではなく、「物理演算を磨いた練習ツールが育っている途中」と見るのが妥当である。</p>
+
+<div class="note">評価の数字と引用は、 2026 年 10 月 17 日時点で Steam のストアページとユーザーレビューから取得したものである。独立した第三者媒体によるレビュー記事は、今回の検索では見つからなかった。物理演算の正確さに関する評価は、ユーザーの体感と開発者自身の説明に基づく。</div>
+
+<h2>基本情報</h2>
+<table>
+<tr><th>項目</th><th>内容</th></tr>
+<tr><th>開発・販売</th><td>Nils Vollenbruch (nils vo) 。開発者と販売元は同一人物</td></tr>
+<tr><th>公開</th><td>2025 年 3 月 7 日に Steam で早期アクセスとして公開</td></tr>
+<tr><th>価格</th><td>¥1,600 （開発者は、早期アクセス終了後も価格を変えないと表明）</td></tr>
+<tr><th>主な特徴</th><td>実機の映像と Blackbox データで検証したと説明する物理演算、実在の場所を 1:1 で再現したマップ、最大 32 人のマルチプレイ、観戦モード、レベルエディタ</td></tr>
+<tr><th>マップ</th><td>ストアページでは 3 マップ。公開当初は 1 マップだった</td></tr>
+<tr><th>必要な機材</th><td>ゲームコントローラまたは RC 送信機が必須。 RC 送信機を推奨</td></tr>
+<tr><th>動作環境（ Windows 最低）</th><td>Core i5 6500 / Ryzen 1600 、 RAM 8 GB 、 Radeon Vega 8 / Intel Iris Plus G7 相当</td></tr>
+<tr><th>対応 OS</th><td>Windows 。 macOS の要件も掲載されているが、予定項目にも macOS 対応が残っている。 SteamOS と Linux のタブもあるが、要件は未掲載</td></tr>
+<tr><th>早期アクセス</th><td>開発者の見積もりは 3 〜 6 か月。予定は、マップ追加、マップエディタ、グラフィックスと UI の改善、動く障害物</td></tr>
+</table>
+
+<h3>開発者について</h3>
+<p>Nils Vollenbruch 氏は、 YouTube チャンネル「 nils vo 」で活動するフリースタイル FPV パイロットで、スポンサー契約も持つと紹介されている。チャンネルの内容そのものは、今回取得できなかった。ストアページには、基本操作に慣れるまで 2 〜 5 時間かかるとの注意書きがあり、「練習なしで遊べる楽しいゲームではなく、シミュレーション兼トレーニングの道具だ」と明記されている。</p>
+
+<h2>Steam での評価の全体像</h2>
+<table>
+<tr><th>集計</th><th>結果</th></tr>
+<tr><th>全期間（ストアページ）</th><td>「非常に好評」、 438 件中 97% が好評</td></tr>
+<tr><th>直近 30 日（ストアページ）</th><td>非常に好評、 52 件中 100% が好評</td></tr>
+<tr><th>英語レビュー（ API 取得）</th><td>309 件中、好評 304 件・不評 5 件との集計値が返った</td></tr>
+</table>
+<div class="note">件数は取得手段で食い違う（全言語と英語のみの違い、取得時刻の違いによる）。不評レビューの本文は、実際に確認できた 3 件（英語 2 件、ロシア語 1 件）だけを下で扱う。</div>
+
+<h2>良い評価</h2>
+<h3>1. 物理演算の手応え</h3>
+<p>最も多い称賛である。「物理演算が素晴らしい」「最高の感触のシミュレータ」といった短い評が大量に並ぶ。具体的な声は次のとおり。</p>
+<ul>
+<li>実機の 5 インチに「そっくり」で、これまで試した中で最も現実的だという評（プレイ 16.5 時間）。</li>
+<li>所有する 65 mm と 5 インチの実機に挙動が合うという評。タイニーウープでも物理演算が良く、レートと抗力の比を調整できるという評も複数ある。</li>
+<li>実機の操縦が上達したという評。練習ツールとして機能していることを示す。</li>
+<li>Liftoff より正確だという比較評（プレイ 80.5 時間）。</li>
+</ul>
+<h3>2. マルチプレイと観戦</h3>
+<p>最大 32 人で飛べるオンライン機能が、他のシミュレータとの差別化点として挙がる。「他の人と一緒に飛べるのがいい」「マルチプレイが現実的な物理演算とよく合う」という声がある。</p>
+<h3>3. 動作の軽快さ</h3>
+<p>非力な環境でも滑らかに動くという評がある。高フレームレートで滑らかだという評や、 Linux のネイティブ対応と描画改善を歓迎する評もある。</p>
+<h3>4. 拡張性と開発者への信頼</h3>
+<p>カスタムマップやコミュニティ製マップ、機体まわりのモジュール性を評価する声がある。開発者の動画解説を評価する声もあり、開発者本人の発信力が支持の一因と読める。</p>
+<h3>5. 価格と価値</h3>
+<p>「この値段なら最良級」という評があり、¥1,600 という価格は好意的に受け止められている。</p>
+
+<h2>悪い評価</h2>
+<p>不評は少数だが、好評レビューの中にも「推奨するが、ここは不満」という指摘が含まれる。両方をまとめる。</p>
+<h3>1. コンテンツの少なさ</h3>
+<p>不評レビューの中心はここである。プレイ 16.9 時間の不評レビューは「有望な出だし、それ以上ではない」と述べ、コンテンツが乏しく、 GUI は機能するだけで、素材の磨き込みが必要だと評している。好評側でも、マップ数、チャレンジやレースの不足、機体カスタマイズの未完成を挙げる声がある。</p>
+<h3>2. グラフィックスと負荷の釣り合い</h3>
+<p>「高設定でも低解像度のように見える」という不評がある。また、単純な見た目のわりに GPU 負荷が高く、エンジンの最適化が必要だという指摘がある。好評側にも、 AI で生成したようなグラフィティへの不満や、ビジュアル改善の要望がある。統合 GPU の AMD 環境で魚眼状の描画不具合が出るという報告もある。</p>
+<h3>3. 細かな設定の不足</h3>
+<p>好評レビューの中に、単独のシミュレータとしては簡素すぎ、スロットルやプロップウォッシュの設定がほしいという声があった。浮遊感が少しあり、 G 力の表現を増やしてほしいという声もある。ストアの説明でも、物理演算のプリセットは 5 インチのフリースタイルが中心とされる。</p>
+<h3>4. 環境による相性</h3>
+<ul>
+<li>M1 の MacBook Air では動かなかった、という報告がある。このレビューは「推奨」で投稿されており、本文と評価が食い違っている。</li>
+<li>プレイ 0.6 時間の不評レビューは、強力なデスクトップ向けであり、 Mac ノートでのタイニーウープには向かないと述べる。室内マップがないこと、 Air65 の実機と挙動が違うことも指摘する。</li>
+<li>ロシア語の不評レビュー（プレイ 30.7 時間）は、左スティックが右へ流れ始めたと訴える。機器側の不具合の可能性があり、ゲーム本体の評価とは切り分けるべきだが、不評の内訳としては記録しておく。</li>
+</ul>
+<h3>5. 学習の壁</h3>
+<p>開発者自身が、操作に慣れるまでに 2 〜 5 時間かかり、練習が前提だと明記している。気軽に遊べるゲームを期待した人には、これが不満の種になり得る。</p>
+
+<h2>評価の読み方</h2>
+<div class="must">物理演算の「正しさ」は、開発者の説明と、実機を持つ一部ユーザーの体感に支えられている。測定による第三者検証は見つからなかった。購入判断では、この点を割り引いて読むこと。</div>
+<ul>
+<li><span class="tag">向く人</span>実機の感覚に近い練習をしたい人。オンラインで仲間と飛びたい人。¥1,600 で試したい人。</li>
+<li><span class="tag">向かない人</span>豊富なマップやレース、細かい機体調整を今すぐ求める人。 Mac ノートや非力な統合 GPU だけで動かしたい人。</li>
+<li><span class="tag">注意</span>コントローラまたは RC 送信機が必須。早期アクセスの内容は更新で変わる。</li>
+</ul>
+
+<h2>出典</h2>
+<ul>
+<li><a href="https://store.steampowered.com/app/3491280/The_Zone__FPV_Drone_Simulator/">Steam ストアページ : The Zone - FPV Drone Simulator</a></li>
+<li><a href="https://www.youtube.com/@nils_vo">YouTube: nils vo</a></li>
+<li>Steam ユーザーレビュー（ストアの公開 API 経由で取得）</li>
+</ul>
+</main>
+</body>
+</html>

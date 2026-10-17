@@ -7,7 +7,7 @@
 <meta name="description" content="作成文書の一覧">
 <style>
   body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
-  main { padding: 2.5rem 1rem 4rem; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
   h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
@@ -58,9 +58,9 @@ html{scroll-behavior:smooth}
 <p class="kicker">ポータル</p>
 <h1>作成文書インデックス</h1>
 <p class="subtitle">A Reading Room</p>
-<div class="lede"><p>Created: 2026-10-10 / Updated: 2026-10-17 / 収録 24 点</p></div>
+<div class="lede"><p>Created: 2026-10-10 / Updated: 2026-10-17 / 収録 25 点</p></div>
 <nav class="toc" aria-label="目次">
-<a href="#sec1">ニュース解説・検証・分析 <span>15</span></a>
+<a href="#sec1">ニュース解説・検証・分析 <span>16</span></a>
 <a href="#sec2">手順書・計画書・実務記録 <span>7</span></a>
 <a href="#sec3">資料・見本 <span>2</span></a>
 <a href="#sec4">文書どうしの関係</a>
@@ -68,6 +68,10 @@ html{scroll-behavior:smooth}
 <h2 id="sec1">1. ニュース解説・検証・分析</h2>
 <p class="sec-intro">報道や記事を調べ直し、事実と解釈を分けて検討した文書です。</p>
 <ul class="cards">
+<li class="card"><span class="tag">製品調査・ゲームの評価</span>
+<a href="the-zone-fpv-simulator.html">The Zone - FPV ドローンシミュレータの調査</a>
+<p>Steam で早期アクセス中の FPV ドローン練習用シミュレータ「 The Zone 」を、ストアページとユーザーレビューから調べます。好評の理由と不評の内訳を整理し、物理演算の「正しさ」が開発者の説明と一部ユーザーの体感に支えられていて、第三者による検証は見つからなかった点を明記します。</p>
+<span class="lang">日本語</span></li>
 <li class="card"><span class="tag">航空・言語・ホビー工学</span>
 <a href="fpv-maneuver.html">FPV ドローンのマニューバ ―― 操縦の仕組みと語の来歴</a>
 <p>FPV ドローンの宙返りや急降下といった技が、機体のどんな動きと操縦者のどんな操作から生まれるのかを整理し、「マニューバ」という語の来歴をたどります。技の定義は出典ごとに揺れているため、確認できた範囲と筆者の解釈を分けて記します。</p>
