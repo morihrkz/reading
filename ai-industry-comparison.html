@@ -5,87 +5,95 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>生成 AI 企業比較の基礎資料――モデル・エージェント・コーディング環境</title>
 <style>
-:root{
-  --bg:#f7f8f6; --text:#242522; --muted:#65695f; --accent:#3d5a52;
-  --line:#d7dcd2; --box:#eceee7; --link:#3d5a52; --card:#ffffff;
-}
-*{box-sizing:border-box;}
-body{
-  background:var(--bg); color:var(--text); margin:0;
-  line-height:2;
-}
-main{padding:2.5rem clamp(1rem,4vw,4rem) 4rem;max-width:none;margin:0}
-.kicker{font-size:.9375rem; letter-spacing:.14em; color:var(--accent); font-weight:bold; margin-bottom:14px;}
-h1{font-size:2rem; line-height:1.6; color:var(--text); margin:0 0 14px; font-weight:bold;}
-.subtitle{font-size:1.25rem; color:var(--muted); margin:0 0 28px; line-height:1.8;}
-.lede{color:var(--muted); border-left:3px solid var(--accent); padding-left:18px; margin:0 0 40px;}
-.lede p{font-size:1.25rem; margin:0 0 14px;}
-.lede p:last-child{margin-bottom:0;}
-.meta{border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--muted);
-  font-size:.9375rem; line-height:1.9; padding:16px 0; margin:0 0 40px;}
-.toc{background:var(--box); border:1px solid var(--line); padding:22px 26px; margin:0 0 46px;}
-.toc>ol{columns:2;column-gap:32px}
-.toc-title{font-size:.9375rem; letter-spacing:.1em; color:var(--accent); font-weight:700; margin:0 0 14px;}
-.toc li{margin-bottom:7px; font-size:1.03125rem;;break-inside:avoid}
-.toc a{color:var(--text); text-decoration:none;}
-.toc a:hover{color:var(--accent); text-decoration:underline;}
-h2{font-size:1.625rem; line-height:1.5; border-bottom:1px solid var(--line); padding-bottom:9px; margin:52px 0 24px;}
-h3{font-size:1.25rem; margin:32px 0 12px;}
-h4,h5{font-size:1.125rem; margin:24px 0 10px;}
-p{font-size:1.1875rem; margin:0 0 20px;}
-.box{background:var(--box); border:1px solid var(--line); padding:22px 24px; margin:0 0 28px; font-size:1.1875rem;}
-.box strong{color:var(--accent);}
-ul,ol{padding-left:1.4em; margin:0 0 20px;}
-li{margin-bottom:9px;font-size:1.1875rem;}
-a{color:var(--link);}
-sup{font-size:.72em;}
-sup a{color:var(--link); text-decoration:none;}
-sup a:hover{text-decoration:underline;}
-.refs{border-top:1px solid var(--line); margin-top:58px; padding-top:25px;}
-.refs h2{border-bottom:none; margin-top:0; padding-bottom:0;}
-.refs p{font-size:.96875rem; line-height:1.65; margin:0 0 11px; overflow-wrap:anywhere; word-break:break-word;}
-.refs em{font-style:italic;}
-.refs ol{margin:0 0 11px;}
-.refs li{font-size:.96875rem; line-height:1.65; margin:0 0 11px; overflow-wrap:anywhere; word-break:break-word;}
-.refs li>a:first-child{font-weight:700; text-decoration:none;}
-.refs sup a{font-style:italic; font-weight:700;}
-.refs li:target, sup:target{background:var(--box);}
-.note{font-size:.9375rem; color:var(--muted); margin-top:20px;}
-strong{font-weight:bold;}
-blockquote{border-left:3px solid var(--line); color:var(--muted); margin:0 0 20px; padding-left:18px; font-style:italic;}
-blockquote p{margin-bottom:10px;}
-blockquote p:last-child{margin-bottom:0;}
-hr{border:none; border-top:1px solid var(--line); margin:40px 0;}
-code{font-size:.88em; background:var(--box); padding:.1em .3em;}
-pre{font-size:1rem; background:var(--box); border:1px solid var(--line);
-  padding:16px 18px; margin:0 0 20px; overflow-x:auto; line-height:1.6;}
-pre code{background:none; padding:0;}
-
-/* --- company profile cards --- */
-.company{border:1px solid var(--line); background:var(--card); margin:0 0 40px; scroll-margin-top:16px;}
-.company-head{background:var(--accent); color:#fff; padding:20px 24px;}
-.company-head .name{font-size:1.5625rem; font-weight:bold; line-height:1.3; margin:0; border-bottom:none; padding-bottom:0;}
-.company-head .tagline{font-size:1.03125rem; opacity:.92; margin-top:6px; line-height:1.6;}
-.field{border-top:1px solid var(--line); padding:20px 24px;}
-.field:first-of-type{border-top:none;}
-.field-label{font-size:.875rem; letter-spacing:.1em; color:var(--accent); font-weight:bold;
-  text-transform:uppercase; margin-bottom:10px;}
-.field-body{font-size:1.09375rem; line-height:1.85;}
-.field-body p{margin:0 0 12px;}
-.field-body p:last-child{margin-bottom:0;}
-.field-body ul{margin:8px 0 0; padding-left:1.2em;}
-.field-body li{margin-bottom:8px; font-size:1.0625rem;}
-.field-body strong{color:var(--accent);}
-
-@media (max-width:480px){
-  h1{font-size:1.6875rem;}
-  .toc>ol{columns:1}
-  .subtitle{font-size:1.0625rem;}
-  .lede{padding-left:14px;}
-  .lede p{font-size:1.09375rem;}
-  .company-head{padding:16px 18px;}
-  .field{padding:16px 18px;}
-}
+  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* 文書固有の補助(目次・参考文献・企業ごとの枠) */
+  .kicker { font-size: .9rem; letter-spacing: .14em; color: #2a4d69; font-weight: 700; margin: 0 0 .6rem; }
+  h1 { font-size: 1.8rem; line-height: 1.5; }
+  .subtitle { font-size: 1.05rem; color: #555; margin: 0 0 1.4rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 0 0 1.6rem; }
+  .lede p:last-child { margin-bottom: 0; }
+  .toc { background: #e6edf3; border: 1px solid #bbb; padding: 1.2rem 1.5rem; margin: 0 0 2.2rem; }
+  .toc > ol { columns: 2; column-gap: 2rem; }
+  .toc-title { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .7rem; }
+  .toc li { margin-bottom: .4rem; font-size: 1rem; break-inside: avoid; }
+  .toc a { color: #222; text-decoration: none; }
+  .toc a:hover { color: #2a4d69; text-decoration: underline; }
+  sup { font-size: .72em; }
+  sup a { color: #2a4d69; text-decoration: none; }
+  sup a:hover { text-decoration: underline; }
+  .refs { border-top: 1px solid #bbb; margin-top: 3.5rem; padding-top: 1.5rem; }
+  .refs h2 { border-bottom: none; margin-top: 0; padding-bottom: 0; }
+  .refs p, .refs li { font-size: .95rem; line-height: 1.65; margin: 0 0 .7rem; overflow-wrap: anywhere; word-break: break-word; }
+  .refs ol { margin: 0 0 .7rem; }
+  .refs li > a:first-child { font-weight: 700; text-decoration: none; }
+  .refs sup a { font-style: italic; font-weight: 700; }
+  .refs li:target, sup:target { background: #e6edf3; }
+  .company { border: 1px solid #bbb; background: #fff; margin: 0 0 2.5rem; scroll-margin-top: 16px; }
+  .company-head { background: #2a4d69; color: #fff; padding: 1.2rem 1.5rem; }
+  .company-head h2 { font-size: 1.5rem; color: #fff; background: none; padding: 0; margin: 0; border-radius: 0; }
+  .company-head .tagline { font-size: 1.03125rem; opacity: .92; margin-top: .4rem; line-height: 1.6; }
+  .field { border-top: 1px solid #bbb; padding: 1.2rem 1.5rem; }
+  .field:first-of-type { border-top: none; }
+  .field-label { font-size: .875rem; letter-spacing: .1em; color: #2a4d69; font-weight: bold; text-transform: uppercase; margin-bottom: .6rem; }
+  .field-body { font-size: 1.09375rem; line-height: 1.85; }
+  .field-body p { margin: 0 0 .7rem; }
+  .field-body p:last-child { margin-bottom: 0; }
+  .field-body ul { margin: .5rem 0 0; padding-left: 1.2em; }
+  .field-body li { margin-bottom: .5rem; font-size: 1.0625rem; }
+  .field-body strong { color: #2a4d69; }
+  @media (max-width: 480px) {
+    h1 { font-size: 1.5rem; }
+    .toc > ol { columns: 1; }
+    .subtitle { font-size: 1.0625rem; }
+    .lede { padding-left: .8rem; }
+    .lede p { font-size: 1.09375rem; }
+    .company-head { padding: 1rem 1.1rem; }
+    .field { padding: 1rem 1.1rem; }
+  }
 </style>
 </head>
 <body>
@@ -95,7 +103,7 @@ pre code{background:none; padding:0;}
 <p class="subtitle">A Reference Compendium of Generative AI Enterprises: Foundation Models, Autonomous Agents, and Coding Environments</p>
 <div class="lede"><p>生成 AI ・ AI エージェント・ AI コーディングを軸に、主要企業の基盤モデル・製品・コーディングツールの現状を整理した比較資料である。 AI 業界は製品名・モデル名・提供条件が短期間で変わり、買収も「契約締結」と「買収完了」を区別して読む必要がある。</p></div>
 
-<div class="meta">【方法と限界】情報基準日は 2026 年 10 月 13 日（ Meta の Muse Wonder 発表、 Gemini 4 Argon の提供範囲拡大、 Claude Haiku 5.5 、 GPT-6.1 Sol Ultrafast を反映）。 Meta の新モデルの性能値は発表直後の自社公表値と第三者指標が混在しており、暫定的なものとして読む必要がある。 SpaceX は xAI に続き Anysphere (Cursor) の買収も完了し、本資料では便宜上「 SpaceX 」 1 社にまとめたが、コーディングエージェントは Grok Build ・ Cursor Agent ・常時稼働型の Grok Bot の 3 系統が併存し、企業としては 1 社でも製品としては当面別系統のまま推移している。 Perplexity は他社のような大規模インフラ企業ではない独立系スタートアップだが、検索特化型の AI アシスタントとブラウザ / エージェント製品で存在感を増しているため、比較対象に加えた。</div>
+<div class="note">【方法と限界】情報基準日は 2026 年 10 月 13 日（ Meta の Muse Wonder 発表、 Gemini 4 Argon の提供範囲拡大、 Claude Haiku 5.5 、 GPT-6.1 Sol Ultrafast を反映）。 Meta の新モデルの性能値は発表直後の自社公表値と第三者指標が混在しており、暫定的なものとして読む必要がある。 SpaceX は xAI に続き Anysphere (Cursor) の買収も完了し、本資料では便宜上「 SpaceX 」 1 社にまとめたが、コーディングエージェントは Grok Build ・ Cursor Agent ・常時稼働型の Grok Bot の 3 系統が併存し、企業としては 1 社でも製品としては当面別系統のまま推移している。 Perplexity は他社のような大規模インフラ企業ではない独立系スタートアップだが、検索特化型の AI アシスタントとブラウザ / エージェント製品で存在感を増しているため、比較対象に加えた。</div>
 
 <nav class="toc" aria-label="目次">
 <p class="toc-title">目次</p>

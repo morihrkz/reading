@@ -5,39 +5,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>国内の主な経済圏の構成</title>
 <style>
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
-body { font-size: 1.1875rem; margin: 0; line-height: 1.8; overflow-wrap: anywhere; }
-main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-.title { border-bottom: solid #2A4D69 2.25pt; }
-h1 { font-size: 1.6rem; line-height: 1.4; }
-h2 { font-size: 1.3rem; line-height: 1.4; }
-h3 { font-size: 1.1rem; line-height: 1.4; }
-ul, ol { padding-left: 1.4em; }
-li { margin-bottom: .4em; }
-.table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1em 0; }
-table { width: 100%; border-collapse: collapse; }
-th, td { border: solid #BBBBBB 1pt; vertical-align: top; text-align: left; padding: .4em .6em; }
-thead th, tbody th { background: #E6EDF3; }
-.wide { min-width: 0; }
-/* 全ての表: 画面幅によらず、行ごとのカード表示にする */
-table, table tbody, table tr, table th, table td { display: block; width: auto; }
-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-table tr { margin-bottom: 1rem; border: solid #BBBBBB 1pt; border-top: solid #2A4D69 3pt; }
-table th, table td { border: none; }
-table tbody th { font-size: 1.05rem; padding: .5em .6em; }
-table td { position: relative; padding-left: 9.2em; border-top: solid #DDDDDD 1pt; min-height: 1.8em; }
-table td::before { content: attr(data-label); position: absolute; left: .6em; width: 8em; font-weight: bold; color: #2A4D69; font-size: .85em; line-height: 2.1; }
-
-@media (max-width: 640px) {
- body { line-height: 1.75; }
- h1 { font-size: 1.35rem; }
- h2 { font-size: 1.2rem; }
- h3 { font-size: 1.05rem; }
- th, td { padding: .35em .5em; }
-}
-  /* 記事型の本文サイズ */
-  p, li, .note, .must, .say { font-size: 1.1875rem; }
+  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
   p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* 文書固有の補助(タイトル罫線・表の外枠) */
+  .title { border-bottom: solid #2a4d69 2.25pt; }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1em 0; }
+  ul, ol { padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
 </style>
 </head>
 <body>
@@ -46,7 +63,7 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
 <h1>国内の主な経済圏の構成</h1>
 </div>
 <div class="table-wrap">
-<table class="matrix wide">
+<table class="cardrow">
  <thead>
   <tr>
    <th scope="col">グループ</th><th scope="col">通信</th><th scope="col">コード決済</th><th scope="col">クレジットカード</th><th scope="col">ポイント</th><th scope="col">銀行</th><th scope="col">証券</th><th scope="col">保険</th>
@@ -212,7 +229,7 @@ table td::before { content: attr(data-label); position: absolute; left: .6em; wi
 </ul>
 <p>出典（種別の「一次」は企業の公式サイトや公式資料、「二次」は報道や解説を指す。）</p>
 <div class="table-wrap">
-<table class="wide">
+<table class="cards">
  <thead>
   <tr><th scope="col">対象</th><th scope="col">出典</th><th scope="col">種別</th><th scope="col">取得日</th></tr>
  </thead>

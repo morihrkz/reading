@@ -5,62 +5,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>五十肩とサイレントマニピュレーション</title>
 <style>
-:root{
-  --bg:#f7f8f6;
-  --text:#242522;
-  --muted:#65695f;
-  --accent:#3d5a52;
-  --line:#d7dcd2;
-  --box:#eceee7;
-  --link:#3d5a52;
-}
-*{box-sizing:border-box}
-body{background:var(--bg);color:var(--text);margin:0;line-height:2;}
-main{padding:2.5rem clamp(1rem,4vw,4rem) 4rem;max-width:none;margin:0}
-a{color:var(--link);}
-.kicker{font-size:.9375rem;letter-spacing:.14em;color:var(--accent);font-weight:700;margin:0 0 14px;}
-h1{font-size:2rem;line-height:1.6;color:var(--text);margin:0 0 14px;font-weight:700;}
-.subtitle{font-size:1.25rem;color:var(--muted);line-height:1.8;margin:0 0 28px;}
-.meta{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin:0 0 40px;color:var(--muted);font-size:.9375rem;line-height:1.9;}
-.lede{border-left:3px solid var(--accent);padding-left:18px;margin:0 0 40px;color:var(--muted);}
-.lede p{font-size:1.25rem;margin:0 0 14px;}
-.lede p:last-child{margin-bottom:0;}
-.toc{background:var(--box);border:1px solid var(--line);padding:22px 26px;margin:0 0 46px}
-.toc>ol{columns:2;column-gap:32px}
-.toc-title{font-size:.9375rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 14px}
-.toc li{margin-bottom:7px;font-size:1.03125rem;break-inside:avoid}
-.toc li ol{margin-top:7px;margin-bottom:11px;}
-.toc li li{font-size:.96875rem;color:var(--muted);margin-bottom:5px;}
-.toc a{color:var(--text);text-decoration:none}
-.toc a:hover{color:var(--accent);text-decoration:underline}
-h2{font-size:1.625rem;line-height:1.5;border-bottom:1px solid var(--line);padding-bottom:9px;margin:52px 0 24px;}
-h3{font-size:1.25rem;margin:32px 0 12px;}
-p{font-size:1.1875rem;margin:0 0 20px;}
-.box{background:var(--box);border:1px solid var(--line);padding:22px 24px;margin:0 0 28px;font-size:1.1875rem;}
-.box strong{color:var(--accent);}
-table{width:100%;border-collapse:collapse;font-size:1rem;margin:0 0 28px;}
-th,td{border:1px solid var(--line);padding:10px 11px;text-align:left;vertical-align:top;}
-th{background:var(--box);}
-ul,ol{padding-left:1.4em;margin:0 0 20px;}
-li{margin-bottom:9px; font-size:1.1875rem;}
-ul li,ol li{margin-bottom:9px;font-size:1.1875rem;}
-sup{font-size:0.72em;}
-sup a{color:var(--link);text-decoration:none;}
-sup a:hover{text-decoration:underline;}
-.refs{border-top:1px solid var(--line);margin-top:58px;padding-top:25px;}
-.refs h2{border-bottom:none;margin-top:0;padding-bottom:0;}
-.refs p{font-size:.96875rem;line-height:1.65;margin:0 0 11px;overflow-wrap:anywhere;word-break:break-word;}
-.refs em{font-style:italic;}
-.refs ol{margin:0 0 11px;}
-.refs li{font-size:.96875rem;line-height:1.65;margin:0 0 11px;overflow-wrap:anywhere;word-break:break-word;}
-.refs li>a:first-child{font-weight:700;text-decoration:none;}
-.refs sup a{font-style:italic;font-weight:700;}
-.refs li:target, sup:target{background:var(--box);}
-.note{font-size:.9375rem;color:var(--muted);margin-top:20px;}
-@media (max-width:480px){
-  h1{font-size:1.6875rem;}
-  .toc>ol{columns:1}
-}
+  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* 文書固有の補助(目次・参考文献・冒頭部) */
+  .kicker { font-size: .9rem; letter-spacing: .14em; color: #2a4d69; font-weight: 700; margin: 0 0 .6rem; }
+  h1 { font-size: 1.8rem; line-height: 1.5; }
+  .subtitle { font-size: 1.05rem; color: #555; margin: 0 0 1.4rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 0 0 1.6rem; }
+  .lede p:last-child { margin-bottom: 0; }
+  .toc { background: #e6edf3; border: 1px solid #bbb; padding: 1.2rem 1.5rem; margin: 0 0 2.2rem; }
+  .toc > ol { columns: 2; column-gap: 2rem; }
+  .toc-title { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .7rem; }
+  .toc li { margin-bottom: .4rem; font-size: 1rem; break-inside: avoid; }
+  .toc li ol { margin-top: .3rem; margin-bottom: .5rem; }
+  .toc li li { font-size: .95rem; color: #555; }
+  .toc a { color: #222; text-decoration: none; }
+  .toc a:hover { color: #2a4d69; text-decoration: underline; }
+  sup { font-size: .72em; }
+  sup a { color: #2a4d69; text-decoration: none; }
+  sup a:hover { text-decoration: underline; }
+  .refs { border-top: 1px solid #bbb; margin-top: 3.5rem; padding-top: 1.5rem; }
+  .refs h2 { border-bottom: none; margin-top: 0; padding-bottom: 0; }
+  .refs p, .refs li { font-size: .95rem; line-height: 1.65; margin: 0 0 .7rem; overflow-wrap: anywhere; word-break: break-word; }
+  .refs ol { margin: 0 0 .7rem; }
+  .refs li > a:first-child { font-weight: 700; text-decoration: none; }
+  .refs sup a { font-style: italic; font-weight: 700; }
+  .refs li:target, sup:target { background: #e6edf3; }
+  @media (max-width: 480px) {
+    h1 { font-size: 1.5rem; }
+    .toc > ol { columns: 1; }
+  }
 </style>
 </head>
 <body>
@@ -75,7 +92,7 @@ sup a:hover{text-decoration:underline;}
 <p>厄介なのは、多くの人がやがて自然に治ると信じて我慢し、拘縮（関節が硬く動かなくなること）が進行してから受診するケースが少なくないことだ。なお、五十肩の発症の仕組みは医学的には完全には解明されておらず、原因は一つに特定されていない。本稿では、発症に関わるとされる要因と、保存療法で改善しない場合に選択肢となる「サイレントマニピュレーション」という治療法について、現時点でわかっていることとわかっていないことを分けて整理する。</p>
 </div>
 
-<div class="meta">
+<div class="note">
 【方法と限界】本稿は日本整形外科学会や国内複数の整形外科クリニックが公開している解説記事を基に、五十肩（肩関節周囲炎）の発症に関わるとされる要因、病期、治療の考え方を整理したものである。症状の現れ方や治療への反応には個人差が大きく、本稿の内容は特定の患者の診断・治療方針を保証するものではない。実際の診断・治療は整形外科専門医の診察を受けたうえで判断してほしい。
 </div>
 
@@ -124,11 +141,11 @@ sup a:hover{text-decoration:underline;}
 <h2 id="sec3">3. 三つの病期――炎症期・拘縮期・回復期</h2>
 <p>五十肩の経過は、大きく三つの病期に分けて理解すると全体像がつかみやすい <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。</p>
 
-<table>
+<table class="cards">
 <tr><th>病期</th><th>主な症状</th><th>おおよその期間</th></tr>
-<tr><td>炎症期（疼痛期・急性期）</td><td>安静にしていても痛む。夜間痛で睡眠が妨げられる。</td><td>2 〜 9 か月</td></tr>
-<tr><td>拘縮期</td><td>痛みは徐々に和らぐが、関節包が硬くなり可動域が大きく制限される。</td><td>4 〜 12 か月</td></tr>
-<tr><td>回復期</td><td>少しずつ動きが戻っていく。</td><td>早くて 5 か月、長いと 24 か月</td></tr>
+<tr><td>炎症期（疼痛期・急性期）</td><td data-label="主な症状">安静にしていても痛む。夜間痛で睡眠が妨げられる。</td><td data-label="おおよその期間">2 〜 9 か月</td></tr>
+<tr><td>拘縮期</td><td data-label="主な症状">痛みは徐々に和らぐが、関節包が硬くなり可動域が大きく制限される。</td><td data-label="おおよその期間">4 〜 12 か月</td></tr>
+<tr><td>回復期</td><td data-label="主な症状">少しずつ動きが戻っていく。</td><td data-label="おおよその期間">早くて 5 か月、長いと 24 か月</td></tr>
 </table>
 
 <p>この表からもわかるとおり、五十肩は多くの場合「いつか自然に改善する」とされるものの、その「いつか」が二年近くに及ぶこともある。とりわけ拘縮期に入り、 3 か月から半年以上リハビリテーションを継続しても可動域の改善が乏しい場合、あるいはむしろ制限が悪化している場合には、関節包そのものの拘縮が強く進行している状態を疑う必要がある <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。この見極めが、後述するマニピュレーションという選択肢を検討するかどうかの分かれ目になる。</p>
@@ -136,7 +153,7 @@ sup a:hover{text-decoration:underline;}
 <h2 id="sec4">4. 標準治療の骨格――保存療法でできること</h2>
 <p>五十肩の治療は、原則として手術によらない保存療法が中心となる。痛みを抑えながら肩の動きをできる範囲で保ち、少しずつ可動域を取り戻していくという考え方だ <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> 。具体的には次のような手段が組み合わされる。</p>
 
-<div class="box">
+<div class="note">
 <ul>
 <li><strong>薬物療法：</strong><br>消炎鎮痛剤の内服や外用薬で痛みをコントロールする。</li>
 <li><strong>注射療法：</strong><br>痛みが強い場合、関節内や肩峰下へのステロイド注射・ヒアルロン酸注射などが検討される。</li>
@@ -169,7 +186,7 @@ sup a:hover{text-decoration:underline;}
 <h3 id="sec7-2">7.2 確認されているリスク</h3>
 <p>一方で、リスクを軽視すべきではない。術後の MRI 評価では、関節唇損傷が 13.3 パーセント、骨挫傷が 50 パーセントの症例で認められたとする報告があり、関節包を強制的に剥離するという処置の性質上、一定の組織損傷を伴うことが示唆されている <sup name="ref7a" id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。また、頸部への注射という手技自体にも、出血や神経損傷といった合併症のリスクが伴う <sup name="ref7b" id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。</p>
 
-<div class="box">
+<div class="must">
 <strong>誰に向いている治療か</strong><br>
 サイレントマニピュレーションは万人向けの治療ではない。数か月から半年以上、保存療法を続けても可動域の改善が乏しい、あるいは悪化している難治性の拘縮肩が対象であり、炎症期のように痛みそのものが強い段階でいきなり選択される治療ではない。適応の判断は、病期の見極めを含めて整形外科専門医に委ねるべき領域だ。
 </div>

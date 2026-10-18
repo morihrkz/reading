@@ -3,45 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#2a4d69">
 <meta name="description" content="ドコモから ahamo へプラン変更するときの手順書。お店の使い方、事前確認、持ち物、d 払い・ iD 、杉並区周辺の店舗を、スマートフォンで読みやすくまとめています。">
 <title>ドコモから ahamo へ変更する手順書</title>
 <style>
+  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* 文書固有の補助(対話部品・目次・出典・固定の目次ボタン) */
   :root {
-    --bg: #fafaf7; --fg: #222; --muted: #555; --accent: #2a4d69; --on-accent: #fff;
-    --link: #1a5a96; --line: #bbb; --line-soft: #e3e3e3; --card: #fff; --head: #e6edf3;
-    --code: #eee; --note-bg: #fff6d6; --note-bd: #d9a400; --must-bg: #fde8e6; --must-bd: #c0392b;
+    --accent: #2a4d69; --on-accent: #fff; --link: #1a5a96; --line: #bbb; --line-soft: #e3e3e3;
+    --card: #fff; --head: #e6edf3; --note-bg: #fff6d6; --note-bd: #d9a400; --must-bg: #fde8e6; --must-bd: #c0392b;
   }
   html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-  body {
-    margin: 0; background: var(--bg); color: var(--fg);
-    font-size: 1.1875rem; line-height: 1.85;
-    word-break: auto-phrase; overflow-wrap: anywhere; text-wrap: pretty;
-  }
-  main {
-    padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0;
-  }
+  body { word-break: auto-phrase; overflow-wrap: anywhere; text-wrap: pretty; }
   h1, h2, h3 { text-wrap: balance; scroll-margin-top: 1rem; }
-  h1 { font-size: clamp(1.45rem, 6.2vw, 2rem); line-height: 1.4; border-bottom: 3px solid var(--accent); padding-bottom: .5rem; }
-  h2 { font-size: 1.3rem; line-height: 1.45; color: var(--on-accent); background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.1rem; line-height: 1.5; color: var(--accent); border-left: 4px solid var(--accent); padding-left: .6rem; margin-top: 1.8rem; }
   a { color: var(--link); text-underline-offset: .15em; }
   a:focus-visible, summary:focus-visible, input:focus-visible { outline: 3px solid var(--note-bd); outline-offset: 2px; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-  caption { text-align: left; color: var(--muted); padding-bottom: .3rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--head); }
-  code { background: var(--code); padding: .1rem .35rem; border-radius: 3px; }
-  .meta { color: var(--muted); }
-  .note, .must, .say { padding: .7rem 1rem; margin: 1rem 0; }
-  .note { background: var(--note-bg); border-left: 5px solid var(--note-bd); }
-  .must { background: var(--must-bg); border-left: 5px solid var(--must-bd); }
-  .say { background: var(--head); border-left: 5px solid var(--accent); margin: .6rem 0; }
+  caption { text-align: left; color: #555; padding-bottom: .3rem; }
+  .say { background: var(--head); border-left: 5px solid var(--accent); padding: .7rem 1rem; margin: .6rem 0; }
   .must ul, .note ul { margin: .4rem 0 0; padding-left: 1.2rem; }
   .must li, .note li { margin: .5rem 0; }
-  .tag { display: inline-block; background: var(--accent); color: var(--on-accent); padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; line-height: 1.6; }
   nav.toc { background: var(--card); border: 1px solid var(--line); border-radius: 4px; margin: 1.2rem 0; }
   nav.toc summary { cursor: pointer; padding: .7rem 1rem; font-weight: bold; color: var(--accent); min-height: 1.5rem; }
   nav.toc ol { margin: 0; padding: 0 1rem .8rem 2.4rem; }
@@ -58,18 +83,16 @@
   .col.ask { border-top-color: var(--must-bd); }
   .col p { margin: .2rem 0; font-weight: bold; }
   .col ul { margin: 0 0 .4rem; padding-left: 1.2rem; }
-  ul.check { list-style: none; padding-left: 0; }
-  ul.check li { margin: .3rem 0; }
   ul.check label { display: flex; gap: .7rem; align-items: flex-start; min-height: 2.75rem; padding: .35rem .4rem; border-radius: 4px; cursor: pointer; }
   ul.check label:active { background: var(--head); }
   ul.check input { flex: none; width: 1.5rem; height: 1.5rem; margin: .2rem 0 0; accent-color: var(--accent); }
-  ul.check input:checked + span { color: var(--muted); }
+  ul.check input:checked + span { color: #555; }
   dl.terms { margin: 1rem 0; }
   dl.terms dt { font-weight: bold; color: var(--accent); margin-top: 1rem; border-bottom: 1px solid var(--line-soft); }
   dl.terms dd { margin: .2rem 0 0; }
   ol.sources { padding-left: 2rem; }
   ol.sources li { margin: .8rem 0; scroll-margin-top: 1rem; }
-  ol.sources li:target { background: var(--note-bg); }
+  ol.sources li:target { background: var(--note-bd); background: var(--note-bg); }
   ol.sources a.url { display: block; font-size: .9rem; }
   .totop {
     position: fixed; right: max(.75rem, env(safe-area-inset-right)); bottom: max(.75rem, env(safe-area-inset-bottom));
@@ -80,20 +103,8 @@
   }
   @media (max-width: 40rem) {
     h2 { margin-top: 2rem; padding: .35rem .6rem; font-size: 1.2rem; }
-    table, tbody, tr, td { display: block; width: 100%; box-sizing: border-box; }
-    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-    caption { display: block; }
-    tr { border: 1px solid var(--line); margin: .7rem 0; background: var(--card); border-radius: 4px; overflow: hidden; }
-    td { border: 0; border-bottom: 1px solid var(--line-soft); padding: .45rem .7rem; font-size: .95rem; }
-    td:last-child { border-bottom: 0; }
-    td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    td:first-child { background: var(--head); font-weight: bold; font-size: 1rem; }
-    td:first-child::before { display: none; }
     ul.check label { padding-left: .2rem; }
   }
-  /* 記事型の本文サイズ */
-  p, li, .note, .must, .say { font-size: 1.1875rem; }
-  p { margin: 0 0 20px; }
 </style>
 </head>
 <body>
@@ -159,7 +170,7 @@
 
 <h3 id="ch1-1">1.1 お店でのお手伝いと、自分でする場合を比べる</h3>
 <p>「お店で手続きしたい」という望みに最も近いのは、お申込みサポートを使う方法です。ほかの方法も、同じ観点で並べます。</p>
-<table>
+<table class="cards">
 <caption>手続き方法の比較</caption>
 <thead>
 <tr><th scope="col">方法</th><th scope="col">費用</th><th scope="col">事前の準備</th><th scope="col">ご本人の負担</th></tr>
@@ -192,7 +203,7 @@
 </ul>
 
 <h2 id="ch3">3. 持ち物</h2>
-<table>
+<table class="cards">
 <caption>持ち物と、ないときの対応</caption>
 <thead>
 <tr><th scope="col">持ち物</th><th scope="col">なぜ必要か</th><th scope="col">ないとき</th></tr>
@@ -306,7 +317,7 @@
 <p>各店舗ページには、 ahamo の取り扱いの記載がありません。一方、 ahamo の公式案内では、お申込みサポートは「全国のドコモショップ」で受け付けるとされています（出典 <a href="#src1">1</a> ）。<strong>来店予約の前に、各店舗へ電話で、受け付けているか確認してください。</strong></p>
 
 <h3 id="ch7-1">7.1 杉並区内</h3>
-<table>
+<table class="cards">
 <caption>杉並区内の店舗</caption>
 <thead>
 <tr><th scope="col">店名</th><th scope="col">住所</th><th scope="col">営業時間</th><th scope="col">定休日</th><th scope="col">電話番号</th></tr>
@@ -322,7 +333,7 @@
 </table>
 <h3 id="ch7-2">7.2 隣の区・市（杉並区の主要駅から行きやすい店舗）</h3>
 <p>高円寺・阿佐ヶ谷・荻窪・西荻窪と同じ中央線沿線の街の店舗を、筆者の判断で選びました（公式ページに駅からの時間の記載はありません）。</p>
-<table>
+<table class="cards">
 <caption>隣の区・市の店舗</caption>
 <thead>
 <tr><th scope="col">店名</th><th scope="col">住所</th><th scope="col">営業時間</th><th scope="col">定休日</th><th scope="col">電話番号</th></tr>

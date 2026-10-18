@@ -5,71 +5,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>クラウドコンピューティング市場の構造分析――生成 AI 需要による勢力図の変化</title>
 <style>
-:root{
-  --bg:#f7f8f6; --text:#242522; --muted:#65695f; --accent:#3d5a52;
-  --line:#d7dcd2; --box:#eceee7; --link:#3d5a52;
-}
-*{box-sizing:border-box;}
-body{
-  background:var(--bg); color:var(--text); margin:0;
-  line-height:2;
-}
-main{padding:2.5rem clamp(1rem,4vw,4rem) 4rem;max-width:none;margin:0}
-.kicker{font-size:.9375rem; letter-spacing:.14em; color:var(--accent); font-weight:bold; margin-bottom:14px;}
-h1{font-size:2rem; line-height:1.6; color:var(--text); margin:0 0 14px; font-weight:bold;}
-.subtitle{font-size:1.25rem; color:var(--muted); margin:0 0 28px; line-height:1.8;}
-.meta{border-top:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--muted);
-  font-size:.9375rem; line-height:1.9; padding:16px 0; margin:0 0 40px;}
-.lede{color:var(--muted); border-left:3px solid var(--accent); padding-left:18px; margin:0 0 40px;}
-.lede p{font-size:1.25rem; margin:0 0 14px;}
-.lede p:last-child{margin-bottom:0;}
-.toc{background:var(--box);border:1px solid var(--line);padding:22px 26px;margin:0 0 46px}
-.toc>ol{columns:2;column-gap:32px}
-.toc-title{font-size:.9375rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 14px}
-.toc ol{margin:0;padding-left:1.3em}
-.toc li{margin-bottom:7px;font-size:1.03125rem;break-inside:avoid}
-.toc li ol{margin-top:7px;margin-bottom:11px;}
-.toc li li{font-size:.96875rem;color:var(--muted);margin-bottom:5px;}
-.toc a{color:var(--text);text-decoration:none}
-.toc a:hover{color:var(--accent);text-decoration:underline}
-h2{font-size:1.625rem; line-height:1.5; border-bottom:1px solid var(--line); padding-bottom:9px; margin:52px 0 24px;}
-h3{font-size:1.25rem; margin:32px 0 12px;}
-h4,h5{font-size:1.125rem; margin:24px 0 10px;}
-p{font-size:1.1875rem; margin:0 0 20px;}
-.box{background:var(--box); border:1px solid var(--line); padding:22px 24px; margin:0 0 28px; font-size:1.1875rem;}
-.box strong{color:var(--accent);}
-table{width:100%; border-collapse:collapse; margin:0 0 28px; font-size:1rem;}
-th,td{border:1px solid var(--line); padding:10px 11px; vertical-align:top; text-align:left;}
-th{background:var(--box);}
-ul,ol{padding-left:1.4em; margin:0 0 20px;}
-li{margin-bottom:9px;}
-a{color:var(--link);}
-sup{font-size:.72em;}
-sup a{color:var(--link); text-decoration:none;}
-sup a:hover{text-decoration:underline;}
-.refs{border-top:1px solid var(--line); margin-top:58px; padding-top:25px;}
-.refs h2{border-bottom:none; margin-top:0; padding-bottom:0;}
-.refs p{font-size:.96875rem; line-height:1.65; margin:0 0 11px; overflow-wrap:anywhere; word-break:break-word;}
-.refs em{font-style:italic;}
-.refs ol{margin:0 0 11px;}
-.refs li{font-size:.96875rem; line-height:1.65; margin:0 0 11px; overflow-wrap:anywhere; word-break:break-word;}
-.refs li>a:first-child{font-weight:700; text-decoration:none;}
-.refs sup a{font-style:italic; font-weight:700;}
-.refs li:target, sup:target{background:var(--box);}
-.note{font-size:.9375rem; color:var(--muted); margin-top:20px;}
-strong{font-weight:bold;}
-blockquote{border-left:3px solid var(--line); color:var(--muted); margin:0 0 20px; padding-left:18px; font-style:italic;}
-blockquote p{margin-bottom:10px;}
-blockquote p:last-child{margin-bottom:0;}
-hr{border:none; border-top:1px solid var(--line); margin:40px 0;}
-code{font-size:.88em; background:var(--box); padding:.1em .3em;}
-pre{font-size:1rem; background:var(--box); border:1px solid var(--line);
-  padding:16px 18px; margin:0 0 20px; overflow-x:auto; line-height:1.6;}
-pre code{background:none; padding:0;}
-@media (max-width:480px){
-  h1{font-size:1.6875rem;}
-  .toc>ol{columns:1}
-}
+  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* 文書固有の補助(目次・参考文献・冒頭部) */
+  .kicker { font-size: .9rem; letter-spacing: .14em; color: #2a4d69; font-weight: 700; margin: 0 0 .6rem; }
+  h1 { font-size: 1.8rem; line-height: 1.5; }
+  .subtitle { font-size: 1.05rem; color: #555; margin: 0 0 1.4rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 0 0 1.6rem; }
+  .lede p:last-child { margin-bottom: 0; }
+  .toc { background: #e6edf3; border: 1px solid #bbb; padding: 1.2rem 1.5rem; margin: 0 0 2.2rem; }
+  .toc > ol { columns: 2; column-gap: 2rem; }
+  .toc-title { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .7rem; }
+  .toc li { margin-bottom: .4rem; font-size: 1rem; break-inside: avoid; }
+  .toc li ol { margin-top: .3rem; margin-bottom: .5rem; }
+  .toc li li { font-size: .95rem; color: #555; }
+  .toc a { color: #222; text-decoration: none; }
+  .toc a:hover { color: #2a4d69; text-decoration: underline; }
+  sup { font-size: .72em; }
+  sup a { color: #2a4d69; text-decoration: none; }
+  sup a:hover { text-decoration: underline; }
+  .refs { border-top: 1px solid #bbb; margin-top: 3.5rem; padding-top: 1.5rem; }
+  .refs h2 { border-bottom: none; margin-top: 0; padding-bottom: 0; }
+  .refs p, .refs li { font-size: .95rem; line-height: 1.65; margin: 0 0 .7rem; overflow-wrap: anywhere; word-break: break-word; }
+  .refs ol { margin: 0 0 .7rem; }
+  .refs li > a:first-child { font-weight: 700; text-decoration: none; }
+  .refs sup a { font-style: italic; font-weight: 700; }
+  .refs li:target, sup:target { background: #e6edf3; }
+  @media (max-width: 480px) {
+    h1 { font-size: 1.5rem; }
+    .toc > ol { columns: 1; }
+  }
 </style>
 </head>
 <body>
@@ -78,8 +86,8 @@ pre code{background:none; padding:0;}
 <h1>クラウドコンピューティング市場の構造分析<br>――生成 AI 需要による勢力図の変化</h1>
 <p class="subtitle">A Structural Analysis of the Cloud Computing Market: Shifting Competitive Dynamics under Generative AI Demand</p>
 <div class="lede"><p>AWS ・ Azure ・ Google Cloud 、および Oracle ・ Alibaba Cloud ・ Tencent Cloud ・ IBM を対象に、市場シェアと決算データで現状を整理し、各社の AI 提携・投資と今後 1 〜 3 年のシナリオを一次資料と出典で積み上げて読み解く調査レポート。 2026 年 8 月。</p></div>
-<div class="meta">【比較の前提】市場シェアは、 IaaS ・ PaaS ・ SaaS の範囲、地域、四半期、売上かランレートかで値が変わる。各社の会計年度・開示セグメントも一致しない。本稿中の実績、会社ガイダンス、調査会社の予測、筆者のシナリオは同じ確度の情報ではない。</div>
-<div class="box"><strong>凡例</strong><br>
+<div class="note">【比較の前提】市場シェアは、 IaaS ・ PaaS ・ SaaS の範囲、地域、四半期、売上かランレートかで値が変わる。各社の会計年度・開示セグメントも一致しない。本稿中の実績、会社ガイダンス、調査会社の予測、筆者のシナリオは同じ確度の情報ではない。</div>
+<div class="note"><strong>凡例</strong><br>
 予測 ―― 調査会社・金融機関等が具体的数値で公表した見通し<br>
 シナリオ ―― 本稿作成にあたり複数の情報を統合して検討した仮説的な将来像<br>
 （ラベルのない記述は決算発表・公式資料等の一次情報にもとづく事実）</div>
@@ -136,7 +144,7 @@ pre code{background:none; padding:0;}
 <h3 id="sec2-3">2.3 各社の直近決算（クラウド部門）</h3>
 <p>各社の会計区分の違いに注意が必要である。 AWS は Amazon の独立事業セグメント、 Azure は Microsoft の「 Intelligent Cloud 」というより大きなセグメントの一部として開示、 Google Cloud は Alphabet の独立セグメントである。
 単純な実額の横並び比較には限界がある。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>企業（セグメント）</th>
@@ -149,24 +157,24 @@ pre code{background:none; padding:0;}
 <tbody>
 <tr>
 <td>AWS (Amazon)</td>
-<td>2026 年 Q2 （ 4 〜 6 月）</td>
-<td>422 億ドル</td>
-<td>+37% （ Jassy CEO は過去 18 四半期で最速と発言）</td>
-<td>166 億ドル（営業利益率約 39.3% ）</td>
+<td data-label="対象四半期">2026 年 Q2 （ 4 〜 6 月）</td>
+<td data-label="売上高">422 億ドル</td>
+<td data-label="前年同期比成長率">+37% （ Jassy CEO は過去 18 四半期で最速と発言）</td>
+<td data-label="営業利益（率）">166 億ドル（営業利益率約 39.3% ）</td>
 </tr>
 <tr>
 <td>Azure (Microsoft Intelligent Cloud)</td>
-<td>FY2026 Q4 （暦年 4 〜 6 月）</td>
-<td>Intelligent Cloud 全体 393 億ドル</td>
-<td>Azure 単体 +43% 、 Intelligent Cloud 全体 +32%</td>
-<td>Intelligent Cloud 全体で約 160 億ドル</td>
+<td data-label="対象四半期">FY2026 Q4 （暦年 4 〜 6 月）</td>
+<td data-label="売上高">Intelligent Cloud 全体 393 億ドル</td>
+<td data-label="前年同期比成長率">Azure 単体 +43% 、 Intelligent Cloud 全体 +32%</td>
+<td data-label="営業利益（率）">Intelligent Cloud 全体で約 160 億ドル</td>
 </tr>
 <tr>
 <td>Google Cloud (Alphabet)</td>
-<td>2026 年 Q2 （ 4 〜 6 月）</td>
-<td>248 億ドル</td>
-<td>+82%</td>
-<td>88 億ドル（前年同期 28 億ドルから大幅増）</td>
+<td data-label="対象四半期">2026 年 Q2 （ 4 〜 6 月）</td>
+<td data-label="売上高">248 億ドル</td>
+<td data-label="前年同期比成長率">+82%</td>
+<td data-label="営業利益（率）">88 億ドル（前年同期 28 億ドルから大幅増）</td>
 </tr>
 </tbody>
 </table>
@@ -200,7 +208,7 @@ OpenAI ・ Oracle ・ SoftBank 等の「 Stargate 」プロジェクト全体で
 <p><strong>その他</strong> : xAI は 2025 年 6 月から OCI 上で Grok モデルを運用（出典 : <sup id="fnref-28-1"><a href="#ref-28">[28]</a></sup> ）。 Meta が Llama 向けに Google TPU を利用する契約を結んだとの報道（ 2026 年 2 月）もあるが金額は未確認である（出典 : <sup id="fnref-29-1"><a href="#ref-29">[29]</a></sup> ）。</p>
 <h3 id="sec3-2">3.2 AI 関連設備投資 (CapEx) の規模</h3>
 <p>生成 AI の開発・提供にはデータセンター建設や専用半導体調達など巨額の設備投資（ CapEx 、将来使用する固定資産への投資支出）が必要となる。各社とも「 AI 関連」と明示的に切り分けた金額は開示しておらず、以下は総設備投資額である点に留意されたい。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>企業</th>
@@ -211,23 +219,23 @@ OpenAI ・ Oracle ・ SoftBank 等の「 Stargate 」プロジェクト全体で
 <tbody>
 <tr>
 <td>Amazon</td>
-<td>1,318 億ドル（前年 830 億ドルから +58.8% ）</td>
-<td>当初約 2,000 億ドル→7 月 30 日決算で 2,200 億ドルに上方修正（メモリ価格上昇等）</td>
+<td data-label="2025 年度実績">1,318 億ドル（前年 830 億ドルから +58.8% ）</td>
+<td data-label="2026 年見通し（直近ガイダンス）">当初約 2,000 億ドル→7 月 30 日決算で 2,200 億ドルに上方修正（メモリ価格上昇等）</td>
 </tr>
 <tr>
 <td>Alphabet</td>
-<td>914.47 億ドル（ガイダンス下限）</td>
-<td>当初 1,750 〜 1,850 億ドル→4 月に 1,800 〜 1,900 億ドル→7 月 22 日決算で 1,950 〜 2,050 億ドルに再上方修正</td>
+<td data-label="2025 年度実績">914.47 億ドル（ガイダンス下限）</td>
+<td data-label="2026 年見通し（直近ガイダンス）">当初 1,750 〜 1,850 億ドル→4 月に 1,800 〜 1,900 億ドル→7 月 22 日決算で 1,950 〜 2,050 億ドルに再上方修正</td>
 </tr>
 <tr>
 <td>Microsoft</td>
-<td>報道間で数値が食い違い未確定（ Q4 単独 242 億ドル）</td>
-<td>当初約 1,900 億ドル→1,750 億ドルに下方修正（主因はリース会計区分変更）。 FY26 Q4 単体は 410 億ドルで四半期最高</td>
+<td data-label="2025 年度実績">報道間で数値が食い違い未確定（ Q4 単独 242 億ドル）</td>
+<td data-label="2026 年見通し（直近ガイダンス）">当初約 1,900 億ドル→1,750 億ドルに下方修正（主因はリース会計区分変更）。 FY26 Q4 単体は 410 億ドルで四半期最高</td>
 </tr>
 <tr>
 <td>Meta （比較対象）</td>
-<td>約 722 億ドル</td>
-<td>当初 1,150 〜 1,350 億ドル→4 月に 1,250 〜 1,450 億ドル→7 月 29 日決算で 1,300 〜 1,450 億ドルに絞り込み</td>
+<td data-label="2025 年度実績">約 722 億ドル</td>
+<td data-label="2026 年見通し（直近ガイダンス）">当初 1,150 〜 1,350 億ドル→4 月に 1,250 〜 1,450 億ドル→7 月 29 日決算で 1,300 〜 1,450 億ドルに絞り込み</td>
 </tr>
 </tbody>
 </table>
@@ -286,7 +294,7 @@ AWS は売上規模・営業利益率で依然最大かつ最も収益性の高�
 それぞれ異なる強み・リスクを抱えながら、同じ AI ブームの波に乗っている、というのが最も公平な整理であろう。</p>
 <p>今後 1 〜 3 年は、電力・半導体という物理的制約、規制当局の動き、そして「 AI 投資が実需に見合う収益を生み出せるか」という根本的な問いへの答えが、業界の勢力図を左右する。個々の企業の株価や短期的なニュースよりも、こうした構造的な変数の動きを継続的に追うことをお勧めしたい。</p>
 <h2 id="sec6">6. 用語集</h2>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>用語</th>
@@ -296,63 +304,63 @@ AWS は売上規模・営業利益率で依然最大かつ最も収益性の高�
 <tbody>
 <tr>
 <td>ハイパースケーラー</td>
-<td>超大規模にデータセンターを展開するクラウド事業者を指す業界用語（ AWS ・ Azure ・ Google Cloud 等）</td>
+<td data-label="定義">超大規模にデータセンターを展開するクラウド事業者を指す業界用語（ AWS ・ Azure ・ Google Cloud 等）</td>
 </tr>
 <tr>
 <td>市場シェア</td>
-<td>ある市場全体の売上のうち特定企業が占める割合</td>
+<td data-label="定義">ある市場全体の売上のうち特定企業が占める割合</td>
 </tr>
 <tr>
 <td>営業利益率</td>
-<td>売上高に対して本業の儲けである営業利益が占める割合</td>
+<td data-label="定義">売上高に対して本業の儲けである営業利益が占める割合</td>
 </tr>
 <tr>
 <td>CapEx （設備投資）</td>
-<td>データセンター建設等、将来使用する固定資産への投資支出</td>
+<td data-label="定義">データセンター建設等、将来使用する固定資産への投資支出</td>
 </tr>
 <tr>
 <td>RPO （残存履行義務）</td>
-<td>将来にわたって履行が約束されている契約の残高。いわば積み上がった受注残</td>
+<td data-label="定義">将来にわたって履行が約束されている契約の残高。いわば積み上がった受注残</td>
 </tr>
 <tr>
 <td>ARR （年間経常収益 / 年換算）</td>
-<td>ある時点の売上ペースが 1 年間続いたと仮定した場合の年間換算値</td>
+<td data-label="定義">ある時点の売上ペースが 1 年間続いたと仮定した場合の年間換算値</td>
 </tr>
 <tr>
 <td>IaaS/PaaS</td>
-<td>IaaS はサーバー等の基盤機能を、 PaaS はアプリケーション開発・実行基盤をサービスとして提供する形態</td>
+<td data-label="定義">IaaS はサーバー等の基盤機能を、 PaaS はアプリケーション開発・実行基盤をサービスとして提供する形態</td>
 </tr>
 <tr>
 <td>TPU (Tensor Processing Unit)</td>
-<td>Google 独自開発の AI 向け専用半導体</td>
+<td data-label="定義">Google 独自開発の AI 向け専用半導体</td>
 </tr>
 <tr>
 <td>Trainium</td>
-<td>Amazon 独自開発の AI 向け専用半導体</td>
+<td data-label="定義">Amazon 独自開発の AI 向け専用半導体</td>
 </tr>
 <tr>
 <td>HBM （高帯域幅メモリ）</td>
-<td>AI 処理向けの高速メモリ。近年の半導体供給制約のボトルネックの一つ</td>
+<td data-label="定義">AI 処理向けの高速メモリ。近年の半導体供給制約のボトルネックの一つ</td>
 </tr>
 <tr>
 <td>フリーキャッシュフロー</td>
-<td>事業活動で実際に自由に使えるお金</td>
+<td data-label="定義">事業活動で実際に自由に使えるお金</td>
 </tr>
 <tr>
 <td>テールリスク</td>
-<td>発生確率は低いが、起きた場合の損失が甚大なリスク</td>
+<td data-label="定義">発生確率は低いが、起きた場合の損失が甚大なリスク</td>
 </tr>
 <tr>
 <td>循環取引</td>
-<td>企業間で出資・供給契約が相互に絡み合う取引構造。需要を見かけ上水増しするとの懸念の対象</td>
+<td data-label="定義">企業間で出資・供給契約が相互に絡み合う取引構造。需要を見かけ上水増しするとの懸念の対象</td>
 </tr>
 <tr>
 <td>DMA （デジタル市場法）</td>
-<td>大手デジタルプラットフォーマーの市場支配力を規制する EU の法律</td>
+<td data-label="定義">大手デジタルプラットフォーマーの市場支配力を規制する EU の法律</td>
 </tr>
 <tr>
 <td>ネオクラウド</td>
-<td>CoreWeave 等、 GPU 特化型の新興クラウド事業者を指す業界用語</td>
+<td data-label="定義">CoreWeave 等、 GPU 特化型の新興クラウド事業者を指す業界用語</td>
 </tr>
 </tbody>
 </table>
