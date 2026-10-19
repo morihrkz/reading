@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>マニュアルモードの利点</title>
+<style>
+  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* この文書固有の部品(配色は意匠の配色表から) */
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1rem 0; }
+  .pair > div { background: #fff; border: 1px solid #bbb; border-radius: 4px; padding: .8rem 1rem; min-width: 0; }
+  .pair > div.hl { border-color: #2a4d69; border-width: 2px; }
+  .pair .big { display: block; font-weight: bold; margin: .3rem 0; }
+  .pair p { margin: 0; font-size: 1rem; }
+  @media (max-width: 40rem) { .pair { grid-template-columns: 1fr; } }
+  .bars { background: #fff; border: 1px solid #bbb; border-radius: 4px; padding: .3rem 1rem 1rem; margin: 1rem 0; }
+  .bar { display: grid; grid-template-columns: 4.5rem 1fr; align-items: center; gap: .6rem; margin: .5rem 0; font-size: .95rem; }
+  .bar .track { height: 1.4rem; }
+  .bar .fill { height: 100%; background: #555; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: .5rem; color: #fff; font-size: .85rem; box-sizing: border-box; }
+  .bar.m .fill { background: #2a4d69; }
+  .bars .cap { font-size: .9rem; color: #555; margin: .8rem 0 0; }
+  .src { font-size: .95rem; color: #555; }
+  .src li { font-size: .95rem; overflow-wrap: anywhere; }
+</style>
+</head>
+<body>
+
+<main>
+  <h1>マニュアルモードで、何が手に入るのか</h1>
+  <p class="meta">DJI Avata 2 / Neo / Neo 2 ・調査ノート・ 2026 年 10 月 19 日時点。出典はメーカー仕様ページ、レビュー記事、販売店ブログ、フォーラム。 DJI 公式マニュアルの本文は確認できていない。</p>
+
+  <h2>先に結論</h2>
+  <p>マニュアルモードの利点は「速く飛べる」ことではなく、<strong>機体の姿勢と推力を自分で全部決められること</strong>である。ノーマル / スポーツでは機体が勝手に水平に戻り、止まり、障害物を避ける。マニュアルではそれが全部なくなる。</p>
+  <p><strong>Avata 2</strong> では、最高速度が約 3.4 倍(8→27 m/s)になり、宙返りや急降下からの引き起こしなど、自動制御では出せない動きができる。 <strong>Neo / Neo 2</strong> では、速度や出力が小さいため、利点の中心は「 FPV の操縦を安い機体で覚えられること」と「狭い場所を自分の判断で飛べること」である。</p>
+  <p>この機能に魅力を感じないのは自然である。撮影が目的なら、ノーマル / スポーツ(Avata 2 なら Easy ACRO も)で足りる人が多いはずだ。</p>
+
+  <h2>スティックが指示する内容が変わる</h2>
+  <p>モードの違いは、スティックを倒したときに機体へ何を命令しているかの違いである。以下は一般的な FPV 機の仕組みに基づく説明で、 DJI の文書から直接引いたものではない。</p>
+  <div class="pair">
+    <div>
+      <span class="tag">NORMAL / SPORT</span>
+      <span class="big">「あっちへ、このくらいの速さで」</span>
+      <p>スティックは目標の速度や方向である。離すと機体は水平に戻って止まる。傾きすぎないよう、角度にも上限がある。</p>
+    </div>
+    <div class="hl">
+      <span class="tag">MANUAL</span>
+      <span class="big">「その向きに回れ、推力はこれだけ」</span>
+      <p>エルロン・エレベーターは機体が回る速さ、スロットルはモーター出力そのものである。離しても水平には戻らず、スロットルを下げれば落ちる。</p>
+    </div>
+  </div>
+  <p>手を離せばドローンが勝手に安定する状態は、安全だが、<strong>人が機体の姿勢を決められない</strong>ことでもある。逆さまでも、真下を向いても、そのまま飛び続けるには、姿勢を人が握る必要がある。マニュアルの利点はすべてここから出ている。</p>
+
+  <h2>Avata 2 で得られるもの</h2>
+  <div class="bars" role="img" aria-label="Avata 2 の最高水平速度。ノーマル8、スポーツ16、マニュアル27メートル毎秒">
+    <h3>最高水平速度 (m/s)</h3>
+    <div class="bar"><span>Normal</span><div class="track"><div class="fill" style="width:29.6%">8</div></div></div>
+    <div class="bar"><span>Sport</span><div class="track"><div class="fill" style="width:59.3%">16</div></div></div>
+    <div class="bar m"><span>Manual</span><div class="track"><div class="fill" style="width:100%">27</div></div></div>
+    <p class="cap">DJI 公式スペック(海面付近・無風)。 EU ではマニュアルは 19 m/s 以下に制限される。ほかに上昇・下降はノーマル 6 m/s 、スポーツ 9 m/s 。マニュアルの値は公開ページで確認できなかった。</p>
+  </div>
+  <ul>
+    <li><strong>速度の天井がなくなる。</strong>スポーツの約 1.7 倍。追いかけながら撮る、長いトンネルを一気に抜ける、といった速さが必要な場面で差が出る。</li>
+    <li><strong>姿勢を自由に作れる。</strong>回転や宙返り、高所からの急降下、地面すれすれでの引き起こしなど、姿勢を人が決める動きができる。ワンタッチの宙返りやロールは、 Motion 3 の Easy ACRO でもできるが、レビューではこれを「マニュアルで可能なことのごく一部」と評している。</li>
+    <li><strong>反応が機敏になる。</strong>あるレビューは、 FPV Remote Controller 3 でのマニュアル飛行は障害物への反応が速く、はるかに機敏だと述べている。機体が自動で減速や自己水平を挟まないぶん、操作がそのまま動きになる。</li>
+    <li><strong>スティックの感度を調整できる。</strong>ゲインとエクスポを自分で調整できる。経験者のフォーラム投稿では、自作機のレート設定をそのまま使いたいという声があった。</li>
+    <li><strong>他の FPV 機への足がかりになる。</strong>マニュアルの操作感は、一般的なレース機・フリースタイル機と同じ種類のものである。</li>
+  </ul>
+
+  <h2>Neo / Neo 2 で得られるもの</h2>
+  <p>Neo は 151g 、 Neo 2 は 160g(送信機付き)で、 Avata 2 の 377g よりずっと軽く小さい機体である。 Neo 2 のスペックページにはマニュアル時の最高速度が載っておらず、ノーマル 8 m/s 、スポーツ 12 m/s までしか分からない。そのため、 Avata 2 のような速度面の利点は期待できない。</p>
+  <ul>
+    <li><strong>安く、壊れにくい練習機になる。</strong>プロペラガード付きの頑丈な機体で、練習中の墜落に比較的強い、と販売店ブログは述べている。 FPV のスティック操作を覚える入口として、これが最大の利点である。</li>
+    <li><strong>狭い場所を自分で飛べる。</strong>ノーマル / スポーツでは、自動ブレーキや障害物検知が先に介入する。マニュアルなら、屋内や近距離での細かい操縦を人の判断で通せる。</li>
+    <li><strong>ダイブやフリップができる。</strong> DroneXL の筆者は、マニュアルで機体の速度を引き出し、 GPS 系のモードではできないダイブやフリップを飛ばしたと書いている。ただし、機体のパワーには限りがあり、持続的な高速飛行やフリースタイルには向かない、という別の見方もある。</li>
+    <li><strong>練習用の安全装置がある(初代 Neo)。</strong>姿勢制限(ガイド付きの補助輪)を有効にすれば、機体をひっくり返せないとされている。慣れてから外す手順である。ブレーキボタンを押すと、逆さまでも水平に戻って静止するとも書かれている。</li>
+  </ul>
+  <div class="note">
+    <p><strong>Neo 2 の注意</strong></p>
+    <p>Neo 2 は 2025 年 11 月のファームウェア 01.00.0400 で初めてマニュアルに対応した。必要なのは DJI FPV Remote Controller 3 と DJI Goggles N3 または Goggles 3 である。 RC-N3 と RC Motion 3 ではマニュアルに切り替えられない。</p>
+  </div>
+
+  <h2>代わりに失うもの</h2>
+  <table class="cards">
+    <thead><tr><th>機能</th><th>Normal / Sport</th><th>Manual</th></tr></thead>
+    <tbody>
+      <tr><td>ホバリング</td><td data-label="Normal / Sport">スティックを離すと位置を保つ</td><td data-label="Manual">保たない。スロットル中央でも落ちる</td></tr>
+      <tr><td>自動ブレーキ</td><td data-label="Normal / Sport">あり</td><td data-label="Manual">なし(ブレーキ / 一時停止ボタンは別)</td></tr>
+      <tr><td>自己水平</td><td data-label="Normal / Sport">あり</td><td data-label="Manual">なし</td></tr>
+      <tr><td>障害物回避</td><td data-label="Normal / Sport">Neo 2 はノーマルで全方向、スポーツは前方なし</td><td data-label="Manual">なし</td></tr>
+      <tr><td>GPS 補助</td><td data-label="Normal / Sport">あり</td><td data-label="Manual">なし。衛星が弱いと ATTI モードで風に流される</td></tr>
+      <tr><td>必要な機材</td><td data-label="Normal / Sport">RC-N3 、 Motion 3 など</td><td data-label="Manual">FPV Remote Controller 3 とゴーグル</td></tr>
+    </tbody>
+  </table>
+  <p>Avata 2 のレビューでは、マニュアルでの初飛行の失敗談が多く、「みんな墜落している」というコメントも見られた。一方で、ノーマル / スポーツは安定していて扱いやすいとの評価である。</p>
+
+  <h2>始めるときの準備</h2>
+  <ol>
+    <li><strong>機材。</strong> FPV Remote Controller 3 と Goggles 3 か N3 。 Neo 2 はデジタルトランスミッターも機体に付ける。</li>
+    <li><strong>スロットルのバネを外す。</strong>同梱の工具で、スロットルスティックの自動中央復帰を無効にする。これがないと推力を保持できない。</li>
+    <li><strong>ゴーグル側でマニュアル切替を有効にする。</strong>初期状態では送信機のスイッチが無効である。ゴーグルの設定から割り当てる。</li>
+    <li><strong>レートとエクスポを下げる。</strong>ある解説では、初回は既定値の約 3 分の 2 に下げ、エクスポを増やす手順だった。</li>
+    <li><strong>最初はシミュレーターと広い場所で。</strong>各方向 20 m 以上空いた場所、離陸はノーマル、上空でマニュアルに入り、危なければノーマルに戻すのが定石である。</li>
+  </ol>
+
+  <h2>あなたに必要か</h2>
+  <table class="cards">
+    <thead><tr><th>目的</th><th>おすすめ</th></tr></thead>
+    <tbody>
+      <tr><td>きれいな映像を安全に撮りたい</td><td data-label="おすすめ">ノーマル / スポーツで十分。マニュアルは不要</td></tr>
+      <tr><td>見栄えのする動きを手軽に</td><td data-label="おすすめ">Avata 2 + Motion 3 の Easy ACRO(ワンタッチの宙返りやロール)</td></tr>
+      <tr><td>FPV の腕を上げたい</td><td data-label="おすすめ">Neo / Neo 2 + FPV Remote 3 で練習。まずシミュレーター</td></tr>
+      <tr><td>高速・急降下・自由な姿勢の飛行がしたい</td><td data-label="おすすめ">Avata 2 のマニュアル。ただし本格的な曲技なら専用の自作機が上、という意見もある</td></tr>
+    </tbody>
+  </table>
+
+  <h2>確度について</h2>
+  <ul>
+    <li>Avata 2 の速度と EU の 19 m/s 制限、 Neo 2 の対応コントローラーは、 DJI 公式のスペックページで確認した。</li>
+    <li>マニュアルで無効になる機能の一覧と準備手順は、販売店ブログ(HireDronePilot)と DroneXL に基づく。 DJI 公式の取扱説明書の本文は確認できていない。</li>
+    <li>Space.com は、 Avata 2 のマニュアルを「 FPV Controller 2 」で使うと書いているが、 DJI の仕様ページと複数の販売店は FPV Remote Controller 3 としている。後者を採用した。</li>
+    <li>Neo の「姿勢制限」と「ブレーキボタンによる復帰」は、初代 Neo を扱った記事の記述である。 Neo 2 に同じ設定があるかは確認できていない。</li>
+    <li>Neo の持続的な高速飛行やフリースタイルに関する評価は、記事ごとに分かれている。</li>
+    <li>「操作の命令内容が変わる」という説明は、一般的な FPV 機の仕組みからの推論である。</li>
+  </ul>
+
+  <h2>出典</h2>
+  <ul class="src">
+    <li><a href="https://www.dji.com/avata-2/specs">DJI Avata 2 スペック</a></li>
+    <li><a href="https://www.dji.com/neo-2/specs">DJI Neo 2 スペック</a></li>
+    <li><a href="https://dronedj.com/2025/11/27/dji-neo-2-manual-fpv/">DroneDJ: Neo 2 ファームウェアでマニュアル FPV モード追加</a></li>
+    <li><a href="https://shop.coptrz.com/blogs/news/dji-neo-2-firmware-update-adds-manual-fpv-mode-for-full-flight-control">Coptrz: Neo 2 ファームウェア更新</a></li>
+    <li><a href="https://hiredronepilot.uk/blog/how-to-fly-dji-neo-2-in-manual-mode/">HireDronePilot: Neo 2 をマニュアルモードで飛ばす</a></li>
+    <li><a href="https://dronexl.co/2024/12/04/learn-how-to-fly-fpv-with-dji-neo-drone/">DroneXL: DJI Neo で FPV を学ぶ</a></li>
+    <li><a href="https://www.maisondudrone.com/en/dji-avata-2-vs-avata-which-drone-to-choose">Maison du Drone: Avata 2 と Avata の比較</a></li>
+    <li><a href="https://www.space.com/dji-avata-2-drone-review">Space.com: Avata 2 レビュー</a></li>
+    <li><a href="https://pilotinstitute.com/djis-avata-2-review/">Pilot Institute: Avata 2 レビュー</a></li>
+    <li><a href="https://www.drohnen-forum.de/index.php/Thread/67607-DJI-Neo-als-Einstieg-in-FPV/">drohnen-forum.de: DJI Neo als Einstieg in FPV?</a></li>
+  </ul>
+</main>
+</body>
+</html>
