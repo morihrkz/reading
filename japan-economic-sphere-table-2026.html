@@ -24,6 +24,9 @@
   /* 本文サイズ(記事型に揃える) */
   p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
   p { margin: 0 0 20px; }
+  /* 長い URL を途中で折り返す(画面幅からのはみ出しによる縮小表示を防ぐ) */
+  li, td { overflow-wrap: anywhere; }
+  th { white-space: normal; }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
