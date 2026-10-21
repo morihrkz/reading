@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>これからの大型選挙スケジュール 2026 年秋〜 2031 年</title>
+<style>
+  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* この文書だけの指定 */
+  figure { margin: 1.5rem 0; }
+  figure svg { display: block; width: 100%; max-width: 720px; height: auto; background: #fff; border: 1px solid #bbb; border-radius: 4px; }
+  figcaption { color: #555; font-size: .9rem; margin-top: .4rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>これからの大型選挙スケジュール 2026 年秋〜 2031 年</h1>
+<p class="meta">作成日 : 2026 年 10 月 22 日 ／ 対象 : 統一地方選挙・東京都議会議員選挙・東京都知事選挙・参議院議員選挙・衆議院議員選挙・自民党総裁選挙</p>
+
+<div class="note">
+<p>結論から言うと、次に国民の目が集まる大型選挙は <strong>2027 年 4 月 11 日と 25 日の統一地方選挙</strong>である。その後は <strong>2027 年 9 月の自民党総裁任期満了</strong>、 <strong>2028 年夏の参議院選挙と東京都知事選挙</strong>、 <strong>2029 年夏の東京都議会議員選挙</strong>と続く。衆議院議員選挙だけは、解散がなければ 2030 年 2 月まで行われない。</p>
+</div>
+
+<h2>全体の見取り図</h2>
+<p>図 1 は、 2026 年 10 月から 2031 年までの主な選挙を、日付の順に縦に並べたものである。間隔は時間の長さに比例しない。色は、紺が地方選挙、黄が政党の選挙、赤が国政選挙を表す。</p>
+
+<figure>
+<svg viewBox="0 0 640 880" role="img" aria-label="2026 年 10 月から 2031 年までの主な選挙を日付順に並べた縦型の年表">
+  <line x1="150" y1="30" x2="150" y2="840" stroke="#2a4d69" stroke-width="3"/>
+
+  <text x="130" y="55" text-anchor="end" font-size="15" fill="#555">2026/10/25</text>
+  <circle cx="150" cy="50" r="8" fill="#2a4d69"/>
+  <text x="175" y="50" font-size="17" font-weight="bold" fill="#222">福島県知事選挙</text>
+  <text x="175" y="70" font-size="14" fill="#555">任期満了に伴う投開票の予定</text>
+
+  <text x="130" y="125" text-anchor="end" font-size="15" fill="#555">2026/11/15</text>
+  <circle cx="150" cy="120" r="8" fill="#2a4d69"/>
+  <text x="175" y="120" font-size="17" font-weight="bold" fill="#222">愛媛県知事選挙</text>
+  <text x="175" y="140" font-size="14" fill="#555">松山市長選なども同日の予定</text>
+
+  <text x="130" y="195" text-anchor="end" font-size="15" fill="#555">2026/12/20</text>
+  <circle cx="150" cy="190" r="8" fill="#2a4d69"/>
+  <text x="175" y="190" font-size="17" font-weight="bold" fill="#222">佐賀県知事選挙</text>
+  <text x="175" y="210" font-size="14" fill="#555">投開票の予定</text>
+
+  <text x="130" y="265" text-anchor="end" font-size="15" fill="#555">2026/12/27</text>
+  <circle cx="150" cy="260" r="8" fill="#2a4d69"/>
+  <text x="175" y="260" font-size="17" font-weight="bold" fill="#222">宮崎県知事選挙</text>
+  <text x="175" y="280" font-size="14" fill="#555">投開票の予定</text>
+
+  <rect x="168" y="318" width="450" height="64" rx="4" fill="#fff6d6" stroke="#d9a400" stroke-width="2"/>
+  <text x="130" y="335" text-anchor="end" font-size="15" font-weight="bold" fill="#222">2027/4/11</text>
+  <circle cx="150" cy="330" r="10" fill="#2a4d69"/>
+  <text x="180" y="338" font-size="17" font-weight="bold" fill="#222">統一地方選挙 前半戦</text>
+  <text x="180" y="362" font-size="14" fill="#222">道府県の知事・議会、政令市の市長・市議会</text>
+
+  <rect x="168" y="388" width="450" height="64" rx="4" fill="#fff6d6" stroke="#d9a400" stroke-width="2"/>
+  <text x="130" y="405" text-anchor="end" font-size="15" font-weight="bold" fill="#222">2027/4/25</text>
+  <circle cx="150" cy="400" r="10" fill="#2a4d69"/>
+  <text x="180" y="408" font-size="17" font-weight="bold" fill="#222">統一地方選挙 後半戦</text>
+  <text x="180" y="432" font-size="14" fill="#222">政令市以外の市区町村の首長・議会</text>
+
+  <text x="130" y="475" text-anchor="end" font-size="15" fill="#555">2027/9</text>
+  <circle cx="150" cy="470" r="8" fill="#d9a400"/>
+  <text x="175" y="470" font-size="17" font-weight="bold" fill="#222">自民党総裁の任期満了</text>
+  <text x="175" y="490" font-size="14" fill="#555">総裁選の日程は未定</text>
+
+  <text x="130" y="545" text-anchor="end" font-size="15" fill="#555">2028/7</text>
+  <circle cx="150" cy="540" r="8" fill="#c0392b"/>
+  <text x="175" y="540" font-size="17" font-weight="bold" fill="#222">参議院議員選挙</text>
+  <text x="175" y="560" font-size="14" fill="#555">半数改選、任期満了は 7 月 25 日</text>
+
+  <text x="130" y="615" text-anchor="end" font-size="15" fill="#555">2028/7</text>
+  <circle cx="150" cy="610" r="8" fill="#2a4d69"/>
+  <text x="175" y="610" font-size="17" font-weight="bold" fill="#222">東京都知事選挙</text>
+  <text x="175" y="630" font-size="14" fill="#555">任期満了は 7 月 30 日</text>
+
+  <text x="130" y="685" text-anchor="end" font-size="15" fill="#555">2029/7</text>
+  <circle cx="150" cy="680" r="8" fill="#2a4d69"/>
+  <text x="175" y="680" font-size="17" font-weight="bold" fill="#222">東京都議会議員選挙</text>
+  <text x="175" y="700" font-size="14" fill="#555">定数 127 、任期満了は 7 月 22 日</text>
+
+  <text x="130" y="755" text-anchor="end" font-size="15" fill="#555">2030/2</text>
+  <circle cx="150" cy="750" r="8" fill="#c0392b"/>
+  <text x="175" y="750" font-size="17" font-weight="bold" fill="#222">衆議院議員選挙</text>
+  <text x="175" y="770" font-size="14" fill="#555">任期満了は 2 月 7 日。解散があれば前倒し</text>
+
+  <text x="130" y="825" text-anchor="end" font-size="15" fill="#555">2031/7</text>
+  <circle cx="150" cy="820" r="8" fill="#c0392b"/>
+  <text x="175" y="820" font-size="17" font-weight="bold" fill="#222">参議院議員選挙</text>
+  <text x="175" y="840" font-size="14" fill="#555">もう半数。任期満了は 7 月 28 日</text>
+</svg>
+<figcaption>図 1 : 主な選挙の年表。 2027 年 4 月の二つの日が黄色の枠で強調されている。</figcaption>
+</figure>
+
+<h2>一覧表</h2>
+<table class="cards">
+<thead>
+<tr><th>選挙</th><th>時期</th><th>状態</th><th>備考</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="選挙">秋冬の知事選</td><td data-label="時期">2026 年 10 月 25 日〜 12 月 27 日</td><td data-label="状態"><span class="tag">予定</span></td><td data-label="備考">福島 10/25 、愛媛 11/15 、佐賀 12/20 、宮崎 12/27</td></tr>
+<tr><td data-label="選挙">統一地方選挙</td><td data-label="時期">2027 年 4 月 11 日・ 25 日</td><td data-label="状態"><span class="tag">法案</span></td><td data-label="備考">2026 年 10 月 16 日に臨時特例法案を閣議決定。成立を目指す段階</td></tr>
+<tr><td data-label="選挙">自民党総裁選挙</td><td data-label="時期">2027 年 9 月ごろ</td><td data-label="状態"><span class="tag">任期満了ベース</span></td><td data-label="備考">高市総裁の任期は前任の残りで 2027 年 9 月まで。日程は未定</td></tr>
+<tr><td data-label="選挙">参議院議員選挙</td><td data-label="時期">2028 年 7 月</td><td data-label="状態"><span class="tag">任期満了ベース</span></td><td data-label="備考">任期満了日は 2028 年 7 月 25 日。次は 2031 年 7 月 28 日</td></tr>
+<tr><td data-label="選挙">東京都知事選挙</td><td data-label="時期">2028 年 7 月</td><td data-label="状態"><span class="tag">任期満了ベース</span></td><td data-label="備考">任期満了日は 2028 年 7 月 30 日</td></tr>
+<tr><td data-label="選挙">東京都議会議員選挙</td><td data-label="時期">2029 年 6 〜 7 月</td><td data-label="状態"><span class="tag">任期満了ベース</span></td><td data-label="備考">任期満了日は 2029 年 7 月 22 日。前回は 2025 年 6 月 22 日</td></tr>
+<tr><td data-label="選挙">衆議院議員選挙</td><td data-label="時期">遅くとも 2030 年 2 月</td><td data-label="状態"><span class="tag">解散次第</span></td><td data-label="備考">任期満了日は 2030 年 2 月 7 日。解散すればいつでも</td></tr>
+</tbody>
+</table>
+
+<h2>統一地方選挙 : 2027 年 4 月の二つの日曜日</h2>
+<p>統一地方選挙は、全国の自治体の選挙日をそろえて行う仕組みで、 4 年に一度の春に実施される。次回は、都道府県と政令指定都市の分を 4 月 11 日、それ以外の市区町村の分を 4 月 25 日とする法案を、政府が 2026 年 10 月 16 日に閣議決定した。主に 2027 年 3 月 1 日から 5 月 31 日までに任期が満了する首長と議員が対象で、全国で約 1000 の選挙になる見通しである。前回の 2023 年は 4 月 9 日と 23 日だった。</p>
+
+<figure>
+<svg viewBox="0 0 640 330" role="img" aria-label="統一地方選挙の前半戦と後半戦を比べた図">
+  <rect x="20" y="20" width="290" height="250" rx="6" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+  <rect x="20" y="20" width="290" height="56" rx="6" fill="#2a4d69"/>
+  <text x="165" y="46" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">前半戦 2027/4/11</text>
+  <text x="165" y="68" text-anchor="middle" font-size="14" fill="#fff">都道府県・政令指定都市</text>
+  <text x="40" y="112" font-size="16" fill="#222">・道府県知事選挙</text>
+  <text x="40" y="142" font-size="16" fill="#222">・道府県議会議員選挙</text>
+  <text x="40" y="172" font-size="16" fill="#222">・政令指定都市の市長選挙</text>
+  <text x="40" y="202" font-size="16" fill="#222">・政令指定都市の市議会議員選挙</text>
+  <text x="40" y="244" font-size="14" fill="#555">例 : 大阪府・北海道・神奈川県など</text>
+
+  <rect x="330" y="20" width="290" height="250" rx="6" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+  <rect x="330" y="20" width="290" height="56" rx="6" fill="#2a4d69"/>
+  <text x="475" y="46" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">後半戦 2027/4/25</text>
+  <text x="475" y="68" text-anchor="middle" font-size="14" fill="#fff">政令指定都市以外の市区町村</text>
+  <text x="350" y="112" font-size="16" fill="#222">・市区町村長選挙</text>
+  <text x="350" y="142" font-size="16" fill="#222">・市区町村議会議員選挙</text>
+  <text x="350" y="172" font-size="16" fill="#222">・東京都特別区の区長・区議会</text>
+  <text x="350" y="244" font-size="14" fill="#555">全国で約 1000 の選挙が集中</text>
+
+  <line x1="165" y1="270" x2="165" y2="300" stroke="#2a4d69" stroke-width="2"/>
+  <line x1="475" y1="270" x2="475" y2="300" stroke="#2a4d69" stroke-width="2"/>
+  <line x1="165" y1="300" x2="475" y2="300" stroke="#d9a400" stroke-width="3"/>
+  <text x="320" y="322" text-anchor="middle" font-size="15" fill="#222">二週間の間隔</text>
+</svg>
+<figcaption>図 2 : 統一地方選挙の前半戦と後半戦。対象の分け方は 2026 年 10 月 16 日閣議決定の法案による。</figcaption>
+</figure>
+
+<div class="must">
+<p>この日程は、臨時特例法が国会で成立して初めて確定する。記事の時点では法案の段階である。大阪府の例では知事選の告示は 3 月 26 日ごろの見込みとされるが、正式な告示日は各選挙管理委員会の発表を待つ必要がある。</p>
+</div>
+
+<h3>前半戦の知事選</h3>
+<p>解説記事では、前半戦に知事選があるのは北海道・神奈川・大阪・奈良・鳥取・島根・徳島・大分の 8 道府県とされている。ただし、この一覧は数か月前の情報に基づくので、最新の任期を確認したい。福井県は 2026 年 1 月に知事選を終え、任期が 2030 年まで続くため対象外である。</p>
+
+<h2>2028 年の夏 : 参院選と都知事選が重なる</h2>
+<p>2028 年は、参議院議員の半数の任期が 7 月 25 日に、東京都知事の任期が 7 月 30 日に満了する。公職選挙法は、任期満了による選挙を任期満了日の前 30 日以内に行うと定めている。この規定を当てはめると、投票できる期間はおおむね図 3 のようになる。二つの期間は 6 月 30 日から 7 月 25 日までの約 4 週間で重なり、投票日が近くなる可能性が高い。</p>
+
+<figure>
+<svg viewBox="0 0 640 260" role="img" aria-label="2028 年 6 月下旬から 7 月末までの参院選と都知事選の実施可能期間を示す図">
+  <line x1="40" y1="200" x2="610" y2="200" stroke="#555" stroke-width="2"/>
+  <line x1="40" y1="194" x2="40" y2="206" stroke="#555" stroke-width="2"/>
+  <text x="40" y="226" text-anchor="middle" font-size="14" fill="#222">6/25</text>
+  <line x1="97" y1="194" x2="97" y2="206" stroke="#555" stroke-width="2"/>
+  <text x="97" y="226" text-anchor="middle" font-size="14" fill="#222">6/30</text>
+  <line x1="287" y1="194" x2="287" y2="206" stroke="#555" stroke-width="2"/>
+  <text x="287" y="226" text-anchor="middle" font-size="14" fill="#222">7/10</text>
+  <line x1="477" y1="194" x2="477" y2="206" stroke="#555" stroke-width="2"/>
+  <text x="477" y="226" text-anchor="middle" font-size="14" fill="#222">7/20</text>
+  <line x1="534" y1="194" x2="534" y2="206" stroke="#555" stroke-width="2"/>
+  <text x="534" y="226" text-anchor="middle" font-size="14" fill="#222">7/23</text>
+  <line x1="610" y1="194" x2="610" y2="206" stroke="#555" stroke-width="2"/>
+  <text x="610" y="226" text-anchor="middle" font-size="14" fill="#222">7/30</text>
+
+  <rect x="97" y="30" width="437" height="30" fill="#e6edf3" stroke="#c0392b" stroke-width="2"/>
+  <text x="315" y="52" text-anchor="middle" font-size="15" fill="#222">重なる期間 6/30 〜 7/25</text>
+
+  <rect x="40" y="80" width="494" height="34" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+  <text x="50" y="103" font-size="16" font-weight="bold" fill="#222">参院選 6/25 〜 7/25</text>
+  <rect x="97" y="130" width="513" height="34" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+  <text x="107" y="153" font-size="16" font-weight="bold" fill="#222">都知事選 6/30 〜 7/30</text>
+
+  <line x1="534" y1="66" x2="534" y2="194" stroke="#c0392b" stroke-width="2" stroke-dasharray="5 4"/>
+  <line x1="610" y1="120" x2="610" y2="194" stroke="#2a4d69" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="540" y="76" font-size="13" fill="#c0392b">参院 任期満了 7/25</text>
+  <text x="610" y="248" text-anchor="end" font-size="13" fill="#2a4d69">都知事 任期満了 7/30</text>
+</svg>
+<figcaption>図 3 : 2028 年の参院選と都知事選の実施可能期間。目盛りは日付の間隔に比例している。「任期満了日の前 30 日以内」という原則を当てはめた目安で、実際の投票日ではない。</figcaption>
+</figure>
+
+<div class="note">
+<p>実際の投票日は、国会の会期や政権の判断などで決まる。 2022 年の参院選は 7 月 10 日、 2024 年の都知事選は 7 月 7 日だった。同じ日になるのか、別の日曜日になるのかは、本稿の時点では何も決まっていない。</p>
+</div>
+
+<h2>自民党総裁選挙 : 任期は 2027 年 9 月まで</h2>
+<p>自民党の総裁選は、公職選挙法の選挙ではなく政党の内部の選挙だが、総裁がそのまま首相になるため、実質的に政権を決める選挙である。 2025 年 10 月に高市早苗氏が総裁に選ばれた。その任期は前任の石破茂氏の残りに当たる 2027 年 9 月までである。</p>
+
+<figure>
+<svg viewBox="0 0 640 230" role="img" aria-label="自民党総裁の任期を示す帯と、次の総裁選の時期を示す図">
+  <line x1="40" y1="150" x2="600" y2="150" stroke="#555" stroke-width="2"/>
+  <rect x="80" y="100" width="380" height="36" fill="#fff6d6" stroke="#d9a400" stroke-width="2"/>
+  <text x="270" y="124" text-anchor="middle" font-size="17" font-weight="bold" fill="#222">高市総裁の任期（前任の残り）</text>
+  <circle cx="80" cy="150" r="7" fill="#2a4d69"/>
+  <text x="80" y="180" text-anchor="middle" font-size="14" fill="#222">2025/10</text>
+  <text x="80" y="200" text-anchor="middle" font-size="13" fill="#555">総裁に選出</text>
+  <circle cx="460" cy="150" r="7" fill="#d9a400"/>
+  <text x="460" y="180" text-anchor="middle" font-size="14" fill="#222">2027/9</text>
+  <text x="460" y="200" text-anchor="middle" font-size="13" fill="#555">任期満了</text>
+  <rect x="500" y="100" width="100" height="36" fill="#e6edf3" stroke="#2a4d69" stroke-width="2" stroke-dasharray="6 4"/>
+  <text x="550" y="124" text-anchor="middle" font-size="15" fill="#222">次の任期</text>
+  <text x="270" y="60" text-anchor="middle" font-size="16" fill="#222">2026/2 に総選挙。与党が大勝</text>
+  <line x1="165" y1="70" x2="165" y2="98" stroke="#c0392b" stroke-width="2"/>
+  <circle cx="165" cy="150" r="5" fill="#c0392b"/>
+</svg>
+<figcaption>図 4 : 自民党総裁の任期。 2026 年 2 月の総選挙の位置は目安の図示であり、縮尺は正確ではない。</figcaption>
+</figure>
+
+<p>総裁選の日程は決まっていない。任期満了で実施される場合と、総裁が欠けて前倒しになる場合の、二つの筋書きがある。総裁任期は 1 期 3 年で、連続して務められるのは 3 期までと定められている。</p>
+
+<h2>東京都議会議員選挙と衆議院議員選挙</h2>
+<p>東京都議会議員選挙は定数 127 で、 4 年ごとに行われる。前回は 2025 年 6 月 22 日に投開票され、都民ファーストの会が 2021 年以来の第一党に返り咲いた。次回の任期満了日は 2029 年 7 月 22 日である。 2025 年のように参議院選挙との重なりを避けて調整されることもあるため、時期は 6 月か 7 月とみておくとよい。</p>
+<p>衆議院議員選挙は、 2026 年 2 月の総選挙で自民党と日本維新の会の連立が大勝した。任期満了日は 2030 年 2 月 7 日だが、衆議院には解散があるため、この日より前に行われる可能性が常にある。ここに挙げた選挙の中で、時期が最も読みにくい。</p>
+
+<h2>この文書の確度</h2>
+<table class="cards">
+<thead>
+<tr><th>区分</th><th>内容</th><th>確かさ</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="区分">任期満了日</td><td data-label="内容">都知事・都議・参院・衆院の満了日は、東京都選挙管理委員会の一覧による</td><td data-label="確かさ">高い</td></tr>
+<tr><td data-label="区分">統一地方選</td><td data-label="内容">日付は閣議決定された法案に基づく。法案の成立は未了</td><td data-label="確かさ">中程度</td></tr>
+<tr><td data-label="区分">秋冬の知事選</td><td data-label="内容">福島以外は選挙情報サイトの一覧による。任期満了日に資料間の食い違いがある</td><td data-label="確かさ">中程度</td></tr>
+<tr><td data-label="区分">実際の投票日</td><td data-label="内容">2028 年以降の投票日は未定。図 3 は法定の原則からの目安</td><td data-label="確かさ">低い</td></tr>
+<tr><td data-label="区分">自民党総裁選</td><td data-label="内容">任期満了の時期は報道による。日程は未定</td><td data-label="確かさ">中程度</td></tr>
+</tbody>
+</table>
+
+<p class="meta">参照した情報 : 東京都選挙管理委員会の任期満了日一覧、日本経済新聞の統一地方選の法案に関する報道、時事通信・日本経済新聞の自民党総裁に関する報道、選挙ドットコムなどの選挙日程一覧。最新の日程は、各選挙管理委員会の発表で確認してほしい。</p>
+</main>
+</body>
+</html>
