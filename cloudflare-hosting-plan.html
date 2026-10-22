@@ -108,7 +108,15 @@ pre code{background:none; padding:0;}
 </ol>
 </li>
 <li><a href="#sec4">各工程の作業内容</a></li>
-<li><a href="#sec5">公開後の運用と、後から独自ドメインを足すとき</a></li>
+<li><a href="#sec5">Claude Code との分担</a>
+<ol>
+<li><a href="#sec5-1">なぜコマンドと API なら任せられるのか</a></li>
+<li><a href="#sec5-2">工程ごとの分担</a></li>
+<li><a href="#sec5-3">任せるときの注意</a></li>
+<li><a href="#sec5-4">Cloudflare 公式の Claude Code 向けセットアップ</a></li>
+</ol>
+</li>
+<li><a href="#sec6">公開後の運用と、後から独自ドメインを足すとき</a></li>
 </ol>
 </nav>
 
@@ -342,7 +350,50 @@ Get-Content urls.txt | ForEach-Object { try { $r = Invoke-WebRequest $_ -Maximum
 <p>公開日の前日に、検証リストを再実施する。告知は、検証が済んでからにする。 GitHub Pages と二重に公開している場合は、どちらを正とするかを決める。 GitHub Pages を止めると、旧 URL が使えなくなる。旧 URL を知っている読者やリンクが残るなら、しばらく併存させるのが安全である。</p>
 <p>なお、 <code>workers.dev</code> の経路そのものを止める場合は、ダッシュボードの Settings &gt; Domains &amp; Routes で無効にするか、設定ファイルに <code>"workers_dev": false</code> を書く。ダッシュボードだけで止めて設定ファイルに書かないと、次回のデプロイで再び有効になる。 <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> ただし、独自ドメインを持たない今回の方式では、これを止めると、サイトにアクセスする手段がなくなる。止めてはならない。</p>
 
-<h2 id="sec5">5. 公開後の運用と、後から独自ドメインを足すとき</h2>
+<h2 id="sec5">5. Claude Code との分担</h2>
+<p>この計画の作業は、 Claude Code と一緒に進めることを想定している。ただし、何でも任せてよいわけではない。この節では、任せられる理由と、人が持つべき範囲、任せるときの注意をまとめる。 Claude Code に任せる考え方は、 Cloudflare への移行を Claude Code と進めた人の記事に拠る。 <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup> その記事は WordPress の会社サイトの移行を扱ったもので、独自ドメインを使う点が本計画と異なる。そのため、取り込んだのは考え方だけである。</p>
+
+<h3 id="sec5-1">5.1 なぜコマンドと API なら任せられるのか</h3>
+<p>記事の筆者は、 Cloudflare に移した最も大きな理由として、「コマンドと公開 API で全機能が触れるので、 Claude Code がそのまま作業できる」ことを挙げている。 <sup id="fnref-24-2"><a href="#ref-24">[24]</a></sup> 本計画で使う <code>npx wrangler deploy</code> も、このコマンドの一つである。 Claude Code は、ターミナルで文字の命令を実行し、その出力を読んで次の手を決める道具である。ボタンの位置を目で探してクリックする作業は、得意な使い方ではない。操作がコマンドと API で閉じていると、次の三点で任せやすくなる。</p>
+<ul>
+<li><strong>入力が文字で済む</strong> : 命令を書けば実行でき、画面の見た目に左右されない</li>
+<li><strong>結果が文字で返る</strong> : 成功か失敗か、現在の状態がどうかを、出力から読み取って判断できる</li>
+<li><strong>繰り返しと取り消しが容易</strong> : 同じ命令を何度でも実行できる。本計画でも、静的ファイルだけの構成なので、 GitHub Pages に戻すのは容易である（6 を参照）</li>
+</ul>
+<p>「全機能」という言い方は、筆者の実感であり、 Cloudflare のすべての機能を検証した主張ではない。本計画で必要な範囲に限っても、どこまでコマンドで済むかは、次の 5.2 で工程ごとに見る。</p>
+
+<h3 id="sec5-2">5.2 工程ごとの分担</h3>
+<p>次の表は、各工程を、人が持つものと、 Claude Code に任せられるものに分けた案である。「任せられる」の中にも、結果を人が確かめる作業が含まれる。</p>
+<table class="cards">
+<thead>
+<tr><th>工程</th><th>人が持つ作業</th><th>Claude Code に任せられる作業</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="工程">工程 0</td><td data-label="人が持つ作業">Worker 名、リポジトリ、公開ディレクトリの構成の決定</td><td data-label="Claude Code に任せられる作業">各案の影響の整理、決定事項の文書化</td></tr>
+<tr><td data-label="工程">工程 1</td><td data-label="人が持つ作業">アカウントの作成、認証情報の入力、二要素認証の設定のすべて</td><td data-label="Claude Code に任せられる作業">なし</td></tr>
+<tr><td data-label="工程">工程 2</td><td data-label="人が持つ作業">公開するファイルの範囲の最終確認、手元での表示の確認</td><td data-label="Claude Code に任せられる作業">設定ファイルと <code>.assetsignore</code> の作成、 <code>npx wrangler dev</code> の実行</td></tr>
+<tr><td data-label="工程">工程 3</td><td data-label="人が持つ作業">ログインの操作、アカウントのサブドメインの決定</td><td data-label="Claude Code に任せられる作業">ログイン後の <code>npx wrangler deploy</code> の実行、出力の確認</td></tr>
+<tr><td data-label="工程">工程 4</td><td data-label="人が持つ作業">GitHub と Cloudflare の連携の認可、権限範囲の選択</td><td data-label="Claude Code に任せられる作業">空の変更の push 、デプロイ結果の確認。接続そのものを Claude Code に任せられるかは、要確認</td></tr>
+<tr><td data-label="工程">工程 5</td><td data-label="人が持つ作業">スマートフォンでの表示、見た目の目視確認、合否の判断</td><td data-label="Claude Code に任せられる作業">全ページの状態コードの一括確認、 404 の確認</td></tr>
+<tr><td data-label="工程">工程 6</td><td data-label="人が持つ作業">公開と告知の判断、二重公開の整理の判断</td><td data-label="Claude Code に任せられる作業">公開後 1 日・ 1 週間・ 1 か月の、リンク切れと自動デプロイの確認</td></tr>
+</tbody>
+</table>
+<p>工程 3 のログインを人が持つとしたのは、 Cloudflare アカウントへのログインに、人の認証が要るためである。ログインの方式の詳細は確認できていないので、実作業の前に確かめる（要確認）。</p>
+
+<h3 id="sec5-3">5.3 任せるときの注意</h3>
+<ul>
+<li><strong>渡す権限を絞る。</strong> Claude Code にコマンドや API を使わせるには、認証情報（トークン）を渡す必要がある。渡す権限の範囲は、この作業に必要なものに絞る。記事にはこの点の記述がないので、筆者の一般的な理解として書く <sup id="fnref-24-3"><a href="#ref-24">[24]</a></sup></li>
+<li><strong>操作できることと、検証を任せられることは別である。</strong>記事でも、切り替えのあとに見つかった欠け（フッター、解析タグ、スマートフォンの表示）は、人と AI が画面を見て確かめて見つけている。 <sup id="fnref-24-4"><a href="#ref-24">[24]</a></sup> 本計画でも、工程 5 の目視確認と合否の判断は、人が持つ</li>
+<li><strong>旧状態の記録は、人が設計する。</strong>切り替えの前に、旧 URL の一覧など、戻すときに必要な記録を残す。本計画では GitHub Pages を止めずに二重公開するので、戻る先が残る</li>
+<li><strong>対象外の領域がある。</strong>本計画は独自ドメインを持たないので、レジストラの管理画面などは登場しない。もし後から独自ドメインを足すなら（6 を参照）、 Cloudflare の外にあるレジストラでの操作は、この分担の対象外になる</li>
+<li><strong>記事は宣伝を兼ねている。</strong>記事の末尾は、 AI エージェント開発サービスの告知で終わっている。実体験に基づく評価として読めるが、宣伝を兼ねた文脈でもある <sup id="fnref-24-5"><a href="#ref-24">[24]</a></sup></li>
+</ul>
+
+<h3 id="sec5-4">5.4 Cloudflare 公式の Claude Code 向けセットアップ</h3>
+<p>記事とは別に、 Cloudflare は Claude Code 向けの公式のセットアップ手順を公開している。 2026 年 10 月 22 日時点の検索結果の要約では、 Cloudflare 向けの Skills と、 API ・ドキュメント・ビルド・可観測性などの MCP サーバーを Claude Code に登録する構成で、 API の MCP サーバーは 2,500 以上のエンドポイントを少ないトークン量で扱える、と説明されている。 <sup id="fnref-25-1"><a href="#ref-25">[25]</a></sup></p>
+<div class="note">この項は検索結果の要約で確認したもので、公式ページの本文は精読していない。本計画の範囲（静的ファイルの公開）では、 <code>wrangler</code> のコマンドだけで足りる可能性が高く、 MCP サーバーが必要かは未確認である（要確認）。導入するときは、公式ページの最新の手順を確かめること。</div>
+
+<h2 id="sec6">6. 公開後の運用と、後から独自ドメインを足すとき</h2>
 <p>公開後の運用は、いまの GitHub Pages とほとんど変わらない。 HTML を更新して push すれば、公開される。次の点を、公開前に決めておくとよい。</p>
 <ul>
 <li>アカウントの保護 : 二要素認証を有効にし、回復手段を安全な場所に保管する</li>
@@ -379,6 +430,8 @@ Get-Content urls.txt | ForEach-Object { try { $r = Invoke-WebRequest $_ -Maximum
 <li id="ref-21"><a href="#fnref-21-1">^</a> GitHub. <em>Configuring a publishing source for your GitHub Pages site</em>. 公開元のブランチとフォルダ、 GitHub Actions の利用。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">GitHub 公式ドキュメント</a></li>
 <li id="ref-22"><a href="#fnref-22-1">^</a> GitHub. <em>Creating a custom 404 page for your GitHub Pages site</em>. <code>404.html</code> を公開元に置くこと。 <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-custom-404-page-for-your-github-pages-site">GitHub 公式ドキュメント</a></li>
 <li id="ref-23"><a href="#fnref-23-1">^</a> Opensource.com. <em>Redirect a GitHub Pages site with this HTTP hack</em>. GitHub Pages でサーバー側のリダイレクトやヘッダー指定ができない旨の第三者の解説（検索結果の要約で確認。公式での確認はしていない）。 <a href="https://opensource.com/article/19/7/permanently-redirect-github-pages">Opensource.com の記事</a></li>
+<li id="ref-24">^ <sup><a href="#fnref-24-1">a</a></sup> <sup><a href="#fnref-24-2">b</a></sup> <sup><a href="#fnref-24-3">c</a></sup> <sup><a href="#fnref-24-4">d</a></sup> <sup><a href="#fnref-24-5">e</a></sup> やぎ. 「PHP の脆弱性を機に、会社 HP を WordPress から Cloudflare に移した話」 X の記事。コマンドと公開 API で Claude Code が作業できるという主張、切り替え後に見つかった欠けの確認、末尾の告知。 2026 年 10 月 22 日に取得。 <a href="https://x.com/yagiryuuu/article/2113191749002862627">X の記事</a></li>
+<li id="ref-25"><a href="#fnref-25-1">^</a> Cloudflare. <em>Claude Code + Cloudflare</em>. Claude Code 向けの Skills と MCP サーバーの登録。検索結果の要約で確認したもので、ページ本体は未精読。 <a href="https://developers.cloudflare.com/agent-setup/claude-code/">Cloudflare 公式ドキュメント</a></li>
 </ol>
 <p class="note">本稿は 2026 年 10 月 7 日時点の公式ドキュメントの確認に基づく計画書であり、実際の作業結果ではない。「要確認」と記した事項、および出典に「未精読」と付した事項は、実作業の前に原典で確かめること。料金プラン、画面の文言、各社の仕様は変更されうる。</p>
 </div>
