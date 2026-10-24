@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EmDash を学ぶべきか</title>
+<style>
+  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+<h1>EmDash を学ぶべきか ― WordPress と比べた条件の整理</h1>
+<p class="meta">作成日 : 2026-10-24 ／ 出典の取得日 : 2026-10-24 ／ 本文は取得日の時点の情報に基づく</p>
+
+<div class="note">この記事は、 Cloudflare の CMS 「 EmDash 」について、 WordPress と比べて何がどう違うかを整理し、どのような条件の人にとって学ぶ価値があるかを検討するものである。結論は、調べた事実の範囲で導く。調べていない事項と、報道の食い違いは、末尾の「限界」で述べる。</div>
+
+<h2>1. 問いと方法</h2>
+<p>主題の問いは、 EmDash は WordPress と比べて、どのような条件の人にとって学ぶ価値があるのか、学ぶとすればどの順に何をすればよいのか、である。選択肢は四つ検討する。今 EmDash を学ぶ、 WordPress を続ける、両方を使う、判断を先に延ばす、である。</p>
+<p>本文の事実は三つに区分して示す。 <span class="tag">確立した事実</span> は一次情報（公式リポジトリ・公式ドキュメント）で確認したものを指す。 <span class="tag">未確定</span> は二次情報（報道・解説記事）にとどまり、検証が足りないものを指す。 <span class="tag">投機</span> は将来の予測を指す。</p>
+
+<h2>2. EmDash の概要</h2>
+<p><span class="tag">確立した事実</span> EmDash は、 Cloudflare が公開する MIT ライセンスの CMS （コンテンツ管理システム。 Web サイトの文章や画像を管理する仕組み）である。公式リポジトリは、 EmDash を Astro （ Web サイトを作るための、 TypeScript 製の枠組み）に基づく TypeScript （ JavaScript に型の宣言を加えた言語）の CMS と説明し、 WordPress の「精神的後継」という語を説明文に使っている <sup>[1]</sup> 。この呼称は提供元の枠組みであり、本記事は事実の評価としては用いない。</p>
+<p><span class="tag">未確定</span> 版 1.0 は、 2026 年 9 月 28 日頃に公開されたと報じられている。報道は、ベータを脱した無料の CMS と紹介している <sup>[2]</sup> 。</p>
+<p><span class="tag">確立した事実</span> 公式の移行ガイドは、 0.x の版（ 1.0 より前の版）から 1.0 への移行で「 Removed 」として扱う項目を四つ挙げている <sup>[3]</sup> 。 その四つは、関数 <code>cloudflareCache()</code>、 <code>emdash/ui</code> からの Comments と CommentForm の書き出し（ <code>emdash/ui/comments</code> からは引き続き使える）、 CLI のコマンド <code>emdash dev</code> と <code>emdash auth secret</code> 、設定の <code>experimental.registry</code> である。 1.0 以後の破壊的変更（既存の利用方法が動かなくなる変更）は、メジャー版（版番号の先頭の数字が変わる版）でのみ行うとリリース情報に書かれている <sup>[4]</sup> 。</p>
+<p><span class="tag">確立した事実</span> 実行環境は、 Cloudflare の Workers （ Cloudflare が提供する、サーバーの管理を要しない実行環境）と D1 （データベース）、 R2 （ファイル保存領域）、または SQLite （小型のデータベース）を使う、 Node.js （サーバー上で JavaScript を動かす実行環境）のサーバーである <sup>[1]</sup> 。プラグインは Dynamic Worker Loaders （隔離された実行環境を作る Cloudflare の仕組み）と呼ばれる環境で動き、使う能力を宣言するマニフェスト（プラグインが使う能力を宣言する書類）を持つ <sup>[1]</sup> 。</p>
+<p><span class="tag">確立した事実</span> CLI （ターミナルから操作する道具）と、 MCP サーバー（ AI エージェントが接続して操作する窓口）が標準で組み込まれている <sup>[1]</sup> 。 MCP の接続先（エンドポイント。通信の届け先）は <code>/_emdash/api/mcp</code> である。認証は Bearer トークン（合言葉に当たる文字列）による。方式は、 OAuth 2.1 （外部のサービスで許可を得る仕組み）、個人アクセストークン、デバイス認可（ターミナルなど、画面の限られた道具で認証する方式）の三つである。操作できる範囲は、スコープ（許可の単位）で絞る <sup>[5]</sup> 。サイト全体の移転に使うツールは、管理者 (Admin) だけが使える <sup>[5]</sup> 。</p>
+<p><span class="tag">未確定</span> プラグインの隔離の強度は、実行環境によって異なる可能性がある。報道は、 Cloudflare 上の隔離に有料プランを要すると書く一方、 Node.js 上でも workerd （ Cloudflare の実行環境の基盤）で隔離できると書く。前者は 1.0 より前のレビューの記述である。信頼モードでは宣言が文書上の意味にとどまり、強制されるのはサンドボックスモードのみとする二次情報もある。この二つは食い違っており、本記事は確定しない <sup>[6]</sup> 。</p>
+
+<h2>3. WordPress との比較</h2>
+<p>比較は、同じ観点で両者を並べる。事実には出典を付ける。筆者の注記は、「（筆者の注記）」と明記する。</p>
+<table class="cards">
+<thead><tr><th>観点</th><th>WordPress</th><th>EmDash</th></tr></thead>
+<tbody>
+<tr><td data-label="観点">ライセンス</td><td data-label="WordPress">GPL バージョン 2 以降 <sup>[7]</sup></td><td data-label="EmDash">MIT<sup>[1]</sup></td></tr>
+<tr><td data-label="観点">拡張の仕組み</td><td data-label="WordPress">プラグインによる拡張。無料プラグインは約 5 万 9 千〜 6 万件とする二次情報がある <sup>[8]</sup> 。公式サイトでの件数は確認していない。品質は調べていない</td><td data-label="EmDash">宣言型マニフェストと隔離実行 <sup>[1]</sup> 。公式の提供元製プラグインは、現時点で 0.x の版である <sup>[1]</sup> 。同資料の掲載日（ 2026 年 9 月 29 日）の時点で、プラグインは十数件程度とする資料がある。提供元製以外を含むかは、資料では確認できない <sup>[9]</sup></td></tr>
+<tr><td data-label="観点">安全性</td><td data-label="WordPress">脆弱性の追跡を行う Patchstack （企業）の 2021 年の分析では、コアの脆弱性は全体の 0.58% 、 9 割以上は無料プラグインに由来した <sup>[10]</sup> 。このデータは 2021 年のもので、現在の状態を示さない。 2025 年の集計として、新規の脆弱性は約 1 万 1 千件で、前年比 42% 増と報じられている。大半はプラグイン由来とされるが、割合は資料により 91% から 97% と異なる <sup>[11]</sup></td><td data-label="EmDash">隔離とマニフェストという設計の説明はある <sup>[1]</sup> 。隔離の強度と、宣言が強制されるかは、実行環境と動作の方式で異なるとする報道があり、確定していない <sup>[6]</sup> 。実績のデータは確認していない。実績のデータがないことは、安全とも危険とも示さない（筆者の注記）</td></tr>
+<tr><td data-label="観点">AI 連携</td><td data-label="WordPress">版 6.9 で、 AI エージェントが機能を発見して使うための Abilities API が導入されたと、 WordPress プロジェクトの公式ブログは述べている。 MCP アダプターがそれを MCP 形式で公開する。出荷の時期は未確認である <sup>[12]</sup></td><td data-label="EmDash">CLI と MCP が標準である <sup>[1][5]</sup></td></tr>
+<tr><td data-label="観点">移行</td><td data-label="WordPress">移行元</td><td data-label="EmDash">WXR （ WordPress の書き出し形式）の取り込みと、専用の EmDash Exporter があると報じられている <sup>[13]</sup> 。 WXR はメディアのファイルを含まず、別に取得する必要がある。版 0.28.0 では、タクソノミー、 Yoast と Rank Math の SEO 項目、 ACF 、メニュー、コメントの取り込みが加わったと報じられている <sup>[14]</sup></td></tr>
+<tr><td data-label="観点">成熟度</td><td data-label="WordPress">全サイトに占める利用シェアは、 Web 技術の統計を公開する W3Techs の 2026 年 10 月 1 日時点の数字として、 40.2% と報じられている。 CMS が判明したサイトに占める割合は 58.7% 。 Web の計測を公開する HTTP Archive のモバイル計測では 33.21% （ 2026 年 4 月）で、計測方法により大きく異なる <sup>[15]</sup></td><td data-label="EmDash">版 1.0 は 2026 年 9 月に公開され、プレビューは 2026 年 4 月頃に公開されたと報じられている <sup>[16]</sup> 。公開からの期間が短い</td></tr>
+<tr><td data-label="観点">提供元と統治</td><td data-label="WordPress">Automattic の取締役会と Matt Mullenweg の対立が報じられた。時期は 2026 年 9 月とする報道があるが、記述は報道により異なる <sup>[17]</sup> 。プロジェクトの管理体制に不確実性がある（筆者の注記）</td><td data-label="EmDash">Cloudflare が提供する。提供元の方針に影響を受ける可能性がある（筆者の注記）</td></tr>
+</tbody>
+</table>
+<p>この表の要約は次のとおりである。両者とも、 AI エージェント向けの仕組みを持つ。ただし、 WordPress 側の AI 連携の記述は公式ブログによるが、出荷の時期は未確認である。 WordPress のプラグイン由来の脆弱性は、 2021 年と 2025 年の集計で、いずれも大半とされる。両者とも、提供元と統治の面に不確実性がある。 EmDash は、隔離とマニフェストという設計を持つが、実績のデータは、本記事では確認していない。利用の広さは、 WordPress のエコシステムの厚みとも、攻撃の標的の多さとも読める（筆者の注記）。どちらの読み方をとるかは、読み手の判断に委ねられる。</p>
+
+<h2>4. 条件別の向き不向き</h2>
+<p>以下は、 2 章と 3 章の事実に基づく筆者の判断である。判定の軸は、既存の WordPress 資産への依存、 AI エージェントによる操作の需要、学習に使える時間、提供元と統治の変化を許容できるかの四つである。</p>
+<table class="cards">
+<thead><tr><th>読者の条件</th><th>筆者の判断</th></tr></thead>
+<tbody>
+<tr><td data-label="条件">既存の WordPress の資産（特定のプラグインやテーマ）に強く依存する</td><td data-label="判断">WordPress を続けるほうが合理的だと考えられる。移行の費用と、同等の機能の有無を、先に確認する必要がある</td></tr>
+<tr><td data-label="条件">新規のサイトで、 AI エージェントによる操作を重視し、提供元と統治の変化を許容できる</td><td data-label="判断">EmDash は検討に値すると考えられる。 WordPress 側にも 6.9 で AI 連携の仕組みがある。両者の機能の比較は、本記事では行っていない。根拠は、新規のサイトであれば既存の資産を移す費用がかからない点である</td></tr>
+<tr><td data-label="条件">既存の資産を持つが、新規の部分を試したい</td><td data-label="判断">両方を使う選択が妥当と考えられる。新規の部分だけを EmDash で試し、移行は小さく行うのが無理が少ない</td></tr>
+<tr><td data-label="条件">TypeScript と Node.js の学習に使える時間がほとんどない</td><td data-label="判断">今は判断を延ばすか、 WordPress を続けるのが妥当と考えられる</td></tr>
+</tbody>
+</table>
+
+<h2>5. 2026 年 10 月から始める道のり</h2>
+<div class="note">この章は、 4 章の表の 2 行目と 3 行目に当てはまる読者に向けた道のりである。起点は 2026 年 10 月、期間は 6 か月（ 2027 年 3 月まで）、学習時間は週 5 時間を仮定する。これらは筆者の仮定である。各段階の長さと所要時間は、筆者の見積もりであり、合計は約 112 時間となる。</div>
+<ol>
+<li><strong>基礎と説明（ 10 月下旬〜 11 月中旬、約 15 時間と見積もる）。</strong> 目標は、 EmDash と WordPress の構成の違いを説明できることである。ターミナルの操作、 Node.js （サーバー上で JavaScript を動かす実行環境）、 TypeScript （ JavaScript に型の宣言を加えた言語）の読み方を学ぶ。終わりに、構成図と説明文を一つずつ作る。これで説明できるかを確かめる。</li>
+<li><strong>構築（ 11 月中旬〜 1 月上旬、約 35 時間と見積もる）。</strong> 目標は、検証用のサイトを手元で動かし、公開することである。 Node.js の版の要件は、二次情報の間で食い違う。公式のはじめ方ページは、 Node.js 22.23.4 以上を求めている <sup>[18]</sup> 。古い二次情報には 22.12 以上や 22.16 以上とするものもあるが、公式の記述を優先する。終わりに、公開した検証サイトを示す。</li>
+<li><strong>移行（ 1 月、約 20 時間と見積もる）。</strong> 小さな WordPress サイトを試しに移行し、移ったものと移らなかったものを表にする。終わりに差分表を作る。</li>
+<li><strong>拡張（ 2 月、約 20 時間と見積もる）。</strong> プラグインか MCP のどちらか一方を選ぶ。 MCP は、個人アクセストークンか、スコープを絞った OAuth で認証する。終わりに、動作した手順を記録する。</li>
+<li><strong>運用（ 3 月、約 22 時間と見積もる）。</strong> 版の更新、バックアップと復元、権限の設計を手順にする。終わりに、一度の更新と一度の復元を記録する。</li>
+</ol>
+<p>学習を続けるかどうかは、 7 章の基準で判断することを提案する。</p>
+
+<h2>6. 学習資料の評価</h2>
+<p>学習の一次資料は、公式リポジトリ <sup>[1]</sup> と公式ドキュメントの MCP のリファレンス <sup>[5]</sup> である。 EmDash の専用書籍は、確認できなかった。確認できた書籍は、技術評論社の『 Cloudflare Workers 実践ガイド―エッジで実現する Web アプリケーションの設計・実装・運用』（ 2026 年 5 月発売）である <sup>[19]</sup> 。 Workers 、 D1 、 KV （ Workers の鍵と値の保存領域）、 R2 、 Durable Objects （状態を保つ仕組み）を扱う、周辺技術の資料と位置づける。事前のメモの記載では、この書籍は EmDash に言及していない。 EmDash への言及の有無と目次は、確認していない。事前のメモに挙がっていた書籍『図解 Cloudflare とは何か』と動画講座『これから始める EmDash 入門』は、検索で見つからなかったため、本記事では扱わない。</p>
+
+<h2>7. 見直しの基準</h2>
+<p>次のいずれかに該当した場合は、 4 章の判断と 5 章の道のりを見直すことを提案する。 2027 年 3 月までに、新しい版が 3 か月以上出ない。提供元の方針が変わり、ライセンスや提供形態が変わる。 5 章の構築か移行の段階が、見積もりの 1.5 倍を超えて遅れる。見直しの結果、撤退も選択肢とする。判断を延ばした読者は、提供元製のプラグインが 1.x の版に達すること、有料プランの要否と隔離の強度が公式文書で確定することを、再判断の条件とすることを提案する。 WordPress を続けた読者も、統治をめぐる報道（時期の記述は報道により異なる）が確定した時点で、判断を見直すことを提案する。</p>
+<p><span class="tag">投機</span> EmDash が今後どの程度普及するかは、本記事の調査では判断できない。普及の見通しを、本記事は判定の根拠に使わない。</p>
+
+<h2>8. 限界</h2>
+<p>本記事は、二次情報に頼る部分がある。 WordPress 側のプラグインの品質は、本記事では調べていない。提供元と統治の状況は、二次情報のみで確認した。 Node.js の版の要件は公式のはじめ方ページで確認した。これと異なる二次情報もある。 Cloudflare の有料プランの要否と隔離の強度は、報道の記述が食い違い、確定していない。プラグインの件数、脆弱性の割合、統治の時期、利用シェアの計測の差も、資料により食い違う。道のりは実機で検証していない。所要時間と学習時間は、筆者の仮定と見積もりである。日付は 2026 年 10 月 24 日時点である。</p>
+
+<h2>参考文献</h2>
+<ol>
+<li>EmDash, GitHub リポジトリ <code>https://github.com/emdash-cms/emdash</code>（取得日 2026-10-24 。一次情報）</li>
+<li>cmswire, 「 Cloudflare releases EmDash 1.0 CMS with decentralized plugin registry 」 <code>https://www.cmswire.com/digital-experience/cloudflare-releases-emdash-1-0-cms-with-decentralized-plugin-registry/</code>（取得日 2026-10-24 。二次情報）</li>
+<li>EmDash, 移行ガイド「 Upgrade to EmDash 1.0 」 <code>https://docs.emdashcms.com/upgrade-to-v1/</code>（取得日 2026-10-24 。一次情報）</li>
+<li>EmDash, GitHub リリース emdash@1.0.1 の転載 <code>https://newreleases.io/project/github/emdash-cms/emdash/release/emdash@1.0.1</code>（取得日 2026-10-24 。転載サイト。二次情報）</li>
+<li>EmDash 公式ドキュメント , MCP サーバーのリファレンス <code>https://docs.emdashcms.com/reference/mcp-server/</code>（取得日 2026-10-24 。一次情報）</li>
+<li>検索で確認した報道・解説（プラグインの隔離と実行環境に関する記述。二次情報。個々の記述の一次出典は未確認で、記述は食い違う）（取得日 2026-10-24 ）</li>
+<li>WordPress.org, ライセンス情報 <code>https://wordpress.org/LICENSE</code>（取得日 2026-10-24 。一次情報）</li>
+<li>Hostinger, 「 Top 34 WordPress statistics for 2026 」 <code>https://www.hostinger.com/tutorials/wordpress-statistics</code>（取得日 2026-10-24 。二次情報。資料により数字が一致しない）</li>
+<li>webhosting.today, 「 EmDash 1.0 is stable 」 <code>https://webhosting.today/2026/09/29/emdash-1-0-is-stable-its-sandboxed-plugins-cannot-touch-the-database-and-that-is-the-whole-pitch/</code>（取得日 2026-10-24 。二次情報）</li>
+<li>TechRadar, 「 Many critical WordPress security flaws never get patched 」 <code>https://www.techradar.com/news/many-critical-wordpress-security-flaws-never-get-patched</code>（取得日 2026-10-24 。 Patchstack の 2021 年の分析を引用。二次情報。データは古い）</li>
+<li>web60.ie, 「 WordPress plugin vulnerabilities record 2025 」 <code>https://web60.ie/blog/wordpress-plugin-vulnerabilities-record-2025</code>（取得日 2026-10-24 。二次情報。 Patchstack の数字を引用）</li>
+<li>make.wordpress.org, 「 Six Months of Core AI: From Building Blocks to Core Release 」 <code>https://make.wordpress.org/ai/2025/12/03/six-months-of-core-ai/</code>（取得日 2026-10-24 。 WordPress プロジェクトの公式ブログ。版 6.9 の出荷時期は未確認）</li>
+<li>oflight, 「 WordPress to EmDash migration guide 2026 」 <code>https://www.oflight.co.jp/ja/columns/wordpress-to-emdash-migration-guide-2026</code>（取得日 2026-10-24 。二次情報）</li>
+<li>EmDash, GitHub リリース emdash@0.28.0 の転載 <code>https://newreleases.io/project/github/emdash-cms/emdash/release/emdash@0.28.0</code>（取得日 2026-10-24 。転載サイト。二次情報）</li>
+<li>barn2, 「 WordPress market share: how many websites use WordPress in 2026? 」 <code>https://barn2.com/wordpress-market-share/</code>（取得日 2026-10-24 。 W3Techs と HTTP Archive の数字を引用。二次情報）</li>
+<li>technobezz, 「 EmDash 1.0 Arrives as Free Open Source CMS With Decentralized Plugin Registry 」 <code>https://www.technobezz.com/news/emdash-1-0-free-open-source-cms-plugin-registry</code>（取得日 2026-10-24 。二次情報）</li>
+<li>capmad, 「 Automattic's board rebels, Matt Mullenweg pushed out of WordPress leadership 」 <code>https://www.capmad.com/post/automattics-board-rebels-matt-mullenweg-pushed-out-of-wordpress-leadership</code>（取得日 2026-10-24 。二次情報。記述の時期が報道により異なる）</li>
+<li>EmDash, 公式のはじめ方 <code>https://docs.emdashcms.com/getting-started/</code>（取得日 2026-10-24 。一次情報。 Node.js 22.23.4 以上を要求）</li>
+<li>上島愛史、田又利土『 Cloudflare Workers 実践ガイド―エッジで実現する Web アプリケーションの設計・実装・運用』技術評論社、 2026 年 5 月 <code>https://gihyo.jp/book/2026/978-4-297-15678-7</code> （取得日 2026-10-24 ）</li>
+</ol>
+</main>
+</body>
+</html>
