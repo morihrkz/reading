@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EmDash を Cloudflare で動かして学ぶ</title>
+<title>EmDash を Cloudflare で公開する</title>
 <style>
   body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
@@ -16,6 +16,7 @@
   code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .check { background: #e7f3e8; border-left: 5px solid #3a7d44; padding: .7rem 1rem; margin: 1rem 0; }
   .meta { color: #555; font-size: .9rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   h4 { font-size: 1rem; color: #2a4d69; margin-top: 1.5rem; }
@@ -26,9 +27,10 @@
   td ul { margin: 0; padding-left: 1.2em; }
   td li { font-size: 1rem; margin-bottom: 6px; }
   ul, ol { padding-left: 1.4em; margin: 0 0 20px; }
+  li { margin-bottom: 8px; }
   sup { font-size: .72em; }
   /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .box, .lede p { font-size: 1.1875rem; }
+  p, li, .note, .must, .check, .say, .box, .lede p { font-size: 1.1875rem; }
   p { margin: 0 0 20px; }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
@@ -45,39 +47,117 @@
 </head>
 <body>
 <main>
-<h1>EmDash を Cloudflare で動かして学ぶ ― 構成の理解から公開・運用までの道のり</h1>
+<h1>EmDash を Cloudflare で公開する ― アカウントの作成から、最初の記事の公開まで</h1>
 <p class="meta">作成日 : 2026-10-24 ／ 出典の取得日 : 2026-10-24 ／ 本文は取得日の時点の情報に基づく</p>
 
-<div class="note">この記事は、 Cloudflare の CMS 「 EmDash 」を、 Cloudflare の環境（ Workers 、 D1 、 R2 ）の上で実際に動かしながら学ぶための手引きである。 EmDash の概要、 Cloudflare 上の構成、学習の道のり、公開と運用の計画の順に述べる。結論は、調べた事実の範囲で導く。調べていない事項と、報道の食い違いは、末尾の「限界」で述べる。</div>
+<div class="note">この記事は、頭から順に読みながら、手を動かして進める手順書である。 Cloudflare のアカウントを作るところから始め、 CMS 「 EmDash 」を自分のパソコンで動かし、同じサイトを Cloudflare に載せて、インターネットに記事を公開するところまでを扱う。各章の終わりに「ここまでの確認」を置いた。確認の条件を満たしてから、次の章に進んでほしい。</div>
 
-<h2>1. 問いと方法</h2>
-<p>主題の問いは、 Cloudflare の環境を使って EmDash を動かし、操作し、学ぶには、何をどの順にすればよいのか、である。学ぶ場所は Cloudflare に絞る。他の CMS との比較や、既存のサイトからの移行は扱わない。</p>
-<p>本文の事実は三つに区分して示す。 <span class="tag">確立した事実</span> は一次情報（公式リポジトリ・公式ドキュメント）で確認したものを指す。 <span class="tag">未確定</span> は二次情報（報道・解説記事）にとどまり、検証が足りないものを指す。 <span class="tag">投機</span> は将来の予測を指す。</p>
-
-<h2>2. EmDash の概要</h2>
-<p><span class="tag">確立した事実</span> EmDash は、 Cloudflare が公開する MIT ライセンスの CMS （コンテンツ管理システム。 Web サイトの文章や画像を管理する仕組み）である。公式リポジトリは、 EmDash を Astro （ Web サイトを作るための、 TypeScript 製の枠組み）に基づく TypeScript （ JavaScript に型の宣言を加えた言語）の CMS と説明している <sup>[1]</sup> 。</p>
-<p><span class="tag">未確定</span> 版 1.0 は、 2026 年 9 月 28 日頃に公開されたと報じられている。報道は、ベータを脱した無料の CMS と紹介している <sup>[2]</sup> 。プレビューは 2026 年 4 月頃に公開されたと報じられている <sup>[8]</sup> 。公開からの期間が短い。</p>
-<p><span class="tag">確立した事実</span> 公式の移行ガイドは、 0.x の版（ 1.0 より前の版）から 1.0 への更新で「 Removed 」として扱う項目を四つ挙げている <sup>[3]</sup> 。その四つは、関数 <code>cloudflareCache()</code>、 <code>emdash/ui</code> からの Comments と CommentForm の書き出し（ <code>emdash/ui/comments</code> からは引き続き使える）、 CLI のコマンド <code>emdash dev</code> と <code>emdash auth secret</code> 、設定の <code>experimental.registry</code> である。 1.0 以後の破壊的変更（既存の利用方法が動かなくなる変更）は、メジャー版（版番号の先頭の数字が変わる版）でのみ行うとリリース情報に書かれている <sup>[4]</sup> 。古い資料の手順は、この削除の影響を受けていないか確かめてから使う。</p>
-<p><span class="tag">確立した事実</span> 実行環境は、 Cloudflare の Workers （ Cloudflare が提供する、サーバーの管理を要しない実行環境）と D1 （データベース）、 R2 （ファイル保存領域）、または SQLite （小型のデータベース）を使う、 Node.js （サーバー上で JavaScript を動かす実行環境）のサーバーである <sup>[1]</sup> 。プラグインは Dynamic Worker Loaders （隔離された実行環境を作る Cloudflare の仕組み）と呼ばれる環境で動き、使う能力を宣言するマニフェスト（プラグインが使う能力を宣言する書類）を持つ <sup>[1]</sup> 。</p>
-<p><span class="tag">確立した事実</span> CLI （ターミナルから操作する道具）と、 MCP サーバー（ AI エージェントが接続して操作する窓口）が標準で組み込まれている <sup>[1]</sup> 。 MCP の接続先（エンドポイント。通信の届け先）は <code>/_emdash/api/mcp</code> である。認証は Bearer トークン（合言葉に当たる文字列）による。方式は、 OAuth 2.1 （外部のサービスで許可を得る仕組み）、個人アクセストークン、デバイス認可（ターミナルなど、画面の限られた道具で認証する方式）の三つである。操作できる範囲は、スコープ（許可の単位）で絞る <sup>[5]</sup> 。サイト全体の移転に使うツールは、管理者 (Admin) だけが使える <sup>[5]</sup> 。</p>
-<p><span class="tag">未確定</span> プラグインの隔離の強度は、実行環境によって異なる可能性がある。報道は、 Cloudflare 上の隔離に有料プランを要すると書く一方、 Node.js 上でも workerd （ Cloudflare の実行環境の基盤）で隔離できると書く。前者は 1.0 より前のレビューの記述である。信頼モードでは宣言が文書上の意味にとどまり、強制されるのはサンドボックスモードのみとする二次情報もある。この二つは食い違っており、本記事は確定しない <sup>[6]</sup> 。なお、 Cloudflare への公開手順の公式ガイドは、特定のプランの名前を挙げていない <sup>[11]</sup> 。</p>
-
-<h2>3. Cloudflare 上の EmDash の構成</h2>
-<p><span class="tag">確立した事実</span> この章は、公式の Cloudflare 向け公開ガイド <sup>[11]</sup> の内容を、取得した要約に基づいて整理したものである。コードと設定値は、実作業の前に原典で照合してほしい。</p>
-<h3>3.1 部品と役割</h3>
+<h2>0. 作るもののあらましと、用意するもの</h2>
+<p>EmDash は、 Cloudflare が公開する MIT ライセンスの CMS （コンテンツ管理システム。 Web サイトの文章や画像を、画面から書いて管理する仕組み）である。 Astro （ Web サイトを作るための枠組み）の上に作られ、 TypeScript で書かれている <sup>[1]</sup> 。この記事では、この CMS を Cloudflare の次の三つの部品の上で動かす。</p>
 <table class="cards">
-<thead><tr><th>部品</th><th>役割</th><th>設定上の名前</th></tr></thead>
+<thead><tr><th>部品</th><th>役割</th></tr></thead>
 <tbody>
-<tr><td data-label="部品">Workers</td><td data-label="役割">サイト本体と管理画面を動かす実行環境。入口は <code>src/worker.ts</code></td><td data-label="設定上の名前"><code>main</code> 、 <code>name</code></td></tr>
-<tr><td data-label="部品">D1</td><td data-label="役割">記事などのデータを入れるデータベース</td><td data-label="設定上の名前">バインディング <code>DB</code></td></tr>
-<tr><td data-label="部品">R2</td><td data-label="役割">画像などのメディアのファイルを入れる保存領域</td><td data-label="設定上の名前">バインディング <code>MEDIA</code></td></tr>
-<tr><td data-label="部品">Worker Loader</td><td data-label="役割">隔離されたプラグインを動かす仕組み。マーケットプレイス、レジストリ、サンドボックスのプラグインを使わないなら省ける</td><td data-label="設定上の名前">バインディング <code>LOADER</code></td></tr>
-<tr><td data-label="部品">Cron Trigger</td><td data-label="役割">予約公開、プラグインの定期処理、バックアップ、保守を駆動する</td><td data-label="設定上の名前"><code>triggers.crons</code></td></tr>
+<tr><td data-label="部品">Workers</td><td data-label="役割">サイトの本体と管理画面を動かす実行環境。自分でサーバーを用意し、管理する必要がない <sup>[5]</sup></td></tr>
+<tr><td data-label="部品">D1</td><td data-label="役割">記事などの文章を入れるデータベース <sup>[5]</sup></td></tr>
+<tr><td data-label="部品">R2</td><td data-label="役割">画像などのファイルを入れる保存領域 <sup>[5]</sup></td></tr>
 </tbody>
 </table>
-<p>バインディング（Worker から D1 や R2 などの資源を呼ぶための名前）の <code>DB</code> 、 <code>MEDIA</code> 、 <code>LOADER</code> は、 EmDash のアダプターが期待する名前と一致させる必要がある <sup>[11]</sup> 。 D1 のデータベースと R2 のバケットは、初回のデプロイ時に存在しなければ Wrangler （ Cloudflare の設定・公開用コマンド）が作る <sup>[11]</sup> 。</p>
-<h3>3.2 設定ファイルの例</h3>
-<p>公式ガイドが示す <code>wrangler.jsonc</code> は次のとおりである。 <code>compatibility_date</code> は公式の例の日付なので、実作業では作業日の日付にする。</p>
+<p>完成すると、 <code>https://（サイトの名前）.（自分の名前）.workers.dev</code> という住所のサイトが、世界のどこからでも見られるようになる。独自のドメイン（自分専用のサイトの住所）は取らない。</p>
+
+<h3>0.1 用意するもの</h3>
+<ul>
+<li>Windows または Mac のパソコン。ターミナル（文字で命令を打ち込む画面）を使う。 Windows では PowerShell 、 Mac では「ターミナル」を使う。</li>
+<li>メールを受け取れるメールアドレス（ Cloudflare の登録で使う）。</li>
+<li>ブラウザ。パスキー（パスワードの代わりになる認証）が使えるもの。</li>
+<li>所要時間の目安は、順調なら 2 〜 3 時間である。</li>
+</ul>
+<div class="note">EmDash は 2026 年 9 月に版 1.0 が公開されたばかりである <sup>[2]</sup> 。ネットにある古い解説は、 1.0 より前の版の手順で書かれていることがある。たとえば <code>emdash dev</code> などのコマンドは、 1.0 で削除された <sup>[3]</sup> 。この記事に書いたコマンドと、手元の画面が食い違ったら、公式ドキュメント <sup>[4][5]</sup> を優先してほしい。</div>
+
+<h2>1. Cloudflare のアカウントを作る</h2>
+<p>この章の作業は、すべてブラウザで行う。</p>
+<ol>
+<li>ブラウザで <code>https://dash.cloudflare.com/sign-up</code> を開く <sup>[12]</sup> 。</li>
+<li>メールアドレスとパスワードを入れ、「 Create Account 」を選ぶ <sup>[12]</sup> 。パスワードは、他のサイトと使い回さない長いものにする。</li>
+<li>確認のメールが届く。メールの中のリンクを開き、メールアドレスの確認を済ませる <sup>[12]</sup> 。</li>
+<li>ダッシュボード（ Cloudflare の管理画面）にログインできることを確かめる。</li>
+<li>二要素認証（パスワードに加えて、もう一つの手段で本人を確かめる仕組み）を有効にする。ダッシュボード右上のプロフィールから、認証（ Authentication ）の設定を開き、認証アプリなどを登録する。メニューの文言は変わりうるので、画面の表示に従う。登録したら、回復用のコードを安全な場所に保管する。</li>
+</ol>
+<div class="note">契約するプランは、無料のもので足りる。ただし、後の章で R2 を使い始める際に、支払い方法の登録を求める画面が出ることがある。この点は、公式の料金ページでは確認できなかった。 R2 の無料枠は、保存 10 GB 、書き込み系の操作が月 100 万回、読み出し系の操作が月 1,000 万回である <sup>[13]</sup> 。 D1 の無料枠は、保存 5 GB 、 1 日に読む行が 500 万行、書く行が 10 万行である <sup>[14]</sup> 。求められた場合は、無料枠の範囲で使い続けるつもりかを自分で決めてから、登録する。</div>
+<div class="check"><strong>ここまでの確認</strong><br>ダッシュボードにログインでき、二要素認証が有効になっている。</div>
+
+<h2>2. 道具をそろえる</h2>
+<p>EmDash の雛形（作り始めの土台となるファイル一式）を作って動かすには、 Node.js （サーバー側で JavaScript を動かす実行環境）が要る。 EmDash の公式のはじめ方は、 Node.js 22.23.4 以上を求めている <sup>[4]</sup> 。</p>
+<ol>
+<li>ターミナルを開く。 Windows では、スタートメニューで「 PowerShell 」を探して開く。 Mac では、「ターミナル」を開く。</li>
+<li>次を打って、 Node.js の版を調べる。
+<pre><code>node --version</code></pre>
+「 v22.23.4 」以上の数字が出れば、次へ進む。「コマンドが見つからない」と出るか、版が古い場合は、 <code>https://nodejs.org/</code> から LTS （長期サポート版）の最新を入れ、ターミナルを開き直して、もう一度調べる。 LTS の最新が 22.23.4 以上であることは、入れたあとの <code>node --version</code> で確かめる。</li>
+<li>パッケージマネージャー（部品の取り込みを管理する道具）の pnpm を入れる。この記事は pnpm で統一する。
+<pre><code>npm install -g pnpm
+pnpm --version</code></pre>
+版の数字が出れば成功である。 Mac で権限のエラーが出るときは、先頭に <code>sudo</code> を付けて打つ。</li>
+</ol>
+<div class="check"><strong>ここまでの確認</strong><br><code>node --version</code> が 22.23.4 以上、 <code>pnpm --version</code> が数字を返す。</div>
+
+<h2>3. 雛形を作る</h2>
+<p>EmDash には、公式の雛形が用意されている。雛形は、ブログ、マーケティング用のページ、作品集、汎用の Starter の四種類があり、それぞれに Cloudflare 向け（ D1 と R2 を使う）と Node.js 向け（ SQLite とパソコン内の保存領域を使う）がある <sup>[6]</sup> 。この記事では、汎用の Starter の Cloudflare 向けを使う。</p>
+<ol>
+<li>雛形を置きたい場所へ移動する。ここでは書類フォルダを例にする。
+<pre><code>cd ~/Documents</code></pre>
+</li>
+<li>雛形の作成を始める。
+<pre><code>pnpm create emdash@latest</code></pre>
+</li>
+<li>質問に答える。公式のはじめ方では、次のように答えている <sup>[4]</sup> 。ただし、この記事は Cloudflare に載せるので、 2 番目の質問だけ変える。
+<table class="cards">
+<thead><tr><th>質問</th><th>答え</th></tr></thead>
+<tbody>
+<tr><td data-label="質問">Project name</td><td data-label="答え"><code>my-emdash-site</code> （好きな名前でよい。英数字とハイフンだけにする）</td></tr>
+<tr><td data-label="質問">Where will you deploy?</td><td data-label="答え">Cloudflare Workers を選ぶ。選択肢の文言は、画面の表示に従う（公式のはじめ方は Node.js の場合だけを説明しており、この選択肢の文言は確認できなかった）</td></tr>
+<tr><td data-label="質問">Which template?</td><td data-label="答え">Starter</td></tr>
+<tr><td data-label="質問">Which package manager?</td><td data-label="答え">pnpm</td></tr>
+<tr><td data-label="質問">Install dependencies?</td><td data-label="答え">Yes</td></tr>
+</tbody>
+</table>
+</li>
+<li>終わったら、できたフォルダに入る。
+<pre><code>cd my-emdash-site</code></pre>
+</li>
+</ol>
+<p>依存部品の取り込みに失敗したときも、ファイルは残る。作成ツールが表示する再実行のコマンドを打つ <sup>[4]</sup> 。</p>
+<div class="note">雛形の質問に Cloudflare の選択肢が見当たらないときは、次の方法で同じものを得る。雛形の置き場 <sup>[6]</sup> から <code>starter-cloudflare</code> のフォルダを手元にコピーし、そのフォルダで <code>pnpm install</code> を実行する。</div>
+<div class="check"><strong>ここまでの確認</strong><br><code>my-emdash-site</code> のフォルダができ、その中に <code>wrangler.jsonc</code> と <code>astro.config.mjs</code> がある。</div>
+
+<h2>4. 自分のパソコンで動かし、記事を一本公開する</h2>
+<p>いきなり Cloudflare に載せず、まず手元で動かす。うまくいかないとき、原因が EmDash の側にあるのか、 Cloudflare の設定にあるのかを切り分けられるからである。</p>
+<h3>4.1 起動する</h3>
+<ol>
+<li>次を打つ。
+<pre><code>pnpm dev</code></pre>
+</li>
+<li>ターミナルに、手元のサイトの住所が出る。通常は <code>http://localhost:4321/</code> である <sup>[4]</sup> 。このターミナルは、閉じずに開いたままにする。</li>
+</ol>
+<h3>4.2 最初の設定を済ませる</h3>
+<ol>
+<li>ブラウザで <code>http://localhost:4321/_emdash/admin/</code> を開く。新しいサイトでは、設定の案内（セットアップウィザード）に自動で移る <sup>[4]</sup> 。</li>
+<li>「 Site Title 」にサイトの名前を入れる。「 Tagline 」（ひとこと説明）は空でもよい。「 Include sample content 」（見本の内容を含める）は選んだままにして、「 Continue 」を選ぶ <sup>[4]</sup> 。</li>
+<li>「 Your Email 」にメールアドレスを入れる。名前は任意である。「 Continue 」を選ぶ <sup>[4]</sup> 。</li>
+<li>ブラウザがパスキーの登録を求めるので、画面の案内に従って登録する。登録後、「 Open the dashboard 」を選ぶ <sup>[4]</sup> 。</li>
+</ol>
+<h3>4.3 記事を編集して公開する</h3>
+<ol>
+<li>管理画面の「 Posts 」を開き、「 Welcome 」の記事を開く <sup>[4]</sup> 。</li>
+<li>題を <code>Hello from EmDash</code> に変えて「 Save 」を選ぶ <sup>[4]</sup> 。</li>
+<li>「 Publish changes 」を選ぶ <sup>[4]</sup> 。</li>
+<li>新しいタブで <code>http://localhost:4321/</code> を開く。トップページに「 Hello from EmDash 」が並んでいれば成功である <sup>[4]</sup> 。</li>
+</ol>
+<div class="note">この章の雛形は、手元で動かすときの保存先（データベースと画像）を自動で用意する。 Cloudflare 向けの雛形を手元で動かしたときの保存先の細部は、公式の記述では確認できなかった。ここで作った記事は、 Cloudflare に公開したサイトには引き継がれない。公開後に、あらためて作る。</div>
+<div class="check"><strong>ここまでの確認</strong><br>手元のサイトのトップページに、題を変えた記事が表示されている。</div>
+
+<h2>5. 公開の前に、構成ファイルを読む</h2>
+<p>手元で動いたので、 Cloudflare に載せる前に、雛形に入っている設定の意味を知っておく。ここは読むだけで、書き換えない。 <code>Ctrl + C</code> でいったん <code>pnpm dev</code> を止めてから、エディターで <code>my-emdash-site</code> のフォルダを開く。</p>
+<h3>5.1 wrangler.jsonc ― Cloudflare への指示書</h3>
+<p>Wrangler は、 Cloudflare の設定と公開のためのコマンドである。 <code>wrangler.jsonc</code> は、何をどの名前で用意するかを書いた指示書である。公式ガイドが示す例は次のとおりである <sup>[5]</sup> 。雛形の中身は、これと近い形のはずだが、日付や名前は雛形のほうが正しい。</p>
 <pre><code>{
   "name": "my-emdash-site",
   "main": "./src/worker.ts",
@@ -87,195 +167,133 @@
   "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "my-emdash-media" }],
   "worker_loaders": [{ "binding": "LOADER" }],
   "triggers": { "crons": ["* * * * *"] }
-}
-</code></pre>
-<p>Astro の設定（ <code>astro.config.mjs</code> ）では、サーバー描画を指定し、 Cloudflare のアダプターと React を有効にする。 React が要るのは、管理画面が React のアプリだからである。そのうえで EmDash に、データベースとして <code>d1({ binding: "DB" })</code> 、保存先として <code>r2({ binding: "MEDIA" })</code> を渡す。隔離プラグインを使うなら <code>sandboxRunner: sandbox()</code> も渡し、使わないなら省く <sup>[11]</sup> 。</p>
-<p><code>src/worker.ts</code> は、定期処理の入口 <code>createScheduledHandler()</code> を接続し、プラグインの橋渡しの <code>PluginBridge</code> を書き出す小さなファイルである <sup>[11]</sup> 。</p>
-<h3>3.3 公開の手順と、公式が挙げる注意</h3>
-<pre><code>pnpm wrangler login      # 初回のみ。ブラウザで認証する
-pnpm build
-pnpm wrangler deploy
-</code></pre>
-<ul>
-<li><strong>移行処理</strong> : 既定の <code>auto</code> では、最初の要求で基本の移行処理が走る。大きな内容の移行は <code>emdash migrate</code> で行う必要があり、それまで Worker は 503 を返す <sup>[11]</sup></li>
-<li><strong>確認</strong> : 定期処理は <code>pnpm emdash doctor</code> と <code>pnpm wrangler tail</code> で確かめる <sup>[11]</sup></li>
-<li><strong>秘密の値</strong> : <code>pnpm wrangler secret put &lt;名前&gt;</code> で保存し、 <code>wrangler.jsonc</code> には書かない。 <code>EMDASH_ENCRYPTION_KEY</code> は、秘密として宣言されたプラグインの設定を暗号化する鍵で、プラグインの秘密を保存する前に設定し、 D1 のバックアップとは別に控える <sup>[11]</sup></li>
-<li><strong>画像の変換</strong> : Images の無料枠は、月 5,000 件の変換までである。超えると新しい変換はエラー 9422 になる <sup>[11]</sup></li>
-<li><strong>メール</strong> : 本番では <code>send_email</code> のバインディングと、確認済みの送信元ドメインが要る。メールの設定がないと、メールによるログイン（マジックリンク）は「 Email is not configured 」と表示される <sup>[11]</sup></li>
-<li><strong>独自ドメイン</strong> : <code>workers.dev</code> の URL が応答することを確かめてから、 <code>wrangler.jsonc</code> に経路を足して再公開する <sup>[11]</sup></li>
-</ul>
-<div class="note">ローカルで動かす入門は、別の公式ページにある。必要な Node.js は 22.23.4 以上である <sup>[9]</sup> 。 <code>npm create emdash@latest</code> で雛形を作り、 <code>npm run dev</code> で起動すると <code>http://localhost:4321/</code> で動く。管理画面は <code>/_emdash/admin/</code> で、初期設定ではサイト名とメールアドレスを入れ、パスキー（パスワードの代わりになる認証方式）を登録する。雛形の質問「 Where will you deploy? 」の選択肢のうち、確認できたのは Node.js だけである。 Cloudflare を選べるかは、取得した要約では分からなかった（要確認）。この雛形は SQLite とローカルの保存領域を使うので、 D1 と R2 を使う構成とは設定が異なる。 <code>.env</code> に生成される <code>EMDASH_ENCRYPTION_KEY</code> は、公開前に控えを取り、リポジトリには入れない <sup>[9]</sup> 。</div>
-
-<h2>4. この学習が向いている人</h2>
-<p>以下は、 2 章と 3 章の事実に基づく筆者の判断である。判定の軸は、 TypeScript と Node.js の学習に使える時間、 Cloudflare のアカウントを持つ（または作る）ことへの抵抗の有無、 AI エージェントによる操作の需要、提供元の方針の変化を許容できるかの四つである。</p>
+}</code></pre>
 <table class="cards">
-<thead><tr><th>読者の条件</th><th>筆者の判断</th></tr></thead>
+<thead><tr><th>項目</th><th>意味</th></tr></thead>
 <tbody>
-<tr><td data-label="条件">Cloudflare のアカウントを使え、 TypeScript と Node.js を学ぶ時間が週に数時間ある</td><td data-label="判断">この記事の道のりに沿って学べる。 D1 、 R2 、 Workers が手元で一通り触れる点も利点になる（筆者の注記）</td></tr>
-<tr><td data-label="条件">AI エージェント（ Claude Code など）から CMS を操作する仕組みに関心がある</td><td data-label="判断">CLI と MCP が標準で組み込まれているので、学ぶ題材として適している <sup>[1][5]</sup></td></tr>
-<tr><td data-label="条件">TypeScript と Node.js の学習に使える時間がほとんどない</td><td data-label="判断">今は判断を延ばすのが妥当と考えられる</td></tr>
-<tr><td data-label="条件">提供元の方針の変化や、公開から日が浅い点を許容できない</td><td data-label="判断">版 1.0 の公開から日が浅く <sup>[2]</sup> 、提供元の方針に影響を受ける可能性がある（筆者の注記）。見直しの基準（ 8 章）を決めてから始める</td></tr>
+<tr><td data-label="項目"><code>name</code></td><td data-label="意味">Worker の名前。公開後の住所の先頭になる。 63 文字以内で、英数字とハイフンだけを使い、ハイフンで始めることも終えることもできない <sup>[7]</sup></td></tr>
+<tr><td data-label="項目"><code>main</code></td><td data-label="意味">入口になるファイル。 <code>src/worker.ts</code></td></tr>
+<tr><td data-label="項目"><code>d1_databases</code></td><td data-label="意味">記事を入れるデータベース。 <code>DB</code> という名前（バインディング。 Worker から資源を呼ぶための名前）で呼び出す</td></tr>
+<tr><td data-label="項目"><code>r2_buckets</code></td><td data-label="意味">画像を入れる保存領域。 <code>MEDIA</code> という名前で呼び出す</td></tr>
+<tr><td data-label="項目"><code>worker_loaders</code></td><td data-label="意味">隔離されたプラグインを動かす仕組み（ <code>LOADER</code> ）。プラグインを使わないなら省ける <sup>[5]</sup></td></tr>
+<tr><td data-label="項目"><code>triggers.crons</code></td><td data-label="意味">定期的に動く処理。予約投稿の公開などを動かす <sup>[5]</sup></td></tr>
 </tbody>
 </table>
+<div class="must"><code>DB</code> 、 <code>MEDIA</code> 、 <code>LOADER</code> の名前は、 EmDash が期待する名前と一致させる必要がある <sup>[5]</sup> 。書き換えない。</div>
+<p>D1 のデータベースと R2 の保存領域は、 Cloudflare の側にまだ無くても、初回の公開で Wrangler が作る <sup>[5]</sup> 。後の公開で同じ資源につなぎ直すため、ここに書かれた名前は変えない <sup>[5]</sup> 。</p>
+<h3>5.2 astro.config.mjs と src/worker.ts</h3>
+<p><code>astro.config.mjs</code> は、サイト全体の設定である。公式ガイドの例では、サーバーでの描画を指定し、 Cloudflare 用の部品と React （管理画面が React で作られているため必要）を有効にする。そのうえで EmDash に、データベースとして <code>d1({ binding: "DB" })</code> 、保存先として <code>r2({ binding: "MEDIA" })</code> を渡す。隔離プラグインを使わないなら、 <code>sandboxRunner: sandbox()</code> の一行は不要である <sup>[5]</sup> 。</p>
+<p><code>src/worker.ts</code> は、定期処理の入口 <code>createScheduledHandler()</code> を接続し、プラグインの橋渡し <code>PluginBridge</code> を書き出す小さなファイルである。隔離プラグインを使わないうちも、 <code>PluginBridge</code> の書き出しは残す <sup>[5]</sup> 。</p>
+<div class="check"><strong>ここまでの確認</strong><br>三つのファイルを開いて、上の表の項目がどこに書かれているかを指させる。</div>
 
-<h2>5. 2026 年 10 月から始める道のり</h2>
-<div class="note">この章は、 4 章の表の 1 行目と 2 行目に当てはまる読者に向けた道のりである。起点は 2026 年 10 月、期間は 6 か月（ 2027 年 3 月まで）、学習時間は週 5 時間を仮定する。これらは筆者の仮定である。各段階の長さと所要時間は、筆者の見積もりであり、合計は約 107 時間となる。</div>
+<h2>6. 暗号鍵を控える</h2>
+<p>手元の雛形を作ったとき、作成ツールは <code>EMDASH_ENCRYPTION_KEY</code> という暗号鍵を作り、 <code>.env</code> というファイルに書いた <sup>[4]</sup> 。この鍵は、プラグインの秘密の設定を暗号化するためのもので、失うと、暗号化した設定を読み出せなくなる <sup>[4][5]</sup> 。公式のはじめ方は、公開の前に控えを取ることを求めている <sup>[4]</sup> 。</p>
 <ol>
-<li><strong>基礎（ 10 月下旬〜 11 月中旬、約 15 時間と見積もる）。</strong> 目標は、 EmDash の構成（ Astro の上の CMS で、 Workers 、 D1 、 R2 に載る）を説明できることである。ターミナルの操作、 Node.js 、 TypeScript の読み方、 Cloudflare の用語（ Worker 、バインディング）を学ぶ。終わりに、 3 章の表を自分の言葉で書き直した構成図と説明文を一つずつ作る。</li>
-<li><strong>ローカルでの構築（ 11 月中旬〜 12 月中旬、約 20 時間と見積もる）。</strong> 目標は、雛形から作った検証用のサイトを手元で動かし、管理画面で記事を一本公開することである。 Node.js の版の要件は 22.23.4 以上である <sup>[9]</sup> 。古い二次情報には 22.12 以上や 22.16 以上とするものもあるが、公式の記述を優先する。終わりに、起動した画面と、公開した記事の記録を残す。</li>
-<li><strong>Cloudflare への公開（ 12 月中旬〜 1 月下旬、約 25 時間と見積もる）。</strong> 目標は、同じサイトを Workers 、 D1 、 R2 の構成に載せ、 <code>workers.dev</code> の URL で動かすことである。手順は 6 章に置く。終わりに、公開した検証サイトと、 <code>wrangler.jsonc</code> の各項目の意味を説明した文書を示す。</li>
-<li><strong>拡張（ 2 月、約 25 時間と見積もる）。</strong> プラグインか MCP のどちらか一方を選ぶ。 MCP は、個人アクセストークンか、スコープを絞った OAuth で認証する <sup>[5]</sup> 。プラグインを選ぶ場合は、 Worker Loader を有効にした構成で試す。終わりに、動作した手順を記録する。</li>
-<li><strong>運用（ 3 月、約 22 時間と見積もる）。</strong> 版の更新、バックアップと復元、秘密の値と権限の設計を手順にする。終わりに、一度の更新と一度の復元を記録する。</li>
+<li><code>.env</code> を開き、 <code>EMDASH_ENCRYPTION_KEY=</code> の右側の文字列を、パスワード管理アプリなどの安全な場所に保存する。</li>
+<li><code>.env</code> を、 Git のリポジトリには入れない <sup>[4]</sup> 。メールやチャットにも貼らない。</li>
 </ol>
-<p>学習を続けるかどうかは、 8 章の基準で判断することを提案する。</p>
+<div class="check"><strong>ここまでの確認</strong><br>鍵の控えが、このフォルダの外にある。</div>
 
-<h2>6. Cloudflare で EmDash を動かす計画</h2>
-<div class="note">この章は、 5 章の 3 段階目「 Cloudflare への公開」を実行するための計画書である。 EmDash の設定と手順は、 2026 年 10 月 24 日に公式ドキュメントの要約で確認した <sup>[9][11]</sup> 。 Cloudflare 一般の仕様（ <code>workers.dev</code> 、 Git 接続など）は、 2026 年 10 月 7 日に確認した公式ドキュメントに基づく。確認できていない事項は、本文中で「要確認」と明記している。公式ページの内容は、取得したページの要約で確認したもので、原文との逐語の照合はしていない。コマンドや設定値は、実作業の前に原典で照合してほしい。</div>
-
-<h3>6.1 前提条件</h3>
-<table class="cards">
-<thead><tr><th>項目</th><th>前提</th></tr></thead>
-<tbody>
-<tr><td data-label="項目">サイトの種類</td><td data-label="前提">EmDash の雛形（ Starter ）から作った検証用のサイト</td></tr>
-<tr><td data-label="項目">ホスティング</td><td data-label="前提">Cloudflare Workers （ D1 と R2 を併用）</td></tr>
-<tr><td data-label="項目">公開 URL</td><td data-label="前提"><code>Worker名.アカウントのサブドメイン.workers.dev</code> <sup>[12]</sup></td></tr>
-<tr><td data-label="項目">ドメイン</td><td data-label="前提">取得しない。独自ドメインは、動作を確かめた後の選択肢とする</td></tr>
-<tr><td data-label="項目">ソース管理</td><td data-label="前提">GitHub のリポジトリ（ Git 接続を使う場合）</td></tr>
-<tr><td data-label="項目">期限</td><td data-label="前提">締切は定めない。公開予定日を L 日と置き、逆算した相対日程で示す</td></tr>
-</tbody>
-</table>
-<p>Worker 名は、 63 文字以内で、英数字とハイフンだけを使い、ハイフンで始めることも終えることもできない <sup>[12]</sup> 。この名前が URL の先頭になる。アカウントのサブドメインはダッシュボードで変えられるが、変えると配下のすべての Worker の URL が変わる <sup>[12]</sup> 。</p>
-
-<h3>6.2 順序を入れ替えてはいけない箇所</h3>
-<table class="cards">
-<thead><tr><th>この順序</th><th>なぜ入れ替えてはいけないか</th></tr></thead>
-<tbody>
-<tr><td data-label="この順序">ローカルで動かす → Cloudflare に公開する</td><td data-label="なぜ入れ替えてはいけないか">不具合が、 EmDash のコードにあるのか、 Cloudflare の設定にあるのかを切り分けるため</td></tr>
-<tr><td data-label="この順序">暗号鍵を控える → 公開する</td><td data-label="なぜ入れ替えてはいけないか">公式の入門が公開前の控えを求めている <sup>[9]</sup> 。鍵を失うと、暗号化したプラグインの設定を読めなくなる</td></tr>
-<tr><td data-label="この順序">秘密の値を設定する → プラグインの秘密を保存する</td><td data-label="なぜ入れ替えてはいけないか"><code>EMDASH_ENCRYPTION_KEY</code> が先に要る <sup>[11]</sup></td></tr>
-<tr><td data-label="この順序">Worker を一度公開して作る → Git に接続する</td><td data-label="なぜ入れ替えてはいけないか">Workers Builds は、既存の Worker に接続する形で案内されている。また、ダッシュボード上の Worker 名と設定ファイルの <code>name</code> が一致しないと、ビルドは失敗する <sup>[14]</sup></td></tr>
-<tr><td data-label="この順序"><code>workers.dev</code> で動作を確かめる → 独自ドメインを足す</td><td data-label="なぜ入れ替えてはいけないか">公式ガイドが、この順を求めている <sup>[11]</sup></td></tr>
-</tbody>
-</table>
-
-<h3>6.3 工程表</h3>
-<table class="cards">
-<thead><tr><th>工程</th><th>内容</th><th>完了条件</th></tr></thead>
-<tbody>
-<tr><td data-label="工程">工程 0</td><td data-label="内容">Worker 名、 D1 と R2 の名前、隔離プラグインを使うか（ <code>LOADER</code> の要否）の決定</td><td data-label="完了条件">決定が文書に記録されている</td></tr>
-<tr><td data-label="工程">工程 1</td><td data-label="内容">Cloudflare のアカウント準備と、二要素認証の設定</td><td data-label="完了条件">二要素認証が有効</td></tr>
-<tr><td data-label="工程">工程 2</td><td data-label="内容">ローカルでの構築（ Node.js と SQLite ）</td><td data-label="完了条件">管理画面で記事を公開できる</td></tr>
-<tr><td data-label="工程">工程 3</td><td data-label="内容">Cloudflare 向けの構成（アダプター、 <code>wrangler.jsonc</code> 、 <code>src/worker.ts</code> ）</td><td data-label="完了条件"><code>pnpm build</code> が成功する</td></tr>
-<tr><td data-label="工程">工程 4</td><td data-label="内容">初回の公開と、 <code>workers.dev</code> での初期設定</td><td data-label="完了条件">標準 URL で管理画面に入り、記事を公開できる</td></tr>
-<tr><td data-label="工程">工程 5</td><td data-label="内容">秘密の値の設定と、 Git への接続</td><td data-label="完了条件">push で自動公開される</td></tr>
-<tr><td data-label="工程">工程 6</td><td data-label="内容">検証と運用への移行</td><td data-label="完了条件">検証リストの全項目に合格し、公開後 1 日・ 1 週間・ 1 か月の確認が終わる</td></tr>
-</tbody>
-</table>
-<p>日程の目安は次のとおりである。公開予定日を L 日とし、検証の余裕をみて約 2 週間で組んだ。</p>
-<table class="cards">
-<thead><tr><th>日程</th><th>工程</th><th>所要時間の目安</th></tr></thead>
-<tbody>
-<tr><td data-label="日程">L-14 〜 L-12</td><td data-label="工程">工程 0 、工程 1</td><td data-label="所要時間の目安">各 1 〜 2 時間</td></tr>
-<tr><td data-label="日程">L-11 〜 L-8</td><td data-label="工程">工程 2</td><td data-label="所要時間の目安">3 〜 5 時間</td></tr>
-<tr><td data-label="日程">L-7 〜 L-5</td><td data-label="工程">工程 3</td><td data-label="所要時間の目安">2 〜 4 時間</td></tr>
-<tr><td data-label="日程">L-4 〜 L-3</td><td data-label="工程">工程 4</td><td data-label="所要時間の目安">1 〜 2 時間</td></tr>
-<tr><td data-label="日程">L-2</td><td data-label="工程">工程 5</td><td data-label="所要時間の目安">1 〜 2 時間</td></tr>
-<tr><td data-label="日程">L-1 〜 L</td><td data-label="工程">工程 6 （検証と公開）</td><td data-label="所要時間の目安">1 〜 2 時間</td></tr>
-<tr><td data-label="日程">L+1 、 L+7 、 L+30</td><td data-label="工程">工程 6 （確認）</td><td data-label="所要時間の目安">各 15 分</td></tr>
-</tbody>
-</table>
-
-<h3>6.4 各工程の作業内容</h3>
-<h4>工程 0 〜 1 : 決定とアカウント</h4>
-<p>工程 0 では、 Worker 名を決める。これが URL の先頭になるので、あとから変えると URL が変わる。 D1 と R2 の名前は、 3 章の例のように分かりやすく付ける。隔離プラグインを使うかどうかで、 <code>LOADER</code> と <code>sandboxRunner</code> の要否が決まる。プランの要否は報道の間で食い違うので <sup>[6]</sup> 、使う場合は公開の時点で動作を確かめる。</p>
-<p>工程 1 の Cloudflare のアカウント作成と認証情報の入力は、必ずご自身で行う。 Claude Code が代行できない作業である。二要素認証も有効にする。</p>
-<h4>工程 2 : ローカルでの構築</h4>
-<p>3 章の枠内に示した入門の手順で、雛形を作って起動する <sup>[9]</sup> 。管理画面で、サイト名とメールアドレスを入れ、パスキーを登録し、記事「 Welcome 」の題を変えて公開する。ここで EmDash の画面と、記事が保存される流れをつかむ。 <code>.env</code> の <code>EMDASH_ENCRYPTION_KEY</code> は、この時点で控えを取る。</p>
-<h4>工程 3 : Cloudflare 向けの構成</h4>
-<p>3 章の設定ファイルの例を参考に、次を行う。 Astro の設定を Cloudflare のアダプターと D1 、 R2 に切り替える。 <code>wrangler.jsonc</code> と <code>src/worker.ts</code> を作る。 <code>compatibility_date</code> を作業日にする。 SQLite とローカル保存領域から D1 と R2 に切り替わると、工程 2 で作った記事は引き継がれないため、記事は公開後に作り直す（引き継ぎ方法は未確認。要確認）。終わりに <code>pnpm build</code> を実行して、成功を確かめる。</p>
-<h4>工程 4 : 初回の公開と初期設定</h4>
-<p>工程 3 のあと、 <code>pnpm wrangler login</code> でログインし、 <code>pnpm wrangler deploy</code> を実行する。 Cloudflare アカウントへのログイン操作は、ご自身で行う。成功すると、 <code>workers.dev</code> の標準 URL でサイトが見られる <sup>[11][12]</sup> 。アカウントのサブドメインをまだ決めていない場合は、初回の公開中に設定を促される、と検索で確認した（公式の逐語での確認はしていない）。ここで決めた名前が、以後のすべての Worker の URL に入るので、落ち着いて決める。</p>
-<p>最初の要求で、基本の移行処理と、雛形の初期データの投入が走る <sup>[11]</sup> 。管理画面の入口が、ローカルと同じ <code>/_emdash/admin/</code> であるかは確認していない（要確認）。入れたら、初期設定を済ませて、記事を一本公開する。 503 が返る場合は、 <code>emdash migrate</code> が必要な状態かを疑う <sup>[11]</sup> 。</p>
-<h4>工程 5 : 秘密の値と Git への接続</h4>
-<p>秘密の値は <code>pnpm wrangler secret put EMDASH_ENCRYPTION_KEY</code> で保存する。値は工程 2 で控えた鍵を使うのか、新しく作るのかを、公式ガイドで確かめる（要確認）。</p>
-<p>Git への接続は、ダッシュボードの Workers &amp; Pages で該当の Worker を開き、 Settings &gt; Builds &gt; Connect から GitHub のリポジトリを選ぶ。デプロイのコマンドの既定は <code>npx wrangler deploy</code> 、監視するブランチの既定は <code>main</code> 、ビルドのコマンドは任意である。 EmDash は公開前に <code>pnpm build</code> が要るので、ビルドのコマンドにそれを入れる必要があるはずだが、確認していない（要確認）。 <sup>[14][15]</sup> 接続後は、 push するたびに自動で公開され、本番以外のブランチには、プレビュー用の URL が作られる。 GitHub のアプリは、ビルドしたいリポジトリだけに権限を絞るよう、公式が勧めている <sup>[17]</sup> 。無料プランのビルドは、月 3,000 分、同時 1 件、 1 回 20 分までである <sup>[16]</sup> 。</p>
-<h4>工程 6 : 検証と運用への移行</h4>
+<h2>7. Cloudflare に公開する</h2>
+<h3>7.1 ログインする</h3>
+<pre><code>pnpm wrangler login</code></pre>
+<p>ブラウザが開き、 Cloudflare への接続を許可するかを尋ねられる。 1 章で作ったアカウントでログインし、許可する。ターミナルに戻ると、ログインの成功が表示される <sup>[5]</sup> 。</p>
+<h3>7.2 公開する</h3>
+<p>雛形の README は、公開のコマンドを <code>pnpm deploy</code> と案内している <sup>[6]</sup> 。</p>
+<pre><code>pnpm deploy</code></pre>
+<p>このコマンドが「見つからない」と表示されたときは、公式ガイドの二段の手順で同じことをする <sup>[5]</sup> 。</p>
+<pre><code>pnpm build
+pnpm wrangler deploy</code></pre>
+<p>初回の公開では、次のことが起きる。</p>
 <ul>
-<li>☐ 標準 URL でトップページが表示され、文字化けがない</li>
+<li>D1 のデータベースと R2 の保存領域が、 Cloudflare の側に作られる <sup>[5][6]</sup> 。 R2 で支払い方法の登録を求められたら、 1 章の注意を読み返す。</li>
+<li>アカウントのサブドメイン（住所の「自分の名前」の部分）を、まだ決めていない場合は、決めるよう促されることがある。この動作は、検索で確認したもので、公式の文面は確認していない。ここで決めた名前は、このアカウントのすべての Worker の住所に入る。あとから変えると、すべての住所が変わる <sup>[7]</sup> 。落ち着いて決める。</li>
+<li>成功すると、ターミナルに <code>https://（Worker の名前）.（サブドメイン）.workers.dev</code> の形の住所が表示される <sup>[5][7]</sup> 。</li>
+</ul>
+<h3>7.3 すぐに管理画面の最初の設定をする</h3>
+<div class="must">これは急ぐ作業である。公開したサイトでは、最初の設定を終えた人が管理者になる。しかも、設定は、そのときの住所を記録する <sup>[5]</sup> 。公開が成功したら、他人に住所を知らせる前に、自分で設定を終える。</div>
+<ol>
+<li>表示された住所に <code>/_emdash/admin/</code> を足して、ブラウザで開く。たとえば <code>https://my-emdash-site.自分の名前.workers.dev/_emdash/admin/</code> である。入口がローカルと同じであるかは、公式の記述では確認していない。開けなければ、トップページから管理画面への案内を探す。</li>
+<li>4.2 と同じ手順で、サイト名、メールアドレス、パスキーを設定する。パスキーは、手元で作ったものとは別に、あらためて登録する。</li>
+</ol>
+<p>最初の要求の際、 EmDash はデータベースの基本の準備を自動で行う <sup>[5]</sup> 。最初の表示だけは、待たされることがある。</p>
+<div class="check"><strong>ここまでの確認</strong><br>公開された住所でトップページが表示され、その管理画面にログインできている。</div>
+
+<h2>8. 公開したサイトに、最初の記事を書く</h2>
+<ol>
+<li>公開したサイトの管理画面で「 Posts 」を開く。 7.3 で見本の内容を含めた場合は、「 Welcome 」の記事がある。</li>
+<li>4.3 と同じ手順で、題を変え、「 Save 」と「 Publish changes 」を選ぶ。または、新しい記事を作って公開する。</li>
+<li>公開した住所のトップページを、別のブラウザ、またはスマートフォンで開く。自分の記事が見えれば、インターネットへの公開は完了である。</li>
+</ol>
+<h3>8.1 画像で R2 を確かめる</h3>
+<p>管理画面から画像を一枚アップロードし、記事に入れて公開する。公開した住所で画像が表示されれば、 R2 が働いている。</p>
+<h3>8.2 サイトを直して、公開し直す</h3>
+<p>記事の内容は、管理画面で直せば、すぐに反映される。サイトの見た目や設定をファイル側で変えたときは、手元で動作を確かめてから、もう一度公開する。</p>
+<pre><code>pnpm deploy</code></pre>
+<p>手元で確かめるときは、 <code>pnpm dev</code> を使う。</p>
+<div class="check"><strong>ここまでの確認</strong><br>別の端末のブラウザから、自分で書いた記事と画像が見える。</div>
+
+<h2>9. 公開後の点検</h2>
+<p>最後に、次の項目を一つずつ確かめる。公式ガイドは、公開の点検として、公開ページの取得、管理画面へのログイン、メディアのアップロードと取得、定期処理の動作の確認を挙げている <sup>[5]</sup> 。</p>
+<ul>
+<li>☐ 公開した住所でトップページが表示され、文字化けがない</li>
 <li>☐ 管理画面にログインでき、記事を作成して公開できる</li>
-<li>☐ 画像をアップロードして、記事に表示できる（ R2 の確認）</li>
-<li>☐ <code>pnpm emdash doctor</code> と <code>pnpm wrangler tail</code> で、定期処理が動いている</li>
-<li>☐ 存在しないパスで、エラーの画面が適切に返る</li>
-<li>☐ スマートフォンからのアクセスで、表示が崩れない</li>
-<li>☐ push すると自動で公開され、変更が反映される</li>
+<li>☐ 画像をアップロードして、記事に表示できる</li>
+<li>☐ 存在しないパスを開くと、エラーの画面が返る</li>
+<li>☐ スマートフォンで見て、表示が崩れない</li>
 <li>☐ 暗号鍵の控えが、リポジトリの外の安全な場所にある</li>
+<li>☐ 次のコマンドで、定期処理が動いている
+<pre><code>pnpm emdash doctor
+pnpm wrangler tail</code></pre>
+<code>wrangler tail</code> は、公開した Worker の動きを、ターミナルに流し続ける。止めるには <code>Ctrl + C</code> を押す。定期処理の設定を変えた直後は、動き出すまでに最長で 15 分かかることがある <sup>[5]</sup> 。</li>
 </ul>
-<p>公開日の前日に、検証リストを再実施する。 <code>workers.dev</code> の経路そのものを止める場合は、ダッシュボードの Settings &gt; Domains &amp; Routes で無効にするか、設定ファイルに <code>"workers_dev": false</code> を書く。ダッシュボードだけで止めて設定ファイルに書かないと、次回の公開で再び有効になる。 <sup>[12]</sup> 独自ドメインを持たない今回の方式では、これを止めると、サイトにアクセスする手段がなくなる。止めてはならない。また、版ごとの URL やプレビュー用の URL は止まらないので <sup>[12]</sup> 、公開したくない内容は入れない。</p>
+<p>これで、「アカウントを作る」から「記事を公開する」までの工程は終わりである。</p>
 
-<h3>6.5 Claude Code との分担</h3>
-<p>この計画の作業は、 Claude Code と一緒に進めることを想定している。 Claude Code は、ターミナルで文字の命令を実行し、その出力を読んで次の手を決める道具である。ボタンの位置を目で探してクリックする作業は、得意な使い方ではない。本計画の <code>wrangler</code> や <code>emdash</code> のコマンドは、入力も結果も文字で済むので、任せやすい。繰り返しも容易で、公開した Worker を作り直す手間も小さい。ただし、何でも任せてよいわけではない。</p>
+<h2>10. うまくいかないとき</h2>
 <table class="cards">
-<thead><tr><th>工程</th><th>人が持つ作業</th><th>Claude Code に任せられる作業</th></tr></thead>
+<thead><tr><th>症状</th><th>確かめること</th></tr></thead>
 <tbody>
-<tr><td data-label="工程">工程 0</td><td data-label="人が持つ作業">名前と構成の決定</td><td data-label="Claude Code に任せられる作業">各案の影響の整理、決定事項の文書化</td></tr>
-<tr><td data-label="工程">工程 1</td><td data-label="人が持つ作業">アカウントの作成、認証情報の入力、二要素認証の設定のすべて</td><td data-label="Claude Code に任せられる作業">なし</td></tr>
-<tr><td data-label="工程">工程 2</td><td data-label="人が持つ作業">管理画面での初期設定（パスキーの登録）、暗号鍵の控えの保管</td><td data-label="Claude Code に任せられる作業">雛形の作成、 <code>npm run dev</code> の実行、コードの説明</td></tr>
-<tr><td data-label="工程">工程 3</td><td data-label="人が持つ作業">設定内容の最終確認</td><td data-label="Claude Code に任せられる作業"><code>wrangler.jsonc</code> と <code>src/worker.ts</code> の作成、 <code>pnpm build</code> の実行</td></tr>
-<tr><td data-label="工程">工程 4</td><td data-label="人が持つ作業">ログインの操作、アカウントのサブドメインの決定、管理画面の初期設定</td><td data-label="Claude Code に任せられる作業">ログイン後の <code>pnpm wrangler deploy</code> の実行、出力の確認</td></tr>
-<tr><td data-label="工程">工程 5</td><td data-label="人が持つ作業">秘密の値の入力、 GitHub と Cloudflare の連携の認可、権限範囲の選択</td><td data-label="Claude Code に任せられる作業">空の変更の push 、公開結果の確認。接続そのものを任せられるかは、要確認</td></tr>
-<tr><td data-label="工程">工程 6</td><td data-label="人が持つ作業">スマートフォンでの表示、見た目の目視確認、合否の判断</td><td data-label="Claude Code に任せられる作業"><code>emdash doctor</code> と <code>wrangler tail</code> の実行、公開後の定期確認</td></tr>
+<tr><td data-label="症状">公開した住所が 503 を返す</td><td data-label="確かめること">大きなデータの移行が未適用の可能性がある。 <code>pnpm emdash migrate</code> を実行する <sup>[5]</sup></td></tr>
+<tr><td data-label="症状">「 D1 binding not found 」</td><td data-label="確かめること"><code>wrangler.jsonc</code> の <code>DB</code> と、 <code>astro.config.mjs</code> の <code>d1({ binding: "DB" })</code> の名前が一致しているか <sup>[5]</sup></td></tr>
+<tr><td data-label="症状">「 R2 binding not found 」</td><td data-label="確かめること"><code>MEDIA</code> と <code>r2({ binding: "MEDIA" })</code> の名前が一致しているか <sup>[5]</sup></td></tr>
+<tr><td data-label="症状">移行のエラー</td><td data-label="確かめること"><code>pnpm wrangler tail</code> を動かしたまま、同じ操作を再現して、出力を読む <sup>[5]</sup></td></tr>
+<tr><td data-label="症状"><code>pnpm dev</code> が起動しない</td><td data-label="確かめること"><code>node --version</code> が 22.23.4 以上か。 <code>pnpm install</code> をやり直す</td></tr>
+<tr><td data-label="症状">画像が表示されない、または原寸のまま出る</td><td data-label="確かめること">画像の変換には <code>IMAGES</code> のバインディングが要る。ない場合は、原寸で配信されるか、失敗する <sup>[5]</sup> 。無料枠は月 5,000 件の変換までで、超えるとエラー 9422 になる <sup>[5]</sup></td></tr>
+<tr><td data-label="症状">メールによるログインで「 Email is not configured 」</td><td data-label="確かめること">本番でのメールの送信には、 <code>send_email</code> のバインディングと、確認済みの送信元ドメインが要る <sup>[5]</sup> 。パスキーでのログインなら不要</td></tr>
 </tbody>
 </table>
-<ul>
-<li><strong>渡す権限を絞る。</strong> Claude Code にコマンドや API を使わせるには、認証情報（トークン）を渡す必要がある。渡す権限の範囲は、この作業に必要なものに絞る。暗号鍵や秘密の値は、会話やリポジトリに書かない（筆者の一般的な理解）</li>
-<li><strong>操作できることと、検証を任せられることは別である。</strong> 画面の見た目や、スマートフォンでの表示は、人が見て確かめる</li>
-<li><strong>EmDash 自身の MCP サーバーは、別の話である。</strong> 5 章の拡張の段階で、 Claude Code から公開した EmDash を操作する場合に使う <sup>[5]</sup> 。権限のスコープを絞り、管理者だけが使えるサイト全体の移転のツールには触れさせない <sup>[5]</sup></li>
-</ul>
-<p>Cloudflare は、 Claude Code 向けの公式のセットアップ手順も公開している。 2026 年 10 月 22 日時点の検索結果の要約では、 Cloudflare 向けの Skills と、 API ・ドキュメント・ビルド・可観測性などの MCP サーバーを Claude Code に登録する構成で、 API の MCP サーバーは 2,500 以上のエンドポイントを少ないトークン量で扱える、と説明されている <sup>[20]</sup> 。この項は検索結果の要約で確認したもので、公式ページの本文は精読していない。本計画の範囲では、 <code>wrangler</code> のコマンドだけで足りる可能性が高く、導入が必要かは未確認である（要確認）。</p>
 
-<h3>6.6 公開後の運用と、後から独自ドメインを足すとき</h3>
-<ul>
-<li>アカウントの保護 : 二要素認証を有効にし、回復手段を安全な場所に保管する</li>
-<li>鍵の保管 : <code>EMDASH_ENCRYPTION_KEY</code> は、 D1 のバックアップとは別に控える <sup>[11]</sup></li>
-<li>サブドメインの扱い : アカウントのサブドメインを変えると、すべての Worker の URL が変わる。変えない前提で運用する</li>
-<li>版の更新 : 更新の前に、移行ガイドの削除項目を確かめる <sup>[3]</sup></li>
-<li>更新手順 : 更新したら push する、という運用を文書にして残す</li>
-</ul>
-<div class="box"><strong>独自ドメインを後から足すとき</strong><br>公式ガイドは、 <code>workers.dev</code> の URL が応答することを確かめてから、 <code>wrangler.jsonc</code> に経路を足して再公開する、と述べる <sup>[11]</sup> 。 Cloudflare 一般の条件として、 Workers のカスタムドメインには有効な Cloudflare のゾーンが要り <sup>[18]</sup> 、ネームサーバーが Cloudflare に管理されていないドメインはサポートされない <sup>[19]</sup> 。ドメインの取得とネームサーバーの切り替えの手順は、この記事では扱わない。</div>
-<p class="note">本章は公式ドキュメントの確認に基づく計画書であり、実際の作業結果ではない。「要確認」と記した事項、および出典に「未精読」と付した事項は、実作業の前に原典で確かめること。料金プラン、画面の文言、各社の仕様は変更されうる。</p>
+<h2>11. この先の選択肢</h2>
+<p>ここから先は、手順書の範囲を超える発展である。必要になったときに読む。</p>
+<h3>11.1 秘密の値の保存</h3>
+<p>プラグインに秘密の設定を持たせるときは、 <code>pnpm wrangler secret put EMDASH_ENCRYPTION_KEY</code> のように、秘密の値を Cloudflare に保存する。値は <code>wrangler.jsonc</code> には書かない <sup>[5]</sup> 。保存すべき値が、 6 章で控えた鍵と同じものかは、公式ガイドの記述から確認できなかった。プラグインを使う前に、原典で確かめる。</p>
+<h3>11.2 Git につなぎ、 push で自動公開する</h3>
+<p>手順は、ダッシュボードの Workers &amp; Pages で該当の Worker を開き、 Settings &gt; Builds から GitHub のリポジトリを接続する、というものである <sup>[8]</sup> 。 Worker を一度公開してから接続する順序になる。ダッシュボード上の Worker 名と、設定ファイルの <code>name</code> が一致しないと、ビルドは失敗する <sup>[8]</sup> 。デプロイのコマンドの既定は <code>npx wrangler deploy</code> 、監視するブランチの既定は <code>main</code> である <sup>[9]</sup> 。 EmDash は公開の前に <code>pnpm build</code> が要るので、ビルドのコマンドの欄に入れる必要があるはずだが、確認していない。無料プランのビルドには、月間の時間などの上限がある。</p>
+<h3>11.3 独自のドメインを足す</h3>
+<p>公式ガイドは、 <code>workers.dev</code> の住所が応答することを確かめてから、 <code>wrangler.jsonc</code> に経路を足して、公開し直すよう述べる <sup>[5]</sup> 。 Workers のカスタムドメインには、有効な Cloudflare のゾーン（ Cloudflare に管理を預けたドメイン）が要る <sup>[10]</sup> 。ドメインの取得の手順は、この記事では扱わない。</p>
+<div class="must"><code>workers.dev</code> の住所を止める設定は、独自ドメインを足すまで使わない。止めると、サイトにアクセスする手段がなくなる <sup>[7]</sup> 。</div>
+<h3>11.4 AI エージェントからの操作</h3>
+<p>EmDash は、 CLI と、 AI エージェントが接続して操作する窓口（ MCP サーバー）を、標準で備える <sup>[1]</sup> 。接続先は <code>/_emdash/api/mcp</code> である。認証には、 OAuth 2.1 、個人アクセストークン、デバイス認可の三つの方式があり、操作できる範囲はスコープ（許可の単位）で絞れる <sup>[11]</sup> 。サイト全体の移転に使うツールは、管理者だけが使える <sup>[11]</sup> 。</p>
 
-<h2>7. 学習資料の評価</h2>
-<p>学習の一次資料は、公式リポジトリ <sup>[1]</sup> 、公式の入門 <sup>[9]</sup> 、 Cloudflare 向けの公開ガイド <sup>[11]</sup> 、 MCP のリファレンス <sup>[5]</sup> である。 EmDash の専用書籍は、確認できなかった。確認できた書籍は、技術評論社の『 Cloudflare Workers 実践ガイド―エッジで実現する Web アプリケーションの設計・実装・運用』（ 2026 年 5 月発売）である <sup>[10]</sup> 。 Workers 、 D1 、 KV （ Workers の鍵と値の保存領域）、 R2 、 Durable Objects （状態を保つ仕組み）を扱う、周辺技術の資料と位置づける。事前のメモの記載では、この書籍は EmDash に言及していない。 EmDash への言及の有無と目次は、確認していない。事前のメモに挙がっていた書籍『図解 Cloudflare とは何か』と動画講座『これから始める EmDash 入門』は、検索で見つからなかったため、本記事では扱わない。</p>
-
-<h2>8. 見直しの基準</h2>
-<p>次のいずれかに該当した場合は、 4 章の判断と 5 章の道のりを見直すことを提案する。 2027 年 3 月までに、新しい版が 3 か月以上出ない。提供元の方針が変わり、ライセンスや提供形態が変わる。 5 章のローカルでの構築か Cloudflare への公開の段階が、見積もりの 1.5 倍を超えて遅れる。見直しの結果、撤退も選択肢とする。判断を延ばした読者は、提供元製のプラグインが 1.x の版に達すること <sup>[1]</sup> 、有料プランの要否と隔離の強度が公式文書で確定することを、再判断の条件とすることを提案する。</p>
-<p><span class="tag">投機</span> EmDash が今後どの程度普及するかは、本記事の調査では判断できない。普及の見通しを、本記事は判定の根拠に使わない。</p>
-
-<h2>9. 限界</h2>
-<p>本記事は、二次情報に頼る部分がある。提供元の方針は、二次情報のみで確認した。 Node.js の版の要件は公式のはじめ方ページで確認した。これと異なる二次情報もある。 Cloudflare の有料プランの要否と隔離の強度は、報道の記述が食い違い、確定していない。プラグインの件数は、資料によって食い違う。道のりは実機で検証していない。所要時間と学習時間は、筆者の仮定と見積もりである。公式ドキュメントは、取得したページの要約で確認したもので、原文との逐語の照合はしていない。日付は 2026 年 10 月 24 日時点である。ただし 6 章の Cloudflare 一般の仕様は、 2026 年 10 月 7 日に確認した内容に基づく（出典の一部は 10 月 22 日）。 6 章には「要確認」と記した事項が残り、 Cloudflare 上の EmDash の公開は実機で検証していない。</p>
+<h2>12. この記事の限界</h2>
+<p>手順は公式ドキュメントのページの要約に基づくもので、原文との逐語の照合はしていない。手順を実機で通して検証してはいない。そのため、画面の文言、選択肢の名前、 Cloudflare 向けの雛形を選ぶ質問の文言には、実際と違う点があるかもしれない。確認できなかった点は、本文に明記した。また、 Cloudflare の料金プラン、無料枠、支払い方法の要否は、変更されうる。版 1.0 の公開時期は報道による情報である <sup>[2]</sup> 。取得日は 2026 年 10 月 24 日である。ただし Cloudflare 一般の仕様の一部は、 2026 年 10 月 7 日に取得した内容に基づく。</p>
 
 <h2>参考文献</h2>
 <ol>
 <li>EmDash, GitHub リポジトリ <code>https://github.com/emdash-cms/emdash</code>（取得日 2026-10-24 。一次情報）</li>
 <li>cmswire, 「 Cloudflare releases EmDash 1.0 CMS with decentralized plugin registry 」 <code>https://www.cmswire.com/digital-experience/cloudflare-releases-emdash-1-0-cms-with-decentralized-plugin-registry/</code>（取得日 2026-10-24 。二次情報）</li>
 <li>EmDash, 移行ガイド「 Upgrade to EmDash 1.0 」 <code>https://docs.emdashcms.com/upgrade-to-v1/</code>（取得日 2026-10-24 。一次情報）</li>
-<li>EmDash, GitHub リリース emdash@1.0.1 の転載 <code>https://newreleases.io/project/github/emdash-cms/emdash/release/emdash@1.0.1</code>（取得日 2026-10-24 。転載サイト。二次情報）</li>
+<li>EmDash, 公式のはじめ方 <code>https://docs.emdashcms.com/getting-started/</code>（取得日 2026-10-24 。一次情報。ページの要約で確認）</li>
+<li>EmDash, 公式の公開ガイド「 Deploying to Cloudflare 」 <code>https://docs.emdashcms.com/deployment/cloudflare/</code>（取得日 2026-10-24 。一次情報。ページの要約で確認）</li>
+<li>EmDash, 雛形の置き場 <code>https://github.com/emdash-cms/templates</code> と、 <code>blog-cloudflare</code> の README （取得日 2026-10-24 。一次情報。ページの要約で確認）</li>
+<li>Cloudflare. 「 workers.dev 」 . <code>https://developers.cloudflare.com/workers/configuration/routing/workers-dev/</code>（取得日 2026-10-07 。一次情報）</li>
+<li>Cloudflare. 「 Workers Builds 」 . <code>https://developers.cloudflare.com/workers/ci-cd/builds/</code>（取得日 2026-10-07 。一次情報）</li>
+<li>Cloudflare. 「 Workers Builds: Configuration 」 . <code>https://developers.cloudflare.com/workers/ci-cd/builds/configuration/</code>（取得日 2026-10-07 。一次情報）</li>
+<li>Cloudflare. 「 Workers: Custom Domains 」 . <code>https://developers.cloudflare.com/workers/configuration/routing/custom-domains/</code>（取得日 2026-10-07 。一次情報）</li>
 <li>EmDash 公式ドキュメント , MCP サーバーのリファレンス <code>https://docs.emdashcms.com/reference/mcp-server/</code>（取得日 2026-10-24 。一次情報）</li>
-<li>検索で確認した報道・解説（プラグインの隔離と実行環境に関する記述。二次情報。個々の記述の一次出典は未確認で、記述は食い違う）（取得日 2026-10-24 ）</li>
-<li>webhosting.today, 「 EmDash 1.0 is stable 」 <code>https://webhosting.today/2026/09/29/emdash-1-0-is-stable-its-sandboxed-plugins-cannot-touch-the-database-and-that-is-the-whole-pitch/</code>（取得日 2026-10-24 。二次情報。プラグインの件数に関する記述は、本文では使っていない）</li>
-<li>technobezz, 「 EmDash 1.0 Arrives as Free Open Source CMS With Decentralized Plugin Registry 」 <code>https://www.technobezz.com/news/emdash-1-0-free-open-source-cms-plugin-registry</code>（取得日 2026-10-24 。二次情報）</li>
-<li>EmDash, 公式のはじめ方 <code>https://docs.emdashcms.com/getting-started/</code>（取得日 2026-10-24 。一次情報。 Node.js 22.23.4 以上を要求。ページの要約で確認）</li>
-<li>上島愛史、田又利土『 Cloudflare Workers 実践ガイド―エッジで実現する Web アプリケーションの設計・実装・運用』技術評論社、 2026 年 5 月 <code>https://gihyo.jp/book/2026/978-4-297-15678-7</code> （取得日 2026-10-24 ）</li>
-<li>EmDash, 公式の公開ガイド「 Deploying to Cloudflare 」 <code>https://docs.emdashcms.com/deployment/cloudflare/</code>（取得日 2026-10-24 。一次情報。ページの要約で確認し、原文との逐語の照合はしていない）</li>
-<li>Cloudflare. 「 workers.dev 」 . URL の形式、アカウントのサブドメインの変更、 Worker 名の制約、 <code>workers.dev</code> の経路を無効にする方法と、設定ファイルへの記載が必要なこと。 <code>https://developers.cloudflare.com/workers/configuration/routing/workers-dev/</code>（取得日 2026-10-07 。一次情報）</li>
-<li>Cloudflare. 「 Static Assets: Billing and limitations 」 . 静的ファイルへの要求は無料で上限がないこと（本文では直接使っていない）。 <code>https://developers.cloudflare.com/workers/static-assets/billing-and-limitations/</code>（取得日 2026-10-07 。一次情報）</li>
-<li>Cloudflare. 「 Workers Builds 」 . GitHub リポジトリの接続手順、 Worker 名と設定ファイルの <code>name</code> の一致、本番とプレビューのビルド。 <code>https://developers.cloudflare.com/workers/ci-cd/builds/</code>（取得日 2026-10-07 。一次情報）</li>
-<li>Cloudflare. 「 Workers Builds: Configuration 」 . ビルド・デプロイのコマンドと監視ブランチの既定値。 <code>https://developers.cloudflare.com/workers/ci-cd/builds/configuration/</code>（取得日 2026-10-07 。一次情報）</li>
-<li>Cloudflare. 「 Workers Builds: Limits and pricing 」 . 無料プランのビルド時間、同時ビルド数、タイムアウト。 <code>https://developers.cloudflare.com/workers/ci-cd/builds/limits-and-pricing/</code>（取得日 2026-10-07 。一次情報）</li>
-<li>Cloudflare. 「 Workers Builds: GitHub integration 」 . GitHub アプリの権限範囲の推奨、ビルドの契機。 <code>https://developers.cloudflare.com/workers/ci-cd/builds/git-integration/github-integration/</code>（取得日 2026-10-07 。一次情報）</li>
-<li>Cloudflare. 「 Workers: Custom Domains 」 . 有効なゾーンが前提であること、追加の手順、 DNS レコードと証明書の自動作成。 <code>https://developers.cloudflare.com/workers/configuration/routing/custom-domains/</code>（取得日 2026-10-07 。一次情報）</li>
-<li>Cloudflare. 「 Migrate from Pages to Workers 」 . Workers はネームサーバーが Cloudflare に管理されていないドメインをサポートしないこと。 <code>https://developers.cloudflare.com/workers/static-assets/migrate-from-pages/</code>（取得日 2026-10-07 。一次情報）</li>
-<li>Cloudflare. 「 Claude Code + Cloudflare 」 . Claude Code 向けの Skills と MCP サーバーの登録。検索結果の要約で確認したもので、ページ本体は未精読。 <code>https://developers.cloudflare.com/agent-setup/claude-code/</code>（取得日 2026-10-22 。一次情報）</li>
+<li>Cloudflare. 「 Create a Cloudflare account 」 . <code>https://developers.cloudflare.com/fundamentals/account/create-account/</code>（取得日 2026-10-24 。一次情報。二要素認証の手順は、このページに記載がなかった）</li>
+<li>Cloudflare. 「 R2 pricing 」 . <code>https://developers.cloudflare.com/r2/pricing/</code>（取得日 2026-10-24 。一次情報。支払い方法の要否は、このページに記載がなかった）</li>
+<li>Cloudflare. 「 D1 pricing 」 . <code>https://developers.cloudflare.com/d1/platform/pricing/</code>（取得日 2026-10-24 。一次情報）</li>
 </ol>
 </main>
 </body>
