@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EmDash を Cloudflare で公開する</title>
+<title>EmDash 入門――アカウントの作成から、最初の記事の公開まで</title>
 <style>
   body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
@@ -47,7 +47,7 @@
 </head>
 <body>
 <main>
-<h1>EmDash を Cloudflare で公開する ― アカウントの作成から、最初の記事の公開まで</h1>
+<h1>EmDash 入門<br>――アカウントの作成から、最初の記事の公開まで</h1>
 <p class="meta">作成日 : 2026-10-24 ／ 出典の取得日 : 2026-10-24 ／ 本文は取得日の時点の情報に基づく</p>
 
 <div class="note">この記事は、頭から順に読みながら、手を動かして進める手順書である。 Cloudflare のアカウントを作るところから始め、 CMS 「 EmDash 」を自分のパソコンで動かし、同じサイトを Cloudflare に載せて、インターネットに記事を公開するところまでを扱う。各章の終わりに「ここまでの確認」を置いた。確認の条件を満たしてから、次の章に進んでほしい。</div>
@@ -62,7 +62,7 @@
 <tr><td data-label="部品">R2</td><td data-label="役割">画像などのファイルを入れる保存領域 <sup>[5]</sup></td></tr>
 </tbody>
 </table>
-<p>完成すると、 <code>https://（サイトの名前）.（自分の名前）.workers.dev</code> という住所のサイトが、世界のどこからでも見られるようになる。独自のドメイン（自分専用のサイトの住所）は取らない。</p>
+<p>完成すると、サイトは <code>https://（サイトの名前）.（自分の名前）.workers.dev</code> という URL （ブラウザのアドレス欄に入れる文字列）で公開され、世界のどこからでも見られるようになる。独自のドメイン（ <code>example.com</code> のような、自分専用の名前）は取らない。</p>
 
 <h3>0.1 用意するもの</h3>
 <ul>
@@ -135,7 +135,7 @@ pnpm --version</code></pre>
 <li>次を打つ。
 <pre><code>pnpm dev</code></pre>
 </li>
-<li>ターミナルに、手元のサイトの住所が出る。通常は <code>http://localhost:4321/</code> である <sup>[4]</sup> 。このターミナルは、閉じずに開いたままにする。</li>
+<li>ターミナルに、手元のサイトを開くための URL が出る。通常は <code>http://localhost:4321/</code> である <sup>[4]</sup> 。このターミナルは、閉じずに開いたままにする。</li>
 </ol>
 <h3>4.2 最初の設定を済ませる</h3>
 <ol>
@@ -171,7 +171,7 @@ pnpm --version</code></pre>
 <table class="cards">
 <thead><tr><th>項目</th><th>意味</th></tr></thead>
 <tbody>
-<tr><td data-label="項目"><code>name</code></td><td data-label="意味">Worker の名前。公開後の住所の先頭になる。 63 文字以内で、英数字とハイフンだけを使い、ハイフンで始めることも終えることもできない <sup>[7]</sup></td></tr>
+<tr><td data-label="項目"><code>name</code></td><td data-label="意味">Worker の名前。公開後の URL の先頭の部分になる。 63 文字以内で、英数字とハイフンだけを使い、ハイフンで始めることも終えることもできない <sup>[7]</sup></td></tr>
 <tr><td data-label="項目"><code>main</code></td><td data-label="意味">入口になるファイル。 <code>src/worker.ts</code></td></tr>
 <tr><td data-label="項目"><code>d1_databases</code></td><td data-label="意味">記事を入れるデータベース。 <code>DB</code> という名前（バインディング。 Worker から資源を呼ぶための名前）で呼び出す</td></tr>
 <tr><td data-label="項目"><code>r2_buckets</code></td><td data-label="意味">画像を入れる保存領域。 <code>MEDIA</code> という名前で呼び出す</td></tr>
@@ -207,26 +207,26 @@ pnpm wrangler deploy</code></pre>
 <p>初回の公開では、次のことが起きる。</p>
 <ul>
 <li>D1 のデータベースと R2 の保存領域が、 Cloudflare の側に作られる <sup>[5][6]</sup> 。 R2 で支払い方法の登録を求められたら、 1 章の注意を読み返す。</li>
-<li>アカウントのサブドメイン（住所の「自分の名前」の部分）を、まだ決めていない場合は、決めるよう促されることがある。この動作は、検索で確認したもので、公式の文面は確認していない。ここで決めた名前は、このアカウントのすべての Worker の住所に入る。あとから変えると、すべての住所が変わる <sup>[7]</sup> 。落ち着いて決める。</li>
-<li>成功すると、ターミナルに <code>https://（Worker の名前）.（サブドメイン）.workers.dev</code> の形の住所が表示される <sup>[5][7]</sup> 。</li>
+<li>アカウントのサブドメイン（ URL のうち「自分の名前」の部分）を、まだ決めていない場合は、決めるよう促されることがある。この動作は、検索で確認したもので、公式の文面は確認していない。ここで決めた名前は、このアカウントのすべての Worker の URL に入る。あとから変えると、それらの URL がすべて変わる <sup>[7]</sup> 。落ち着いて決める。</li>
+<li>成功すると、ターミナルに、公開先の URL が <code>https://（Worker の名前）.（サブドメイン）.workers.dev</code> の形で表示される <sup>[5][7]</sup> 。</li>
 </ul>
 <h3>7.3 すぐに管理画面の最初の設定をする</h3>
-<div class="must">これは急ぐ作業である。公開したサイトでは、最初の設定を終えた人が管理者になる。しかも、設定は、そのときの住所を記録する <sup>[5]</sup> 。公開が成功したら、他人に住所を知らせる前に、自分で設定を終える。</div>
+<div class="must">これは急ぐ作業である。公開したサイトでは、最初の設定を終えた人が管理者になる。しかも、この設定では、そのときアクセスしている URL が記録される <sup>[5]</sup> 。公開が成功したら、サイトの URL を他人に知らせる前に、自分で設定を終える。</div>
 <ol>
-<li>表示された住所に <code>/_emdash/admin/</code> を足して、ブラウザで開く。たとえば <code>https://my-emdash-site.自分の名前.workers.dev/_emdash/admin/</code> である。入口がローカルと同じであるかは、公式の記述では確認していない。開けなければ、トップページから管理画面への案内を探す。</li>
+<li>表示された URL の末尾に <code>/_emdash/admin/</code> を足して、ブラウザで開く。たとえば <code>https://my-emdash-site.自分の名前.workers.dev/_emdash/admin/</code> である。入口がローカルと同じであるかは、公式の記述では確認していない。開けなければ、トップページから管理画面への案内を探す。</li>
 <li>4.2 と同じ手順で、サイト名、メールアドレス、パスキーを設定する。パスキーは、手元で作ったものとは別に、あらためて登録する。</li>
 </ol>
 <p>最初の要求の際、 EmDash はデータベースの基本の準備を自動で行う <sup>[5]</sup> 。最初の表示だけは、待たされることがある。</p>
-<div class="check"><strong>ここまでの確認</strong><br>公開された住所でトップページが表示され、その管理画面にログインできている。</div>
+<div class="check"><strong>ここまでの確認</strong><br>公開先の URL でトップページが表示され、その管理画面にログインできている。</div>
 
 <h2>8. 公開したサイトに、最初の記事を書く</h2>
 <ol>
 <li>公開したサイトの管理画面で「 Posts 」を開く。 7.3 で見本の内容を含めた場合は、「 Welcome 」の記事がある。</li>
 <li>4.3 と同じ手順で、題を変え、「 Save 」と「 Publish changes 」を選ぶ。または、新しい記事を作って公開する。</li>
-<li>公開した住所のトップページを、別のブラウザ、またはスマートフォンで開く。自分の記事が見えれば、インターネットへの公開は完了である。</li>
+<li>7.2 で表示された URL を、別のブラウザ、またはスマートフォンで開く。自分の記事が見えれば、インターネットへの公開は完了である。</li>
 </ol>
 <h3>8.1 画像で R2 を確かめる</h3>
-<p>管理画面から画像を一枚アップロードし、記事に入れて公開する。公開した住所で画像が表示されれば、 R2 が働いている。</p>
+<p>管理画面から画像を一枚アップロードし、記事に入れて公開する。公開したサイトの記事で画像が表示されれば、 R2 が働いている。</p>
 <h3>8.2 サイトを直して、公開し直す</h3>
 <p>記事の内容は、管理画面で直せば、すぐに反映される。サイトの見た目や設定をファイル側で変えたときは、手元で動作を確かめてから、もう一度公開する。</p>
 <pre><code>pnpm deploy</code></pre>
@@ -236,7 +236,7 @@ pnpm wrangler deploy</code></pre>
 <h2>9. 公開後の点検</h2>
 <p>最後に、次の項目を一つずつ確かめる。公式ガイドは、公開の点検として、公開ページの取得、管理画面へのログイン、メディアのアップロードと取得、定期処理の動作の確認を挙げている <sup>[5]</sup> 。</p>
 <ul>
-<li>☐ 公開した住所でトップページが表示され、文字化けがない</li>
+<li>☐ 公開したサイトのトップページが開き、文字化けがない</li>
 <li>☐ 管理画面にログインでき、記事を作成して公開できる</li>
 <li>☐ 画像をアップロードして、記事に表示できる</li>
 <li>☐ 存在しないパスを開くと、エラーの画面が返る</li>
@@ -253,7 +253,7 @@ pnpm wrangler tail</code></pre>
 <table class="cards">
 <thead><tr><th>症状</th><th>確かめること</th></tr></thead>
 <tbody>
-<tr><td data-label="症状">公開した住所が 503 を返す</td><td data-label="確かめること">大きなデータの移行が未適用の可能性がある。 <code>pnpm emdash migrate</code> を実行する <sup>[5]</sup></td></tr>
+<tr><td data-label="症状">公開したサイトを開くと 503 が返る</td><td data-label="確かめること">大きなデータの移行が未適用の可能性がある。 <code>pnpm emdash migrate</code> を実行する <sup>[5]</sup></td></tr>
 <tr><td data-label="症状">「 D1 binding not found 」</td><td data-label="確かめること"><code>wrangler.jsonc</code> の <code>DB</code> と、 <code>astro.config.mjs</code> の <code>d1({ binding: "DB" })</code> の名前が一致しているか <sup>[5]</sup></td></tr>
 <tr><td data-label="症状">「 R2 binding not found 」</td><td data-label="確かめること"><code>MEDIA</code> と <code>r2({ binding: "MEDIA" })</code> の名前が一致しているか <sup>[5]</sup></td></tr>
 <tr><td data-label="症状">移行のエラー</td><td data-label="確かめること"><code>pnpm wrangler tail</code> を動かしたまま、同じ操作を再現して、出力を読む <sup>[5]</sup></td></tr>
@@ -270,8 +270,8 @@ pnpm wrangler tail</code></pre>
 <h3>11.2 Git につなぎ、 push で自動公開する</h3>
 <p>手順は、ダッシュボードの Workers &amp; Pages で該当の Worker を開き、 Settings &gt; Builds から GitHub のリポジトリを接続する、というものである <sup>[8]</sup> 。 Worker を一度公開してから接続する順序になる。ダッシュボード上の Worker 名と、設定ファイルの <code>name</code> が一致しないと、ビルドは失敗する <sup>[8]</sup> 。デプロイのコマンドの既定は <code>npx wrangler deploy</code> 、監視するブランチの既定は <code>main</code> である <sup>[9]</sup> 。 EmDash は公開の前に <code>pnpm build</code> が要るので、ビルドのコマンドの欄に入れる必要があるはずだが、確認していない。無料プランのビルドには、月間の時間などの上限がある。</p>
 <h3>11.3 独自のドメインを足す</h3>
-<p>公式ガイドは、 <code>workers.dev</code> の住所が応答することを確かめてから、 <code>wrangler.jsonc</code> に経路を足して、公開し直すよう述べる <sup>[5]</sup> 。 Workers のカスタムドメインには、有効な Cloudflare のゾーン（ Cloudflare に管理を預けたドメイン）が要る <sup>[10]</sup> 。ドメインの取得の手順は、この記事では扱わない。</p>
-<div class="must"><code>workers.dev</code> の住所を止める設定は、独自ドメインを足すまで使わない。止めると、サイトにアクセスする手段がなくなる <sup>[7]</sup> 。</div>
+<p>公式ガイドは、 <code>workers.dev</code> の URL でサイトが応答することを確かめてから、 <code>wrangler.jsonc</code> に経路を足して、公開し直すよう述べる <sup>[5]</sup> 。 Workers のカスタムドメインには、有効な Cloudflare のゾーン（ Cloudflare に管理を預けたドメイン）が要る <sup>[10]</sup> 。ドメインの取得の手順は、この記事では扱わない。</p>
+<div class="must"><code>workers.dev</code> の URL でのアクセスを止める設定は、独自ドメインを足すまで使わない。止めると、サイトにアクセスする手段がなくなる <sup>[7]</sup> 。</div>
 <h3>11.4 AI エージェントからの操作</h3>
 <p>EmDash は、 CLI と、 AI エージェントが接続して操作する窓口（ MCP サーバー）を、標準で備える <sup>[1]</sup> 。接続先は <code>/_emdash/api/mcp</code> である。認証には、 OAuth 2.1 、個人アクセストークン、デバイス認可の三つの方式があり、操作できる範囲はスコープ（許可の単位）で絞れる <sup>[11]</sup> 。サイト全体の移転に使うツールは、管理者だけが使える <sup>[11]</sup> 。</p>
 
