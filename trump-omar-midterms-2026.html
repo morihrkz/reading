@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>トランプ大統領はなぜオマル議員を名指しするのか</title>
+<style>
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注と参考文献 */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{border-bottom:none;margin-top:0;padding-bottom:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+</style>
+</head>
+<body>
+<main>
+<h1>トランプ大統領はなぜオマル議員を名指しするのか</h1>
+<p class="meta">作成日 : 2026 年 10 月 25 日／情報の時点 : 2026 年 10 月 24 日までの報道と公開データ／種別 : 調査結果のまとめ</p>
+
+<div class="lede">
+<p>2026 年 10 月の中間選挙遊説で、トランプ大統領が民主党のイルハン・オマル下院議員（ミネソタ州選出）を繰り返し名指ししている。これは「国民の敵意を動員する」試みなのか。そうだとして、米国の世論はどう受け止めているのか。報道と世論調査を確認して整理した。</p>
+</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">結論</a></li>
+<li><a href="#sec2">何が起きたか</a>
+<ol>
+<li><a href="#sec2-1">発端 : 10 月 12 日の自宅捜索</a></li>
+<li><a href="#sec2-2">三つの集会での発言</a></li>
+</ol>
+</li>
+<li><a href="#sec3">「敵意の動員」という見方は正しいか</a>
+<ol>
+<li><a href="#sec3-1">見方を支える材料</a></li>
+<li><a href="#sec3-2">見方に留保が要る点</a></li>
+</ol>
+</li>
+<li><a href="#sec4">米国内の世論の動向</a>
+<ol>
+<li><a href="#sec4-1">全体の情勢</a></li>
+<li><a href="#sec4-2">移民問題の位置づけ</a></li>
+<li><a href="#sec4-3">オマル氏をめぐる反応と 2019 年の前例</a></li>
+</ol>
+</li>
+<li><a href="#sec5">この記事の限界</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 結論</h2>
+<p>ご指摘の見方は、観察できる事実の範囲では、おおむね当たっている。ただし、見方の一部は証明できない推定であり、世論の反応はこの件に限った調査がまだない。</p>
+<ul>
+<li><strong>当たっている部分</strong> : 10 月 12 日以降、トランプ氏は三つの集会でオマル氏を名指しした。素材は出身国、名前、家族関係で、聴衆から「 deport 」「 lock her up 」の連呼が起きた。主張の一部には、報道で裏付けが示されていないものがある。</li>
+<li><strong>証明できない部分</strong> : 「敵意を動員しようとしている」は意図の推定である。トランプ氏は法の支配と議席の正統性の問題として語っており、連邦の捜査自体は実在する。ただし、捜査の中身は未確認で、起訴の報道もない。</li>
+<li><strong>世論</strong> : この件を直接測った調査は見つからなかった。全体の情勢はトランプ氏に厳しく、移民問題での共和党の優位も消えかけている。 2019 年の似た事例では、共和党支持者の大半が支持し、全体では反対が多数だった。</li>
+</ul>
+
+<h2 id="sec2">2. 何が起きたか</h2>
+
+<h3 id="sec2-1">2.1 発端 : 10 月 12 日の自宅捜索</h3>
+<p>10 月 12 日（月）、国土安全保障省の捜査機関が、ワシントン DC にあるオマル氏の自宅を捜索した。司法省は、進行中の連邦刑事捜査の一環として、裁判所の承認を得た捜索令状を執行したと説明している。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 捜査の中心は、オマル氏の子ども時代にさかのぼる移民関係書類だと、情報源の話として報じられている。虚偽の陳述と移民詐欺の可能性が調べられているというが、公式には確認されておらず、起訴されたとの報道も確認できなかった。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> オマル氏の事務所は不正を否定している。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> オマル氏は捜索を「政治的な脅迫運動の最新のエスカレーション」と呼び、トランプ氏は記者団に、捜索には関与していないと述べた。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
+
+<h3 id="sec2-2">2.2 三つの集会での発言</h3>
+<p>捜索の後、トランプ氏は 11 日間に三つの集会でオマル氏に触れた。報道で確認できた内容は次のとおりである。</p>
+<table class="cards">
+<thead>
+<tr><th>日付</th><th>場所</th><th>主な発言</th><th>聴衆の反応</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="日付">10 月 12 日（月）</td><td data-label="場所">オハイオ州ヤングスタウン</td><td data-label="主な発言">オマル氏を「災厄」と呼び、ソマリアを「世界最悪の国の一つ」と評した。ミシガン州上院選の民主党候補エルサイード氏を「聖戦主義者」と呼び、ソマリア系などの人々はオハイオに「属さない」と述べた。</td><td data-label="聴衆の反応">「 deport 」の連呼が、繰り返し起きた。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><td data-label="日付">10 月 22 日（木）</td><td data-label="場所">アイオワ州スーシティ</td><td data-label="主な発言">移民関連の不正疑惑を理由に、議員の辞職を求めた。オマル氏の二人目の夫は実は兄弟だ、という主張を繰り返した。</td><td data-label="聴衆の反応">「 lock her up 」の連呼が起きた。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><td data-label="日付">10 月 23 日（金）</td><td data-label="場所">フロリダ州フォートマイヤーズ</td><td data-label="主な発言">「 Ilhan Omar 」は本名ではないと主張し、偽名で宣誓したのだから直ちに辞職すべきだと述べた。下院議長に、民主党はこの議席を失ったと伝えるよう求めた。</td><td data-label="聴衆の反応">確認した記事には記載がない。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
+</tbody>
+</table>
+<p>このうち、結婚についての主張は、オマル氏が 10 月 21 日のインタビューで「 insane 」と退け、オンラインのゴシップブログが出どころだと述べている。確認した報道には、この主張を裏付ける証拠は示されていない。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 名前についての主張に対するオマル氏本人の反応は、確認した記事には出ていない。</p>
+
+<h2 id="sec3">3. 「敵意の動員」という見方は正しいか</h2>
+
+<h3 id="sec3-1">3.1 見方を支える材料</h3>
+<ul>
+<li><strong>本人が候補者ではない場所で言及している。</strong> 三つの集会の目的は、他の共和党候補の応援だった。オマル氏はミネソタ州の議員で、オハイオ・アイオワ・フロリダの選挙には出ていない。それでも毎回、名指しした。</li>
+<li><strong>素材が政策ではなく属性である。</strong> 出身国、名前、家族関係、宗教が使われている。エルサイード氏への「聖戦主義者」という呼称も同じ系統である。</li>
+<li><strong>聴衆の反応が敵意の形をとっている。</strong> 「 deport 」は国外追放、「 lock her up 」は投獄を求める連呼である。後者は、もとはヒラリー・クリントン氏に向けられた言葉だと報じられている。</li>
+<li><strong>主張が段階的に強まっている。</strong> 12 日はソマリアと移民、 22 日は結婚、 23 日は名前と辞職要求へと進んだ。裏付けが示されないまま、要求だけが重くなっている。</li>
+</ul>
+
+<h3 id="sec3-2">3.2 見方に留保が要る点</h3>
+<ul>
+<li><strong>捜査は実在する。</strong> 令状は裁判所の承認を得たものと司法省が説明している。移民書類に虚偽があったかどうかは、本来、議員の資格にかかわる正当な争点でもある。ただし、内容は匿名の情報源の話にとどまり、結論は出ていない。</li>
+<li><strong>トランプ氏は関与を否定している。</strong> これは本人の発言であり、外から確かめる材料は、確認した範囲にはない。</li>
+<li><strong>意図は断定できない。</strong> 支持層の投票率を上げる狙いかもしれないし、注目を集める習慣かもしれない。オマル氏自身が、 10 年にわたって標的にされてきたと述べている。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> どの説明を採るにしても、動機は発言からは読み取れない。</li>
+<li><strong>標的にされた側も、それを使っている。</strong> オマル氏は捜索の直後から寄付を呼びかけ、資金集めを始めた。 <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 注目を集める効果は、双方に働いている。</li>
+</ul>
+
+<h2 id="sec4">4. 米国内の世論の動向</h2>
+
+<h3 id="sec4-1">4.1 全体の情勢</h3>
+<p>投票日（ 11 月 3 日）まで 11 日の時点で、情勢は民主党に有利である。 Silver Bulletin の平均では、議会選挙の「一般投票」（どちらの党に投票するかの調査）で民主党が 9 ポイント超リードし、差は 1 か月で広がった。トランプ氏の支持率は 36.9% 、不支持は 60.3% で、差し引き 23.4 ポイントの不支持超過である。個別の調査では、 NYT/Siena が 26 ポイント、 CNN/SSRS が 35 ポイントの不支持超過だった（いずれも 10 月 21 日付）。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
+
+<h3 id="sec4-2">4.2 移民問題の位置づけ</h3>
+<p>オマル氏への攻撃は、移民問題と地続きである。そこで、 Fox News の 9 月調査を見る。 9 月 11 日から 14 日に、全米の登録有権者 1,211 人を対象に行われた。</p>
+<table class="cards">
+<thead>
+<tr><th>項目</th><th>結果</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="項目">移民取り締まりの水準</td><td data-label="結果">「行き過ぎ」が 53% 。「不十分」と「ちょうどよい」は、それぞれ 23% 。</td></tr>
+<tr><td data-label="項目">トランプ氏の移民政策への支持</td><td data-label="結果">43% 。夏の最高値の 48% から低下した。</td></tr>
+<tr><td data-label="項目">移民問題で信頼できる党</td><td data-label="結果">民主党 48% 、共和党 49% 。共和党の長い優位が、ほぼ消えた。</td></tr>
+<tr><td data-label="項目">党派別の見方</td><td data-label="結果">「行き過ぎ」は民主党支持者の 87% 、無党派の 60% 。共和党支持者は、「ちょうどよい」が 43% 、「不十分」が 40% 。</td></tr>
+</tbody>
+</table>
+<p>共和党支持者の取り締まりへの支持は固い。一方、無党派の過半数は行き過ぎだと見ている。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 移民を前面に出す手法が、かつてほど確実な切り札ではなくなっている、とは言える。ただし、これは取り締まりについての調査であり、オマル氏への攻撃への評価ではない。</p>
+
+<h3 id="sec4-3">4.3 オマル氏をめぐる反応と 2019 年の前例</h3>
+<p>筆者が調べた範囲では、今回のオマル氏への攻撃を直接たずねた全国調査は見つからなかった。代わりに、似た構図の前例を見る。 2019 年 7 月、トランプ氏が、オマル氏を含む 4 人の民主党の女性議員に、出身国へ「帰れ」という趣旨の投稿をした。同じ頃、集会では、オマル氏に向けた「 Send her back 」の連呼も起きた。 CBS News/YouGov が 7 月 17 日から 19 日に行った調査の結果は、次のとおりである。</p>
+<table class="cards">
+<thead>
+<tr><th>回答者</th><th>投稿への賛成</th><th>反対</th><th>人種差別的だと答えた割合</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="回答者">全体</td><td data-label="投稿への賛成">40%</td><td data-label="反対">59%</td><td data-label="人種差別的だと答えた割合">48%</td></tr>
+<tr><td data-label="回答者">共和党員</td><td data-label="投稿への賛成">82%</td><td data-label="反対">—</td><td data-label="人種差別的だと答えた割合">「人種差別的ではない」が 70%</td></tr>
+<tr><td data-label="回答者">民主党員</td><td data-label="投稿への賛成">—</td><td data-label="反対">88%</td><td data-label="人種差別的だと答えた割合">84%</td></tr>
+</tbody>
+</table>
+<p>表の「—」は、確認した記事に数値がなかった項目である。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 全体では反対が多数でも、共和党支持者は大半が支持した。これを今回に当てはめれば、支持層は固まるが、全体の評価は上がらない、という構図が考えられる。ただし、これは 7 年前の別の事例からの推定であり、今回の実測ではない。</p>
+
+<h2 id="sec5">5. この記事の限界</h2>
+<div class="note">
+<ul>
+<li>オマル氏への攻撃を直接測った世論調査は、確認できなかった。 4 章の数字は、周辺の情勢を示すものである。</li>
+<li>捜査の内容は、匿名の情報源による報道で、公式には確認されていない。起訴もされていない。</li>
+<li>フォートマイヤーズの集会は、聴衆の反応を確認できなかった。</li>
+<li>トランプ氏の意図は、発言と状況からの推定であり、断定できない。</li>
+<li>検索で見つかった世論調査の集計サイトのうち、更新日や数字が不統一なものは使っていない。 4.1 節の数字は、 Silver Bulletin の平均を引いた報道記事によるもので、元の集計は直接確認していない。</li>
+<li>投票日が近く、状況は日々動いている。この記事は 10 月 24 日までの報道に基づく。</li>
+</ul>
+</div>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> NBC News の記事 <em>Trump attacks Rep. Ilhan Omar and Senate hopeful Abdul El-Sayed at Ohio rally</em> 。 10 月 12 日のヤングスタウン集会と自宅捜索を報じている。 <a href="https://www.nbcnews.com/politics/2026-election/donald-trump-attacks-ilhan-omar-abdul-el-sayed-ohio-rally-youngstown-rcna603107">NBC News</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> CBS Minnesota の記事 <em>Rep. Ilhan Omar says Trump is trying to intimidate her before midterms</em> 。捜索の日付、報じられている捜査内容、オマル氏の反応を伝えている。 <a href="https://www.cbsnews.com/minnesota/news/ilhan-omar-responds-federal-search-home-video-midterms/">CBS Minnesota</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> NBC News のライブブログ。 10 月 22 日のアイオワ州の集会での発言、「 lock her up 」の連呼、結婚についての主張とオマル氏の反応を伝えている。 <a href="https://www.nbcnews.com/politics/trump-administration/live-blog/trump-rally-hinson-iowa-vance-nebraska-congress-2026-live-updates-rcna604927">NBC News ライブブログ</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> The Hill のライブブログ。 10 月 23 日のフロリダ州の集会での、名前についての主張と辞職要求を伝えている。 <a href="https://thehill.com/homenews/administration/6167503-live-updates-donald-trump-midterm-elections/amp/">The Hill ライブブログ</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> Yahoo ニュースの記事。投票日まで 11 日の時点での世論調査のまとめで、 Silver Bulletin の平均と、 NYT/Siena ・ CNN/SSRS の調査を引いている。 <a href="https://www.yahoo.com/news/politics/article/the-2026-midterms-are-less-than-2-weeks-away-which-party-has-a-better-chance-of-winning-heres-what-the-latest-polls-say-131448048.html">Yahoo ニュース</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> Fox News の調査 <em>Fox News Poll</em>（ 2026 年 9 月 11 日から 14 日、登録有権者 1,211 人）の報道記事。 <a href="https://www.foxnews.com/politics/fox-news-poll-majority-says-immigration-enforcement-has-crossed-line">Fox News</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> CBS News/YouGov の調査（ 2019 年 7 月 17 日から 19 日、全米 2,099 人）の報道記事。 <a href="https://www.cbsnews.com/news/most-americans-disagree-with-trumps-go-back-tweets-cbs-news-poll/">CBS News</a></li>
+</ol>
+</div>
+</main>
+</body>
+</html>
