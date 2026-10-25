@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>これからの大型選挙スケジュール 2026 年秋〜 2031 年</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -22,7 +22,7 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
@@ -50,7 +50,30 @@
     table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
-  /* この文書だけの指定 */
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注と参考文献 */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{border-bottom:none;margin-top:0;padding-bottom:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 文書固有の補助 */
   figure { margin: 1.5rem 0; }
   figure svg { display: block; width: 100%; max-width: 720px; height: auto; background: #fff; border: 1px solid #bbb; border-radius: 4px; }
   figcaption { color: #555; font-size: .9rem; margin-top: .4rem; }
@@ -65,7 +88,24 @@
 <p>結論から言うと、次に国民の目が集まる大型選挙は <strong>2027 年 4 月 11 日と 25 日の統一地方選挙</strong>である。その後は <strong>2027 年 9 月の自民党総裁任期満了</strong>、 <strong>2028 年夏の参議院選挙と東京都知事選挙</strong>、 <strong>2029 年夏の東京都議会議員選挙</strong>と続く。衆議院議員選挙だけは、解散がなければ 2030 年 2 月まで行われない。</p>
 </div>
 
-<h2>全体の見取り図</h2>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">全体の見取り図</a></li>
+<li><a href="#sec2">一覧表</a></li>
+<li><a href="#sec3">統一地方選挙 : 2027 年 4 月の二つの日曜日</a>
+<ol>
+<li><a href="#sec3-1">前半戦の知事選</a></li>
+</ol>
+</li>
+<li><a href="#sec4">2028 年の夏 : 参院選と都知事選が重なる</a></li>
+<li><a href="#sec5">自民党総裁選挙 : 任期は 2027 年 9 月まで</a></li>
+<li><a href="#sec6">東京都議会議員選挙と衆議院議員選挙</a></li>
+<li><a href="#sec7">この文書の確度</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 全体の見取り図</h2>
 <p>図 1 は、 2026 年 10 月から 2031 年までの主な選挙を、日付の順に縦に並べたものである。間隔は時間の長さに比例しない。色は、紺が地方選挙、黄が政党の選挙、赤が国政選挙を表す。</p>
 
 <figure>
@@ -137,7 +177,7 @@
 <figcaption>図 1 : 主な選挙の年表。 2027 年 4 月の二つの日が黄色の枠で強調されている。</figcaption>
 </figure>
 
-<h2>一覧表</h2>
+<h2 id="sec2">2. 一覧表</h2>
 <table class="cards">
 <thead>
 <tr><th>選挙</th><th>時期</th><th>状態</th><th>備考</th></tr>
@@ -153,7 +193,7 @@
 </tbody>
 </table>
 
-<h2>統一地方選挙 : 2027 年 4 月の二つの日曜日</h2>
+<h2 id="sec3">3. 統一地方選挙 : 2027 年 4 月の二つの日曜日</h2>
 <p>統一地方選挙は、全国の自治体の選挙日をそろえて行う仕組みで、 4 年に一度の春に実施される。次回は、都道府県と政令指定都市の分を 4 月 11 日、それ以外の市区町村の分を 4 月 25 日とする法案を、政府が 2026 年 10 月 16 日に閣議決定した。主に 2027 年 3 月 1 日から 5 月 31 日までに任期が満了する首長と議員が対象で、全国で約 1000 の選挙になる見通しである。前回の 2023 年は 4 月 9 日と 23 日だった。</p>
 
 <figure>
@@ -189,10 +229,10 @@
 <p>この日程は、臨時特例法が国会で成立して初めて確定する。記事の時点では法案の段階である。大阪府の例では知事選の告示は 3 月 26 日ごろの見込みとされるが、正式な告示日は各選挙管理委員会の発表を待つ必要がある。</p>
 </div>
 
-<h3>前半戦の知事選</h3>
+<h3 id="sec3-1">3.1 前半戦の知事選</h3>
 <p>解説記事では、前半戦に知事選があるのは北海道・神奈川・大阪・奈良・鳥取・島根・徳島・大分の 8 道府県とされている。ただし、この一覧は数か月前の情報に基づくので、最新の任期を確認したい。福井県は 2026 年 1 月に知事選を終え、任期が 2030 年まで続くため対象外である。</p>
 
-<h2>2028 年の夏 : 参院選と都知事選が重なる</h2>
+<h2 id="sec4">4. 2028 年の夏 : 参院選と都知事選が重なる</h2>
 <p>2028 年は、参議院議員の半数の任期が 7 月 25 日に、東京都知事の任期が 7 月 30 日に満了する。公職選挙法は、任期満了による選挙を任期満了日の前 30 日以内に行うと定めている。この規定を当てはめると、投票できる期間はおおむね図 3 のようになる。二つの期間は 6 月 30 日から 7 月 25 日までの約 4 週間で重なり、投票日が近くなる可能性が高い。</p>
 
 <figure>
@@ -231,7 +271,7 @@
 <p>実際の投票日は、国会の会期や政権の判断などで決まる。 2022 年の参院選は 7 月 10 日、 2024 年の都知事選は 7 月 7 日だった。同じ日になるのか、別の日曜日になるのかは、本稿の時点では何も決まっていない。</p>
 </div>
 
-<h2>自民党総裁選挙 : 任期は 2027 年 9 月まで</h2>
+<h2 id="sec5">5. 自民党総裁選挙 : 任期は 2027 年 9 月まで</h2>
 <p>自民党の総裁選は、公職選挙法の選挙ではなく政党の内部の選挙だが、総裁がそのまま首相になるため、実質的に政権を決める選挙である。 2025 年 10 月に高市早苗氏が総裁に選ばれた。その任期は前任の石破茂氏の残りに当たる 2027 年 9 月までである。</p>
 
 <figure>
@@ -256,11 +296,11 @@
 
 <p>総裁選の日程は決まっていない。任期満了で実施される場合と、総裁が欠けて前倒しになる場合の、二つの筋書きがある。総裁任期は 1 期 3 年で、連続して務められるのは 3 期までと定められている。</p>
 
-<h2>東京都議会議員選挙と衆議院議員選挙</h2>
+<h2 id="sec6">6. 東京都議会議員選挙と衆議院議員選挙</h2>
 <p>東京都議会議員選挙は定数 127 で、 4 年ごとに行われる。前回は 2025 年 6 月 22 日に投開票され、都民ファーストの会が 2021 年以来の第一党に返り咲いた。次回の任期満了日は 2029 年 7 月 22 日である。 2025 年のように参議院選挙との重なりを避けて調整されることもあるため、時期は 6 月か 7 月とみておくとよい。</p>
 <p>衆議院議員選挙は、 2026 年 2 月の総選挙で自民党と日本維新の会の連立が大勝した。任期満了日は 2030 年 2 月 7 日だが、衆議院には解散があるため、この日より前に行われる可能性が常にある。ここに挙げた選挙の中で、時期が最も読みにくい。</p>
 
-<h2>この文書の確度</h2>
+<h2 id="sec7">7. この文書の確度</h2>
 <table class="cards">
 <thead>
 <tr><th>区分</th><th>内容</th><th>確かさ</th></tr>

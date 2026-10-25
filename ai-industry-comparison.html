@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>生成 AI 企業比較の基礎資料――モデル・エージェント・コーディング環境</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -22,7 +22,7 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
@@ -50,28 +50,34 @@
     table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
-  /* 文書固有の補助(目次・参考文献・企業ごとの枠) */
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注と参考文献 */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{border-bottom:none;margin-top:0;padding-bottom:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 文書固有の補助 */
   .kicker { font-size: .9rem; letter-spacing: .14em; color: #2a4d69; font-weight: 700; margin: 0 0 .6rem; }
-  h1 { font-size: 1.8rem; line-height: 1.5; }
   .subtitle { font-size: 1.05rem; color: #555; margin: 0 0 1.4rem; }
   .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 0 0 1.6rem; }
   .lede p:last-child { margin-bottom: 0; }
-  .toc { background: #e6edf3; border: 1px solid #bbb; padding: 1.2rem 1.5rem; margin: 0 0 2.2rem; }
-  .toc > ol { columns: 2; column-gap: 2rem; }
-  .toc-title { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .7rem; }
-  .toc li { margin-bottom: .4rem; font-size: 1rem; break-inside: avoid; }
-  .toc a { color: #222; text-decoration: none; }
-  .toc a:hover { color: #2a4d69; text-decoration: underline; }
-  sup { font-size: .72em; }
-  sup a { color: #2a4d69; text-decoration: none; }
-  sup a:hover { text-decoration: underline; }
-  .refs { border-top: 1px solid #bbb; margin-top: 3.5rem; padding-top: 1.5rem; }
-  .refs h2 { border-bottom: none; margin-top: 0; padding-bottom: 0; }
-  .refs p, .refs li { font-size: .95rem; line-height: 1.65; margin: 0 0 .7rem; overflow-wrap: anywhere; word-break: break-word; }
-  .refs ol { margin: 0 0 .7rem; }
-  .refs li > a:first-child { font-weight: 700; text-decoration: none; }
-  .refs sup a { font-style: italic; font-weight: 700; }
-  .refs li:target, sup:target { background: #e6edf3; }
   .company { border: 1px solid #bbb; background: #fff; margin: 0 0 2.5rem; scroll-margin-top: 16px; }
   .company-head { background: #2a4d69; color: #fff; padding: 1.2rem 1.5rem; }
   .company-head h2 { font-size: 1.5rem; color: #fff; background: none; padding: 0; margin: 0; border-radius: 0; }
@@ -83,17 +89,9 @@
   .field-body p { margin: 0 0 .7rem; }
   .field-body p:last-child { margin-bottom: 0; }
   .field-body ul { margin: .5rem 0 0; padding-left: 1.2em; }
-  .field-body li { margin-bottom: .5rem; font-size: 1.0625rem; }
+  .field-body li { margin-bottom: .5rem; }
   .field-body strong { color: #2a4d69; }
-  @media (max-width: 480px) {
-    h1 { font-size: 1.5rem; }
-    .toc > ol { columns: 1; }
-    .subtitle { font-size: 1.0625rem; }
-    .lede { padding-left: .8rem; }
-    .lede p { font-size: 1.09375rem; }
-    .company-head { padding: 1rem 1.1rem; }
-    .field { padding: 1rem 1.1rem; }
-  }
+  @media (max-width: 480px) { .subtitle { font-size: 1.0625rem; } .lede { padding-left: .8rem; } .company-head { padding: 1rem 1.1rem; } .field { padding: 1rem 1.1rem; } }
 </style>
 </head>
 <body>
@@ -108,18 +106,19 @@
 <nav class="toc" aria-label="目次">
 <p class="toc-title">目次</p>
 <ol>
-<li><a href="#google">Google ―― Google の AI エコシステム</a></li>
-<li><a href="#openai">OpenAI ―― 汎用 AI アシスタント + AI エージェント</a></li>
-<li><a href="#anthropic">Anthropic ―― 高性能モデル + AI エージェント</a></li>
-<li><a href="#spacex">SpaceX ―― Grok + Cursor + 常時稼働エージェント</a></li>
-<li><a href="#meta">Meta ―― 配布力 × スーパーインテリジェンス</a></li>
-<li><a href="#perplexity">Perplexity ―― 検索特化型 AI アシスタント + ブラウザエージェント</a></li>
+<li><a href="#sec1">Google ―― Google の AI エコシステム</a></li>
+<li><a href="#sec2">OpenAI ―― 汎用 AI アシスタント + AI エージェント</a></li>
+<li><a href="#sec3">Anthropic ―― 高性能モデル + AI エージェント</a></li>
+<li><a href="#sec4">SpaceX ―― Grok + Cursor + 常時稼働エージェント</a></li>
+<li><a href="#sec5">Meta ―― 配布力 × スーパーインテリジェンス</a></li>
+<li><a href="#sec6">Perplexity ―― 検索特化型 AI アシスタント + ブラウザエージェント</a></li>
+<li><a href="#sec7">参考文献・資料</a></li>
 </ol>
 </nav>
 
 <section class="company" id="google">
 <div class="company-head">
-<h2 class="name">Google</h2>
+<h2 class="name" id="sec1">1. Google</h2>
 <div class="tagline">「 Google の AI エコシステム」――検索・クラウド・ OS ・ Workspace まで含めた総合型。</div>
 </div>
 <div class="field">
@@ -181,7 +180,7 @@
 
 <section class="company" id="openai">
 <div class="company-head">
-<h2 class="name">OpenAI</h2>
+<h2 class="name" id="sec2">2. OpenAI</h2>
 <div class="tagline">「汎用 AI アシスタント + AI エージェント」―― ChatGPT を入口に、調査・作業・コーディングまで広げる。</div>
 </div>
 <div class="field">
@@ -238,7 +237,7 @@
 
 <section class="company" id="anthropic">
 <div class="company-head">
-<h2 class="name">Anthropic</h2>
+<h2 class="name" id="sec3">3. Anthropic</h2>
 <div class="tagline">「高性能モデル + AI エージェント」―― Claude Code を含む知的作業・開発への深い統合。</div>
 </div>
 <div class="field">
@@ -294,7 +293,7 @@
 
 <section class="company" id="spacex">
 <div class="company-head">
-<h2 class="name">SpaceX</h2>
+<h2 class="name" id="sec4">4. SpaceX</h2>
 <div class="tagline">「 Grok + Cursor + 常時稼働エージェント」――基盤モデルからコーディング環境、 24 時間稼働するクラウドエージェントまで、 1 社で垂直統合する戦略。</div>
 </div>
 <div class="field">
@@ -350,7 +349,7 @@
 
 <section class="company" id="meta">
 <div class="company-head">
-<h2 class="name">Meta</h2>
+<h2 class="name" id="sec5">5. Meta</h2>
 <div class="tagline">「配布力 × スーパーインテリジェンス」――30 億人規模のソーシャルグラフに Muse Wonder ・ Muse Spark ・ Muse ・ Muse Code を直接届ける企業。</div>
 </div>
 <div class="field">
@@ -412,7 +411,7 @@
 
 <section class="company" id="perplexity">
 <div class="company-head">
-<h2 class="name">Perplexity</h2>
+<h2 class="name" id="sec6">6. Perplexity</h2>
 <div class="tagline">「検索特化型 AI アシスタント + ブラウザエージェント」――回答エンジンを起点に、ブラウザと自律エージェントへ拡張する独立系スタートアップ。</div>
 </div>
 <div class="field">
@@ -465,7 +464,7 @@
 </section>
 
 <div class="refs">
-<h2>参考文献・資料</h2>
+<h2 id="sec7">7. 参考文献・資料</h2>
 <p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> Google, 「 Gemini API Release notes 」 , <em>Google AI for Developers</em> 。 <a href="https://ai.google.dev/gemini-api/docs/changelog">Google AI for Developers 更新履歴</a></li>

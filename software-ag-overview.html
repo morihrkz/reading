@@ -8,7 +8,7 @@
   body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -22,8 +22,19 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say { font-size: 19px; }
+  p, li, .note, .must, .say { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
@@ -61,7 +72,25 @@
 <p><strong>結論 : Software AG は、メインフレーム向けのデータベース Adabas と開発言語 Natural で成長した、ドイツ発の基盤ソフトウェア会社である。</strong> 1969 年に創業し、 1990 年代は北米・日本などの販売を米国の子会社が担っていた。 2000 年代に買収で統合・業務プロセス分野へ広がったが、 2023 年から 2025 年にかけて、投資ファンドの下で事業が切り分けられている。</p>
 </div>
 
-<h2>1. 要点</h2>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">要点</a></li>
+<li><a href="#sec2">年表</a></li>
+<li><a href="#sec3">1990 年代後半の Software AG</a>
+<ol>
+<li><a href="#sec3-1">親会社と SAGA の二層構造</a></li>
+<li><a href="#sec3-2">何を売っていたか</a></li>
+</ol>
+</li>
+<li><a href="#sec4">2000 年代以降の変遷</a></li>
+<li><a href="#sec5">「何だったのか」への答え</a></li>
+<li><a href="#sec6">確認できていないこと</a></li>
+<li><a href="#sec7">出典</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 要点</h2>
 <ul>
 <li>1969 年、コンサルティング会社 AIV の若手 6 人が創業した。創業者の一人で数学者の Peter Schnell が、のちに長く取締役会長を務めた。</li>
 <li>1971 年に高性能なトランザクション処理向けのデータベース Adabas を出し、 1979 年に英語に近い第 4 世代言語 Natural を出した。この二つが長く事業の柱になった。</li>
@@ -71,7 +100,7 @@
 <li>2023 年に Silver Lake が買収し、 2024 年に webMethods と StreamSets を IBM へ売却した。 2025 年には ARIS と Adabas &amp; Natural の二事業を軸にする方針になった。</li>
 </ul>
 
-<h2>2. 年表</h2>
+<h2 id="sec2">2. 年表</h2>
 <table class="cards">
 <thead><tr><th>時期</th><th>出来事</th></tr></thead>
 <tbody>
@@ -92,8 +121,8 @@
 </tbody>
 </table>
 
-<h2>3. 1990 年代後半の Software AG</h2>
-<h3>親会社と SAGA の二層構造</h3>
+<h2 id="sec3">3. 1990 年代後半の Software AG</h2>
+<h3 id="sec3-1">3.1 親会社と SAGA の二層構造</h3>
 <p>1998 年当時の報道によると、 SAGA （米バージニア州レストン）は、 Software AG の製品を北米・南米・日本・イスラエルで独占的に販売していた。新製品の開発の多くは引き続きドイツで行われ、親会社は SAGA から使用料を受け取っていた。したがって、「 Software AG 」という名前で日本や米国の顧客が接した相手は、ドイツ本社ではなく、この販売会社だった可能性が高い（これは報道からの推論である）。</p>
 <table class="cards">
 <thead><tr><th>項目</th><th>内容（ SAGA 、 1997 年度）</th></tr></thead>
@@ -106,10 +135,10 @@
 <tr><td data-label="項目">競合</td><td data-label="内容">IBM 、 Sybase 、 Sterling Software 、 Iona Technologies</td></tr>
 </tbody>
 </table>
-<h3>何を売っていたか</h3>
+<h3 id="sec3-2">3.2 何を売っていたか</h3>
 <p>報道によれば、中心はソフトウェアの開発ツールと、異なるコンピュータやネットワークをつなぐミドルウェアだった。データベースは、分析 (OLAP) ではなく、大量の取引を処理する基幹システム向けの Adabas である。 Adabas はメインフレームでの定着が強みだったが、その強みが新しい基盤への移行をためらわせ、市場での存在感を下げたという見方も資料にある。</p>
 
-<h2>4. 2000 年代以降の変遷</h2>
+<h2 id="sec4">4. 2000 年代以降の変遷</h2>
 <ul>
 <li><strong>XML への展開 :</strong> 1999 年ごろの上場後に、 XML を扱う Tamino を出した。</li>
 <li><strong>統合・業務プロセスへ :</strong> webMethods （ 2007 年、 5.46 億ドル）で、サービス統合基盤や業務プロセス管理に入った。 IDS Scheer の取り込みで、業務プロセスのモデリング製品 ARIS を得た。</li>
@@ -120,7 +149,7 @@
 <p>IDS Scheer の買収年は、資料で食い違う。 Wikipedia は 2009 年の買収提案と 2010 年 2 月の傘下入りとし、 diginomica は 2007 年と書いている。本稿は Wikipedia の記述を採った。確定には一次資料が必要である。</p>
 </div>
 
-<h2>5. 「何だったのか」への答え</h2>
+<h2 id="sec5">5. 「何だったのか」への答え</h2>
 <table class="cards">
 <thead><tr><th>見方</th><th>答え</th></tr></thead>
 <tbody>
@@ -132,7 +161,7 @@
 </tbody>
 </table>
 
-<h2>6. 確認できていないこと</h2>
+<h2 id="sec6">6. 確認できていないこと</h2>
 <ul class="check">
 <li>親会社の上場年（ 1999 年か 2002 年か）</li>
 <li>IDS Scheer の買収の正確な年（上の注記を参照）</li>
@@ -142,7 +171,7 @@
 <li>2025 年以降の Alfabet 、 Cumulocity の売却先（資料では未公表）</li>
 </ul>
 
-<h2>7. 出典</h2>
+<h2 id="sec7">7. 出典</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Software_AG">Software AG - Wikipedia</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Peter_Pag%C3%A9">Peter Pagé - Wikipedia</a></li>

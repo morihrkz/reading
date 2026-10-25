@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>マニュアルモードの利点</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -22,8 +22,19 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
@@ -73,12 +84,31 @@
   <h1>マニュアルモードで、何が手に入るのか</h1>
   <p class="meta">DJI Avata 2 / Neo / Neo 2 ・調査ノート・ 2026 年 10 月 19 日時点。出典はメーカー仕様ページ、レビュー記事、販売店ブログ、フォーラム。 DJI 公式マニュアルの本文は確認できていない。</p>
 
-  <h2>先に結論</h2>
+  <nav class="toc" aria-label="目次">
+  <p class="toc-title">目次</p>
+  <ol>
+  <li><a href="#sec1">先に結論</a></li>
+  <li><a href="#sec2">スティックが指示する内容が変わる</a></li>
+  <li><a href="#sec3">Avata 2 で得られるもの</a>
+  <ol>
+  <li><a href="#sec3-1">最高水平速度 (m/s)</a></li>
+  </ol>
+  </li>
+  <li><a href="#sec4">Neo / Neo 2 で得られるもの</a></li>
+  <li><a href="#sec5">代わりに失うもの</a></li>
+  <li><a href="#sec6">始めるときの準備</a></li>
+  <li><a href="#sec7">あなたに必要か</a></li>
+  <li><a href="#sec8">確度について</a></li>
+  <li><a href="#sec9">出典</a></li>
+  </ol>
+  </nav>
+
+  <h2 id="sec1">1. 先に結論</h2>
   <p>マニュアルモードの利点は「速く飛べる」ことではなく、<strong>機体の姿勢と推力を自分で全部決められること</strong>である。ノーマル / スポーツでは機体が勝手に水平に戻り、止まり、障害物を避ける。マニュアルではそれが全部なくなる。</p>
   <p><strong>Avata 2</strong> では、最高速度が約 3.4 倍(8→27 m/s)になり、宙返りや急降下からの引き起こしなど、自動制御では出せない動きができる。 <strong>Neo / Neo 2</strong> では、速度や出力が小さいため、利点の中心は「 FPV の操縦を安い機体で覚えられること」と「狭い場所を自分の判断で飛べること」である。</p>
   <p>この機能に魅力を感じないのは自然である。撮影が目的なら、ノーマル / スポーツ(Avata 2 なら Easy ACRO も)で足りる人が多いはずだ。</p>
 
-  <h2>スティックが指示する内容が変わる</h2>
+  <h2 id="sec2">2. スティックが指示する内容が変わる</h2>
   <p>モードの違いは、スティックを倒したときに機体へ何を命令しているかの違いである。以下は一般的な FPV 機の仕組みに基づく説明で、 DJI の文書から直接引いたものではない。</p>
   <div class="pair">
     <div>
@@ -94,9 +124,9 @@
   </div>
   <p>手を離せばドローンが勝手に安定する状態は、安全だが、<strong>人が機体の姿勢を決められない</strong>ことでもある。逆さまでも、真下を向いても、そのまま飛び続けるには、姿勢を人が握る必要がある。マニュアルの利点はすべてここから出ている。</p>
 
-  <h2>Avata 2 で得られるもの</h2>
+  <h2 id="sec3">3. Avata 2 で得られるもの</h2>
   <div class="bars" role="img" aria-label="Avata 2 の最高水平速度。ノーマル8、スポーツ16、マニュアル27メートル毎秒">
-    <h3>最高水平速度 (m/s)</h3>
+    <h3 id="sec3-1">3.1 最高水平速度 (m/s)</h3>
     <div class="bar"><span>Normal</span><div class="track"><div class="fill" style="width:29.6%">8</div></div></div>
     <div class="bar"><span>Sport</span><div class="track"><div class="fill" style="width:59.3%">16</div></div></div>
     <div class="bar m"><span>Manual</span><div class="track"><div class="fill" style="width:100%">27</div></div></div>
@@ -110,7 +140,7 @@
     <li><strong>他の FPV 機への足がかりになる。</strong>マニュアルの操作感は、一般的なレース機・フリースタイル機と同じ種類のものである。</li>
   </ul>
 
-  <h2>Neo / Neo 2 で得られるもの</h2>
+  <h2 id="sec4">4. Neo / Neo 2 で得られるもの</h2>
   <p>Neo は 151g 、 Neo 2 は 160g(送信機付き)で、 Avata 2 の 377g よりずっと軽く小さい機体である。 Neo 2 のスペックページにはマニュアル時の最高速度が載っておらず、ノーマル 8 m/s 、スポーツ 12 m/s までしか分からない。そのため、 Avata 2 のような速度面の利点は期待できない。</p>
   <ul>
     <li><strong>安く、壊れにくい練習機になる。</strong>プロペラガード付きの頑丈な機体で、練習中の墜落に比較的強い、と販売店ブログは述べている。 FPV のスティック操作を覚える入口として、これが最大の利点である。</li>
@@ -123,7 +153,7 @@
     <p>Neo 2 は 2025 年 11 月のファームウェア 01.00.0400 で初めてマニュアルに対応した。必要なのは DJI FPV Remote Controller 3 と DJI Goggles N3 または Goggles 3 である。 RC-N3 と RC Motion 3 ではマニュアルに切り替えられない。</p>
   </div>
 
-  <h2>代わりに失うもの</h2>
+  <h2 id="sec5">5. 代わりに失うもの</h2>
   <table class="cards">
     <thead><tr><th>機能</th><th>Normal / Sport</th><th>Manual</th></tr></thead>
     <tbody>
@@ -137,7 +167,7 @@
   </table>
   <p>Avata 2 のレビューでは、マニュアルでの初飛行の失敗談が多く、「みんな墜落している」というコメントも見られた。一方で、ノーマル / スポーツは安定していて扱いやすいとの評価である。</p>
 
-  <h2>始めるときの準備</h2>
+  <h2 id="sec6">6. 始めるときの準備</h2>
   <ol>
     <li><strong>機材。</strong> FPV Remote Controller 3 と Goggles 3 か N3 。 Neo 2 はデジタルトランスミッターも機体に付ける。</li>
     <li><strong>スロットルのバネを外す。</strong>同梱の工具で、スロットルスティックの自動中央復帰を無効にする。これがないと推力を保持できない。</li>
@@ -146,7 +176,7 @@
     <li><strong>最初はシミュレーターと広い場所で。</strong>各方向 20 m 以上空いた場所、離陸はノーマル、上空でマニュアルに入り、危なければノーマルに戻すのが定石である。</li>
   </ol>
 
-  <h2>あなたに必要か</h2>
+  <h2 id="sec7">7. あなたに必要か</h2>
   <table class="cards">
     <thead><tr><th>目的</th><th>おすすめ</th></tr></thead>
     <tbody>
@@ -157,7 +187,7 @@
     </tbody>
   </table>
 
-  <h2>確度について</h2>
+  <h2 id="sec8">8. 確度について</h2>
   <ul>
     <li>Avata 2 の速度と EU の 19 m/s 制限、 Neo 2 の対応コントローラーは、 DJI 公式のスペックページで確認した。</li>
     <li>マニュアルで無効になる機能の一覧と準備手順は、販売店ブログ(HireDronePilot)と DroneXL に基づく。 DJI 公式の取扱説明書の本文は確認できていない。</li>
@@ -167,7 +197,7 @@
     <li>「操作の命令内容が変わる」という説明は、一般的な FPV 機の仕組みからの推論である。</li>
   </ul>
 
-  <h2>出典</h2>
+  <h2 id="sec9">9. 出典</h2>
   <ul class="src">
     <li><a href="https://www.dji.com/avata-2/specs">DJI Avata 2 スペック</a></li>
     <li><a href="https://www.dji.com/neo-2/specs">DJI Neo 2 スペック</a></li>

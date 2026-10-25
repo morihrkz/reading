@@ -7,10 +7,10 @@
 <meta name="description" content="ドコモから ahamo へプラン変更するときの手順書。お店の使い方、事前確認、持ち物、d 払い・ iD 、杉並区周辺の店舗を、スマートフォンで読みやすくまとめています。">
 <title>ドコモから ahamo へ変更する手順書</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -24,7 +24,7 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.1875rem; }
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
@@ -52,6 +52,17 @@
     table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
   /* 文書固有の補助(対話部品・目次・出典・固定の目次ボタン) */
   :root {
     --accent: #2a4d69; --on-accent: #fff; --link: #1a5a96; --line: #bbb; --line-soft: #e3e3e3;
@@ -67,11 +78,6 @@
   .say { background: var(--head); border-left: 5px solid var(--accent); padding: .7rem 1rem; margin: .6rem 0; }
   .must ul, .note ul { margin: .4rem 0 0; padding-left: 1.2rem; }
   .must li, .note li { margin: .5rem 0; }
-  nav.toc { background: var(--card); border: 1px solid var(--line); border-radius: 4px; margin: 1.2rem 0; }
-  nav.toc summary { cursor: pointer; padding: .7rem 1rem; font-weight: bold; color: var(--accent); min-height: 1.5rem; }
-  nav.toc ol { margin: 0; padding: 0 1rem .8rem 2.4rem; }
-  nav.toc li { margin: 0; }
-  nav.toc li a { display: block; padding: .5rem 0; }
   ol.steps { list-style: none; counter-reset: step; padding: 0; margin: 1rem 0; }
   ol.steps > li { counter-increment: step; position: relative; background: var(--card); border: 1px solid var(--line); border-radius: 4px; padding: .7rem 1rem .7rem 3.4rem; margin: 0 0 1.3rem; }
   ol.steps > li::before { content: counter(step); position: absolute; left: .7rem; top: .7rem; width: 1.9rem; height: 1.9rem; line-height: 1.9rem; text-align: center; border-radius: 50%; background: var(--accent); color: var(--on-accent); font-weight: bold; }
@@ -113,36 +119,54 @@
 <h1>ドコモから ahamo へ変更する手順書</h1>
 <p class="meta">作成日 : 2026 年 10 月 14 日</p>
 
-<nav class="toc" id="toc">
-<details>
-<summary>目次（ 11 章）</summary>
+<nav class="toc" id="toc" aria-label="目次">
+<p class="toc-title">目次</p>
 <ol>
-<li><a href="#ch1">全体の流れ</a></li>
-<li><a href="#ch2">手続きの前に確認すること</a></li>
-<li><a href="#ch3">持ち物</a></li>
-<li><a href="#ch4">お店に行く日</a></li>
-<li><a href="#ch5">d 払い・ iD を使い続けるために</a></li>
-<li><a href="#ch6">手続きのあとにすること</a></li>
-<li><a href="#ch7">杉並区周辺のドコモショップ</a></li>
-<li><a href="#ch8">詐欺・偽サイトに注意</a></li>
-<li><a href="#ch9">出典</a></li>
-<li><a href="#ch10">用語の説明</a></li>
-<li><a href="#ch11">この手順書の限界</a></li>
+<li><a href="#sec1">全体の流れ</a>
+<ol>
+<li><a href="#sec1-1">お店でのお手伝いと、自分でする場合を比べる</a></li>
 </ol>
-</details>
+</li>
+<li><a href="#sec2">手続きの前に確認すること</a></li>
+<li><a href="#sec3">持ち物</a></li>
+<li><a href="#sec4">お店に行く日</a>
+<ol>
+<li><a href="#sec4-1">予約</a></li>
+<li><a href="#sec4-2">当日の流れ</a></li>
+</ol>
+</li>
+<li><a href="#sec5">d 払い・ iD を使い続けるために</a>
+<ol>
+<li><a href="#sec5-1">手続きの前にすること</a></li>
+<li><a href="#sec5-2">手続きのあとにすること</a></li>
+<li><a href="#sec5-3">iD について（条件によって変わります）</a></li>
+</ol>
+</li>
+<li><a href="#sec6">手続きのあとにすること</a></li>
+<li><a href="#sec7">杉並区周辺のドコモショップ</a>
+<ol>
+<li><a href="#sec7-1">杉並区内</a></li>
+<li><a href="#sec7-2">隣の区・市（杉並区の主要駅から行きやすい店舗）</a></li>
+</ol>
+</li>
+<li><a href="#sec8">詐欺・偽サイトに注意</a></li>
+<li><a href="#sec9">出典</a></li>
+<li><a href="#sec10">用語の説明</a></li>
+<li><a href="#sec11">この手順書の限界</a></li>
+</ol>
 </nav>
 
 <div class="must">
 <strong>最初に</strong>
 <ul>
-<li><strong>お店でできること。</strong>ドコモショップでは、有料の「 ahamo WEB お申込みサポート」（税込 3,300 円）を受けられます。ただし、<strong>申し込みの操作をするのはご自身です。</strong>お店の人は、画面を見ながら必要に応じて案内する役です。代わりに操作してくれるサービスではありません。受け付けは店舗ごとに電話で確認してください（<a href="#ch7">第 7 章</a>）。</li>
+<li><strong>お店でできること。</strong>ドコモショップでは、有料の「 ahamo WEB お申込みサポート」（税込 3,300 円）を受けられます。ただし、<strong>申し込みの操作をするのはご自身です。</strong>お店の人は、画面を見ながら必要に応じて案内する役です。代わりに操作してくれるサービスではありません。受け付けは店舗ごとに電話で確認してください（<a href="#sec7">第 7 章</a>）。</li>
 <li><strong>お店でできないこと。</strong>契約後の相談はお店では受けられず、 ahamo に変更したあとの手続きは、ドコモショップなどではできません（WEB または郵送）。開通は、ご自身で行う流れです（出典 <a href="#src1">1</a> ・ <a href="#src2">2</a> ）。機種変更を同時に申し込むこともできません。</li>
-<li><strong>d 払い・ iD 。</strong> ahamo の公式案内では、変更後も続けて使えます。ただし、残高が一時的に 0 円と表示される、「ドコモメール持ち運び」を申し込まないとドコモメールが使えなくなるなど、事前に知っておくことがあります（<a href="#ch5">第 5 章</a>）。</li>
+<li><strong>d 払い・ iD 。</strong> ahamo の公式案内では、変更後も続けて使えます。ただし、残高が一時的に 0 円と表示される、「ドコモメール持ち運び」を申し込まないとドコモメールが使えなくなるなど、事前に知っておくことがあります（<a href="#sec5">第 5 章</a>）。</li>
 <li><strong>行く場所と回数。</strong>お店に行くのは、申し込みの日が中心です。何回行くことになるかは、確認できていません。お店で確認してください。</li>
 </ul>
 </div>
 
-<h2 id="ch1">1. 全体の流れ</h2>
+<h2 id="sec1">1. 全体の流れ</h2>
 <p>手続きは、三つの場面に分かれます。「前日」と「後日」は自宅、「当日」はお店です。</p>
 <ol class="steps">
 <li><strong>前日・自宅で</strong>
@@ -168,7 +192,7 @@
 </li>
 </ol>
 
-<h3 id="ch1-1">1.1 お店でのお手伝いと、自分でする場合を比べる</h3>
+<h3 id="sec1-1">1.1 お店でのお手伝いと、自分でする場合を比べる</h3>
 <p>「お店で手続きしたい」という望みに最も近いのは、お申込みサポートを使う方法です。ほかの方法も、同じ観点で並べます。</p>
 <table class="cards">
 <caption>手続き方法の比較</caption>
@@ -184,14 +208,14 @@
 </table>
 <p><strong>助言 :</strong> 操作に不安がある方は、 A をおすすめします。理由は、画面の前で分からないところをその場で聞けるからです。その代わり、お店の人は説明の義務を負っていません（出典 <a href="#src1">1</a> ）。分からない点は、遠慮せず質問してください。 ahamo にするかどうかの判断は、ご自身でなさってください。</p>
 
-<h2 id="ch2">2. 手続きの前に確認すること</h2>
+<h2 id="sec2">2. 手続きの前に確認すること</h2>
 <p class="meta">各項目の左の四角をタップすると、確認ずみの印を付けられます。印はこの端末のブラウザに保存されます。</p>
 <ul class="check">
 <li><label><input type="checkbox"><span><strong>契約者は本人か。</strong>ご家族（成人）の名義で、使っているのが別の成人の方の場合は、 ahamo に変更する前に、ドコモショップで名義変更が必要です（出典 <a href="#src5">5</a> ）。確認 : 契約書類、または店頭で聞く。</span></label></li>
 <li><label><input type="checkbox"><span><strong>d アカウントで入れるか。</strong> ahamo の申し込みは、 d アカウント（ドコモの共通 ID）でログインして進みます（出典 <a href="#src2">2</a> ）。確認 : 自宅のスマートフォンで d アカウントにログインしてみる。パスワードを忘れた場合は、お店に行く前にドコモの案内に従って再設定する。</span></label></li>
 <li><label><input type="checkbox"><span><strong>毎月の支払い方法。</strong> ahamo の支払いは、クレジットカードか口座振替だけです。それ以外（請求書払いなど）の場合は、先に変更が必要です。新しくカードを登録する場合は、 3D セキュア（カード会社の本人確認の仕組み）に対応したカードだけが使えます（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。確認 : My docomo 、または毎月の請求書。</span></label></li>
-<li><label><input type="checkbox"><span><strong>今の端末が使えるか。</strong> ahamo では、 nanoSIM または eSIM に対応した端末だけが使えます（出典 <a href="#src3">3</a> ）。今の端末を使い続ける場合は、 SIM ロック解除（ほかの会社の SIM を入れても使えるようにする設定）も必要です（出典 <a href="#src2">2</a> ）。 nanoSIM は従来の小さなカード型の SIM 、 eSIM は<a href="#ch10">第 10 章</a>で説明します。確認 : 「対応端末確認」で調べる（出典 <a href="#src4">4</a> ）。分からなければ、お店で相談する。</span></label></li>
-<li><label><input type="checkbox"><span><strong>ネットワーク暗証番号（契約の手続きで使う番号）を覚えているか。</strong>手続きで使う場面があるかは、確認できていません（<a href="#ch11">第 11 章</a>）。確認 : 番号は書き留めず、頭の中で思い出せるかだけ確かめる。忘れた場合の扱いは、店舗に聞く。<span class="tag">助言</span></span></label></li>
+<li><label><input type="checkbox"><span><strong>今の端末が使えるか。</strong> ahamo では、 nanoSIM または eSIM に対応した端末だけが使えます（出典 <a href="#src3">3</a> ）。今の端末を使い続ける場合は、 SIM ロック解除（ほかの会社の SIM を入れても使えるようにする設定）も必要です（出典 <a href="#src2">2</a> ）。 nanoSIM は従来の小さなカード型の SIM 、 eSIM は<a href="#sec10">第 10 章</a>で説明します。確認 : 「対応端末確認」で調べる（出典 <a href="#src4">4</a> ）。分からなければ、お店で相談する。</span></label></li>
+<li><label><input type="checkbox"><span><strong>ネットワーク暗証番号（契約の手続きで使う番号）を覚えているか。</strong>手続きで使う場面があるかは、確認できていません（<a href="#sec11">第 11 章</a>）。確認 : 番号は書き留めず、頭の中で思い出せるかだけ確かめる。忘れた場合の扱いは、店舗に聞く。<span class="tag">助言</span></span></label></li>
 <li><label><input type="checkbox"><span><strong>機種変更をしたいか。</strong>機種の購入と、 ahamo への変更は同時にできません。先にプラン変更をして、そのあとドコモオンラインショップで購入します（出典 <a href="#src6">6</a> ）。確認 : 機種を替える予定があるかどうか、ご自身で決めておく。</span></label></li>
 <li><label><input type="checkbox"><span><strong>ドコモメール（@docomo.ne.jp）を使っているか。</strong> ahamo では、そのままでは使えません。「ドコモメール持ち運び」（アドレスを引き続き使える申し込み）をしないと、アドレスは失効し、元に戻せません（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。確認 : 使っているメールアドレスを見る。</span></label></li>
 <li><label><input type="checkbox"><span><strong>ahamo で使えなくなるサービスがないか。</strong>ドコモ電話帳、公式の一覧にある割引、（契約している場合は）「 60 歳からのスマホプログラム」などは、変更と同時に廃止・終了になります。シェアパック（家族でデータを分け合うプラン）は、事前に手続きが必要です（出典 <a href="#src4">4</a> ）。確認 : 公式の一覧、または店頭で聞く。</span></label></li>
@@ -199,10 +223,10 @@
 <li><label><input type="checkbox"><span><strong>家族割引やセット割引を使っているか。</strong>契約を変えると適用が変わらないか、確認が必要です。この手順書では、結果を確認できていません（要確認）。確認 : 店頭で聞く、またはドコモの公式案内。</span></label></li>
 <li><label><input type="checkbox"><span><strong>月額がどう変わるか。</strong> ahamo の基本料金は 30GB で税込 2,970 円（2026 年 10 月 14 日時点）で、 2026 年 12 月 1 日から段階制に改定されると案内されています（出典 <a href="#src3">3</a> ）。今のドコモの料金と比べてください。</span></label></li>
 <li><label><input type="checkbox"><span><strong>解約金・手数料。</strong>ドコモから ahamo への変更では、解約金も事務手数料もかからないと案内されています（出典 <a href="#src3">3</a> ・ <a href="#src8">8</a> ）。</span></label></li>
-<li><label><input type="checkbox"><span><strong>iD の種類と設定。</strong><a href="#ch5">第 5 章</a>を見てください。確認 : iD を使っているカードまたはアプリの名前をメモする。</span></label></li>
+<li><label><input type="checkbox"><span><strong>iD の種類と設定。</strong><a href="#sec5">第 5 章</a>を見てください。確認 : iD を使っているカードまたはアプリの名前をメモする。</span></label></li>
 </ul>
 
-<h2 id="ch3">3. 持ち物</h2>
+<h2 id="sec3">3. 持ち物</h2>
 <table class="cards">
 <caption>持ち物と、ないときの対応</caption>
 <thead>
@@ -216,10 +240,10 @@
 </tbody>
 </table>
 
-<h2 id="ch4">4. お店に行く日</h2>
-<h3 id="ch4-1">4.1 予約</h3>
+<h2 id="sec4">4. お店に行く日</h2>
+<h3 id="sec4-1">4.1 予約</h3>
 <p>各店舗の公式ページには、「店頭来店」の予約、オンライン来店（ビデオ通話）の予約などが載っています。 d アカウントでログインして予約する方法もあります（出典 <a href="#src9">9</a> ）。お申込みサポートに予約が必須かどうかは、確認できていません。<strong>助言 :</strong> 電話で「お申込みサポートを受けたいが、予約は必要か」と聞いてください。理由は、待たずに済むか、書類や持ち物の確認ができるからです。</p>
-<h3 id="ch4-2">4.2 当日の流れ</h3>
+<h3 id="sec4-2">4.2 当日の流れ</h3>
 <ol>
 <li>受付で、来店予約をしていれば、そのことを伝えます。受付が終わる時刻は、営業時間の終わりより早い店舗があります（例 : 荻窪タウンセブン店は受付が 19:00 まで。出典 <a href="#src9">9</a> ）。時間に余裕をもって行ってください。<span class="tag">助言</span></li>
 <li>次の言葉で、用件を伝えます。
@@ -237,7 +261,7 @@
 新規契約には審査があり、お申込みサポートを使っても契約が成立するとは限らないと案内されています（出典 <a href="#src1">1</a> ）。ドコモからのプラン変更でも同じかは、確認できていません（要確認）。
 </div>
 
-<h2 id="ch5">5. d 払い・ iD を使い続けるために</h2>
+<h2 id="sec5">5. d 払い・ iD を使い続けるために</h2>
 <p>公式の案内では、「 d 払い・ iD をご利用いただけます。ドコモから ahamo に変更後も継続してご利用いただけます」とされています（出典 <a href="#src10">10</a> ）。ただし、次の違いがあります。</p>
 <div class="cols">
 <section class="col">
@@ -266,14 +290,14 @@
 </section>
 </div>
 
-<h3 id="ch5-1">5.1 手続きの前にすること</h3>
+<h3 id="sec5-1">5.1 手続きの前にすること</h3>
 <ul class="check">
 <li><label><input type="checkbox"><span>d 払い残高の金額を、アプリで見て覚えておく（変更後の確認のため）。<span class="tag">助言</span></span></label></li>
 <li><label><input type="checkbox"><span>ドコモメールのアドレスを残したい場合は、「ドコモメール持ち運び」を申し込む。申し込まないと、アドレスは失効し、元に戻せません（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。</span></label></li>
 <li><label><input type="checkbox"><span>d アカウントの ID にドコモメールを設定している場合は、「ドコモメール持ち運び」を申し込むか、 d アカウントの連絡先メールアドレス（ほかの会社のメール）を登録する。そのままでは大事なお知らせが届かなくなるおそれがあります（出典 <a href="#src11">11</a> ）。</span></label></li>
-<li><label><input type="checkbox"><span>支払い方法が、クレジットカードか口座振替になっているか確認する（<a href="#ch2">第 2 章</a>）。</span></label></li>
+<li><label><input type="checkbox"><span>支払い方法が、クレジットカードか口座振替になっているか確認する（<a href="#sec2">第 2 章</a>）。</span></label></li>
 </ul>
-<h3 id="ch5-2">5.2 手続きのあとにすること</h3>
+<h3 id="sec5-2">5.2 手続きのあとにすること</h3>
 <ul class="check">
 <li><label><input type="checkbox"><span>d 払いアプリを開き、ログインできるか確かめる。</span></label></li>
 <li><label><input type="checkbox"><span>残高が 0 円と表示されても、あわてない。残高は返金される扱いです。ドコモから ahamo に変更した場合は、変更から 1 〜 2 週間後（目安）に返金メールが届くと案内されています（出典 <a href="#src12">12</a> ）。会員情報の変更をした人が対象とされています。メールが届かないときは、 ahamo のチャットで相談してください。</span></label></li>
@@ -281,7 +305,7 @@
 <li><label><input type="checkbox"><span>Amazon で d 払いを使っている場合は、別の設定が必要です（出典 <a href="#src10">10</a> ）。</span></label></li>
 <li><label><input type="checkbox"><span>電話料金合算払い（d 払いの代金を、電話代といっしょに払う方法）の利用限度額は、引き継がれます（出典 <a href="#src13">13</a> ）。</span></label></li>
 </ul>
-<h3 id="ch5-3">5.3 iD について（条件によって変わります）</h3>
+<h3 id="sec5-3">5.3 iD について（条件によって変わります）</h3>
 <p>iD は、使っているカードやアプリが人によって違います。 ahamo の公式 FAQ は「 iD を継続して使える」と案内しますが、お手元の端末で何を設定しているかは、この調査では分かりません。<strong>あなたの場合は、次を確認してください。</strong></p>
 <ul class="check">
 <li><label><input type="checkbox"><span>iD を使っているカード（またはアプリ）の名前をメモする。</span></label></li>
@@ -292,18 +316,18 @@
 おサイフケータイ（交通系 IC など）の設定の引き継ぎについては、公式の記載を確認できませんでした。この手順書では何も約束しません。カードの会社や iD の公式の案内で確認してください。
 </div>
 
-<h2 id="ch6">6. 手続きのあとにすること</h2>
+<h2 id="sec6">6. 手続きのあとにすること</h2>
 <ol>
 <li id="step1"><strong>開通する。</strong>申し込みのあとの開通は、自分で行います。選んだ SIM の種類によって手順が違います。
 <ul>
 <li><strong>SIM カードの場合。</strong>届いた商品を受け取って、利用開始の設定をします。届くまで 1 週間前後かかることがあります。</li>
 <li><strong>eSIM（端末の中に入る電子的な SIM）の場合。</strong>「 eSIM 利用開始手続きのご案内」のメールが届いたら、設定をダウンロードして開通します。当日から 3 日前後で使い始められると案内されています（出典 <a href="#src2">2</a> ）。</li>
-<li>eSIM は配送を待たずに済む分、早く始められますが、お手元の端末が eSIM に対応しているかは、<a href="#ch2">第 2 章</a>で確認してください。 SIM カードを選ぶと、届くのを待つことになります。</li>
+<li>eSIM は配送を待たずに済む分、早く始められますが、お手元の端末が eSIM に対応しているかは、<a href="#sec2">第 2 章</a>で確認してください。 SIM カードを選ぶと、届くのを待つことになります。</li>
 </ul>
 <strong>eSIM を自分で削除しないでください。</strong>再発行が有料になる場合があります（出典 <a href="#src4">4</a> ）。開通の途中で分からなくなったら、 ahamo のチャットに相談します（<a href="#step7">第 6 章 7 番</a>）。</li>
 <li><strong>d アカウントの利用開始設定をする。</strong>開通した電話番号に SMS（電話番号あての短いメッセージ）が届きます。案内に沿って進めます（出典 <a href="#src2">2</a> ）。</li>
 <li><strong>つながるか確かめる。</strong>電話と、インターネット（Wi-Fi を切って）を試します。</li>
-<li><strong>d 払い・ iD を試す。</strong><a href="#ch5">第 5 章</a>のとおりです。</li>
+<li><strong>d 払い・ iD を試す。</strong><a href="#sec5">第 5 章</a>のとおりです。</li>
 <li><strong>請求を確認する。</strong>月額料金は、 NTT ファイナンスから請求されます（出典 <a href="#src4">4</a> ）。最初の請求書で、金額を確かめます。</li>
 <li><strong>旧契約のこと。</strong>ドコモのプランは、変更とともに ahamo に切り替わります。変更後の手続きは、ドコモショップなどではできず、 WEB または郵送で行います（出典 <a href="#src2">2</a> ）。</li>
 <li id="step7"><strong>困ったとき。</strong>申し込みの方法が分からないときは、 ahamo のチャット、またはドコモのオンライン手続きサポートに相談します（出典 <a href="#src15">15</a> ）。契約後の相談は、お店では受けられません（出典 <a href="#src1">1</a> ）。</li>
@@ -312,11 +336,11 @@
 申し込みの画面が開かない場合は、 Google アプリや Yahoo! アプリの中から開いていないか確認してください。 iPhone は Safari 、 Android は Chrome の最新版で開くよう案内されています（出典 <a href="#src15">15</a> ）。
 </div>
 
-<h2 id="ch7">7. 杉並区周辺のドコモショップ</h2>
+<h2 id="sec7">7. 杉並区周辺のドコモショップ</h2>
 <p>ドコモの公式の店舗ページ（shop.smt.docomo.ne.jp）で、 2026 年 10 月 14 日に確認しました。最寄り駅や徒歩の時間は、公式ページに記載がなかったため載せていません。住所と、各店舗ページの地図で確かめてください。住所をタップすると地図アプリで開き、電話番号をタップすると発信できます。</p>
 <p>各店舗ページには、 ahamo の取り扱いの記載がありません。一方、 ahamo の公式案内では、お申込みサポートは「全国のドコモショップ」で受け付けるとされています（出典 <a href="#src1">1</a> ）。<strong>来店予約の前に、各店舗へ電話で、受け付けているか確認してください。</strong></p>
 
-<h3 id="ch7-1">7.1 杉並区内</h3>
+<h3 id="sec7-1">7.1 杉並区内</h3>
 <table class="cards">
 <caption>杉並区内の店舗</caption>
 <thead>
@@ -331,7 +355,7 @@
 <tr><td data-label="店名">浜田山店</td><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区浜田山3-30-10">杉並区浜田山 3-30-10 1 階</a></td><td data-label="営業時間">9:30 〜 18:00</td><td data-label="定休日">無休</td><td data-label="電話番号"><a href="tel:0120876171">0120-876-171</a> ／ <a href="tel:0363797524">03-6379-7524</a></td></tr>
 </tbody>
 </table>
-<h3 id="ch7-2">7.2 隣の区・市（杉並区の主要駅から行きやすい店舗）</h3>
+<h3 id="sec7-2">7.2 隣の区・市（杉並区の主要駅から行きやすい店舗）</h3>
 <p>高円寺・阿佐ヶ谷・荻窪・西荻窪と同じ中央線沿線の街の店舗を、筆者の判断で選びました（公式ページに駅からの時間の記載はありません）。</p>
 <table class="cards">
 <caption>隣の区・市の店舗</caption>
@@ -346,7 +370,7 @@
 </table>
 <p>予約は、各店舗ページの「来店予約」から、スマートフォンやパソコンでできます。 d アカウントでログインして予約する方法もあります（出典 <a href="#src9">9</a> ）。店舗の公式ページ : <a href="https://shop.smt.docomo.ne.jp/"><code>https://shop.smt.docomo.ne.jp/</code></a> で店名を検索してください。杉並区内にほかの店舗がないかも、この公式検索で確かめられます。</p>
 
-<h2 id="ch8">8. 詐欺・偽サイトに注意</h2>
+<h2 id="sec8">8. 詐欺・偽サイトに注意</h2>
 <div class="must">
 携帯電話会社を名乗る電話・メール・ SMS ・メッセージには注意してください。<strong>暗証番号やパスワードは、誰にも口に出して伝えないでください。</strong>入力が必要なときは、ご自身の手で、画面をのぞかれないようにして入力します。
 </div>
@@ -357,7 +381,7 @@
 <li>だまされたかもしれないと思ったら、すぐに d アカウントのパスワードを変更し、ドコモの公式の案内（出典 <a href="#src16">16</a> のページから探せます）で対応を確認する。<span class="tag">助言</span></li>
 </ul>
 
-<h2 id="ch9">9. 出典</h2>
+<h2 id="sec9">9. 出典</h2>
 <p>すべて 2026 年 10 月 14 日に取得しました。番号をタップすると、本文の該当箇所から、ここへ移動します。</p>
 <ol class="sources">
 <li id="src1">ahamo お知らせ「 ahamo WEB お申込みサポート」「 ahamo WEB お手続きサポート」の開始（料金・対象・できないこと）<a class="url" href="https://ahamo.com/news/acscu50000000ifd.html">https://ahamo.com/news/acscu50000000ifd.html</a></li>
@@ -378,7 +402,7 @@
 <li id="src16">ドコモ「フィッシング詐欺への対策」<a class="url" href="https://www.docomo.ne.jp/info/anti-phishing/">https://www.docomo.ne.jp/info/anti-phishing/</a></li>
 </ol>
 
-<h2 id="ch10">10. 用語の説明</h2>
+<h2 id="sec10">10. 用語の説明</h2>
 <dl class="terms">
 <dt>ahamo</dt><dd>ドコモが提供する、ネットでの申し込みを基本とする料金プランです。</dd>
 <dt>プラン変更</dt><dd>電話番号はそのままで、料金プランだけをドコモのプランから ahamo に切り替えることです。</dd>
@@ -398,10 +422,10 @@
 <dt>フィッシング詐欺</dt><dd>本物そっくりの偽サイトや偽メッセージで、 ID や暗証番号を盗む手口です。</dd>
 </dl>
 
-<h2 id="ch11">11. この手順書の限界</h2>
+<h2 id="sec11">11. この手順書の限界</h2>
 <ul>
 <li><strong>確認できなかったこと。</strong>お申込みサポートに来店予約が必須か、所要時間、支払い方法。プラン変更のときの本人確認書類（新規契約の案内にある書類を載せています）。家族割引・セット割引への影響。おサイフケータイの引き継ぎ。ネットワーク暗証番号（電話の契約手続きで使う番号）を使う場面があるか。</li>
-<li><strong>契約内容によって変わること。</strong>プラン、端末の機種、支払い方法、名義、使っているサービス、 iD の種類。<a href="#ch2">第 2 章</a>のチェックリストで確かめてください。</li>
+<li><strong>契約内容によって変わること。</strong>プラン、端末の機種、支払い方法、名義、使っているサービス、 iD の種類。<a href="#sec2">第 2 章</a>のチェックリストで確かめてください。</li>
 <li><strong>店頭で最終確認すること。</strong>お申込みサポートの受付、予約の要否、持ち物、費用。</li>
 <li><strong>店舗の情報。</strong>杉並区内の店舗が、ここに載せた 6 店で全部かは、公式の店舗検索で確かめられていません。営業時間・定休日は変わることがあります。</li>
 </ul>

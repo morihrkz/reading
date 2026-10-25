@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>国際刑事裁判所所長に対する米国の制裁措置 ――指定の理由と経緯をめぐる検討</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -21,43 +21,10 @@
   ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3;--link:#2a4d69}
-.kicker{font-size:.9rem;letter-spacing:.12em;color:var(--accent);font-weight:700;margin:0 0 .4rem}
-.subtitle{color:var(--muted);margin:0 0 1rem}
-.lede{border-left:4px solid var(--accent);padding-left:1rem;margin:1rem 0}
-.lede p{color:var(--muted)}
-.meta{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:1rem 0;margin:0 0 2.5rem;color:var(--muted);font-size:.9rem;line-height:1.9}
-.toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-.toc>ol{columns:2;column-gap:2rem;margin:0;padding-left:1.6em}
-.toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-.toc li{margin-bottom:.3rem;break-inside:avoid;line-height:1.8}
-.toc li li{color:var(--muted)}
-.toc a{color:var(--text);text-decoration:none}
-.toc a:hover{color:var(--accent);text-decoration:underline}
-ul,ol{margin:0 0 1.2rem;padding-left:1.4em}
-strong{color:var(--accent)}
-a{color:var(--link)}
-sup{font-size:.72em}
-sup a{text-decoration:none}
-sup a:hover{text-decoration:underline}
-.box{background:var(--box);border:1px solid var(--line);padding:1rem 1.2rem;margin:0 0 1.4rem}
-.box ul{margin:0;list-style:none;padding-left:0}
-.box li:last-child{margin-bottom:0}
-.refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
-.refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-.refs em{font-style:italic}
-.refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-.refs li>a:first-child{font-weight:700;text-decoration:none}
-.refs sup a{font-style:italic;font-weight:700}
-.refs li:target,sup:target{background:var(--box)}
-.refs p.note-end{font-size:.9rem;color:var(--muted)}
-@media (max-width:480px){
-.toc>ol{columns:1}
-}
-  /* 記事型の本文サイズ */
-  p, li, .note, .must, .say { font-size: 1.1875rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
-  /* 表のカード化(幅 40rem 以下) */
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
     table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
@@ -67,7 +34,54 @@ sup a:hover{text-decoration:underline}
     table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
     table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注と参考文献 */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{border-bottom:none;margin-top:0;padding-bottom:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 文書固有の補助 */
+  .kicker { font-size:.9rem;letter-spacing:.12em;color:#2a4d69;font-weight:700;margin:0 0 .4rem }
+  .subtitle { color:#555;margin:0 0 1rem }
+  .lede { border-left:4px solid #2a4d69;padding-left:1rem;margin:1rem 0 }
+  .lede p { color:#555 }
+  ul,ol { margin:0 0 1.2rem;padding-left:1.4em }
+  .box { background:#e6edf3;border:1px solid #bbb;padding:1rem 1.2rem;margin:0 0 1.4rem }
+  .box ul { margin:0;list-style:none;padding-left:0 }
+  .box li:last-child { margin-bottom:0 }
 </style>
 </head>
 <body>
@@ -113,6 +127,7 @@ sup a:hover{text-decoration:underline}
 </li>
 <li><a href="#sec6">考察</a></li>
 <li><a href="#sec7">結論</a></li>
+<li><a href="#sec8">参考文献・資料</a></li>
 </ol>
 </nav>
 <h2 id="sec1">1. 問題の所在</h2>
@@ -191,7 +206,7 @@ sup a:hover{text-decoration:underline}
 <p>米国政府が赤根智子所長を制裁対象に指定した公式の理由は、 ICC が自国や同盟国の公務員を捜査・訴追しようとしていることへの関与である。しかし、その実質は、 2025 年 2 月に始まり 2026 年 10 月に機関指定へ至った、 ICC 全体に対する圧力の拡大の一環として理解するのが妥当である。所長という職責の象徴性と、日本が最大の拠出国であるという事情が、この時期の指定に影響した可能性はあるが、それを裏づける公式の説明は見当たらない。</p>
 <p>今後の焦点は、提訴された各訴訟の判断、加盟国の脱退と拠出をめぐる動向、そして日本を含む加盟国が米国の金融上の圧力から ICC の実務を守る具体策を示せるかどうかである。</p>
 <div class="refs">
-<h2>参考文献・資料</h2>
+<h2 id="sec8">8. 参考文献・資料</h2>
 <p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> 時事通信「【やさしく解説】アメリカは国際刑事裁判所長をなぜ制裁したか」 2026 年 9 月。 <a href="https://www.jiji.com/jc/v8?id=202609ICC-team">時事ドットコム</a></li>

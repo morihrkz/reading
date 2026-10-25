@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>「上か下か」を考える心 ――社会的比較と年齢をめぐる研究から</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -19,37 +19,12 @@
   .meta { color: #555; font-size: .9rem; }
   ul.check { list-style: none; padding-left: 0; }
   ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
-  ul.check li::before { content: "±0"; position: absolute; left: 0; font-size: 1.1rem; }
+  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-
-  /* 本文書に固有の部品(基調色は意匠の配色に揃える) */
-  a { color: #2a4d69; }
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
-  .subtitle { color: #555; margin: 0 0 1.5rem; }
-  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin-bottom: 2rem; }
-  .lede p { color: #555; margin: 0; }
-  .lede p + p { margin-top: .8rem; }
-  .toc { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.4rem; margin: 0 0 2rem; }
-  .toc > ol { columns: 2; column-gap: 2rem; margin-bottom: 0; }
-  .toc-title { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .6rem; }
-  .toc li { break-inside: avoid; }
-  .toc li li { color: #555; }
-  .toc a { color: #222; text-decoration: none; }
-  .toc a:hover { color: #2a4d69; text-decoration: underline; }
-  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: #2a4d69; }
-  sup { font-size: .72em; line-height: 0; }
-  sup a { text-decoration: none; }
-  .refs { border-top: 1px solid #bbb; margin-top: 3rem; padding-top: 1rem; }
-  .refs p, .refs li { font-size: .95rem; line-height: 1.65; overflow-wrap: anywhere; word-break: break-word; }
-  .refs li > a:first-child { font-weight: 700; text-decoration: none; }
-  .refs li:target, sup:target { background: #e6edf3; }
-  @media (max-width: 480px) { .toc > ol { columns: 1; } }
-  /* 記事型の本文サイズ */
-  p, li, .note, .must, .say { font-size: 1.1875rem; }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
-  /* 表のカード化(幅 40rem 以下) */
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
     table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
@@ -59,7 +34,54 @@
     table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
     table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注と参考文献 */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{border-bottom:none;margin-top:0;padding-bottom:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 文書固有の補助 */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
+  .subtitle { color: #555; margin: 0 0 1.5rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin-bottom: 2rem; }
+  .lede p { color: #555; margin: 0; }
+  .lede p + p { margin-top: .8rem; }
+  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: #2a4d69; }
 </style>
 </head>
 <body>
@@ -106,6 +128,7 @@
 <li><a href="#sec5">比較がもたらす利点と反対の立場</a></li>
 <li><a href="#sec6">三つの問いへの答え</a></li>
 <li><a href="#sec7">この記事の限界</a></li>
+<li><a href="#sec8">参考文献・資料</a></li>
 </ol>
 </nav>
 
@@ -194,7 +217,7 @@
 <p>さらに、この記事は医療や心理療法の代わりになるものではない。強い苦しさが続く場合や、日常生活に支障が出ている場合は、専門の相談先に相談することが望ましい。ただし、本稿では相談先の具体的な情報を、公式ページで確認できていないため挙げていない。</p>
 
 <div class="refs">
-<h2>参考文献・資料</h2>
+<h2 id="sec8">8. 参考文献・資料</h2>
 <p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1"><a href="#fnref-1-1">^</a> Festinger, L. (1954) . A theory of social comparison processes. <em>Human Relations</em>（巻号・頁は要確認。本文の記述は二次情報による）。</li>

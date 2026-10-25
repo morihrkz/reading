@@ -8,7 +8,7 @@
   body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -22,8 +22,19 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say { font-size: 19px; }
+  p, li, .note, .must, .say { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
@@ -65,7 +76,39 @@
 <p>用途の具体的な顧客名は、今回確認できた資料では多くは出てこなかった。行政の例（カリフォルニア州技術局）と、移行を請け負う事業者の事例が主である。性能や費用削減の数字は、メーカーや移行事業者の自己申告が大半なので、そう明記した。</p>
 </div>
 
-<h2>1. 要点</h2>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">要点</a></li>
+<li><a href="#sec2">何のために使われたか</a>
+<ol>
+<li><a href="#sec2-1">想定された仕事</a></li>
+<li><a href="#sec2-2">なぜ「速く、安い」と言われたか</a></li>
+</ol>
+</li>
+<li><a href="#sec3">仕組み</a>
+<ol>
+<li><a href="#sec3-1">三つの領域</a></li>
+<li><a href="#sec3-2">ISN とアドレス変換表</a></li>
+<li><a href="#sec3-3">転置リスト</a></li>
+<li><a href="#sec3-4">繰り返しの持ち方</a></li>
+</ol>
+</li>
+<li><a href="#sec4">どう使われたか</a>
+<ol>
+<li><a href="#sec4-1">アクセスの方法</a></li>
+<li><a href="#sec4-2">同時利用と障害への備え</a></li>
+</ol>
+</li>
+<li><a href="#sec5">リレーショナル型との違い</a></li>
+<li><a href="#sec6">周辺の製品</a></li>
+<li><a href="#sec7">その後と、いまの位置</a></li>
+<li><a href="#sec8">確認できていないこと</a></li>
+<li><a href="#sec9">出典</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 要点</h2>
 <ul>
 <li>名前は「 adaptable database system （適応できるデータベース）」の略で、 1971 年に非リレーショナルのデータベースとして出た。最初の版は IBM メインフレームの DOS/360 、 OS/MFT 、 OS/MVT で動いた。</li>
 <li>狙いは、大量のデータと大量の同時利用がある基幹業務を、少ない資源で処理すること。公式文書は、同種の製品の 10% から 50% の資源（ディスク、 CPU 、経過時間）で済むと述べる（メーカーの主張）。</li>
@@ -75,8 +118,8 @@
 <li>2016 年に Software AG は、 Adabas と Natural を 2050 年以降も支援すると発表した。いまも Linux 、 Unix 、 Windows 向けを含めて販売されている。</li>
 </ul>
 
-<h2>2. 何のために使われたか</h2>
-<h3>想定された仕事</h3>
+<h2 id="sec2">2. 何のために使われたか</h2>
+<h3 id="sec2-1">2.1 想定された仕事</h3>
 <p>公式文書は、数テラバイトのデータと数千台の端末をもつ大規模なオンライン業務を支えるものとして説明している。 Wikipedia は、大量データの処理と、取引の多いオンライン処理に使われると書く。つまり、集計や分析のために作られた製品ではなく、日々の受付・更新・照会を絶え間なく繰り返す業務のためのものである。</p>
 <table class="cards">
 <thead><tr><th>用途の側面</th><th>内容</th><th>確度</th></tr></thead>
@@ -89,11 +132,11 @@
 </tbody>
 </table>
 
-<h3>なぜ「速く、安い」と言われたか</h3>
+<h3 id="sec2-2">2.2 なぜ「速く、安い」と言われたか</h3>
 <p>理由は主に三つ述べられている。第一に、データを圧縮して持つこと。第二に、検索の鍵ごとに用意した索引（転置リスト）で、該当レコードの位置をすぐ引けること。第三に、関係を実行時の結合に頼らず、構造として持つことである。公式文書は、多くのファイルで元データの 50% から 60% の容量で済む（索引などの約 25% を足した後でも）と述べる。</p>
 
-<h2>3. 仕組み</h2>
-<h3>三つの領域</h3>
+<h2 id="sec3">3. 仕組み</h2>
+<h3 id="sec3-1">3.1 三つの領域</h3>
 <p>Adabas は、データ本体と、データを探すための仕組みを分けて持つ。</p>
 <table class="cards">
 <thead><tr><th>領域</th><th>役割</th></tr></thead>
@@ -103,17 +146,17 @@
 <tr><td data-label="領域">Work （作業域）</td><td data-label="役割">自動復旧に使う保護情報、検索の途中結果と最終結果（ ISN のリスト）、二相コミットの情報を置く</td></tr>
 </tbody>
 </table>
-<h3>ISN とアドレス変換表</h3>
+<h3 id="sec3-2">3.2 ISN とアドレス変換表</h3>
 <p>各レコードには ISN （内部通番）が付く。新しいレコードには、既存の最大値に 1 を足した番号が付くのが基本である。 ISN と物理的な位置の対応は「アドレス変換表」が持つので、レコードを別の場所へ動かしても、更新するのはこの表だけで済み、索引は変わらない。</p>
-<h3>転置リスト</h3>
+<h3 id="sec3-3">3.3 転置リスト</h3>
 <p>検索の鍵になる項目（ディスクリプタ）ごとに、索引（転置リスト）を持つ。値ごとに「その値」「該当レコード数」「該当する ISN の並び」を記録する。レコードの順に値を並べる通常の索引と逆に、値を起点にレコードを引くので「転置」と呼ばれる。複数の項目を組み合わせた鍵（スーパーディスクリプタ、 2 から 20 項目）や、音の近さで引く鍵（フォネティック）も作れる。</p>
-<h3>繰り返しの持ち方</h3>
+<h3 id="sec3-4">3.4 繰り返しの持ち方</h3>
 <p>一つのレコードに同種の値を複数持つ「多値項目 (MU) 」と、項目の組を繰り返す「周期グループ (PE) 」がある。 MU は既定で 1 レコードあたり最大 191 回、設定により約 65,534 回まで持てる。 PE は繰り返しの順序を保つ点が MU と異なる。表を正規化して分けるかわりに、一つのレコードに畳み込む設計である。</p>
 
-<h2>4. どう使われたか</h2>
-<h3>アクセスの方法</h3>
+<h2 id="sec4">4. どう使われたか</h2>
+<h3 id="sec4-1">4.1 アクセスの方法</h3>
 <p>プログラムは、直接の呼び出し（コマンド）で Adabas を使う。検索、読み出し、追加・更新・削除、取引の確定と取消などのコマンドがあり、必要な項目だけを取り出せる。実際には、多くの業務は開発言語 Natural の READ 、 FIND 、 HISTOGRAM などの文で書かれ、裏で Adabas が呼ばれる。バックエンドに Adabas を使う古い業務アプリケーションの多くが Natural で作られているのは、このためである。</p>
-<h3>同時利用と障害への備え</h3>
+<h3 id="sec4-2">4.2 同時利用と障害への備え</h3>
 <ul>
 <li>更新するレコードは「保持」状態にされ、他の利用者は待たされる（待たずにエラーを受け取る指定もできる）。</li>
 <li>取引は、保持から確定 (ET) または取消 (BT) までを単位とする。複数のデータベースにまたがる取引は、二相コミットで調整する。</li>
@@ -121,7 +164,7 @@
 <li>障害後は自動で再開・取消が行われ、論理的に完結した取引だけが残る。ログとして、コマンドの記録、更新前後の記録（保護ログ）、復旧用の記録がある。</li>
 </ul>
 
-<h2>5. リレーショナル型との違い</h2>
+<h2 id="sec5">5. リレーショナル型との違い</h2>
 <table class="cards">
 <thead><tr><th>観点</th><th>Adabas</th><th>一般のリレーショナル型</th></tr></thead>
 <tbody>
@@ -134,7 +177,7 @@
 </table>
 <p>同じ転置リスト型の主要製品として、 Model 204 (Computer Corporation of America) と Datacom/DB (ADR) が挙げられている。 2015 年の IBM の白書は、 Adabas のような関係型以前のデータベースを、もはや主流ではないと評した。</p>
 
-<h2>6. 周辺の製品</h2>
+<h2 id="sec6">6. 周辺の製品</h2>
 <table class="cards">
 <thead><tr><th>製品</th><th>役割</th></tr></thead>
 <tbody>
@@ -148,7 +191,7 @@
 </tbody>
 </table>
 
-<h2>7. その後と、いまの位置</h2>
+<h2 id="sec7">7. その後と、いまの位置</h2>
 <ul>
 <li><strong>動作環境の拡大 :</strong> 現在は BS2000 、 z/VSE 、 z/OS 、 Unix 、 Linux 、 Windows で動く。</li>
 <li><strong>長期の支援 :</strong> 2016 年に、 2050 年以降まで支援すると表明した。</li>
@@ -159,7 +202,7 @@
 <p>移行事例の費用や期間の数字は、事業者の宣伝に近い。一方で、「使用料が高い」「技術者が減っている」という動機は、複数の事業者が共通して挙げている。</p>
 </div>
 
-<h2>8. 確認できていないこと</h2>
+<h2 id="sec8">8. 確認できていないこと</h2>
 <ul class="check">
 <li>1990 年代の主要な顧客の一覧と、業種別の導入比率</li>
 <li>日本での導入状況と、日本法人の役割（今回の検索では情報が出なかった）</li>
@@ -168,7 +211,7 @@
 <li>Natural 自体の詳しい来歴（専用の百科事典の記事が取得できなかった）</li>
 </ul>
 
-<h2>9. 出典</h2>
+<h2 id="sec9">9. 出典</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/ADABAS">ADABAS - Wikipedia</a></li>
 <li><a href="https://documentation.softwareag.com/adabas/azp843/concepts/cfdesign.htm">Adabas Design - Software AG Documentation</a></li>

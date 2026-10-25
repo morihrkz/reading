@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yahoo! マップ / Yahoo! カーナビへの地点一括登録マニュアル</title>
     <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -40,31 +40,18 @@
             margin-bottom: 6px;
             font-size: 1rem;}
 .keyfact .kf-title::before{content: "🔗 ";}
-.overview{display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 18px 0 28px;}
-.overview a{flex: 1 1 200px;
-            background: var(--card);
-            border: 2px solid var(--blue-bg);
-            border-radius: 10px;
-            padding: 12px 14px;
-            text-decoration: none;
-            color: var(--ink);
-            font-size: .9375rem;
-            transition: border-color .15s;}
-.overview a:hover{border-color: var(--blue);}
-.overview .num{display: inline-block;
-            background: var(--blue);
-            color: var(--card);
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            line-height: 24px;
-            text-align: center;
-            font-weight: bold;
-            font-size: .8125rem;
-            margin-right: 6px;}
+.toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+.toc>ol{columns:2;column-gap:2rem;margin:0}
+.toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+.toc ol{padding-left:1.4em;list-style:decimal}
+.toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid;padding:0;background:none;border:0;border-radius:0}
+.toc li::before{content:none}
+.toc li li{color:#555}
+.toc a{color:#222;text-decoration:none}
+.toc a:hover{color:#2a4d69;text-decoration:underline}
+@media (max-width:40rem){
+.toc>ol{columns:1}
+}
 .step-box{background: var(--card);
             padding: 24px 26px 20px;
             border-radius: 0 0 8px 8px;
@@ -213,8 +200,34 @@ li .why::before{content: "💡 ねらい: ";
 h2 { margin-bottom: 0; }
 .overall-checklist h2 { margin: -22px -26px 18px; }
   /* 記事型の本文サイズ */
-  p, li, .note, .must, .say { font-size: 1.1875rem; }
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
 </style>
 </head>
 <body>
@@ -228,14 +241,18 @@ h2 { margin-bottom: 0; }
         Yahoo! の「登録スポット」機能は、 <strong>Yahoo! 地図（ PC ブラウザ）・ Yahoo! マップ（スマホアプリ）・ Yahoo! カーナビ（スマホアプリ）の三つで共通</strong>のデータです。<strong>同じ Yahoo! JAPAN ID でログイン</strong>してさえいれば、どこか一ヶ所で登録した地点が自動的に他の二つにも反映されます。<strong>ログインを両方の端末・アプリで揃えること</strong>が今回の作業でいちばん重要なポイントになります。
     </div>
 
-    <div class="overview">
-        <a href="#step0"><span class="num">0</span> 事前準備</a>
-        <a href="#step1"><span class="num">1</span>PC で一括登録</a>
-        <a href="#step2"><span class="num">2</span>iPhone で反映確認</a>
-        <a href="#step3"><span class="num">3</span> カーナビで使う</a>
-    </div>
+    <nav class="toc" aria-label="目次">
+    <p class="toc-title">目次</p>
+    <ol>
+    <li><a href="#sec1">ステップ 0 ： 事前準備（インストールとログイン）</a></li>
+    <li><a href="#sec2">ステップ 1 ： Windows PC での一括登録</a></li>
+    <li><a href="#sec3">ステップ 2 ： iPhone での反映確認</a></li>
+    <li><a href="#sec4">ステップ 3 ： Yahoo! カーナビでの目的地設定</a></li>
+    <li><a href="#sec5">全体まとめチェックリスト</a></li>
+    </ol>
+    </nav>
 
-    <h2 id="step0">🔋 0. 事前準備（インストールとログイン）</h2>
+    <h2 id="sec1">1. ステップ 0 ： 事前準備（インストールとログイン）</h2>
     <div class="step-box">
         <p class="intro">今回の作業は「同じ Yahoo! JAPAN ID でログインする」ことが土台になります。まずアプリを揃え、ログインまで済ませてください。</p>
         <ol>
@@ -268,13 +285,13 @@ h2 { margin-bottom: 0; }
         </div>
     </div>
 
-    <h2 id="step1">💻 ステップ 1 ： Windows PC での一括登録</h2>
+    <h2 id="sec2">2. ステップ 1 ： Windows PC での一括登録</h2>
     <div class="step-box">
         <p class="intro">PC のブラウザ版「 Yahoo! 地図」を使い、キーボードで検索しながら約 30 件をテンポよく登録します。スマホで 1 件ずつ入力するより速く進められます。</p>
         <ol>
             <li>
                 PC のブラウザ（ Google Chrome や Edge など）で<strong>「 Yahoo! 地図」</strong>にアクセスします。
-                <span class="detail">アドレスバーに次の URL を直接入力するのが確実です：<br><a href="https://map.yahoo.co.jp/" target="_blank">https://map.yahoo.co.jp/</a></span>
+                <span class="detail">アドレスバーに次の URL を直接入力するのが確実です：<br><a href="https://map.yahoo.co.jp/" target="_blank">Yahoo! 地図</a></span>
             </li>
             <li>
                 画面右上（または左上）にある<strong>「ログイン」</strong>をクリックし、<strong>ステップ 0 と同じ Yahoo! JAPAN ID</strong> でログインします。
@@ -312,7 +329,7 @@ h2 { margin-bottom: 0; }
         </div>
     </div>
 
-    <h2 id="step2">📱 ステップ 2 ： iPhone での反映確認</h2>
+    <h2 id="sec3">3. ステップ 2 ： iPhone での反映確認</h2>
     <div class="step-box">
         <p class="intro">PC で登録した地点は、同じ Yahoo! JAPAN ID でログインしていれば自動的に iPhone 側にも反映されます。ここでは「確かに反映されているか」を確認するだけです。</p>
         <ol>
@@ -342,7 +359,7 @@ h2 { margin-bottom: 0; }
         </div>
     </div>
 
-    <h2 id="step3">🚗 ステップ 3 ： Yahoo! カーナビでの目的地設定</h2>
+    <h2 id="sec4">4. ステップ 3 ： Yahoo! カーナビでの目的地設定</h2>
     <div class="step-box">
         <p class="intro">実際に車に乗る際、登録スポットの中から目的地を選んでナビを開始する手順です。この操作は使いたい地点ごとに毎回行います。</p>
         <ol>
@@ -371,7 +388,7 @@ h2 { margin-bottom: 0; }
     </div>
 
     <div class="overall-checklist">
-        <h2>🏁 全体まとめチェックリスト</h2>
+        <h2 id="sec5">5. 全体まとめチェックリスト</h2>
         <ul>
             <li><input type="checkbox" id="all-1"><label for="all-1">0. iPhone に Yahoo! カーナビと Yahoo! マップをインストールし、同一 Yahoo! JAPAN ID でログインした</label></li>
             <li><input type="checkbox" id="all-2"><label for="all-2">1. PC の Yahoo! 地図に同じ ID でログインし、約 30 件を「登録スポット」に登録した</label></li>

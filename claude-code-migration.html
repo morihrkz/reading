@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Claude Code 環境移植ガイド (Windows 11 ⇔ Mac)</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -21,42 +21,37 @@
   ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3;--link:#2a4d69}
-html{-webkit-text-size-adjust:100%}
-a{color:var(--link)}
-.kicker{font-size:.9375rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 10px}
-.subtitle{font-size:1.25rem;color:var(--muted);line-height:1.8;margin:0 0 28px}
-.lede{border-left:3px solid var(--accent);padding-left:18px;margin:0 0 40px}
-.lede p{font-size:1.1875rem;color:var(--muted);margin:0 0 14px}
-.lede p:last-child{margin-bottom:0}
-.meta{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin:0 0 40px;color:var(--muted);font-size:.9375rem;line-height:1.9}
-.toc{background:var(--box);border:1px solid var(--line);padding:22px 26px;margin:0 0 46px}
-.toc>ol{columns:2;column-gap:32px}
-.toc-title{font-size:.9375rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 14px}
-.toc ol{margin:0;padding-left:1.4em}
-.toc li{margin-bottom:7px;font-size:1.03125rem;break-inside:avoid}
-.toc li ol{margin-top:7px;margin-bottom:11px}
-.toc li li{font-size:.96875rem;color:var(--muted);margin-bottom:5px}
-.toc a{color:var(--text);text-decoration:none}
-.toc a:hover{color:var(--accent);text-decoration:underline}
-p{font-size:1.1875rem;margin:0 0 20px}
-strong{color:var(--accent)}
-ul,ol{padding-left:1.4em;margin:0 0 20px}
-li{font-size:1.1875rem;margin-bottom:9px}
-.box{background:var(--box);border:1px solid var(--line);padding:22px 24px;margin:0 0 28px;font-size:1.1875rem}
-.box p:last-child,.box ul:last-child{margin-bottom:0}
-.box ul{margin-bottom:0}
-.box code{background:#fafaf7}
-pre{background:var(--box);border:1px solid var(--line);padding:14px 16px;overflow-x:auto;font-size:.9375rem;line-height:1.6;margin:0 0 28px}
-pre code{background:none;border:none;padding:0}
-.table-wrap{overflow-x:auto;margin:0 0 28px}
-td.path{color:var(--accent);word-break:break-all}
-.sub{color:var(--muted)}
-.note{font-size:1.1875rem;color:var(--muted);margin-top:20px}
-@media (max-width:480px){
-.toc>ol{columns:1}
-}
-  /* 表のカード化(幅 40rem 以下) */
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 文書固有の補助 */
+  .kicker { font-size: .9375rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 10px; }
+  .subtitle { font-size: 1.25rem; color: #555; line-height: 1.8; margin: 0 0 28px; }
+  .lede { border-left: 3px solid #2a4d69; padding-left: 18px; margin: 0 0 2rem; }
+  .lede p { color: #555; margin: 0 0 14px; }
+  .lede p:last-child { margin-bottom: 0; }
+  ul, ol { padding-left: 1.4em; margin: 0 0 20px; }
+  li { margin-bottom: 9px; }
+  .box { background: #e6edf3; border: 1px solid #bbb; padding: 22px 24px; margin: 0 0 28px; }
+  .box p:last-child, .box ul:last-child { margin-bottom: 0; }
+  .box code { background: #fafaf7; }
+  pre { background: #e6edf3; border: 1px solid #bbb; padding: 14px 16px; overflow-x: auto; font-size: .9375rem; line-height: 1.6; margin: 0 0 28px; }
+  pre code { background: none; border: none; padding: 0; }
+  .table-wrap { overflow-x: auto; margin: 0 0 28px; }
+  td.path { color: #2a4d69; word-break: break-all; }
+  .sub { color: #555; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
     table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
@@ -66,6 +61,21 @@ td.path{color:var(--accent);word-break:break-all}
     table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
     table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
 </style>
 </head>

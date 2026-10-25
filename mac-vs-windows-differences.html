@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MacBook Pro で何が変わるか</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -22,11 +22,33 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 記事型の本文サイズ */
-  p, li, .note, .must, .say { font-size: 1.1875rem; }
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
   /* 長い URL を途中で折り返す(画面幅からのはみ出しによる縮小表示を防ぐ) */
-  li, td { overflow-wrap: anywhere; }
-  /* 表のカード化(幅 40rem 以下) */
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注と参考文献 */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{border-bottom:none;margin-top:0;padding-bottom:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
     table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
@@ -36,6 +58,21 @@
     table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
     table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
 </style>
 </head>
@@ -47,8 +84,27 @@
 
 <p>この MacBook Pro で、 Windows の一般的な PC にはできないことは、あるのか。 Steam で遊ぶ FPV ドローンのゲームは、 Mac でも遊べるのか。手元の機種を出発点に、公式の資料で確かめた。</p>
 
-<h2>1. 比べ方を決める</h2>
-<p>対象の機種は、チップに Apple M2 Max を使い、 CPU (計算を担う部品) が 12 コア (計算を分担する単位が 12 個)、 GPU (画像処理を担う部品) が 38 コア、メモリが 32 GB 、 OS が macOS 27.0.1 の MacBook Pro である。 Apple の仕様ページ (16 インチ、 2023 年モデル) には、同じ M2 Max が、 12 コアの CPU 、 38 コアの GPU と載っている [1] 。以下では、この機種の値と Apple の公式資料を使う。</p>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">比べ方を決める</a></li>
+<li><a href="#sec2">手元の FPV ゲームは、 Mac で遊べるか</a></li>
+<li><a href="#sec3">iPhone とつながる機能</a>
+<ol>
+<li><a href="#sec3-1">iPhone をカメラにする (Continuity Camera)</a></li>
+<li><a href="#sec3-2">iPhone の画面を Mac で操作する (iPhone Mirroring)</a></li>
+</ol>
+</li>
+<li><a href="#sec4">複数の機器を、一組のキーボードとマウスで操作する</a></li>
+<li><a href="#sec5">端末の中で AI を動かす</a></li>
+<li><a href="#sec6">まとめ</a></li>
+<li><a href="#sec7">限界</a></li>
+<li><a href="#sec8">参考文献・資料</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 比べ方を決める</h2>
+<p>対象の機種は、チップに Apple M2 Max を使い、 CPU (計算を担う部品) が 12 コア (計算を分担する単位が 12 個)、 GPU (画像処理を担う部品) が 38 コア、メモリが 32 GB 、 OS が macOS 27.0.1 の MacBook Pro である。 Apple の仕様ページ (16 インチ、 2023 年モデル) には、同じ M2 Max が、 12 コアの CPU 、 38 コアの GPU と載っている <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。以下では、この機種の値と Apple の公式資料を使う。</p>
 <p>比べる相手は、「一般的な Windows PC 」である。ここでは、 Windows 11 が動くノート PC を指す。 NPU (AI 向けの専用演算回路) を積んだ Copilot+ PC かどうかで結論が変わる項目は、そのつど書く。</p>
 <p>各項目は、次の三つの区分で書き分ける。</p>
 <table class="cards">
@@ -59,78 +115,81 @@
 </table>
 <p>「 Windows ではできない」と言い切るには、 Windows 側の確認が要る。確認しきれなかった項目は、どの区分にも入れず、そのとおり書く。また、第 3 章は iPhone を、第 4 章は二台目の Mac か iPad を持つ人向けの話で、持っていない人には当てはまらない。</p>
 
-<h2>2. 手元の FPV ゲームは、 Mac で遊べるか</h2>
+<h2 id="sec2">2. 手元の FPV ゲームは、 Mac で遊べるか</h2>
 <p>FPV (First Person View) とは、ドローンに積んだカメラの映像を見ながら操縦する遊び方である。ゲームでは、その操縦を画面上で練習する。 Steam (ゲームの販売・管理サービス) のストアページか開発元の公式サイトで、 Mac の動作環境を確認できた FPV 系のタイトルのうち、次の三つを取り上げる。網羅的な調査ではない。</p>
 <table class="cards">
 <tr><th>タイトル</th><th>macOS に関する記載 (2026-10-16 確認)</th></tr>
-<tr><td data-label="タイトル">Uncrashed : FPV Drone Simulator</td><td data-label="macOS に関する記載 (2026-10-16 確認)">対応 OS は Windows と macOS 。 macOS の推奨環境は「最新の macOS 」と M1 以上のチップ。コントローラーかリモコンが必須 [2] 。</td></tr>
-<tr><td data-label="タイトル">Liftoff : FPV Drone Racing</td><td data-label="macOS に関する記載 (2026-10-16 確認)">対応 OS は Windows 、 macOS 、 SteamOS + Linux 。 macOS の推奨は macOS Big Sur (macOS の旧版の名前) 以降。リモコンかコントローラーが必須 [3] 。</td></tr>
-<tr><td data-label="タイトル">VelociDrone</td><td data-label="macOS に関する記載 (2026-10-16 確認)">開発元の公式サイトに Mac の動作環境の記載があり、プロセッサーの欄に「 Apple M 」とある [4] 。 Steam での掲載は確認できなかった。</td></tr>
+<tr><td data-label="タイトル">Uncrashed : FPV Drone Simulator</td><td data-label="macOS に関する記載 (2026-10-16 確認)">対応 OS は Windows と macOS 。 macOS の推奨環境は「最新の macOS 」と M1 以上のチップ。コントローラーかリモコンが必須 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><td data-label="タイトル">Liftoff : FPV Drone Racing</td><td data-label="macOS に関する記載 (2026-10-16 確認)">対応 OS は Windows 、 macOS 、 SteamOS + Linux 。 macOS の推奨は macOS Big Sur (macOS の旧版の名前) 以降。リモコンかコントローラーが必須 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。</td></tr>
+<tr><td data-label="タイトル">VelociDrone</td><td data-label="macOS に関する記載 (2026-10-16 確認)">開発元の公式サイトに Mac の動作環境の記載があり、プロセッサーの欄に「 Apple M 」とある <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。 Steam での掲載は確認できなかった。</td></tr>
 </table>
-<p>三つとも、ストアページや公式サイトに Mac の動作環境が載っている。記載から判断する限り、 Mac で遊べる可能性は高い。 Windows 側は、 Uncrashed と Liftoff が対応 OS として明記している [2][3] 。ただし、これは記載の確認であって、実際の動作の確認ではない。 Apple シリコン (Mac 用に Apple が作ったチップ) 上でそのまま動く版なのか、 Intel 向けの版を変換して動かしているのかは、確認できなかった。 macOS 27 での動作も、確認できなかった。</p>
-<p>操縦には、送信機 (手に持つ操縦用のリモコン) かゲームコントローラーが要る。 Bluetooth のコントローラーは、 Mac の「システム設定」の Bluetooth から接続する、と Apple は案内している [5] 。一方、 Uncrashed のストアページは「 Windows が認識するジョイスティックなら動く」と書いており、 Mac での扱いには触れていない [2] 。 Mac で、送信機が同じように認識されるかは、確認できなかった。手持ちの送信機が使えるかは、実際に接続して試すのが確実である。</p>
+<p>三つとも、ストアページや公式サイトに Mac の動作環境が載っている。記載から判断する限り、 Mac で遊べる可能性は高い。 Windows 側は、 Uncrashed と Liftoff が対応 OS として明記している <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。ただし、これは記載の確認であって、実際の動作の確認ではない。 Apple シリコン (Mac 用に Apple が作ったチップ) 上でそのまま動く版なのか、 Intel 向けの版を変換して動かしているのかは、確認できなかった。 macOS 27 での動作も、確認できなかった。</p>
+<p>操縦には、送信機 (手に持つ操縦用のリモコン) かゲームコントローラーが要る。 Bluetooth のコントローラーは、 Mac の「システム設定」の Bluetooth から接続する、と Apple は案内している <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。一方、 Uncrashed のストアページは「 Windows が認識するジョイスティックなら動く」と書いており、 Mac での扱いには触れていない <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。 Mac で、送信機が同じように認識されるかは、確認できなかった。手持ちの送信機が使えるかは、実際に接続して試すのが確実である。</p>
 <p>この章の判定は、次のとおりである。 FPV ゲームに限れば、 Mac でも遊べる見込みがある。ただし、 Mac だけでできる、という根拠はない。 Windows 側との動作の安定性の比較は、資料が見つからず、調べきれていない。</p>
 
-<h2>3. iPhone とつながる機能</h2>
-<h3>3.1 iPhone をカメラにする (Continuity Camera)</h3>
-<p>Continuity Camera は、 iPhone を Mac のウェブカメラとして使う機能である。 iOS 16 以降で iPhone XR 以降の iPhone と、 macOS Ventura 13 以降の Mac が要り、同じ Apple アカウントで使う。有線でも無線でも動く [6] 。対象機種の macOS 27.0.1 は、この条件を満たす。</p>
-<p>Windows 側には、 Android のスマートフォンをウェブカメラにする機能がある、と報じられている [9] 。報道によれば、これは Android 専用で、 iPhone には使えない。ただし、これは Microsoft の公式ページでは確認できていない。 iPhone をウェブカメラにする第三者製品の有無も、調べきれていない。したがって、この機能は、どの区分にも入れない。</p>
+<h2 id="sec3">3. iPhone とつながる機能</h2>
+<h3 id="sec3-1">3.1 iPhone をカメラにする (Continuity Camera)</h3>
+<p>Continuity Camera は、 iPhone を Mac のウェブカメラとして使う機能である。 iOS 16 以降で iPhone XR 以降の iPhone と、 macOS Ventura 13 以降の Mac が要り、同じ Apple アカウントで使う。有線でも無線でも動く <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。対象機種の macOS 27.0.1 は、この条件を満たす。</p>
+<p>Windows 側には、 Android のスマートフォンをウェブカメラにする機能がある、と報じられている <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。報道によれば、これは Android 専用で、 iPhone には使えない。ただし、これは Microsoft の公式ページでは確認できていない。 iPhone をウェブカメラにする第三者製品の有無も、調べきれていない。したがって、この機能は、どの区分にも入れない。</p>
 
-<h3>3.2 iPhone の画面を Mac で操作する (iPhone Mirroring)</h3>
-<p>iPhone Mirroring は、 iPhone のアプリを、 Mac のマウスとキーボードで操作する機能である。 iPhone の通知も Mac に出る。 Mac は macOS Sequoia 15 以降で、 Apple シリコンか、セキュリティ用の T2 チップを積んだ機種であり、 iPhone は iOS 18 以降である [7] 。制限もある。 iPhone のカメラとマイクは使えない。 EU では使えない。ワイヤレスのゲームコントローラーは、 Mac ではなく iPhone に接続する必要がある [7] 。</p>
-<p>Windows には、スマートフォンと PC をつなぐ Microsoft のアプリ、 Phone Link がある。 2023 年の報道によれば、 iPhone との連携は通話、メッセージ、通知が中心で、機能は限られる [8] 。ただし、 Microsoft の公式ページを取得できなかったため、現在の機能は確認できていない。アプリを画面ごと操作する機能が Windows にあるかも、公式の資料では確認できていない。この機能も、どの区分にも入れない。</p>
+<h3 id="sec3-2">3.2 iPhone の画面を Mac で操作する (iPhone Mirroring)</h3>
+<p>iPhone Mirroring は、 iPhone のアプリを、 Mac のマウスとキーボードで操作する機能である。 iPhone の通知も Mac に出る。 Mac は macOS Sequoia 15 以降で、 Apple シリコンか、セキュリティ用の T2 チップを積んだ機種であり、 iPhone は iOS 18 以降である <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。制限もある。 iPhone のカメラとマイクは使えない。 EU では使えない。ワイヤレスのゲームコントローラーは、 Mac ではなく iPhone に接続する必要がある <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。</p>
+<p>Windows には、スマートフォンと PC をつなぐ Microsoft のアプリ、 Phone Link がある。 2023 年の報道によれば、 iPhone との連携は通話、メッセージ、通知が中心で、機能は限られる <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。ただし、 Microsoft の公式ページを取得できなかったため、現在の機能は確認できていない。アプリを画面ごと操作する機能が Windows にあるかも、公式の資料では確認できていない。この機能も、どの区分にも入れない。</p>
 
-<h2>4. 複数の機器を、一組のキーボードとマウスで操作する</h2>
-<p>Universal Control は、 Mac のキーボードとマウス (またはトラックパッド) で、近くにある最大二台の Mac や iPad を操作する機能である。同じ Apple アカウントでサインインし、 Bluetooth 、 Wi-Fi 、 Handoff (機器間で作業を引き継ぐ機能) をオンにしておく [10] 。</p>
-<p>Windows には、 Microsoft の PowerToys (Windows 向けの追加ツール集) に Mouse Without Borders がある。最大四台のコンピューターを、一組のキーボードとマウスで操作でき、クリップボードの共有とファイルの転送もできる。ただし、ファイルは単一のみ、 100MB までという制限がある [11] 。</p>
-<p>基本の機能は、同等である。違いは双方向にある。 Universal Control は、 iPad も対象に含められる [10] 。一方、 Mouse Without Borders は、 PowerToys を入れる手間がかかり、対象は Windows のコンピューターである。しかし、操作できる台数は最大四台と多く、ファイルの転送もできる [11] 。差が一方向ではなく、どちらが有利かを示せる指標もない。そのため、判定は「 Windows でも同等にできる」とする。</p>
+<h2 id="sec4">4. 複数の機器を、一組のキーボードとマウスで操作する</h2>
+<p>Universal Control は、 Mac のキーボードとマウス (またはトラックパッド) で、近くにある最大二台の Mac や iPad を操作する機能である。同じ Apple アカウントでサインインし、 Bluetooth 、 Wi-Fi 、 Handoff (機器間で作業を引き継ぐ機能) をオンにしておく <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。</p>
+<p>Windows には、 Microsoft の PowerToys (Windows 向けの追加ツール集) に Mouse Without Borders がある。最大四台のコンピューターを、一組のキーボードとマウスで操作でき、クリップボードの共有とファイルの転送もできる。ただし、ファイルは単一のみ、 100MB までという制限がある <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</p>
+<p>基本の機能は、同等である。違いは双方向にある。 Universal Control は、 iPad も対象に含められる <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 。一方、 Mouse Without Borders は、 PowerToys を入れる手間がかかり、対象は Windows のコンピューターである。しかし、操作できる台数は最大四台と多く、ファイルの転送もできる <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。差が一方向ではなく、どちらが有利かを示せる指標もない。そのため、判定は「 Windows でも同等にできる」とする。</p>
 
-<h2>5. 端末の中で AI を動かす</h2>
-<p>この章は、アプリを通じて間接的に恩恵を受ける話である。 Apple の Foundation Models framework は、アプリの開発者が、端末の中で動く Apple のモデル (オンデバイスのモデル) を使えるようにする仕組みである。機能はオフラインで使え、開発者に推論 (AI が答えを出す処理) の費用はかからない。 macOS 26 以降で、 Apple Intelligence (Apple の AI 機能群) に対応する機器で、 Apple Intelligence をオンにしたときに使える [12] 。対象機種が Apple Intelligence に対応するかは、確認できなかった。 2025 年 9 月の発表時点では、日本語を含む言語に対応するが、ベータ版と案内されていた。その後の状況は確認していない [12] 。</p>
-<p>Windows にも、同じ層の仕組みがある。 Microsoft の Foundry Local は、 20 以上のオープンソースの言語モデルなどを、 Windows のどの機器でも動かせる。 Windows ML は、アプリの開発者が、 CPU 、 GPU 、 NPU でモデルを動かすための仕組みで、これも Windows のどの機器でも使える [13] 。一方、 Windows AI APIs (Phi Silica など、アプリの開発者が使う、 Microsoft 組み込みの AI 機能) の多くは、 Copilot+ PC (NPU を積み、メモリが 16GB 以上などの条件を満たす機種) が必要である。ただし、一部は他の Windows 11 の機器でも動く [13] 。</p>
+<h2 id="sec5">5. 端末の中で AI を動かす</h2>
+<p>この章は、アプリを通じて間接的に恩恵を受ける話である。 Apple の Foundation Models framework は、アプリの開発者が、端末の中で動く Apple のモデル (オンデバイスのモデル) を使えるようにする仕組みである。機能はオフラインで使え、開発者に推論 (AI が答えを出す処理) の費用はかからない。 macOS 26 以降で、 Apple Intelligence (Apple の AI 機能群) に対応する機器で、 Apple Intelligence をオンにしたときに使える <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 。対象機種が Apple Intelligence に対応するかは、確認できなかった。 2025 年 9 月の発表時点では、日本語を含む言語に対応するが、ベータ版と案内されていた。その後の状況は確認していない <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> 。</p>
+<p>Windows にも、同じ層の仕組みがある。 Microsoft の Foundry Local は、 20 以上のオープンソースの言語モデルなどを、 Windows のどの機器でも動かせる。 Windows ML は、アプリの開発者が、 CPU 、 GPU 、 NPU でモデルを動かすための仕組みで、これも Windows のどの機器でも使える <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup> 。一方、 Windows AI APIs (Phi Silica など、アプリの開発者が使う、 Microsoft 組み込みの AI 機能) の多くは、 Copilot+ PC (NPU を積み、メモリが 16GB 以上などの条件を満たす機種) が必要である。ただし、一部は他の Windows 11 の機器でも動く <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup> 。</p>
 <p>したがって、端末の中で AI を動かせること自体は、 Windows でも同等である。使える AI 機能の質や速さの差は、今回は示せていない。判定は「 Windows でも同等にできる」とする。</p>
 
-<h2>6. まとめ</h2>
+<h2 id="sec6">6. まとめ</h2>
 <table class="cards">
 <tr><th>項目</th><th>判定</th><th>根拠の強さ</th></tr>
-<tr><td data-label="項目">FPV ゲーム (Mac で遊べるか)</td><td data-label="判定">区分なし (Mac での動作は記載の確認のみ。 Windows との動作の比較は未調査)</td><td data-label="根拠の強さ">ストアページ・公式サイトの記載 [2][3][4]</td></tr>
-<tr><td data-label="項目">iPhone をカメラにする</td><td data-label="判定">区分なし (確認しきれなかった)</td><td data-label="根拠の強さ">Apple は公式 [6] 、 Windows 側は報道 [9]</td></tr>
-<tr><td data-label="項目">iPhone の画面を Mac で操作する</td><td data-label="判定">区分なし (確認しきれなかった)</td><td data-label="根拠の強さ">Apple は公式 [7] 、 Windows 側は報道 [8]</td></tr>
-<tr><td data-label="項目">一組のキーボードとマウスで複数の機器を操作する</td><td data-label="判定">Windows でも同等にできる</td><td data-label="根拠の強さ">両方とも公式 [10][11]</td></tr>
-<tr><td data-label="項目">端末の中で AI を動かす</td><td data-label="判定">Windows でも同等にできる</td><td data-label="根拠の強さ">両方とも公式 [12][13]</td></tr>
+<tr><td data-label="項目">FPV ゲーム (Mac で遊べるか)</td><td data-label="判定">区分なし (Mac での動作は記載の確認のみ。 Windows との動作の比較は未調査)</td><td data-label="根拠の強さ">ストアページ・公式サイトの記載 <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><td data-label="項目">iPhone をカメラにする</td><td data-label="判定">区分なし (確認しきれなかった)</td><td data-label="根拠の強さ">Apple は公式 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 、 Windows 側は報道 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><td data-label="項目">iPhone の画面を Mac で操作する</td><td data-label="判定">区分なし (確認しきれなかった)</td><td data-label="根拠の強さ">Apple は公式 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 、 Windows 側は報道 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><td data-label="項目">一組のキーボードとマウスで複数の機器を操作する</td><td data-label="判定">Windows でも同等にできる</td><td data-label="根拠の強さ">両方とも公式 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><td data-label="項目">端末の中で AI を動かす</td><td data-label="判定">Windows でも同等にできる</td><td data-label="根拠の強さ">両方とも公式 <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-3"><a href="#ref-13">[13]</a></sup></td></tr>
 </table>
-<p>「 Mac でしか実現できない」と言える項目は、今回の調査では見つからなかった。「 Windows でも可能だが Mac が有利」と、出典で示せた項目もなかった。 Mac ならではかもしれない項目は、 iPhone との連携の二つにあるが、 Windows 側の公式な確認が足りないため、断定できない。 Mac の価値は、機能の有無よりも、 Apple の機器を持っている人にとっての手間の少なさにあるのかもしれない。ただし、これは筆者の推測であり、今回の資料では示せていない。なお、 Uncrashed と Liftoff は Windows 版も明記している [2][3] 。 VelociDrone の Windows 版は確認していない。ゲームの面で Mac が有利と示せる材料はない。</p>
+<p>「 Mac でしか実現できない」と言える項目は、今回の調査では見つからなかった。「 Windows でも可能だが Mac が有利」と、出典で示せた項目もなかった。 Mac ならではかもしれない項目は、 iPhone との連携の二つにあるが、 Windows 側の公式な確認が足りないため、断定できない。 Mac の価値は、機能の有無よりも、 Apple の機器を持っている人にとっての手間の少なさにあるのかもしれない。ただし、これは筆者の推測であり、今回の資料では示せていない。なお、 Uncrashed と Liftoff は Windows 版も明記している <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> 。 VelociDrone の Windows 版は確認していない。ゲームの面で Mac が有利と示せる材料はない。</p>
 
-<h2>7. 限界</h2>
+<h2 id="sec7">7. 限界</h2>
 <ul>
-<li>対象は、 Apple と Microsoft の公式ページ、 Steam のストアページ、開発元の公式サイトである。 Windows 側の Phone Link と Android のウェブカメラ機能は、報道を頼りにしており、公式ページでは確認できていない [8][9] 。</li>
+<li>対象は、 Apple と Microsoft の公式ページ、 Steam のストアページ、開発元の公式サイトである。 Windows 側の Phone Link と Android のウェブカメラ機能は、報道を頼りにしており、公式ページでは確認できていない <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup> 。</li>
 <li>FPV ゲームは、実機で動かして確かめていない。 Apple シリコン上での動作の形態、 macOS 27 での動作、 Mac での送信機の認識は、確認できなかった。</li>
 <li>統合メモリ (CPU と GPU が同じメモリを共有する仕組み) の効果、消費電力、 Windows 向けゲームの数との比較は、比べる資料が見つからず、扱っていない。</li>
-<li>Apple の Game Porting Toolkit は、開発者が Windows のゲームを Apple のチップで評価する道具である [14] 。遊ぶ人向けの機能ではないため、区分に入れていない。また、 MetalFX (画面を高画質に拡大する技術) の新しい拡大処理は、 M5 Pro と M5 Max が名指しされており、 M2 Max に適用されるかは確認できていない [15] 。</li>
+<li>Apple の Game Porting Toolkit は、開発者が Windows のゲームを Apple のチップで評価する道具である <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 。遊ぶ人向けの機能ではないため、区分に入れていない。また、 MetalFX (画面を高画質に拡大する技術) の新しい拡大処理は、 M5 Pro と M5 Max が名指しされており、 M2 Max に適用されるかは確認できていない <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 。</li>
 <li>iPhone を持たない人、 Android を使う人には第 3 章の結論は当てはまらない。二台目の Mac や iPad を持たない人には、第 4 章の結論も当てはまらない。</li>
 <li>三つの区分には、 Windows が有利な項目の置き場がない。この記事も、 Windows が有利な点は、本文で個別に書くしかなかった。</li>
 <li>比較相手を Windows 11 のノート PC とし、 Copilot+ PC かどうかでの違いは第 5 章の範囲でしか見ていない。比較する PC の価格帯や性能帯は揃えていない。</li>
 <li>資料の日付は揃っていない。 Apple の Foundation Models の発表は 2025 年 9 月、 Microsoft の資料は 2026 年 6 月から 8 月の更新である。取得日は、すべて 2026-10-16 である。</li>
 </ul>
 
-<h2>参考文献</h2>
+<div class="refs">
+<h2 id="sec8">8. 参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
-<li>MacBook Pro (16-inch, 2023) - Tech Specs. Apple. https://support.apple.com/en-us/111838 (取得日 : 2026-10-16)</li>
-<li>Uncrashed : FPV Drone Simulator. Steam (Valve). https://store.steampowered.com/app/1682970/Uncrashed__FPV_Drone_Simulator/ (取得日 : 2026-10-16)</li>
-<li>Liftoff : FPV Drone Racing. Steam (Valve). https://store.steampowered.com/app/410340/Liftoff_FPV_Drone_Racing/ (取得日 : 2026-10-16)</li>
-<li>VelociDrone FPV Simulator (shop ページの動作環境の記載). Velocidrone. https://www.velocidrone.com/shop (取得日 : 2026-10-16)</li>
-<li>Connect a wireless game controller to your Apple device. Apple. https://support.apple.com/en-us/ht210414 (取得日 : 2026-10-16 ／検索結果の要約を参照)</li>
-<li>Continuity Camera: Use iPhone as a webcam for Mac. Apple. https://support.apple.com/102546 (取得日 : 2026-10-16)</li>
-<li>iPhone Mirroring: Use your iPhone from your Mac. Apple. https://support.apple.com/120421 (取得日 : 2026-10-16)</li>
-<li>Phone Link can finally connect your iPhone to your Windows 11 PC... kind of. Windows Central (2023 年の報道). https://windowscentral.com/software-apps/phone-link-can-finally-connect-your-iphone-to-your-windows-11-pc-kind-of (取得日 : 2026-10-16 ／検索結果の要約を参照)</li>
-<li>Use your smartphone as a webcam for Windows 11. PCWorld (報道). https://www.pcworld.com/article/2311397/use-your-smartphone-as-a-webcam-for-windows-11.html (取得日 : 2026-10-16 ／検索結果の要約を参照)</li>
-<li>Universal Control: Use a single keyboard and mouse between Mac and iPad. Apple. https://support.apple.com/en-us/102459 (取得日 : 2026-10-16 ／検索結果の要約を参照)</li>
-<li>Control Multiple Computers with PowerToys Mouse Without Borders. Microsoft Learn (2026 年 6 月更新). https://learn.microsoft.com/en-us/windows/powertoys/mouse-without-borders (取得日 : 2026-10-16)</li>
-<li>Apple's Foundation Models framework unlocks new intelligent app experiences. Apple Newsroom (2025 年 9 月). https://www.apple.com/newsroom/2025/09/apples-foundation-models-framework-unlocks-new-intelligent-app-experiences/ (取得日 : 2026-10-16)</li>
-<li>Choose your Windows AI solution. Microsoft Learn (2026 年 8 月更新). https://learn.microsoft.com/windows/ai/windows-ai-comparison (取得日 : 2026-10-16)</li>
-<li>Game Porting Toolkit (ページ見出し : Bring your advanced games to Mac, iPad, and iPhone). Apple Developer. https://developer.apple.com/games/game-porting-toolkit/ (取得日 : 2026-10-16)</li>
-<li>What's new in Games. Apple Developer. https://developer.apple.com/games/whats-new/ (取得日 : 2026-10-16)</li>
+<li id="ref-1"><a href="#fnref-1-1">^</a> <em>MacBook Pro (16-inch, 2023) - Tech Specs</em>. Apple. 取得日 : 2026-10-16 。 <a href="https://support.apple.com/en-us/111838">Apple サポート</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <em>Uncrashed : FPV Drone Simulator</em>. Steam (Valve). 取得日 : 2026-10-16 。 <a href="https://store.steampowered.com/app/1682970/Uncrashed__FPV_Drone_Simulator/">Steam ストアページ</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <em>Liftoff : FPV Drone Racing</em>. Steam (Valve). 取得日 : 2026-10-16 。 <a href="https://store.steampowered.com/app/410340/Liftoff_FPV_Drone_Racing/">Steam ストアページ</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> <em>VelociDrone FPV Simulator (shop ページの動作環境の記載)</em>. Velocidrone. 取得日 : 2026-10-16 。 <a href="https://www.velocidrone.com/shop">VelociDrone 公式サイト</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> <em>Connect a wireless game controller to your Apple device</em>. Apple. 取得日 : 2026-10-16 ／検索結果の要約を参照。 <a href="https://support.apple.com/en-us/ht210414">Apple サポート</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> <em>Continuity Camera: Use iPhone as a webcam for Mac</em>. Apple. 取得日 : 2026-10-16 。 <a href="https://support.apple.com/102546">Apple サポート</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> <sup><a href="#fnref-7-3">c</a></sup> <em>iPhone Mirroring: Use your iPhone from your Mac</em>. Apple. 取得日 : 2026-10-16 。 <a href="https://support.apple.com/120421">Apple サポート</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> <sup><a href="#fnref-8-3">c</a></sup> <em>Phone Link can finally connect your iPhone to your Windows 11 PC... kind of</em>. Windows Central (2023 年の報道). 取得日 : 2026-10-16 ／検索結果の要約を参照。 <a href="https://windowscentral.com/software-apps/phone-link-can-finally-connect-your-iphone-to-your-windows-11-pc-kind-of">Windows Central</a></li>
+<li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> <sup><a href="#fnref-9-3">c</a></sup> <em>Use your smartphone as a webcam for Windows 11</em>. PCWorld (報道). 取得日 : 2026-10-16 ／検索結果の要約を参照。 <a href="https://www.pcworld.com/article/2311397/use-your-smartphone-as-a-webcam-for-windows-11.html">PCWorld</a></li>
+<li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> <sup><a href="#fnref-10-3">c</a></sup> <em>Universal Control: Use a single keyboard and mouse between Mac and iPad</em>. Apple. 取得日 : 2026-10-16 ／検索結果の要約を参照。 <a href="https://support.apple.com/en-us/102459">Apple サポート</a></li>
+<li id="ref-11">^ <sup><a href="#fnref-11-1">a</a></sup> <sup><a href="#fnref-11-2">b</a></sup> <sup><a href="#fnref-11-3">c</a></sup> <em>Control Multiple Computers with PowerToys Mouse Without Borders</em>. Microsoft Learn (2026 年 6 月更新). 取得日 : 2026-10-16 。 <a href="https://learn.microsoft.com/en-us/windows/powertoys/mouse-without-borders">Microsoft Learn</a></li>
+<li id="ref-12">^ <sup><a href="#fnref-12-1">a</a></sup> <sup><a href="#fnref-12-2">b</a></sup> <sup><a href="#fnref-12-3">c</a></sup> <em>Apple's Foundation Models framework unlocks new intelligent app experiences</em>. Apple Newsroom (2025 年 9 月). 取得日 : 2026-10-16 。 <a href="https://www.apple.com/newsroom/2025/09/apples-foundation-models-framework-unlocks-new-intelligent-app-experiences/">Apple Newsroom</a></li>
+<li id="ref-13">^ <sup><a href="#fnref-13-1">a</a></sup> <sup><a href="#fnref-13-2">b</a></sup> <sup><a href="#fnref-13-3">c</a></sup> <em>Choose your Windows AI solution</em>. Microsoft Learn (2026 年 8 月更新). 取得日 : 2026-10-16 。 <a href="https://learn.microsoft.com/windows/ai/windows-ai-comparison">Microsoft Learn</a></li>
+<li id="ref-14"><a href="#fnref-14-1">^</a> <em>Game Porting Toolkit (ページ見出し : Bring your advanced games to Mac, iPad, and iPhone)</em>. Apple Developer. 取得日 : 2026-10-16 。 <a href="https://developer.apple.com/games/game-porting-toolkit/">Apple Developer</a></li>
+<li id="ref-15"><a href="#fnref-15-1">^</a> <em>What's new in Games</em>. Apple Developer. 取得日 : 2026-10-16 。 <a href="https://developer.apple.com/games/whats-new/">Apple Developer</a></li>
 </ol>
+</div>
 
 </main>
 </body>

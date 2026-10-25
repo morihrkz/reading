@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>シャットダウンを再起動と同じ深さにする設定手順書</title>
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -22,11 +22,22 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 記事型の本文サイズ */
-  p, li, .note, .must, .say { font-size: 1.1875rem; }
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
   /* 長いコマンド行は横スクロールにして、画面幅からのはみ出しによる縮小表示を防ぐ */
   pre { overflow-x: auto; }
-  /* 表のカード化(幅 40rem 以下) */
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
     table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
@@ -36,6 +47,21 @@
     table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
     table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
 </style>
 </head>
@@ -43,8 +69,34 @@
 <main>
 <h1>シャットダウンを「再起動」と同じ深さにする設定手順書</h1>
 <p class="meta">対象 : Windows 11 ／ macOS 26 ｜ 作成 : 2026-10-14 ｜ 実機での動作確認は未実施（仕様に基づく手順）</p>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">この文書の背景</a></li>
+<li><a href="#sec2">結論</a></li>
+<li><a href="#sec3">前提の検証</a></li>
+<li><a href="#sec4">Windows 11 の設定</a></li>
+<li><a href="#sec5">macOS 26 の設定</a></li>
+<li><a href="#sec6">完了チェックリスト</a>
+<ol>
+<li><a href="#sec3-1">Windows</a></li>
+<li><a href="#sec3-2">Mac</a></li>
+<li><a href="#sec4-1">考え方</a></li>
+<li><a href="#sec4-2">手順 A: 画面操作で設定する</a></li>
+<li><a href="#sec4-3">手順 B: コマンドで設定する</a></li>
+<li><a href="#sec4-4">効果の確かめ方</a></li>
+<li><a href="#sec4-5">その場かぎりで完全終了したいとき</a></li>
+<li><a href="#sec4-6">付随する設定（任意）</a></li>
+<li><a href="#sec4-7">元に戻す</a></li>
+<li><a href="#sec5-1">考え方</a></li>
+<li><a href="#sec5-2">確認する</a></li>
+<li><a href="#sec5-3">付随する設定（任意）</a></li>
+</ol>
+</li>
+</ol>
+</nav>
 
-<h2>0. この文書の背景</h2>
+<h2 id="sec1">1. この文書の背景</h2>
 <p>この文書は、作成者（ユーザー）が 2026-10-14 に Claude へ寄せた次の疑問への回答と、その結果としての設定手順をまとめたものである。</p>
 <ul>
 <li><strong>疑問の前提 :</strong> 「 Windows でも Mac でも、『再起動』は『シャットダウン（システム終了）』よりも深いレベルまでプロセスを終了・リセットしているのではないか。シャットダウンは、終了時や次回起動時の時間を短縮するために、浅いレベルでしか行っていないのではないか。」</li>
@@ -53,16 +105,16 @@
 </ul>
 <p>以下の「認識」「見方」は、すべてこの疑問の前提を指す。</p>
 
-<h2>1. 結論</h2>
+<h2 id="sec2">2. 結論</h2>
 <p>「再起動が深く、シャットダウンは浅い」という前提が、各 OS で成り立つかどうかを先にまとめる。</p>
 <table class="cards">
 <tr><th>OS</th><th>前提の当否</th><th>必要な設定</th></tr>
-<tr><td data-label="OS">Windows 11</td><td data-label="前提の当否">成り立つ。シャットダウンは既定で「高速スタートアップ」という半休止状態の保存を伴い、再起動より浅い。</td><td data-label="必要な設定">高速スタートアップを無効にする（第 3 章）。</td></tr>
-<tr><td data-label="OS">macOS 26</td><td data-label="前提の当否">成り立たない。 Mac には Windows の高速スタートアップに相当する仕組みがなく、シャットダウンは再起動と同じく全プロセスと OS カーネルを終了する。</td><td data-label="必要な設定">プロセスのクリア度合いを上げる設定は不要（第 4 章）。</td></tr>
+<tr><td data-label="OS">Windows 11</td><td data-label="前提の当否">成り立つ。シャットダウンは既定で「高速スタートアップ」という半休止状態の保存を伴い、再起動より浅い。</td><td data-label="必要な設定">高速スタートアップを無効にする（第 4 章）。</td></tr>
+<tr><td data-label="OS">macOS 26</td><td data-label="前提の当否">成り立たない。 Mac には Windows の高速スタートアップに相当する仕組みがなく、シャットダウンは再起動と同じく全プロセスと OS カーネルを終了する。</td><td data-label="必要な設定">プロセスのクリア度合いを上げる設定は不要（第 5 章）。</td></tr>
 </table>
 
-<h2>2. 前提の検証</h2>
-<h3>2.1 Windows</h3>
+<h2 id="sec3">3. 前提の検証</h2>
+<h3 id="sec3-1">3.1 Windows</h3>
 <p>疑問の前提のうち、「再起動の方が深い」は正しい。ただし「終了時の時間を短縮するため」という理由づけは少し違う。短縮されるのは主に<strong>次回の起動時間</strong>であり、終了処理はむしろ休止ファイル(<code>hiberfil.sys</code>)への書き出しが加わる分、わずかに長くなることがある。</p>
 <table class="cards">
 <tr><th>操作</th><th>ユーザーのアプリ・サインイン</th><th>OS カーネル・ドライバー</th></tr>
@@ -72,16 +124,16 @@
 </table>
 <p>つまり、カーネルとドライバーの状態が持ち越されることが「浅い」の正体である。長時間のうちに溜まったドライバーの不調やメモリの断片化が、シャットダウンでは解消されにくい。</p>
 
-<h3>2.2 Mac</h3>
+<h3 id="sec3-2">3.2 Mac</h3>
 <p>Mac のシャットダウンでは、すべてのアプリとシステムプロセスが終了し、メモリの内容は破棄される。次の起動は一から始まる。休止状態の保存(<code>hibernatemode</code>)が関わるのはスリープ（蓋を閉じる操作を含む）であり、シャットダウンではない。</p>
 <p>再起動との違いは、電源を一度落とすかどうかというハードウェア側の差にとどまる。プロセスの終了の深さに差はない。</p>
 
-<h2>3. Windows 11 の設定</h2>
-<h3>3.1 考え方</h3>
+<h2 id="sec4">4. Windows 11 の設定</h2>
+<h3 id="sec4-1">4.1 考え方</h3>
 <p>高速スタートアップをオフにすると、シャットダウンが従来どおりの完全な終了になる。手順は二通りある。いずれも結果は同じなので、やりやすい方を選ぶ。</p>
 <div class="note">Windows 11 Home にはグループポリシーエディター(<code>gpedit.msc</code>)がないため、ここでは使わない。</div>
 
-<h3>3.2 手順 A: 画面操作で設定する</h3>
+<h3 id="sec4-2">4.2 手順 A: 画面操作で設定する</h3>
 <ol>
 <li><code>Win</code> キーと <code>R</code> キーを同時に押し、 <code>powercfg.cpl</code> と入力して Enter を押す（電源オプションが開く）。</li>
 <li>左側の「電源ボタンの動作を選択する」をクリックする。</li>
@@ -91,46 +143,46 @@
 </ol>
 <div class="note">「高速スタートアップを有効にする」の項目自体が表示されない場合は、休止状態が無効になっている。すでに高速スタートアップは働いておらず、設定は不要である。</div>
 
-<h3>3.3 手順 B: コマンドで設定する</h3>
+<h3 id="sec4-3">4.3 手順 B: コマンドで設定する</h3>
 <p>高速スタートアップのオン・オフは、レジストリの <code>HiberbootEnabled</code> の値で決まる。 0 にするとオフになる。スタートボタンを右クリックし、「ターミナル（管理者）」を開いて次を実行する。</p>
 <pre><code>reg add "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v HiberbootEnabled /t REG_DWORD /d 0 /f</code></pre>
 <p>現在の値を確かめるには、次を実行する（ <code>0x0</code> ならオフ）。</p>
 <pre><code>reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power" /v HiberbootEnabled</code></pre>
 <div class="note">別の方法として <code>powercfg /hibernate off</code> でも高速スタートアップは無効になる。ただし休止状態の機能そのものが使えなくなり、休止ファイルも消える。休止状態を使うつもりがなければ有効な選択肢だが、手順 A か B の方が影響が小さい。</div>
 
-<h3>3.4 効果の確かめ方</h3>
+<h3 id="sec4-4">4.4 効果の確かめ方</h3>
 <ol>
 <li>設定を変更したあと、一度シャットダウンして電源を入れ直す。</li>
 <li>タスクマネージャー(<code>Ctrl</code> + <code>Shift</code> + <code>Esc</code>)を開き、「パフォーマンス」→「 CPU 」の「稼働時間」を見る。</li>
 <li>電源を入れ直した直後の稼働時間が、ほぼ 0 から始まっていれば成功である。高速スタートアップが働いていると、シャットダウンをまたいで稼働時間が積み上がる。</li>
 </ol>
 
-<h3>3.5 その場かぎりで完全終了したいとき</h3>
+<h3 id="sec4-5">4.5 その場かぎりで完全終了したいとき</h3>
 <p>設定を変えず、一回だけ完全なシャットダウンをする方法もある。</p>
 <ul>
 <li>スタートメニューで <code>Shift</code> キーを押しながら「シャットダウン」をクリックする。</li>
 <li>または、ターミナルで <code>shutdown /s /full /t 0</code> を実行する。</li>
 </ul>
 
-<h3>3.6 付随する設定（任意）</h3>
+<h3 id="sec4-6">4.6 付随する設定（任意）</h3>
 <p>シャットダウンのあと、サインイン時にアプリが自動で再び開く場合がある。「毎回まっさらにしたい」目的に合わせるなら、「設定」→「アカウント」→「サインイン オプション」にある「再起動可能なアプリを自動的に保存し、サインイン時に再起動する」（表記は版によって異なる）をオフにする。</p>
 
-<h3>3.7 元に戻す</h3>
+<h3 id="sec4-7">4.7 元に戻す</h3>
 <p>手順 A ならチェックを入れ直す。手順 B なら、上のコマンドの <code>/d 0</code> を <code>/d 1</code> に変えて実行する。</p>
 
 <div class="must">デメリット : 高速スタートアップをオフにすると、電源を入れてからデスクトップが使えるまでの時間が長くなる。 SSD の機種では数秒から十数秒程度の差であることが多い。</div>
-<div class="note">大型の Windows 更新（機能更新）のあとに、この設定が既定の「有効」に戻ることがある。更新後は第 3.4 節の確認をやり直す。</div>
+<div class="note">大型の Windows 更新（機能更新）のあとに、この設定が既定の「有効」に戻ることがある。更新後は第 4.4 節の確認をやり直す。</div>
 
-<h2>4. macOS 26 の設定</h2>
-<h3>4.1 考え方</h3>
-<p>第 2.2 節のとおり、 Mac のシャットダウンは最初から完全な終了である。ここで「設定」として行うことは、確認と、任意の付随設定だけである。</p>
+<h2 id="sec5">5. macOS 26 の設定</h2>
+<h3 id="sec5-1">5.1 考え方</h3>
+<p>第 3.2 節のとおり、 Mac のシャットダウンは最初から完全な終了である。ここで「設定」として行うことは、確認と、任意の付随設定だけである。</p>
 
-<h3>4.2 確認する</h3>
+<h3 id="sec5-2">5.2 確認する</h3>
 <p>シャットダウン後に電源を入れ、ターミナルで次を実行する。</p>
 <pre><code>sysctl kern.boottime</code></pre>
 <p>表示される起動時刻が、電源を入れた直後の時刻になっていれば、カーネルが一から起動し直されている。</p>
 
-<h3>4.3 付随する設定（任意）</h3>
+<h3 id="sec5-3">5.3 付随する設定（任意）</h3>
 <p>Mac で「前回の状態が残る」と感じる原因は、プロセスの生き残りではなく、<strong>アプリとウインドウの復元機能</strong>であることが多い。これを抑えると、毎回まっさらな状態で始まる。</p>
 <ol>
 <li>シャットダウンを選ぶと出る確認ダイアログで、「再度ログインしたときにウインドウを再度開く」のチェックを外してから、「システム終了」を押す。</li>
@@ -139,7 +191,7 @@
 </ol>
 <div class="note">蓋を閉じる操作やスリープは、シャットダウンではない。スリープではメモリの内容が保たれたままになる。「リセットしたい」ときは、必ず「システム終了」または「再起動」を選ぶ。</div>
 
-<h2>5. 完了チェックリスト</h2>
+<h2 id="sec6">6. 完了チェックリスト</h2>
 <ul class="check">
 <li>(Windows) 高速スタートアップをオフにした。</li>
 <li>(Windows) シャットダウン後の再起動で、タスクマネージャーの稼働時間がほぼ 0 から始まることを確認した。</li>

@@ -8,7 +8,7 @@
   body { line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
   h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
   h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
@@ -22,8 +22,19 @@
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
   .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say { font-size: 19px; }
+  p, li, .note, .must, .say { font-size: 1.05rem; }
   p { margin: 0 0 20px; }
+  /* 目次 */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
@@ -61,7 +72,33 @@
 <p>結論 : Essbase の開発・販売元は米国の Arbor Software （アーバー・ソフトウェア）で、 1992 年に初版を出した。<br>1998 年に Hyperion Software と合併して Hyperion Solutions となり、製品名は Hyperion Essbase になった。<br>2007 年に Oracle が Hyperion を買収し、現在は Oracle Essbase である。</p>
 </div>
 
-<h2>1. 要点</h2>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">要点</a></li>
+<li><a href="#sec2">年表</a></li>
+<li><a href="#sec3">1998 年の Arbor と Hyperion の合併</a></li>
+<li><a href="#sec4">Essbase の技術の特徴</a>
+<ol>
+<li><a href="#sec4-1">多次元モデル</a></li>
+<li><a href="#sec4-2">疎な次元と密な次元</a></li>
+<li><a href="#sec4-3">計算とインターフェース</a></li>
+</ol>
+</li>
+<li><a href="#sec5">1990 年代の日本での販売について</a>
+<ol>
+<li><a href="#sec5-1">手がかり 1 : Arbor 自身の拠点に日本がない</a></li>
+<li><a href="#sec5-2">手がかり 2 : 間接販売の提携先に日本企業が載っている</a></li>
+<li><a href="#sec5-3">手がかり 3 : 日本法人は合併後に現れる</a></li>
+<li><a href="#sec5-4">補足 : Comshare との争い</a></li>
+</ol>
+</li>
+<li><a href="#sec6">確認できていないこと</a></li>
+<li><a href="#sec7">出典</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 要点</h2>
 <ul>
 <li>Essbase は多次元データベース (MDBMS) で、表計算ソフトの規模の限界を超えるために作られた。</li>
 <li>生みの親は Arbor Software 。 1992 年に初版を出荷し、同年に多次元データの格納・検索方法の特許を出願、 1994 年に成立した。</li>
@@ -70,7 +107,7 @@
 <li>2007 年 4 月、 Oracle が約 33 億ドルで Hyperion を買収した。</li>
 </ul>
 
-<h2>2. 年表</h2>
+<h2 id="sec2">2. 年表</h2>
 <table class="cards">
 <thead><tr><th>時期</th><th>出来事</th><th>当事者</th></tr></thead>
 <tbody>
@@ -85,7 +122,7 @@
 </tbody>
 </table>
 
-<h2>3. 1998 年の Arbor と Hyperion の合併</h2>
+<h2 id="sec3">3. 1998 年の Arbor と Hyperion の合併</h2>
 <p>1990 年代後半の Essbase を語るうえで最大の出来事は、この合併である。 Hyperion Software は、財務連結・予算管理などの業務アプリケーションを持つ会社で、前身は 1981 年創業の IMRS だった。 Arbor は OLAP エンジンの Essbase を持つ会社で、両者は補完関係にあった。</p>
 <table class="cards">
 <thead><tr><th>項目</th><th>内容</th></tr></thead>
@@ -98,21 +135,21 @@
 </tbody>
 </table>
 
-<h2>4. Essbase の技術の特徴</h2>
-<h3>多次元モデル</h3>
+<h2 id="sec4">4. Essbase の技術の特徴</h2>
+<h3 id="sec4-1">4.1 多次元モデル</h3>
 <p>データを「ハイパーキューブ」として持つ。地域別・製品別・期間別などの切り口ごとに表計算のシートを複製する運用をやめ、一つのモデルに集約する発想である。</p>
-<h3>疎な次元と密な次元</h3>
+<h3 id="sec4-2">4.2 疎な次元と密な次元</h3>
 <p>ブロック格納方式では、開発者が各次元を「密 (dense) 」か「疎 (sparse) 」に指定する。データが実在する組み合わせにだけ記憶領域を割り当てるため、大半が空になる多次元データを効率よく持てる。</p>
-<h3>計算とインターフェース</h3>
+<h3 id="sec4-3">4.3 計算とインターフェース</h3>
 <p>階層の集計、保存された計算メンバーと動的な計算メンバー、手続き型の計算スクリプトを備える。 C 、 Visual Basic 、 Java の API があり、利用者は主に Microsoft Excel のアドインから使う。 7 版でブロック格納 (BSO) に加えて集計格納 (ASO) が入り、後者では MDX で動的計算を書く。</p>
 
-<h2>5. 1990 年代の日本での販売について</h2>
+<h2 id="sec5">5. 1990 年代の日本での販売について</h2>
 <div class="must">
 <p><strong>結論 : 1990 年代の日本での販売会社は、今回の調査では特定できなかった。</strong> Arbor Software が日本に自社の拠点を持っていた形跡も、見つからなかった。ただし、販売経路をたどる手がかりは三つ見つかった。</p>
 </div>
-<h3>手がかり 1 : Arbor 自身の拠点に日本がない</h3>
+<h3 id="sec5-1">5.1 手がかり 1 : Arbor 自身の拠点に日本がない</h3>
 <p>米国証券取引委員会 (SEC) に出された Arbor の年次報告書（ 1997 年 3 月期と 1998 年 3 月期）に、日本という語は出てこない。子会社は英国・フランス・ドイツにあり、 1997 年 3 月期の報告書に、パリ、フランクフルト、ハンブルク、ミュンヘン、シドニーに拠点を開いたと書かれている。販売地域は「米国、カナダ、欧州、環太平洋」で、海外売上は 1997 年 3 月期で全体の 11% 、その大半は欧州だった。このため、日本での販売は、自社の直販ではなく、他社を通じた間接販売が中心だったと考えられる（推論）。</p>
-<h3>手がかり 2 : 間接販売の提携先に日本企業が載っている</h3>
+<h3 id="sec5-2">5.2 手がかり 2 : 間接販売の提携先に日本企業が載っている</h3>
 <table class="cards">
 <thead><tr><th>提携先</th><th>報告書での記載</th><th>日本との関係</th></tr></thead>
 <tbody>
@@ -121,12 +158,12 @@
 <tr><td data-label="提携先">Comshare</td><td data-label="報告書での記載">最大の再販業者で、 1996 年 3 月期の売上の 26% を占めた。 Essbase を世界で使い、複製し、再許諾する権利を持つ</td><td data-label="日本との関係">日本での活動は確認できず</td></tr>
 </tbody>
 </table>
-<h3>手がかり 3 : 日本法人は合併後に現れる</h3>
+<h3 id="sec5-3">5.3 手がかり 3 : 日本法人は合併後に現れる</h3>
 <p>合併後の Hyperion Solutions については、 2001 年 2 月に Hyperion Solutions Japan の社長に就いた人物の経歴が確認できた（その人物は 1998 年 2 月に米国の Hyperion Solutions に入社している）。したがって、少なくとも 2001 年には日本法人があった。 Essbase 7.1 の日本語版は 2004 年に出荷が発表されている。設立の時期と、 1990 年代の Arbor 時代との関係は確認できなかった。</p>
-<h3>補足 : Comshare との争い</h3>
+<h3 id="sec5-4">5.4 補足 : Comshare との争い</h3>
 <p>Comshare は Essbase を自社の販売網でも売っていたが、 Arbor との間でライセンスをめぐる争いが起き、 1996 年に仲裁の手続きが始まった。 1997 年の報告書でも訴訟中とされている。 Comshare の Essbase 関連の売上の約 50% から 60% は海外の顧客向けだったが、その中に日本が含まれるかどうかはわからない。</p>
 
-<h2>6. 確認できていないこと</h2>
+<h2 id="sec6">6. 確認できていないこと</h2>
 <ul class="check">
 <li>Arbor Software の創業年と創業者（第三者の紹介ページには 1991 年にカリフォルニア州サニーベールで、 Bob Earle と Jim Dorrian が創業したとあるが、一次資料では確認していない）</li>
 <li>IBM と Arbor の OEM 契約の開始時期と契約条件</li>
@@ -136,7 +173,7 @@
 <li>富士通と三菱商事の報告書での記載が、日本の販売を指すのかどうか（当時の日本の業界誌や、両社の発表資料に当たる必要がある）</li>
 </ul>
 
-<h2>7. 出典</h2>
+<h2 id="sec7">7. 出典</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Essbase">Essbase - Wikipedia</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Hyperion_Solutions">Hyperion Solutions - Wikipedia</a></li>
