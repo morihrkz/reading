@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EmDash 入門 ――アカウントの作成から、最初の記事の公開まで</title>
+<title>EmDash 入門――アカウントの作成から、最初の記事の公開まで</title>
 <style>
   body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
@@ -93,9 +93,9 @@
 <h1>EmDash 入門<br>――アカウントの作成から、最初の記事の公開まで</h1>
 <p class="subtitle">From Account Creation to the First Published Post: A Hands-On Introduction to Running the EmDash CMS on Cloudflare</p>
 <div class="lede">
-<p>この記事は Cloudflare の CMS である EmDash を学ぶ手順書である。頭から順に読みながら、手を動かして進めることができる。 Cloudflare のアカウントを作るところから始め、記事を公開するまでを扱う。各章の終わりに「ここまでの確認」を置いた。</p>
+<p>この記事は Cloudflare の CMS である EmDash を学ぶ手順書である。頭から順に読みながら、手を動かして進めることができる。 Cloudflare のアカウントを作るところから記事を公開するまでを扱う。各章の終わりに「ここまでの確認」を置いた。</p>
 </div>
-<div class="meta"><strong>【作成と取得日】</strong>作成日 2026-10-24 ／ 更新日 2026-10-25 ／ 出典の取得日 2026-10-24 ／ 本文は取得日の時点の情報に基づく</div>
+<div class="meta"><strong>【作成と取得日】</strong>作成日 2026-10-24 ／ 更新日 2026-10-25 ／ 出典の取得日 2026-10-24</div>
 <nav class="toc" aria-label="目次">
 <p class="toc-title">目次</p>
 <ol>
@@ -218,8 +218,8 @@
 <pre><code>node --version</code></pre>
 <p>「 v22.23.4 」以上の数字が出れば、次へ進む。「コマンドが見つからない」と出るか、版が古い場合は、 <code>https://nodejs.org/</code> から LTS （長期サポート版）の最新を入れ、ターミナルを開き直して、もう一度調べる。 LTS の最新が 22.23.4 以上であることは、入れたあとの <code>node --version</code> で確かめる。</p></li>
 <li>パッケージマネージャー（部品の取り込みを管理する道具）の pnpm を入れる。この記事は pnpm で統一する。
-<pre><code>npm install -g pnpm
-pnpm --version</code></pre>
+<pre><code>npm install -g pnpm</code><br>
+<code>pnpm --version</code></pre>
 <p>版の数字が出れば成功である。 Mac で権限のエラーが出るときは、先頭に <code>sudo</code> を付けて打つ。</p></li>
 </ol>
 <div class="box"><strong>ここまでの確認</strong><br><code>node --version</code> が 22.23.4 以上、 <code>pnpm --version</code> が数字を返す。</div>
@@ -318,8 +318,8 @@ pnpm --version</code></pre>
 <p>雛形の README は、公開のコマンドを <code>pnpm deploy</code> と案内している <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> 。</p>
 <pre><code>pnpm deploy</code></pre>
 <p>このコマンドが「見つからない」と表示されたときは、公式ガイドの二段の手順で同じことをする <sup id="fnref-5-15"><a href="#ref-5">[5]</a></sup> 。</p>
-<pre><code>pnpm build
-pnpm wrangler deploy</code></pre>
+<pre><code>pnpm build</code><br>
+<code>pnpm wrangler deploy</code></pre>
 <p>初回の公開では、次のことが起きる。</p>
 <ul>
 <li>D1 のデータベースと R2 の保存領域が、 Cloudflare の側に作られる <sup id="fnref-5-16"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-4"><a href="#ref-6">[6]</a></sup> 。 R2 で支払い方法の登録を求められたら、 2 章の注意を読み返す。</li>
@@ -364,15 +364,15 @@ pnpm wrangler deploy</code></pre>
 <h2 id="sec10">10. 公開後の点検</h2>
 <p>最後に、次の項目を一つずつ確かめる。公式ガイドは、公開の点検として、公開ページの取得、管理画面へのログイン、メディアのアップロードと取得、定期処理の動作の確認を挙げている <sup id="fnref-5-20"><a href="#ref-5">[5]</a></sup> 。</p>
 <ul>
-<li>☐ 公開したサイトのトップページが開き、文字化けがない</li>
-<li>☐ 管理画面にログインでき、記事を作成して公開できる</li>
-<li>☐ 画像をアップロードして、記事に表示できる</li>
-<li>☐ 存在しないパスを開くと、エラーの画面が返る</li>
-<li>☐ スマートフォンで見て、表示が崩れない</li>
-<li>☐ 暗号鍵の控えが、リポジトリの外の安全な場所にある</li>
-<li>☐ 次のコマンドで、定期処理が動いている
-<pre><code>pnpm emdash doctor
-pnpm wrangler tail</code></pre>
+<li>公開したサイトのトップページが開き、文字化けがない</li>
+<li>管理画面にログインでき、記事を作成して公開できる</li>
+<li>画像をアップロードして、記事に表示できる</li>
+<li>存在しないパスを開くと、エラーの画面が返る</li>
+<li>スマートフォンで見て、表示が崩れない</li>
+<li>暗号鍵の控えが、リポジトリの外の安全な場所にある</li>
+<li>次のコマンドで、定期処理が動いている
+<pre><code>pnpm emdash doctor</code><br>
+<code>pnpm wrangler tail</code></pre>
 <p><code>wrangler tail</code> は、公開した Worker の動きを、ターミナルに流し続ける。止めるには <code>Ctrl + C</code> を押す。定期処理の設定を変えた直後は、動き出すまでに最長で 15 分かかることがある <sup id="fnref-5-21"><a href="#ref-5">[5]</a></sup> 。</p></li>
 </ul>
 <p>これで、「アカウントを作る」から「記事を公開する」までの工程は終わりである。</p>
