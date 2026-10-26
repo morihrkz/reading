@@ -5,78 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>これからの大型選挙スケジュール 2026 年秋〜 2031 年</title>
 <style>
-  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
+  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
+  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  a { color: var(--accent); }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 1.4rem; color: var(--text); }
+  .subtitle { color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
+  /* 見出し */
+  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  /* 表 */
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: #e6edf3; white-space: nowrap; }
-  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: var(--box); white-space: nowrap; }
+  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
+  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--accent); }
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .meta { color: #555; font-size: .9rem; }
+  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
   ul.check { list-style: none; padding-left: 0; }
   ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
   ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
-  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
-  p { margin: 0 0 20px; }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
-  /* 目次 */
-  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
+  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
   .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:#555}
-  .toc a{color:#222;text-decoration:none}
-  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--text);text-decoration:none}
+  .toc a:hover{color:var(--accent);text-decoration:underline}
   @media (max-width:40rem){
     .toc>ol{columns:1}
   }
-  /* 脚注と参考文献 */
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
   sup{font-size:.72em}
-  sup a{color:#2a4d69;text-decoration:none}
+  sup a{color:var(--accent);text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
-  .refs h2{border-bottom:none;margin-top:0;padding-bottom:0}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
   .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
   .refs li>a:first-child{font-weight:700;text-decoration:none}
   .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:#e6edf3}
-  /* 文書固有の補助 */
-  figure { margin: 1.5rem 0; }
-  figure svg { display: block; width: 100%; max-width: 720px; height: auto; background: #fff; border: 1px solid #bbb; border-radius: 4px; }
-  figcaption { color: #555; font-size: .9rem; margin-top: .4rem; }
+  .refs li:target,sup:target{background:var(--box)}
+  /* 末尾の注記 */
+  .endnote { font-size: .9rem; color: var(--muted); }
+  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
+  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
+  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
+  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
+  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
+  @media (max-width: 40rem) {
+    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
+    figure.diagram svg { max-width: none; }
+    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
+  }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
+    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
+    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
 </style>
 </head>
 <body>
@@ -108,7 +128,7 @@
 <h2 id="sec1">1. 全体の見取り図</h2>
 <p>図 1 は、 2026 年 10 月から 2031 年までの主な選挙を、日付の順に縦に並べたものである。間隔は時間の長さに比例しない。色は、紺が地方選挙、黄が政党の選挙、赤が国政選挙を表す。</p>
 
-<figure>
+<figure class="diagram">
 <svg viewBox="0 0 640 880" role="img" aria-label="2026 年 10 月から 2031 年までの主な選挙を日付順に並べた縦型の年表">
   <line x1="150" y1="30" x2="150" y2="840" stroke="#2a4d69" stroke-width="3"/>
 
@@ -196,7 +216,7 @@
 <h2 id="sec3">3. 統一地方選挙 : 2027 年 4 月の二つの日曜日</h2>
 <p>統一地方選挙は、全国の自治体の選挙日をそろえて行う仕組みで、 4 年に一度の春に実施される。次回は、都道府県と政令指定都市の分を 4 月 11 日、それ以外の市区町村の分を 4 月 25 日とする法案を、政府が 2026 年 10 月 16 日に閣議決定した。主に 2027 年 3 月 1 日から 5 月 31 日までに任期が満了する首長と議員が対象で、全国で約 1000 の選挙になる見通しである。前回の 2023 年は 4 月 9 日と 23 日だった。</p>
 
-<figure>
+<figure class="diagram">
 <svg viewBox="0 0 640 330" role="img" aria-label="統一地方選挙の前半戦と後半戦を比べた図">
   <rect x="20" y="20" width="290" height="250" rx="6" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
   <rect x="20" y="20" width="290" height="56" rx="6" fill="#2a4d69"/>
@@ -235,7 +255,7 @@
 <h2 id="sec4">4. 2028 年の夏 : 参院選と都知事選が重なる</h2>
 <p>2028 年は、参議院議員の半数の任期が 7 月 25 日に、東京都知事の任期が 7 月 30 日に満了する。公職選挙法は、任期満了による選挙を任期満了日の前 30 日以内に行うと定めている。この規定を当てはめると、投票できる期間はおおむね図 3 のようになる。二つの期間は 6 月 30 日から 7 月 25 日までの約 4 週間で重なり、投票日が近くなる可能性が高い。</p>
 
-<figure>
+<figure class="diagram">
 <svg viewBox="0 0 640 260" role="img" aria-label="2028 年 6 月下旬から 7 月末までの参院選と都知事選の実施可能期間を示す図">
   <line x1="40" y1="200" x2="610" y2="200" stroke="#555" stroke-width="2"/>
   <line x1="40" y1="194" x2="40" y2="206" stroke="#555" stroke-width="2"/>
@@ -274,7 +294,7 @@
 <h2 id="sec5">5. 自民党総裁選挙 : 任期は 2027 年 9 月まで</h2>
 <p>自民党の総裁選は、公職選挙法の選挙ではなく政党の内部の選挙だが、総裁がそのまま首相になるため、実質的に政権を決める選挙である。 2025 年 10 月に高市早苗氏が総裁に選ばれた。その任期は前任の石破茂氏の残りに当たる 2027 年 9 月までである。</p>
 
-<figure>
+<figure class="diagram">
 <svg viewBox="0 0 640 230" role="img" aria-label="自民党総裁の任期を示す帯と、次の総裁選の時期を示す図">
   <line x1="40" y1="150" x2="600" y2="150" stroke="#555" stroke-width="2"/>
   <rect x="80" y="100" width="380" height="36" fill="#fff6d6" stroke="#d9a400" stroke-width="2"/>
