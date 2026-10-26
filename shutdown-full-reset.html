@@ -32,9 +32,16 @@
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
   .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  ul.check { list-style: none; padding-left: 0; }
-  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
-  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
   /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
   .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
@@ -228,12 +235,16 @@
 <div class="note">蓋を閉じる操作やスリープは、シャットダウンではない。スリープではメモリの内容が保たれたままになる。「リセットしたい」ときは、必ず「システム終了」または「再起動」を選ぶ。</div>
 
 <h2 id="sec6">6. 完了チェックリスト</h2>
-<ul class="check">
-<li>(Windows) 高速スタートアップをオフにした。</li>
-<li>(Windows) シャットダウン後の再起動で、タスクマネージャーの稼働時間がほぼ 0 から始まることを確認した。</li>
-<li>(Mac)<code>sysctl kern.boottime</code> で、シャットダウン後の起動時刻が新しいことを確認した。</li>
-<li>（ Mac ・任意）ウインドウの再オープンを抑える設定を行った。</li>
+<div class="checklist">
+<span class="cl-title">確認項目</span>
+<ul>
+<li><input type="checkbox" id="c6-1"><label for="c6-1">(Windows) 高速スタートアップをオフにした。</label></li>
+<li><input type="checkbox" id="c6-2"><label for="c6-2">(Windows) シャットダウン後の再起動で、タスクマネージャーの稼働時間がほぼ 0 から始まることを確認した。</label></li>
+<li><input type="checkbox" id="c6-3"><label for="c6-3">(Mac)<code>sysctl kern.boottime</code> で、シャットダウン後の起動時刻が新しいことを確認した。</label></li>
+<li><input type="checkbox" id="c6-4"><label for="c6-4">（ Mac ・任意）ウインドウの再オープンを抑える設定を行った。</label></li>
 </ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
 </main>
 </body>
 </html>

@@ -32,9 +32,16 @@
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
   .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  ul.check { list-style: none; padding-left: 0; }
-  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
-  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
   /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
   .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
@@ -380,18 +387,22 @@
 <div class="box"><strong>ここまでの確認</strong><br>別の端末のブラウザから、自分で書いた記事と画像が見える。</div>
 <h2 id="sec10">10. 公開後の点検</h2>
 <p>最後に、次の項目を一つずつ確かめる。公式ガイドは、公開の点検として、公開ページの取得、管理画面へのログイン、メディアのアップロードと取得、定期処理の動作の確認を挙げている <sup id="fnref-5-20"><a href="#ref-5">[5]</a></sup> 。</p>
+<div class="checklist">
+<span class="cl-title">公開後の点検 チェックリスト</span>
 <ul>
-<li>公開したサイトのトップページが開き、文字化けがない</li>
-<li>管理画面にログインでき、記事を作成して公開できる</li>
-<li>画像をアップロードして、記事に表示できる</li>
-<li>存在しないパスを開くと、エラーの画面が返る</li>
-<li>スマートフォンで見て、表示が崩れない</li>
-<li>暗号鍵の控えが、リポジトリの外の安全な場所にある</li>
-<li>次のコマンドで、定期処理が動いている
+<li><input type="checkbox" id="c10-1"><label for="c10-1">公開したサイトのトップページが開き、文字化けがない</label></li>
+<li><input type="checkbox" id="c10-2"><label for="c10-2">管理画面にログインでき、記事を作成して公開できる</label></li>
+<li><input type="checkbox" id="c10-3"><label for="c10-3">画像をアップロードして、記事に表示できる</label></li>
+<li><input type="checkbox" id="c10-4"><label for="c10-4">存在しないパスを開くと、エラーの画面が返る</label></li>
+<li><input type="checkbox" id="c10-5"><label for="c10-5">スマートフォンで見て、表示が崩れない</label></li>
+<li><input type="checkbox" id="c10-6"><label for="c10-6">暗号鍵の控えが、リポジトリの外の安全な場所にある</label></li>
+<li><input type="checkbox" id="c10-7"><label for="c10-7">次のコマンドで、定期処理が動いている</label>
 <pre><code>pnpm emdash doctor</code><br>
 <code>pnpm wrangler tail</code></pre>
 <p><code>wrangler tail</code> は、公開した Worker の動きを、ターミナルに流し続ける。止めるには <code>Ctrl + C</code> を押す。定期処理の設定を変えた直後は、動き出すまでに最長で 15 分かかることがある <sup id="fnref-5-21"><a href="#ref-5">[5]</a></sup> 。</p></li>
 </ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
 <p>これで、「アカウントを作る」から「記事を公開する」までの工程は終わりである。</p>
 <h2 id="sec11">11. うまくいかないとき</h2>
 <table class="cards">

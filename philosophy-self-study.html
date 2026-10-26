@@ -32,9 +32,16 @@
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
   .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  ul.check { list-style: none; padding-left: 0; }
-  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
-  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
   /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
   .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
@@ -204,8 +211,14 @@
 <p>哲学では、読んだ本の冊数や覚えた哲学者の人数が、そのまま理解の深さを示すわけではない。一つの立場を、自分と反対の立場からでも公平に説明できるか。その立場の前提を指摘できるか。反例を考えられるか。自分の考えがどの条件で変わるかを説明できるか。こうした能力の方が、哲学的理解の目安になりやすい <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。</p>
 <p>したがって、独学の成果確認には小さな「論文」を定期的に書く方法が向いている。長文である必要はない。問い、立場 A 、立場 B 、自分の評価、未解決問題を数ページにまとめるだけでも、受け身の読書から能動的な研究へ移行できる。</p>
 <h2 id="sec3">3. 次のアクション</h2>
-<p>☐ 気になっているテーマを一つ選び、「問いを正確にする」の手順で一文の問いに落とし込む</p>
-<p>☐ そのテーマについて、「ノートの型」を使って最初の 1 ページを書いてみる</p>
+<div class="checklist">
+<span class="cl-title">次のアクション チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="c3-1"><label for="c3-1">気になっているテーマを一つ選び、「問いを正確にする」の手順で一文の問いに落とし込む</label></li>
+<li><input type="checkbox" id="c3-2"><label for="c3-2">そのテーマについて、「ノートの型」を使って最初の 1 ページを書いてみる</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
 <div class="refs">
 <h2 id="sec4">4. 参考文献・資料</h2>
 <p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>

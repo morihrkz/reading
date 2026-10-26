@@ -32,9 +32,16 @@
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
   .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  ul.check { list-style: none; padding-left: 0; }
-  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
-  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
   /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
   .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
@@ -788,15 +795,18 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 <p>GitHub Pages の設定は、リポジトリの Settings → Pages で、公開するブランチ(<code>main</code>)とフォルダ（ルート）を選ぶだけである。数分待つと、標準の <code>github.io</code> URL でサイトが公開される。
 <strong>この時点ではまだ独自ドメイン (Custom domain) を設定しない。</strong>設定すると標準 URL が独自ドメインへ転送されるようになり、動作確認に使えなくなるためである (2-5) 。</p>
 <p>確認は、ローカル（手元のパソコン）と、 GitHub Pages のプレビュー URL の、二段階でおこなった。順番に確認することで、問題が起きたときに「ファイル自体の不具合」か「配信設定の不具合」かを切り分けやすくなる。</p>
-<p><strong>次の工程（旧環境の削除）に進んでよい条件</strong></p>
+<div class="checklist">
+<span class="cl-title">次の工程（旧環境の削除）に進んでよい条件</span>
 <ul>
-<li>☐ ローカルと GitHub Pages のプレビュー URL の両方で、ページが正しく表示される</li>
-<li>☐ 矢印キーでドローンが操作でき、加速・減速・画面端での挙動が意図どおり</li>
-<li>☐ マウスポインタでもドローンが操作でき、キー操作からの切り替えが自然</li>
-<li>☐ スマートフォン幅での表示を確認済み（レイアウトが崩れない、または操作不可である旨が破綻なく表示される）</li>
-<li>☐ 主要ブラウザ（ Chrome/Safari 等）で表示・動作を確認済み</li>
-<li>☐ タイトルなど、基本的なメタ情報が意図どおりになっている</li>
+<li><input type="checkbox" id="c1-1"><label for="c1-1">ローカルと GitHub Pages のプレビュー URL の両方で、ページが正しく表示される</label></li>
+<li><input type="checkbox" id="c1-2"><label for="c1-2">矢印キーでドローンが操作でき、加速・減速・画面端での挙動が意図どおり</label></li>
+<li><input type="checkbox" id="c1-3"><label for="c1-3">マウスポインタでもドローンが操作でき、キー操作からの切り替えが自然</label></li>
+<li><input type="checkbox" id="c1-4"><label for="c1-4">スマートフォン幅での表示を確認済み（レイアウトが崩れない、または操作不可である旨が破綻なく表示される）</label></li>
+<li><input type="checkbox" id="c1-5"><label for="c1-5">主要ブラウザ（ Chrome/Safari 等）で表示・動作を確認済み</label></li>
+<li><input type="checkbox" id="c1-6"><label for="c1-6">タイトルなど、基本的なメタ情報が意図どおりになっている</label></li>
 </ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
 <p>次の工程で旧環境を削除すると、後戻りができなくなる (3-4) 。この確認だけが、削除に進む前の唯一の安全策になるため、満たしていない項目があれば、先を急がずここで直した。</p>
 <h3 id="sec4-4">4.4 工程 4 : 旧 WordPress 環境を削除する</h3>
 <p>3-3 の完成条件をすべて満たしたことを確認したうえで、サーバー内の WordPress のデータベースとファイル一式を削除した。
@@ -880,14 +890,18 @@ curl -I https://pyx.co.jp
 SSL 証明書の自動発行には最大 1 時間程度、反映には最大 24 時間程度かかることがあるとされているが、今回は大きな遅れなく反映された。</p>
 <h3 id="sec4-6">4.6 工程 6 : 切替後の検証</h3>
 <p>最後に、独自ドメイン経由での表示を確認した。</p>
+<div class="checklist">
+<span class="cl-title">切替後の検証 チェックリスト</span>
 <ul>
-<li>☐ <code>https://pyx.co.jp</code> で新しいページが表示される</li>
-<li>☐ <code>http://pyx.co.jp</code> が <code>https://pyx.co.jp</code> へ自動転送される</li>
-<li>☐ <code>https://www.pyx.co.jp</code> が正しく転送・表示される</li>
-<li>☐ ブラウザで証明書エラーが出ない（ HTTPS が有効）</li>
-<li>☐ 独自ドメイン経由でも、キー操作・マウス操作が問題なく動作する</li>
-<li>☐ スマートフォンからのアクセスでも表示が破綻しない</li>
+<li><input type="checkbox" id="c2-1"><label for="c2-1"><code>https://pyx.co.jp</code> で新しいページが表示される</label></li>
+<li><input type="checkbox" id="c2-2"><label for="c2-2"><code>http://pyx.co.jp</code> が <code>https://pyx.co.jp</code> へ自動転送される</label></li>
+<li><input type="checkbox" id="c2-3"><label for="c2-3"><code>https://www.pyx.co.jp</code> が正しく転送・表示される</label></li>
+<li><input type="checkbox" id="c2-4"><label for="c2-4">ブラウザで証明書エラーが出ない（ HTTPS が有効）</label></li>
+<li><input type="checkbox" id="c2-5"><label for="c2-5">独自ドメイン経由でも、キー操作・マウス操作が問題なく動作する</label></li>
+<li><input type="checkbox" id="c2-6"><label for="c2-6">スマートフォンからのアクセスでも表示が破綻しない</label></li>
 </ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
 <p>ここまでで、当初の目的だった「サーバー契約期限までに、旧サイトの表示に依存しない形へ移行する」ことは達成できた。</p>
 <table class="cards">
 <thead>

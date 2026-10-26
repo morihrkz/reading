@@ -32,9 +32,16 @@
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
   .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  ul.check { list-style: none; padding-left: 0; }
-  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
-  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
   /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
   .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
@@ -121,14 +128,6 @@
   .tip{display: block;             margin-top: 8px;             color: var(--amber);             font-weight: bold;             font-size: .9375rem;             background: var(--amber-bg);             border-radius: 6px;             padding: 8px 12px;}
   .tip::before{content: "🔎 見つからないときは: ";}
   .badge{display: inline-block;             background-color: var(--blue);             color: white;             padding: 2px 10px;             border-radius: 4px;             font-size: .8125rem;             font-weight: bold;             margin-right: 6px;}
-  .checklist{background: var(--green-bg);             border: 1px solid #bbb;             border-radius: 8px;             padding: 16px 20px;             margin-top: 18px;}
-  .checklist .cl-title{font-weight: bold;             color: var(--green);             font-size: 1rem;             margin-bottom: 10px;             display: block;}
-  .checklist .cl-title::before{content: "✅ ";}
-  .checklist ul{list-style: none;             padding: 0;             margin: 0;}
-  .checklist li{padding: 8px 0 8px 34px;             position: relative;             font-size: 1rem;             border-bottom: 1px dashed #ddd;}
-  .checklist li:last-child{border-bottom: none;}
-  .checklist input[type="checkbox"]{position: absolute;             left: 0;             top: 9px;             width: 20px;             height: 20px;             accent-color: var(--green);             cursor: pointer;}
-  .checklist li label{cursor: pointer;}
   .overall-checklist{background: var(--card);             border: 2px solid var(--blue);             border-radius: 10px;             padding: 22px 26px;             margin-top: 44px;}
   .overall-checklist ul{list-style: none;             padding: 0;             margin: 0;}
   .overall-checklist li{padding: 10px 0 10px 36px;             position: relative;             font-size: 1.0625rem;             border-bottom: 1px solid #e6edf3;}
@@ -138,7 +137,6 @@
   .refs .r-title{display: block;             font-weight: bold;             margin-bottom: 6px;             color: var(--ink);}
   .refs a{color: var(--blue-dark);}
   .footer{margin-top: 40px;             font-size: .8125rem;             text-align: center;             color: var(--sub);             border-top: 1px solid #bbb;             padding-top: 12px;}
-  .save-note{font-size: .8125rem;             color: var(--sub);             text-align: center;             margin-top: 4px;}
   h2 { margin-bottom: 0; }
   .overall-checklist h2 { margin: -22px -26px 18px; }
 </style>
@@ -195,6 +193,7 @@
                 <li><input type="checkbox" id="c0-3"><label for="c0-3">Yahoo! カーナビで Yahoo! JAPAN ID にログインした</label></li>
                 <li><input type="checkbox" id="c0-4"><label for="c0-4">Yahoo! マップで同じ Yahoo! JAPAN ID にログインした</label></li>
             </ul>
+        <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
         </div>
     </div>
 
@@ -239,6 +238,7 @@
                 <li><input type="checkbox" id="c1-3"><label for="c1-3">必要に応じてグループ分けを行った</label></li>
                 <li><input type="checkbox" id="c1-4"><label for="c1-4">一覧画面で登録件数が約 30 件になっていることを確認した</label></li>
             </ul>
+        <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
         </div>
     </div>
 
@@ -269,6 +269,7 @@
                 <li><input type="checkbox" id="c2-2"><label for="c2-2">Yahoo! カーナビの登録スポット一覧にも約 30 件が表示されている</label></li>
                 <li><input type="checkbox" id="c2-3"><label for="c2-3">（表示されない場合）ログイン中の Yahoo! JAPAN ID を確認・統一した</label></li>
             </ul>
+        <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
         </div>
     </div>
 
@@ -297,6 +298,7 @@
                 <li><input type="checkbox" id="c3-1"><label for="c3-1">Yahoo! カーナビの「登録スポット」から目的地を選べた</label></li>
                 <li><input type="checkbox" id="c3-2"><label for="c3-2">ルートが表示され、「ナビ開始」で走行を開始できた</label></li>
             </ul>
+        <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
         </div>
     </div>
 

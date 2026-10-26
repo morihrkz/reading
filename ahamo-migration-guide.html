@@ -34,9 +34,16 @@
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
   .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  ul.check { list-style: none; padding-left: 0; }
-  ul.check li { padding-left: 1.8rem; position: relative; margin: .4rem 0; }
-  ul.check li::before { content: "\2610"; position: absolute; left: 0; font-size: 1.1rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
   /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
   .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
@@ -122,10 +129,6 @@
   .col.ask { border-top-color: var(--must-bd); }
   .col p { margin: .2rem 0; font-weight: bold; }
   .col ul { margin: 0 0 .4rem; padding-left: 1.2rem; }
-  ul.check label { display: flex; gap: .7rem; align-items: flex-start; min-height: 2.75rem; padding: .35rem .4rem; border-radius: 4px; cursor: pointer; }
-  ul.check label:active { background: var(--head); }
-  ul.check input { flex: none; width: 1.5rem; height: 1.5rem; margin: .2rem 0 0; accent-color: var(--accent); }
-  ul.check input:checked + span { color: #555; }
   dl.terms { margin: 1rem 0; }
   dl.terms dt { font-weight: bold; color: var(--accent); margin-top: 1rem; border-bottom: 1px solid var(--line-soft); }
   dl.terms dd { margin: .2rem 0 0; }
@@ -134,7 +137,7 @@
   ol.sources li:target { background: var(--note-bd); background: var(--note-bg); }
   ol.sources a.url { display: block; font-size: .9rem; }
   .totop {     position: fixed; right: max(.75rem, env(safe-area-inset-right)); bottom: max(.75rem, env(safe-area-inset-bottom));     min-width: 2.75rem; min-height: 2.75rem; padding: 0 .9rem; box-sizing: border-box;     display: flex; align-items: center; justify-content: center;     background: var(--accent); color: var(--on-accent); border-radius: 1.4rem; text-decoration: none; font-weight: bold;     box-shadow: 0 2px 6px rgba(0,0,0,.35);   }
-  @media (max-width: 40rem) { h2 { margin-top: 2rem; padding: .35rem .6rem; font-size: 1.2rem; } ul.check label { padding-left: .2rem; } }
+  @media (max-width: 40rem) { h2 { margin-top: 2rem; padding: .35rem .6rem; font-size: 1.2rem; } }
 </style>
 </head>
 <body>
@@ -234,21 +237,24 @@
 
 <h2 id="sec2">2. 手続きの前に確認すること</h2>
 <p class="meta">各項目の左の四角をタップすると、確認ずみの印を付けられます。印はこの端末のブラウザに保存されます。</p>
-<ul class="check">
-<li><label><input type="checkbox"><span><strong>契約者は本人か。</strong>ご家族（成人）の名義で、使っているのが別の成人の方の場合は、 ahamo に変更する前に、ドコモショップで名義変更が必要です（出典 <a href="#src5">5</a> ）。確認 : 契約書類、または店頭で聞く。</span></label></li>
-<li><label><input type="checkbox"><span><strong>d アカウントで入れるか。</strong> ahamo の申し込みは、 d アカウント（ドコモの共通 ID）でログインして進みます（出典 <a href="#src2">2</a> ）。確認 : 自宅のスマートフォンで d アカウントにログインしてみる。パスワードを忘れた場合は、お店に行く前にドコモの案内に従って再設定する。</span></label></li>
-<li><label><input type="checkbox"><span><strong>毎月の支払い方法。</strong> ahamo の支払いは、クレジットカードか口座振替だけです。それ以外（請求書払いなど）の場合は、先に変更が必要です。新しくカードを登録する場合は、 3D セキュア（カード会社の本人確認の仕組み）に対応したカードだけが使えます（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。確認 : My docomo 、または毎月の請求書。</span></label></li>
-<li><label><input type="checkbox"><span><strong>今の端末が使えるか。</strong> ahamo では、 nanoSIM または eSIM に対応した端末だけが使えます（出典 <a href="#src3">3</a> ）。今の端末を使い続ける場合は、 SIM ロック解除（ほかの会社の SIM を入れても使えるようにする設定）も必要です（出典 <a href="#src2">2</a> ）。 nanoSIM は従来の小さなカード型の SIM 、 eSIM は<a href="#sec10">第 10 章</a>で説明します。確認 : 「対応端末確認」で調べる（出典 <a href="#src4">4</a> ）。分からなければ、お店で相談する。</span></label></li>
-<li><label><input type="checkbox"><span><strong>ネットワーク暗証番号（契約の手続きで使う番号）を覚えているか。</strong>手続きで使う場面があるかは、確認できていません（<a href="#sec11">第 11 章</a>）。確認 : 番号は書き留めず、頭の中で思い出せるかだけ確かめる。忘れた場合の扱いは、店舗に聞く。<span class="tag">助言</span></span></label></li>
-<li><label><input type="checkbox"><span><strong>機種変更をしたいか。</strong>機種の購入と、 ahamo への変更は同時にできません。先にプラン変更をして、そのあとドコモオンラインショップで購入します（出典 <a href="#src6">6</a> ）。確認 : 機種を替える予定があるかどうか、ご自身で決めておく。</span></label></li>
-<li><label><input type="checkbox"><span><strong>ドコモメール（@docomo.ne.jp）を使っているか。</strong> ahamo では、そのままでは使えません。「ドコモメール持ち運び」（アドレスを引き続き使える申し込み）をしないと、アドレスは失効し、元に戻せません（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。確認 : 使っているメールアドレスを見る。</span></label></li>
-<li><label><input type="checkbox"><span><strong>ahamo で使えなくなるサービスがないか。</strong>ドコモ電話帳、公式の一覧にある割引、（契約している場合は）「 60 歳からのスマホプログラム」などは、変更と同時に廃止・終了になります。シェアパック（家族でデータを分け合うプラン）は、事前に手続きが必要です（出典 <a href="#src4">4</a> ）。確認 : 公式の一覧、または店頭で聞く。</span></label></li>
-<li><label><input type="checkbox"><span><strong>端末の分割払いが残っているか。</strong>変更後も、分割払いは続けて支払います。手続きは不要です（出典 <a href="#src7">7</a> ）。確認 : My docomo 、または毎月の請求書。</span></label></li>
-<li><label><input type="checkbox"><span><strong>家族割引やセット割引を使っているか。</strong>契約を変えると適用が変わらないか、確認が必要です。この手順書では、結果を確認できていません（要確認）。確認 : 店頭で聞く、またはドコモの公式案内。</span></label></li>
-<li><label><input type="checkbox"><span><strong>月額がどう変わるか。</strong> ahamo の基本料金は 30GB で税込 2,970 円（2026 年 10 月 14 日時点）で、 2026 年 12 月 1 日から段階制に改定されると案内されています（出典 <a href="#src3">3</a> ）。今のドコモの料金と比べてください。</span></label></li>
-<li><label><input type="checkbox"><span><strong>解約金・手数料。</strong>ドコモから ahamo への変更では、解約金も事務手数料もかからないと案内されています（出典 <a href="#src3">3</a> ・ <a href="#src8">8</a> ）。</span></label></li>
-<li><label><input type="checkbox"><span><strong>iD の種類と設定。</strong><a href="#sec5">第 5 章</a>を見てください。確認 : iD を使っているカードまたはアプリの名前をメモする。</span></label></li>
+<div class="checklist">
+<span class="cl-title">事前確認チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="chk-1"><label for="chk-1"><strong>契約者は本人か。</strong>ご家族（成人）の名義で、使っているのが別の成人の方の場合は、 ahamo に変更する前に、ドコモショップで名義変更が必要です（出典 <a href="#src5">5</a> ）。確認 : 契約書類、または店頭で聞く。</label></li>
+<li><input type="checkbox" id="chk-2"><label for="chk-2"><strong>d アカウントで入れるか。</strong> ahamo の申し込みは、 d アカウント（ドコモの共通 ID）でログインして進みます（出典 <a href="#src2">2</a> ）。確認 : 自宅のスマートフォンで d アカウントにログインしてみる。パスワードを忘れた場合は、お店に行く前にドコモの案内に従って再設定する。</label></li>
+<li><input type="checkbox" id="chk-3"><label for="chk-3"><strong>毎月の支払い方法。</strong> ahamo の支払いは、クレジットカードか口座振替だけです。それ以外（請求書払いなど）の場合は、先に変更が必要です。新しくカードを登録する場合は、 3D セキュア（カード会社の本人確認の仕組み）に対応したカードだけが使えます（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。確認 : My docomo 、または毎月の請求書。</label></li>
+<li><input type="checkbox" id="chk-4"><label for="chk-4"><strong>今の端末が使えるか。</strong> ahamo では、 nanoSIM または eSIM に対応した端末だけが使えます（出典 <a href="#src3">3</a> ）。今の端末を使い続ける場合は、 SIM ロック解除（ほかの会社の SIM を入れても使えるようにする設定）も必要です（出典 <a href="#src2">2</a> ）。 nanoSIM は従来の小さなカード型の SIM 、 eSIM は<a href="#sec10">第 10 章</a>で説明します。確認 : 「対応端末確認」で調べる（出典 <a href="#src4">4</a> ）。分からなければ、お店で相談する。</label></li>
+<li><input type="checkbox" id="chk-5"><label for="chk-5"><strong>ネットワーク暗証番号（契約の手続きで使う番号）を覚えているか。</strong>手続きで使う場面があるかは、確認できていません（<a href="#sec11">第 11 章</a>）。確認 : 番号は書き留めず、頭の中で思い出せるかだけ確かめる。忘れた場合の扱いは、店舗に聞く。<span class="tag">助言</span></label></li>
+<li><input type="checkbox" id="chk-6"><label for="chk-6"><strong>機種変更をしたいか。</strong>機種の購入と、 ahamo への変更は同時にできません。先にプラン変更をして、そのあとドコモオンラインショップで購入します（出典 <a href="#src6">6</a> ）。確認 : 機種を替える予定があるかどうか、ご自身で決めておく。</label></li>
+<li><input type="checkbox" id="chk-7"><label for="chk-7"><strong>ドコモメール（@docomo.ne.jp）を使っているか。</strong> ahamo では、そのままでは使えません。「ドコモメール持ち運び」（アドレスを引き続き使える申し込み）をしないと、アドレスは失効し、元に戻せません（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。確認 : 使っているメールアドレスを見る。</label></li>
+<li><input type="checkbox" id="chk-8"><label for="chk-8"><strong>ahamo で使えなくなるサービスがないか。</strong>ドコモ電話帳、公式の一覧にある割引、（契約している場合は）「 60 歳からのスマホプログラム」などは、変更と同時に廃止・終了になります。シェアパック（家族でデータを分け合うプラン）は、事前に手続きが必要です（出典 <a href="#src4">4</a> ）。確認 : 公式の一覧、または店頭で聞く。</label></li>
+<li><input type="checkbox" id="chk-9"><label for="chk-9"><strong>端末の分割払いが残っているか。</strong>変更後も、分割払いは続けて支払います。手続きは不要です（出典 <a href="#src7">7</a> ）。確認 : My docomo 、または毎月の請求書。</label></li>
+<li><input type="checkbox" id="chk-10"><label for="chk-10"><strong>家族割引やセット割引を使っているか。</strong>契約を変えると適用が変わらないか、確認が必要です。この手順書では、結果を確認できていません（要確認）。確認 : 店頭で聞く、またはドコモの公式案内。</label></li>
+<li><input type="checkbox" id="chk-11"><label for="chk-11"><strong>月額がどう変わるか。</strong> ahamo の基本料金は 30GB で税込 2,970 円（2026 年 10 月 14 日時点）で、 2026 年 12 月 1 日から段階制に改定されると案内されています（出典 <a href="#src3">3</a> ）。今のドコモの料金と比べてください。</label></li>
+<li><input type="checkbox" id="chk-12"><label for="chk-12"><strong>解約金・手数料。</strong>ドコモから ahamo への変更では、解約金も事務手数料もかからないと案内されています（出典 <a href="#src3">3</a> ・ <a href="#src8">8</a> ）。</label></li>
+<li><input type="checkbox" id="chk-13"><label for="chk-13"><strong>iD の種類と設定。</strong><a href="#sec5">第 5 章</a>を見てください。確認 : iD を使っているカードまたはアプリの名前をメモする。</label></li>
 </ul>
+</div>
 
 <h2 id="sec3">3. 持ち物</h2>
 <table class="cards">
@@ -315,27 +321,36 @@
 </div>
 
 <h3 id="sec5-1">5.1 手続きの前にすること</h3>
-<ul class="check">
-<li><label><input type="checkbox"><span>d 払い残高の金額を、アプリで見て覚えておく（変更後の確認のため）。<span class="tag">助言</span></span></label></li>
-<li><label><input type="checkbox"><span>ドコモメールのアドレスを残したい場合は、「ドコモメール持ち運び」を申し込む。申し込まないと、アドレスは失効し、元に戻せません（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。</span></label></li>
-<li><label><input type="checkbox"><span>d アカウントの ID にドコモメールを設定している場合は、「ドコモメール持ち運び」を申し込むか、 d アカウントの連絡先メールアドレス（ほかの会社のメール）を登録する。そのままでは大事なお知らせが届かなくなるおそれがあります（出典 <a href="#src11">11</a> ）。</span></label></li>
-<li><label><input type="checkbox"><span>支払い方法が、クレジットカードか口座振替になっているか確認する（<a href="#sec2">第 2 章</a>）。</span></label></li>
+<div class="checklist">
+<span class="cl-title">d 払い（手続きの前）チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="chk-14"><label for="chk-14">d 払い残高の金額を、アプリで見て覚えておく（変更後の確認のため）。<span class="tag">助言</span></label></li>
+<li><input type="checkbox" id="chk-15"><label for="chk-15">ドコモメールのアドレスを残したい場合は、「ドコモメール持ち運び」を申し込む。申し込まないと、アドレスは失効し、元に戻せません（出典 <a href="#src2">2</a> ・ <a href="#src4">4</a> ）。</label></li>
+<li><input type="checkbox" id="chk-16"><label for="chk-16">d アカウントの ID にドコモメールを設定している場合は、「ドコモメール持ち運び」を申し込むか、 d アカウントの連絡先メールアドレス（ほかの会社のメール）を登録する。そのままでは大事なお知らせが届かなくなるおそれがあります（出典 <a href="#src11">11</a> ）。</label></li>
+<li><input type="checkbox" id="chk-17"><label for="chk-17">支払い方法が、クレジットカードか口座振替になっているか確認する（<a href="#sec2">第 2 章</a>）。</label></li>
 </ul>
+</div>
 <h3 id="sec5-2">5.2 手続きのあとにすること</h3>
-<ul class="check">
-<li><label><input type="checkbox"><span>d 払いアプリを開き、ログインできるか確かめる。</span></label></li>
-<li><label><input type="checkbox"><span>残高が 0 円と表示されても、あわてない。残高は返金される扱いです。ドコモから ahamo に変更した場合は、変更から 1 〜 2 週間後（目安）に返金メールが届くと案内されています（出典 <a href="#src12">12</a> ）。会員情報の変更をした人が対象とされています。メールが届かないときは、 ahamo のチャットで相談してください。</span></label></li>
-<li><label><input type="checkbox"><span>「 d 払い口座」を使っていた場合は、口座が解約になり、利用履歴は引き継がれません。残高は移行・返還されます（出典 <a href="#src4">4</a> ）。</span></label></li>
-<li><label><input type="checkbox"><span>Amazon で d 払いを使っている場合は、別の設定が必要です（出典 <a href="#src10">10</a> ）。</span></label></li>
-<li><label><input type="checkbox"><span>電話料金合算払い（d 払いの代金を、電話代といっしょに払う方法）の利用限度額は、引き継がれます（出典 <a href="#src13">13</a> ）。</span></label></li>
+<div class="checklist">
+<span class="cl-title">d 払い（手続きのあと）チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="chk-18"><label for="chk-18">d 払いアプリを開き、ログインできるか確かめる。</label></li>
+<li><input type="checkbox" id="chk-19"><label for="chk-19">残高が 0 円と表示されても、あわてない。残高は返金される扱いです。ドコモから ahamo に変更した場合は、変更から 1 〜 2 週間後（目安）に返金メールが届くと案内されています（出典 <a href="#src12">12</a> ）。会員情報の変更をした人が対象とされています。メールが届かないときは、 ahamo のチャットで相談してください。</label></li>
+<li><input type="checkbox" id="chk-20"><label for="chk-20">「 d 払い口座」を使っていた場合は、口座が解約になり、利用履歴は引き継がれません。残高は移行・返還されます（出典 <a href="#src4">4</a> ）。</label></li>
+<li><input type="checkbox" id="chk-21"><label for="chk-21">Amazon で d 払いを使っている場合は、別の設定が必要です（出典 <a href="#src10">10</a> ）。</label></li>
+<li><input type="checkbox" id="chk-22"><label for="chk-22">電話料金合算払い（d 払いの代金を、電話代といっしょに払う方法）の利用限度額は、引き継がれます（出典 <a href="#src13">13</a> ）。</label></li>
 </ul>
+</div>
 <h3 id="sec5-3">5.3 iD について（条件によって変わります）</h3>
 <p>iD は、使っているカードやアプリが人によって違います。 ahamo の公式 FAQ は「 iD を継続して使える」と案内しますが、お手元の端末で何を設定しているかは、この調査では分かりません。<strong>あなたの場合は、次を確認してください。</strong></p>
-<ul class="check">
-<li><label><input type="checkbox"><span>iD を使っているカード（またはアプリ）の名前をメモする。</span></label></li>
-<li><label><input type="checkbox"><span>ahamo に変えたあと、買い物をするお店のレジで少額の支払いを一度試す。反応しない場合は、 iD アプリの設定を、 iD の公式の案内（出典 <a href="#src14">14</a> のサイト）や、カードの会社の窓口で確認する。</span></label></li>
-<li><label><input type="checkbox"><span>ahamo 向けに販売された端末（ahamo サイトで購入した Android 端末）では、 iD アプリが最初から入っていない場合があります。その場合は、 iD の公式の案内に沿って自分でインストールします（出典 <a href="#src14">14</a> ）。</span></label></li>
+<div class="checklist">
+<span class="cl-title">iD チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="chk-23"><label for="chk-23">iD を使っているカード（またはアプリ）の名前をメモする。</label></li>
+<li><input type="checkbox" id="chk-24"><label for="chk-24">ahamo に変えたあと、買い物をするお店のレジで少額の支払いを一度試す。反応しない場合は、 iD アプリの設定を、 iD の公式の案内（出典 <a href="#src14">14</a> のサイト）や、カードの会社の窓口で確認する。</label></li>
+<li><input type="checkbox" id="chk-25"><label for="chk-25">ahamo 向けに販売された端末（ahamo サイトで購入した Android 端末）では、 iD アプリが最初から入っていない場合があります。その場合は、 iD の公式の案内に沿って自分でインストールします（出典 <a href="#src14">14</a> ）。</label></li>
 </ul>
+</div>
 <div class="note">
 おサイフケータイ（交通系 IC など）の設定の引き継ぎについては、公式の記載を確認できませんでした。この手順書では何も約束しません。カードの会社や iD の公式の案内で確認してください。
 </div>
@@ -460,7 +475,7 @@
 (function () {
   var KEY = "ahamo-guide-check-v1", saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
-  Array.prototype.forEach.call(document.querySelectorAll("ul.check input[type=checkbox]"), function (box, i) {
+  Array.prototype.forEach.call(document.querySelectorAll(".checklist input[type=checkbox]"), function (box, i) {
     if (saved[i]) box.checked = true;
     box.addEventListener("change", function () {
       if (box.checked) saved[i] = 1; else delete saved[i];
