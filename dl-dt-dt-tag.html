@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML の説明リストタグ【 dl ・ dt ・ dd 】の使い方を徹底解説｜ webliker （ウェブライカー）</title>
+  <style>
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
+  .subtitle { color: #555; margin: 0 0 1rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
+  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
+  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: #2a4d69; }
+  .endnote { font-size: .9rem; color: #555; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+
+    /* コード例: ターミナル風（黒地に白字） */
+    .hcb_wrap pre {
+      margin: 0;
+      padding: 1em;
+      overflow-x: auto;
+      background: #000;
+      color: #fff;
+      line-height: 1.5;
+    }
+
+    .hcb_wrap pre code {
+      background: none;
+      color: inherit;
+      font: inherit;
+    }
+
+    /* コード例の直後に置く、ブラウザでの表示例 */
+    .demo {
+      margin: 0.5em 0 1.5em;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #000;
+    }
+
+    .demo__label {
+      margin: 0;
+      padding: 0.3em 0.8em;
+      border-bottom: 1px solid #ccc;
+      background: #eee;
+      color: #333;
+      font-size: 0.85em;
+    }
+
+    .demo__body {
+      padding: 0.5em 1em;
+    }
+
+    /* 「dt と dd を横並びにする」のコード例に対応 */
+    .demo__body--float dt {
+      float: left;
+    }
+
+    .demo__body--float dt::after {
+      content: "：";
+    }
+
+    /* 「dt と dd に下線をつける」のコード例に対応 */
+    .demo__body--border dl div {
+      border-bottom: dashed 1px #333333;
+      margin: 5px 0;
+    }
+
+    .demo__body--border dt {
+      float: left;
+    }
+
+    .demo__body--border dt::after {
+      content: "：";
+    }
+  </style>
+</head>
+<body>
+  <main class="p-archive__list">
+    <div class="l-inner">
+      <div class="l-2col">
+        <div class="l-2col__main">
+          <article class="p-single__content entry-content">
+            <p class="meta">元の記事： <a href="https://webliker.info/html/13381/">https://webliker.info/html/13381/</a></p>
+
+            <header class="p-single__header">
+              <div class="header-top">
+                <p class="posted-date">
+                  更新日 <time datetime="2022-01-12">2022 年 1 月 12 日</time>
+                </p>
+              </div>
+              <div class="header-title">
+                <p class="img"><img src="https://webliker.info/wp-content/uploads/2022/01/56-1.png" decoding="async" loading="lazy" alt=""></p>
+                <h1>HTML の説明リストタグ【 dl ・ dt ・ dd 】の使い方を徹底解説</h1>
+              </div>
+            </header>
+            <!-- /.p-single__header -->
+
+            <div class="p-single__main">
+              <p class="wp-block-paragraph">HTML の以前は定義リストタグであった dl ・ dt ・ dd というタグですが、今は説明リストタグへと意味が変わり使い方にも柔軟性が出て来ました。ただ、その分使い方があやふやになっている方も多いタグですよね。</p>
+
+              <p class="wp-block-paragraph">本記事ではそんな dl タグについての「そもそもどんな意味があってどう使うの？」や「 table タグや ul タグとの違いは？」といった疑問を解消していきます。</p>
+
+              <div class="wp-block-blocks-chatbox undefined p-talkbox webliker-chatbox">
+                <div class="p-talkbox__text">本記事を読むことで <strong>dl ・ dt ・ dt タグを自信をもって使うことができるように</strong>なりますよ。</div>
+              </div>
+
+              <nav class="toc" aria-label="目次">
+              <p class="toc-title">目次</p>
+              <ol>
+              <li><a href="#sec1">dl ・ dt ・ dd ってどんな意味？</a>
+              <ol>
+              <li><a href="#sec1-1">定義リストから説明リストへ</a></li>
+              </ol>
+              </li>
+              <li><a href="#sec2">dl ・ dt ・ dt の使い方</a>
+              <ol>
+              <li><a href="#sec2-1">一つの dt に対し複数の dd</a></li>
+              <li><a href="#sec2-2">複数の dt に対し一つの dd</a></li>
+              <li><a href="#sec2-3">複数の dt に対して複数の dd</a></li>
+              </ol>
+              </li>
+              <li><a href="#sec3">dfn タグで辞典的な意味を強調</a></li>
+              <li><a href="#sec4">dl ・ dt ・ dd の実例サンプル</a>
+              <ol>
+              <li><a href="#sec4-1">サービス名とサービスの説明</a></li>
+              <li><a href="#sec4-2">質問とその回答</a></li>
+              <li><a href="#sec4-3">人物の詳細を説明</a></li>
+              </ol>
+              </li>
+              <li><a href="#sec5">table や ul とはどう使い分ける？</a>
+              <ol>
+              <li><a href="#sec5-1">単純なリストは ul 、リストに説明が必要なら dl</a></li>
+              <li><a href="#sec5-2">一つの項目に対しての説明なら dl を使う</a></li>
+              </ol>
+              </li>
+              <li><a href="#sec6">dl の見た目を css で調整する</a>
+              <ol>
+              <li><a href="#sec6-1">dt と dd を横並びにする</a></li>
+              <li><a href="#sec6-2">dt と dd に下線をつける</a></li>
+              </ol>
+              </li>
+              <li><a href="#sec7">dl リストのまとめ</a></li>
+              </ol>
+              </nav>
+
+              <h2 class="wp-block-heading" id="sec1">1. dl ・ dt ・ dd ってどんな意味？</h2>
+
+              <p class="wp-block-paragraph">実は、この dl ・ dt ・ dd というタグは少し前まではそれぞれ</p>
+
+              <ul class="wp-block-list">
+                <li>dl (definition list) = 定義リスト</li>
+                <li>dt (definition term) = 定義する言葉</li>
+                <li>dd (definition description) = 定義の説明</li>
+              </ul>
+
+              <p class="wp-block-paragraph">という意味で「<strong>定義リスト</strong>」としての役割を持っていました。</p>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML">
+<code>&lt;dl&gt;
+   &lt;dt&gt;りんご&lt;/dt&gt;
+   &lt;dd&gt;赤くてまるい果物。味は甘酸っぱい&lt;/dd&gt;
+ &lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt>りんご</dt>
+                        <dd>赤くてまるい果物。味は甘酸っぱい</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph">例えばこのコードのように <code>dt</code> で囲った単語の定義を <code>dd</code> に記述する、辞典のような書き方しかできませんでした。</p>
+                </div>
+              </div>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph">しかし、 html5 になってからは dl ・ dt ・ dd のタグの持つ意味が「定義リスト」から「<strong>説明リスト</strong>」に変わったことで様々な用途で使用することができるようになりました。</p>
+                </div>
+              </div>
+
+              <h3 class="wp-block-heading" id="sec1-1">1.1 定義リストから説明リストへ</h3>
+
+              <p class="wp-block-paragraph">HTML5 からそれぞれ</p>
+
+              <ul class="wp-block-list">
+                <li>dl (description list) = 説明リスト</li>
+                <li>dt (description term) = 説明する言葉</li>
+                <li>dd (definition / description) = 定義文 or 説明文</li>
+              </ul>
+
+              <p class="wp-block-paragraph">というように「説明リスト」へとタグの持つ意味に変わり用途の幅が広がりました。</p>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;dt&gt;明日の天気&lt;/dt&gt;
+  &lt;dd&gt;午前中は晴れ、夕方頃から曇り&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt>明日の天気</dt>
+                        <dd>午前中は晴れ、夕方頃から曇り</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <p class="wp-block-paragraph">つまり「 <strong><code>dt</code> の内容を <code>dd</code> で説明しているような形になっていれば問題ない</strong>」ので、単語の解説をするような辞典的な書き方でなくても OK になりました。</p>
+
+              <div class="wp-block-blocks-freespace undefined webliker-freespace">
+                <div class="inner">
+                  <div class="webliker-freespace__title">
+                    <h4 class="icontitle">dl タグを理解するポイント</h4>
+                  </div>
+                  <p class="wp-block-paragraph">ポイントとしては現在の dl ・ dt ・ dd タグは「定義リスト」である辞書的な書き方と「説明リスト」の書き方どちらの役割も持っているという点。 html5 になった現在でも「定義リスト」として使うことは問題はないんだ。<br>とにかく <strong>dl タグは以前と比べて使える場面が増えた</strong>ということを覚えておこう！</p>
+                </div>
+              </div>
+
+              <h2 class="wp-block-heading" id="sec2">2. dl ・ dt ・ dt の使い方</h2>
+
+              <p class="wp-block-paragraph">基本的な用途と意味がわかったところでコードの書き方を学習しましょう。</p>
+
+              <div class="wp-block-image is-style-border">
+                <figure class="aligncenter">
+                  <img decoding="async" src="https://webliker.info/wp-content/uploads/2018/06/dl-use.png" alt="dl・dt・ddの書き方" class="wp-image-4082">
+                </figure>
+              </div>
+
+              <p class="wp-block-paragraph">使い方はとっても簡単です。 <code>dt</code> に説明したいことを書き、 <code>dd</code> でそれに対しての説明文を書きます。その全体を <code>dl</code> で囲うだけです。</p>
+
+              <p class="wp-block-paragraph">dl の中に dt と dd はいくらかいても OK です。また、「 dt が一つに対して、 dd も一つ」というルールはなく、内容によっては数にばらつきがうまれます。詳しくは後述します。</p>
+
+              <h3 class="wp-block-heading" id="sec2-1">2.1 一つの dt に対し複数の dd</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;dt&gt;りんご&lt;/dt&gt;
+  &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
+  &lt;dd&gt;味は甘酸っぱい&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt>りんご</dt>
+                        <dd>赤くてまるい果物</dd>
+                        <dd>味は甘酸っぱい</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph">一つの <code>dt</code> に対して複数の説明をしたい場合は <code>dd</code> を複数書くことができます。</p>
+                </div>
+              </div>
+
+              <h3 class="wp-block-heading" id="sec2-2">2.2 複数の dt に対し一つの dd</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;dt&gt;りんご&lt;/dt&gt;
+  &lt;dt&gt;リンゴ&lt;/dt&gt;
+  &lt;dt&gt;林檎&lt;/dt&gt;
+  &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt>りんご</dt>
+                        <dt>リンゴ</dt>
+                        <dt>林檎</dt>
+                        <dd>赤くてまるい果物</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph">定義する言葉のタイプが複数ある場合は <code>dt</code> を複数書けば <code>dd</code>一つでまとめて定義することができます。</p>
+                </div>
+              </div>
+
+              <h3 class="wp-block-heading" id="sec2-3">2.3 複数の dt に対して複数の dd</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;dt&gt;りんご&lt;/dt&gt;
+  &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
+  &lt;dt&gt;ぶどう&lt;/dt&gt;
+  &lt;dd&gt;紫で房状の果物&lt;/dd&gt;
+  &lt;dt&gt;めろん&lt;/dt&gt;
+  &lt;dd&gt;緑で固い皮に包まれている&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt>りんご</dt>
+                        <dd>赤くてまるい果物</dd>
+                        <dt>ぶどう</dt>
+                        <dd>紫で房状の果物</dd>
+                        <dt>めろん</dt>
+                        <dd>緑で固い皮に包まれている</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph">もちろん <code>dt</code>（説明したい言葉）と <code>dd</code>（説明文）をセットで複数かいていくこともできます。</p>
+                </div>
+              </div>
+
+              <h2 class="wp-block-heading" id="sec3">3. dfn タグで辞典的な意味を強調</h2>
+
+              <p class="wp-block-paragraph">さきほど html5 では「定義リスト」と「説明リスト」の二つの役割があると説明しました。</p>
+
+              <p class="wp-block-paragraph">ですが、検索エンジン (Goolge) からしたら同じ dl ・ dt ・ dd タグなので、その内容が「定義リスト」として使われているのか「説明リスト」として使われているのかを理解することができません。</p>
+
+              <p class="wp-block-paragraph">それを解決するために <strong>dfn タグ</strong>を使用します。</p>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;dt&gt;&lt;dfn&gt;りんご&lt;/dfn&gt;&lt;/dt&gt;
+  &lt;dd&gt;赤くてまるい果物。味は甘酸っぱい&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt><dfn>りんご</dfn></dt>
+                        <dd>赤くてまるい果物。味は甘酸っぱい</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph">このように「定義リスト」として、辞書的な書き方をする場合は <code>dt</code> に書く言葉を <code>dfn</code> で囲うことでそのリストが定義リストであることを強調します。</p>
+                </div>
+              </div>
+
+              <h2 class="wp-block-heading" id="sec4">4. dl ・ dt ・ dd の実例サンプル</h2>
+
+              <p class="wp-block-paragraph">dl ・ dt ・ dd の基本的な使い方がわかったところで実際どんなシーンで使うのが適切なのかサンプルをいくつか紹介していきます。</p>
+
+              <p class="wp-block-paragraph">一応おさらいですが、 dl は「 dt が dd によって説明されている」という関係が成り立っていれば OK です。それを踏まえて自身でもどんな使い方が適切かイメージしてみましょう。</p>
+
+              <h3 class="wp-block-heading" id="sec4-1">4.1 サービス名とサービスの説明</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;サービスの紹介&lt;/p&gt;
+&lt;dl&gt;
+  &lt;dt&gt;ホームページ制作&lt;/dt&gt;
+  &lt;dd&gt;オリジナルホームページの制作&lt;/dd&gt;
+  &lt;dt&gt;webコンサルティング&lt;/dt&gt;
+  &lt;dd&gt;ホームページの集客をアドバイス&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <p>サービスの紹介</p>
+                      <dl>
+                        <dt>ホームページ制作</dt>
+                        <dd>オリジナルホームページの制作</dd>
+                        <dt>web コンサルティング</dt>
+                        <dd>ホームページの集客をアドバイス</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph">各サービスとそのサービスに関する説明文をセットにして <code>dl</code> で説明リストにしています。</p>
+                </div>
+              </div>
+
+              <h3 class="wp-block-heading" id="sec4-2">4.2 質問とその回答</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;サービスに関するFAQ&lt;/p&gt;
+&lt;dl&gt;
+  &lt;dt&gt;ホームページ制作のサービスにはどんな作業が含まれていますか？&lt;/dt&gt;
+  &lt;dd&gt;コンテンツ企画・文章作成、オリジナルWEBデザインの制作〜コーディングまですべて含まれています。&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <p>サービスに関する FAQ</p>
+                      <dl>
+                        <dt>ホームページ制作のサービスにはどんな作業が含まれていますか？</dt>
+                        <dd>コンテンツ企画・文章作成、オリジナル WEB デザインの制作〜コーディングまですべて含まれています。</dd>
+                      </dl>
+                    </div>
+                  </div>
+
+                  <p class="wp-block-paragraph">このように質問を <code>dt</code> その回答を <code>dd</code> という質問に対する説明という形で書くのも OK 。</p>
+                </div>
+              </div>
+
+              <h3 class="wp-block-heading" id="sec4-3">4.3 人物の詳細を説明</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;dt&gt;名前&lt;/dt&gt;
+  &lt;dd&gt;イチロー&lt;/dd&gt;
+  &lt;dt&gt;職業&lt;/dt&gt;
+  &lt;dd&gt;プロ野球選手&lt;/dd&gt;
+  &lt;dt&gt;生年月日&lt;/dt&gt;
+  &lt;dd&gt;1973年10月22日&lt;/dd&gt;
+  &lt;dt&gt;身長&lt;/dt&gt;
+  &lt;dd&gt;180cm&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt>名前</dt>
+                        <dd>イチロー</dd>
+                        <dt>職業</dt>
+                        <dd>プロ野球選手</dd>
+                        <dt>生年月日</dt>
+                        <dd>1973 年 10 月 22 日</dd>
+                        <dt>身長</dt>
+                        <dd>180cm</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph">人物や商品の細かなデータを <code>dt</code> と <code>dd</code> で紐づけて <code>dl</code> でまとめることができます。</p>
+
+                  <p class="wp-block-paragraph">このような項目とそのデータの組み合わせのことを<strong>メタデータ</strong>と呼ぶので覚えておきましょう。</p>
+                </div>
+              </div>
+
+              <h2 class="wp-block-heading" id="sec5">5. table や ul とはどう使い分ける？</h2>
+
+              <p class="wp-block-paragraph">「役割が似ている table や ul とどう使い分けたらいいの？」と思っている人もいるはず。</p>
+
+              <p class="wp-block-paragraph">html のタグの定義は決して正解があるとというわけではないですが、以下のことを判断基準にすることで正解に近いタグ付けをできるはずです。</p>
+
+              <h3 class="wp-block-heading" id="sec5-1">5.1 単純なリストは ul 、リストに説明が必要なら dl</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="has-text-align-center wp-block-paragraph">ul ・ ol を使うケース</p>
+
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;ul&gt;
+  &lt;li&gt;りんご&lt;/li&gt;
+  &lt;li&gt;ぶどう&lt;/li&gt;
+  &lt;li&gt;メロン&lt;/li&gt;
+&lt;/ul&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <ul>
+                        <li>りんご</li>
+                        <li>ぶどう</li>
+                        <li>メロン</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <p class="wp-block-paragraph">このように単純な項目のリストの場合は <code>ul</code> や <code>ol</code> を使えば問題ありません。</p>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="has-text-align-center wp-block-paragraph">dl を使うケース</p>
+
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;dt&gt;りんご&lt;/dt&gt;
+  &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
+  &lt;dt&gt;ぶどう&lt;/dt&gt;
+  &lt;dd&gt;紫で房状の果物&lt;/dd&gt;
+  &lt;dt&gt;めろん&lt;/dt&gt;
+  &lt;dd&gt;緑で固い皮に包まれている&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt>りんご</dt>
+                        <dd>赤くてまるい果物</dd>
+                        <dt>ぶどう</dt>
+                        <dd>紫で房状の果物</dd>
+                        <dt>めろん</dt>
+                        <dd>緑で固い皮に包まれている</dd>
+                      </dl>
+                    </div>
+                  </div>
+
+                  <p class="wp-block-paragraph">「リスト」 + 「項目ごとの説明」を書く場合は <code>dl</code> を使いましょう。</p>
+                </div>
+              </div>
+
+              <h3 class="wp-block-heading" id="sec5-2">5.2 一つの項目に対しての説明なら dl を使う</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="has-text-align-center wp-block-paragraph">table を使うケース</p>
+
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;webサイトを作る言語の種類&lt;/p&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;言語名&lt;/th&gt;&lt;td&gt;html&lt;/td&gt;&lt;td&gt;css&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;th&gt;役割&lt;/th&gt;&lt;td&gt;論理構造を定義&lt;/td&gt;&lt;td&gt;見た目の調整&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <p>web サイトを作る言語の種類</p>
+                      <table>
+                        <tr>
+                          <th>言語名</th><td>html</td><td>css</td>
+                        </tr>
+                        <tr>
+                          <th>役割</th><td>論理構造を定義</td><td>見た目の調整</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                  <p class="wp-block-paragraph">「 web サイトを作る言語の種類」となっていて html と css と複数の項目についての説明をしなければいけないので <code>dl</code> ではうまく表現ができません。この場合は <code>table</code> を使います。</p>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="has-text-align-center wp-block-paragraph">dl を使うケース</p>
+
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;htmlについて&lt;/p&gt;
+&lt;dl&gt;
+  &lt;dt&gt;言語の種類&lt;/dt&gt;
+  &lt;dd&gt;マークアップ言語&lt;/dd&gt;
+  &lt;dt&gt;役割&lt;/dt&gt;
+  &lt;dd&gt;論理構造の定義&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示</p>
+                    <div class="demo__body">
+                      <p>html について</p>
+                      <dl>
+                        <dt>言語の種類</dt>
+                        <dd>マークアップ言語</dd>
+                        <dt>役割</dt>
+                        <dd>論理構造の定義</dd>
+                      </dl>
+                    </div>
+                  </div>
+
+                  <p class="wp-block-paragraph">こちらは html についてというテーマなので html という一つの項目に対しての説明だけで OK なので <code>dl</code> で書くことができます。</p>
+                </div>
+              </div>
+
+              <p class="wp-block-paragraph">この部分については説明が難しいので、腑に落ちていない方もいるかもしれません…</p>
+
+              <p class="wp-block-paragraph">そんな時は「表っぽくなりそうなら table を使う」という考え方でも OK です。</p>
+
+              <h2 class="wp-block-heading" id="sec6">6. dl の見た目を css で調整する</h2>
+
+              <p class="wp-block-paragraph">dl でのリストははデフォルトでは以下のような見た目になっているのでいくつか css での調整方法を紹介します。</p>
+
+              <h3 class="wp-block-heading" id="sec6-1">6.1 dt と dd を横並びにする</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;dt&gt;りんご&lt;/dt&gt;
+  &lt;dd&gt;赤い果物&lt;/dd&gt;
+  &lt;dt&gt;ぶどう&lt;/dt&gt;
+  &lt;dd&gt;紫の果物&lt;/dd&gt;
+  &lt;dt&gt;めろん&lt;/dt&gt;
+  &lt;dd&gt;緑の果物&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示（ CSS なし）</p>
+                    <div class="demo__body">
+                      <dl>
+                        <dt>りんご</dt>
+                        <dd>赤い果物</dd>
+                        <dt>ぶどう</dt>
+                        <dd>紫の果物</dd>
+                        <dt>めろん</dt>
+                        <dd>緑の果物</dd>
+                      </dl>
+                    </div>
+                  </div>
+
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-css" data-lang="CSS"><code>dt{
+  float: left;
+}
+
+dt::after{
+  content: &quot;：&quot;
+}</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示（ CSS 適用後）</p>
+                    <div class="demo__body demo__body--float">
+                      <dl>
+                        <dt>りんご</dt>
+                        <dd>赤い果物</dd>
+                        <dt>ぶどう</dt>
+                        <dd>紫の果物</dd>
+                        <dt>めろん</dt>
+                        <dd>緑の果物</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph"><strong>dt と dd を 1 行で横並び</strong>にしたい場合は dt にのみ <code>float : left;</code> を適用させます。 dd にも適用させてしまうと dl リスト内のすべての項目が横並びになるので注意してください。</p>
+
+                  <p class="wp-block-paragraph">また、横並びになると文字が繋がって見えてしまうので dt の擬似要素 <code>after</code> に：という記号を挿入しています。</p>
+                </div>
+              </div>
+
+              <h3 class="wp-block-heading" id="sec6-2">6.2 dt と dd に下線をつける</h3>
+
+              <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
+  &lt;div&gt;
+    &lt;dt&gt;りんご&lt;/dt&gt;
+    &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;dt&gt;ぶどう&lt;/dt&gt;
+    &lt;dd&gt;紫で房状の果物&lt;/dd&gt;
+  &lt;/div&gt;
+&lt;/dl&gt;</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示（ CSS なし）</p>
+                    <div class="demo__body">
+                      <dl>
+                        <div>
+                          <dt>りんご</dt>
+                          <dd>赤くてまるい果物</dd>
+                        </div>
+                        <div>
+                          <dt>ぶどう</dt>
+                          <dd>紫で房状の果物</dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-css" data-lang="CSS"><code>dl div{
+  border-bottom:dashed 1px #333333;
+  margin:5px 0;
+}
+
+dt{
+  float: left;
+}
+
+dt::after{
+  content: &quot;：&quot;
+}</code></pre></div>
+
+                  <div class="demo">
+                    <p class="demo__label">ブラウザでの表示（ CSS 適用後）</p>
+                    <div class="demo__body demo__body--border">
+                      <dl>
+                        <div>
+                          <dt>りんご</dt>
+                          <dd>赤くてまるい果物</dd>
+                        </div>
+                        <div>
+                          <dt>ぶどう</dt>
+                          <dd>紫で房状の果物</dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
+                  <p class="wp-block-paragraph"><strong>dt と dd を複数かいた場合に div で囲ってグループ化することで 1 行に対して css を適用できるようにします。</strong></p>
+
+                  <p class="wp-block-paragraph">その div に対して <code>border</code> や <code>background-color</code> などで装飾することで dt と dd を見やすくわけることができます。いう記号を挿入しています。</p>
+
+                  <p class="wp-block-paragraph">横並びにする方法は先ほどと同じで <code>dt</code> に <code>float : left;</code> を適用してます。</p>
+                </div>
+              </div>
+
+              <h2 class="wp-block-heading" id="sec7">7. dl リストのまとめ</h2>
+
+              <p class="wp-block-paragraph">本記事で学習したことのまとめです。</p>
+
+              <ul class="wp-block-list">
+                <li>dl は辞書的な定義リストとしての使い方と説明リストの使い方がある</li>
+                <li>dt の内容を dd で説明している形式であれば OK</li>
+                <li>一つの dt に一つの dd というルールはなく複数になることもある</li>
+                <li>よくある使い方としては「商品とその説明」「質問とその回答」「人物とその説明」などがある</li>
+              </ul>
+
+              <p class="wp-block-paragraph"><code>dl</code> は web 制作現場の人でも意外ときちんとした使い方を知らないままの人が多いので基本を抑えて自信を持って使えるようにできるといいですね。</p>
+            </div>
+            <!-- /.p-single__main -->
+
+            <footer class="p-single__footer">
+              <div class="authorbox">
+                <h3 class="authorbox__title">この記事を書いた人</h3>
+                <div class="authorbox__inner">
+                  <div class="authorbox__meta">
+                    <p class="name">web 兄さん</p>
+                    <p class="role">WEB ディレクター</p>
+                    <p class="description">「フリーランス 3 年 ▶︎ 法人 2 年目」の WEB の何でも屋。マーケティング・ WEB デザイン〜コーディングまで守備範囲は広め。
+                    記事へのこだわりが強いです！初学者に寄り添ったわかりやすさに定評あり。</p>
+                  </div>
+                </div>
+              </div>
+              <!-- /.authorbox -->
+            </footer>
+            <!-- /.p-single__footer -->
+          </article>
+        </div>
+        <!-- /.l-2col__main -->
+      </div>
+    </div>
+  </main>
+  <!-- /.p-archive__list -->
+</body>
+</html>
