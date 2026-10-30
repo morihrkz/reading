@@ -14,7 +14,7 @@
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
   th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
   th { background: #e6edf3; white-space: nowrap; }
-  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  code { background: #f0f2f5; margin: 0 .2em; padding: .2em .4em; border-radius: 4px; font-size: .9em; vertical-align: .1em; }
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
   .meta { color: #555; font-size: .9rem; }
@@ -91,21 +91,97 @@
     table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
 
-    /* コード例: ターミナル風（黒地に白字） */
+    /* コード例: 元記事（webliker）のコードブロックに合わせる。濃紺地・行番号・右上の言語ラベル・構文色 */
+    .hcb_wrap {
+      position: relative;
+      margin: 2em 0;
+    }
+
     .hcb_wrap pre {
       margin: 0;
-      padding: 1em;
-      overflow-x: auto;
-      background: #000;
+      padding: 1.75em 1.5em 1.25em 3.75em;
+      overflow: auto;
+      box-sizing: border-box;
+      background: #1d2128;
       color: #fff;
-      line-height: 1.5;
+      font-size: 14px;
+      letter-spacing: .1px;
+      line-height: 1;
+      tab-size: 4;
+      white-space: pre;
     }
 
     .hcb_wrap pre code {
+      position: relative;
+      display: block;
+      margin: 0;
+      padding: 0;
       background: none;
       color: inherit;
-      font: inherit;
+      font-size: inherit;
+      line-height: 1.5;
+      vertical-align: baseline;
     }
+
+    /* 右上の言語ラベル */
+    .hcb_wrap pre::before {
+      content: attr(data-lang);
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 4em;
+      padding: 0 10px;
+      box-sizing: border-box;
+      background: #111;
+      color: #fff;
+      font-size: 12px;
+      line-height: 20px;
+      text-align: center;
+    }
+
+    /* 行番号（行数ぶんの空 span に CSS カウンターで番号を振る） */
+    .hcb_wrap pre { counter-reset: linenumber; }
+
+    .line-numbers-rows {
+      position: absolute;
+      top: -2px;
+      left: -3.75em;
+      width: 3em;
+      border-right: 1px solid #999;
+      letter-spacing: -1px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .line-numbers-rows > span {
+      display: block;
+      counter-increment: linenumber;
+    }
+
+    .line-numbers-rows > span::before {
+      content: counter(linenumber);
+      display: block;
+      padding-right: .8em;
+      color: #999;
+      text-align: right;
+    }
+
+    /* 構文色（元記事のダーク配色） */
+    .token.punctuation { color: #f8f8f2; }
+    .token.tag, .token.property { color: #ff2c78; }
+
+    /* 文書側のラベル部品 .tag（背景・余白つき）と名前が衝突するので、コード内では装飾を打ち消す */
+    .hcb_wrap .token.tag {
+      display: inline;
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      background: none;
+      font-size: inherit;
+    }
+    .token.attr-name, .token.selector { color: #b4ec43; }
+    .token.attr-value, .token.string { color: #f3e880; }
+    .token.number { color: #ae81ff; }
 
     /* コード例の直後に置く、ブラウザでの表示例 */
     .demo {
@@ -235,11 +311,10 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML">
-<code>&lt;dl&gt;
-   &lt;dt&gt;りんご&lt;/dt&gt;
-   &lt;dd&gt;赤くてまるい果物。味は甘酸っぱい&lt;/dd&gt;
- &lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>赤くてまるい果物。味は甘酸っぱい<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -277,10 +352,10 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;dt&gt;明日の天気&lt;/dt&gt;
-  &lt;dd&gt;午前中は晴れ、夕方頃から曇り&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>明日の天気<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>午前中は晴れ、夕方頃から曇り<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -324,11 +399,11 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;dt&gt;りんご&lt;/dt&gt;
-  &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
-  &lt;dd&gt;味は甘酸っぱい&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>赤くてまるい果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>味は甘酸っぱい<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -351,12 +426,12 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;dt&gt;りんご&lt;/dt&gt;
-  &lt;dt&gt;リンゴ&lt;/dt&gt;
-  &lt;dt&gt;林檎&lt;/dt&gt;
-  &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>リンゴ<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>林檎<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>赤くてまるい果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -380,14 +455,14 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;dt&gt;りんご&lt;/dt&gt;
-  &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
-  &lt;dt&gt;ぶどう&lt;/dt&gt;
-  &lt;dd&gt;紫で房状の果物&lt;/dd&gt;
-  &lt;dt&gt;めろん&lt;/dt&gt;
-  &lt;dd&gt;緑で固い皮に包まれている&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>赤くてまるい果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>ぶどう<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>紫で房状の果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>めろん<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>緑で固い皮に包まれている<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -419,10 +494,10 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;dt&gt;&lt;dfn&gt;りんご&lt;/dfn&gt;&lt;/dt&gt;
-  &lt;dd&gt;赤くてまるい果物。味は甘酸っぱい&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dfn</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dfn</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>赤くてまるい果物。味は甘酸っぱい<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -450,13 +525,13 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;サービスの紹介&lt;/p&gt;
-&lt;dl&gt;
-  &lt;dt&gt;ホームページ制作&lt;/dt&gt;
-  &lt;dd&gt;オリジナルホームページの制作&lt;/dd&gt;
-  &lt;dt&gt;webコンサルティング&lt;/dt&gt;
-  &lt;dd&gt;ホームページの集客をアドバイス&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>サービスの紹介<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>ホームページ制作<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>オリジナルホームページの制作<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>webコンサルティング<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>ホームページの集客をアドバイス<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -481,11 +556,11 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;サービスに関するFAQ&lt;/p&gt;
-&lt;dl&gt;
-  &lt;dt&gt;ホームページ制作のサービスにはどんな作業が含まれていますか？&lt;/dt&gt;
-  &lt;dd&gt;コンテンツ企画・文章作成、オリジナルWEBデザインの制作〜コーディングまですべて含まれています。&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>サービスに関するFAQ<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>ホームページ制作のサービスにはどんな作業が含まれていますか？<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>コンテンツ企画・文章作成、オリジナルWEBデザインの制作〜コーディングまですべて含まれています。<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -506,16 +581,16 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;dt&gt;名前&lt;/dt&gt;
-  &lt;dd&gt;イチロー&lt;/dd&gt;
-  &lt;dt&gt;職業&lt;/dt&gt;
-  &lt;dd&gt;プロ野球選手&lt;/dd&gt;
-  &lt;dt&gt;生年月日&lt;/dt&gt;
-  &lt;dd&gt;1973年10月22日&lt;/dd&gt;
-  &lt;dt&gt;身長&lt;/dt&gt;
-  &lt;dd&gt;180cm&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>名前<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>イチロー<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>職業<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>プロ野球選手<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>生年月日<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>1973年10月22日<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>身長<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>180cm<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -553,11 +628,11 @@
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                   <p class="has-text-align-center wp-block-paragraph">ul ・ ol を使うケース</p>
 
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;ul&gt;
-  &lt;li&gt;りんご&lt;/li&gt;
-  &lt;li&gt;ぶどう&lt;/li&gt;
-  &lt;li&gt;メロン&lt;/li&gt;
-&lt;/ul&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>ぶどう<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">&gt;</span></span>メロン<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -576,14 +651,14 @@
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                   <p class="has-text-align-center wp-block-paragraph">dl を使うケース</p>
 
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;dt&gt;りんご&lt;/dt&gt;
-  &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
-  &lt;dt&gt;ぶどう&lt;/dt&gt;
-  &lt;dd&gt;紫で房状の果物&lt;/dd&gt;
-  &lt;dt&gt;めろん&lt;/dt&gt;
-  &lt;dd&gt;緑で固い皮に包まれている&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>赤くてまるい果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>ぶどう<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>紫で房状の果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>めろん<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>緑で固い皮に包まれている<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -609,15 +684,15 @@
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                   <p class="has-text-align-center wp-block-paragraph">table を使うケース</p>
 
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;webサイトを作る言語の種類&lt;/p&gt;
-&lt;table&gt;
-  &lt;tr&gt;
-    &lt;th&gt;言語名&lt;/th&gt;&lt;td&gt;html&lt;/td&gt;&lt;td&gt;css&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;th&gt;役割&lt;/th&gt;&lt;td&gt;論理構造を定義&lt;/td&gt;&lt;td&gt;見た目の調整&lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/table&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>webサイトを作る言語の種類<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>table</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>tr</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>th</span><span class="token punctuation">&gt;</span></span>言語名<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>th</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">&gt;</span></span>html<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">&gt;</span></span>css<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>tr</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>tr</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>th</span><span class="token punctuation">&gt;</span></span>役割<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>th</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">&gt;</span></span>論理構造を定義<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>td</span><span class="token punctuation">&gt;</span></span>見た目の調整<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>td</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>tr</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>table</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -640,13 +715,13 @@
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
                   <p class="has-text-align-center wp-block-paragraph">dl を使うケース</p>
 
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;p&gt;htmlについて&lt;/p&gt;
-&lt;dl&gt;
-  &lt;dt&gt;言語の種類&lt;/dt&gt;
-  &lt;dd&gt;マークアップ言語&lt;/dd&gt;
-  &lt;dt&gt;役割&lt;/dt&gt;
-  &lt;dd&gt;論理構造の定義&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">&gt;</span></span>htmlについて<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>言語の種類<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>マークアップ言語<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>役割<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>論理構造の定義<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示</p>
@@ -677,14 +752,14 @@
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;dt&gt;りんご&lt;/dt&gt;
-  &lt;dd&gt;赤い果物&lt;/dd&gt;
-  &lt;dt&gt;ぶどう&lt;/dt&gt;
-  &lt;dd&gt;紫の果物&lt;/dd&gt;
-  &lt;dt&gt;めろん&lt;/dt&gt;
-  &lt;dd&gt;緑の果物&lt;/dd&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>赤い果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>ぶどう<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>紫の果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>めろん<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>緑の果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示（ CSS なし）</p>
@@ -700,13 +775,13 @@
                     </div>
                   </div>
 
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-css" data-lang="CSS"><code>dt{
-  float: left;
-}
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-css" data-lang="CSS"><code><span class="token selector">dt</span><span class="token punctuation">{</span>
+  <span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-dt::after{
-  content: &quot;：&quot;
-}</code></pre></div>
+<span class="token selector">dt::after</span><span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">"："</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示（ CSS 適用後）</p>
@@ -734,16 +809,16 @@ dt::after{
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code>&lt;dl&gt;
-  &lt;div&gt;
-    &lt;dt&gt;りんご&lt;/dt&gt;
-    &lt;dd&gt;赤くてまるい果物&lt;/dd&gt;
-  &lt;/div&gt;
-  &lt;div&gt;
-    &lt;dt&gt;ぶどう&lt;/dt&gt;
-    &lt;dd&gt;紫で房状の果物&lt;/dd&gt;
-  &lt;/div&gt;
-&lt;/dl&gt;</code></pre></div>
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-html" data-lang="HTML"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dl</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>りんご<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>赤くてまるい果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dt</span><span class="token punctuation">&gt;</span></span>ぶどう<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dt</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dd</span><span class="token punctuation">&gt;</span></span>紫で房状の果物<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dd</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dl</span><span class="token punctuation">&gt;</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示（ CSS なし）</p>
@@ -761,18 +836,18 @@ dt::after{
                     </div>
                   </div>
 
-                  <div class="hcb_wrap"><pre class="prism line-numbers lang-css" data-lang="CSS"><code>dl div{
-  border-bottom:dashed 1px #333333;
-  margin:5px 0;
-}
+                  <div class="hcb_wrap"><pre class="prism line-numbers lang-css" data-lang="CSS"><code><span class="token selector">dl div</span><span class="token punctuation">{</span>
+  <span class="token property">border-bottom</span><span class="token punctuation">:</span>dashed 1px #333333<span class="token punctuation">;</span>
+  <span class="token property">margin</span><span class="token punctuation">:</span>5px 0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-dt{
-  float: left;
-}
+<span class="token selector">dt</span><span class="token punctuation">{</span>
+  <span class="token property">float</span><span class="token punctuation">:</span> left<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-dt::after{
-  content: &quot;：&quot;
-}</code></pre></div>
+<span class="token selector">dt::after</span><span class="token punctuation">{</span>
+  <span class="token property">content</span><span class="token punctuation">:</span> <span class="token string">"："</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
 
                   <div class="demo">
                     <p class="demo__label">ブラウザでの表示（ CSS 適用後）</p>
