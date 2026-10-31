@@ -5,69 +5,96 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EmDash 入門――アカウントの作成から、最初の記事の公開まで</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  .meta { color: #555; font-size: .9rem; }
   /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
-  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
-  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
   .checklist .cl-title::before { content: "✅ "; }
   .checklist ul { list-style: none; padding: 0; margin: 0; }
-  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
   .checklist li:last-child { border-bottom: none; }
-  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
   .checklist label { cursor: pointer; }
-  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
+  .subtitle { color: #555; margin: 0 0 1rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
+  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
+  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: #2a4d69; }
+  .endnote { font-size: .9rem; color: #555; }
   /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
   .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
   @media (max-width:40rem){
     .toc>ol{columns:1}
   }
   /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
   sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  sup a{color:#2a4d69;text-decoration:none}
   sup a:hover{text-decoration:underline}
   /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
   .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
   .refs li>a:first-child{font-weight:700;text-decoration:none}
   .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
   /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
   figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
   figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
@@ -106,7 +133,6 @@
   }
   /* 文書固有 */
   h2,h3,h4 { scroll-margin-top:1rem }
-  pre { background:#e6edf3;border:1px solid #bbb;padding:.8rem 1rem;overflow-x:auto;font-size:.9rem;line-height:1.6;margin:.8rem 0 1.2rem }
   pre code { font-size:inherit;overflow-wrap:normal }
   code, th, td { overflow-wrap: anywhere; }
 </style>
@@ -119,7 +145,7 @@
 <div class="lede">
 <p>この記事は Cloudflare の CMS である EmDash を学ぶ手順書である。頭から順に読みながら、手を動かして進めることができる。 Cloudflare のアカウントを作るところから記事を公開するまでを扱う。各章の終わりに「ここまでの確認」を置いた。</p>
 </div>
-<div class="meta"><strong>【作成と取得日】</strong>作成日 2026-10-24 ／ 更新日 2026-10-25 ／ 出典の取得日 2026-10-24</div>
+<div class="meta band"><strong>【作成と取得日】</strong>作成日 2026-10-24 ／ 更新日 2026-10-25 ／ 出典の取得日 2026-10-24</div>
 <nav class="toc" aria-label="目次">
 <p class="toc-title">目次</p>
 <ol>
@@ -170,7 +196,6 @@
 </ol>
 </li>
 <li><a href="#sec13">この記事の限界</a></li>
-<li><a href="#sec14">参考文献・資料</a></li>
 </ol>
 </nav>
 <h2 id="sec1">1. 作るもののあらましと、用意するもの</h2>
@@ -191,7 +216,7 @@
 <li>ブラウザ。パスキー（パスワードの代わりになる認証）が使えるもの。</li>
 <li>所要時間の目安は、順調なら 2 〜 3 時間である。</li>
 </ul>
-<p>EmDash は 2026 年 9 月に版 1.0 が公開されたばかりである <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。ネットにある古い解説は、 1.0 より前の版の手順で書かれていることがある。たとえば <code>emdash dev</code> などのコマンドは、 1.0 で削除された <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。この記事に書いたコマンドと、手元の画面が食い違ったら、公式ドキュメント <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup> を優先してほしい。</p>
+<p>EmDash は 2026 年 9 月に版 1.0 が公開されたばかりである <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。ネットにある古い解説は、 1.0 より前の版の手順で書かれていることがある。たとえば <code class="term">emdash dev</code> などのコマンドは、 1.0 で削除された <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。この記事に書いたコマンドと、手元の画面が食い違ったら、公式ドキュメント <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup> を優先してほしい。</p>
 <h3 id="sec1-2">1.2 先に知っておく――「手元の PC 」と「 Cloudflare 」は別の場所である</h3>
 <p>この記事には、二つの場所が出てくる。ここを取り違えると、あとで「手元で書いた記事が、公開したサイトに無い」と戸惑うことになる。手を動かす前に、ここで整理しておく。</p>
 <div class="box"><strong>たとえ話 ― 設計図と、実際のお店</strong><br><strong>手元の PC</strong> は、「設計図と模型を置いた工房」である。ここでは、いくら壊しても、誰にも見られない。 <strong>Cloudflare</strong> は、「実際に開店するお店」である。工房から設計図を送ると、同じ造りのお店が建つ。ただし、工房の模型に飾った商品（記事や画像）は、お店には運ばれない。お店に並べる商品は、お店に着いてから、お店の管理画面で並べ直す。</div>
@@ -199,7 +224,7 @@
 <table class="cards">
 <thead><tr><th>もの</th><th>公開のとき Cloudflare に運ばれるか</th><th>どうするか</th></tr></thead>
 <tbody>
-<tr><td data-label="もの">サイトの仕組み（フォルダの中のファイル一式。コードと設定）</td><td data-label="公開のとき Cloudflare に運ばれるか">運ばれる</td><td data-label="どうするか">8 章の <code>pnpm deploy</code> で送る</td></tr>
+<tr><td data-label="もの">サイトの仕組み（フォルダの中のファイル一式。コードと設定）</td><td data-label="公開のとき Cloudflare に運ばれるか">運ばれる</td><td data-label="どうするか">8 章の <code class="term">pnpm deploy</code> で送る</td></tr>
 <tr><td data-label="もの">手元で書いた記事と、手元で入れた画像</td><td data-label="公開のとき Cloudflare に運ばれるか">運ばれない</td><td data-label="どうするか">公開したあとで、 Cloudflare 側の管理画面から、あらためて作る（ 9 章）</td></tr>
 <tr><td data-label="もの">手元で登録した管理者の情報（パスキー）</td><td data-label="公開のとき Cloudflare に運ばれるか">運ばれない</td><td data-label="どうするか">公開したあとで、あらためて登録する（ 8.3 ）</td></tr>
 </tbody>
@@ -239,21 +264,21 @@
 <ol>
 <li>ターミナルを開く。 Windows では、スタートメニューで「 PowerShell 」を探して開く。 Mac では、「ターミナル」を開く。</li>
 <li>次を打って、 Node.js の版を調べる。
-<pre><code>node --version</code></pre>
-<p>「 v22.23.4 」以上の数字が出れば、次へ進む。「コマンドが見つからない」と出るか、版が古い場合は、 <code>https://nodejs.org/</code> から LTS （長期サポート版）の最新を入れ、ターミナルを開き直して、もう一度調べる。 LTS の最新が 22.23.4 以上であることは、入れたあとの <code>node --version</code> で確かめる。</p></li>
+<pre class="term"><code>node --version</code></pre>
+<p>「 v22.23.4 」以上の数字が出れば、次へ進む。「コマンドが見つからない」と出るか、版が古い場合は、 <code>https://nodejs.org/</code> から LTS （長期サポート版）の最新を入れ、ターミナルを開き直して、もう一度調べる。 LTS の最新が 22.23.4 以上であることは、入れたあとの <code class="term">node --version</code> で確かめる。</p></li>
 <li>パッケージマネージャー（部品の取り込みを管理する道具）の pnpm を入れる。この記事は pnpm で統一する。
-<pre><code>npm install -g pnpm</code><br>
-<code>pnpm --version</code></pre>
-<p>版の数字が出れば成功である。 Mac で権限のエラーが出るときは、先頭に <code>sudo</code> を付けて打つ。</p></li>
+<pre class="term"><code>npm install -g pnpm
+pnpm --version</code></pre>
+<p>版の数字が出れば成功である。 Mac で権限のエラーが出るときは、先頭に <code class="term">sudo</code> を付けて打つ。</p></li>
 </ol>
-<div class="box"><strong>ここまでの確認</strong><br><code>node --version</code> が 22.23.4 以上、 <code>pnpm --version</code> が数字を返す。</div>
+<div class="box"><strong>ここまでの確認</strong><br><code class="term">node --version</code> が 22.23.4 以上、 <code class="term">pnpm --version</code> が数字を返す。</div>
 <h2 id="sec4">4. 雛形を作る</h2>
 <p>EmDash には、公式の雛形が用意されている。雛形は、ブログ、マーケティング用のページ、作品集、汎用の Starter の四種類があり、それぞれに Cloudflare 向け（ D1 と R2 を使う）と Node.js 向け（ SQLite と PC 内の保存領域を使う）がある <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。この記事では、汎用の Starter の Cloudflare 向けを使う。</p>
 <ol>
 <li>雛形を置きたい場所へ移動する。ここでは書類フォルダを例にする。
-<pre><code>cd ~/Documents</code></pre></li>
+<pre class="term"><code>cd ~/Documents</code></pre></li>
 <li>雛形の作成を始める。
-<pre><code>pnpm create emdash@latest</code></pre></li>
+<pre class="term"><code>pnpm create emdash@latest</code></pre></li>
 <li>質問に答える。公式のはじめ方では、次のように答えている <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup> 。ただし、この記事は Cloudflare に載せるので、 2 番目の質問だけ変える。
 <table class="cards">
 <thead><tr><th>質問</th><th>答え</th></tr></thead>
@@ -266,10 +291,10 @@
 </tbody>
 </table></li>
 <li>終わったら、できたフォルダに入る。
-<pre><code>cd my-emdash-site</code></pre></li>
+<pre class="term"><code>cd my-emdash-site</code></pre></li>
 </ol>
 <p>依存部品の取り込みに失敗したときも、ファイルは残る。作成ツールが表示する再実行のコマンドを打つ <sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup> 。</p>
-<p>雛形の質問に Cloudflare の選択肢が見当たらないときは、次の方法で同じものを得る。雛形の置き場 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> から <code>starter-cloudflare</code> のフォルダを手元にコピーし、そのフォルダで <code>pnpm install</code> を実行する。</p>
+<p>雛形の質問に Cloudflare の選択肢が見当たらないときは、次の方法で同じものを得る。雛形の置き場 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> から <code>starter-cloudflare</code> のフォルダを手元にコピーし、そのフォルダで <code class="term">pnpm install</code> を実行する。</p>
 <div class="box"><strong>ここまでの確認</strong><br><code>my-emdash-site</code> のフォルダができ、その中に <code>wrangler.jsonc</code> と <code>astro.config.mjs</code> がある。</div>
 <h2 id="sec5">5. 自分の PC で動かし、記事を一本公開する</h2>
 <p>いきなり Cloudflare に載せず、まず手元で動かす。この章は、 1.2 で説明した「練習場」にあたる。手元で動かしておくと、うまくいかないとき、原因が EmDash の側にあるのか、 Cloudflare の設定にあるのかを切り分けられるからである。</p>
@@ -277,7 +302,7 @@
 <h3 id="sec5-1">5.1 起動する</h3>
 <ol>
 <li>次を打つ。
-<pre><code>pnpm dev</code></pre></li>
+<pre class="term"><code>pnpm dev</code></pre></li>
 <li>ターミナルに、手元のサイトを開くための URL が出る。通常は <code>http://localhost:4321/</code> である <sup id="fnref-4-5"><a href="#ref-4">[4]</a></sup> 。このターミナルは、閉じずに開いたままにする。</li>
 </ol>
 <h3 id="sec5-2">5.2 最初の設定を済ませる</h3>
@@ -297,7 +322,7 @@
 <p>この章の雛形は、手元で動かすときの保存先（データベースと画像）を自動で用意する。 Cloudflare 向けの雛形を手元で動かしたときの保存先の細部は、公式の記述では確認できなかった。ここで作った記事は、 Cloudflare に公開したサイトには引き継がれない（ 1.2 を参照）。公開後に、あらためて作る。</p>
 <div class="box"><strong>ここまでの確認</strong><br>手元のサイトのトップページに、題を変えた記事が表示されている。</div>
 <h2 id="sec6">6. 公開の前に、構成ファイルを読む</h2>
-<p>手元で動いたので、 Cloudflare に載せる前に、雛形に入っている設定の意味を知っておく。ここは読むだけで、書き換えない。 <code>Ctrl + C</code> でいったん <code>pnpm dev</code> を止めてから、エディターで <code>my-emdash-site</code> のフォルダを開く。</p>
+<p>手元で動いたので、 Cloudflare に載せる前に、雛形に入っている設定の意味を知っておく。ここは読むだけで、書き換えない。 <code>Ctrl + C</code> でいったん <code class="term">pnpm dev</code> を止めてから、エディターで <code>my-emdash-site</code> のフォルダを開く。</p>
 <h3 id="sec6-1">6.1 wrangler.jsonc ― Cloudflare への指示書</h3>
 <p>Wrangler は、 Cloudflare の設定と公開のためのコマンドである。 <code>wrangler.jsonc</code> は、何をどの名前で用意するかを書いた指示書である。公式ガイドが示す例は次のとおりである <sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup> 。雛形の中身は、これと近い形のはずだが、日付や名前は雛形のほうが正しい。</p>
 <pre><code>{
@@ -336,14 +361,14 @@
 <div class="box"><strong>ここまでの確認</strong><br>鍵の控えが、このフォルダの外にある。</div>
 <h2 id="sec8">8. Cloudflare に公開する</h2>
 <h3 id="sec8-1">8.1 ログインする</h3>
-<pre><code>pnpm wrangler login</code></pre>
+<pre class="term"><code>pnpm wrangler login</code></pre>
 <p>ブラウザが開き、 Cloudflare への接続を許可するかを尋ねられる。 2 章で作ったアカウントでログインし、許可する。ターミナルに戻ると、ログインの成功が表示される <sup id="fnref-5-14"><a href="#ref-5">[5]</a></sup> 。</p>
 <h3 id="sec8-2">8.2 公開する</h3>
-<p>雛形の README は、公開のコマンドを <code>pnpm deploy</code> と案内している <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> 。</p>
-<pre><code>pnpm deploy</code></pre>
+<p>雛形の README は、公開のコマンドを <code class="term">pnpm deploy</code> と案内している <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> 。</p>
+<pre class="term"><code>pnpm deploy</code></pre>
 <p>このコマンドが「見つからない」と表示されたときは、公式ガイドの二段の手順で同じことをする <sup id="fnref-5-15"><a href="#ref-5">[5]</a></sup> 。</p>
-<pre><code>pnpm build</code><br>
-<code>pnpm wrangler deploy</code></pre>
+<pre class="term"><code>pnpm build
+pnpm wrangler deploy</code></pre>
 <p>初回の公開では、次のことが起きる。</p>
 <ul>
 <li>D1 のデータベースと R2 の保存領域が、 Cloudflare の側に作られる <sup id="fnref-5-16"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-4"><a href="#ref-6">[6]</a></sup> 。 R2 で支払い方法の登録を求められたら、 2 章の注意を読み返す。</li>
@@ -379,9 +404,9 @@
 <ol>
 <li>手元のフォルダで、ファイルを直す。</li>
 <li>手元で動かして、直した結果を確かめる。公開中のサイトは、まだ何も変わっていないので、失敗しても安全である。
-<pre><code>pnpm dev</code></pre></li>
+<pre class="term"><code>pnpm dev</code></pre></li>
 <li>うまくいったのを見てから、 Cloudflare に送り直す。
-<pre><code>pnpm deploy</code></pre></li>
+<pre class="term"><code>pnpm deploy</code></pre></li>
 </ol>
 <p>手元の管理画面（ <code>localhost</code> ）で記事を直しても、公開したサイトの記事は変わらない。記事を直したいときは、必ず、公開したサイトの管理画面で直す。</p>
 <div class="box"><strong>ここまでの確認</strong><br>別の端末のブラウザから、自分で書いた記事と画像が見える。</div>
@@ -397,9 +422,9 @@
 <li><input type="checkbox" id="c10-5"><label for="c10-5">スマートフォンで見て、表示が崩れない</label></li>
 <li><input type="checkbox" id="c10-6"><label for="c10-6">暗号鍵の控えが、リポジトリの外の安全な場所にある</label></li>
 <li><input type="checkbox" id="c10-7"><label for="c10-7">次のコマンドで、定期処理が動いている</label>
-<pre><code>pnpm emdash doctor</code><br>
-<code>pnpm wrangler tail</code></pre>
-<p><code>wrangler tail</code> は、公開した Worker の動きを、ターミナルに流し続ける。止めるには <code>Ctrl + C</code> を押す。定期処理の設定を変えた直後は、動き出すまでに最長で 15 分かかることがある <sup id="fnref-5-21"><a href="#ref-5">[5]</a></sup> 。</p></li>
+<pre class="term"><code>pnpm emdash doctor
+pnpm wrangler tail</code></pre>
+<p><code class="term">wrangler tail</code> は、公開した Worker の動きを、ターミナルに流し続ける。止めるには <code>Ctrl + C</code> を押す。定期処理の設定を変えた直後は、動き出すまでに最長で 15 分かかることがある <sup id="fnref-5-21"><a href="#ref-5">[5]</a></sup> 。</p></li>
 </ul>
 <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
 </div>
@@ -408,11 +433,11 @@
 <table class="cards">
 <thead><tr><th>症状</th><th>確かめること</th></tr></thead>
 <tbody>
-<tr><td data-label="症状">公開したサイトを開くと 503 が返る</td><td data-label="確かめること">大きなデータの移行が未適用の可能性がある。 <code>pnpm emdash migrate</code> を実行する <sup id="fnref-5-22"><a href="#ref-5">[5]</a></sup></td></tr>
+<tr><td data-label="症状">公開したサイトを開くと 503 が返る</td><td data-label="確かめること">大きなデータの移行が未適用の可能性がある。 <code class="term">pnpm emdash migrate</code> を実行する <sup id="fnref-5-22"><a href="#ref-5">[5]</a></sup></td></tr>
 <tr><td data-label="症状">「 D1 binding not found 」</td><td data-label="確かめること"><code>wrangler.jsonc</code> の <code>DB</code> と、 <code>astro.config.mjs</code> の <code>d1({ binding: "DB" })</code> の名前が一致しているか <sup id="fnref-5-23"><a href="#ref-5">[5]</a></sup></td></tr>
 <tr><td data-label="症状">「 R2 binding not found 」</td><td data-label="確かめること"><code>MEDIA</code> と <code>r2({ binding: "MEDIA" })</code> の名前が一致しているか <sup id="fnref-5-24"><a href="#ref-5">[5]</a></sup></td></tr>
-<tr><td data-label="症状">移行のエラー</td><td data-label="確かめること"><code>pnpm wrangler tail</code> を動かしたまま、同じ操作を再現して、出力を読む <sup id="fnref-5-25"><a href="#ref-5">[5]</a></sup></td></tr>
-<tr><td data-label="症状"><code>pnpm dev</code> が起動しない</td><td data-label="確かめること"><code>node --version</code> が 22.23.4 以上か。 <code>pnpm install</code> をやり直す</td></tr>
+<tr><td data-label="症状">移行のエラー</td><td data-label="確かめること"><code class="term">pnpm wrangler tail</code> を動かしたまま、同じ操作を再現して、出力を読む <sup id="fnref-5-25"><a href="#ref-5">[5]</a></sup></td></tr>
+<tr><td data-label="症状"><code class="term">pnpm dev</code> が起動しない</td><td data-label="確かめること"><code class="term">node --version</code> が 22.23.4 以上か。 <code class="term">pnpm install</code> をやり直す</td></tr>
 <tr><td data-label="症状">画像が表示されない、または原寸のまま出る</td><td data-label="確かめること">画像の変換には <code>IMAGES</code> のバインディングが要る。ない場合は、原寸で配信されるか、失敗する <sup id="fnref-5-26"><a href="#ref-5">[5]</a></sup> 。無料枠は月 5,000 件の変換までで、超えるとエラー 9422 になる <sup id="fnref-5-27"><a href="#ref-5">[5]</a></sup></td></tr>
 <tr><td data-label="症状">メールによるログインで「 Email is not configured 」</td><td data-label="確かめること">本番でのメールの送信には、 <code>send_email</code> のバインディングと、確認済みの送信元ドメインが要る <sup id="fnref-5-28"><a href="#ref-5">[5]</a></sup> 。パスキーでのログインなら不要</td></tr>
 </tbody>
@@ -420,9 +445,9 @@
 <h2 id="sec12">12. この先の選択肢</h2>
 <p>ここから先は、手順書の範囲を超える発展である。必要になったときに読む。</p>
 <h3 id="sec12-1">12.1 秘密の値の保存</h3>
-<p>プラグインに秘密の設定を持たせるときは、 <code>pnpm wrangler secret put EMDASH_ENCRYPTION_KEY</code> のように、秘密の値を Cloudflare に保存する。値は <code>wrangler.jsonc</code> には書かない <sup id="fnref-5-29"><a href="#ref-5">[5]</a></sup> 。保存すべき値が、 7 章で控えた鍵と同じものかは、公式ガイドの記述から確認できなかった。プラグインを使う前に、原典で確かめる。</p>
+<p>プラグインに秘密の設定を持たせるときは、 <code class="term">pnpm wrangler secret put EMDASH_ENCRYPTION_KEY</code> のように、秘密の値を Cloudflare に保存する。値は <code>wrangler.jsonc</code> には書かない <sup id="fnref-5-29"><a href="#ref-5">[5]</a></sup> 。保存すべき値が、 7 章で控えた鍵と同じものかは、公式ガイドの記述から確認できなかった。プラグインを使う前に、原典で確かめる。</p>
 <h3 id="sec12-2">12.2 Git につなぎ、 push で自動公開する</h3>
-<p>手順は、ダッシュボードの Workers &amp; Pages で該当の Worker を開き、 Settings &gt; Builds から GitHub のリポジトリを接続する、というものである <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。 Worker を一度公開してから接続する順序になる。ダッシュボード上の Worker 名と、設定ファイルの <code>name</code> が一致しないと、ビルドは失敗する <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> 。デプロイのコマンドの既定は <code>npx wrangler deploy</code> 、監視するブランチの既定は <code>main</code> である <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。 EmDash は公開の前に <code>pnpm build</code> が要るので、ビルドのコマンドの欄に入れる必要があるはずだが、確認していない。無料プランのビルドには、月間の時間などの上限がある。</p>
+<p>手順は、ダッシュボードの Workers &amp; Pages で該当の Worker を開き、 Settings &gt; Builds から GitHub のリポジトリを接続する、というものである <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。 Worker を一度公開してから接続する順序になる。ダッシュボード上の Worker 名と、設定ファイルの <code>name</code> が一致しないと、ビルドは失敗する <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> 。デプロイのコマンドの既定は <code>npx wrangler deploy</code> 、監視するブランチの既定は <code>main</code> である <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。 EmDash は公開の前に <code class="term">pnpm build</code> が要るので、ビルドのコマンドの欄に入れる必要があるはずだが、確認していない。無料プランのビルドには、月間の時間などの上限がある。</p>
 <h3 id="sec12-3">12.3 独自のドメインを足す</h3>
 <p>公式ガイドは、 <code>workers.dev</code> の URL でサイトが応答することを確かめてから、 <code>wrangler.jsonc</code> に経路を足して、公開し直すよう述べる <sup id="fnref-5-30"><a href="#ref-5">[5]</a></sup> 。 Workers のカスタムドメインには、有効な Cloudflare のゾーン（ Cloudflare に管理を預けたドメイン）が要る <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。ドメインの取得の手順は、この記事では扱わない。</p>
 <p><code>workers.dev</code> の URL でのアクセスを止める設定は、独自ドメインを足すまで使わない。止めると、サイトにアクセスする手段がなくなる <sup id="fnref-7-4"><a href="#ref-7">[7]</a></sup> 。</p>
@@ -431,7 +456,7 @@
 <h2 id="sec13">13. この記事の限界</h2>
 <p>手順は公式ドキュメントのページの要約に基づくもので、原文との逐語の照合はしていない。手順を実機で通して検証してはいない。そのため、画面の文言、選択肢の名前、 Cloudflare 向けの雛形を選ぶ質問の文言には、実際と違う点があるかもしれない。確認できなかった点は、本文に明記した。また、 Cloudflare の料金プラン、無料枠、支払い方法の要否は、変更されうる。版 1.0 の公開時期は報道による情報である <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。取得日は 2026 年 10 月 24 日である。ただし Cloudflare 一般の仕様の一部は、 2026 年 10 月 7 日に取得した内容に基づく。</p>
 <div class="refs">
-<h2 id="sec14">14. 参考文献・資料</h2>
+<h2>参考文献・資料</h2>
 <p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> EmDash, GitHub リポジトリ（取得日 2026-10-24 。一次情報）。 <a href="https://github.com/emdash-cms/emdash">GitHub リポジトリ</a></li>
