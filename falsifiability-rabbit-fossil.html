@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>反証可能性と「ウサギの化石」――古い地層からの発見は何を意味するか</title>
+<style>
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
+  .subtitle { color: #555; margin: 0 0 1rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
+  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
+  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: #2a4d69; }
+  .endnote { font-size: .9rem; color: #555; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<p class="kicker">進化論入門・科学哲学</p>
+<h1>反証可能性と「ウサギの化石」<br>――古い地層からの発見は何を意味するか</h1>
+<p class="subtitle">Falsifiability and the Rabbit Fossil Thought Experiment</p>
+
+<div class="lede">
+<p>「先カンブリア時代の地層からウサギの化石が見つかったら、進化論は誤りだ」。この有名な思考実験は、科学の理論がどのように検証されるかを示す例として語られてきた。本稿は、この例の背後にある地層、年代測定、生物の登場順、分類の仕組みを、図を使って順にたどる。前提知識は不要である。</p>
+</div>
+
+<div class="meta band"><strong>【方法と限界】</strong> 本文の年代は概数である。各主張の出典は参考文献欄に示し、裏付けの取れなかった内容は本文に書いていない。確かめられなかった点と、見解が分かれている点は、末尾の「この文書の限界」に記した。図は理解のための模式図であり、縮尺や形は実際と異なる。</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">話のはじまり：理論はどうなれば誤りか</a>
+<ol>
+<li><a href="#sec1-1">反証可能性とは何か</a></li>
+<li><a href="#sec1-2">ホールデンの逸話</a></li>
+</ol>
+</li>
+<li><a href="#sec2">地層と化石：過去を読むしくみ</a>
+<ol>
+<li><a href="#sec2-1">地層は下ほど古い</a></li>
+<li><a href="#sec2-2">化石になるのはごく一部</a></li>
+</ol>
+</li>
+<li><a href="#sec3">年代はどうやって知るのか</a>
+<ol>
+<li><a href="#sec3-1">相対年代と絶対年代</a></li>
+<li><a href="#sec3-2">放射性元素という自然の時計</a></li>
+<li><a href="#sec3-3">火山灰で化石の年代をはさむ</a></li>
+</ol>
+</li>
+<li><a href="#sec4">時間の長さで見ると、ウサギはごく最近</a>
+<ol>
+<li><a href="#sec4-1">地球史を一本の帯にする</a></li>
+<li><a href="#sec4-2">地球の一日に縮めて見る</a></li>
+</ol>
+</li>
+<li><a href="#sec5">ウサギの祖先はどこから来たか</a>
+<ol>
+<li><a href="#sec5-1">脊椎動物の大まかな系統</a></li>
+<li><a href="#sec5-2">恐竜絶滅のあとの放散</a></li>
+<li><a href="#sec5-3">ウサギ目とげっ歯目の関係</a></li>
+<li><a href="#sec5-4">ウサギ目の化石が出る時期</a></li>
+</ol>
+</li>
+<li><a href="#sec6">「ウサギが出たら困る」のはなぜか</a>
+<ol>
+<li><a href="#sec6-1">段階をとばした出現が反証になる理由</a></li>
+<li><a href="#sec6-2">分類は入れ子になる</a></li>
+<li><a href="#sec6-3">各グループの出現順</a></li>
+</ol>
+</li>
+<li><a href="#sec7">実際の発見：移行化石の例</a>
+<ol>
+<li><a href="#sec7-1">魚から陸へ：ティクターリク</a></li>
+<li><a href="#sec7-2">陸から海へ：クジラの祖先</a></li>
+<li><a href="#sec7-3">恐竜から鳥へ：羽毛恐竜</a></li>
+<li><a href="#sec7-4">化石が出る時代のまとめ</a></li>
+</ol>
+</li>
+<li><a href="#sec8">注意：「絶対に出ない」ではなく「出たら大事件」</a>
+<ol>
+<li><a href="#sec8-1">混入による見かけの年代</a></li>
+<li><a href="#sec8-2">断層による見かけの逆転</a></li>
+<li><a href="#sec8-3">判断の手順</a></li>
+</ol>
+</li>
+<li><a href="#sec9">よくある疑問</a></li>
+<li><a href="#sec10">まとめ</a></li>
+<li><a href="#sec11">この文書の限界</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 話のはじまり：理論はどうなれば誤りか</h2>
+<p>科学の理論には、「もしこのような証拠が見つかれば、この理論は誤りだ」と言える条件がある。これを<span class="term">反証可能性</span>という。哲学者カール・ポパーは、科学とそれ以外を分ける目安として、この考え方を強調した。</p>
+
+<h3 id="sec1-1">1.1 反証可能性とは何か</h3>
+<p>たとえば「明日は雨が降るか、降らないかのどちらかだ」という主張は、何が起きても正しい。したがって、確かめる方法がない。一方、「このボールを離すと下に落ちる」は、上に浮かべば誤りだとわかる。後者のように、<strong>外れる可能性をもつ主張</strong>が、検証を重ねて信頼を積み上げられる。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 230" role="img" aria-label="反証できる主張とできない主張の比較">
+  <rect x="10" y="10" width="340" height="210" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+  <text x="180" y="40" text-anchor="middle" font-size="16" font-weight="700">反証できる主張</text>
+  <text x="180" y="75" text-anchor="middle" font-size="13">「ウサギの化石は新生代以降にしか出ない」</text>
+  <text x="180" y="110" text-anchor="middle" font-size="13">→ 古い地層から出れば誤りとわかる</text>
+  <text x="180" y="145" text-anchor="middle" font-size="13">→ 調べるたびに、外れる機会にさらされる</text>
+  <text x="180" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="#2a4d69">科学的な主張</text>
+  <rect x="370" y="10" width="340" height="210" rx="10" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+  <text x="540" y="40" text-anchor="middle" font-size="16" font-weight="700">反証できない主張</text>
+  <text x="540" y="75" text-anchor="middle" font-size="13">「明日は雨か、雨でないかのどちらかだ」</text>
+  <text x="540" y="110" text-anchor="middle" font-size="13">→ どんな結果でも正しいことになる</text>
+  <text x="540" y="145" text-anchor="middle" font-size="13">→ 調べても、何も確かめられない</text>
+  <text x="540" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="#c0392b">確かめようがない主張</text>
+</svg>
+<figcaption>「外れる可能性がある」ことは、理論の弱点ではなく、検証できるという条件である。</figcaption>
+</figure>
+
+<h3 id="sec1-2">1.2 ホールデンの逸話</h3>
+<p>進化生物学者の J ・ B ・ S ・ホールデンが、進化論を誤りとするなら何が見つかればよいかと問われ、「先カンブリア時代の化石ウサギ」と答えたという逸話が広く引かれる。ただし、この言葉を記した一次資料は確認できていない。言い回しも伝わるうちに変わっている。ここでは、進化論が「どうなれば誤りか」を明確に指定できる理論であることの例として扱う。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup></p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 220" role="img" aria-label="反証可能性の図">
+  <rect x="10" y="60" width="190" height="100" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+  <text x="105" y="95" text-anchor="middle" font-size="16" font-weight="700">理論（予測）</text>
+  <text x="105" y="120" text-anchor="middle" font-size="13">ウサギの出現は</text>
+  <text x="105" y="140" text-anchor="middle" font-size="13">新生代以降のはず</text>
+  <line x1="205" y1="110" x2="300" y2="60" stroke="#888" stroke-width="2" marker-end="url(#a1)"/>
+  <line x1="205" y1="110" x2="300" y2="165" stroke="#888" stroke-width="2" marker-end="url(#a1)"/>
+  <rect x="305" y="25" width="400" height="60" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+  <text x="505" y="52" text-anchor="middle" font-size="14" font-weight="700">調べた結果：古い地層にウサギはいない</text>
+  <text x="505" y="72" text-anchor="middle" font-size="13">→ 予測は支持された（反証は得られていない）</text>
+  <rect x="305" y="135" width="400" height="60" rx="10" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+  <text x="505" y="162" text-anchor="middle" font-size="14" font-weight="700">調べた結果：先カンブリア時代にウサギの化石</text>
+  <text x="505" y="182" text-anchor="middle" font-size="13">→ 理論は大きな修正を迫られる（反証）</text>
+</svg>
+<figcaption>理論は、当たるか外れるかを確かめられる形をしている。これまでのところ、外れた例は報告されていない。</figcaption>
+</figure>
+
+<div class="box">
+<p><strong>ここがポイント</strong><br>この例で問題になっているのは、ウサギそのものよりも「生物が現れた順番」である。ウサギは、哺乳類であることが誰にでもわかる代表として選ばれた例にすぎない。</p>
+</div>
+
+<h2 id="sec2">2. 地層と化石：過去を読むしくみ</h2>
+
+<h3 id="sec2-1">2.1 地層は下ほど古い</h3>
+<p>地層は、川や海で運ばれた泥や砂が下から順に積もってできる。ふつうは<strong>下の層ほど古く、上の層ほど新しい</strong>。これを地層累重の法則という。化石はその層に閉じ込められているため、どの化石がどの深さから出るかを調べると、生物の登場順がわかる。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 380" role="img" aria-label="地層ができる様子">
+  <g font-size="13">
+    <text x="20" y="22" font-weight="700">① 昔：海底に泥や砂が積もる</text>
+    <rect x="20" y="30" width="200" height="90" fill="#9ec5e0"/>
+    <rect x="20" y="95" width="200" height="25" fill="#7d6b4b"/>
+    <ellipse cx="80" cy="93" rx="14" ry="5" fill="#fff" stroke="#555"/>
+    <text x="20" y="140" font-size="12" fill="#555">生き物が死んで底に沈む</text>
+    <text x="250" y="22" font-weight="700">② 上にどんどん積もる</text>
+    <rect x="250" y="30" width="200" height="90" fill="#9ec5e0"/>
+    <rect x="250" y="55" width="200" height="25" fill="#b39c72"/>
+    <rect x="250" y="80" width="200" height="40" fill="#7d6b4b"/>
+    <ellipse cx="310" cy="105" rx="14" ry="5" fill="#fff" stroke="#555"/>
+    <text x="250" y="140" font-size="12" fill="#555">骨は新しい堆積物の下に埋もれる</text>
+    <text x="480" y="22" font-weight="700">③ 固まって地層・化石に</text>
+    <rect x="480" y="30" width="200" height="30" fill="#d9c9a3"/>
+    <rect x="480" y="60" width="200" height="30" fill="#b39c72"/>
+    <rect x="480" y="90" width="200" height="30" fill="#7d6b4b"/>
+    <ellipse cx="540" cy="105" rx="14" ry="5" fill="#fff" stroke="#555"/>
+    <text x="480" y="140" font-size="12" fill="#555">長い時間をかけて岩になる</text>
+  </g>
+  <g>
+    <text x="20" y="190" font-size="14" font-weight="700">④ 現在：隆起して陸になり、削られて断面が現れる</text>
+    <rect x="40" y="205" width="360" height="55" fill="#d9c9a3"/>
+    <rect x="40" y="260" width="360" height="55" fill="#b39c72"/>
+    <rect x="40" y="315" width="360" height="55" fill="#7d6b4b"/>
+    <rect x="40" y="205" width="360" height="165" fill="none" stroke="#222" stroke-width="1.5"/>
+    <text x="60" y="238" font-size="13">上：新しい層（新しい生物の化石）</text>
+    <text x="60" y="293" font-size="13">中</text>
+    <text x="60" y="348" font-size="13" fill="#fff">下：古い層（古い生物の化石）</text>
+    <line x1="440" y1="360" x2="440" y2="215" stroke="#888" stroke-width="2" marker-end="url(#a1)"/>
+    <text x="455" y="225" font-size="12">新しい</text>
+    <text x="455" y="360" font-size="12">古い</text>
+    <text x="520" y="260" font-size="13">地層は積み重なった順に</text>
+    <text x="520" y="282" font-size="13">過去を記録している</text>
+  </g>
+</svg>
+<figcaption>地層は積もった順に並ぶ。生物の遺骸が堆積物に覆われると、化石として保存されることがある。</figcaption>
+</figure>
+
+<h3 id="sec2-2">2.2 化石になるのはごく一部</h3>
+<p>生き物が死んでも、ほとんどは他の動物に食べられるか、腐って消える。化石になるのは、死後すぐに土砂に埋もれるなどの限られた場合だけである。そのため、化石の記録には大きな欠けがある。それでも、世界各地で多数の化石が調べられてきた結果、はっきりした登場順のパターンが見えている。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 200" role="img" aria-label="化石になる量の漏斗図">
+  <polygon points="40,30 680,30 560,100 200,100" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+  <text x="360" y="62" text-anchor="middle" font-size="14" font-weight="700">かつて生きていた生物</text>
+  <text x="360" y="84" text-anchor="middle" font-size="12">（膨大な数）</text>
+  <polygon points="200,100 560,100 460,150 300,150" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+  <text x="380" y="130" text-anchor="middle" font-size="13">埋もれて化石になる</text>
+  <polygon points="300,150 460,150 420,190 340,190" fill="#fff" stroke="#222" stroke-width="2"/>
+  <text x="380" y="176" text-anchor="middle" font-size="12">発見・採集される</text>
+  <text x="60" y="140" font-size="12" fill="#555">ごく一部だけが残る →</text>
+</svg>
+<figcaption>化石はごく一部の偶然の産物である。見つからないことだけで「いなかった」とは言えない。一方で、多数の地点を通して一貫したパターンが見られれば、それは重要な情報になる。</figcaption>
+</figure>
+
+<h2 id="sec3">3. 年代はどうやって知るのか</h2>
+<p>「新生代の地層」「約 6600 万年前」といった年代は、どのように決められるのか。大きく二つの方法がある。</p>
+
+<h3 id="sec3-1">3.1 相対年代と絶対年代</h3>
+<p><strong>相対年代</strong>は、どちらが古いかを決める方法である。地層の上下関係や、特定の時代にだけ出現する示準化石（例：三葉虫、アンモナイト）を使う。</p>
+<p><strong>絶対年代</strong>は、何年前かを数値で決める方法である。岩石に含まれる放射性元素を使う。その代表が次節の方法である。国際的な時代区分（国際年代層序表）の数値は、<a href="https://stratigraphy.org/ICSchart/ChronostratChart2022-10.pdf">国際層序委員会の年代層序表</a>で確認できる。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
+
+<h3 id="sec3-2">3.2 放射性元素という自然の時計</h3>
+<p>岩石に含まれる放射性元素は、一定のペースで別の元素に変わる。元の量が半分になるまでの時間を半減期といい、元素ごとに決まっている。残っている量と変化後の量の比から、岩石ができてからの時間がわかる。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 280" role="img" aria-label="放射性元素の半減期の図">
+  <line x1="70" y1="30" x2="70" y2="230" stroke="#222" stroke-width="1.5"/>
+  <line x1="70" y1="230" x2="400" y2="230" stroke="#222" stroke-width="1.5"/>
+  <text x="62" y="36" text-anchor="end" font-size="11">100%</text>
+  <text x="62" y="136" text-anchor="end" font-size="11">50%</text>
+  <text x="62" y="186" text-anchor="end" font-size="11">25%</text>
+  <text x="62" y="234" text-anchor="end" font-size="11">0</text>
+  <path d="M70,30 C110,80 140,110 170,130 C210,155 240,170 270,180 C320,195 360,205 390,210" stroke="#c0392b" stroke-width="3" fill="none"/>
+  <line x1="70" y1="130" x2="170" y2="130" stroke="#888" stroke-dasharray="4 4"/>
+  <line x1="170" y1="130" x2="170" y2="230" stroke="#888" stroke-dasharray="4 4"/>
+  <line x1="70" y1="180" x2="270" y2="180" stroke="#888" stroke-dasharray="4 4"/>
+  <line x1="270" y1="180" x2="270" y2="230" stroke="#888" stroke-dasharray="4 4"/>
+  <text x="70" y="250" text-anchor="middle" font-size="11">0</text>
+  <text x="170" y="250" text-anchor="middle" font-size="11">一半減期</text>
+  <text x="270" y="250" text-anchor="middle" font-size="11">二半減期</text>
+  <text x="235" y="272" text-anchor="middle" font-size="12">経過時間 →</text>
+  <text x="440" y="60" font-size="13" font-weight="700">原理</text>
+  <text x="440" y="84" font-size="13">元の元素は一定の割合で減っていく</text>
+  <text x="440" y="106" font-size="13">→ 残量を測れば経過時間がわかる</text>
+  <text x="440" y="140" font-size="13" font-weight="700">例</text>
+  <text x="440" y="164" font-size="13">炭素 14 ：半減期 約 5730 年</text>
+  <text x="440" y="184" font-size="12" fill="#555">（数万年前までの生物遺骸に使う）</text>
+  <text x="440" y="212" font-size="13">ウラン 238 ：半減期 約 45 億年</text>
+  <text x="440" y="232" font-size="12" fill="#555">（数億〜数十億年前の岩石に使う）</text>
+</svg>
+<figcaption>放射性元素は、決まったペースで減る「自然の時計」である。炭素 14 の半減期は約 5730 年、ウラン 238 の半減期は約 44 億 7000 万年とされる。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></figcaption>
+</figure>
+
+<h3 id="sec3-3">3.3 火山灰で化石の年代をはさむ</h3>
+<p>古い化石そのものを直接測ることは難しい場合が多い。そのため実際には、化石をはさむ<strong>火山灰の層</strong>などを測り、年代の範囲を絞り込む。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 250" role="img" aria-label="火山灰層で化石の年代をはさむ図">
+  <rect x="60" y="20" width="320" height="50" fill="#d9c9a3"/>
+  <rect x="60" y="70" width="320" height="22" fill="#888"/>
+  <rect x="60" y="92" width="320" height="50" fill="#b39c72"/>
+  <rect x="60" y="142" width="320" height="22" fill="#888"/>
+  <rect x="60" y="164" width="320" height="50" fill="#7d6b4b"/>
+  <rect x="60" y="20" width="320" height="194" fill="none" stroke="#222" stroke-width="1.5"/>
+  <ellipse cx="150" cy="117" rx="26" ry="9" fill="#fff" stroke="#c0392b" stroke-width="2.5"/>
+  <text x="220" y="121" font-size="13">★ 化石</text>
+  <text x="100" y="86" font-size="12" fill="#fff">火山灰（上）</text>
+  <text x="100" y="158" font-size="12" fill="#fff">火山灰（下）</text>
+  <text x="410" y="50" font-size="13" font-weight="700">上の火山灰： 5000 万年前</text>
+  <text x="410" y="82" font-size="13">下の火山灰： 5400 万年前</text>
+  <text x="410" y="134" font-size="13" font-weight="700" fill="#c0392b">→ 化石は 5000 万〜 5400 万年前の</text>
+  <text x="410" y="156" font-size="13" fill="#c0392b">　あいだに生きていた</text>
+  <text x="410" y="200" font-size="12" fill="#555">※数値は説明のための仮の例である。</text>
+</svg>
+<figcaption>火山灰は、噴火した時点の時計をもつ。化石をはさむ上下の火山灰の年代がわかれば、化石の年代の範囲が決まる。</figcaption>
+</figure>
+
+<h2 id="sec4">4. 時間の長さで見ると、ウサギはごく最近</h2>
+
+<h3 id="sec4-1">4.1 地球史を一本の帯にする</h3>
+<p>地球は約 46 億年前に生まれた。下の図は、その全歴史を一本の帯にしたものである。帯の長さは時間に比例している。先カンブリア時代が全体のおよそ 88% を占め、新生代は約 1.4% に過ぎない。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 200" role="img" aria-label="地球史の帯グラフ（時間に比例）">
+  <rect x="20" y="60" width="600" height="50" fill="#6b5b45"/>
+  <rect x="620" y="60" width="43" height="50" fill="#8a9a5b"/>
+  <rect x="663" y="60" width="27" height="50" fill="#d4a017"/>
+  <rect x="690" y="60" width="10" height="50" fill="#c0392b"/>
+  <text x="320" y="90" text-anchor="middle" font-size="14" fill="#fff">先カンブリア時代（約 46 億〜 5.4 億年前）</text>
+  <text x="641" y="30" text-anchor="middle" font-size="12">古生代</text>
+  <text x="676" y="30" text-anchor="middle" font-size="12">中生代</text>
+  <text x="695" y="130" text-anchor="end" font-size="12" fill="#c0392b">新生代 →</text>
+  <line x1="20" y1="115" x2="20" y2="135" stroke="#222"/>
+  <text x="20" y="152" font-size="12">46 億年前（地球誕生）</text>
+  <line x1="620" y1="115" x2="620" y2="135" stroke="#222"/>
+  <text x="620" y="152" font-size="12" text-anchor="end">5.4 億年前</text>
+  <text x="20" y="180" font-size="11" fill="#555">縦線の位置：古生代の始まり（ 5.4 億年前）。中生代・新生代の幅は数ピクセルに縮むため、拡大して見る。</text>
+</svg>
+<figcaption>地球史を 46 億年とすると、先カンブリア時代が約 88% 、古生代が約 6% 、中生代が約 4% 、新生代が約 1.4% である。ウサギ目の仲間が現れるのは、この最後の幅の中である。</figcaption>
+</figure>
+
+<h3 id="sec4-2">4.2 地球の一日に縮めて見る</h3>
+<p>数字が大きすぎて実感がわきにくいので、地球の歴史を<strong>一日（ 24 時間）</strong>に縮め、最後の三時間（ 21 時〜 24 時）を拡大してみよう。一時間は約 1 億 9000 万年に当たる。 0 時の地球誕生から 21 時ごろまでは、ほぼ微生物の時代である。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 300" role="img" aria-label="地球の一日の最後の三時間">
+  <!-- 21:00-24:00 を x 60〜680 に対応（180分、約3.44px/分） -->
+  <line x1="60" y1="150" x2="680" y2="150" stroke="#222" stroke-width="3"/>
+  <g font-size="11" fill="#555" text-anchor="middle">
+    <text x="60" y="175">21:00</text><text x="267" y="175">22:00</text><text x="473" y="175">23:00</text><text x="680" y="175">24:00</text>
+  </g>
+  <g stroke="#222">
+    <line x1="60" y1="145" x2="60" y2="155"/><line x1="267" y1="145" x2="267" y2="155"/>
+    <line x1="473" y1="145" x2="473" y2="155"/><line x1="680" y1="145" x2="680" y2="155"/>
+  </g>
+  <g font-size="12">
+    <circle cx="98" cy="150" r="6" fill="#2a4d69"/>
+    <path d="M98,144 V110" stroke="#888"/><text x="98" y="102" text-anchor="start">21:11 カンブリア爆発（ 5.4 億年前）</text>
+    <circle cx="280" cy="150" r="6" fill="#2a4d69"/>
+    <path d="M280,144 V70" stroke="#888"/><text x="280" y="62" text-anchor="middle">22:04 両生類（約 3.7 億年前）</text>
+    <circle cx="442" cy="150" r="6" fill="#2a4d69"/>
+    <path d="M442,156 V210" stroke="#888"/><text x="442" y="226" text-anchor="middle">22:51 哺乳類（約 2.2 億年前）</text>
+    <circle cx="608" cy="150" r="6" fill="#c0392b"/>
+    <path d="M608,144 V110" stroke="#888"/><text x="608" y="102" text-anchor="middle">23:39 恐竜絶滅（ 6600 万年前）</text>
+    <circle cx="621" cy="150" r="6" fill="#c0392b"/>
+    <path d="M621,156 V250" stroke="#c0392b" stroke-width="2"/><text x="621" y="268" text-anchor="middle" font-weight="700" fill="#c0392b">23:43 ウサギ目の仲間（約 5600 万年前）</text>
+    <circle cx="680" cy="150" r="6" fill="#2a4d69"/>
+    <path d="M680,156 V190" stroke="#888"/><text x="690" y="205" text-anchor="end">23:59:54 ヒト（約 30 万年前）</text>
+  </g>
+</svg>
+<figcaption>一日に縮めると、ウサギの仲間が現れるのは夜 11 時 40 分すぎ。ホモ・サピエンスは日付が変わる約 6 秒前である。図は模式図であり、各年代の位置は概数である。</figcaption>
+</figure>
+
+<h2 id="sec5">5. ウサギの祖先はどこから来たか</h2>
+
+<h3 id="sec5-1">5.1 脊椎動物の大まかな系統</h3>
+<p>ウサギは<span class="term">哺乳類</span>である。哺乳類は約 2 億 2000 万年前（中生代の三畳紀後期）に現れ、恐竜の時代には小型の動物として暮らしていた。現在の哺乳類の多くのグループが広がったのは、約 6600 万年前に恐竜（鳥を除く）が絶滅した後、新生代に入ってからである。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 320" role="img" aria-label="脊椎動物の進化の簡略図">
+  <g stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <path d="M20,160 H60"/>
+    <path d="M60,160 V40 M60,160 V290"/>
+    <path d="M60,40 H430"/>
+    <path d="M60,290 H430"/>
+    <path d="M120,40 V100 M120,100 H430"/>
+    <path d="M180,100 V160 M180,160 H430"/>
+    <path d="M240,160 V220 M240,220 H430"/>
+  </g>
+  <g font-size="14">
+    <text x="440" y="45">魚類（サメ・硬骨魚など）</text>
+    <text x="440" y="105">両生類（カエル・イモリ）</text>
+    <text x="440" y="165">爬虫類・鳥類（恐竜を含む）</text>
+    <text x="440" y="225" font-weight="700" fill="#2a4d69">哺乳類 → ネズミ・ウサギの仲間ほか</text>
+    <text x="440" y="295">無脊椎動物（貝・昆虫など）</text>
+  </g>
+  <g font-size="11" fill="#555">
+    <text x="126" y="32">約 5 億年前〜 魚類</text>
+    <text x="186" y="92">約 3.7 億年前〜 陸上へ</text>
+    <text x="246" y="152">約 3.2 億年前〜 哺乳類と爬虫類の系統が分かれる</text>
+    <text x="246" y="212">約 2.2 億年前 哺乳類が現れる</text>
+  </g>
+  <text x="20" y="315" font-size="12" fill="#555">※枝分かれの順序のみを示す簡略図である。長さは時間に比例しない。</text>
+</svg>
+<figcaption>ウサギにたどり着くには、魚類→両生類→（爬虫類と共通の祖先）→哺乳類、という順に、祖先のグループが先に現れていなければならない。</figcaption>
+</figure>
+
+<h3 id="sec5-2">5.2 恐竜絶滅のあとの放散</h3>
+<p>恐竜の時代の哺乳類は、ネズミほどの小型の動物が中心だった。約 6600 万年前の大量絶滅で大型の陸上動物が姿を消すと、空いた生活の場所（ニッチ）に向けて、哺乳類は多様な形へ分かれていった。これを<span class="term">適応放散</span>という。ウサギ、ネズミ、ウマ、クジラ、コウモリなどの仲間は、この時期に多様化したと考えられている。</p>
+<p>ただし、その時期については見解が分かれている。化石の記録を重視する研究では、現在の哺乳類の目（もく）の多くは大量絶滅の後に現れたとされる。一方、分子系統（ DNA の比較）に基づく推定では、哺乳類の主要な分岐は白亜紀に始まっていたとされる。どちらが正しいかは決着していない。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 280" role="img" aria-label="恐竜絶滅後の哺乳類の適応放散（模式図）">
+  <rect x="20" y="30" width="330" height="220" fill="#fff" stroke="#bbb"/>
+  <rect x="370" y="30" width="330" height="220" fill="#fff" stroke="#bbb"/>
+  <text x="185" y="22" text-anchor="middle" font-size="14" font-weight="700">絶滅前（中生代）</text>
+  <text x="535" y="22" text-anchor="middle" font-size="14" font-weight="700">絶滅後（新生代）</text>
+  <g stroke="#222" stroke-width="2" fill="none">
+    <path d="M185,240 V190"/>
+    <path d="M185,190 L120,140 M185,190 L185,140 M185,190 L250,140"/>
+  </g>
+  <g font-size="12" text-anchor="middle">
+    <text x="120" y="125">小型の哺乳類</text>
+    <text x="185" y="110">小型の哺乳類</text>
+    <text x="250" y="125">小型の哺乳類</text>
+    <text x="185" y="62" fill="#555">大型の陸上動物は恐竜が占めていた</text>
+  </g>
+  <g stroke="#222" stroke-width="2" fill="none">
+    <path d="M535,240 V200"/>
+    <path d="M535,200 L440,150 M535,200 L490,130 M535,200 L535,110 M535,200 L580,130 M535,200 L630,150"/>
+  </g>
+  <g font-size="12" text-anchor="middle">
+    <text x="440" y="140">ウサギ・ネズミ</text>
+    <text x="490" y="118">ウマ・ウシ</text>
+    <text x="535" y="98">霊長類</text>
+    <text x="582" y="118">コウモリ</text>
+    <text x="630" y="140">クジラ</text>
+    <text x="535" y="60" fill="#2a4d69">空いた場所へ多様化（適応放散）</text>
+  </g>
+  <line x1="352" y1="140" x2="366" y2="140" stroke="#888" stroke-width="2" marker-end="url(#a1)"/>
+</svg>
+<figcaption>模式図である。恐竜がいなくなって空いた場所に、哺乳類が多様化していった。ウサギの仲間もこの流れの中で現れたとされる。</figcaption>
+</figure>
+
+<h3 id="sec5-3">5.3 ウサギ目とげっ歯目の関係</h3>
+<p>ウサギやナキウサギの仲間は<span class="term">ウサギ目</span>（兎形目）と呼ばれる。見た目はネズミに似ているが、別のグループである。ただし系統的には近く、ウサギ目とげっ歯目（ネズミ・リスなど）は共通の祖先をもつと考えられている。両者をまとめて<span class="term">グリレス類</span>と呼ぶ。</p>
+<p>違いは前歯に現れる。げっ歯目は上あごの前歯が一対だけである。ウサギ目は、大きな前歯の後ろに小さな前歯（栓歯）がもう一対あり、合計で二対である。この歯の違いは、化石でもウサギ目かどうかを見分ける手がかりになる。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 250" role="img" aria-label="ウサギの仲間の系統図">
+  <g stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round">
+    <path d="M30,125 H100"/>
+    <path d="M100,125 V55 M100,125 V195"/>
+    <path d="M100,55 H400"/>
+    <path d="M100,195 H200"/>
+    <path d="M200,195 V150 M200,195 V235"/>
+    <path d="M200,150 H400"/>
+    <path d="M200,235 H400"/>
+  </g>
+  <g font-size="14">
+    <text x="410" y="60">その他の哺乳類（ウシ・ヒト・コウモリなど）</text>
+    <text x="410" y="155">げっ歯目（ネズミ・リス・ビーバー）</text>
+    <text x="410" y="240" font-weight="700" fill="#2a4d69">ウサギ目（ウサギ・ナキウサギ）</text>
+  </g>
+  <text x="196" y="190" font-size="11" fill="#555" text-anchor="end">ここで分かれる（両者をまとめてグリレス類）</text>
+  <text x="30" y="20" font-size="12" fill="#555">ウサギとネズミは近い親戚である。ウサギ目はげっ歯目と共通の祖先をもつ。</text>
+</svg>
+<figcaption>この系統図は簡略化したものである。ウサギ目とげっ歯目をまとめて「グリレス類」と呼ぶ。</figcaption>
+</figure>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 230" role="img" aria-label="ウサギ目とげっ歯目の前歯の違い（模式図）">
+  <g>
+    <text x="180" y="28" text-anchor="middle" font-size="15" font-weight="700">ウサギ目（上あごの前歯・正面）</text>
+    <path d="M60,60 Q180,40 300,60 L300,90 Q180,70 60,90 Z" fill="#e6edf3" stroke="#222" stroke-width="1.5"/>
+    <rect x="145" y="85" width="22" height="60" rx="6" fill="#fff" stroke="#222" stroke-width="2"/>
+    <rect x="193" y="85" width="22" height="60" rx="6" fill="#fff" stroke="#222" stroke-width="2"/>
+    <rect x="152" y="132" width="8" height="26" rx="3" fill="#fff" stroke="#c0392b" stroke-width="2"/>
+    <rect x="200" y="132" width="8" height="26" rx="3" fill="#fff" stroke="#c0392b" stroke-width="2"/>
+    <text x="180" y="190" text-anchor="middle" font-size="12" fill="#c0392b">大きな前歯の後ろに小さな前歯</text>
+    <text x="180" y="210" text-anchor="middle" font-size="12" fill="#555">→ 前歯は合計で二対</text>
+  </g>
+  <g>
+    <text x="540" y="28" text-anchor="middle" font-size="15" font-weight="700">げっ歯目（上あごの前歯・正面）</text>
+    <path d="M420,60 Q540,40 660,60 L660,90 Q540,70 420,90 Z" fill="#e6edf3" stroke="#222" stroke-width="1.5"/>
+    <rect x="505" y="85" width="22" height="60" rx="6" fill="#fff" stroke="#222" stroke-width="2"/>
+    <rect x="553" y="85" width="22" height="60" rx="6" fill="#fff" stroke="#222" stroke-width="2"/>
+    <text x="540" y="190" text-anchor="middle" font-size="12" fill="#2a4d69">小さな前歯はない</text>
+    <text x="540" y="210" text-anchor="middle" font-size="12" fill="#555">→ 前歯は合計で一対</text>
+  </g>
+</svg>
+<figcaption>模式図であり、実際の形や位置は簡略化している。</figcaption>
+</figure>
+
+<h3 id="sec5-4">5.4 ウサギ目の化石が出る時期</h3>
+<p>ウサギ目に近い動物の化石は、新生代の始まりである暁新世の後期（約 5600 万年前ごろ）の中国から出ている。<span class="term">ミモトナ</span>は、ウサギ目に近い原始的な仲間（幹群）とされる。ミモトナ類は、ウサギ目そのものの特徴を完全には備えていない。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></p>
+<p>確実なウサギ目の化石（真のウサギ目）は、その後の始新世前期の後半（約 5000 万年前ごろ）の中国内モンゴルの地層から報告されている。現在の「ウサギ」（ウサギ科）に近い形のものは、さらに新しい時代に現れ、種類が増えていく。それより前の中生代や古生代の地層からは、確実なウサギ目の化石は見つかっていない。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup></p>
+<p>一方、分子系統に基づく推定では、ウサギ目の起源は白亜紀にさかのぼるとされる。化石の記録との差は、まだ解決していない。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 210" role="img" aria-label="ウサギ目の化石記録の時代（模式図）">
+  <rect x="20" y="70" width="340" height="40" fill="#8a9a5b"/>
+  <rect x="360" y="70" width="60" height="40" fill="#d4a017"/>
+  <rect x="420" y="70" width="280" height="40" fill="#c0392b"/>
+  <text x="190" y="95" text-anchor="middle" font-size="12" fill="#fff">古生代（ 5.4 〜 2.5 億年前）</text>
+  <text x="390" y="95" text-anchor="middle" font-size="11">中生代</text>
+  <text x="560" y="95" text-anchor="middle" font-size="13" fill="#fff">新生代（ 6600 万年前〜現在）</text>
+  <g font-size="11" text-anchor="middle">
+    <rect x="420" y="118" width="60" height="24" fill="#fde8e6" stroke="#c0392b"/>
+    <text x="450" y="135">暁新世</text>
+    <rect x="480" y="118" width="70" height="24" fill="#fde8e6" stroke="#c0392b"/>
+    <text x="515" y="135">始新世</text>
+    <rect x="550" y="118" width="60" height="24" fill="#fde8e6" stroke="#c0392b"/>
+    <text x="580" y="135">漸新世</text>
+    <rect x="610" y="118" width="90" height="24" fill="#fde8e6" stroke="#c0392b"/>
+    <text x="655" y="135">中新世〜現在</text>
+  </g>
+  <path d="M450,62 L450,45" stroke="#c0392b" stroke-width="2"/>
+  <text x="450" y="38" text-anchor="middle" font-size="12" fill="#c0392b">ミモトナ（幹群）</text>
+  <path d="M500,62 L500,45" stroke="#c0392b" stroke-width="2"/>
+  <text x="505" y="38" text-anchor="start" font-size="12" fill="#c0392b">真のウサギ目（始新世前期後半）</text>
+  <text x="190" y="168" text-anchor="middle" font-size="13">確実なウサギ目の化石：なし</text>
+  <text x="560" y="168" text-anchor="middle" font-size="13" font-weight="700" fill="#c0392b">新生代に出現</text>
+  <text x="20" y="200" font-size="11" fill="#555">※長さは時間に比例しない。</text>
+</svg>
+<figcaption>ウサギ目の仲間の化石は、新生代の地層から見つかる。確実なウサギ目の化石は、暁新世の幹群の後に現れる。</figcaption>
+</figure>
+
+<h2 id="sec6">6. 「ウサギが出たら困る」のはなぜか</h2>
+
+<h3 id="sec6-1">6.1 段階をとばした出現が反証になる理由</h3>
+<p>進化論が予測するのは、「複雑で特殊な体をもつ動物は、より単純な祖先から段階的に生まれた」ということである。ウサギのような哺乳類が現れるには、その前に魚類、両生類、初期の哺乳類が存在している必要がある。</p>
+<p>そこで、もし先カンブリア時代（微生物や単純な生物が中心だった時代）の地層から、<strong>後から混入したのではない形で</strong>本物のウサギの化石が出てきたとする。その場合、「生物は段階的に進化してきた」という見取り図の大きな部分が崩れる。ここで理論と照らし合わせるのは、地層の年代、化石の形、そして化石の所属の三つである。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 200" role="img" aria-label="積み上がる進化の順序">
+  <g font-size="13" text-anchor="middle">
+    <rect x="10" y="60" width="115" height="80" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="68" y="95">単純な</text><text x="68" y="115">微生物</text>
+    <rect x="145" y="60" width="115" height="80" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="203" y="105">魚類</text>
+    <rect x="280" y="60" width="115" height="80" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="338" y="95">四足動物</text><text x="338" y="115">（陸上の仲間）</text>
+    <rect x="415" y="60" width="115" height="80" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="473" y="95">初期の</text><text x="473" y="115">哺乳類</text>
+    <rect x="550" y="60" width="150" height="80" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="3"/>
+    <text x="625" y="95" font-weight="700">ウサギの仲間</text><text x="625" y="115">（新生代）</text>
+  </g>
+  <g stroke="#888" stroke-width="2" fill="#888">
+    <path d="M127,100 H141"/><polygon points="145,100 138,95 138,105"/>
+    <path d="M262,100 H276"/><polygon points="280,100 273,95 273,105"/>
+    <path d="M397,100 H411"/><polygon points="415,100 408,95 408,105"/>
+    <path d="M532,100 H546"/><polygon points="550,100 543,95 543,105"/>
+  </g>
+  <path d="M68,50 Q330,5 625,50" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-dasharray="6 5"/>
+  <polygon points="625,52 617,44 631,42" fill="#c0392b"/>
+  <text x="340" y="22" font-size="13" text-anchor="middle" fill="#c0392b">ここを飛び越える「先カンブリア時代のウサギ」は想定外</text>
+  <text x="360" y="180" font-size="12" text-anchor="middle" fill="#555">進化では、前の段階なしに、いきなり複雑な動物は現れない（という予測）。</text>
+</svg>
+<figcaption>進化は段階の積み重ねである。順序を飛び越える発見は、理論に対する強い反証になりうる。</figcaption>
+</figure>
+
+<h3 id="sec6-2">6.2 分類は入れ子になる</h3>
+<p>進化論が予測することは、もう一つある。生物の分類が<strong>入れ子（箱の中の箱）</strong>の形になることである。祖先から枝分かれして子孫が増えるなら、「すべての哺乳類」という箱の中に「ウサギ目」という箱が入る構造が生じるはずである。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 280" role="img" aria-label="分類の入れ子構造">
+  <rect x="20" y="20" width="680" height="250" rx="14" fill="#fff" stroke="#222" stroke-width="2"/>
+  <text x="40" y="46" font-size="14" font-weight="700">脊椎動物</text>
+  <rect x="50" y="60" width="620" height="200" rx="12" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+  <text x="70" y="86" font-size="14" font-weight="700">四足動物（陸上に上がった仲間）</text>
+  <rect x="80" y="100" width="560" height="150" rx="10" fill="#fff" stroke="#2a4d69" stroke-width="2"/>
+  <text x="100" y="126" font-size="14" font-weight="700">哺乳類</text>
+  <rect x="110" y="140" width="320" height="100" rx="10" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+  <text x="130" y="166" font-size="14" font-weight="700">グリレス類</text>
+  <rect x="140" y="178" width="130" height="50" rx="8" fill="#fff" stroke="#c0392b" stroke-width="2"/>
+  <text x="205" y="208" text-anchor="middle" font-size="13">ウサギ目</text>
+  <rect x="285" y="178" width="130" height="50" rx="8" fill="#fff" stroke="#c0392b" stroke-width="2"/>
+  <text x="350" y="208" text-anchor="middle" font-size="13">げっ歯目</text>
+  <text x="450" y="170" font-size="12" fill="#555">他の哺乳類</text>
+  <text x="450" y="190" font-size="12" fill="#555">（霊長類・ウシ・クジラなど）</text>
+</svg>
+<figcaption>この入れ子構造は、系統をもとに分類した結果と一致している。「ウサギ目が魚類の一部になる」といった食い違いは起きない。化石の登場順も、この入れ子構造と矛盾しない。</figcaption>
+</figure>
+
+<h3 id="sec6-3">6.3 各グループの出現順</h3>
+<p>大きな脊椎動物のグループが化石として現れる時期を帯で示す。各バーの左端が、そのグループの化石が最初に出てくる時期である。目盛は一億年あたり約 98 ピクセルの直線になっている。</p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 300" role="img" aria-label="各グループの化石の出現時期（時間の目盛は直線）">
+  <g stroke="#bbb">
+    <line x1="170" y1="30" x2="170" y2="250"/>
+    <line x1="347" y1="30" x2="347" y2="250"/>
+    <line x1="523" y1="30" x2="523" y2="250"/>
+    <line x1="700" y1="30" x2="700" y2="250"/>
+  </g>
+  <g font-size="11" text-anchor="middle" fill="#555">
+    <text x="170" y="270">5.4 億年前</text>
+    <text x="347" y="270">3.6 億年前</text>
+    <text x="523" y="270">1.8 億年前</text>
+    <text x="700" y="270">現在</text>
+  </g>
+  <g font-size="13">
+    <text x="10" y="60">魚類</text>
+    <text x="10" y="100">両生類</text>
+    <text x="10" y="140">爬虫類</text>
+    <text x="10" y="180">哺乳類</text>
+    <text x="10" y="220" font-weight="700" fill="#c0392b">ウサギ目</text>
+  </g>
+  <rect x="170" y="45" width="530" height="20" rx="4" fill="#4a90a4"/>
+  <rect x="337" y="85" width="363" height="20" rx="4" fill="#6a9a4a"/>
+  <rect x="384" y="125" width="316" height="20" rx="4" fill="#c58a2c"/>
+  <rect x="484" y="165" width="216" height="20" rx="4" fill="#8a5aa8"/>
+  <rect x="649" y="205" width="51" height="20" rx="4" fill="#c0392b"/>
+  <text x="180" y="40" font-size="11" fill="#555">約 5.4 億年前〜</text>
+  <text x="330" y="100" font-size="11" fill="#555" text-anchor="end">約 3.7 億年前〜</text>
+  <text x="378" y="140" font-size="11" fill="#555" text-anchor="end">約 3.2 億年前〜</text>
+  <text x="478" y="180" font-size="11" fill="#555" text-anchor="end">約 2.2 億年前〜</text>
+  <text x="643" y="220" font-size="11" fill="#c0392b" text-anchor="end">約 5600 万年前〜</text>
+</svg>
+<figcaption>基本的に「魚類→両生類→爬虫類→哺乳類→ウサギ目」の順に始まる。ウサギ目は、暁新世後期（幹群）の出現が最後である。</figcaption>
+</figure>
+
+<h2 id="sec7">7. 実際の発見：移行化石の例</h2>
+<p>19 世紀から現在まで、世界中で多くの化石が発掘されてきた。主要な系統群について見ると、化石の出現順が体制の複雑さと大きく食い違う例は、これまでのところ報告されていない。新しい発見が、系統の予測と整合することも少なくない。以下は、そのような例である。</p>
+
+<h3 id="sec7-1">7.1 魚から陸へ：ティクターリク</h3>
+<p>魚類と四足動物の中間の特徴をもつ動物がいるとすれば、どの時代の地層を探すべきか。研究チームは、堆積環境から約 3 億 7500 万年前の地層を候補として調査を続けた。その結果、カナダ北極圏のエルズミア島で<span class="term">ティクターリク</span>が見つかった（ 2004 年に発見、 2006 年に記載）。ひれの中に腕に似た骨の並びをもち、首が動く、魚と四足動物の中間の動物である。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 240" role="img" aria-label="魚から四足動物への移行">
+  <g font-size="13" text-anchor="middle">
+    <rect x="10" y="50" width="160" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="90" y="80" font-weight="700">肉鰭類の魚</text>
+    <text x="90" y="104">約 3.8 億年前以前</text>
+    <text x="90" y="128">ひれに骨がある</text>
+    <text x="90" y="148" font-size="11" fill="#555">首は動かないのが一般的</text>
+    <rect x="200" y="50" width="160" height="110" rx="10" fill="#fde8e6" stroke="#c0392b" stroke-width="3"/>
+    <text x="280" y="80" font-weight="700" fill="#c0392b">ティクターリク</text>
+    <text x="280" y="104">約 3.75 億年前</text>
+    <text x="280" y="128" font-size="12">首が動く・ひれに関節</text>
+    <text x="280" y="148" font-size="11" fill="#555">浅い水辺で暮らした</text>
+    <rect x="390" y="50" width="160" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="470" y="80" font-weight="700">初期の四足動物</text>
+    <text x="470" y="104">約 3.6 億年前</text>
+    <text x="470" y="128">指をもつ四肢</text>
+    <text x="470" y="148" font-size="11" fill="#555">水辺〜陸を行き来</text>
+    <rect x="580" y="50" width="130" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="645" y="80" font-weight="700">爬虫類</text>
+    <text x="645" y="104">約 3.2 億年前</text>
+    <text x="645" y="128">陸上生活が定着</text>
+  </g>
+  <g stroke="#888" stroke-width="2" fill="#888">
+    <path d="M172,105 H190"/><polygon points="198,105 190,100 190,110"/>
+    <path d="M362,105 H380"/><polygon points="388,105 380,100 380,110"/>
+    <path d="M552,105 H570"/><polygon points="578,105 570,100 570,110"/>
+  </g>
+  <text x="360" y="205" text-anchor="middle" font-size="12" fill="#555">時代の順序と、体のつくりの変化が対応している</text>
+</svg>
+<figcaption>中間的な体をもつ化石が、系統の予測と整合する時代の層から見つかった例である。ここに並べた動物は、直系の祖先ではなく、近縁の仲間を時代順に並べたものである。</figcaption>
+</figure>
+
+<h3 id="sec7-2">7.2 陸から海へ：クジラの祖先</h3>
+<p>クジラは、陸上で暮らしていた四足の哺乳類から進化した。パキスタンやインドなどで、約 5000 万年前から順に、陸と水辺を行き来する中間的な化石が見つかっている。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 220" role="img" aria-label="クジラの進化（模式図）">
+  <g font-size="13" text-anchor="middle">
+    <rect x="10" y="40" width="150" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="85" y="68" font-weight="700">パキケトゥス</text>
+    <text x="85" y="92">約 5000 万年前</text>
+    <text x="85" y="114">四足で歩く</text>
+    <text x="85" y="134" font-size="11" fill="#555">水辺で暮らす</text>
+    <rect x="190" y="40" width="150" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="265" y="68" font-weight="700" font-size="12">アンブロケトゥス</text>
+    <text x="265" y="92">約 4900 万年前</text>
+    <text x="265" y="114" font-size="12">大きな足・泳ぎが得意</text>
+    <text x="265" y="134" font-size="11" fill="#555">ワニのような暮らし</text>
+    <rect x="370" y="40" width="150" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="445" y="68" font-weight="700">ロドケトゥス</text>
+    <text x="445" y="92">約 4700 万年前</text>
+    <text x="445" y="114">後ろ足が小さい</text>
+    <text x="445" y="134" font-size="11" fill="#555">水中生活が中心</text>
+    <rect x="550" y="40" width="160" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="630" y="68" font-weight="700">バシロサウルス</text>
+    <text x="630" y="92">約 4000 万年前</text>
+    <text x="630" y="114">後ろ足は痕跡的</text>
+    <text x="630" y="134" font-size="11" fill="#555">ほぼ海の動物</text>
+  </g>
+  <g stroke="#888" stroke-width="2" fill="#888">
+    <path d="M162,95 H180"/><polygon points="188,95 180,90 180,100"/>
+    <path d="M342,95 H360"/><polygon points="368,95 360,90 360,100"/>
+    <path d="M522,95 H540"/><polygon points="548,95 540,90 540,100"/>
+  </g>
+  <text x="360" y="190" text-anchor="middle" font-size="12" fill="#555">時代が新しくなるほど、水中生活への適応が進んでいる</text>
+</svg>
+<figcaption>後ろ足が小さくなる順序が、地層の古さの順と並んでいる。ここに並べた動物は直系の祖先ではなく、近縁の仲間である。属ごとの年代には幅がある。</figcaption>
+</figure>
+
+<h3 id="sec7-3">7.3 恐竜から鳥へ：羽毛恐竜</h3>
+<p>爬虫類と鳥類をつなぐ<span class="term">羽毛恐竜</span>や始祖鳥は、中生代の地層から見つかっている。中国の遼寧省などでは、羽毛の跡が残る小型恐竜の化石が多数見つかっている。</p>
+
+<h3 id="sec7-4">7.4 化石が出る時代のまとめ</h3>
+<table class="cards">
+<thead><tr><th>生物グループ</th><th>化石が出始める時代</th></tr></thead>
+<tbody>
+<tr><td data-label="生物グループ">単細胞生物</td><td data-label="化石が出始める時代">先カンブリア時代（約 35 億年前〜）</td></tr>
+<tr><td data-label="生物グループ">魚類</td><td data-label="化石が出始める時代">古生代（約 5 億年前〜）</td></tr>
+<tr><td data-label="生物グループ">両生類</td><td data-label="化石が出始める時代">古生代後半（約 3.7 億年前〜）</td></tr>
+<tr><td data-label="生物グループ">爬虫類</td><td data-label="化石が出始める時代">古生代後半（約 3.2 億年前〜）</td></tr>
+<tr><td data-label="生物グループ">哺乳類</td><td data-label="化石が出始める時代">中生代（約 2.2 億年前〜）</td></tr>
+<tr><td data-label="生物グループ">ウサギの仲間（ウサギ目）</td><td data-label="化石が出始める時代">新生代（暁新世後期の幹群、約 5600 万年前ごろ。確実なウサギ目は始新世前期後半から）</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec8">8. 注意：「絶対に出ない」ではなく「出たら大事件」</h2>
+<div class="note">
+<p><strong>化石の解釈には、見かけの年代をつくる仕組みがある。</strong>ウサギは巣穴を掘る種がいるため、現代の骨が巣穴を通じて古い地層に入り込むことがありうる。また、断層によって地層の重なりが逆転して見えることもある。</p>
+<p>そのため、古い地層から哺乳類の骨が見つかったとき、まず疑うのは「混入」や「地層の乱れ」である。それらを丁寧に除外しても、なお残る発見だけが、理論に対する反証の候補になる。</p>
+<p>さらに、反証は一度の発見で決まるとは限らない。まず測定や同定の誤りを疑い、測定方法や地層の解釈といった補助的な前提の正しさも問い直す。理論の一部を手直しして説明を保つ道もある。</p>
+</div>
+
+<h3 id="sec8-1">8.1 混入による見かけの年代</h3>
+<figure>
+<svg width="100%" viewBox="0 0 720 240" role="img" aria-label="混入のしくみの図">
+  <rect x="40" y="20" width="400" height="55" fill="#d9c9a3"/>
+  <rect x="40" y="75" width="400" height="55" fill="#b39c72"/>
+  <rect x="40" y="130" width="400" height="70" fill="#7d6b4b"/>
+  <rect x="40" y="20" width="400" height="180" fill="none" stroke="#222" stroke-width="1.5"/>
+  <path d="M120,20 V170 Q120,180 135,180 H170" stroke="#222" stroke-width="14" fill="none" stroke-linecap="round" opacity=".35"/>
+  <circle cx="160" cy="180" r="9" fill="#fff" stroke="#c0392b" stroke-width="3"/>
+  <text x="470" y="60" font-size="13" font-weight="700" fill="#c0392b">巣穴を通じて運ばれた現代の骨</text>
+  <text x="470" y="82" font-size="13">古い層の中にあっても、</text>
+  <text x="470" y="102" font-size="13">地層と同じ年代とは限らない。</text>
+  <text x="470" y="140" font-size="13" font-weight="700" fill="#2a4d69">見分け方</text>
+  <text x="470" y="162" font-size="13">・穴の跡（周囲と土の色が違う）</text>
+  <text x="470" y="182" font-size="13">・骨の化学的な年代測定</text>
+  <text x="470" y="202" font-size="13">・骨の石化の度合い</text>
+</svg>
+<figcaption>混入の可能性を一つずつ除いたあとに、なお残る発見だけが反証の候補になる。</figcaption>
+</figure>
+
+<h3 id="sec8-2">8.2 断層による見かけの逆転</h3>
+<p>大きな地殻変動によって、古い地層が新しい地層の上に乗り上げる<span class="term">衝上断層</span>がある。北米のルイス衝上断層では、先カンブリア時代の岩石（ベルト超群）が白亜紀の地層の上に乗っている。この場合、上の層は実際には古い。ただし、時間が逆行したのではなく、できたあとの断層によって積み順が入れ替わったものである。断層という境目があることから、この状態だと判断できる。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></p>
+
+<figure>
+<svg width="100%" viewBox="0 0 720 240" role="img" aria-label="衝上断層の図">
+  <g>
+    <text x="20" y="22" font-size="14" font-weight="700">① 通常：下が古い</text>
+    <rect x="20" y="35" width="190" height="40" fill="#d9c9a3"/>
+    <rect x="20" y="75" width="190" height="40" fill="#b39c72"/>
+    <rect x="20" y="115" width="190" height="40" fill="#7d6b4b"/>
+    <text x="30" y="60" font-size="12">新</text>
+    <text x="30" y="140" font-size="12" fill="#fff">古</text>
+  </g>
+  <g>
+    <text x="260" y="22" font-size="14" font-weight="700">② 横から押す力</text>
+    <rect x="260" y="95" width="200" height="40" fill="#d9c9a3"/>
+    <rect x="260" y="135" width="200" height="40" fill="#b39c72"/>
+    <rect x="300" y="55" width="120" height="40" fill="#7d6b4b"/>
+    <path d="M250,75 L290,75" stroke="#c0392b" stroke-width="3" marker-end="url(#a1)"/>
+    <text x="360" y="200" text-anchor="middle" font-size="12" fill="#555">古い岩盤が新しい層の上へ乗り上げる</text>
+  </g>
+  <g>
+    <text x="500" y="22" font-size="14" font-weight="700">③ 結果：順序が逆に見える</text>
+    <rect x="500" y="35" width="200" height="40" fill="#7d6b4b"/>
+    <rect x="500" y="75" width="200" height="40" fill="#d9c9a3"/>
+    <rect x="500" y="115" width="200" height="40" fill="#b39c72"/>
+    <line x1="500" y1="75" x2="700" y2="75" stroke="#c0392b" stroke-width="3" stroke-dasharray="6 4"/>
+    <text x="510" y="60" font-size="12" fill="#fff">古（乗り上げた岩盤）</text>
+    <text x="510" y="100" font-size="12">新</text>
+    <text x="600" y="185" text-anchor="middle" font-size="12" fill="#c0392b">断層面（点線）が境目</text>
+  </g>
+</svg>
+<figcaption>断層があるかどうかは、地質調査で確かめられる。上が古く見えるのは見かけの逆転であり、時間が逆行したわけではない。</figcaption>
+</figure>
+
+<h3 id="sec8-3">8.3 判断の手順</h3>
+<p>古い地層から哺乳類の骨が見つかったとき、次の順に確かめる。どこかで「混入」または「地層の乱れ」と判明すれば、その発見は反証にならない。</p>
+<figure>
+<svg width="100%" viewBox="0 0 720 300" role="img" aria-label="判断のフローチャート">
+  <g font-size="13" text-anchor="middle">
+    <rect x="240" y="10" width="240" height="40" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
+    <text x="360" y="35" font-weight="700">古い地層から哺乳類の骨が出た</text>
+    <rect x="240" y="80" width="240" height="40" rx="8" fill="#fff" stroke="#222" stroke-width="2"/>
+    <text x="360" y="105">巣穴や割れ目からの混入では？</text>
+    <rect x="240" y="150" width="240" height="40" rx="8" fill="#fff" stroke="#222" stroke-width="2"/>
+    <text x="360" y="175">断層などで地層が乱れていない？</text>
+    <rect x="240" y="220" width="240" height="40" rx="8" fill="#fff" stroke="#222" stroke-width="2"/>
+    <text x="360" y="245">骨自体の年代は地層と一致する？</text>
+    <rect x="520" y="80" width="190" height="40" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="615" y="105" font-size="12">混入と判明 → 反証ではない</text>
+    <rect x="520" y="150" width="190" height="40" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="615" y="175" font-size="12">地層の乱れ → 反証ではない</text>
+    <rect x="520" y="220" width="190" height="40" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
+    <text x="615" y="245" font-size="12">一致しない → 混入の可能性が高い</text>
+    <rect x="10" y="215" width="190" height="50" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="3"/>
+    <text x="105" y="236" font-weight="700" fill="#c0392b">すべて除いても残る</text>
+    <text x="105" y="256" font-weight="700" fill="#c0392b">→ 反証の候補</text>
+  </g>
+  <g stroke="#888" stroke-width="2" fill="#888">
+    <path d="M360,52 V72"/><polygon points="360,80 354,72 366,72"/>
+    <path d="M360,122 V142"/><polygon points="360,150 354,142 366,142"/>
+    <path d="M360,192 V212"/><polygon points="360,220 354,212 366,212"/>
+    <path d="M482,100 H512"/><polygon points="520,100 512,95 512,105"/>
+    <path d="M482,170 H512"/><polygon points="520,170 512,165 512,175"/>
+    <path d="M482,240 H512"/><polygon points="520,240 512,235 512,245"/>
+    <path d="M238,240 H208"/><polygon points="200,240 208,235 208,245"/>
+  </g>
+  <text x="498" y="92" font-size="11" fill="#555" text-anchor="middle">はい</text>
+  <text x="498" y="162" font-size="11" fill="#555" text-anchor="middle">はい</text>
+  <text x="372" y="140" font-size="11" fill="#555">いいえ</text>
+  <text x="372" y="210" font-size="11" fill="#555">いいえ</text>
+  <text x="224" y="232" font-size="11" fill="#555" text-anchor="end">一致する</text>
+</svg>
+<figcaption>各段階の「はい」は、その発見が反証でないことを示す。骨の年代が地層と一致しない場合は、骨が後から混入した可能性が高い。</figcaption>
+</figure>
+
+<h2 id="sec9">9. よくある疑問</h2>
+<p><strong>Q. ウサギでなくても、ほかの動物でも同じ話になるのか。</strong><br>なる。たとえば「カンブリア紀の三葉虫の層から、ライオンの化石が出た」でも同じ論理が当てはまる。ウサギが選ばれたのは、哺乳類であることが一目でわかり、イメージしやすいからだと考えられる（選んだ理由は一次資料で確認できていない）。</p>
+<p><strong>Q. 化石が見つからないことは、いなかった証拠になるのか。</strong><br>一か所で見つからないだけでは、いなかったとは言えない。化石になる確率は低いからである。大事なのは、多数の調査地点を通して一貫したパターンが得られている点である。</p>
+<p><strong>Q. 「ウサギは新生代以降にしかいない」は言いすぎではないか。</strong><br>厳密には、現在の「ウサギ」（ウサギ科）と、ナキウサギも含む「ウサギ目」を区別する必要がある。確実なウサギ目の化石は、始新世前期後半以降の地層から見つかっている。一方、暁新世後期の幹群（ミモトナ類）を含めると、新生代の始まりまでさかのぼる。さらに、分子系統の推定では、ウサギ目の起源は白亜紀にさかのぼるとされる。 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> ただし、その祖先は「ウサギ」ではなく、両者に共通するごく原始的な小型哺乳類である。この推定と化石の記録との差は、解決していない。</p>
+<p><strong>Q. 進化論の代わりになる説明は何か。</strong><br>現時点で、化石の登場順、分類の入れ子構造、遺伝子の比較という三つの独立した証拠を、同時に説明できる別の理論は見つかっていない。どれか一つの証拠が揺らいでも、全体の見取り図は簡単には崩れない。だからこそ、一つの決定的な反例が見つかれば、それは大きな出来事になる。</p>
+
+<h2 id="sec10">10. まとめ</h2>
+<div class="box">
+<p>・ウサギ（ウサギ目）の確実な化石は、始新世前期後半以降の地層から見つかる。暁新世後期の幹群を含めても、新生代の始まりまでしかさかのぼらない。</p>
+<p>・それは、魚類→両生類→爬虫類→哺乳類、という段階的な進化の順序と整合する。</p>
+<p>・「先カンブリア時代のウサギ」は、見つかれば進化論の説明が大きく崩れる発見の例である。これまでそのような化石は報告されていない。</p>
+<p>・実際の調査では、混入や地層の乱れを慎重に検討する。反証と呼べるのは、それらを除いたあとに残る発見だけである。</p>
+</div>
+
+<div class="note">
+<p><strong>さらに知りたくなったら</strong></p>
+<ul>
+<li>地質年代と化石の年代測定（放射性同位体など）</li>
+<li>入れ子状の分類と共通祖先（系統樹）</li>
+<li>ポパーの反証主義と、その限界についての議論（補助仮説の問題を含む）</li>
+<li>移行化石（ティクターリク、クジラの祖先、始祖鳥）</li>
+</ul>
+</div>
+
+<h2 id="sec11">11. この文書の限界</h2>
+<ul>
+<li><strong>ホールデンの逸話</strong>は、一次資料が確認できていない。言い回しも伝わるうちに変わっているため、ここでは逸話として扱った。</li>
+<li><strong>ウサギ目の起源</strong>は、化石の記録（暁新世後期の幹群、始新世前期後半の真のウサギ目）と、分子系統の推定（白亜紀）とで食い違っており、決着していない。</li>
+<li><strong>哺乳類の放散の時期</strong>は、化石を重んじる研究と分子系統の研究とで見解が分かれている。本文ではどちらかに断定しなかった。</li>
+<li><strong>年代の数値</strong>は概数である。国際年代層序表は改訂されることがあるため、正確な値は最新版で確かめる必要がある。</li>
+<li><strong>属ごとの年代</strong>（クジラの祖先など）は、研究によって幅がある。</li>
+<li><strong>図</strong>は模式図であり、縮尺や形は実際と異なる。ただし、帯グラフの目盛は直線で、年代に比例している。</li>
+<li><strong>削除した内容</strong>として、出典の確認できなかった化石の数量（「何百万点」）がある。</li>
+<li><strong>要確認の数値</strong>として、初期の四足動物の年代（約 3.6 億年前）、ドウソノラグスの年代、ホモ・サピエンスの年代（約 30 万年前）、炭素 14 とウラン 238 の使い分けの範囲がある。</li>
+</ul>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1"><a href="#fnref-1-1">^</a> 進化生物学者 J ・ B ・ S ・ホールデンの逸話。この言葉は、後年の回想や伝聞として広く引かれている二次的な伝承であり、一次資料は確認できていない。 <a href="https://en.wikipedia.org/wiki/Precambrian_rabbit">百科事典の項目「 Precambrian rabbit 」（二次資料）</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> 国際年代層序表（地質年代の区分と年代の数値）。 <a href="https://stratigraphy.org/ICSchart/ChronostratChart2022-10.pdf">国際層序委員会 年代層序表 (2022 年 10 月版 PDF)</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> 放射性元素の半減期（炭素 14 は約 5,730 年、ウラン 238 は約 44 億 7,000 万年）。 <a href="https://www.nist.gov/node/1875781">米国標準技術研究所 (NIST) の解説</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> 哺乳類の目の分化の時期に関する、化石記録のベイズ推定の研究（化石記録を重んじる立場）。 <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7617171/">「 A timescale for placental mammal diversification based on Bayesian modeling of the fossil record 」</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 哺乳類の放散が大量絶滅をまたいで連続的に起きたとする、ゲノムデータに基づく研究。 <a href="https://ui.adsabs.harvard.edu/abs/2017PNAS..114E7282L">Lee ら (2017) , PNAS</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> ミモトナ類（暁新世、中国）と、真のウサギ目の最古の化石（始新世前期後半、中国内モンゴル）に関する総説。 <a href="https://www.nature.shu.edu.cn/EN/Y2023/V45/I5/371">中国の科学雑誌『自然雑誌』 2023 年の総説</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> ウサギ目の多様化の年代に関する分子系統（分子時計）の推定。化石を較正に使った推定では、ウサギ目の起源は暁新世とされる。 <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11379240/">「 Molecular time estimates for the Lagomorpha diversification 」（ PLOS ONE 、 2024 年）</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> ティクターリクの発見と記載。 <a href="https://en.wikipedia.org/wiki/Tiktaalik">百科事典の項目「 Tiktaalik 」</a>、<a href="https://www.cbc.ca/news/science/fish-fossils-found-in-nunavut-bridge-evolution-gap-1.598624">カナダ放送協会 (CBC) の報道（ヌナブト準州の化石）</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> クジラの祖先の化石（パキケトゥス、アンブロケトゥス、ロドケトゥス、バシロサウルス）と、その年代。 <a href="https://evolution-outreach.biomedcentral.com/articles/10.1007/s12052-011-0381-y">進化の教育に関する解説論文 (Evolution: Education and Outreach)</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> ルイス衝上断層と、ベルト超群が白亜紀の地層の上に乗る構造。 <a href="https://www.nps.gov/parkhistory/online_books/geology/publications/pp/296/sec2a-2.htm">米国地質調査所 (USGS) 専門論文 296 （ Glacier 国立公園）</a>、<a href="https://pages.uoregon.edu/millerm/Lewis1.html">オレゴン大学の地質解説</a></li>
+</ol>
+</div>
+
+</main>
+</body>
+</html>
