@@ -55,7 +55,7 @@
 
 - **出典を挙げる** : 「出典」または「参考文献」を見出しに持つ文書は、 28 本のうち 22 本である。持たない六本は、手順書・マニュアル・環境移行・実務記録・日程表・配色見本である。
 - **限界を書く** : 「限界」を見出しに持つ文書が九本、メタ情報帯に【方法と限界】を置く文書が 10 本ある（両方を持つものを含む）。「確認できていないこと」「未確認」を見出しにする文書も五本ある。
-- **事実と解釈を分ける** : `chudo-kaikaku-rengo-analysis.html` 、 `icc-akane-us-sanctions.html` 、 `fpv-maneuver.html` 、 `upward-comparison-mind.html` などが、「確認できた事実」と「筆者の推論・解釈」を分けて書くと宣言している。確度を段階で示すものもある（ `election-schedule-japan.html` の「この文書の確度」は高い・中程度・低い、 `dji-manual-mode-note.html` の「確度について」）。
+- **事実と解釈を分ける** : `chudo-kaikaku-rengo-analysis.html` 、 `icc-akane-us-sanctions.html` 、 `fpv-maneuver.html` 、 `superiority-social-comparison.html` などが、「確認できた事実」と「筆者の推論・解釈」を分けて書くと宣言している。確度を段階で示すものもある（ `election-schedule-japan.html` の「この文書の確度」は高い・中程度・低い、 `dji-manual-mode-note.html` の「確度について」）。
 - **時点を明記する** : 「時点」の語を本文に持つ文書が 17 本ある。作成日、調査日、情報基準日、取得日のいずれかをメタ情報帯に置く。
 - **結論を先に書く** : 「要点」「結論」「要旨」の節を持つ文書が 11 本ある。このほか、 `election-schedule-japan.html` は冒頭を「結論から言うと」で始める。
 - **実機で確かめていないことを明記する** : `shutdown-full-reset.html` （「実機での動作確認は未実施」）、 `emdash-learning-guide.html` （「手順を実機で通して検証してはいない」）、 `mac-vs-windows-differences.html` （ FPV ゲームを「実機で動かして確かめていない」）。
@@ -88,7 +88,7 @@
 | `dji-manual-mode-note.html` | DJI 公式の取扱説明書の本文。 Neo 2 に初代 Neo と同じ姿勢制限の設定があるか。 |
 | `icc-akane-us-sanctions.html` | 米国務省・財務省の原文書（直接確認できなかった）。 |
 | `tire-size-and-outer-diameter.html` | JATMA と ETRTO の規格書そのもの。読んだ国内の条文は 2013 年の版で、現行のものではない。 |
-| `upward-comparison-mind.html` | 1954 年のフェスティンガーの原典（二次情報による）。中高年を対象にした方策の研究は乏しい。 |
+| `superiority-social-comparison.html` | 1954 年のフェスティンガーの原典（二次情報による）。中高年を対象にした方策の研究は乏しい。 |
 | `bluejays-2026-decline.html` | 接戦の成績、リーグ全体の得点環境、予測システムの数字、守備・走塁の指標。出典が媒体名の列挙にとどまる箇所。 |
 
 **（ C ）時間が経たないと閉じられないもの**
@@ -216,7 +216,7 @@
 | 「民主改革の会」の続報 | 1 時事・政治・国際 | `chudo-kaikaku-rengo-analysis.html` の情報基準日は 2026 年 10 月 13 日で、新党をめぐる状況は流動的である | 新党の動きが、報道で確かめられる形で出たとき |
 | Handlebar RC の独立した利用者の声 | 3 FPV ドローンと周辺機器 | 五回の検索で、独立したレビューは見つからなかった（ `handlebar-rc-japan-import.html` ） | 発売後のレビューや実機の報告が、公開されたとき |
 | The Zone の物理演算の第三者検証 | 3 FPV ドローンと周辺機器 | 測定による第三者検証が見つからなかった（ `the-zone-fpv-simulator.html` ） | 計測や比較をした資料が、出たとき。または、本人が実機と比べて記録できるとき |
-| 中高年を対象にした、社会的比較への向き合い方の研究 | 4 暮らし・健康・教養・スポーツ | 中高年を対象にした方策の研究は乏しく、本文は若年層の研究から類推している（ `upward-comparison-mind.html` ） | 追跡研究や、中高年対象の介入研究が見つかったとき |
+| 中高年を対象にした、社会的比較への向き合い方の研究 | 4 暮らし・健康・教養・スポーツ | 中高年を対象にした方策の研究は乏しく、本文は若年層の研究から類推している（ `superiority-social-comparison.html` ） | 追跡研究や、中高年対象の介入研究が見つかったとき |
 
 ---
 
