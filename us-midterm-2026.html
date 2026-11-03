@@ -53,7 +53,7 @@
   .sw.sq { border-radius: 2px; }
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards caption { display: block; }
+    table.cards caption, table.cardrow caption { display: block; }
     table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
     table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
     table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
@@ -61,6 +61,13 @@
     table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
     table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
     table.cards td:first-child::before { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
 </style>
 </head>
@@ -86,19 +93,31 @@
 <li><a href="#sec3-3">予測の見え方</a></li>
 </ol>
 </li>
-<li><a href="#sec4">選挙の意義</a>
+<li><a href="#sec4">注目の上院選 : ミシガンとテキサス</a>
 <ol>
-<li><a href="#sec4-1">国内政治</a></li>
-<li><a href="#sec4-2">日本にとって</a></li>
+<li><a href="#sec4-1">二人が報じられる理由</a></li>
+<li><a href="#sec4-2">二つの選挙区の位置づけ</a></li>
+<li><a href="#sec4-3">民主党内の路線をめぐる争い</a></li>
+<li><a href="#sec4-4">Abdul El-Sayed の経歴と政策</a></li>
+<li><a href="#sec4-5">Abdul El-Sayed の上院選と話題</a></li>
+<li><a href="#sec4-6">James Talarico の経歴と政策</a></li>
+<li><a href="#sec4-7">James Talarico の上院選と話題</a></li>
 </ol>
 </li>
-<li><a href="#sec5">限界と留意点</a></li>
+<li><a href="#sec5">選挙の意義</a>
+<ol>
+<li><a href="#sec5-1">国内政治</a></li>
+<li><a href="#sec5-2">日本にとって</a></li>
+</ol>
+</li>
+<li><a href="#sec6">限界と留意点</a></li>
 </ol>
 </nav>
 
 <h2 id="sec1">1. 要約</h2>
 <p>2026 年の中間選挙は、連邦議会の多数派を決める選挙である。本稿は勝敗を予想するものではない。他者の予測を、結果ではなく参考として整理し、結果を読むための枠組みを示すことを目的とする。投票は 11 月 3 日に行われたが、基準日の時点で、当選確実の報道と公式の結果は確認できていない。</p>
 <p>確認できた予測では、下院で民主党が多数派を得る確率が高いとされていた。上院については予測機関の見通しが分かれ、民主党系が過半数の 51 議席に届くとしたのは、 12 者のうち 5 者だった。有権者の関心については、 10 月 8 日のピュー・リサーチ・センターの調査で、経済を「非常に重要」とする回答が 84% に上った。</p>
+<p>上院の多数派を左右する選挙区のうち、ミシガン州の Abdul El-Sayed とテキサス州の James Talarico の二人は、民主党の候補として繰り返し報じられている。二人が報じられる理由は、 4 章に整理した。</p>
 
 <h2 id="sec2">2. 中間選挙の基礎</h2>
 <h3 id="sec2-1">2.1 下院と上院の違い</h3>
@@ -937,18 +956,106 @@
 </figure>
 </div>
 
-<h2 id="sec4">4. 選挙の意義</h2>
-<h3 id="sec4-1">4.1 国内政治</h3>
+<h2 id="sec4">4. 注目の上院選 : ミシガンとテキサス</h2>
+<div class="note">この章は、 Wikipedia の 2 ページ（ El-Sayed 、 Talarico ）を土台に、報道記事の検索結果で補ったものである。章の情報の時点は 2026 年 11 月 2 日で、投開票の前日にあたる。補った情報のうち、検索結果の要約だけで確認し、記事本体を開いていないものは、本文または参考文献欄でそう断っている。「なぜ報じられるのか」の整理は、集めた事実を踏まえたこの文書の見立てであり、各媒体が同じ理由を挙げているとは限らない。</div>
+
+<h3 id="sec4-1">4.1 二人が報じられる理由</h3>
+<p>二人は、ともに 2026 年の米国連邦上院議員選挙で民主党の候補となった政治家である。 El-Sayed はミシガン州、 Talarico はテキサス州から立つ。どちらも「進歩派」と呼ばれるが、出自は大きく違う。 El-Sayed は公衆衛生の専門家で、ムスリムであり、 Bernie Sanders らの支持を受けてきた。 Talarico はキリスト教（米国長老教会）の信仰を政治の動機に据える州議会議員である。</p>
+<p>二人が繰り返し報じられる理由は、経歴の珍しさだけでは説明できない。この文書は、理由を次の五つに整理する。</p>
+<ol>
+<li><strong>上院の多数派がかかる選挙区である</strong> ― 民主党が多数派を取り戻すには、どちらの州も欠かせない。</li>
+<li><strong>民主党内の路線をめぐる争いの象徴になっている</strong> ― 左派の候補を党がどう受け止めるかが問われる。</li>
+<li><strong>資金と外部支出の規模が異例である</strong> ― 献金の記録と、巨額の外部団体の支出が報じられる。</li>
+<li><strong>属性・信仰・発言が論争を呼ぶ</strong> ― 宗教、中東政策、過去の発言が、攻撃と擁護の両方の材料になる。</li>
+<li><strong>メディアや党外の権力との摩擦が、話題を拡散させる</strong> ― テレビ局や規制当局、対立候補との衝突が記事になる。</li>
+</ol>
+
+<table class="cardrow">
+<caption>報じられる理由の対応</caption>
+<thead>
+<tr><th>理由</th><th>Abdul El-Sayed</th><th>James Talarico</th></tr>
+</thead>
+<tbody>
+<tr><th>選挙区の重み</th><td data-label="Abdul El-Sayed">引退する民主党議員の空席を、守れるかどうかの選挙区</td><td data-label="James Talarico">当選すれば 1988 年以来、テキサス州で民主党初の上院議員になる</td></tr>
+<tr><th>党内の路線</th><td data-label="Abdul El-Sayed">穏健派の Stevens に 0.8 ポイント差で辛勝。穏健派の一部に不安がある</td><td data-label="James Talarico">知名度の高い Crockett に 6.2 ポイント差で勝った</td></tr>
+<tr><th>資金</th><td data-label="Abdul El-Sayed">対立候補側に約 6,200 万ドルの外部支出（うち約 3,300 万ドルが AIPAC 関連）</td><td data-label="James Talarico">2026 年第 3 四半期に 6,400 万ドル。上院候補として四半期の最高額</td></tr>
+<tr><th>属性・発言</th><td data-label="Abdul El-Sayed">初のムスリム上院議員になりうる。ガザ戦争を「ジェノサイド」と呼んだ</td><td data-label="James Talarico">神学生で議員。キリスト教ナショナリズムを批判する</td></tr>
+<tr><th>摩擦と拡散</th><td data-label="Abdul El-Sayed">反ムスリム的な攻撃。配信者 Hasan Piker をめぐる謝罪</td><td data-label="James Talarico">Colbert の番組での出演が放送されず、ネットで拡散</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec4-2">4.2 二つの選挙区の位置づけ</h3>
+<p>2026 年 8 月下旬の報道によれば、民主党が上院の多数派を取り戻すには、純増で 4 議席が要る（ 3.1 節）。当初の計画は、ミシガン、ジョージア、ニューハンプシャーを守り、アラスカ、メイン、ノースカロライナ、オハイオを奪うことだった。いずれの道筋でも、トランプ大統領が 2024 年に二桁の差で勝った州で、少なくとも 2 議席を取る必要がある。選挙戦の総支出は 34 億ドルを超えると見込まれている。 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup></p>
+<p>ミシガンは、 Gary Peters の引退で空いた議席で、民主党は守る側に立つ。テキサスは共和党が強い州だが、 Talarico が当選すれば、 1988 年以来、民主党の候補として初めて勝つことになる。 Cook Political Report は、テキサスとアイオワの選挙を「共和党がやや有利」から「接戦」に移した。 <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> つまり、二人は、どちらも多数派の行方に直結する位置にいる。これが、全国紙・テレビ・ネットで繰り返し取り上げられる、最も基本的な理由である。</p>
+<p>なお、この見立ては 8 月下旬の報道に基づく。その後の情勢の変化は、確認できていない。</p>
+
+<h3 id="sec4-3">4.3 民主党内の路線をめぐる争い</h3>
+<p>El-Sayed の予備選は、穏健派の Haley Stevens との争いだった。 Stevens を支持する外部団体の支出は約 6,200 万ドルに上り、決着は僅差で、一晩以上を要した。 El-Sayed の勝利の後、穏健派の一部が不安を示し、共和党系の団体 Senate Leadership Fund は、ミシガンの広告費を 600 万ドル積み増して、合計 5,100 万ドルにしたと報じられている。 <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup></p>
+<p>Talarico の予備選は、知名度の高い Jasmine Crockett との争いで、投票総数は約 232 万票に上った。民主党がどんな候補で本選に臨むかを、党員が選んだ結果として読まれた。</p>
+
+<h3 id="sec4-4">4.4 Abdul El-Sayed の経歴と政策</h3>
+<p><strong>経歴</strong><br>エジプト系移民の子としてミシガン州に生まれ、機械技師でイマーム（礼拝の指導者）でもあった父に育てられた。ミシガン大学を 2007 年に卒業し、ローズ奨学生としてオックスフォード大学で公衆衛生の博士号（ D.Phil. ）を 2011 年に取った。コロンビア大学で 2014 年に医学博士（ M.D. ）を取ったが、研修医課程は終えておらず、医師免許は持たない。このため、選挙戦で使う「医師」という肩書きは、対立候補から誤解を招くと批判されている。陣営は、米国医師会（ AMA ）の広い定義を根拠に反論している。 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></p>
+<p>職歴の柱は二つある。第 1 に、 2015 年 8 月、 30 歳でデトロイト市の保健局長に任命された（任期は 2017 年まで）。製油所の二酸化硫黄の排出増への反対や、学校の水道の鉛検査に取り組んだ。第 2 に、 2023 年 3 月から 2025 年 4 月まで、ウェイン郡で保健・人間サービス・退役軍人サービス部門の長を務めた。医療債務を買い取って帳消しにする事業を始め、約 9,500 万ドルが 10 万人超の住民分で帳消しになったとされる。ただし、 Bridge Michigan は、陣営がこの成果を誇張していると報じた。 <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup></p>
+<p>2018 年にはミシガン州知事選の民主党予備選に出て、約 30% を得て Gretchen Whitmer に敗れた。企業献金を受けない方針を掲げ、 Sanders 、 Alexandria Ocasio-Cortez らの支持を受けた。同年、進歩派の候補を支える政治活動委員会（ PAC ）、 Southpaw Michigan を設立した。著書に、 Micah Johnson との共著『 Medicare for All: A Citizen's Guide 』（オックスフォード大学出版局、 2021 年）がある。</p>
+<p><strong>政策と立場</strong></p>
+<ul>
+<li><strong>医療</strong><br>国民皆保険制度（ Medicare for All ）を中心の政策に置く。</li>
+<li><strong>経済</strong><br>自身を資本主義者と述べ、社会主義者とは称さない。反トラスト法の執行の強化と、企業への減税の廃止を唱える。 2026 年 6 月には AI の規制強化を求め、連邦の安全策がないままのデータセンターの拡大に反対した。</li>
+<li><strong>外交</strong><br>海外への軍事援助に総じて否定的で、イスラエルへの援助も批判している。 2024 年にガザでの戦争を「ジェノサイド」と呼んだ。ウクライナへの援助は支持する。</li>
+<li><strong>移民・治安</strong><br>移民・関税執行局（ ICE ）の廃止を支持しつつ、一部の国境警備は認める。 2020 年の「警察予算の削減」発言は批判を受け、後に、削減を求めたことはないと述べた。</li>
+<li><strong>労働</strong><br>労働組合の結成を支持する。</li>
+</ul>
+<p>以上は Wikipedia の記述による。 <sup id="fnref-13-3"><a href="#ref-13">[13]</a></sup></p>
+
+<h3 id="sec4-5">4.5 Abdul El-Sayed の上院選と話題</h3>
+<p>El-Sayed は、 Peters 上院議員の引退表明を受け、 2025 年 4 月に立候補を表明した。 2026 年 8 月 4 日の民主党予備選で、 Haley Stevens に 48.4% 対 47.6% で辛勝した。決着までには一晩以上を要した。 <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 本選の相手は共和党の Mike Rogers で、投開票は 11 月 3 日である。 Kamala Harris が 9 月に支持を表明し、 Barack Obama が 10 月 24 日にデトロイトで応援集会を開いた。 <sup id="fnref-13-4"><a href="#ref-13">[13]</a></sup></p>
+<p>話題になる理由は、次の五つである。</p>
+<ul>
+<li><strong>属性の歴史性と、それに向けられた攻撃</strong><br>当選すれば、ムスリムとして、またエジプト系米国人として、初の上院議員になる。選挙戦では、トランプ大統領らによる反ムスリム的な攻撃が繰り返され、 Rogers がそれを撤回していないと Wikipedia は記す。 El-Sayed はムスリム同胞団との関係を否定している。属性そのものが、報道の見出しになり、同時に攻撃の標的にもなっている。 <sup id="fnref-13-5"><a href="#ref-13">[13]</a></sup></li>
+<li><strong>中東政策と巨額の外部支出</strong><br>ガザ戦争を「ジェノサイド」と呼び、 AIPAC を批判してきた。予備選では、対立候補側の外部支出約 6,200 万ドルのうち、約 3,300 万ドルが AIPAC とその関連団体によるものだった。イスラエル政策が民主党の予備選でどこまで争点になるのかを占う事例として、注目された。 <sup id="fnref-13-6"><a href="#ref-13">[13]</a></sup></li>
+<li><strong>左派の連合と、党の重鎮の応援</strong><br>Sanders 、 Ocasio-Cortez らの支持を受け、「 Squad 」と呼ばれる左派の下院議員グループの全員が支持を表明したと報じられた。 <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 予備選の当日に Mallory McMorrow が支持を表明し、本選では Harris と Obama が応援に入った。左派の候補を党がどう受け止めるかを、象徴的に映した。</li>
+<li><strong>僅差の勝利</strong><br>0.8 ポイント差の辛勝は、勝者が決まるまでの過程そのものがニュースになる。</li>
+<li><strong>失点と修正</strong><br>2026 年 8 月、 Temple Israel の襲撃事件をめぐる自身の発言について謝罪し、配信者 Hasan Piker とは二度と選挙運動をしないと述べた。医師の肩書きや、医療債務の成果の誇張も、批判の材料になっている。 <sup id="fnref-13-7"><a href="#ref-13">[13]</a></sup></li>
+</ul>
+
+<h3 id="sec4-6">4.6 James Talarico の経歴と政策</h3>
+<p><strong>経歴</strong><br>テキサス大学オースティン校で政治学を学び（学士、 2011 年）、ハーバード大学教育大学院で教育政策の修士号（ 2016 年）を取った。さらに、オースティン長老教会神学校で神学の修士号（ 2025 年）を取り、牧師になる課程（神学修士）に在籍している。大学卒業後は Teach For America に参加し、サンアントニオの中学校で 6 年生に英語を教えた。その後、算数のオンライン教材を提供する非営利団体で、中部テキサスの代表を務めた。 <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup></p>
+<p>2018 年、 29 歳でテキサス州下院議員に当選し、 2019 年の会期では最年少の議員だった。 4 期にわたり、約 200 本の法案の筆頭提案者となり、うち 16 本が成立した。インスリンの自己負担を月 25 ドルに抑える法案の提案者でもある。 <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup></p>
+<p>信仰は政治の動機の中心にある。米国長老教会（ PCUSA ）の会員で、イエスの教えが政界に入った理由だと述べる。キリスト教ナショナリズムを批判している。</p>
+<p><strong>政策と立場</strong></p>
+<ul>
+<li><strong>経済</strong><br>2026 年 8 月の「 New American Dream 」計画で、上位 1% への減税の撤回、育児の無償化、有給の家族休暇、クレジットカードの金利の上限を掲げた。</li>
+<li><strong>医療</strong><br>「 Medicare for Y'all 」と呼ぶ公的保険の選択肢（パブリックオプション）を支持し、垂直統合した医療企業の分割を唱える。</li>
+<li><strong>移民</strong><br>Dignity Act を支持し、自らを「国境警備に積極的な民主党員」と称する。</li>
+<li><strong>制度改革</strong><br>Citizens United 判決の覆しと、議員の株取引の禁止を唱える。最高裁の定数の拡大にも否定的ではない。</li>
+<li><strong>外交</strong><br>パレスチナ問題では二国家解決を支持し、イスラエルへの攻撃用の援助に反対する。ウクライナへの援助は支持する。</li>
+</ul>
+<p>以上は Wikipedia の記述による。 <sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup></p>
+
+<h3 id="sec4-7">4.7 James Talarico の上院選と話題</h3>
+<p>Talarico は 2025 年 9 月 9 日に立候補を表明し、 2026 年 3 月 3 日の予備選で、 Jasmine Crockett を 52.4% 対 46.2% で破った（得票は 1,216,412 票対 1,071,900 票）。本選の相手は、 5 月の決選投票で共和党の候補になった Ken Paxton である。 Obama も支持を表明している。 <sup id="fnref-16-4"><a href="#ref-16">[16]</a></sup></p>
+<p>話題になる理由は、次の四つである。</p>
+<ul>
+<li><strong>信仰を政治の言葉にする異色さ</strong><br>神学生でもある州議会議員が、聖書と信仰の言葉で、キリスト教ナショナリズムを批判する。共和党と福音派が強いテキサスで、宗教を右派だけの資産にしない姿勢として注目された。 Joe Rogan の番組との関わりも、 Guardian の記事（ 2025 年 7 月）が「新しい進歩派のスター」という見出しで紹介している。 <sup id="fnref-16-5"><a href="#ref-16">[16]</a></sup></li>
+<li><strong>対立候補 Paxton との因縁</strong><br>2025 年、選挙区割りの変更に抗議して定足数を割った（議場を離れた）民主党議員 51 人に加わった。すると、のちの対立候補である Paxton が、 Talarico ら 13 人の追放を求めた。テキサス州最高裁は、 2026 年 5 月に訴えを管轄がないとして却下した。同じ年には、十戒に関する法案の審議を、議事手続き（ point of order ）で遅らせたことも記録されている。 <sup id="fnref-16-6"><a href="#ref-16">[16]</a></sup></li>
+<li><strong>記録的な資金集め</strong><br>選挙資金は、 2026 年第 1 四半期に 2,700 万ドル超、第 2 四半期に 3,000 万ドル超、第 3 四半期に 6,400 万ドルを集めた。第 3 四半期の額は、上院候補として四半期の最高額とされる。額の大きさそのものが、全国報道の対象になる。 <sup id="fnref-16-7"><a href="#ref-16">[16]</a></sup></li>
+<li><strong>テレビ局・規制当局との摩擦（ Colbert の番組）</strong><br>2026 年 2 月、 Stephen Colbert は、 CBS が自身の番組での Talarico へのインタビューを、連邦通信委員会（ FCC ）の「イコール・タイム」ルール（候補者に公平な放送時間を与える規則）への懸念から、放送させなかったと述べた。 CBS は、放送を禁じたのではなく、法的助言を受け、番組の YouTube チャンネルで流す判断をしたと説明している。両者の説明は食い違う。インタビューは YouTube で公開されて拡散し、 Wikipedia は、 730 万回の再生と、 24 時間で 250 万ドルの寄付を記す（再生数は、報道の時点によって食い違う）。放送局と規制当局の関係をめぐる論争が、 Talarico の知名度を一気に押し上げた。 <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup><sup id="fnref-16-8"><a href="#ref-16">[16]</a></sup></li>
+</ul>
+
+<h2 id="sec5">5. 選挙の意義</h2>
+<h3 id="sec5-1">5.1 国内政治</h3>
 <p>議会の多数派が変わると、予算、立法、議会による調査、大統領が指名する人事の承認といった権限の行使の仕方が変わりうる。下院と上院で多数派が分かれる場合、法案の成立は難しくなると考えられる。これは制度の一般論であり、 2026 年に具体的に何が変わるかは、結果が確定してから読む必要がある。</p>
 
-<h3 id="sec4-2">4.2 日本にとって</h3>
+<h3 id="sec5-2">5.2 日本にとって</h3>
 <p>通商政策や安全保障をめぐる議会の動きは、日米関係に影響しうる。ただし、本稿の出典では、この影響の具体的な大きさを裏付けられていない。ここでは断定を避け、確認すべき論点として示すにとどめる。</p>
 
-<h2 id="sec5">5. 限界と留意点</h2>
+<h2 id="sec6">6. 限界と留意点</h2>
 <div class="note"><span class="tag">基準日</span> 2026 年 11 月 4 日 00:33 （日本時間）。投票は 11 月 3 日に行われた。</div>
 <ul>
 <li><strong>確認できなかったこと</strong> : 開票結果、当選確実の報道、各州の確定状況、 11 月時点の大統領支持率、選挙区割りの訴訟と投票ルールの最近の変更。</li>
 <li><strong>予測の不確かさ</strong> : 市場の確率は結果ではなく、取得日時も不明である。 FiftyPlusOne の統計モデルの数値は 8 月 3 日付の記事のもので、投票直前の評価は図 3 ・図 4 で補った。上院の予測は、民主党系 47 から 53 議席まで、機関によって分かれる。</li>
+<li><strong>4 章の出典</strong> : 4 章の「なぜ報じられるのか」の五つの理由は、集めた事実を踏まえたこの文書の整理である。各媒体が同じ枠組みで報じているわけではない。報道を引いた箇所の一部は、検索結果の要約だけで確認し、記事本体を開いていない。引用や転載の前に、原文で確かめてほしい。</li>
+<li><strong>4 章の数字の食い違い</strong> : El-Sayed の予備選の得票率は、 Wikipedia が 48.4% 対 47.6% 、別の報道が 48.5% 対 47.5% である。 4 章は Wikipedia の値を採った。 Talarico の動画の再生数も、報道の時点で食い違う。上院の勢力図の記述（ 4.2 節）は 8 月下旬の報道に基づく。世論調査の数字は出典で食い違うため、 4 章には載せなかった。</li>
 <li><strong>出典の確認状況</strong> : 制度の数値と「平均 26 議席」は、 2018 年・ 2022 年の解説記事の要約にもとづく。現有議席、上院の改選数 (35) 、図 3 ・図 4 の評価は、 Wikipedia の集計にもとづく。各州の公式資料や各予測機関の原文とは照合していない。評価の日付は 10 月 27 日から 11 月 3 日までと、機関によって異なる。</li>
 </ul>
 <p>結果の確認には、公式の集計と信頼できる報道が必要である。結果が確定すれば、本稿の前提は変わる。</p>
@@ -967,6 +1074,13 @@
 <li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> Wikipedia 「 2026 United States House of Representatives elections 」（ 2026 年 11 月 4 日閲覧）。投票前の下院の議席構成と、 2024 年の選挙の獲得議席。 <a href="https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections">Wikipedia （英語版）</a></li>
 <li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> Wikipedia 「 2026 United States Senate elections 」（ 2026 年 11 月 4 日閲覧）。投票前の上院の議席構成、改選数、予測機関の評価。 <a href="https://en.wikipedia.org/wiki/2026_United_States_Senate_elections">Wikipedia （英語版）</a></li>
 <li id="ref-10"><a href="#fnref-10-1">^</a> Wikipedia 「 2026 United States House of Representatives election ratings 」（ 2026 年 11 月 4 日閲覧）。下院の予測機関の評価。 <a href="https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_election_ratings">Wikipedia （英語版）</a></li>
+<li id="ref-11"><a href="#fnref-11-1">^</a> NBC News 、「 The 10 Senate races that will decide the balance of power in 2026 」。検索結果の見出しと要約で確認（ 8 月下旬までの報道を含む要約）。数字ごとの出所は特定できていない。 <a href="https://www.nbcnews.com/politics/2026-election/10-senate-races-will-decide-balance-power-2026-rcna248276">NBC News</a></li>
+<li id="ref-12">^ <sup><a href="#fnref-12-1">a</a></sup> <sup><a href="#fnref-12-2">b</a></sup> <sup><a href="#fnref-12-3">c</a></sup> Yahoo News 、「 Democrats See Path to Senate Control. Here Are the Races to Watch 」。検索結果の見出しと要約で確認（ 8 月下旬までの報道を含む要約）。数字ごとの出所は特定できていない。 <a href="https://www.yahoo.com/news/articles/senate-map-shows-narrow-path-162307257.html">Yahoo News</a></li>
+<li id="ref-13">^ <sup><a href="#fnref-13-1">a</a></sup> <sup><a href="#fnref-13-2">b</a></sup> <sup><a href="#fnref-13-3">c</a></sup> <sup><a href="#fnref-13-4">d</a></sup> <sup><a href="#fnref-13-5">e</a></sup> <sup><a href="#fnref-13-6">f</a></sup> <sup><a href="#fnref-13-7">g</a></sup> Wikipedia の Abdul El-Sayed の項目（英語版）。全体の約 17.8 万字のうち、先頭の約 10 万字と、書誌を含む後半の一部を確認した。 <a href="https://en.wikipedia.org/wiki/Abdul_El-Sayed">Wikipedia （英語版）</a></li>
+<li id="ref-14"><a href="#fnref-14-1">^</a> NPR 、「 Progressive Abdul El-Sayed wins Michigan's Democratic primary for Senate 」（ 2026 年 8 月 5 日）。検索結果の見出しと要約で確認。 <a href="https://npr.org/2026/08/05/nx-s1-5920403/michigan-senate-el-sayed-stevens-democrats">NPR</a></li>
+<li id="ref-15"><a href="#fnref-15-1">^</a> Fox News 、「 Entire Squad endorses Abdul El-Sayed days before Michigan Democratic Senate primary 」。保守系媒体。検索結果の要約で確認。 <a href="https://www.foxnews.com/politics/squad-endorses-abdul-el-sayed-days-before-michigan-democratic-senate-primary.amp">Fox News 報道</a></li>
+<li id="ref-16">^ <sup><a href="#fnref-16-1">a</a></sup> <sup><a href="#fnref-16-2">b</a></sup> <sup><a href="#fnref-16-3">c</a></sup> <sup><a href="#fnref-16-4">d</a></sup> <sup><a href="#fnref-16-5">e</a></sup> <sup><a href="#fnref-16-6">f</a></sup> <sup><a href="#fnref-16-7">g</a></sup> <sup><a href="#fnref-16-8">h</a></sup> Wikipedia の James Talarico の項目（英語版）。先頭の約 10 万字と、後半の参考文献の部分を確認した。 <a href="https://en.wikipedia.org/wiki/James_Talarico">Wikipedia （英語版）</a></li>
+<li id="ref-17"><a href="#fnref-17-1">^</a> Variety （オーストラリア版）、「 Stephen Colbert Says CBS Blocked James Talarico Interview Over FCC 'Equal Time' Fears 」。検索結果の見出しと要約で確認。 <a href="https://au.variety.com/2026/tv/news/stephen-colbert-cbs-blocked-james-talarico-interview-fcc-equal-time-33184/">Variety</a></li>
 </ol>
 </div>
 </main>
