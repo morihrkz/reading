@@ -34,6 +34,23 @@
   .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs li>a:first-child{font-weight:700;text-decoration:none}
   .refs li:target,sup:target{background:#e6edf3}
+  /* 図（ figure.diagram 。他の文書と同じ型）。 .fig-pair は 2 枚を横に並べ、狭い幅では縦に積む */
+  .fig-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 16px; margin: 0 0 36px; }
+  .fig-pair figure.diagram { margin: 0; }
+  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: #e6edf3; border: 1px solid #bbb; }
+  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
+  figcaption { font-size: .9375rem; color: #555; margin-top: 12px; text-align: center; line-height: 1.7; }
+  figcaption .fig-label { color: #2a4d69; font-weight: 700; margin-right: .3em; }
+  .legend { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: .2rem 1.1rem; }
+  .legend li { font-size: .9rem; margin: 0; color: #222; }
+  .sw { display: inline-block; width: .85em; height: .85em; border-radius: 50%; margin-right: .35em; vertical-align: -.08em; box-sizing: border-box; }
+  .sw-d { background: #2a4d69; }
+  .sw-r { background: #c0392b; }
+  .sw-i { background: #555; }
+  .sw-vac { background: #e6edf3; border: 2px solid #555; }
+  .sw-up { background: #e6edf3; border: 2px solid #2a4d69; border-right-color: #c0392b; border-bottom-color: #c0392b; }
+  .sw-toss { background: #bbb; }
+  .sw.sq { border-radius: 2px; }
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
     table.cards caption { display: block; }
@@ -81,7 +98,7 @@
 
 <h2 id="sec1">1. 要約</h2>
 <p>2026 年の中間選挙は、連邦議会の多数派を決める選挙である。本稿は勝敗を予想するものではない。他者の予測を、結果ではなく参考として整理し、結果を読むための枠組みを示すことを目的とする。投票は 11 月 3 日に行われたが、基準日の時点で、当選確実の報道と公式の結果は確認できていない。</p>
-<p>確認できた予測では、下院で民主党が多数派を得る確率が高いとされていた。上院については、資料の記述が一致せず、原文の確認が必要である。有権者の関心については、 10 月 8 日のピュー・リサーチ・センターの調査で、経済を「非常に重要」とする回答が 84% に上った。</p>
+<p>確認できた予測では、下院で民主党が多数派を得る確率が高いとされていた。上院については予測機関の見通しが分かれ、民主党系が過半数の 51 議席に届くとしたのは、 12 者のうち 5 者だった。有権者の関心については、 10 月 8 日のピュー・リサーチ・センターの調査で、経済を「非常に重要」とする回答が 84% に上った。</p>
 
 <h2 id="sec2">2. 中間選挙の基礎</h2>
 <h3 id="sec2-1">2.1 下院と上院の違い</h3>
@@ -102,7 +119,589 @@
 
 <h2 id="sec3">3. 2026 年の注目点</h2>
 <h3 id="sec3-1">3.1 議席の構図</h3>
-<p>報道によれば、投票前の議席構成では、共和党が下院で僅差の多数派にあった。民主党は純増 3 議席で、過半数の 218 議席に届く計算とされていた <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。議席差が小さいため、少数の選挙区の結果が多数派を左右しうる。</p>
+<p>報道によれば、投票前の議席構成では、共和党が下院で僅差の多数派にあった。民主党は、純増 3 議席で過半数の 218 議席に届くとされていた <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。この「 3 」は、民主党が 2024 年の選挙で得た 215 議席を起点にした数え方とみられる。投票前の議席 (214) から数えると、 218 までは 4 議席が要る <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。議席差が小さいため、少数の選挙区の結果が多数派を左右しうる。</p>
+<p>投票前の議席を、図 1 ・図 2 に示す。下院は 435 議席のすべてが改選される。構成は、共和党 218 、民主党 214 、無所属 1 、空席 2 である <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> 。上院は 100 議席のうち 35 議席が改選され、その内訳は共和党 22 、民主党 13 である。改選されない 65 議席では、民主党系（民主党と会派を組む無所属 2 を含む）が 34 、共和党が 31 を持つ <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。民主党系が上院の過半数 51 に届くには、改選 35 議席のうち 17 議席、つまり現有から純増 4 議席が必要になる。</p>
+<div class="fig-pair">
+<figure class="diagram">
+<svg viewBox="0 0 600 330" role="img" aria-label="投票前の下院 435 議席の構成。民主党 214 、空席 2 、無所属 1 、共和党 218 。">
+  <g fill="#2a4d69"><title>民主党 214</title>
+    <circle cx="197.4" cy="315.0" r="6.6"/>
+    <circle cx="180.8" cy="315.0" r="6.6"/>
+    <circle cx="164.2" cy="315.0" r="6.6"/>
+    <circle cx="147.7" cy="315.0" r="6.6"/>
+    <circle cx="131.1" cy="315.0" r="6.6"/>
+    <circle cx="114.5" cy="315.0" r="6.6"/>
+    <circle cx="97.9" cy="315.0" r="6.6"/>
+    <circle cx="81.3" cy="315.0" r="6.6"/>
+    <circle cx="64.7" cy="315.0" r="6.6"/>
+    <circle cx="48.2" cy="315.0" r="6.6"/>
+    <circle cx="31.6" cy="315.0" r="6.6"/>
+    <circle cx="15.0" cy="315.0" r="6.6"/>
+    <circle cx="15.5" cy="298.1" r="6.6"/>
+    <circle cx="32.1" cy="297.8" r="6.6"/>
+    <circle cx="48.8" cy="297.8" r="6.6"/>
+    <circle cx="65.4" cy="297.8" r="6.6"/>
+    <circle cx="82.0" cy="297.8" r="6.6"/>
+    <circle cx="98.6" cy="297.9" r="6.6"/>
+    <circle cx="115.3" cy="297.9" r="6.6"/>
+    <circle cx="131.9" cy="297.9" r="6.6"/>
+    <circle cx="148.7" cy="297.3" r="6.6"/>
+    <circle cx="17.0" cy="281.3" r="6.6"/>
+    <circle cx="33.8" cy="280.7" r="6.6"/>
+    <circle cx="165.4" cy="297.3" r="6.6"/>
+    <circle cx="50.5" cy="280.7" r="6.6"/>
+    <circle cx="67.3" cy="280.7" r="6.6"/>
+    <circle cx="182.1" cy="297.2" r="6.6"/>
+    <circle cx="84.0" cy="280.8" r="6.6"/>
+    <circle cx="100.8" cy="280.8" r="6.6"/>
+    <circle cx="199.0" cy="297.2" r="6.6"/>
+    <circle cx="19.5" cy="264.6" r="6.6"/>
+    <circle cx="117.6" cy="280.9" r="6.6"/>
+    <circle cx="36.5" cy="263.7" r="6.6"/>
+    <circle cx="134.5" cy="281.0" r="6.6"/>
+    <circle cx="53.4" cy="263.8" r="6.6"/>
+    <circle cx="70.4" cy="263.8" r="6.6"/>
+    <circle cx="151.8" cy="279.9" r="6.6"/>
+    <circle cx="87.4" cy="264.0" r="6.6"/>
+    <circle cx="23.0" cy="248.1" r="6.6"/>
+    <circle cx="104.4" cy="264.1" r="6.6"/>
+    <circle cx="40.4" cy="246.9" r="6.6"/>
+    <circle cx="168.9" cy="279.9" r="6.6"/>
+    <circle cx="57.5" cy="247.1" r="6.6"/>
+    <circle cx="121.6" cy="264.2" r="6.6"/>
+    <circle cx="74.7" cy="247.2" r="6.6"/>
+    <circle cx="27.4" cy="231.8" r="6.6"/>
+    <circle cx="186.1" cy="279.9" r="6.6"/>
+    <circle cx="138.8" cy="264.4" r="6.6"/>
+    <circle cx="92.0" cy="247.4" r="6.6"/>
+    <circle cx="45.3" cy="230.4" r="6.6"/>
+    <circle cx="109.5" cy="247.7" r="6.6"/>
+    <circle cx="62.7" cy="230.7" r="6.6"/>
+    <circle cx="203.6" cy="279.9" r="6.6"/>
+    <circle cx="156.8" cy="262.9" r="6.6"/>
+    <circle cx="32.8" cy="215.8" r="6.6"/>
+    <circle cx="80.3" cy="231.0" r="6.6"/>
+    <circle cx="127.0" cy="248.0" r="6.6"/>
+    <circle cx="51.2" cy="214.3" r="6.6"/>
+    <circle cx="174.6" cy="263.0" r="6.6"/>
+    <circle cx="98.0" cy="231.3" r="6.6"/>
+    <circle cx="144.8" cy="248.4" r="6.6"/>
+    <circle cx="69.0" cy="214.7" r="6.6"/>
+    <circle cx="39.2" cy="200.1" r="6.6"/>
+    <circle cx="115.8" cy="231.8" r="6.6"/>
+    <circle cx="87.0" cy="215.1" r="6.6"/>
+    <circle cx="192.6" cy="263.3" r="6.6"/>
+    <circle cx="58.2" cy="198.5" r="6.6"/>
+    <circle cx="133.9" cy="232.3" r="6.6"/>
+    <circle cx="163.9" cy="246.6" r="6.6"/>
+    <circle cx="105.2" cy="215.7" r="6.6"/>
+    <circle cx="46.4" cy="184.9" r="6.6"/>
+    <circle cx="76.4" cy="199.1" r="6.6"/>
+    <circle cx="152.3" cy="233.0" r="6.6"/>
+    <circle cx="123.6" cy="216.4" r="6.6"/>
+    <circle cx="94.8" cy="199.9" r="6.6"/>
+    <circle cx="66.1" cy="183.3" r="6.6"/>
+    <circle cx="211.1" cy="263.7" r="6.6"/>
+    <circle cx="182.4" cy="247.1" r="6.6"/>
+    <circle cx="54.6" cy="170.1" r="6.6"/>
+    <circle cx="84.8" cy="184.1" r="6.6"/>
+    <circle cx="113.6" cy="200.7" r="6.6"/>
+    <circle cx="142.3" cy="217.3" r="6.6"/>
+    <circle cx="75.0" cy="168.6" r="6.6"/>
+    <circle cx="172.7" cy="231.3" r="6.6"/>
+    <circle cx="103.8" cy="185.2" r="6.6"/>
+    <circle cx="63.6" cy="155.8" r="6.6"/>
+    <circle cx="132.6" cy="201.8" r="6.6"/>
+    <circle cx="201.5" cy="247.9" r="6.6"/>
+    <circle cx="161.4" cy="218.5" r="6.6"/>
+    <circle cx="94.3" cy="169.8" r="6.6"/>
+    <circle cx="123.1" cy="186.5" r="6.6"/>
+    <circle cx="84.9" cy="154.5" r="6.6"/>
+    <circle cx="152.0" cy="203.2" r="6.6"/>
+    <circle cx="73.5" cy="142.1" r="6.6"/>
+    <circle cx="192.3" cy="232.4" r="6.6"/>
+    <circle cx="113.8" cy="171.2" r="6.6"/>
+    <circle cx="142.8" cy="188.0" r="6.6"/>
+    <circle cx="104.6" cy="156.1" r="6.6"/>
+    <circle cx="221.4" cy="249.0" r="6.6"/>
+    <circle cx="183.3" cy="217.1" r="6.6"/>
+    <circle cx="95.6" cy="141.0" r="6.6"/>
+    <circle cx="133.7" cy="173.0" r="6.6"/>
+    <circle cx="171.8" cy="205.0" r="6.6"/>
+    <circle cx="84.1" cy="128.9" r="6.6"/>
+    <circle cx="124.8" cy="158.0" r="6.6"/>
+    <circle cx="162.9" cy="190.0" r="6.6"/>
+    <circle cx="212.6" cy="233.9" r="6.6"/>
+    <circle cx="115.9" cy="143.1" r="6.6"/>
+    <circle cx="154.1" cy="175.2" r="6.6"/>
+    <circle cx="107.2" cy="128.3" r="6.6"/>
+    <circle cx="95.5" cy="116.5" r="6.6"/>
+    <circle cx="204.0" cy="219.0" r="6.6"/>
+    <circle cx="145.4" cy="160.4" r="6.6"/>
+    <circle cx="136.7" cy="145.6" r="6.6"/>
+    <circle cx="183.6" cy="192.6" r="6.6"/>
+    <circle cx="195.5" cy="204.2" r="6.6"/>
+    <circle cx="128.1" cy="130.9" r="6.6"/>
+    <circle cx="107.6" cy="104.7" r="6.6"/>
+    <circle cx="175.0" cy="177.9" r="6.6"/>
+    <circle cx="119.5" cy="116.3" r="6.6"/>
+    <circle cx="166.5" cy="163.3" r="6.6"/>
+    <circle cx="158.0" cy="148.7" r="6.6"/>
+    <circle cx="234.0" cy="236.4" r="6.6"/>
+    <circle cx="149.5" cy="134.2" r="6.6"/>
+    <circle cx="141.1" cy="119.6" r="6.6"/>
+    <circle cx="120.4" cy="93.7" r="6.6"/>
+    <circle cx="225.7" cy="221.8" r="6.6"/>
+    <circle cx="132.6" cy="105.1" r="6.6"/>
+    <circle cx="196.6" cy="181.4" r="6.6"/>
+    <circle cx="217.4" cy="207.3" r="6.6"/>
+    <circle cx="188.2" cy="167.0" r="6.6"/>
+    <circle cx="209.0" cy="192.8" r="6.6"/>
+    <circle cx="179.8" cy="152.5" r="6.6"/>
+    <circle cx="171.5" cy="138.1" r="6.6"/>
+    <circle cx="133.9" cy="83.4" r="6.6"/>
+    <circle cx="163.1" cy="123.7" r="6.6"/>
+    <circle cx="154.8" cy="109.3" r="6.6"/>
+    <circle cx="146.4" cy="94.9" r="6.6"/>
+    <circle cx="147.9" cy="74.0" r="6.6"/>
+    <circle cx="210.6" cy="171.6" r="6.6"/>
+    <circle cx="202.3" cy="157.3" r="6.6"/>
+    <circle cx="194.0" cy="142.9" r="6.6"/>
+    <circle cx="185.7" cy="128.6" r="6.6"/>
+    <circle cx="177.4" cy="114.2" r="6.6"/>
+    <circle cx="169.1" cy="99.8" r="6.6"/>
+    <circle cx="160.9" cy="85.5" r="6.6"/>
+    <circle cx="248.7" cy="226.1" r="6.6"/>
+    <circle cx="240.4" cy="211.8" r="6.6"/>
+    <circle cx="232.1" cy="197.4" r="6.6"/>
+    <circle cx="223.8" cy="183.1" r="6.6"/>
+    <circle cx="162.4" cy="65.4" r="6.6"/>
+    <circle cx="175.8" cy="77.0" r="6.6"/>
+    <circle cx="184.1" cy="91.4" r="6.6"/>
+    <circle cx="192.4" cy="105.8" r="6.6"/>
+    <circle cx="200.7" cy="120.2" r="6.6"/>
+    <circle cx="209.0" cy="134.5" r="6.6"/>
+    <circle cx="217.3" cy="148.9" r="6.6"/>
+    <circle cx="225.6" cy="163.3" r="6.6"/>
+    <circle cx="177.4" cy="57.7" r="6.6"/>
+    <circle cx="191.3" cy="69.6" r="6.6"/>
+    <circle cx="199.7" cy="84.0" r="6.6"/>
+    <circle cx="239.7" cy="175.1" r="6.6"/>
+    <circle cx="208.0" cy="98.5" r="6.6"/>
+    <circle cx="248.0" cy="189.6" r="6.6"/>
+    <circle cx="216.3" cy="113.0" r="6.6"/>
+    <circle cx="192.9" cy="50.9" r="6.6"/>
+    <circle cx="224.6" cy="127.5" r="6.6"/>
+    <circle cx="256.5" cy="204.1" r="6.6"/>
+    <circle cx="233.0" cy="142.0" r="6.6"/>
+    <circle cx="241.3" cy="156.6" r="6.6"/>
+    <circle cx="207.3" cy="63.1" r="6.6"/>
+    <circle cx="264.9" cy="218.6" r="6.6"/>
+    <circle cx="215.7" cy="77.7" r="6.6"/>
+    <circle cx="224.0" cy="92.3" r="6.6"/>
+    <circle cx="208.7" cy="45.0" r="6.6"/>
+    <circle cx="232.4" cy="107.0" r="6.6"/>
+    <circle cx="240.8" cy="121.8" r="6.6"/>
+    <circle cx="256.3" cy="169.1" r="6.6"/>
+    <circle cx="223.6" cy="57.7" r="6.6"/>
+    <circle cx="249.2" cy="136.6" r="6.6"/>
+    <circle cx="232.1" cy="72.5" r="6.6"/>
+    <circle cx="224.9" cy="40.1" r="6.6"/>
+    <circle cx="264.9" cy="183.9" r="6.6"/>
+    <circle cx="240.5" cy="87.4" r="6.6"/>
+    <circle cx="257.7" cy="151.5" r="6.6"/>
+    <circle cx="249.0" cy="102.4" r="6.6"/>
+    <circle cx="273.5" cy="198.8" r="6.6"/>
+    <circle cx="240.3" cy="53.3" r="6.6"/>
+    <circle cx="257.4" cy="117.4" r="6.6"/>
+    <circle cx="241.3" cy="36.1" r="6.6"/>
+    <circle cx="248.8" cy="68.4" r="6.6"/>
+    <circle cx="265.9" cy="132.6" r="6.6"/>
+    <circle cx="257.3" cy="83.7" r="6.6"/>
+    <circle cx="282.2" cy="214.0" r="6.6"/>
+    <circle cx="273.5" cy="165.0" r="6.6"/>
+    <circle cx="257.2" cy="50.0" r="6.6"/>
+    <circle cx="265.8" cy="99.0" r="6.6"/>
+    <circle cx="274.4" cy="148.0" r="6.6"/>
+    <circle cx="257.9" cy="33.1" r="6.6"/>
+    <circle cx="265.7" cy="65.5" r="6.6"/>
+    <circle cx="282.3" cy="180.4" r="6.6"/>
+    <circle cx="274.3" cy="114.5" r="6.6"/>
+    <circle cx="274.3" cy="81.2" r="6.6"/>
+    <circle cx="274.2" cy="47.8" r="6.6"/>
+    <circle cx="282.9" cy="130.3" r="6.6"/>
+    <circle cx="274.7" cy="31.1" r="6.6"/>
+    <circle cx="282.8" cy="97.0" r="6.6"/>
+    <circle cx="291.1" cy="196.2" r="6.6"/>
+    <circle cx="282.8" cy="63.8" r="6.6"/>
+    <circle cx="291.1" cy="162.9" r="6.6"/>
+    <circle cx="291.4" cy="146.3" r="6.6"/>
+    <circle cx="291.4" cy="113.1" r="6.6"/>
+    <circle cx="291.4" cy="79.9" r="6.6"/>
+    <circle cx="291.4" cy="46.7" r="6.6"/>
+  </g>
+  <g fill="#e6edf3" stroke="#555" stroke-width="2.5"><title>空席 2</title>
+    <circle cx="291.6" cy="30.1" r="5.4"/>
+    <circle cx="300.0" cy="212.4" r="5.4"/>
+  </g>
+  <g fill="#555"><title>無所属 1 （共和党と会派）</title>
+    <circle cx="300.0" cy="179.2" r="6.6"/>
+  </g>
+  <g fill="#c0392b"><title>共和党 218</title>
+    <circle cx="300.0" cy="129.5" r="6.6"/>
+    <circle cx="300.0" cy="96.3" r="6.6"/>
+    <circle cx="300.0" cy="63.2" r="6.6"/>
+    <circle cx="308.4" cy="30.1" r="6.6"/>
+    <circle cx="308.6" cy="46.7" r="6.6"/>
+    <circle cx="308.6" cy="79.9" r="6.6"/>
+    <circle cx="308.6" cy="113.1" r="6.6"/>
+    <circle cx="308.6" cy="146.3" r="6.6"/>
+    <circle cx="308.9" cy="162.9" r="6.6"/>
+    <circle cx="317.2" cy="63.8" r="6.6"/>
+    <circle cx="308.9" cy="196.2" r="6.6"/>
+    <circle cx="317.2" cy="97.0" r="6.6"/>
+    <circle cx="325.3" cy="31.1" r="6.6"/>
+    <circle cx="317.1" cy="130.3" r="6.6"/>
+    <circle cx="325.8" cy="47.8" r="6.6"/>
+    <circle cx="325.7" cy="81.2" r="6.6"/>
+    <circle cx="325.7" cy="114.5" r="6.6"/>
+    <circle cx="317.7" cy="180.4" r="6.6"/>
+    <circle cx="334.3" cy="65.5" r="6.6"/>
+    <circle cx="342.1" cy="33.1" r="6.6"/>
+    <circle cx="325.6" cy="148.0" r="6.6"/>
+    <circle cx="334.2" cy="99.0" r="6.6"/>
+    <circle cx="342.8" cy="50.0" r="6.6"/>
+    <circle cx="317.8" cy="214.0" r="6.6"/>
+    <circle cx="326.5" cy="165.0" r="6.6"/>
+    <circle cx="342.7" cy="83.7" r="6.6"/>
+    <circle cx="334.1" cy="132.6" r="6.6"/>
+    <circle cx="351.2" cy="68.4" r="6.6"/>
+    <circle cx="358.7" cy="36.1" r="6.6"/>
+    <circle cx="342.6" cy="117.4" r="6.6"/>
+    <circle cx="326.5" cy="198.8" r="6.6"/>
+    <circle cx="359.7" cy="53.3" r="6.6"/>
+    <circle cx="351.0" cy="102.4" r="6.6"/>
+    <circle cx="342.3" cy="151.5" r="6.6"/>
+    <circle cx="359.5" cy="87.4" r="6.6"/>
+    <circle cx="335.1" cy="183.9" r="6.6"/>
+    <circle cx="375.1" cy="40.1" r="6.6"/>
+    <circle cx="367.9" cy="72.5" r="6.6"/>
+    <circle cx="350.8" cy="136.6" r="6.6"/>
+    <circle cx="376.4" cy="57.7" r="6.6"/>
+    <circle cx="343.7" cy="169.1" r="6.6"/>
+    <circle cx="359.2" cy="121.8" r="6.6"/>
+    <circle cx="367.6" cy="107.0" r="6.6"/>
+    <circle cx="391.3" cy="45.0" r="6.6"/>
+    <circle cx="376.0" cy="92.3" r="6.6"/>
+    <circle cx="384.3" cy="77.7" r="6.6"/>
+    <circle cx="335.1" cy="218.6" r="6.6"/>
+    <circle cx="392.7" cy="63.1" r="6.6"/>
+    <circle cx="358.7" cy="156.6" r="6.6"/>
+    <circle cx="367.0" cy="142.0" r="6.6"/>
+    <circle cx="343.5" cy="204.1" r="6.6"/>
+    <circle cx="375.4" cy="127.5" r="6.6"/>
+    <circle cx="407.1" cy="50.9" r="6.6"/>
+    <circle cx="352.0" cy="189.6" r="6.6"/>
+    <circle cx="383.7" cy="113.0" r="6.6"/>
+    <circle cx="392.0" cy="98.5" r="6.6"/>
+    <circle cx="360.3" cy="175.1" r="6.6"/>
+    <circle cx="400.3" cy="84.0" r="6.6"/>
+    <circle cx="408.7" cy="69.6" r="6.6"/>
+    <circle cx="422.6" cy="57.7" r="6.6"/>
+    <circle cx="374.4" cy="163.3" r="6.6"/>
+    <circle cx="382.7" cy="148.9" r="6.6"/>
+    <circle cx="391.0" cy="134.5" r="6.6"/>
+    <circle cx="399.3" cy="120.2" r="6.6"/>
+    <circle cx="407.6" cy="105.8" r="6.6"/>
+    <circle cx="415.9" cy="91.4" r="6.6"/>
+    <circle cx="424.2" cy="77.0" r="6.6"/>
+    <circle cx="437.6" cy="65.4" r="6.6"/>
+    <circle cx="351.3" cy="226.1" r="6.6"/>
+    <circle cx="359.6" cy="211.8" r="6.6"/>
+    <circle cx="367.9" cy="197.4" r="6.6"/>
+    <circle cx="376.2" cy="183.1" r="6.6"/>
+    <circle cx="439.1" cy="85.5" r="6.6"/>
+    <circle cx="430.9" cy="99.8" r="6.6"/>
+    <circle cx="422.6" cy="114.2" r="6.6"/>
+    <circle cx="414.3" cy="128.6" r="6.6"/>
+    <circle cx="406.0" cy="142.9" r="6.6"/>
+    <circle cx="397.7" cy="157.3" r="6.6"/>
+    <circle cx="389.4" cy="171.6" r="6.6"/>
+    <circle cx="452.1" cy="74.0" r="6.6"/>
+    <circle cx="453.6" cy="94.9" r="6.6"/>
+    <circle cx="445.2" cy="109.3" r="6.6"/>
+    <circle cx="436.9" cy="123.7" r="6.6"/>
+    <circle cx="466.1" cy="83.4" r="6.6"/>
+    <circle cx="428.5" cy="138.1" r="6.6"/>
+    <circle cx="420.2" cy="152.5" r="6.6"/>
+    <circle cx="391.0" cy="192.8" r="6.6"/>
+    <circle cx="411.8" cy="167.0" r="6.6"/>
+    <circle cx="382.6" cy="207.3" r="6.6"/>
+    <circle cx="403.4" cy="181.4" r="6.6"/>
+    <circle cx="374.3" cy="221.8" r="6.6"/>
+    <circle cx="467.4" cy="105.1" r="6.6"/>
+    <circle cx="479.6" cy="93.7" r="6.6"/>
+    <circle cx="458.9" cy="119.6" r="6.6"/>
+    <circle cx="450.5" cy="134.2" r="6.6"/>
+    <circle cx="366.0" cy="236.4" r="6.6"/>
+    <circle cx="442.0" cy="148.7" r="6.6"/>
+    <circle cx="433.5" cy="163.3" r="6.6"/>
+    <circle cx="480.5" cy="116.3" r="6.6"/>
+    <circle cx="425.0" cy="177.9" r="6.6"/>
+    <circle cx="492.4" cy="104.7" r="6.6"/>
+    <circle cx="471.9" cy="130.9" r="6.6"/>
+    <circle cx="404.5" cy="204.2" r="6.6"/>
+    <circle cx="416.4" cy="192.6" r="6.6"/>
+    <circle cx="463.3" cy="145.6" r="6.6"/>
+    <circle cx="396.0" cy="219.0" r="6.6"/>
+    <circle cx="454.6" cy="160.4" r="6.6"/>
+    <circle cx="504.5" cy="116.5" r="6.6"/>
+    <circle cx="492.8" cy="128.3" r="6.6"/>
+    <circle cx="445.9" cy="175.2" r="6.6"/>
+    <circle cx="484.1" cy="143.1" r="6.6"/>
+    <circle cx="387.4" cy="233.9" r="6.6"/>
+    <circle cx="437.1" cy="190.0" r="6.6"/>
+    <circle cx="475.2" cy="158.0" r="6.6"/>
+    <circle cx="515.9" cy="128.9" r="6.6"/>
+    <circle cx="428.2" cy="205.0" r="6.6"/>
+    <circle cx="466.3" cy="173.0" r="6.6"/>
+    <circle cx="504.4" cy="141.0" r="6.6"/>
+    <circle cx="378.6" cy="249.0" r="6.6"/>
+    <circle cx="416.7" cy="217.1" r="6.6"/>
+    <circle cx="495.4" cy="156.1" r="6.6"/>
+    <circle cx="457.2" cy="188.0" r="6.6"/>
+    <circle cx="486.2" cy="171.2" r="6.6"/>
+    <circle cx="407.7" cy="232.4" r="6.6"/>
+    <circle cx="526.5" cy="142.1" r="6.6"/>
+    <circle cx="448.0" cy="203.2" r="6.6"/>
+    <circle cx="515.1" cy="154.5" r="6.6"/>
+    <circle cx="476.9" cy="186.5" r="6.6"/>
+    <circle cx="505.7" cy="169.8" r="6.6"/>
+    <circle cx="438.6" cy="218.5" r="6.6"/>
+    <circle cx="398.5" cy="247.9" r="6.6"/>
+    <circle cx="467.4" cy="201.8" r="6.6"/>
+    <circle cx="536.4" cy="155.8" r="6.6"/>
+    <circle cx="496.2" cy="185.2" r="6.6"/>
+    <circle cx="427.3" cy="231.3" r="6.6"/>
+    <circle cx="525.0" cy="168.6" r="6.6"/>
+    <circle cx="457.7" cy="217.3" r="6.6"/>
+    <circle cx="486.4" cy="200.7" r="6.6"/>
+    <circle cx="515.2" cy="184.1" r="6.6"/>
+    <circle cx="545.4" cy="170.1" r="6.6"/>
+    <circle cx="388.9" cy="263.7" r="6.6"/>
+    <circle cx="417.6" cy="247.1" r="6.6"/>
+    <circle cx="533.9" cy="183.3" r="6.6"/>
+    <circle cx="505.2" cy="199.9" r="6.6"/>
+    <circle cx="476.4" cy="216.4" r="6.6"/>
+    <circle cx="447.7" cy="233.0" r="6.6"/>
+    <circle cx="523.6" cy="199.1" r="6.6"/>
+    <circle cx="553.6" cy="184.9" r="6.6"/>
+    <circle cx="494.8" cy="215.7" r="6.6"/>
+    <circle cx="436.1" cy="246.6" r="6.6"/>
+    <circle cx="466.1" cy="232.3" r="6.6"/>
+    <circle cx="407.4" cy="263.3" r="6.6"/>
+    <circle cx="541.8" cy="198.5" r="6.6"/>
+    <circle cx="513.0" cy="215.1" r="6.6"/>
+    <circle cx="484.2" cy="231.8" r="6.6"/>
+    <circle cx="560.8" cy="200.1" r="6.6"/>
+    <circle cx="531.0" cy="214.7" r="6.6"/>
+    <circle cx="455.2" cy="248.4" r="6.6"/>
+    <circle cx="425.4" cy="263.0" r="6.6"/>
+    <circle cx="502.0" cy="231.3" r="6.6"/>
+    <circle cx="548.8" cy="214.3" r="6.6"/>
+    <circle cx="473.0" cy="248.0" r="6.6"/>
+    <circle cx="519.7" cy="231.0" r="6.6"/>
+    <circle cx="567.2" cy="215.8" r="6.6"/>
+    <circle cx="396.4" cy="279.9" r="6.6"/>
+    <circle cx="443.2" cy="262.9" r="6.6"/>
+    <circle cx="537.3" cy="230.7" r="6.6"/>
+    <circle cx="490.5" cy="247.7" r="6.6"/>
+    <circle cx="554.7" cy="230.4" r="6.6"/>
+    <circle cx="508.0" cy="247.4" r="6.6"/>
+    <circle cx="461.2" cy="264.4" r="6.6"/>
+    <circle cx="413.9" cy="279.9" r="6.6"/>
+    <circle cx="572.6" cy="231.8" r="6.6"/>
+    <circle cx="525.3" cy="247.2" r="6.6"/>
+    <circle cx="478.4" cy="264.2" r="6.6"/>
+    <circle cx="542.5" cy="247.1" r="6.6"/>
+    <circle cx="431.1" cy="279.9" r="6.6"/>
+    <circle cx="559.6" cy="246.9" r="6.6"/>
+    <circle cx="495.6" cy="264.1" r="6.6"/>
+    <circle cx="577.0" cy="248.1" r="6.6"/>
+    <circle cx="512.6" cy="264.0" r="6.6"/>
+    <circle cx="448.2" cy="279.9" r="6.6"/>
+    <circle cx="529.6" cy="263.8" r="6.6"/>
+    <circle cx="546.6" cy="263.8" r="6.6"/>
+    <circle cx="465.5" cy="281.0" r="6.6"/>
+    <circle cx="563.5" cy="263.7" r="6.6"/>
+    <circle cx="482.4" cy="280.9" r="6.6"/>
+    <circle cx="580.5" cy="264.6" r="6.6"/>
+    <circle cx="401.0" cy="297.2" r="6.6"/>
+    <circle cx="499.2" cy="280.8" r="6.6"/>
+    <circle cx="516.0" cy="280.8" r="6.6"/>
+    <circle cx="417.9" cy="297.2" r="6.6"/>
+    <circle cx="532.7" cy="280.7" r="6.6"/>
+    <circle cx="549.5" cy="280.7" r="6.6"/>
+    <circle cx="434.6" cy="297.3" r="6.6"/>
+    <circle cx="566.2" cy="280.7" r="6.6"/>
+    <circle cx="583.0" cy="281.3" r="6.6"/>
+    <circle cx="451.3" cy="297.3" r="6.6"/>
+    <circle cx="468.1" cy="297.9" r="6.6"/>
+    <circle cx="484.7" cy="297.9" r="6.6"/>
+    <circle cx="501.4" cy="297.9" r="6.6"/>
+    <circle cx="518.0" cy="297.8" r="6.6"/>
+    <circle cx="534.6" cy="297.8" r="6.6"/>
+    <circle cx="551.2" cy="297.8" r="6.6"/>
+    <circle cx="567.9" cy="297.8" r="6.6"/>
+    <circle cx="584.5" cy="298.1" r="6.6"/>
+    <circle cx="402.6" cy="315.0" r="6.6"/>
+    <circle cx="419.2" cy="315.0" r="6.6"/>
+    <circle cx="435.8" cy="315.0" r="6.6"/>
+    <circle cx="452.3" cy="315.0" r="6.6"/>
+    <circle cx="468.9" cy="315.0" r="6.6"/>
+    <circle cx="485.5" cy="315.0" r="6.6"/>
+    <circle cx="502.1" cy="315.0" r="6.6"/>
+    <circle cx="518.7" cy="315.0" r="6.6"/>
+    <circle cx="535.3" cy="315.0" r="6.6"/>
+    <circle cx="551.8" cy="315.0" r="6.6"/>
+    <circle cx="568.4" cy="315.0" r="6.6"/>
+    <circle cx="585.0" cy="315.0" r="6.6"/>
+  </g>
+  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#222" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="300" y="10" text-anchor="middle" font-size="17" fill="#222">過半数 218</text>
+</svg>
+<ul class="legend">
+<li><span class="sw sw-d"></span>民主党 214</li>
+<li><span class="sw sw-r"></span>共和党 218</li>
+<li><span class="sw sw-i"></span>無所属 1 （共和党と会派）</li>
+<li><span class="sw sw-vac"></span>空席 2</li>
+</ul>
+<figcaption><span class="fig-label">図 1</span> 下院の現有議席（投票前、 435 議席）。中央の破線は過半数 218 の目安。</figcaption>
+</figure>
+<figure class="diagram">
+<svg viewBox="0 0 600 330" role="img" aria-label="投票前の上院 100 議席の構成。民主党 45 と無所属 2 、共和党 53 。白抜きは改選される 35 議席。">
+  <g fill="#555"><title>無所属 2 （民主党と会派。改選なし）</title>
+    <circle cx="197.4" cy="315.0" r="14.6"/>
+    <circle cx="160.9" cy="315.0" r="14.6"/>
+  </g>
+  <g fill="#2a4d69"><title>民主党 改選なし 32</title>
+    <circle cx="124.4" cy="315.0" r="14.6"/>
+    <circle cx="88.0" cy="315.0" r="14.6"/>
+    <circle cx="51.5" cy="315.0" r="14.6"/>
+    <circle cx="15.0" cy="315.0" r="14.6"/>
+    <circle cx="17.4" cy="277.8" r="14.6"/>
+    <circle cx="54.5" cy="276.1" r="14.6"/>
+    <circle cx="91.6" cy="276.0" r="14.6"/>
+    <circle cx="128.8" cy="275.9" r="14.6"/>
+    <circle cx="24.7" cy="241.2" r="14.6"/>
+    <circle cx="166.6" cy="275.8" r="14.6"/>
+    <circle cx="63.6" cy="238.2" r="14.6"/>
+    <circle cx="102.3" cy="238.4" r="14.6"/>
+    <circle cx="205.2" cy="275.7" r="14.6"/>
+    <circle cx="36.7" cy="205.9" r="14.6"/>
+    <circle cx="141.8" cy="238.8" r="14.6"/>
+    <circle cx="78.6" cy="202.2" r="14.6"/>
+    <circle cx="53.2" cy="172.5" r="14.6"/>
+    <circle cx="119.7" cy="203.4" r="14.6"/>
+    <circle cx="183.0" cy="239.8" r="14.6"/>
+    <circle cx="98.9" cy="168.9" r="14.6"/>
+    <circle cx="73.9" cy="141.5" r="14.6"/>
+    <circle cx="162.7" cy="205.5" r="14.6"/>
+    <circle cx="143.3" cy="172.1" r="14.6"/>
+    <circle cx="227.5" cy="242.5" r="14.6"/>
+    <circle cx="124.3" cy="139.3" r="14.6"/>
+    <circle cx="98.5" cy="113.5" r="14.6"/>
+    <circle cx="208.9" cy="209.9" r="14.6"/>
+    <circle cx="190.5" cy="177.7" r="14.6"/>
+    <circle cx="126.5" cy="88.9" r="14.6"/>
+    <circle cx="172.2" cy="145.8" r="14.6"/>
+    <circle cx="153.9" cy="113.9" r="14.6"/>
+    <circle cx="157.5" cy="68.2" r="14.6"/>
+  </g>
+  <g fill="#e6edf3" stroke="#2a4d69" stroke-width="5.5"><title>民主党 改選 13</title>
+    <circle cx="187.2" cy="93.6" r="11.8"/>
+    <circle cx="205.5" cy="125.2" r="11.8"/>
+    <circle cx="223.8" cy="156.8" r="11.8"/>
+    <circle cx="242.2" cy="188.5" r="11.8"/>
+    <circle cx="260.7" cy="220.2" r="11.8"/>
+    <circle cx="190.9" cy="51.7" r="11.8"/>
+    <circle cx="223.2" cy="78.6" r="11.8"/>
+    <circle cx="242.0" cy="111.1" r="11.8"/>
+    <circle cx="226.2" cy="39.7" r="11.8"/>
+    <circle cx="260.9" cy="143.8" r="11.8"/>
+    <circle cx="261.1" cy="69.5" r="11.8"/>
+    <circle cx="280.2" cy="177.3" r="11.8"/>
+    <circle cx="262.8" cy="32.4" r="11.8"/>
+  </g>
+  <g fill="#e6edf3" stroke="#c0392b" stroke-width="5.5"><title>共和党 改選 22</title>
+    <circle cx="280.4" cy="103.9" r="11.8"/>
+    <circle cx="300.0" cy="212.4" r="11.8"/>
+    <circle cx="300.0" cy="139.4" r="11.8"/>
+    <circle cx="300.0" cy="66.5" r="11.8"/>
+    <circle cx="300.0" cy="30.0" r="11.8"/>
+    <circle cx="319.6" cy="103.9" r="11.8"/>
+    <circle cx="337.2" cy="32.4" r="11.8"/>
+    <circle cx="319.8" cy="177.3" r="11.8"/>
+    <circle cx="338.9" cy="69.5" r="11.8"/>
+    <circle cx="339.1" cy="143.8" r="11.8"/>
+    <circle cx="373.8" cy="39.7" r="11.8"/>
+    <circle cx="358.0" cy="111.1" r="11.8"/>
+    <circle cx="376.8" cy="78.6" r="11.8"/>
+    <circle cx="339.3" cy="220.2" r="11.8"/>
+    <circle cx="409.1" cy="51.7" r="11.8"/>
+    <circle cx="357.8" cy="188.5" r="11.8"/>
+    <circle cx="376.2" cy="156.8" r="11.8"/>
+    <circle cx="394.5" cy="125.2" r="11.8"/>
+    <circle cx="412.8" cy="93.6" r="11.8"/>
+    <circle cx="442.5" cy="68.2" r="11.8"/>
+    <circle cx="446.1" cy="113.9" r="11.8"/>
+    <circle cx="427.8" cy="145.8" r="11.8"/>
+  </g>
+  <g fill="#c0392b"><title>共和党 改選なし 31</title>
+    <circle cx="473.5" cy="88.9" r="14.6"/>
+    <circle cx="409.5" cy="177.7" r="14.6"/>
+    <circle cx="391.1" cy="209.9" r="14.6"/>
+    <circle cx="372.5" cy="242.5" r="14.6"/>
+    <circle cx="475.7" cy="139.3" r="14.6"/>
+    <circle cx="501.5" cy="113.5" r="14.6"/>
+    <circle cx="456.7" cy="172.1" r="14.6"/>
+    <circle cx="437.3" cy="205.5" r="14.6"/>
+    <circle cx="526.1" cy="141.5" r="14.6"/>
+    <circle cx="501.1" cy="168.9" r="14.6"/>
+    <circle cx="417.0" cy="239.8" r="14.6"/>
+    <circle cx="480.3" cy="203.4" r="14.6"/>
+    <circle cx="546.8" cy="172.5" r="14.6"/>
+    <circle cx="521.4" cy="202.2" r="14.6"/>
+    <circle cx="458.2" cy="238.8" r="14.6"/>
+    <circle cx="394.8" cy="275.7" r="14.6"/>
+    <circle cx="563.3" cy="205.9" r="14.6"/>
+    <circle cx="497.7" cy="238.4" r="14.6"/>
+    <circle cx="536.4" cy="238.2" r="14.6"/>
+    <circle cx="433.4" cy="275.8" r="14.6"/>
+    <circle cx="575.3" cy="241.2" r="14.6"/>
+    <circle cx="471.2" cy="275.9" r="14.6"/>
+    <circle cx="508.4" cy="276.0" r="14.6"/>
+    <circle cx="545.5" cy="276.1" r="14.6"/>
+    <circle cx="582.6" cy="277.8" r="14.6"/>
+    <circle cx="402.6" cy="315.0" r="14.6"/>
+    <circle cx="439.1" cy="315.0" r="14.6"/>
+    <circle cx="475.6" cy="315.0" r="14.6"/>
+    <circle cx="512.0" cy="315.0" r="14.6"/>
+    <circle cx="548.5" cy="315.0" r="14.6"/>
+    <circle cx="585.0" cy="315.0" r="14.6"/>
+  </g>
+  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#222" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="300" y="10" text-anchor="middle" font-size="17" fill="#222">過半数 51</text>
+</svg>
+<ul class="legend">
+<li><span class="sw sw-d"></span>民主党 45</li>
+<li><span class="sw sw-r"></span>共和党 53</li>
+<li><span class="sw sw-i"></span>無所属 2 （民主党と会派）</li>
+<li><span class="sw sw-up"></span>白抜き = 今回の改選 35</li>
+</ul>
+<figcaption><span class="fig-label">図 2</span> 上院の現有議席（投票前、 100 議席）。白抜きは改選される議席で、民主党 13 、共和党 22 。 50 対 50 の同数なら副大統領（共和党）が決するため、民主党系の過半数には 51 議席が要る。</figcaption>
+</figure>
+</div>
 
 <h3 id="sec3-2">3.2 有権者の関心</h3>
 <p>ピュー・リサーチ・センターの 2026 年 10 月 8 日の調査では、有権者の 84% が、経済を投票の判断にとって「非常に重要」と答えた <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。同じ調査の記事は、党派によって他の争点の重視度が異なることを示している。経済の重視が、どちらの党に有利に働くかは、この調査からは断定できない。</p>
@@ -110,8 +709,233 @@
 
 <h3 id="sec3-3">3.3 予測の見え方</h3>
 <p>予測市場は、事象の成否に金銭を賭ける取引の価格から確率を読み取る仕組みである。 Kalshi の市場は、民主党が下院を奪還する確率を約 94% と示していた <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。ただし、この値の取得日時は確認できていない。残りの確率は、共和党が多数派を維持する可能性を示す。</p>
-<p>統計モデルは、多数のシミュレーションにもとづいて結果の範囲を推計する手法である。 FiftyPlusOne の統計モデル（ 10 月 24 日付）は、民主党の下院議席の中央値（多数のシミュレーションの中央の値）を 230 、範囲を 211 から 253 と見積もっていた <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。上院に関する数値は、資料の記述が一致せず、原文の確認が必要である。</p>
-<p>Decision Desk HQ という予測機関については、上院で共和党がわずかに優位とする記述が資料にあるが、原文は未確認である <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。上院の予測は資料間で記述が一致せず、確認が必要である。これらはいずれも予測であり、結果ではない。</p>
+<p>統計モデルは、多数のシミュレーションにもとづいて結果の範囲を推計する手法である。 FiftyPlusOne の統計モデル（ 8 月 3 日付の記事）は、民主党の下院議席の中央値（多数のシミュレーションの中央の値）を 230 、範囲を 211 から 253 と見積もっていた。上院では、民主党系の中央値を 51 、範囲を 47 から 55 とし、上院の多数派を得る確率を 55% としていた <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。これは 8 月時点の見積もりであり、同社の 11 月 2 日の評価は図 3 ・図 4 に含めた。</p>
+<p>予測機関の Decision Desk HQ は、 11 月 2 日の上院の評価で、民主党系 51 、共和党 46 、拮抗 3 としていた <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。上院の見通しは、機関によって分かれる（図 4 ）。これらはいずれも予測であり、結果ではない。</p>
+<p>図 3 ・図 4 は、主な予測機関が選挙区ごとに付けた評価（確実・優勢・やや優勢など）を、党ごとに合計したものである。下院では、 10 者すべてが、民主党の優勢議席を過半数の 218 以上と見ていた <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。上院では、民主党系の優勢議席は 47 から 53 に分かれ、過半数の 51 に届くとしたのは、 12 者のうち 5 者だった <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 。灰色の「拮抗」は、どちらにも傾けていない議席である。評価は勝敗の見通しであり、確定した議席ではない。</p>
+<div class="fig-pair">
+<figure class="diagram">
+<svg viewBox="0 0 600 610" role="img" aria-label="下院の予測機関 10 者の評価。民主党優勢の議席は 222 から 239 で、全機関が過半数の 218 を超える。">
+  <text x="274.0" y="18" text-anchor="middle" font-size="17" fill="#222">過半数 218</text>
+  <text x="596" y="18" text-anchor="end" font-size="17" fill="#555">拮抗</text>
+  <g><title>Sabato's Crystal Ball (11/2) : 民主党 239 、共和党 196 、拮抗 0</title>
+    <text x="8" y="54" font-size="17" fill="#222">Sabato's Crystal Ball <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="62" width="291.3" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="301.3" y="62" width="238.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="78.5" font-size="16" font-weight="bold" fill="#fff">239</text>
+    <text x="534" y="78.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">196</text>
+    <text x="596" y="78.5" text-anchor="end" font-size="16" fill="#555">―</text>
+  </g>
+  <g><title>The Economist (11/2) : 民主党 230 、共和党 190 、拮抗 15</title>
+    <text x="8" y="110" font-size="17" fill="#222">The Economist <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="118" width="280.3" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="290.3" y="118" width="16.3" height="22" fill="#bbb"/>
+    <rect x="308.6" y="118" width="231.4" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="134.5" font-size="16" font-weight="bold" fill="#fff">230</text>
+    <text x="534" y="134.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">190</text>
+    <text x="596" y="134.5" text-anchor="end" font-size="16" fill="#555">15</text>
+  </g>
+  <g><title>FiftyPlusOne (11/2) : 民主党 230 、共和党 196 、拮抗 9</title>
+    <text x="8" y="166" font-size="17" fill="#222">FiftyPlusOne <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="174" width="280.3" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="290.3" y="174" width="9.0" height="22" fill="#bbb"/>
+    <rect x="301.3" y="174" width="238.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="190.5" font-size="16" font-weight="bold" fill="#fff">230</text>
+    <text x="534" y="190.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">196</text>
+    <text x="596" y="190.5" text-anchor="end" font-size="16" fill="#555">9</text>
+  </g>
+  <g><title>Silver Bulletin (11/2) : 民主党 230 、共和党 196 、拮抗 9</title>
+    <text x="8" y="222" font-size="17" fill="#222">Silver Bulletin <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="230" width="280.3" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="290.3" y="230" width="9.0" height="22" fill="#bbb"/>
+    <rect x="301.3" y="230" width="238.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="246.5" font-size="16" font-weight="bold" fill="#fff">230</text>
+    <text x="534" y="246.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">196</text>
+    <text x="596" y="246.5" text-anchor="end" font-size="16" fill="#555">9</text>
+  </g>
+  <g><title>RealClearPolitics (11/2) : 民主党 226 、共和党 189 、拮抗 20</title>
+    <text x="8" y="278" font-size="17" fill="#222">RealClearPolitics <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="286" width="275.4" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="285.4" y="286" width="22.5" height="22" fill="#bbb"/>
+    <rect x="309.9" y="286" width="230.1" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="302.5" font-size="16" font-weight="bold" fill="#fff">226</text>
+    <text x="534" y="302.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">189</text>
+    <text x="596" y="302.5" text-anchor="end" font-size="16" fill="#555">20</text>
+  </g>
+  <g><title>Split Ticket (11/2) : 民主党 225 、共和党 197 、拮抗 13</title>
+    <text x="8" y="334" font-size="17" fill="#222">Split Ticket <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="342" width="274.2" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="284.2" y="342" width="13.9" height="22" fill="#bbb"/>
+    <rect x="300.1" y="342" width="239.9" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="358.5" font-size="16" font-weight="bold" fill="#fff">225</text>
+    <text x="534" y="358.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">197</text>
+    <text x="596" y="358.5" text-anchor="end" font-size="16" fill="#555">13</text>
+  </g>
+  <g><title>Inside Elections (10/29) : 民主党 224 、共和党 198 、拮抗 13</title>
+    <text x="8" y="390" font-size="17" fill="#222">Inside Elections <tspan fill="#555" font-size="14">10/29</tspan></text>
+    <rect x="8" y="398" width="272.9" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="282.9" y="398" width="13.9" height="22" fill="#bbb"/>
+    <rect x="298.8" y="398" width="241.2" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="414.5" font-size="16" font-weight="bold" fill="#fff">224</text>
+    <text x="534" y="414.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">198</text>
+    <text x="596" y="414.5" text-anchor="end" font-size="16" fill="#555">13</text>
+  </g>
+  <g><title>Fox News (10/27) : 民主党 223 、共和党 195 、拮抗 17</title>
+    <text x="8" y="446" font-size="17" fill="#222">Fox News <tspan fill="#555" font-size="14">10/27</tspan></text>
+    <rect x="8" y="454" width="271.7" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="281.7" y="454" width="18.8" height="22" fill="#bbb"/>
+    <rect x="302.5" y="454" width="237.5" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="470.5" font-size="16" font-weight="bold" fill="#fff">223</text>
+    <text x="534" y="470.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">195</text>
+    <text x="596" y="470.5" text-anchor="end" font-size="16" fill="#555">17</text>
+  </g>
+  <g><title>Decision Desk HQ (11/2) : 民主党 223 、共和党 203 、拮抗 9</title>
+    <text x="8" y="502" font-size="17" fill="#222">Decision Desk HQ <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="510" width="271.7" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="281.7" y="510" width="9.0" height="22" fill="#bbb"/>
+    <rect x="292.7" y="510" width="247.3" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="526.5" font-size="16" font-weight="bold" fill="#fff">223</text>
+    <text x="534" y="526.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">203</text>
+    <text x="596" y="526.5" text-anchor="end" font-size="16" fill="#555">9</text>
+  </g>
+  <g><title>Cook Political Report (11/2) : 民主党 222 、共和党 195 、拮抗 18</title>
+    <text x="8" y="558" font-size="17" fill="#222">Cook Political Report <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="566" width="270.5" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="280.5" y="566" width="20.0" height="22" fill="#bbb"/>
+    <rect x="302.5" y="566" width="237.5" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="582.5" font-size="16" font-weight="bold" fill="#fff">222</text>
+    <text x="534" y="582.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">195</text>
+    <text x="596" y="582.5" text-anchor="end" font-size="16" fill="#555">18</text>
+  </g>
+  <line x1="274.0" y1="26" x2="274.0" y2="606" stroke="#222" stroke-width="1.5" stroke-dasharray="4 3"/>
+</svg>
+<ul class="legend">
+<li><span class="sw sq sw-d"></span>民主党優勢</li>
+<li><span class="sw sq sw-toss"></span>拮抗</li>
+<li><span class="sw sq sw-r"></span>共和党優勢</li>
+</ul>
+<figcaption><span class="fig-label">図 3</span> 下院の予測（ 435 議席）。各機関の評価を党ごとに合計し、民主党の議席の多い順に並べた。機関名の右は評価の日付（ 2026 年）。</figcaption>
+</figure>
+<figure class="diagram">
+<svg viewBox="0 0 600 722" role="img" aria-label="上院の予測機関 12 者の評価。民主党系の優勢議席は 47 から 53 。過半数 51 に届くのは 5 者。">
+  <text x="276.7" y="18" text-anchor="middle" font-size="17" fill="#222">過半数 51</text>
+  <text x="596" y="18" text-anchor="end" font-size="17" fill="#555">拮抗</text>
+  <g><title>FiftyPlusOne (11/2) : 民主党 53 、共和党 46 、拮抗 1</title>
+    <text x="8" y="54" font-size="17" fill="#222">FiftyPlusOne <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="62" width="281.0" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="291.0" y="62" width="3.3" height="22" fill="#bbb"/>
+    <rect x="296.3" y="62" width="243.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="78.5" font-size="16" font-weight="bold" fill="#fff">53</text>
+    <text x="534" y="78.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">46</text>
+    <text x="596" y="78.5" text-anchor="end" font-size="16" fill="#555">1</text>
+  </g>
+  <g><title>Split Ticket (11/2) : 民主党 53 、共和党 46 、拮抗 1</title>
+    <text x="8" y="110" font-size="17" fill="#222">Split Ticket <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="118" width="281.0" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="291.0" y="118" width="3.3" height="22" fill="#bbb"/>
+    <rect x="296.3" y="118" width="243.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="134.5" font-size="16" font-weight="bold" fill="#fff">53</text>
+    <text x="534" y="134.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">46</text>
+    <text x="596" y="134.5" text-anchor="end" font-size="16" fill="#555">1</text>
+  </g>
+  <g><title>Sabato's Crystal Ball (11/2) : 民主党 53 、共和党 47 、拮抗 0</title>
+    <text x="8" y="166" font-size="17" fill="#222">Sabato's Crystal Ball <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="174" width="281.0" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="291.0" y="174" width="249.0" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="190.5" font-size="16" font-weight="bold" fill="#fff">53</text>
+    <text x="534" y="190.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">47</text>
+    <text x="596" y="190.5" text-anchor="end" font-size="16" fill="#555">―</text>
+  </g>
+  <g><title>Silver Bulletin (11/3) : 民主党 52 、共和党 46 、拮抗 2</title>
+    <text x="8" y="222" font-size="17" fill="#222">Silver Bulletin <tspan fill="#555" font-size="14">11/3</tspan></text>
+    <rect x="8" y="230" width="275.6" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="285.6" y="230" width="8.6" height="22" fill="#bbb"/>
+    <rect x="296.3" y="230" width="243.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="246.5" font-size="16" font-weight="bold" fill="#fff">52</text>
+    <text x="534" y="246.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">46</text>
+    <text x="596" y="246.5" text-anchor="end" font-size="16" fill="#555">2</text>
+  </g>
+  <g><title>Decision Desk HQ (11/2) : 民主党 51 、共和党 46 、拮抗 3</title>
+    <text x="8" y="278" font-size="17" fill="#222">Decision Desk HQ <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="286" width="270.3" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="280.3" y="286" width="14.0" height="22" fill="#bbb"/>
+    <rect x="296.3" y="286" width="243.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="302.5" font-size="16" font-weight="bold" fill="#fff">51</text>
+    <text x="534" y="302.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">46</text>
+    <text x="596" y="302.5" text-anchor="end" font-size="16" fill="#555">3</text>
+  </g>
+  <g><title>Inside Elections (10/29) : 民主党 50 、共和党 46 、拮抗 4</title>
+    <text x="8" y="334" font-size="17" fill="#222">Inside Elections <tspan fill="#555" font-size="14">10/29</tspan></text>
+    <rect x="8" y="342" width="265.0" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="275.0" y="342" width="19.3" height="22" fill="#bbb"/>
+    <rect x="296.3" y="342" width="243.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="358.5" font-size="16" font-weight="bold" fill="#fff">50</text>
+    <text x="534" y="358.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">46</text>
+    <text x="596" y="358.5" text-anchor="end" font-size="16" fill="#555">4</text>
+  </g>
+  <g><title>NBC News (11/3) : 民主党 49 、共和党 46 、拮抗 5</title>
+    <text x="8" y="390" font-size="17" fill="#222">NBC News <tspan fill="#555" font-size="14">11/3</tspan></text>
+    <rect x="8" y="398" width="259.7" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="269.7" y="398" width="24.6" height="22" fill="#bbb"/>
+    <rect x="296.3" y="398" width="243.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="414.5" font-size="16" font-weight="bold" fill="#fff">49</text>
+    <text x="534" y="414.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">46</text>
+    <text x="596" y="414.5" text-anchor="end" font-size="16" fill="#555">5</text>
+  </g>
+  <g><title>The Economist (11/3) : 民主党 49 、共和党 47 、拮抗 4</title>
+    <text x="8" y="446" font-size="17" fill="#222">The Economist <tspan fill="#555" font-size="14">11/3</tspan></text>
+    <rect x="8" y="454" width="259.7" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="269.7" y="454" width="19.3" height="22" fill="#bbb"/>
+    <rect x="291.0" y="454" width="249.0" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="470.5" font-size="16" font-weight="bold" fill="#fff">49</text>
+    <text x="534" y="470.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">47</text>
+    <text x="596" y="470.5" text-anchor="end" font-size="16" fill="#555">4</text>
+  </g>
+  <g><title>Fox News (11/1) : 民主党 48 、共和党 45 、拮抗 7</title>
+    <text x="8" y="502" font-size="17" fill="#222">Fox News <tspan fill="#555" font-size="14">11/1</tspan></text>
+    <rect x="8" y="510" width="254.4" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="264.4" y="510" width="35.2" height="22" fill="#bbb"/>
+    <rect x="301.6" y="510" width="238.4" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="526.5" font-size="16" font-weight="bold" fill="#fff">48</text>
+    <text x="534" y="526.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">45</text>
+    <text x="596" y="526.5" text-anchor="end" font-size="16" fill="#555">7</text>
+  </g>
+  <g><title>Cook Political Report (11/2) : 民主党 48 、共和党 46 、拮抗 6</title>
+    <text x="8" y="558" font-size="17" fill="#222">Cook Political Report <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="566" width="254.4" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="264.4" y="566" width="29.9" height="22" fill="#bbb"/>
+    <rect x="296.3" y="566" width="243.7" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="582.5" font-size="16" font-weight="bold" fill="#fff">48</text>
+    <text x="534" y="582.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">46</text>
+    <text x="596" y="582.5" text-anchor="end" font-size="16" fill="#555">6</text>
+  </g>
+  <g><title>MS NOW (10/29) : 民主党 48 、共和党 47 、拮抗 5</title>
+    <text x="8" y="614" font-size="17" fill="#222">MS NOW <tspan fill="#555" font-size="14">10/29</tspan></text>
+    <rect x="8" y="622" width="254.4" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="264.4" y="622" width="24.6" height="22" fill="#bbb"/>
+    <rect x="291.0" y="622" width="249.0" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="638.5" font-size="16" font-weight="bold" fill="#fff">48</text>
+    <text x="534" y="638.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">47</text>
+    <text x="596" y="638.5" text-anchor="end" font-size="16" fill="#555">5</text>
+  </g>
+  <g><title>RealClearPolitics (11/2) : 民主党 47 、共和党 44 、拮抗 9</title>
+    <text x="8" y="670" font-size="17" fill="#222">RealClearPolitics <tspan fill="#555" font-size="14">11/2</tspan></text>
+    <rect x="8" y="678" width="249.0" height="22" rx="3" fill="#2a4d69"/>
+    <rect x="259.0" y="678" width="45.9" height="22" fill="#bbb"/>
+    <rect x="306.9" y="678" width="233.1" height="22" rx="3" fill="#c0392b"/>
+    <text x="14" y="694.5" font-size="16" font-weight="bold" fill="#fff">47</text>
+    <text x="534" y="694.5" text-anchor="end" font-size="16" font-weight="bold" fill="#fff">44</text>
+    <text x="596" y="694.5" text-anchor="end" font-size="16" fill="#555">9</text>
+  </g>
+  <line x1="276.7" y1="26" x2="276.7" y2="718" stroke="#222" stroke-width="1.5" stroke-dasharray="4 3"/>
+</svg>
+<ul class="legend">
+<li><span class="sw sq sw-d"></span>民主党系優勢（無所属を含む）</li>
+<li><span class="sw sq sw-toss"></span>拮抗</li>
+<li><span class="sw sq sw-r"></span>共和党優勢</li>
+</ul>
+<figcaption><span class="fig-label">図 4</span> 上院の予測（ 100 議席。改選されない 65 議席を含む）。並べ方と日付の表記は図 3 と同じ。</figcaption>
+</figure>
+</div>
 
 <h2 id="sec4">4. 選挙の意義</h2>
 <h3 id="sec4-1">4.1 国内政治</h3>
@@ -124,8 +948,8 @@
 <div class="note"><span class="tag">基準日</span> 2026 年 11 月 4 日 00:33 （日本時間）。投票は 11 月 3 日に行われた。</div>
 <ul>
 <li><strong>確認できなかったこと</strong> : 開票結果、当選確実の報道、各州の確定状況、 11 月時点の大統領支持率、選挙区割りの訴訟と投票ルールの最近の変更。</li>
-<li><strong>予測の不確かさ</strong> : 市場の確率は結果ではなく、取得日時も不明である。統計モデルは 10 月 24 日付であり、その後の変化は確認できていない。上院の予測は資料間で記述が一致せず、原文の確認が必要である。</li>
-<li><strong>出典の確認状況</strong> : 制度の数値と「平均 26 議席」は、 2018 年・ 2022 年の解説記事の要約にもとづく。上院の 2026 年改選数は、単一の出典しかなく原文が未確認のため、本稿では書いていない。</li>
+<li><strong>予測の不確かさ</strong> : 市場の確率は結果ではなく、取得日時も不明である。 FiftyPlusOne の統計モデルの数値は 8 月 3 日付の記事のもので、投票直前の評価は図 3 ・図 4 で補った。上院の予測は、民主党系 47 から 53 議席まで、機関によって分かれる。</li>
+<li><strong>出典の確認状況</strong> : 制度の数値と「平均 26 議席」は、 2018 年・ 2022 年の解説記事の要約にもとづく。現有議席、上院の改選数 (35) 、図 3 ・図 4 の評価は、 Wikipedia の集計にもとづく。各州の公式資料や各予測機関の原文とは照合していない。評価の日付は 10 月 27 日から 11 月 3 日までと、機関によって異なる。</li>
 </ul>
 <p>結果の確認には、公式の集計と信頼できる報道が必要である。結果が確定すれば、本稿の前提は変わる。</p>
 
@@ -134,12 +958,15 @@
 <p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> 中間選挙の制度と大統領与党の議席の傾向に関する 2018 年・ 2022 年の解説記事の要約。原文の URL は未確認で、原文の確認が必要。</li>
-<li id="ref-2"><a href="#fnref-2-1">^</a> Fox News 「 Election Day 2026 polls open with House and Senate control at stake 」。公開日は未確認。 <a href="https://www.foxnews.com/politics/battle-congress-just-beginning-heres-whats-stake-election-day">Fox News 報道</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> Fox News 「 Election Day 2026 polls open with House and Senate control at stake 」（ 2026 年 11 月 3 日）。 <a href="https://www.foxnews.com/politics/battle-congress-just-beginning-heres-whats-stake-election-day">Fox News 報道</a></li>
 <li id="ref-3"><a href="#fnref-3-1">^</a> Pew Research Center 「 Economy ranks as top issue in midterms for all voters but partisans differ over the importance of other issues 」（ 2026 年 10 月 8 日）。 <a href="https://www.pewresearch.org/politics/2026/10/08/economy-ranks-as-top-issue-in-midterms-for-all-voters-but-partisans-differ-over-the-importance-of-other-issues">ピュー・リサーチ・センター</a></li>
 <li id="ref-4"><a href="#fnref-4-1">^</a> Reuters/Ipsos および Marquette Law School の世論調査（ 2026 年 7 月）。原文の確認が必要。</li>
 <li id="ref-5"><a href="#fnref-5-1">^</a> Kalshi 「 Who will control the House? 2026 」（市場の値。取得日時は未確認）。 <a href="https://kalshi.com/markets/controlh/house-winner/controlh-2026">Kalshi 市場</a></li>
-<li id="ref-6"><a href="#fnref-6-1">^</a> FiftyPlusOne 「 Election forecast 」（ 10 月 24 日付）。原文の確認が必要。 <a href="https://blog.fiftyplusone.news/p/election-forecast-democrats-strongly-favored-house-tilt-senate">FiftyPlusOne ブログ</a></li>
-<li id="ref-7"><a href="#fnref-7-1">^</a> Decision Desk HQ の上院の予測（投票前）。原文の URL と日付は未確認で、原文の確認が必要。</li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> FiftyPlusOne 「 Election forecast 」（ 2026 年 8 月 3 日）。 <a href="https://blog.fiftyplusone.news/p/election-forecast-democrats-strongly-favored-house-tilt-senate">FiftyPlusOne ブログ</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> Decision Desk HQ 「 2026 Senate Ratings 」（ 2026 年 11 月 2 日の評価）。数値は Wikipedia 「 2026 United States Senate elections 」の集計によるもので、原文とは照合していない。 <a href="https://votes.decisiondeskhq.com/forecast/2026/senate">Decision Desk HQ</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> Wikipedia 「 2026 United States House of Representatives elections 」（ 2026 年 11 月 4 日閲覧）。投票前の下院の議席構成と、 2024 年の選挙の獲得議席。 <a href="https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections">Wikipedia （英語版）</a></li>
+<li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> Wikipedia 「 2026 United States Senate elections 」（ 2026 年 11 月 4 日閲覧）。投票前の上院の議席構成、改選数、予測機関の評価。 <a href="https://en.wikipedia.org/wiki/2026_United_States_Senate_elections">Wikipedia （英語版）</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> Wikipedia 「 2026 United States House of Representatives election ratings 」（ 2026 年 11 月 4 日閲覧）。下院の予測機関の評価。 <a href="https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_election_ratings">Wikipedia （英語版）</a></li>
 </ol>
 </div>
 </main>
