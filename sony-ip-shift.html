@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ソニーはなぜ IP の会社になったのか</title>
+<style>
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
+  .subtitle { color: #555; margin: 0 0 1rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
+  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
+  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: #2a4d69; }
+  .endnote { font-size: .9rem; color: #555; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">企業史・コンテンツ産業論</p>
+<h1>ソニーはなぜ IP の会社になったのか<br>――トリニトロンの時代から『鬼滅の刃』の時代へ</h1>
+<p class="subtitle">From Cathode-Ray Tubes to Characters: The Long Shift of a Hardware Maker Toward Intellectual Property</p>
+
+<div class="lede">
+<p>2008 年 3 月、ソニーは世界で累計 2 億 8,000 万台を販売したブラウン管「トリニトロン」の生産から撤退した。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> それから十数年を経た現在、同社を支える看板の一つは、テレビではなくアニメ作品である。かつて「画質の会社」と呼ばれた企業が、なぜ、どのような順序で「 IP の会社」へと軸足を移したのか。本稿は、 IP ビジネスの基本構造を押さえたうえで、その経緯を 1968 年から現在までたどる。</p>
+</div>
+
+<div class="meta band"><strong>【方法と限界】</strong>公開されている報道・資料にもとづく整理であり、各時点での経営判断の動機を社内資料で裏づけたものではない。動機や因果に踏み込む箇所は「と考えられる」と明示した。また、ソニーは現在もエレクトロニクスを手がける企業であり、「テレビから IP へ」は事業の重心の移動を指す表現であって、ハードウェアからの全面撤退を意味しない。</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">前提――IP ビジネスとは何か</a></li>
+<li><a href="#sec2">トリニトロンが築いたソニー</a></li>
+<li><a href="#sec3">技術の会社が「中身」を買った</a></li>
+<li><a href="#sec4">ゲームという第三の柱</a></li>
+<li><a href="#sec5">トリニトロンの終幕</a></li>
+<li><a href="#sec6">アニメ IP を束ねる</a></li>
+<li><a href="#sec7">変わったもの、変わらなかったもの</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 前提――IP ビジネスとは何か</h2>
+<p>IP ビジネスとは、漫画・アニメ・ゲーム・小説・キャラクターといった創作物の権利を第三者に許諾し、多角的な展開によって収益を最大化するモデルである。かつては「一つの作品を売る」だけだったものが、現在は「一つの世界観やキャラクターを土台に、多様なメディアと商品へ派生させる」形に進化している。収益源は、グッズ化などのライセンス、アニメ化・映画化・ゲーム化といったメディアミックス、海外の配信や現地展開、ライブやコラボカフェなどのファン向けイベントの四つに大別できる。</p>
+<p>なぜ今、これが重視されるのか。理由は二つある。第一に、ゼロから新しいヒット作を生むのは難度が高く投資リスクも大きいが、認知度とファンを持つ IP があれば、新作の企画にも最初から一定の集客を見込める。第二に、優れた IP は世代を超えて愛されるため、 10 年、 20 年という長期にわたって安定した収入をもたらす。つまり IP は、一度きりの商品でなく「持続可能な資産」として扱われる。</p>
+<p>この二つの性質、とりわけ「資産として長持ちする」という性質を、ソニーがかつて主力としていた事業と並べてみると、同社の選択の意味が見えてくる。</p>
+
+<h2 id="sec2">2. トリニトロンが築いたソニー</h2>
+<p>トリニトロンは、 1967 年に開発され、 1968 年に製品化されたブラウン管の方式である。アパーチャーグリル方式という独自の構造を持ち、世界累計の販売台数は 2 億 8,000 万台に及ぶ。ピークの 2000 年には単年で 2,000 万台を販売した。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> ここまでの数字だけを見れば、これは企業の屋台骨と呼ぶにふさわしい。</p>
+<p>ただし、この種の資産には構造的な弱点があった。技術の優位は、別の技術が登場すれば一世代で失われる。ブラウン管の優劣をどれほど磨いても、市場が液晶やプラズマに移れば、積み上げた技術は値打ちを失う。「製品を売る」商売は、売った瞬間に次の製品との競争が始まるからである。</p>
+<p>これは、前節で見た IP の性質――世代を超えて収益を生み続ける資産――の、ちょうど裏返しにあたる。</p>
+
+<h2 id="sec3">3. 技術の会社が「中身」を買った</h2>
+<p>ソニーは、その弱点に早くから無自覚だったわけではないと考えられる。同社は 1968 年に米 CBS との合弁で CBS ・ソニーレコードを設立し、音楽という「中身」の事業に足を踏み入れていた。そして 1988 年に米 CBS レコードを約 20 億ドルで、 1989 年に米コロンビア・ピクチャーズを約 34 億ドルで買収する。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> これらは現在、ソニー・ミュージックエンタテインメントとソニー・ピクチャーズエンタテインメントに引き継がれている。</p>
+<p>買収の論理は、ハードとソフトの両輪を持つという発想にあったと考えられる。再生機器を売るだけでは、規格や技術の競争に巻き込まれ続ける。映画や音楽の権利そのものを持てば、機器の勝敗とは別に、作品が収益を生む。この発想は、 IP が「資産」だという現在の説明と、ほとんど同じ構造をしている。</p>
+<p>もっとも、 1980 年代末の時点では、これはまだ「ハードの付加価値を高めるための補完」という位置づけにとどまっていた。軸足そのものは、依然としてブラウン管にあった。</p>
+
+<h2 id="sec4">4. ゲームという第三の柱</h2>
+<p>転機の一つは、 1991 年にある。ソニーは任天堂とスーパーファミコン向けの CD-ROM 機を共同開発していたが、 1991 年の CES に試作機を出展した直後、任天堂が別の企業との提携を発表し、共同開発は中止となった。単独での参入を決めたのは、当時の経営トップだった大賀典雄氏とされ、開発は久夛良木健氏が主導したと伝えられている。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> ソニー・コンピュータエンタテインメントが 1993 年に設立され、初代プレイステーションは 1994 年 12 月 3 日に発売された。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
+<p>この出来事の意味は二重にある。まず、提携の破談という外的な事情が、結果として自前のプラットフォームとソフト供給網の構築につながった。ゲーム機は、ハードを売る事業であると同時に、ソフトのライセンスで収益を得る事業でもあるからである。次に、ここでソニーは初めて、自社の技術を、自社が権利を握る作品の流通と結びつけた。のちの IP 戦略の原型が、ここに見える。</p>
+
+<h2 id="sec5">5. トリニトロンの終幕</h2>
+<p>一方、本業のテレビでは、潮目の変化に対応が遅れた。 2008 年 3 月末、ソニーはトリニトロンの生産から撤退する。国内の販売は前年に終えており、最後に残っていたのは、中南米向けに出荷していたシンガポール工場の生産だった。報道は、平面トリニトロンを搭載した「ベガ」シリーズの成功が、液晶テレビへのシフトを遅らせたと伝えている。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></p>
+<p>ここには皮肉がある。ブラウン管で最も成功した製品が、次の技術への移行を最も難しくした。成功した技術への投資が大きいほど、それを捨てる決断は重くなるからである。先に述べたとおり、技術の優位は一世代で失われる。その性質が、最も顕著な形で表れた事例といえる。</p>
+<div class="note">本稿は、ソニーが「テレビを捨てて IP に転じた」とは主張しない。時系列を見れば、 IP 関連の事業は 1960 年代末から並行して育てられており、テレビ事業の不振が、その比重を相対的に高めたと整理するのが実態に近い。</div>
+
+<h2 id="sec6">6. アニメ IP を束ねる</h2>
+<p>2020 年代に入ると、重心の移動は、とりわけアニメで鮮明になった。中心にいるのは、ソニー・ミュージックグループ傘下のアニプレックスである。同社は『鬼滅の刃』をプロデュースし、配給と海外展開も手がける。『鋼の錬金術師』（ 2003 年）がヒットするまでは赤字だったとされ、報道では「ソニーグループにとってのピクサー」とも評されている。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
+<p>2021 年には、ソニー傘下の Funimation Global Group が、米 AT&amp;T から配信大手のクランチロールを 11 億 7,500 万ドルで買収した。 Funimation は、ソニー・ピクチャーズエンタテインメントとアニプレックスの合弁事業である。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> これにより、制作（アニプレックス）、配信（クランチロール）、映画・音楽・ゲームという周辺事業が、同じグループの中でつながった。</p>
+<p>この体制は、冒頭で見た IP ビジネスの展開モデル――原作創出、認知拡大、多角化――を、一つの企業グループの内部で完結させる設計だと読める。成果も数字に表れている。劇場版『鬼滅の刃』無限城編は、全国約 590 館のうち 443 館で初日公開され、公開 5 週目までの興行収入は 257 億円、観客は約 2,000 万人に達した。上映は 80 以上の国・地域で決まっている。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup> アニプレックスの 2022 年 3 月期の売上高も 1,790 億円、営業利益は 362 億円に上った。前期に『無限列車編』が大ヒットした反動で減収減益となった年でも、この規模である。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
+
+<h2 id="sec7">7. 変わったもの、変わらなかったもの</h2>
+<p>ここまでの経緯を、年表にまとめる。</p>
+
+<table class="cards">
+<thead>
+<tr><th>時期</th><th>出来事</th><th>IP への軸足移動という観点での意味</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="時期">1968 年</td><td data-label="出来事">トリニトロン製品化。 CBS ・ソニーレコード設立</td><td data-label="意味">主力の技術事業と、音楽という「中身」の事業が並行して始まる</td></tr>
+<tr><td data-label="時期">1988 〜 1989 年</td><td data-label="出来事">米 CBS レコード、米コロンビア・ピクチャーズを買収</td><td data-label="意味">音楽・映画の権利そのものを大規模に保有する</td></tr>
+<tr><td data-label="時期">1993 〜 1994 年</td><td data-label="出来事">ソニー・コンピュータエンタテインメント設立、プレイステーション発売</td><td data-label="意味">自社プラットフォームとソフト供給網の構築</td></tr>
+<tr><td data-label="時期">2000 年</td><td data-label="出来事">トリニトロン、単年販売がピーク（ 2,000 万台）</td><td data-label="意味">ブラウン管事業の頂点であり、転換の始まりでもある</td></tr>
+<tr><td data-label="時期">2008 年</td><td data-label="出来事">トリニトロン生産終了</td><td data-label="意味">ハードの優位が一世代で失われたことの象徴</td></tr>
+<tr><td data-label="時期">2021 年</td><td data-label="出来事">クランチロール買収</td><td data-label="意味">アニメの制作から配信までをグループ内でつなぐ</td></tr>
+</tbody>
+</table>
+
+<p>この年表から読み取れるのは、「テレビメーカーが突然 IP に転じた」という物語ではなく、三十年以上にわたる、複数の事業の並走と比重の移動である。変わったのは、収益の源泉の置き場所だった。優れた画面を作る技術から、人が繰り返し観たくなる作品へ。前者は一世代で陳腐化するが、後者は IP として 10 年、 20 年と収益を生み続けうる。企業の持続性という観点から見れば、この移動は合理的だったと考えられる。</p>
+<p>では、変わらなかったものは何か。それは「規格や画質の優劣ではなく、体験の質で選ばれる」という、ソニーの出自である。ブラウン管の時代には色の美しさが、アニメの時代には物語とキャラクターが、その役割を担っている。技術の会社から IP の会社へ、というよりも、「人が価値を感じる体験を、長く届け続ける会社」への一貫した移行だったと見ることもできる。</p>
+<p>IP が単なる「作品」でなく「戦略的資産」だとすれば、ソニーの 50 年は、その資産の置き場所を探し続けた歴史と言い換えられる。そして『鬼滅の刃』は、その探索がひとまず結実した姿である。</p>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> 「ソニー、トリニトロンの生産終了」 ITmedia NEWS 、 2008 年 3 月 3 日。 <a href="https://www.itmedia.co.jp/news/articles/0803/03/news059.html">ITmedia NEWS</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> “List of acquisitions by Sony.” <em>Wikipedia</em> （ 2022 年 3 月時点の保存版）。 <a href="https://webcf.waybackmachine.org/web/20220320203019/https://en.wikipedia.org/wiki/List_of_acquisitions_by_Sony">Wikipedia （保存版）</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> “PlayStation launch 1994.” 東証 6758 の意思決定解説。 <a href="https://the-shashi.com/tse/6758/decisions/playstation-launch-1994/">the-shashi</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> 「プレイステーションの日（ 12 月 3 日 記念日）」雑学ネタ帳。 <a href="https://zatsuneta.com/archives/112036.html">雑学ネタ帳</a></li>
+<li id="ref-5">^ <sup><a href="#fnref-5-1">a</a></sup> <sup><a href="#fnref-5-2">b</a></sup> 「世界的ヒット『鬼滅の刃』 ソニー G が狙うディズニー超えの IP 戦略」 nippon.com 。 <a href="https://www.nippon.com/ja/in-depth/d01163/">nippon.com</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> “Sony’s Funimation Completes Crunchyroll Acquisition.” <em>Animation World Network</em>. <a href="https://www.awn.com/print/news/sonys-funimation-completes-crunchyroll-acquisition">AWN</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> 「アニプレックス、 22 年 3 月期の決算は営業益 32% 減の 362 億円と大幅減益」 gamebiz 。 <a href="https://gamebiz.jp/news/352387">gamebiz</a></li>
+</ol>
+<p class="endnote">本稿の事実関係は、上記の公開資料で確認できた範囲に限る。事業の重心の移動をめぐる解釈は筆者の整理であり、ソニー自身の公式見解ではない。</p>
+</div>
+</main>
+</body>
+</html>
