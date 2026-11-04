@@ -6,56 +6,52 @@
 <title>作成文書</title>
 <meta name="description" content="作成文書の一覧">
 <style>
-  body { font-size: 1.1875rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  h1 { font-size: 1.6rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.25rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: #e6edf3; white-space: nowrap; }
-  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .meta { color: #555; font-size: .9rem; }
-  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3;--link:#2a4d69}
-a{color:var(--link)}
-.kicker{font-size:.9375rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 10px}
-.subtitle{font-size:1.25rem;color:var(--muted);line-height:1.8;margin:0 0 28px}
-.lede{border-left:3px solid var(--accent);padding-left:18px;margin:0 0 40px}
-.lede p{font-size:1.1875rem;color:var(--muted);margin:0 0 14px}
-.lede p:last-child{margin-bottom:0}
-p{font-size:1.1875rem;margin:0 0 20px}
-.toc{display:flex;flex-wrap:wrap;gap:8px 10px;margin:0 0 8px}
-.toc a{font-size:1rem;line-height:1.6;text-decoration:none;border:1px solid var(--line);background:var(--box);padding:4px 14px;border-radius:999px}
-.toc a:hover{border-color:var(--accent)}
-.toc span{color:var(--muted);font-size:.875rem;margin-left:4px}
-.sec-intro{color:var(--muted);font-size:1.0625rem;margin:0 0 16px}
-.cards{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:14px}
-.card{position:relative;background:var(--box);border:1px solid var(--line);border-left:4px solid var(--accent);padding:14px 22px 12px;transition:background .15s,border-color .15s}
-.card:hover{background:#fff;border-color:var(--accent)}
-.card a{font-size:1.25rem;font-weight:700;line-height:1.6;text-decoration:none}
-.card a::after{content:"";position:absolute;inset:0}
-.card a:hover,.card a:focus-visible{text-decoration:underline}
-.card p{font-size:1rem;line-height:1.9;margin:4px 0 6px}
-.tag,.lang{background:none;padding:0;margin:0;border-radius:0;font-size:.8125rem;letter-spacing:.06em;color:var(--accent);font-weight:700;display:block}
-.lang{color:var(--muted);font-weight:400}
-html{scroll-behavior:smooth}
-.box{background:var(--box);border:1px solid var(--line);padding:22px 24px;margin:0 0 28px;font-size:1.1875rem}
-.box strong{color:var(--accent)}
-.box a{text-decoration:none}
-.box a:hover{text-decoration:underline}
-.box p{margin:0}
-.note{font-size:1.1875rem;color:var(--muted);margin-top:20px}
-.search{margin:24px 0 8px}
-.search label{display:block;font-size:.9375rem;font-weight:700;color:var(--accent);margin-bottom:6px}
-.search input{box-sizing:border-box;width:100%;max-width:40rem;font:inherit;font-size:1.0625rem;padding:8px 14px;border:1px solid var(--line);border-radius:4px;background:#fff;color:var(--text)}
-.search input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
-.search-status{font-size:.9375rem;color:var(--muted);margin:6px 0 0;min-height:1.6em}
-.card p.snippet{font-size:.9375rem;color:var(--muted);border-top:1px dashed var(--line);margin:8px 0 6px;padding-top:6px}
-.card mark{background:#ffe27a;color:inherit;padding:0 .1em}
-[hidden]{display:none !important}
+  :root{--bg:#101820;--text:#202a32;--muted:#66737d;--accent:#a34e35;--line:#d9dfe1;--box:#f0f2f1;--link:#24495a;--paper:#f5f5f2;--deep:#172631;--ice:#e7edef}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-size:1.0625rem;line-height:1.8;color:var(--text);background:linear-gradient(180deg,var(--deep) 0, var(--deep) 250px, #e9edef 250px, var(--paper) 560px);margin:0}
+  main{width:min(1440px,calc(100% - clamp(32px,7vw,120px)));margin:0 auto;padding:46px 0 100px}
+  main> .kicker{margin:0;color:#dca58c;font-size:.83rem;letter-spacing:.18em;text-transform:uppercase;font-weight:750}
+  h1{font-size:clamp(2rem,4vw,3.25rem);line-height:1.18;letter-spacing:-.035em;color:#f4f2ed;margin:8px 0 0;padding:0 0 25px;border-bottom:1px solid #ffffff35}
+  .subtitle{font-size:1.1rem;color:#c3cdd1;letter-spacing:.04em;line-height:1.6;margin:13px 0 24px}
+  .lede{border-left:3px solid #c67856;padding-left:16px;margin:0 0 28px;color:#d4dcdf}
+  .lede p{font-size:.95rem;color:inherit;margin:0}
+  p{font-size:1.0625rem;margin:0 0 18px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:18px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px #1726310b}
+  .toc a{font-size:.9rem;line-height:1.5;text-decoration:none;border:1px solid #d9e0e2;background:var(--ice);color:var(--text);padding:7px 12px;border-radius:7px;transition:background .15s,border-color .15s,color .15s}
+  .toc a:hover,.toc a:focus-visible{border-color:var(--accent);background:#f7ede8;color:#753d2d}
+  .toc span{color:var(--muted);font-size:.8rem;margin-left:4px}
+  h2{font-size:1.3rem;line-height:1.4;color:#f5f3ee;background:#263c48;padding:12px 17px;margin:42px 0 12px;border-radius:8px;border-left:4px solid #b86748;letter-spacing:.01em}
+  .sec-intro{color:var(--muted);font-size:.98rem;margin:0 0 18px}
+  .cards{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+  .card{position:relative;min-width:0;background:#fff;border:1px solid #d9dfe1;border-top:2px solid #c5cfd2;border-radius:9px;padding:15px 18px 14px;box-shadow:0 3px 12px #17263108;transition:transform .16s,border-color .16s,box-shadow .16s}
+  .card:hover{transform:translateY(-2px);border-color:#b77a64;box-shadow:0 9px 22px #17263112}
+  .card a{display:inline-block;color:var(--link);font-size:1.08rem;font-weight:750;line-height:1.55;text-decoration:none}
+  .card a::after{content:"";position:absolute;inset:0}
+  .card a:hover,.card a:focus-visible{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
+  .card p{font-size:.91rem;line-height:1.75;color:#53616b;margin:7px 0 10px}
+  .tag,.lang{background:none;padding:0;margin:0 0 5px;border-radius:0;font-size:.72rem;letter-spacing:.075em;color:var(--accent);font-weight:750;display:block}
+  .lang{color:var(--muted);font-weight:600;margin:0}
+  h3{font-size:1.05rem;color:var(--link);border-left:3px solid var(--accent);padding-left:.65rem;margin-top:1.8rem}
+  table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.95rem}
+  th,td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left;vertical-align:top}
+  th{background:var(--ice);white-space:nowrap}
+  code{background:var(--ice);padding:.1rem .35rem;border-radius:4px;font-size:.92em}
+  .note,.must,.box{background:var(--box);border:1px solid var(--line);border-left:4px solid var(--accent);padding:14px 18px;margin:20px 0;border-radius:7px}
+  .must{border-left-color:#9b3e36;background:#f5ecea}
+  .meta{color:var(--muted);font-size:.9rem}
+  a{color:var(--link)}
+  .box strong{color:var(--accent)}.box a{text-decoration:none}.box a:hover{text-decoration:underline}.box p{margin:0}
+  .search{margin:22px 0 10px;padding:17px 19px;background:#fff;border:1px solid var(--line);border-radius:10px}
+  .search label{display:block;font-size:.9rem;font-weight:750;color:var(--link);margin-bottom:7px}
+  .search input{box-sizing:border-box;width:100%;max-width:40rem;font:inherit;font-size:1rem;padding:10px 13px;border:1px solid #bac5c9;border-radius:6px;background:#fbfcfb;color:var(--text)}
+  .search input:focus{outline:2px solid #a34e3580;outline-offset:2px;border-color:var(--accent)}
+  .search-status{font-size:.85rem;color:var(--muted);margin:5px 0 0;min-height:1.6em}
+  .card p.snippet{font-size:.86rem;color:var(--muted);border-top:1px dashed var(--line);margin:8px 0 6px;padding-top:7px}
+  .card mark{background:#f1d39c;color:#30271e;padding:0 .12em;border-radius:2px}
+  [hidden]{display:none !important}
+  @media(max-width:700px){main{width:calc(100% - 28px);padding-top:30px}.cards{grid-template-columns:1fr}h2{margin-top:32px}}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
 </style>
 </head>
 <body>
@@ -63,9 +59,9 @@ html{scroll-behavior:smooth}
 <p class="kicker">ポータル</p>
 <h1>作成文書インデックス</h1>
 <p class="subtitle">A Reading Room</p>
-<div class="lede"><p>Created: 2026-10-10 / Updated: 2026-11-04 / 収録 35 点</p></div>
+<div class="lede"><p>Created: 2026-10-10 / Updated: 2026-11-04 / 収録 36 点</p></div>
 <nav class="toc" aria-label="目次">
-<a href="#sec1">時事・政治・経済・国際 <span>7</span></a>
+<a href="#sec1">時事・政治・経済・国際 <span>8</span></a>
 <a href="#sec2">企業・IT・産業の調査 <span>6</span></a>
 <a href="#sec3">FPV ドローンと周辺機器 <span>4</span></a>
 <a href="#sec4">暮らし・健康・教養・スポーツ <span>7</span></a>
@@ -78,7 +74,7 @@ html{scroll-behavior:smooth}
 <p class="search-status" id="qstatus" aria-live="polite"></p>
 </form>
 <h2 id="sec1">1. 時事・政治・経済・国際</h2>
-<p class="sec-intro">選挙日程、政局、住宅市場、国際関係、報道の検証など、いま動いている出来事を調べ直した文書である。</p>
+<p class="sec-intro">選挙日程、政局、住宅市場、国際関係、報道の検証など、いま動いている出来事を調べ直した文書。</p>
 <ul class="cards">
 <li class="card"><span class="tag">日本政治・選挙日程</span>
 <a href="election-schedule-japan.html">これからの大型選挙スケジュール 2026 年秋〜 2031 年</a>
@@ -90,7 +86,7 @@ html{scroll-behavior:smooth}
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">解説記事・住宅市場の統計</span>
 <a href="new-condos-in-japan.html">新築マンションの平均価格が一億円超え。一体、誰が買っているのか</a>
-<p>東京 23 区の新築マンションの平均価格は 2025 年に 1 億 3,613 万円へ達したが、同じ年に首都圏で契約した人の平均購入価格は 7,324 万円である。公表された統計と購入者調査をたどり、購入者の層、価格上昇の要因、買えない人の選択を整理する。投資家・法人の割合など、確かめられなかった点も明記する。</p>
+<p>東京 23 区の新築マンションの平均価格は 2025 年に 1 億 3,613 万円へ達したが、同じ年に首都圏で契約した人の平均購入価格は 7,324 万円。公表された統計と購入者調査をたどり、購入者の層、価格上昇の要因、買えない人の選択を整理する。投資家・法人の割合など、確かめられなかった点も明記する。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">ファクトチェック・エネルギー政策</span>
 <a href="norway-oil-fact-check.html">ノルウェーは石油を富に変えたか</a>
@@ -105,12 +101,16 @@ html{scroll-behavior:smooth}
 <p>2026 年 10 月の中間選挙遊説で、トランプ大統領が民主党のオマル下院議員を繰り返し名指ししている。これが「国民の敵意を動員する」試みなのかを、 10 月 12 日の自宅捜索と三つの集会での発言から検討し、世論調査と 2019 年の前例で米国内の受け止めを確かめる。意図の推定と確認できた事実を分けて記す。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">米国政治・選挙制度</span>
-<a href="us-midterm-2026.html">アメリカ中間選挙 2026 を読む――制度と争点、その意義</a>
-<p>2026 年 11 月 3 日に投票された米国中間選挙を、連邦議会の制度と 2026 年の争点から読むための枠組みを示す。勝敗の予想ではなく、他者の予測を参考として整理し、基準日の時点で結果を確認できていないことを明記する。</p>
-<span class="lang">日本語</span></li>
+<a href="us-midterm-2026.html" lang="en">2026 U.S. Midterms: Balance of Power and Live Race Calls</a>
+<p lang="en">A live overview of the 2026 U.S. midterm elections, covering the rules that shape congressional control, key Senate and House races, voter priorities, and the implications of the results. Race calls and vote counts are presented with source notes and a clear reporting cutoff.</p>
+<span class="lang">English</span></li>
+<li class="card"><span class="tag">U.S. Politics &amp; Election Reporting</span>
+<a href="us-election-lexicon.html" lang="en">U.S. Election &amp; Political Journalism Lexicon</a>
+<p lang="en">A newsroom-focused guide to the language of U.S. elections, defining terms used in campaign coverage, vote counting, race calls, and congressional reporting, with examples and notes on journalistic usage.</p>
+<span class="lang">English</span></li>
 </ul>
 <h2 id="sec2">2. 企業・IT・産業の調査</h2>
-<p class="sec-intro">ソフトウェア製品と企業の来歴、クラウド市場の構造、パソコンの機種の差など、公開資料から調べ直した文書である。</p>
+<p class="sec-intro">ソフトウェア製品と企業の来歴、クラウド市場の構造、パソコンの機種の差など、公開資料から調べ直した文書。</p>
 <ul class="cards">
 <li class="card"><span class="tag">企業調査・基盤ソフトウェア会社の来歴</span>
 <a href="software-ag-overview.html">Software AG とは何だったのか</a>
@@ -126,7 +126,7 @@ html{scroll-behavior:smooth}
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">産業分析・クラウド市場</span>
 <a href="cloud-market-ai-analysis.html">クラウドコンピューティング市場の構造分析――生成 AI 需要による勢力図の変化</a>
-<p>AWS 、 Azure 、 Google Cloud を中心に、市場シェアと決算、各社の AI 提携と設備投資を一次資料で整理し、今後 1 〜 3 年のシナリオを検討する。情報は 2026 年 8 月時点である。</p>
+<p>AWS 、 Azure 、 Google Cloud を中心に、市場シェアと決算、各社の AI 提携と設備投資を一次資料で整理し、今後 1 〜 3 年のシナリオを検討する。情報は 2026 年 8 月時点。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">製品調査・機種比較</span>
 <a href="mac-vs-windows-differences.html">MacBook Pro で何が変わるか――手元の機種で、 Windows PC との差を確かめる</a>
@@ -138,7 +138,7 @@ html{scroll-behavior:smooth}
 <span class="lang">日本語</span></li>
 </ul>
 <h2 id="sec3">3. FPV ドローンと周辺機器</h2>
-<p class="sec-intro">機体、送信機、シミュレータ、操縦の仕組みを扱う文書である。</p>
+<p class="sec-intro">機体、送信機、シミュレータ、操縦の仕組みを扱う文書。</p>
 <ul class="cards">
 <li class="card"><span class="tag">航空・言語・ホビー工学</span>
 <a href="fpv-maneuver.html">FPV ドローンのマニューバ――操縦の仕組みと語の来歴</a>
@@ -158,7 +158,7 @@ html{scroll-behavior:smooth}
 <span class="lang">日本語</span></li>
 </ul>
 <h2 id="sec4">4. 暮らし・健康・教養・スポーツ</h2>
-<p class="sec-intro">生活の基礎知識、健康、心理、学び方、野球の分析など、身近な主題を調べた文書である。</p>
+<p class="sec-intro">生活の基礎知識、健康、心理、学び方、野球の分析など、身近な主題を調べた文書。</p>
 <ul class="cards">
 <li class="card"><span class="tag">自動車の基礎知識・規格の読み解き</span>
 <a href="tire-size-and-outer-diameter.html">タイヤのサイズとは何か――刻印の読み方から、国産車と欧州車の傾向まで</a>
@@ -174,7 +174,7 @@ html{scroll-behavior:smooth}
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">実践ノート・哲学の独学</span>
 <a href="philosophy-self-study.html">哲学的思考の技術と独学カリキュラムの設計</a>
-<p>問いを正確にする、概念を区別する、意見と論証を分けるといった、哲学的に考える技術と、独学を五つの段階で組み立てる方法をまとめた実践ノートである。末尾に、次に取りかかる作業を記している。</p>
+<p>問いを正確にする、概念を区別する、意見と論証を分けるといった、哲学的に考える技術と、独学を五つの段階で組み立てる方法をまとめた実践ノート。末尾に、次に取りかかる作業を記している。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">文学・日本探偵小説</span>
 <a href="strange-novels-of-japan.html">三大奇書の紹介 ―― 『黒死館殺人事件』『虚無への供物』『ドグラ・マグラ』</a>
@@ -190,7 +190,7 @@ html{scroll-behavior:smooth}
 <span class="lang">日本語</span></li>
 </ul>
 <h2 id="sec5">5. 手順書・計画書・実務記録</h2>
-<p class="sec-intro">契約、端末、環境構築、サイト運用など、手を動かすための手順と作業の記録である。</p>
+<p class="sec-intro">契約、端末、環境構築、サイト運用など、手を動かすための手順と作業の記録。</p>
 <ul class="cards">
 <li class="card"><span class="tag">手順書・携帯電話の契約</span>
 <a href="ahamo-migration-guide.html">ドコモから ahamo へ変更する手順書</a>
@@ -202,15 +202,15 @@ html{scroll-behavior:smooth}
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">手順書・ OS 設定</span>
 <a href="shutdown-full-reset.html">シャットダウンを「再起動」と同じ深さにする設定手順書</a>
-<p>「再起動のほうがシャットダウンより深くリセットされる」という前提が Windows 11 と macOS 26 で成り立つかを整理し、 Windows で高速スタートアップを無効にする手順を示す。実機での動作確認は未実施で、仕様にもとづく手順である。</p>
+<p>「再起動のほうがシャットダウンより深くリセットされる」という前提が Windows 11 と macOS 26 で成り立つかを整理し、 Windows で高速スタートアップを無効にする手順を示す。実機での動作確認は未実施で、仕様にもとづく手順。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">実践ガイド・環境移行</span>
 <a href="claude-code-migration.html">Claude Code 環境移植ガイド (Windows 11 ⇔ Mac)</a>
-<p>Claude Code の設定と記憶を別の PC へ移すためのチェックリストである。ユーザー設定、プロジェクト設定、認証、 MCP サーバーなどの系統ごとに整理している。</p>
+<p>Claude Code の設定と記憶を別の PC へ移すためのチェックリスト。ユーザー設定、プロジェクト設定、認証、 MCP サーバーなどの系統ごとに整理している。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">実務記録・ウェブ運用</span>
 <a href="static-site-migration.html">静的サイト移行の実務記録―― DNS 移管とネームサーバー設定</a>
-<p>二年間更新していなかったウェブサイトを、レンタルサーバーから GitHub Pages へ移した記録である。作業だけでなく、次へ進んでよいと判断した根拠も残している。</p>
+<p>二年間更新していなかったウェブサイトを、レンタルサーバーから GitHub Pages へ移した記録。作業だけでなく、次へ進んでよいと判断した根拠も残している。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">手順書</span>
 <a href="emdash-learning-guide.html">EmDash 入門――アカウントの作成から、最初の記事の公開まで</a>
@@ -218,19 +218,19 @@ html{scroll-behavior:smooth}
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">手順書・音楽生成 AI</span>
 <a href="suno-mcp-guide.html">Claude と Suno をつなぐ MCP の手順書</a>
-<p>音楽生成 AI の Suno を、 MCP で Claude から操作できるようにする手順書。 Claude アプリと Claude Code の三つの経路を比べ、接続、確認、最初の一曲、困ったとき、安全・費用・規約までを示す。公式資料にもとづくもので、実機での確認は未実施である。</p>
+<p>音楽生成 AI の Suno を、 MCP で Claude から操作できるようにする手順書。 Claude アプリと Claude Code の三つの経路を比べ、接続、確認、最初の一曲、困ったとき、安全・費用・規約までを示す。公式資料にもとづくもので、実機での確認は未実施。</p>
 <span class="lang">日本語</span></li>
 </ul>
 <h2 id="sec6">6. 資料・見本</h2>
-<p class="sec-intro">参照用の比較資料、技術解説、見本である。</p>
+<p class="sec-intro">参照用の比較資料、技術解説、見本。</p>
 <ul class="cards">
 <li class="card"><span class="tag">資料・企業比較</span>
 <a href="ai-industry-comparison.html">生成 AI 企業比較の基礎資料――モデル・エージェント・コーディング環境</a>
-<p>Google 、 OpenAI 、 Anthropic 、 SpaceX 、 Meta 、 Perplexity の六社について、基盤モデル、製品、コーディング環境の現状を整理した比較資料である。情報基準日は 2026 年 10 月 13 日で、製品名や提供条件は短期間で変わる。</p>
+<p>Google 、 OpenAI 、 Anthropic 、 SpaceX 、 Meta 、 Perplexity の六社について、基盤モデル、製品、コーディング環境の現状を整理した比較資料。情報基準日は 2026 年 10 月 13 日で、製品名や提供条件は短期間で変わる。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">資料・比較表</span>
 <a href="japan-economic-sphere-table-2026.html">国内の主な経済圏の構成（ 2026 年 10 月時点）</a>
-<p>au ・ソフトバンク／ PayPay ・ドコモ・三井住友・楽天の五つの経済圏を、通信・コード決済・クレジットカード・ポイント・銀行・証券の六つの種別で比べた表である。資本関係は記号で区別し、確認できなかった点は「未確認」と記している。</p>
+<p>au ・ソフトバンク／ PayPay ・ドコモ・三井住友・楽天の五つの経済圏を、通信・コード決済・クレジットカード・ポイント・銀行・証券の六つの種別で比べた表。資本関係は記号で区別し、確認できなかった点は「未確認」と記している。</p>
 <span class="lang">日本語</span></li>
 <li class="card"><span class="tag">資料・HTML タグの解説</span>
 <a href="dl-tag.html">HTML の説明リストタグ【 dl ・ dt ・ dd 】の使い方</a>

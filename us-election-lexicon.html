@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>U.S. Election &amp; Political Journalism Lexicon: Key Terms and Media Phrasing</title>
+<style>
+:root {
+  --ink: #172033;
+  --muted: #5c677d;
+  --navy: #102543;
+  --blue: #2563eb;
+  --blue-soft: #eff6ff;
+  --blue-border: #bfdbfe;
+  --red: #c2413b;
+  --red-soft: #fef2f2;
+  --paper: #f8fafc;
+  --card: #ffffff;
+  --line: #e2e8f0;
+  --gold: #d97706;
+  --gold-soft: #fffbeb;
+  --shadow: 0 10px 30px rgba(16, 37, 67, 0.06);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at 90% 0, #e2ecfa 0, transparent 40rem), var(--paper);
+  color: var(--ink);
+  font: 16px/1.75 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+a { color: #164db5; text-underline-offset: 3px; }
+a:hover { color: #0c337b; }
+main {
+  width: min(1040px, calc(100% - 36px));
+  margin: auto;
+  padding: 40px 0 90px;
+}
+header.hero {
+  background: linear-gradient(130deg, #102543 0%, #1e3a63 65%, #2a5286 100%);
+  color: #ffffff;
+  padding: clamp(28px, 5vw, 56px);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(16, 37, 67, 0.15);
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  font-size: .8rem;
+  font-weight: 800;
+  color: #93c5fd;
+  margin-bottom: .6rem;
+}
+.hero h1 {
+  font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+  line-height: 1.18;
+  letter-spacing: -.03em;
+  margin: 0 0 1rem;
+  max-width: 820px;
+}
+.hero p {
+  max-width: 720px;
+  color: #e2e8f0;
+  font-size: 1.05rem;
+  margin: 0 0 1.2rem;
+}
+.hero-meta {
+  display: inline-flex;
+  gap: .6rem;
+  align-items: center;
+  padding: .35rem .8rem;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 99px;
+  font-size: .82rem;
+  color: #f1f5f9;
+}
+.hero-meta:before {
+  content: "";
+  width: .55rem;
+  height: .55rem;
+  background: #fbbf24;
+  border-radius: 50%;
+}
+.intro-box {
+  margin: 24px 0 32px;
+  padding: 20px 24px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--blue);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.intro-box p { margin: 0; color: #334155; font-size: .98rem; }
+.toc-panel {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px 26px;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow);
+}
+.toc-panel h2 {
+  font-size: .82rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: .5rem 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.toc-grid li { font-size: .92rem; }
+.toc-grid a {
+  text-decoration: none;
+  color: var(--ink);
+  display: inline-block;
+  padding: .15rem 0;
+}
+.toc-grid a:hover {
+  text-decoration: underline;
+  color: var(--blue);
+}
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.entry {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 26px 30px;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.entry:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 14px 34px rgba(16, 37, 67, 0.08);
+}
+.entry-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 14px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+.term {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin: 0;
+  letter-spacing: -.02em;
+}
+.badge-group {
+  display: inline-flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.badge {
+  font-size: .75rem;
+  font-weight: 700;
+  padding: .2rem .55rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.badge.pos { background: #f1f5f9; color: #475569; }
+.badge.cat { background: var(--blue-soft); color: #1e40af; border: 1px solid var(--blue-border); }
+.badge.highlight { background: var(--gold-soft); color: #92400e; border: 1px solid #fde68a; }
+.def-block {
+  margin: 14px 0;
+}
+.def-label {
+  font-weight: 750;
+  font-size: .82rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 4px;
+}
+.definition {
+  font-size: 1.04rem;
+  line-height: 1.68;
+  color: #0f172a;
+  margin: 0 0 12px;
+}
+.nuance {
+  font-size: .94rem;
+  line-height: 1.65;
+  color: #334155;
+  background: #f8fafc;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border-left: 3px solid #94a3b8;
+  margin: 12px 0;
+}
+.example-box {
+  background: #fdfefe;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 14px;
+}
+.example-label {
+  font-size: .78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #1e3a63;
+  margin-bottom: 6px;
+  display: block;
+}
+.example-quote {
+  margin: 0;
+  font-style: italic;
+  font-size: .95rem;
+  line-height: 1.65;
+  color: #1e293b;
+}
+.example-source {
+  display: block;
+  font-style: normal;
+  font-size: .8rem;
+  color: var(--muted);
+  margin-top: 6px;
+  text-align: right;
+}
+footer {
+  margin-top: 50px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .88rem;
+  text-align: center;
+}
+@media (max-width: 640px) {
+  main { width: calc(100% - 24px); padding-top: 20px; }
+  .entry { padding: 18px 20px; }
+  .toc-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<main>
+
+<header class="hero">
+<div class="eyebrow">Political Journalism Reference &middot; English Lexicon</div>
+<h1>U.S. Election &amp; Political Journalism Lexicon</h1>
+<p>An English-English explanatory dictionary defining standard newsroom phrasing, institutional idioms, and analytical terminology widely deployed across American political reporting.</p>
+<div class="hero-meta">Comprehensive Reference for U.S. Midterms &amp; National Elections</div>
+</header>
+
+<div class="intro-box">
+<p><strong>About This Lexicon:</strong> American political reporting relies on specialized idioms and analytical phrasing to communicate institutional power, razor-thin seat arithmetic, and high-velocity election night developments. This reference provides precise English definitions, journalistic nuances, and authentic newsroom usage examples for essential election terminology.</p>
+</div>
+
+<nav class="toc-panel" aria-label="Table of Contents">
+<h2>Alphabetical Index of Terms</h2>
+<ul class="toc-grid">
+<li><a href="#term-certified-canvass">Certified Canvass</a></li>
+<li><a href="#term-divided-government">Divided Government</a></li>
+<li><a href="#term-down-ballot-races">Down-Ballot Races</a></li>
+<li><a href="#term-flip-the-senate">Flip the Senate</a></li>
+<li><a href="#term-lame-duck-session">Lame-Duck Session</a></li>
+<li><a href="#term-mid-decade-redistricting">Mid-Decade Redistricting</a></li>
+<li><a href="#term-network-decision-desks">Network Decision Desks</a></li>
+<li><a href="#term-open-seat-clash">Open-Seat Clash</a></li>
+<li><a href="#term-razor-thin-majority">Razor-Thin Majority</a></li>
+<li><a href="#term-reclaim-the-speakers-gavel">Reclaim the Speaker's Gavel</a></li>
+<li><a href="#term-split-ticket-voting">Split-Ticket Voting</a></li>
+<li><a href="#term-too-close-too-early">Too Early vs. Too Close to Call</a></li>
+<li><a href="#term-toss-up-race">Toss-Up Race</a></li>
+<li><a href="#term-wave-election">Wave Election</a></li>
+</ul>
+</nav>
+
+<div class="entries">
+
+<article class="entry" id="term-razor-thin-majority">
+<div class="entry-header">
+<h2 class="term">razor-thin majority</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Congressional Math</span>
+<span class="badge highlight">Core Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">A legislative governing margin that is exceptionally narrow&mdash;frequently just a single seat or a handful of votes&mdash;leaving party leadership highly vulnerable to individual absences, member defections, and factional leverage.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> News organizations prefer "razor-thin majority" over neutral phrases like "small margin" because it conveys constant procedural instability. In coverage of the U.S. House or Senate, reporters deploy this term to explain why party leaders must appease internal ideological caucuses (e.g., hardline conservatives or vulnerable moderates) on routine floor votes.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;Governing with a razor-thin majority of just four seats, House leaders struggled to hold their conference together as rebellious backbenchers repeatedly threatened to derail federal funding bills.&quot;</p>
+<span class="example-source">&mdash; Modeled on AP and Politico Congressional coverage</span>
+</div>
+</article>
+
+<article class="entry" id="term-reclaim-the-speakers-gavel">
+<div class="entry-header">
+<h2 class="term">reclaim the speaker&#39;s gavel</h2>
+<div class="badge-group">
+<span class="badge pos">Verb Phrase (Idiomatic)</span>
+<span class="badge cat">House Leadership</span>
+<span class="badge highlight">Core Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">For the minority party in the U.S. House of Representatives to win back the chamber majority in an election, thereby gaining the authority to elect the Speaker of the House (symbolized by the ceremonial wooden gavel used to preside over the floor).</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> The "gavel" functions as a classic metonym for sweeping institutional control. Beyond simply winning 218 seats, reclaiming the gavel signifies total mastery over which bills reach the floor, which committee chairs issue subpoenas, and how statutory deadlines are negotiated with the White House.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;Targeting vulnerable suburban incumbents across California and New York, Democrats mounted an aggressive offensive aimed at reclaiming the speaker&#39;s gavel after two years in the minority.&quot;</p>
+<span class="example-source">&mdash; Modeled on The Washington Post and AP reporting</span>
+</div>
+</article>
+
+<article class="entry" id="term-flip-the-senate">
+<div class="entry-header">
+<h2 class="term">flip the Senate</h2>
+<div class="badge-group">
+<span class="badge pos">Verb Phrase</span>
+<span class="badge cat">Senate Balance of Power</span>
+<span class="badge highlight">Core Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">To shift the partisan majority of the United States Senate from one political party to the other by achieving sufficient net seat pickups across an election cycle.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> In political journalism, the transitive verb "flip" denotes capturing a seat, chamber, or state previously held by the opposing party. "Flipping the Senate" carries enormous constitutional weight because Senate control dictates the confirmation of Supreme Court justices, federal appellate judges, and cabinet nominees.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;Needing a net gain of four seats to flip the Senate, Democrats secured an early victory in North Carolina before turning their focus to tight ongoing counts in the Industrial Midwest.&quot;</p>
+<span class="example-source">&mdash; Modeled on Reuters and AP News analysis</span>
+</div>
+</article>
+
+<article class="entry" id="term-open-seat-clash">
+<div class="entry-header">
+<h2 class="term">open-seat clash</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Campaign Dynamics</span>
+<span class="badge highlight">Core Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">A fiercely contested election for an office where the incumbent officeholder is not running for reelection&mdash;typically due to retirement, resignation, or seeking higher office&mdash;thereby eliminating the traditional electoral advantages of incumbency.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> Because incumbent lawmakers in Congress historically win reelection over 90% of the time, open seats represent the primary battlegrounds where majorities are won and lost. Journalists characterize these races as volatile, high-stakes "clashes" that attract massive outside spending and unvarnished candidate contrasts.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;The open-seat clash in Michigan quickly evolved into one of the nation&#39;s most expensive Senate battles following the longtime Democratic incumbent&#39;s decision to retire.&quot;</p>
+<span class="example-source">&mdash; Modeled on AP News and The Detroit News</span>
+</div>
+</article>
+
+<article class="entry" id="term-mid-decade-redistricting">
+<div class="entry-header">
+<h2 class="term">mid-decade redistricting</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Electoral Law &amp; Maps</span>
+<span class="badge highlight">Core Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">The redraw of congressional or state legislative district lines outside the regular once-a-decade timeline that follows the U.S. Census, typically prompted by judicial rulings striking down unlawful maps or by partisan state legislatures seeking strategic advantages.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> Standard redistricting occurs once every ten years. When redistricting occurs "mid-decade," it disrupts established political coalitions and forces sitting incumbents into unfamiliar territory. Media outlets scrutinize these developments because line-drawing decisions in state capitols can determine control of the U.S. House before a single voter casts a ballot.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;Court-mandated mid-decade redistricting scrambled the congressional map across several southern states, creating newly competitive districts that bolstered the minority party&#39;s pickup prospects.&quot;</p>
+<span class="example-source">&mdash; Modeled on The New York Times and AP reporting</span>
+</div>
+</article>
+
+<article class="entry" id="term-network-decision-desks">
+<div class="entry-header">
+<h2 class="term">network decision desks</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Election Night Operations</span>
+<span class="badge highlight">Core Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">Specialized, nonpartisan operations within major television networks and news agencies (such as AP, CNN, NBC, ABC, CBS, and Fox News) staffed by statistical modelers, data scientists, and political legal experts who mathematically evaluate vote streams and survey data to project race winners.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> Decision desks operate with strict editorial independence from on-air anchors and commentary panels. In live election night reporting, anchors frequently refer to "our decision desk" to signal that a projection is grounded in statistical modeling rather than premature pundit speculation.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;While the challenger maintained an early five-point lead, network decision desks withheld an official race call until tabulated results from the state&#39;s most populous mail-in precincts were verified.&quot;</p>
+<span class="example-source">&mdash; Modeled on CNN and AP live election coverage</span>
+</div>
+</article>
+
+<article class="entry" id="term-certified-canvass">
+<div class="entry-header">
+<h2 class="term">certified canvass</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Election Law &amp; Certification</span>
+<span class="badge highlight">Core Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">The legally mandated administrative process conducted by county and state election boards to audit, tabulate, resolve provisional and challenged ballots, verify reconciliation reports, and formally execute certified final election results.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> Crucially distinguishes unofficial election-night tabulations (relayed by media outlets) from legally binding, unalterable outcomes. News outlets highlight the certified canvass during recount battles and tight contests to emphasize that legal certification rests exclusively with sworn election authorities, not media projections.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;With the margin separating the two candidates sitting at just 180 votes, state election directors stressed that official victory certificates will not be issued until the completion of the certified canvass.&quot;</p>
+<span class="example-source">&mdash; Modeled on Reuters and state election administrative reporting</span>
+</div>
+</article>
+
+<article class="entry" id="term-too-close-too-early">
+<div class="entry-header">
+<h2 class="term">too early to call vs. too close to call</h2>
+<div class="badge-group">
+<span class="badge pos">Adjective Phrases</span>
+<span class="badge cat">Election Night Designations</span>
+<span class="badge highlight">Supplementary Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition"><strong>Too early to call:</strong> Insufficient vote data has been counted or processed to determine a winner with statistical certainty, regardless of how wide an initial lead appears.<br><strong>Too close to call:</strong> A significant proportion of the expected vote has been tabulated, but the margin separating the candidates remains narrower than the volume of uncounted ballots.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> Modern news decision desks draw a disciplined distinction between these two tags. "Too early" reflects timing and data volume; "too close" reflects genuine mathematical tightness. Using the wrong tag misleads audiences regarding whether an election outcome is genuinely in doubt.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;The network labeled the Senate race &#39;too early to call&#39; when polls closed at 8 p.m., but shifted the status to &#39;too close to call&#39; by midnight as the margin hovered under half a percentage point with 92% of precincts reporting.&quot;</p>
+<span class="example-source">&mdash; Modeled on AP Decision Desk methodology statements</span>
+</div>
+</article>
+
+<article class="entry" id="term-toss-up-race">
+<div class="entry-header">
+<h2 class="term">toss-up race</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Election Forecasting</span>
+<span class="badge highlight">Supplementary Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">An election contest in which nonpartisan polling, demographic trends, past voting history, and campaign finance metrics demonstrate that neither candidate holds a distinct statistical advantage, rendering the final outcome as evenly balanced as a coin toss.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> The central classification utilized by nonpartisan prognosticators (e.g., The Cook Political Report, Sabato&#39;s Crystal Ball, Inside Elections). In coverage of congressional elections, reporters obsess over the "toss-up column" because these races form the battleground tipping points that dictate chamber majorities.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;Analysts designated approximately twenty-five House districts as pure toss-ups, warning that control of Capitol Hill could hinge on fewer than ten thousand votes dispersed across four states.&quot;</p>
+<span class="example-source">&mdash; Modeled on The Cook Political Report and AP News</span>
+</div>
+</article>
+
+<article class="entry" id="term-wave-election">
+<div class="entry-header">
+<h2 class="term">wave election</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Electoral Trends</span>
+<span class="badge highlight">Supplementary Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">An election cycle marked by substantial, widespread seat gains by one political party across multiple levels of government (federal, state, and gubernatorial), usually fueled by widespread public dissatisfaction with the incumbent president or governing party.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> Often invoked in midterm coverage (such as the historical "Republican waves" of 1994 and 2010, or the "Democratic wave" of 2018). Political reporters continually evaluate whether an election represents a genuine nationalized wave or a localized, district-by-district dogfight insulated by gerrymandering and polarization.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;While the opposition party anticipated a historic red wave propelled by inflation, high voter turnout in key suburban battlegrounds blunted their gains and preserved a competitive House.&quot;</p>
+<span class="example-source">&mdash; Modeled on Politico and Wall Street Journal post-election analyses</span>
+</div>
+</article>
+
+<article class="entry" id="term-split-ticket-voting">
+<div class="entry-header">
+<h2 class="term">split-ticket voting</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase / Verb: to split a ticket</span>
+<span class="badge cat">Voter Behavior</span>
+<span class="badge highlight">Supplementary Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">The voting practice whereby an elector casts votes for candidates of different political parties on the same ballot (for example, voting for a Democratic candidate for U.S. Senate and a Republican candidate for state governor).</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> In an era characterized by intense partisan calcification and straight-ticket voting, split-ticket voters are increasingly rare but disproportionately influential. Reporters scrutinize split-ticket results to gauge whether candidate brand quality can overcome broader national headwinds.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;Suburban precincts exhibited pronounced split-ticket voting, as thousands of independent electors supported the popular moderate Republican governor while simultaneously backing the Democratic nominee for Congress.&quot;</p>
+<span class="example-source">&mdash; Modeled on The Washington Post and AP Voter Poll breakdowns</span>
+</div>
+</article>
+
+<article class="entry" id="term-down-ballot-races">
+<div class="entry-header">
+<h2 class="term">down-ballot races</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Ballot Architecture &amp; Local Offices</span>
+<span class="badge highlight">Supplementary Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">Elections for public offices positioned physically below the marquee, top-of-the-ticket contests (such as the presidency or U.S. Senate), encompassing state legislative seats, judicial posts, attorneys general, secretaries of state, and municipal offices.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> While national news naturally gravitates toward top-of-the-ticket battles, savvy political reporters examine down-ballot contests because state lawmakers and election officials wield constitutional authority over voting laws, redistricting maps, and executive powers.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;Major donors poured millions into critical down-ballot races for state supreme court seats, recognizing that future abortion and voting rights disputes would be decided in state chambers.&quot;</p>
+<span class="example-source">&mdash; Modeled on AP News and Politico State Politics coverage</span>
+</div>
+</article>
+
+<article class="entry" id="term-lame-duck-session">
+<div class="entry-header">
+<h2 class="term">lame-duck session</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Congressional Calendar &amp; Governance</span>
+<span class="badge highlight">Supplementary Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">The period of congressional business that convenes following the November general election but prior to the formal inauguration of the newly elected Congress in early January, during which outgoing, retired, or defeated lawmakers still retain voting power.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> Known in Washington for unusual legislative volatility. Because departing lawmakers are unburdened by reelection considerations, party leaders frequently use the lame-duck session to negotiate complex compromise spending packages, judicial confirmations, or statutory debt-limit increases.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;Facing the prospect of minority status in January, the outgoing Senate majority rushed to confirm dozens of pending federal judges during a marathon post-election lame-duck session.&quot;</p>
+<span class="example-source">&mdash; Modeled on The Hill and Reuters Congressional reporting</span>
+</div>
+</article>
+
+<article class="entry" id="term-divided-government">
+<div class="entry-header">
+<h2 class="term">divided government</h2>
+<div class="badge-group">
+<span class="badge pos">Noun Phrase</span>
+<span class="badge cat">Institutional Balance of Power</span>
+<span class="badge highlight">Supplementary Term</span>
+</div>
+</div>
+<div class="def-block">
+<span class="def-label">Definition</span>
+<p class="definition">A structural condition in the American political system where the executive branch (the White House) is controlled by one political party, while the opposing party commands a majority in one or both chambers of the United States Congress.</p>
+</div>
+<div class="nuance">
+<strong>Journalistic Nuance:</strong> The default baseline of modern American governance. When midterms produce divided government, journalists frame the subsequent legislative horizon around high-stakes fiscal confrontations, weaponized committee investigations, and expanded reliance on executive actions and presidential vetoes.
+</div>
+<div class="example-box">
+<span class="example-label">In the News (Newsroom Example)</span>
+<p class="example-quote">&quot;The election outcomes ushered in a renewed era of divided government in Washington, closing the window on sweeping legislative overhauls and setting up a protracted war of attrition over the federal budget.&quot;</p>
+<span class="example-source">&mdash; Modeled on The New York Times and AP political analysis</span>
+</div>
+</article>
+
+</div>
+
+<footer>
+<p>U.S. Election &amp; Political Journalism Lexicon &middot; Compiled for professional reference &middot; Data and definitions strictly conform to standard American newsroom usage.</p>
+<p>Cross-reference with <a href="us-midterm-2026.html">2026 U.S. Midterms: Congressional Balance of Power and Key Races</a></p>
+</footer>
+
+</main>
+</body>
+</html>
