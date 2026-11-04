@@ -6,52 +6,116 @@
 <title>作成文書</title>
 <meta name="description" content="作成文書の一覧">
 <style>
-  :root{--bg:#101820;--text:#202a32;--muted:#66737d;--accent:#a34e35;--line:#d9dfe1;--box:#f0f2f1;--link:#24495a;--paper:#f5f5f2;--deep:#172631;--ice:#e7edef}
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{font-size:1.0625rem;line-height:1.8;color:var(--text);background:linear-gradient(180deg,var(--deep) 0, var(--deep) 250px, #e9edef 250px, var(--paper) 560px);margin:0}
-  main{width:min(1440px,calc(100% - clamp(32px,7vw,120px)));margin:0 auto;padding:46px 0 100px}
-  main> .kicker{margin:0;color:#dca58c;font-size:.83rem;letter-spacing:.18em;text-transform:uppercase;font-weight:750}
-  h1{font-size:clamp(2rem,4vw,3.25rem);line-height:1.18;letter-spacing:-.035em;color:#f4f2ed;margin:8px 0 0;padding:0 0 25px;border-bottom:1px solid #ffffff35}
-  .subtitle{font-size:1.1rem;color:#c3cdd1;letter-spacing:.04em;line-height:1.6;margin:13px 0 24px}
-  .lede{border-left:3px solid #c67856;padding-left:16px;margin:0 0 28px;color:#d4dcdf}
-  .lede p{font-size:.95rem;color:inherit;margin:0}
-  p{font-size:1.0625rem;margin:0 0 18px}
-  .toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:18px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 24px #1726310b}
-  .toc a{font-size:.9rem;line-height:1.5;text-decoration:none;border:1px solid #d9e0e2;background:var(--ice);color:var(--text);padding:7px 12px;border-radius:7px;transition:background .15s,border-color .15s,color .15s}
-  .toc a:hover,.toc a:focus-visible{border-color:var(--accent);background:#f7ede8;color:#753d2d}
-  .toc span{color:var(--muted);font-size:.8rem;margin-left:4px}
-  h2{font-size:1.3rem;line-height:1.4;color:#f5f3ee;background:#263c48;padding:12px 17px;margin:42px 0 12px;border-radius:8px;border-left:4px solid #b86748;letter-spacing:.01em}
-  .sec-intro{color:var(--muted);font-size:.98rem;margin:0 0 18px}
-  .cards{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-  .card{position:relative;min-width:0;background:#fff;border:1px solid #d9dfe1;border-top:2px solid #c5cfd2;border-radius:9px;padding:15px 18px 14px;box-shadow:0 3px 12px #17263108;transition:transform .16s,border-color .16s,box-shadow .16s}
-  .card:hover{transform:translateY(-2px);border-color:#b77a64;box-shadow:0 9px 22px #17263112}
-  .card a{display:inline-block;color:var(--link);font-size:1.08rem;font-weight:750;line-height:1.55;text-decoration:none}
-  .card a::after{content:"";position:absolute;inset:0}
-  .card a:hover,.card a:focus-visible{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
-  .card p{font-size:.91rem;line-height:1.75;color:#53616b;margin:7px 0 10px}
-  .tag,.lang{background:none;padding:0;margin:0 0 5px;border-radius:0;font-size:.72rem;letter-spacing:.075em;color:var(--accent);font-weight:750;display:block}
-  .lang{color:var(--muted);font-weight:600;margin:0}
-  h3{font-size:1.05rem;color:var(--link);border-left:3px solid var(--accent);padding-left:.65rem;margin-top:1.8rem}
-  table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.95rem}
-  th,td{border:1px solid var(--line);padding:.55rem .7rem;text-align:left;vertical-align:top}
-  th{background:var(--ice);white-space:nowrap}
-  code{background:var(--ice);padding:.1rem .35rem;border-radius:4px;font-size:.92em}
-  .note,.must,.box{background:var(--box);border:1px solid var(--line);border-left:4px solid var(--accent);padding:14px 18px;margin:20px 0;border-radius:7px}
-  .must{border-left-color:#9b3e36;background:#f5ecea}
-  .meta{color:var(--muted);font-size:.9rem}
-  a{color:var(--link)}
-  .box strong{color:var(--accent)}.box a{text-decoration:none}.box a:hover{text-decoration:underline}.box p{margin:0}
-  .search{margin:22px 0 10px;padding:17px 19px;background:#fff;border:1px solid var(--line);border-radius:10px}
-  .search label{display:block;font-size:.9rem;font-weight:750;color:var(--link);margin-bottom:7px}
-  .search input{box-sizing:border-box;width:100%;max-width:40rem;font:inherit;font-size:1rem;padding:10px 13px;border:1px solid #bac5c9;border-radius:6px;background:#fbfcfb;color:var(--text)}
-  .search input:focus{outline:2px solid #a34e3580;outline-offset:2px;border-color:var(--accent)}
-  .search-status{font-size:.85rem;color:var(--muted);margin:5px 0 0;min-height:1.6em}
-  .card p.snippet{font-size:.86rem;color:var(--muted);border-top:1px dashed var(--line);margin:8px 0 6px;padding-top:7px}
-  .card mark{background:#f1d39c;color:#30271e;padding:0 .12em;border-radius:2px}
-  [hidden]{display:none !important}
-  @media(max-width:700px){main{width:calc(100% - 28px);padding-top:30px}.cards{grid-template-columns:1fr}h2{margin-top:32px}}
-  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important}}
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
+  .subtitle { color: #555; margin: 0 0 1rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
+  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
+  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: #2a4d69; }
+  .endnote { font-size: .9rem; color: #555; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+  /* portal.html 固有の部品(カード・検索・目次の件数)。配色は上の意匠に合わせる */
+  .toc li span { color: #555; font-size: .8rem; margin-left: .3rem; }
+  .sec-intro { color: #555; margin: 0 0 1rem; }
+  .cards { list-style: none; margin: 0 0 20px; padding: 0; display: grid; gap: 14px; }
+  .card { position: relative; background: #e6edf3; border: 1px solid #bbb; border-left: 4px solid #2a4d69; padding: 14px 22px 12px; }
+  .card a { display: inline-block; color: #2a4d69; font-weight: 700; text-decoration: none; }
+  .card a::after { content: ""; position: absolute; inset: 0; }
+  .card a:hover, .card a:focus-visible { text-decoration: underline; }
+  .card p { font-size: .95rem; line-height: 1.75; color: #222; margin: .4rem 0 .6rem; }
+  .card .tag { display: block; width: fit-content; margin: 0 0 .35rem; }
+  .card .lang { display: block; font-size: .8rem; color: #555; }
+  .card p.snippet { font-size: .88rem; color: #555; border-top: 1px dashed #bbb; margin: .5rem 0 .4rem; padding-top: .4rem; }
+  .card mark { background: #fff6d6; color: #222; padding: 0 .12em; }
+  .search { margin: 1.4rem 0 .6rem; padding: 1rem 1.2rem; background: #fff; border: 1px solid #bbb; }
+  .search label { display: block; font-size: .9rem; font-weight: 700; color: #2a4d69; margin-bottom: .4rem; }
+  .search input { box-sizing: border-box; width: 100%; max-width: 40rem; font: inherit; font-size: 1rem; padding: .55rem .75rem; border: 1px solid #bbb; border-radius: 3px; background: #fff; color: #222; }
+  .search input:focus { outline: 2px solid #2a4d69; outline-offset: 2px; }
+  .search-status { font-size: .85rem; color: #555; margin: .3rem 0 0; min-height: 1.6em; }
+  [hidden] { display: none !important; }
 </style>
 </head>
 <body>
@@ -61,12 +125,15 @@
 <p class="subtitle">A Reading Room</p>
 <div class="lede"><p>Created: 2026-10-10 / Updated: 2026-11-04 / 収録 36 点</p></div>
 <nav class="toc" aria-label="目次">
-<a href="#sec1">時事・政治・経済・国際 <span>8</span></a>
-<a href="#sec2">企業・IT・産業の調査 <span>6</span></a>
-<a href="#sec3">FPV ドローンと周辺機器 <span>4</span></a>
-<a href="#sec4">暮らし・健康・教養・スポーツ <span>7</span></a>
-<a href="#sec5">手順書・計画書・実務記録 <span>7</span></a>
-<a href="#sec6">資料・見本 <span>4</span></a>
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">時事・政治・経済・国際</a> <span>8</span></li>
+<li><a href="#sec2">企業・IT・産業の調査</a> <span>6</span></li>
+<li><a href="#sec3">FPV ドローンと周辺機器</a> <span>4</span></li>
+<li><a href="#sec4">暮らし・健康・教養・スポーツ</a> <span>7</span></li>
+<li><a href="#sec5">手順書・計画書・実務記録</a> <span>7</span></li>
+<li><a href="#sec6">資料・見本</a> <span>4</span></li>
+</ol>
 </nav>
 <form class="search" role="search" onsubmit="return false">
 <label for="q">文書の本文を検索</label>
@@ -100,7 +167,7 @@
 <a href="trump-omar-midterms-2026.html">トランプ大統領はなぜオマル議員を名指しするのか</a>
 <p>2026 年 10 月の中間選挙遊説で、トランプ大統領が民主党のオマル下院議員を繰り返し名指ししている。これが「国民の敵意を動員する」試みなのかを、 10 月 12 日の自宅捜索と三つの集会での発言から検討し、世論調査と 2019 年の前例で米国内の受け止めを確かめる。意図の推定と確認できた事実を分けて記す。</p>
 <span class="lang">日本語</span></li>
-<li class="card"><span class="tag">米国政治・選挙制度</span>
+<li class="card"><span class="tag">2026 U.S. Midterms: Congressional Balance</span>
 <a href="us-midterm-2026.html" lang="en">2026 U.S. Midterms: Balance of Power and Live Race Calls</a>
 <p lang="en">A live overview of the 2026 U.S. midterm elections, covering the rules that shape congressional control, key Senate and House races, voter priorities, and the implications of the results. Race calls and vote counts are presented with source notes and a clear reporting cutoff.</p>
 <span class="lang">English</span></li>
