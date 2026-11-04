@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「黒人英語」は何を指すのか</title>
+<style>
+  /* 配色(薄い緑の基調)。色はここだけで決め、以降は var() で参照する */
+  :root{--bg:#f7f8f6;--text:#242522;--muted:#65695f;--accent:#3d5a52;--line:#d7dcd2;--box:#eceee7}
+  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--accent); }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 1.4rem; color: var(--text); }
+  .subtitle { color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
+  /* 見出し */
+  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  /* 表 */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: var(--box); white-space: nowrap; }
+  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  pre { overflow-x: auto; background: var(--box); padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
+  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--accent); }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
+  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--text);text-decoration:none}
+  .toc a:hover{color:var(--accent);text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em}
+  sup a{color:var(--accent);text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:var(--box)}
+  /* 末尾の注記 */
+  .endnote { font-size: .9rem; color: var(--muted); }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
+    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
+    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
+  }
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">社会言語学・言語史</p>
+<h1>「黒人英語」は何を指すのか<br>――AAVE と MLE の表現・起源・捉え方</h1>
+<p class="subtitle">African American Vernacular English and Multicultural London English: A Survey of Expressions, Disputed Origins, and Scholarly Perspectives</p>
+<div class="lede">
+<p>「黒人英語」と呼ばれる言語変種の代表に、米国のアフリカ系アメリカ人の共同体で用いられてきた AAVE がある。英国には、別の経緯で形成された多民族の若者の都市方言 MLE がある。両者は重なる部分を持つが、同じ対象ではない。本稿は、両者の代表的な表現を、文法・語彙・語用論の観点から検討し、起源がどこまで確かかを区分して示し、言語学・哲学・史学がこれらの変種をどう捉えてきたかを論じる。</p>
+</div>
+<div class="meta"><strong>【方法と限界】</strong>本稿は、公開された辞書・研究機関のページ・論文の要旨を調べた結果に基づく。原典の全文を読んでいない出典が多く、その旨を参考文献欄に記した。話し言葉の実例は、辞書の引用文と教育機関の解説に限られ、コーパス調査は行っていない。日本語訳はすべて筆者による一例である。</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">問いと方法</a></li>
+<li><a href="#sec2">用語と範囲</a>
+<ol>
+<li><a href="#sec2-1">AAVE と AAE</a></li>
+<li><a href="#sec2-2">MLE と周辺の呼称</a></li>
+</ol>
+</li>
+<li><a href="#sec3">歴史的背景</a>
+<ol>
+<li><a href="#sec3-1">米国の大移動</a></li>
+<li><a href="#sec3-2">英国のウィンドラッシュ世代</a></li>
+</ol>
+</li>
+<li><a href="#sec4">十の表現の検討</a>
+<ol>
+<li><a href="#sec4-1">AAVE の五つの表現</a></li>
+<li><a href="#sec4-2">MLE の五つの表現</a></li>
+<li><a href="#sec4-3">追加の用例 (AAVE)</a></li>
+<li><a href="#sec4-4">追加の用例 (MLE)</a></li>
+</ol>
+</li>
+<li><a href="#sec5">AAVE と MLE の比較</a></li>
+<li><a href="#sec6">起源をめぐる論点</a>
+<ol>
+<li><a href="#sec6-1">AAVE の成立</a></li>
+<li><a href="#sec6-2"><code>y'all</code> と過去の <code>ain't</code></a></li>
+<li><a href="#sec6-3"><code>innit</code> と <code>-dem</code></a></li>
+</ol>
+</li>
+<li><a href="#sec7">学問の捉え方</a>
+<ol>
+<li><a href="#sec7-1">言語学</a></li>
+<li><a href="#sec7-2">史学</a></li>
+<li><a href="#sec7-3">哲学</a></li>
+</ol>
+</li>
+<li><a href="#sec8">結論</a></li>
+<li><a href="#sec9">限界</a></li>
+<li><a href="#refs">参考文献・資料</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 問いと方法</h2>
+<p>本稿は、三つの問いに答える。第一に、「黒人英語」という語は何を指し、 AAVE と MLE はどこで重なり、どこで分かれるのか。第二に、代表的な十の表現は、文法・語彙・語用論のどれとして説明でき、その起源はどこまで確かなのか。第三に、言語学・哲学・史学は、これらの変種をどのように捉えてきたのか。</p>
+<p>結論は、調査の結果として得る。調査では、各主張を次の三つに区分する。「確立した事実」は、複数の独立した研究または主要な辞書で記述が一致するもの。「未確定の仮説」は、研究者の間で説が分かれる、または出典の間で記述が食い違うもの。「投機的な理論」は、検証できる証拠が乏しいものである。この区分は、確認できた出典に基づく筆者の判断である。</p>
+<p>本稿は、増補の素材とした既存の解説稿（以下「素材」）の記述を、確認済みの事実としては扱わなかった。年代、語源、語義の記述を一つずつ出典に照らし、裏付けのない記述は本文から外した。外した項目は 9 節で述べる。</p>
+
+<h2 id="sec2">2. 用語と範囲</h2>
+<h3 id="sec2-1">2.1 AAVE と AAE</h3>
+<p>米国のアフリカ系アメリカ人の共同体で用いられてきた変種を、研究者は AAVE (African American Vernacular English) または AAE (African American English) と呼ぶ。 両者の使い分けの詳細は、本稿の調査では確認していない。</p>
+<p>この変種を、独立した規則の体系を持つ方言として記述する立場は、 社会言語学者 Labov の 1972 年の著作に代表される。 Labov は、非標準の話し方が学習の障害になるとは考えられないと論じた <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 。この見方は、 1997 年の米国言語学会の決議でも示されている（ 7.1 節）。</p>
+
+<h3 id="sec2-2">2.2 MLE と周辺の呼称</h3>
+<p>英国の MLE (Multicultural London English) は、ロンドンの多民族の若者の都市方言を指す語として使われる。 MLE の形成を調べた Cheshire らは、民族的な多様性に由来する多様な言語特徴の集まり (feature pool) から、この変種が形成されたと論じた <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</p>
+<p>MLE に先立つ若者の言語として、ロンドン・ジャマイカ英語 (London Jamaican) と多民族の俗語 (multiracial vernacular) の二つが挙げられている <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 。筆者の判断では、 MLE 、 Black British English 、ジャマイカ・パトワ語（ British Jamaican Creole などの呼称）は、同じ対象の言い換えではない。ただし、各語の研究上の厳密な定義は、本稿の調査では確認できなかった。</p>
+<p>以上から、「黒人英語」という語を AAVE と MLE の両方に当てはめることには、注意が要る。 MLE の話し手は、アフリカ系の子孫に限られない多民族の若者だからである。</p>
+
+<h2 id="sec3">3. 歴史的背景</h2>
+<h3 id="sec3-1">3.1 米国の大移動</h3>
+<p>Britannica は、 1916 年から 1970 年にかけて、約 600 万人の黒人が南部から北部・西部の都市へ移ったと記す <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup> 。この数値は百科事典の記述であり、移動そのものは確立した事実として扱う。移動に伴って南部の話し方が北部・西部の都市へ広がったと考えることはできるが、これは筆者の推測であり、変種の広がりとの因果関係は、本稿の調査では確認していない。</p>
+
+<h3 id="sec3-2">3.2 英国のウィンドラッシュ世代</h3>
+<p>英国の公文書館によれば、エンパイア・ウィンドラッシュ号は 1948 年 6 月 22 日にエセックスのティルベリーに到着した。 1948 年から 1971 年にかけてカリブ海諸国から英国へ来た人々は、ウィンドラッシュ世代と呼ばれる <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup> 。素材は移民の時期を「 1940 〜 70 年代」（ 2 節）と「 1950 年代以降」（比較表）の二通りに書いていた。いずれも上の記録と合わないため、本稿は 1948 年を起点とする。</p>
+<p>この到着は、移住全体を象徴する出来事として扱われることがある <sup id="fnref-20-2"><a href="#ref-20">[20]</a></sup> 。移住の全体は、一つの出来事に還元できない。</p>
+
+<h2 id="sec4">4. 十の表現の検討</h2>
+<p>以下の表は、十の表現について、意味、文法・語彙・語用論上の説明、起源の確かさの区分を示す。日本語訳は、原語の砕けた調子を反映して筆者が付けた一例である。例文のうち「作例」と記したものは筆者が作った短い文であり、その用法が成立することは、挙げた辞書・解説の記述で裏付けている。話者集団の全員がこれらを使うとは限らず、場面や個人によって使い分けられる点にも留意する必要がある。</p>
+
+<h3 id="sec4-1">4.1 AAVE の五つの表現</h3>
+<table class="cards">
+<thead><tr><th>表現</th><th>意味</th><th>説明</th><th>起源と区分</th><th>例文と訳</th></tr></thead>
+<tbody>
+<tr><td data-label="表現"><code>ain't</code></td><td data-label="意味"><code>have not</code> の否定。 AAVE では過去の否定（ <code>didn't</code> 相当）にも現れる。素材は <code>am not</code> から <code>have not</code> までの万能な否定語とするが、 <code>am not</code> や <code>is not</code> の用法は、本稿の出典では確認できていない。</td><td data-label="説明">文法。助動詞の否定形。過去の否定として使われる点が、他の多くの非標準変種と異なるとされる <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。 <code>ain't</code> の後の動詞は、原形のほか過去形も取りうる <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</td><td data-label="起源と区分"><span class="tag">未確定</span> 過去の <code>ain't</code> は、現在完了の <code>ain't</code> からの再分析とする提案がある一方、高年層が <code>ain't</code> と過去形の組み合わせを好むことから古い構成の可能性も指摘されている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</td><td data-label="例文と訳"><em>"I ain't see nothing."</em> <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。「何も見なかった」。素材の例文 <em>"He ain't listening to me."</em>（「彼は私の話を聞いていない」）の用法は、出典では確認できていない。</td></tr>
+<tr><td data-label="表現"><code>y'all</code></td><td data-label="意味">二人称の複数形。「あなたたち」。</td><td data-label="説明">語彙・文法。 you の複数形。辞書は、南部米語または AAVE に伝統的に結びつく複数形と説明する <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> 。丁寧さの度合いは中立的で、くだけた「お前ら」とは限らない。</td><td data-label="起源と区分"><span class="tag">未確定</span> スコッツ・アイリッシュ(<code>ye aw</code>)に由来する説と、初期のアフリカ系の変種に由来する説があり、初出年の記述も出典で食い違う（ 6.2 節）。</td><td data-label="例文と訳">作例 <em>"Y'all coming tonight?"</em> 「皆さん、今夜来る ? 」</td></tr>
+<tr><td data-label="表現"><code>finna</code></td><td data-label="意味">「〜しようとしている」。</td><td data-label="説明">Language Log のコメントは、 <code>gonna</code> に近い助動詞的な語と見る <sup id="fnref-29-1"><a href="#ref-29">[29]</a></sup> が、一個人の見解であり根拠は弱い。 Merriam-Webster は、 <code>fixing to</code> を表す語と記す <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。語彙か相（動作の局面）の標識かという分類は、本稿では決めない。</td><td data-label="起源と区分"><span class="tag">未確定</span> <code>fixing to</code> の縮約という説明は、確認できた主要辞書の一点に基づく。音韻変化の過程と、縮約が AAVE に限られるかは確認していない <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。</td><td data-label="例文と訳">作例 <em>"I'm finna head out."</em> 「そろそろ出るところだ」</td></tr>
+<tr><td data-label="表現"><code>cap</code> / <code>no cap</code></td><td data-label="意味"><code>cap</code> は誇張や嘘。 <code>no cap</code> は「嘘ではない」。</td><td data-label="説明">語彙・語用論。 <code>no cap</code> は、発言の真実性を強調する標識として働く。 Merriam-Webster は、 <code>no cap</code> が真実性を伝えるものであり、それが修飾する発言自体は意図的に誇張されていることも多いと記す <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。</td><td data-label="起源と区分"><span class="tag">未確定</span> 黒人の語彙集 <em>Black Talk</em>(1994) を著した Smitherman は <code>cap</code> を「からかう、貶める」の意で定義するという。現在の意味とは同じでないが、意味上のつながりがありうる <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup> 。 Dictionary.com は、嘘・誇張の意味が 1900 年代初頭にさかのぼるとする <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。</td><td data-label="例文と訳">作例 <em>"No cap, that was the best show."</em> 「嘘じゃなく、あれは最高の公演だった」</td></tr>
+<tr><td data-label="表現">habitual <code>be</code></td><td data-label="意味">習慣や反復を表す。</td><td data-label="説明">文法。屈折しない <code>be</code> が、習慣的・反復的な事態を表す。標準英語は、この区別を明示的に示さない <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> 。</td><td data-label="起源と区分"><span class="tag">未確定</span> 起源は、アイルランド英語からの拡散説などがあるが、カリブのクレオールには習慣の <code>be</code> の証拠がないという批判もある <sup id="fnref-27-2"><a href="#ref-27">[27]</a></sup> 。</td><td data-label="例文と訳"><em>"She be working all the time."</em> <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。「彼女はしょっちゅう働いている」</td></tr>
+</tbody>
+</table>
+<p>habitual <code>be</code> の意味は、素材の「恒常的な状態」ではなく、習慣・反復と記す方が出典に近い <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。状態を表す述語との共起の制約については、確認できていない。</p>
+
+<h3 id="sec4-2">4.2 MLE の五つの表現</h3>
+<table class="cards">
+<thead><tr><th>表現</th><th>意味</th><th>説明</th><th>起源と区分</th><th>例文と訳</th></tr></thead>
+<tbody>
+<tr><td data-label="表現"><code>bruv</code> / <code>blud</code></td><td data-label="意味">友人や仲間への呼びかけ。「おい」「兄弟」に近い。</td><td data-label="説明">語彙・語用論。呼びかけ語 (vocative) 。 MLE の特徴として、一群の呼びかけ語が多用される点が挙げられている <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。ただし、 <code>bruv</code> 自体の語義の出典は確認できていない。</td><td data-label="起源と区分"><span class="tag">投機的</span> <code>blud</code> の語源を <code>blood</code> や <code>bredren</code> とする説明は、辞書的な裏付けを確認できていない。素材の「ジャマイカ英語の blood brother 」は、そのような表現の実在を確認できず、削除した。</td><td data-label="例文と訳">作例 <em>"Alright, bruv?"</em> 「調子はどう ? 」</td></tr>
+<tr><td data-label="表現"><code>innit</code></td><td data-label="意味">付加疑問の標識。「〜だよね」。</td><td data-label="説明">語用論。 <code>isn't it</code> の縮約から生じ、形の変わらない (invariant) 付加疑問として使われる <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。</td><td data-label="起源と区分"><span class="tag">未確定</span> 文法化（頻度による音声の縮約と再分析）を主とする説明が提案され、言語接触の影響は補助的で暫定的とされる（ 6.3 節）。</td><td data-label="例文と訳"><em>"Potato is good for you, innit."</em> <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 。「ジャガイモは体にいい、でしょ」</td></tr>
+<tr><td data-label="表現"><code>mandem</code></td><td data-label="意味">男性の仲間の集団。「連中」。</td><td data-label="説明">語彙・形態論。 <code>man</code> に <code>dem</code> が付く。 <code>dem</code> の文法的な働きは、分析が割れている（ 6.3 節）。</td><td data-label="起源と区分"><span class="tag">未確定</span> オンライン辞書はジャマイカ・クレオールの <code>man dem</code> からの借用と記すが、研究文献では確認しておらず、補助的な根拠にとどまる。女性形 <code>gyaldem</code> は、実在を確認できず削除した。</td><td data-label="例文と訳">作例 <em>"The mandem are outside."</em> 「仲間たちは外にいる」</td></tr>
+<tr><td data-label="表現"><code>ting</code></td><td data-label="意味">「物」。複合語の <code>peng ting</code> は「非常に魅力的な女性」。</td><td data-label="説明">語彙。 Green's Dictionary of Slang は、 <code>peng ting</code> を英国の黒人スラングとして「非常に魅力的な女性」と定義する <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。素材の「気になっている相手」という語義は、裏付けが取れず訂正した。</td><td data-label="起源と区分"><span class="tag">未確定</span> 単独の <code>ting</code> がジャマイカの <code>thing</code> に由来するという説明は、辞書的な裏付けを十分に確認できていない。</td><td data-label="例文と訳">見出し語形 <em>peng ting</em> 。「魅力的な女性」。引用文は、女性を品定めする文脈にあるため、代表例として採らない。</td></tr>
+<tr><td data-label="表現"><code>allow it</code></td><td data-label="意味">「やめろ」。会話や口論を終わらせる命令。</td><td data-label="説明">語用論。 Green's Dictionary of Slang は、「会話や口論を止める」の意で、英国の黒人・若者のスラングと記す <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。素材の「勘弁してくれ」という哀願の語感は、裏付けが取れなかった。</td><td data-label="起源と区分"><span class="tag">未確定</span> 1997 年以降の引用があるが <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 、語源の説明は確認できていない。</td><td data-label="例文と訳"><em>"'Low it, man, I don't have to tell you, it's nothing to do with this business."</em>（翻訳小説からの引用）<sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> 。「やめろよ。お前に言う必要はない。この件とは関係ない」</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec4-3">4.3 追加の用例 (AAVE)</h3>
+<p>次の四つは、 Hawaii LangNet が AAVE の特徴として挙げる例文である <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 。同ページは、これらの特徴が体系的であり、かつ変異を伴う、すなわち標準形と交替して現れると述べる。</p>
+<table class="cards">
+<thead><tr><th>用例</th><th>意味</th><th>説明</th><th>出典</th></tr></thead>
+<tbody>
+<tr><td data-label="用例"><em>"He been married."</em><br>「彼は（ずっと前から）結婚している」</td><td data-label="意味">遠い過去から続く状態。</td><td data-label="説明">文法。この文は現在も既婚であることを示す。</td><td data-label="出典"><sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><td data-label="用例"><em>"He done eat his dinner."</em><br>「彼は夕食を食べ終えた」</td><td data-label="意味">完了。</td><td data-label="説明">文法。 <code>done</code> が完了を表す標識として動詞の前に置かれ、動詞自体は屈折しない。</td><td data-label="出典"><sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><td data-label="用例"><em>"I ain't see nothing."</em><br>「何も見なかった」</td><td data-label="意味">否定の一致（複数の否定語が一つの否定を表す）と、過去の <code>ain't</code> の併用。</td><td data-label="説明">文法。標準英語では二重否定が肯定に読まれうるが、この構文では否定が文中の複数の位置に現れても、意味は否定一つである。</td><td data-label="出典"><sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><td data-label="用例"><em>"Can't nobody beat 'em."</em><br>「誰も彼らには勝てない」</td><td data-label="意味">否定倒置。</td><td data-label="説明">文法。否定の助動詞が主語の前に移る。標準英語の疑問文の語順と見かけは似るが、平叙文として使われる。</td><td data-label="出典"><sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup></td></tr>
+</tbody>
+</table>
+
+<h3 id="sec4-4">4.4 追加の用例 (MLE)</h3>
+<p>次の三つは、 Green's Dictionary of Slang の見出しと引用に基づく。同辞書の引用には小説・映画の脚本が含まれる。これらは実際の話し言葉の記録ではなく、作者が話し言葉を写したものである。したがって、使用の実態を示す証拠としては限界がある。</p>
+<table class="cards">
+<thead><tr><th>用例</th><th>意味</th><th>説明</th><th>出典</th></tr></thead>
+<tbody>
+<tr><td data-label="用例"><em>"What-a-gwarn? How comes you reach home so early?"</em> （ 1999 年の小説より）<br>「どうした。なんでこんなに早く帰ってきたんだ」</td><td data-label="意味"><code>wagwan</code> 。「調子はどう」「何が起きている」。</td><td data-label="説明">語用論。挨拶として働く。 <code>what's going on</code> の縮約で、西インド諸島と英国の黒人の若者のスラングと記される。</td><td data-label="出典"><sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><td data-label="用例"><em>"He was 1 peng boi I had been chatin 2 4 tym."</em> （ 2005 年の小説より、原文の綴りのまま）<br>「ずっと話していた、いい感じの男子だった」</td><td data-label="意味">非特定の肯定的な意味で「良い」。</td><td data-label="説明">語彙。英国の黒人のスラング。語源は <code>pong</code>（強い匂いの大麻）で、そこから一般的な優良の意味に広がったと記される。</td><td data-label="出典"><sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><td data-label="用例"><em>"we'd have bare dough, we'd have bare money in our pocket."</em> （ 2005 年の新聞より）<br>「金がたっぷりあって、ポケットにはいくらでも入っていた」</td><td data-label="意味"><code>bare</code> 。「たくさんの」。</td><td data-label="説明">語彙・形態。数量を表す形容詞。バルバドス英語の <code>bare</code>（「〜だけ」「過剰な」）に由来すると記される。 2016 年の新聞は、 <code>bare</code> を最も広まった語の一つに挙げる。</td><td data-label="出典"><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
+</tbody>
+</table>
+<p>MLE の文法面では、引用辞（発言を引く導入の語）の <code>this is</code> に代名詞が続く形（ <em>this is me</em> など）と、 <code>man</code> の代名詞的な用法が、特徴として挙げられている <sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup><sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup> 。これらの具体的な例文は、本稿では確認できなかった。 MLE を語彙（スラング）の面でのみ語ることは、 AAVE が文法で語られる傾向と非対称であり、誤った対比を生むおそれがある。本稿は、この偏りを資料の限界として記す。</p>
+
+<h2 id="sec5">5. AAVE と MLE の比較</h2>
+<table class="cards">
+<thead><tr><th>項目</th><th>米国の AAVE</th><th>英国の MLE</th></tr></thead>
+<tbody>
+<tr><td data-label="項目">話し手</td><td data-label="米国の AAVE">主にアフリカ系アメリカ人の共同体 <sup id="fnref-15-2"><a href="#ref-15">[15]</a></sup> 。地域・世代・場面による差があり、全員が同じように使うわけではない。</td><td data-label="英国の MLE">ロンドンの多民族の若者 <sup id="fnref-11-4"><a href="#ref-11">[11]</a></sup> 。個人や場面による使い分けがある。</td></tr>
+<tr><td data-label="項目">成立の背景</td><td data-label="米国の AAVE">奴隷制の歴史、南部の方言、アフリカの言語との接触などが議論される。起源は未確定である（ 6.1 節）。</td><td data-label="英国の MLE">1948 年以降のカリブ海諸国からの移民と、多様な入力変種の接触 <sup id="fnref-20-3"><a href="#ref-20">[20]</a></sup><sup id="fnref-11-5"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><td data-label="項目">語彙・語形</td><td data-label="米国の AAVE">南部英語と共通する語を含む(<code>y'all</code>)。</td><td data-label="英国の MLE">西インド諸島系の語（ <code>wagwan</code> など）を含む <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。</td></tr>
+<tr><td data-label="項目">文法上の特徴</td><td data-label="米国の AAVE">habitual <code>be</code> 、過去の <code>ain't</code> 、 <code>been</code> 、 <code>done</code> 、否定の一致・倒置 <sup id="fnref-1-10"><a href="#ref-1">[1]</a></sup></td><td data-label="英国の MLE"><code>innit</code> 、引用辞 <code>this is</code> + 代名詞、 <code>man</code> の代名詞的用法 <sup id="fnref-11-6"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><td data-label="項目">重なる点</td><td data-label="米国の AAVE">どちらも研究の対象となる変種であり、一部の語や特徴がカリブの英語と関連づけて論じられる。</td><td data-label="英国の MLE">ただし、関連の程度は個々の語や特徴ごとに議論がある。</td></tr>
+</tbody>
+</table>
+<p>この表は、「固有」ではなく「特徴的」という言い方を前提にしている。 <code>ain't</code> は他の非標準変種にも見られ、 <code>y'all</code> は南部英語に広く見られ、 <code>innit</code> は英国北部にも独立に生じている <sup id="fnref-1-11"><a href="#ref-1">[1]</a></sup><sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup><sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup> 。したがって、これらを AAVE または MLE だけの表現と断定することはできない。</p>
+
+<h2 id="sec6">6. 起源をめぐる論点</h2>
+<h3 id="sec6-1">6.1 AAVE の成立</h3>
+<p>AAVE の起源をめぐる主要な立場は、四つに整理できる <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup> 。各立場は、主張、根拠、批判の順に述べる。</p>
+<p><strong>クレオール起源説</strong><br>主張は、 AAVE が、奴隷とされたアフリカ系の人々が話した混成の言語（クレオール）に由来するというものである。根拠の種類として、奴隷制の社会史的条件、離散した地域の変種の録音、カリブ海のクレオールや西アフリカの言語との類似が挙げられる。弱い形の説（ Holm と Rickford に結びつけられる）は、プランテーション南部全体にクレオールがあったとは限らないが、形成期に混成語的な話し方が要素として働いたとする。批判は、英語起源説の側から出される。</p>
+<p><strong>新英語起源説</strong><br>主張は、 AAVE が初期の入植者の英語方言として始まったというものである。 Poplack や Tagliamonte に結びつけられる新英語起源説は、 AAVE の他の文法的特徴を、後の言語変化の結果と見る。 Poplack は、共同体が固まるにつれて、特定の特徴が革新されたと論じる。批判は、筆者の整理では、英語に帰せない特徴が実在すれば、この説の説明力が限られる点に向けられる（次の Mufwene の記述を参照）。</p>
+<p><strong>創始者効果の説</strong><br>主張は、植民地の創始者となる人口が、のちの言語状況に持続的な影響を与えるというものである。論者は Mufwene で、クレオール起源説に最も懐疑的である。ただし、英語に帰せずクレオールの起源や影響にしか帰せない特徴があれば、それはクレオール説を支えると認めると、 Rickford は記す。</p>
+<p><strong>基層・中間説</strong><br>主張は、英語起源説とクレオール起源説の折衷として、基層（ substrate 、下層にある言語の影響）や言語接触が早い時期から関与したとするものである。 Winford や Mufwene らは、折衷的な立場を求めた。否定の構文を調べた研究は、初期の AAE が英語とクレオールの双方に由来する要素を持っていたはずだと結論する <sup id="fnref-28-1"><a href="#ref-28">[28]</a></sup> 。この立場への批判は、本稿の調査では確認できなかった。</p>
+<p>以上の論点は、研究者の間で決着していない。どの説が優勢かの判断は、本稿の調査では確認できなかったため、記さない。起源は<span class="tag">未確定</span>の区分に置く。素材の「奴隷制の歴史・南部方言・アフリカ諸語が混ざり合ってできた」という記述は、基層・中間説に近いが、確定した事実ではない。</p>
+
+<h3 id="sec6-2">6.2 <code>y'all</code> と過去の <code>ain't</code></h3>
+<p><code>y'all</code> の起源には、スコッツ・アイリッシュ移民の <code>ye aw</code> に由来するという説と、初期のアフリカ系の変種やクレオールを経て南部英語に入ったとする説がある。二つの説の優劣は、確認できた出典からは決められない <sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup> 。初出年の記述も出典によって食い違う。 Salon は OED の初出を 1824 年とするが <sup id="fnref-23-3"><a href="#ref-23">[23]</a></sup> 、別の解説は 1856 年とし、辞書の記述は直接確認できなかった。</p>
+<p>過去の <code>ain't</code> は、 AAE の特徴と記述する研究がある一方、その成立が現在完了の <code>ain't</code> の再分析なのか、古い構成なのかは未確定である <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。</p>
+
+<h3 id="sec6-3">6.3 <code>innit</code> と <code>-dem</code></h3>
+<p><code>innit</code> について、言語学者 Pichler は、 <code>isn't it</code>（おそらく <code>ain't it</code> を経由）の頻度による音声の縮約と、話者による再分析（語を別の構造に捉え直すこと）を、文法化として説明する。言語接触が果たした役割は補助的であり、その提案は暫定的であると自ら述べる <sup id="fnref-10-4"><a href="#ref-10">[10]</a></sup> 。一方、 <code>innit</code> がジャマイカ・クレオールに由来するという先行研究の主張に対しては、辞書の証拠は弱くしかそれを支えないと評価する。 <code>innit</code> は、南部イングランドとロンドンで少なくとも 1970 年代から使われ、北部の Berwick での使用は、独立した体系内部の発達と考えられている <sup id="fnref-10-5"><a href="#ref-10">[10]</a></sup> 。ここから、 <code>innit</code> を MLE だけの表現と見ることは難しい。</p>
+<p><code>-dem</code> には、三つの分析がある。第一に、複数接尾辞とする見方。これはオンライン辞書や一般向けの解説に見られる説明で、研究文献での担い手は確認していない。第二に、掲示板に投稿した Patrick の見方である。 Patrick は、 Bill Stewart に由来するとされる「連合複数」（ associative plural 、名前などに添えて「その人たち」を表す複数）の用語で説明する。ジャマイカ・クレオールでは <code>[名前] an dem</code> や <code>[名前]-dem</code> の形が可能で、これは英語の通常の複数では表しにくい <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup> 。 APiCS （クレオール諸語の構造を集めたデータベース）には <em>di maan dem a wok</em>（「その男たちが働いている」）という例がある <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 。第三に、ジャマイカ・クレオールに複数標識はなく、後置の <code>dem</code> は包括性の標識であるとする分析が、 Creole Language Library の一論文にある（著者は未確認）<sup id="fnref-25-1"><a href="#ref-25">[25]</a></sup> 。 Patrick の投稿は掲示板への投稿であり、査読を経ていない。三つの分析の優劣は、本稿では判断しない。</p>
+
+<h2 id="sec7">7. 学問の捉え方</h2>
+<h3 id="sec7-1">7.1 言語学</h3>
+<p>言語学では、 AAVE を規則を持つ体系として記述する立場が、 Labov の著作 <sup id="fnref-15-3"><a href="#ref-15">[15]</a></sup> や、次の決議に示されている。 1997 年 1 月 3 日の米国言語学会の決議は、この変種が他の自然な話し言葉と同じく体系的で規則に従うと述べ、「スラング」や「壊れた英語」という呼称は不正確で貶めるものだとした <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> 。同決議は、言語と方言の区別が言語学的な根拠よりも社会的・政治的な根拠に基づくとも述べ、標準英語の習得を支える立場も取った <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 。</p>
+<p>この立場は記述的である。つまり、変種の優劣を決めず、実際の使用を規則として説明する。一方、規範的な立場は、標準英語の習得を重んじる。以下は筆者の整理である。上の決議も標準英語の習得を支持し <sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup> 、 Ann Arbor の判決も標準英語の読みの指導を学校に求めた <sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup> 。つまり、記述的な立場も、標準英語の習得そのものを否定していない。両者の関係は、 7.2 節の裁判と決議で具体的に現れた。本稿は、どちらの立場が正しいかを先に決めない。</p>
+
+<h3 id="sec7-2">7.2 史学</h3>
+<p>1979 年 7 月 12 日、ミシガン州アナーバーの連邦地裁（ Joiner 判事）は、黒人の児童が起こした訴訟で判決を出した。判決は、黒人英語自体は言語上の障壁ではなく、教師が児童の家庭の言語を考慮せずに標準英語の読みを教えることが障壁になっていると認めたとされる。学校側には、この変種の話者を識別し、その知識を標準英語の読みの指導に使うことを命じた <sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup> 。判決文の本文は、本稿では読んでいない。</p>
+<p>1996 年 12 月 18 日、オークランドの教育委員会は、西アフリカ・ニジェール = コンゴ系の言語体系を「 Ebonics 」と呼び、児童の主要な言語と認める決議を採択した。決議は、それが「遺伝的に基づき、英語の方言ではない」と述べていた <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup> 。委員会は、 1997 年 1 月 15 日に決議を修正し、「遺伝的に基づく」という文言を削除して、「起源を持つ」という表現に改めた。ただし、「英語の方言ではない」という主張は残った。この修正の記述は、解説記事の要約による <sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup> 。</p>
+<p>この二つの事例は、変種の地位をめぐる議論が教育政策と直結していたことを示す。この文言は修正で削除された。決議の主張と言語学者の起源論は、区別して読む必要があると筆者は考える。</p>
+
+<h3 id="sec7-3">7.3 哲学</h3>
+<p>哲学の観点として、 Fricker の認識的不正義の議論を取り上げる。 Fricker の中心的な事例では、証言的不正義は、聞き手の同一性に関する偏見が原因で、話者の信用性が不当に低く見積もられる場合に生じる <sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup> 。</p>
+<p>以下は筆者の解釈である。この枠組みを方言の話者に当てはめるなら、話し方への偏見が、内容とは無関係に発言の信用性を下げる場合がありうる。ただし、 Fricker 自身が方言話者を例に論じたかは、本稿では原典を読んでおらず、確認できていない。この当てはめは、仮の枠組みにとどまる。</p>
+
+<h2 id="sec8">8. 結論</h2>
+<p>第一の問いについて、「黒人英語」という語は、米国のアフリカ系アメリカ人の共同体の変種 (AAVE) に当てられることがあるが、日本語の辞書の定義は確認していない。 MLE は多民族の若者の変種であり、 AAVE と同じ対象ではない。両者は、カリブの英語との関係が論じられる点で重なる。第二の問いについて、十の表現のうち、起源が確立したと言えるものは本稿では確認できなかった。多くは<span class="tag">未確定</span>であり、 <code>blud</code> の語源は<span class="tag">投機的</span>である。第三の問いについて、言語学は規則を持つ体系として記述し、史学は教育政策との結びつきを示し、哲学は偏見と信用性の関係を論じる枠組みを与える。ただし、哲学の当てはめは筆者の解釈である。</p>
+
+<h2 id="sec9">9. 限界</h2>
+<ul>
+<li>本稿は、検索結果の要約と公開ページに基づく。 Labov 、 Fricker 、 Green 、 Cheshire らの原典の全文は読んでいない。</li>
+<li>日本語の辞書が「黒人英語」をどう定義しているかは、確認していない。 1 節の問いは、研究上の呼称の整理で代える。</li>
+<li>本文から外した項目は、 <code>gyaldem</code> 、ジャマイカ英語の blood brother 、 <code>ting</code> の「気になっている相手」の語義、 <code>allow it</code> の「勘弁してくれ」の語感、 <code>cap</code> の 2010 年代の初出説、 MLE の <code>bare</code> を強意に使う例文である。</li>
+<li>MLE の資料は Green's Dictionary of Slang に偏り、 AAVE の資料は文法の解説に偏る。小説や映画の引用は、実際の話し言葉の証拠ではない。用例には犯罪や薬物を連想させるものが多いため、代表例としては避けた。</li>
+<li>話者集団は一枚岩ではない。用例は特定の話者・場面での用法であり、集団の全員が使うとは限らない。スラングの移り変わりは速く、本稿の記述は 2026 年 11 月時点で確認できた範囲に限られる。</li>
+</ul>
+
+<div class="refs">
+<h2 id="refs">参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> <sup><a href="#fnref-1-10">j</a></sup> <sup><a href="#fnref-1-11">k</a></sup> Hawaii LangNet. "African American Vernacular English (AAVE) ". University of Hawai‘i at Mānoa, Sato Center. <a href="https://www.hawaii.edu/satocenter/langnet/definitions/aave.html">Hawaii LangNet</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> Fisher, Sabriya. <em>Variation and Change in Past Tense Negation in African American English</em>. 博士論文 , University of Pennsylvania. <a href="https://repository.upenn.edu/edissertations/2925">ペンシルベニア大学リポジトリ</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> Merriam-Webster. "finna". 辞書項目（検索結果の要約で確認。本文の取得は拒否された）。 <a href="https://www.merriam-webster.com/dictionary/finna">Merriam-Webster</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> Merriam-Webster. "Words We're Watching: 'Cap'". 検索結果の要約で確認。 <a href="https://www.merriam-webster.com/wordplay/word-were-watching-cap">Merriam-Webster</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> Dictionary.com. "no cap". 検索結果の要約で確認。 <a href="https://www.dictionary.com/e/slang/no-cap/">Dictionary.com</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> <sup><a href="#fnref-6-3">c</a></sup> Green's Dictionary of Slang. "allow it". <a href="https://greensdictofslang.com/entry/xgtx7ga">Green's Dictionary of Slang</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> Green's Dictionary of Slang. "what a gwarn?". <a href="https://greensdictofslang.com/entry/sqjsnji">Green's Dictionary of Slang</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> Green's Dictionary of Slang. "peng". <a href="https://greensdictofslang.com/entry/s7inn2i">Green's Dictionary of Slang</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> Green's Dictionary of Slang. "bare, adj.2". <a href="https://greensdictofslang.com/entry/r5cof6a">Green's Dictionary of Slang</a></li>
+<li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> <sup><a href="#fnref-10-3">c</a></sup> <sup><a href="#fnref-10-4">d</a></sup> <sup><a href="#fnref-10-5">e</a></sup> Pichler, Heike. "Grammaticalization and language contact in a discourse-pragmatic change in progress: the spread of <em>innit</em> in London English". <em>Language in Society</em>. 巻号頁は未確認。 <a href="https://www.cambridge.org/core/product/BF2579426AFD6EC33308D6F52113F2D9/core-reader">Cambridge Core</a></li>
+<li id="ref-11">^ <sup><a href="#fnref-11-1">a</a></sup> <sup><a href="#fnref-11-2">b</a></sup> <sup><a href="#fnref-11-3">c</a></sup> <sup><a href="#fnref-11-4">d</a></sup> <sup><a href="#fnref-11-5">e</a></sup> <sup><a href="#fnref-11-6">f</a></sup> Cheshire, Jenny, Paul Kerswill, Susan Fox and Eivind Torgersen. "Contact, the feature pool and the speech community: The emergence of Multicultural London English". <em>Journal of Sociolinguistics</em> 15 (2) , 2011, pp. 151-196. 論文の本文は読んでおらず、書誌と要旨の要約による。 <a href="https://pure.york.ac.uk/portal/en/publications/contact-the-feature-pool-and-the-speech-community-the-emergence-o/">ヨーク大学リポジトリ</a></li>
+<li id="ref-12"><a href="#fnref-12-1">^</a> Kerswill, Paul. 講演資料（ Huddersfield, 2018 年 1 月 30 日）。 MLE に先立つ若者の言語として London Jamaican と multiracial vernacular を挙げる。検索結果の要約による。 <a href="https://pure-research.york.ac.uk/ws/portalfiles/portal/55992102/Huddersfield_Kerswill_30.1.18.pdf">ヨーク大学の研究資料</a></li>
+<li id="ref-13"><a href="#fnref-13-1">^</a> Patrick, Peter. American Dialect Society 掲示板への投稿 , 1995 年 1 月 30 日。査読を経ていない。 <a href="https://americandialect.org/americandialectarchives/jan95293.html">American Dialect Society 記録</a></li>
+<li id="ref-14"><a href="#fnref-14-1">^</a> Atlas of Pidgin and Creole Language Structures Online. 例文 5-43. <a href="https://apics-online.info/sentences/5-43">APiCS Online</a></li>
+<li id="ref-15">^ <sup><a href="#fnref-15-1">a</a></sup> <sup><a href="#fnref-15-2">b</a></sup> <sup><a href="#fnref-15-3">c</a></sup> Labov, William. <em>Language in the Inner City: Studies in the Black English Vernacular</em>. University of Pennsylvania Press, 1972. 本文は未読。第 5 章の引用は Penn Today の記事による。 <a href="https://penntoday.upenn.edu/1998-02-26/latest-news/labovs-1972-book-still-something-talk-about">Penn Today</a></li>
+<li id="ref-16">^ <sup><a href="#fnref-16-1">a</a></sup> <sup><a href="#fnref-16-2">b</a></sup> <sup><a href="#fnref-16-3">c</a></sup> Linguistic Society of America. "Resolution on the Oakland 'Ebonics' Issue". 1997 年 1 月 3 日採択。 <a href="https://web.stanford.edu/~rickford/ebonics/LSAResolution.html">LSA 決議（ Rickford 氏のサイト）</a></li>
+<li id="ref-17">^ <sup><a href="#fnref-17-1">a</a></sup> <sup><a href="#fnref-17-2">b</a></sup> Education Week. "Full Text of 'Ebonics' Resolution Adopted by Oakland Board". 1997 年 1 月 15 日。修正に関する記述は、同紙 1997 年 1 月 22 日の記事の要約による。 <a href="https://www.edweek.org/ew/articles/1997/01/15/16oakc.h16.html">Education Week</a></li>
+<li id="ref-18">^ <sup><a href="#fnref-18-1">a</a></sup> <sup><a href="#fnref-18-2">b</a></sup> Martin Luther King Junior Elementary School Children v. Ann Arbor School District Board, 473 F. Supp. 1371, E.D. Mich. 1979. 判決文の本文は未読で、解説資料の要約による。 <a href="https://languagepolicy.net/archives/king.htm">Language Policy 資料</a></li>
+<li id="ref-19"><a href="#fnref-19-1">^</a> Fricker, Miranda. <em>Epistemic Injustice: Power and the Ethics of Knowing</em>. Oxford University Press, 2007. 原典は未読。 Internet Encyclopedia of Philosophy の項目による。 <a href="https://iep.utm.edu/epistemic-injustice/">Internet Encyclopedia of Philosophy</a></li>
+<li id="ref-20">^ <sup><a href="#fnref-20-1">a</a></sup> <sup><a href="#fnref-20-2">b</a></sup> <sup><a href="#fnref-20-3">c</a></sup> The National Archives, UK. "Empire Windrush: Caribbean migration". <a href="https://www.nationalarchives.gov.uk/education/resources/the-empire-windrush/empire-windrush-caribbean-migration/">The National Archives</a></li>
+<li id="ref-21"><a href="#fnref-21-1">^</a> Encyclopædia Britannica. "Great Migration". <a href="https://www.britannica.com/event/Great-Migration">Britannica</a></li>
+<li id="ref-22"><a href="#fnref-22-1">^</a> Rickford, John R. 2005 年の SALSA 13 の論文（ AAVE の起源をめぐるクレオール起源説の整理）。要約による。 <a href="https://asol.ling.utexas.edu/salsa/proceedings/2005/RickfordSALSA13.pdf">SALSA 論文集</a></li>
+<li id="ref-23">^ <sup><a href="#fnref-23-1">a</a></sup> <sup><a href="#fnref-23-2">b</a></sup> <sup><a href="#fnref-23-3">c</a></sup> Salon. "The secret history of 'Y'all'". 2015. 二次的な記事であり、辞書の記述の確認は未了。 <a href="https://www.salon.com/2015/08/30/the_secret_history_of_yall_the_murky_origins_of_a_legendary_southern_slang_word">Salon</a></li>
+<li id="ref-24"><a href="#fnref-24-1">^</a> Fox, Susan. 研究業績の一覧（引用辞 <em>this is me</em> などの研究題名）。 <a href="https://webspace.qmul.ac.uk/spfox/_sgt/m3_1.htm">Susan Fox 氏のページ</a></li>
+<li id="ref-25"><a href="#fnref-25-1">^</a> John Benjamins 刊 <em>Creole Language Library</em> 31 巻所収の論文（ジャマイカ・クレオールの複数標識を論じる）。著者・題名は未確認。検索結果の要約による。 <a href="https://benjamins.com/catalog/cll.31.20ste">John Benjamins</a></li>
+<li id="ref-26"><a href="#fnref-26-1">^</a> Dictionary.com. "y'all". 検索結果の要約で確認。 <a href="https://www.dictionary.com/browse/y-all">Dictionary.com</a></li>
+<li id="ref-27">^ <sup><a href="#fnref-27-1">a</a></sup> <sup><a href="#fnref-27-2">b</a></sup> Yale Grammatical Diversity Project. "Invariant <em>be</em>". 検索結果の要約による。 <a href="https://ygdp.yale.edu/phenomena/invariant-be">Yale Grammatical Diversity Project</a></li>
+<li id="ref-28"><a href="#fnref-28-1">^</a> "What negation can tell us about the origin of African American Vernacular English". <em>Linguistics in Amsterdam</em>. 著者・巻号は未確認。検索結果の要約による。 <a href="https://linguisticsinamsterdam.nl/article/view/27853">Linguistics in Amsterdam</a></li>
+<li id="ref-29"><a href="#fnref-29-1">^</a> Language Log. "Ask Language Log: Finna". 読者コメントを含む。 <a href="https://languagelog.ldc.upenn.edu/nll/?p=29182">Language Log</a></li>
+</ol>
+</div>
+<p class="endnote">本稿は、検索結果の要約と公開ページの本文に基づく調査であり、原典の全文を読んでいない出典が多い。該当する出典には、その旨を参考文献欄に記した。日本語訳はすべて筆者による一例である。</p>
+</main>
+</body>
+</html>
