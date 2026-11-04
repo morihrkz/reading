@@ -5,102 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>「黒人英語」は何を指すのか</title>
 <style>
-  /* 配色(薄い緑の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#f7f8f6;--text:#242522;--muted:#65695f;--accent:#3d5a52;--line:#d7dcd2;--box:#eceee7}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
   table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  pre { overflow-x: auto; background: var(--box); padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
   pre code { background: none; padding: 0; }
   /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
   pre.term { background: #000; color: #fff; }
   pre.term code { color: #fff; }
   code.term { background: #000; color: #fff; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
   .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
   .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  .meta { color: #555; font-size: .9rem; }
   /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
-  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
-  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
+  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
   .checklist .cl-title::before { content: "✅ "; }
   .checklist ul { list-style: none; padding: 0; margin: 0; }
-  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
   .checklist li:last-child { border-bottom: none; }
-  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
   .checklist label { cursor: pointer; }
-  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
+  .subtitle { color: #555; margin: 0 0 1rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
+  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
+  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: #2a4d69; }
+  .endnote { font-size: .9rem; color: #555; }
   /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
   .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
   @media (max-width:40rem){
     .toc>ol{columns:1}
   }
   /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
   sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  sup a{color:#2a4d69;text-decoration:none}
   sup a:hover{text-decoration:underline}
   /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
   .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
   .refs li>a:first-child{font-weight:700;text-decoration:none}
   .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
+  .refs li:target,sup:target{background:#e6edf3}
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
   /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 40rem) {
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
     table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
     table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
     table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
     table.cards td:first-child::before { display: none; }
     table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
     table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
     table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
     table.cardspan td[rowspan] { display: none; }
     table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
     table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
+    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
     table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
   }
+  a { color: #2a4d69; }
 </style>
 </head>
 <body>
@@ -111,7 +107,7 @@
 <div class="lede">
 <p>「黒人英語」と呼ばれる言語変種の代表に、米国のアフリカ系アメリカ人の共同体で用いられてきた AAVE がある。英国には、別の経緯で形成された多民族の若者の都市方言 MLE がある。両者は重なる部分を持つが、同じ対象ではない。本稿は、両者の代表的な表現を、文法・語彙・語用論の観点から検討し、起源がどこまで確かかを区分して示し、言語学・哲学・史学がこれらの変種をどう捉えてきたかを論じる。</p>
 </div>
-<div class="meta"><strong>【方法と限界】</strong>本稿は、公開された辞書・研究機関のページ・論文の要旨を調べた結果に基づく。原典の全文を読んでいない出典が多く、その旨を参考文献欄に記した。話し言葉の実例は、辞書の引用文と教育機関の解説に限られ、コーパス調査は行っていない。日本語訳はすべて筆者による一例である。</div>
+<div class="meta band"><strong>【方法と限界】</strong>本稿は、公開された辞書・研究機関のページ・論文の要旨を調べた結果に基づく。原典の全文を読んでいない出典が多く、その旨を参考文献欄に記した。話し言葉の実例は、辞書の引用文と教育機関の解説に限られ、コーパス調査は行っていない。日本語訳はすべて筆者による一例である。</div>
 
 <nav class="toc" aria-label="目次">
 <p class="toc-title">目次</p>
@@ -154,7 +150,7 @@
 </li>
 <li><a href="#sec8">結論</a></li>
 <li><a href="#sec9">限界</a></li>
-<li><a href="#refs">参考文献・資料</a></li>
+<li><a href="#sec10">参考文献・資料</a></li>
 </ol>
 </nav>
 
@@ -290,7 +286,7 @@
 </ul>
 
 <div class="refs">
-<h2 id="refs">参考文献・資料</h2>
+<h2 id="sec10">10. 参考文献・資料</h2>
 <p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> <sup><a href="#fnref-1-10">j</a></sup> <sup><a href="#fnref-1-11">k</a></sup> Hawaii LangNet. "African American Vernacular English (AAVE) ". University of Hawai‘i at Mānoa, Sato Center. <a href="https://www.hawaii.edu/satocenter/langnet/definitions/aave.html">Hawaii LangNet</a></li>
