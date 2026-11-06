@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>能動的サイバー防御とは何か</title>
+<style>
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
+  .subtitle { color: #555; margin: 0 0 1rem; }
+  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">サイバーセキュリティ・法制度</p>
+<h1>能動的サイバー防御とは何か<br>――2026 年 10 月に動き出した新制度を、報道から読む</h1>
+<p class="subtitle">Active Cyber Defense in Japan: What the New Framework Does, What Has Started, and What Remains Contested</p>
+
+<div class="lede">
+<p>「能動的サイバー防御」は、サイバー攻撃を受けてから対処するのではなく、被害が出る前に兆候を捉え、必要なら攻撃元のサーバーにまで手を伸ばして無害化する、という考え方である。日本では 2025 年 5 月に関連 2 法が成立し、 2026 年 10 月 1 日に主要部分が施行された。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup></p>
+</div>
+<p class="meta">作成 : 2026-11-06 ／ 根拠 : 国内外の報道・解説記事 4 本（末尾の参考文献）</p>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">ひとことで言うと</a></li>
+<li><a href="#sec2">なぜ「能動的」なのか</a></li>
+<li><a href="#sec3">四つの柱</a></li>
+<li><a href="#sec4">いま何が動き、何が先送りか</a></li>
+<li><a href="#sec5">無害化は誰が、どんな条件で行うのか</a></li>
+<li><a href="#sec6">報道から見える論点</a></li>
+<li><a href="#sec7">この文書の根拠と限界</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. ひとことで言うと</h2>
+<ul>
+<li>従来の防御は、自分のネットワークの中で守る「受動的」なものだった。能動的サイバー防御は、攻撃の兆候を事前に捉え、攻撃の基盤そのものを断つ手段を国に与える。</li>
+<li>中核は、重要インフラ事業者との官民連携、通信情報の利用、攻撃サーバーへのアクセスと無害化、そしてこれらを支える組織・体制の整備である。</li>
+<li>2026 年 10 月 1 日に、官民連携と無害化が始まった。通信情報の利用は 2027 年秋の施行予定で、まだ動いていない。</li>
+<li>権限が強い分、通信の秘密との関係と、独立した監督の実効性が主な論点になっている。</li>
+</ul>
+
+<h2 id="sec2">2. なぜ「能動的」なのか</h2>
+<p>日本のサイバー防御は長く、ファイアウォールやウイルス対策など、守る側のネットワーク内で完結する手段が中心だった。ある論者はこれを「籠城戦」にたとえ、能動的な防御を、攻撃が実行される前に相手の動きを妨げる「ゲリラ戦」に近いものと説明している。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
+<p>背景には、犯罪集団と国家系の攻撃者の双方による攻撃の増加がある。英語の報道は、中国のサイバー能力の拡大も要因に挙げている。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> こうした状況で、被害を受けてから対処するだけでは足りないという認識が、立法の出発点になった。</p>
+
+<h2 id="sec3">3. 四つの柱</h2>
+<p>制度は「サイバー対処能力強化法」と「同整備法」の 2 本からなり、 2025 年 5 月 16 日に国会で成立した。内容は四つの柱に整理される。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></p>
+
+<table class="cards">
+<thead>
+<tr><th>柱</th><th>内容</th><th>施行の状況</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="柱">官民連携の強化</td><td data-label="内容">基幹インフラ事業者が、重要な設備の届出とインシデントの報告を行う。官民で脅威情報を共有する協議会を置く。</td><td data-label="施行の状況">2026 年 10 月 1 日に施行</td></tr>
+<tr><td data-label="柱">通信情報の利用</td><td data-label="内容">攻撃の検知のため、国が通信情報を利用する。独立機関の承認を受けて取得する仕組み。</td><td data-label="施行の状況">2027 年秋に施行予定</td></tr>
+<tr><td data-label="柱">アクセス・無害化</td><td data-label="内容">攻撃に使われるサーバーなどにアクセスし、悪意あるプログラムの除去や機能の停止を行う。</td><td data-label="施行の状況">2026 年 10 月 1 日に施行</td></tr>
+<tr><td data-label="柱">組織・体制の整備</td><td data-label="内容">上記を担う政府内の組織と、独立した監督機関（サイバー通信情報監理委員会）を整える。</td><td data-label="施行の状況">監督機関は 2026 年 4 月に設置</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec4">4. いま何が動き、何が先送りか</h2>
+<h3 id="sec4-1">4.1 2026 年 10 月 1 日に始まったこと</h3>
+<p>施行されたのは、基幹インフラ事業者による資産の届出とインシデント報告、官民の情報共有を担う協議会、そして攻撃に使われるサーバーへのアクセスと無害化の措置である。協議会には約 100 組織の加入が予定されている。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
+<p>義務の中心になる「特定社会基盤事業者」は、 15 分野 258 事業者（2026 年 7 月 1 日時点）である。資産届出の期限は、施行時にすでに導入済みの機器が 2027 年 3 月 31 日まで、施行後に導入する機器が原則として導入から 4 か月以内とされた。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></p>
+<p>首相は施行を受け、無害化措置の追加によって「日本を狙うサイバー攻撃に実効的に対処できる」と述べたと報じられた。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></p>
+
+<h3 id="sec4-2">4.2 まだ動いていないこと</h3>
+<p>通信情報の利用は、 2027 年秋の施行予定である。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 攻撃サーバーを事前に見つけるための土台はこの部分にあり、現時点の協議会は、インシデント報告、外国から得た情報、政府への攻撃情報などを情報源にする。つまり、いまの運用は「通報と共有」が主で、国が通信の流れから広く兆候を探す段階には入っていない。</p>
+
+<h2 id="sec5">5. 無害化は誰が、どんな条件で行うのか</h2>
+<p>無害化の主な実施主体は警察である。外国政府が関わる組織的・計画的な攻撃では、自衛隊が警察と共同で対処する。ただし自衛隊が動くには、日本の外にいる者による特に高度に組織的・計画的な攻撃であること、重大な支障が生じるおそれが大きいこと、自衛隊の特別な技術や情報が必要であること、が求められ、内閣総理大臣の命令も要る。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup></p>
+<p>措置は原則として事前の承認が必要で、緊急時に限り、実施後に速やかに通知する例外が設けられている。承認や点検を担うのが、内閣府に置かれた独立の監督機関である。</p>
+
+<div class="note">報告義務の具体的な期限（何時間以内か）は、確認した報道のいずれにも書かれていなかった。インシデント報告は「速やかに」行うとされ、事業所管大臣と内閣総理大臣に出す。詳細は政府の公式資料で確認する必要がある。</div>
+
+<h2 id="sec6">6. 報道から見える論点</h2>
+<h3 id="sec6-1">6.1 通信の秘密</h3>
+<p>最大の論点は、憲法 21 条が保障する通信の秘密との関係である。政府は、個人の通信の実質的な内容は収集・分析しないと説明し、独立した監督機関が通信の秘密の尊重を担保するとしている。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 英語の分析者は、データ収集のあり方を法の最も重大な要素と位置づけ、運用と情報活動の範囲には疑問が残ると指摘した。 <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup></p>
+
+<h3 id="sec6-2">6.2 人材と実行力</h3>
+<p>制度を動かす人材の不足を、実施上の「最大の障壁」とする見方がある。サイバー分野の専門家が足りず、国家安全保障の観点での訓練も十分ではない、という指摘である。 <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup></p>
+
+<h3 id="sec6-3">6.3 対象の拡大と罰則</h3>
+<p>対象は固定されていない。医療分野を加える改正法が 2026 年 6 月 17 日に公布されており、今後広がる見込みである。罰則もあり、官民協議会で得た秘密の不正利用や漏えいには 2 年以下の拘禁刑または 100 万円以下の罰金、報告を怠って是正命令にも従わない場合は 200 万円以下の罰金が科される。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></p>
+
+<h2 id="sec7">7. この文書の根拠と限界</h2>
+<div class="must">確認できたのは、日本語の解説記事 2 本と、英語の解説・報道 2 本である。ロイターなど大手通信社の記事は、検索では取得できなかった。</div>
+<p>英語の記事は二次的な紹介が多く、日本語の記事と細部が食い違う。たとえば通信監視の本格化の時期は、日本語の記事が「 2027 年秋」とするのに対し、英語の記事は「 2027 年」とだけ書く。この文書では、施行日や数字は日本語の記事に合わせた。一次情報（法令、内閣官房・内閣府の資料）での確認が望ましい。</p>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> 「【解説】能動的サイバー防御が施行、官民連携と無害化が始動し通信情報は来年秋」、 <em>Innovatopia</em> 、 2026 年 10 月 2 日。 <a href="https://innovatopia.jp/cyber-security/cyber-security-news/118417/">Innovatopia の記事</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> Ōsawa Jun, “New Legislation Signals Japan’s Shift to ‘Active’ Cyber Defense,” <em>Nippon.com</em> , August 7, 2025. <a href="https://www.nippon.com/en/in-depth/d01147/">Nippon.com の記事</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> 「『能動的サイバー防御』で組織は何に備えるべきか～ 2026 年 10 月 1 日施行～」、トレンドマイクロ、 2026 年 8 月 14 日。 <a href="https://www.trendmicro.com/ja_jp/jp-security/26/h/securitytrend-20260814-01.html">トレンドマイクロの解説</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> <sup><a href="#fnref-4-3">c</a></sup> “Japan’s ‘Active Cyber Defense’ Law Comes into Force,” <em>Vision Times</em> , October 2, 2026. <a href="https://www.visiontimes.com/2026/10/02/japans-active-cyber-defense-law-comes-into-force.html">Vision Times の記事</a></li>
+</ol>
+</div>
+</main>
+</body>
+</html>
