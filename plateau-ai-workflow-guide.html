@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PLATEAU と AI で作る FPV ドローン風映像</title>
+<style>
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  /* 本文サイズ(記事型に揃える) */
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
+  /* コピーボタン */
+  pre { position: relative; }
+  .copy-btn { position: absolute; top: .4rem; right: .4rem; font-size: .8rem; line-height: 1.4; padding: .15rem .6rem; border: 1px solid #2a4d69; border-radius: 3px; background: #fff; color: #2a4d69; cursor: pointer; }
+  .copy-btn:hover { background: #e6edf3; }
+  pre.term .copy-btn { border-color: #fff; background: #000; color: #fff; }
+  pre.term .copy-btn:hover { background: #333; }
+</style>
+</head>
+<body>
+<main>
+<h1>PLATEAU と AI で作る FPV ドローン風映像</h1>
+<p class="meta">作成日 : 2026-11-07 ／ 想定読者 : Blender も動画生成 AI も初めての個人制作者</p>
+
+<div class="note">
+<p>この手引書は、 PLATEAU の 3D データで街の構造を固定し、動画生成 AI で実写風にする手順を、再現しやすい形にまとめたものです。手順の数値（高さ、速度、画角、解像度など）は、そのまま入力できる形で示します。ただし、動画生成 AI の画面や機能の名称は頻繁に変わります。作成時点の画面は確認していないので、名称は読み替えてください。</p>
+</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">この手引書の位置づけ</a>
+<ol>
+<li><a href="#sec1-1">完成物と所要時間</a></li>
+<li><a href="#sec1-2">できないこと・注意点</a></li>
+</ol>
+</li>
+<li><a href="#sec2">全体像</a></li>
+<li><a href="#sec3">事前準備</a>
+<ol>
+<li><a href="#sec3-1">必要なもの</a></li>
+<li><a href="#sec3-2">作業フォルダの作り方</a></li>
+</ol>
+</li>
+<li><a href="#sec4">工程 1 PLATEAU データを入手する</a>
+<ol>
+<li><a href="#sec4-1">対象エリアを決める</a></li>
+<li><a href="#sec4-2">ダウンロードと展開</a></li>
+<li><a href="#sec4-3">利用条件と出典表示</a></li>
+</ol>
+</li>
+<li><a href="#sec5">工程 2 Blender で街を組み立てる</a>
+<ol>
+<li><a href="#sec5-1">スクリプト build_scene.py</a></li>
+<li><a href="#sec5-2">実行方法</a></li>
+<li><a href="#sec5-3">目視で確認する項目</a></li>
+</ol>
+</li>
+<li><a href="#sec6">工程 3 カメラ経路を設計する</a>
+<ol>
+<li><a href="#sec6-1">設計の数値目安</a></li>
+<li><a href="#sec6-2">座標の測り方</a></li>
+<li><a href="#sec6-3">経路ファイル path.json</a></li>
+</ol>
+</li>
+<li><a href="#sec7">工程 4 レンダリングする</a>
+<ol>
+<li><a href="#sec7-1">スクリプト render_path.py</a></li>
+<li><a href="#sec7-2">試し撮りから本番まで</a></li>
+<li><a href="#sec7-3">連番画像を動画にする</a></li>
+</ol>
+</li>
+<li><a href="#sec8">工程 5 動画生成 AI で実写風にする</a>
+<ol>
+<li><a href="#sec8-1">方式 A 画像から動画</a></li>
+<li><a href="#sec8-2">方式 B 動画から動画</a></li>
+<li><a href="#sec8-3">プロンプトの組み立て</a></li>
+<li><a href="#sec8-4">選別の基準</a></li>
+</ol>
+</li>
+<li><a href="#sec9">工程 6 仕上げと書き出し</a></li>
+<li><a href="#sec10">AI エージェントへの任せ方</a></li>
+<li><a href="#sec11">トラブルシューティング</a></li>
+<li><a href="#sec12">公開前の確認</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. この手引書の位置づけ</h2>
+
+<h3 id="sec1-1">1.1 完成物と所要時間</h3>
+<p>完成物は、東京・渋谷のように実在する街の構造を保った、 8 〜 16 秒ほどの FPV ドローン風の映像です。 FPV とは、機体のカメラ視点で飛ぶ、低空・高速・急旋回を特徴とする撮影様式を指します。</p>
+<p>所要時間の目安は次のとおりです。初回は、準備とつまずきの解消に時間を取られます。 2 回目以降は、同じ街なら工程 3 から繰り返せます。</p>
+<table class="cards">
+<thead><tr><th>工程</th><th>内容</th><th>初回の目安</th><th>2 回目以降</th></tr></thead>
+<tbody>
+<tr><td>準備</td><td data-label="内容">ソフトの導入、フォルダ作成</td><td data-label="初回の目安">1 〜 2 時間</td><td data-label="2 回目以降">なし</td></tr>
+<tr><td>工程 1</td><td data-label="内容">PLATEAU データの入手</td><td data-label="初回の目安">30 分</td><td data-label="2 回目以降">なし</td></tr>
+<tr><td>工程 2</td><td data-label="内容">Blender で街を組む</td><td data-label="初回の目安">1 時間</td><td data-label="2 回目以降">なし</td></tr>
+<tr><td>工程 3</td><td data-label="内容">カメラ経路の設計</td><td data-label="初回の目安">1 〜 2 時間</td><td data-label="2 回目以降">30 分</td></tr>
+<tr><td>工程 4</td><td data-label="内容">レンダリング</td><td data-label="初回の目安">30 分〜数時間</td><td data-label="2 回目以降">同左</td></tr>
+<tr><td>工程 5</td><td data-label="内容">動画生成 AI で変換</td><td data-label="初回の目安">1 〜 3 時間</td><td data-label="2 回目以降">同左</td></tr>
+<tr><td>工程 6</td><td data-label="内容">連結・仕上げ</td><td data-label="初回の目安">30 分</td><td data-label="2 回目以降">同左</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec1-2">1.2 できないこと・注意点</h3>
+<div class="must">
+<p>動画生成 AI は、入力した 3D の形をそのまま保存する装置ではありません。建物の位置と高さを「参考にする」だけなので、看板の文字、窓の数、細部の形は AI が作り直します。測量や設計の資料としては使えません。</p>
+</div>
+<ul>
+<li>スクリプトの修正などを任せる AI エージェントには、 Claude Code のような、手元の PC でコードを実行できるものを想定します。</li>
+<li>コマンドとパスは、 Mac （ zsh ）を前提に書いています。 Windows では、 Blender の実行ファイルのパスを <code>C:\Program Files\Blender Foundation\Blender 4.2\blender.exe</code> のように読み替え、 PowerShell で実行してください。</li>
+<li>各サービスの料金、商用利用の可否、生成できる長さは、利用時点の公式ページで確認してください。</li>
+<li>Blender のスクリプトは、 Blender 4.2 LTS または 4.5 LTS の API を前提にしています。 5.0 以降は、コンポジター関連の API が変わっている可能性があります。</li>
+<li>PLATEAU の配布物の構成（フォルダ名、ファイル名）は年度やデータセットで異なります。手引書の記述と違うときは、実物を見て読み替えてください。</li>
+</ul>
+
+<h2 id="sec2">2. 全体像</h2>
+<p>街の形と、カメラの動きと、見た目の質感を、別々の工程で決めます。 AI に任せるのは最後の「質感」だけで、街の形とカメラの動きは、人が数値で決めます。</p>
+<ol>
+<li><strong>工程 1</strong><br>PLATEAU の OBJ データを入手する。</li>
+<li><strong>工程 2</strong><br>Blender に取り込み、原点付近へ寄せ、空と太陽を置く。ここまでを <code>build_scene.py</code> で自動化する。</li>
+<li><strong>工程 3</strong><br>飛行経路を、座標と秒数の表（ <code>path.json</code> ）にする。</li>
+<li><strong>工程 4</strong><br><code>render_path.py</code> が、経路どおりに飛ぶ連番画像と、深度の連番画像を書き出す。</li>
+<li><strong>工程 5</strong><br>動画生成 AI に渡し、実写風にする。</li>
+<li><strong>工程 6</strong><br>クリップを連結し、色を整え、書き出す。</li>
+</ol>
+
+<h2 id="sec3">3. 事前準備</h2>
+
+<h3 id="sec3-1">3.1 必要なもの</h3>
+<table class="cards">
+<thead><tr><th>項目</th><th>用途</th><th>入手先・目安</th></tr></thead>
+<tbody>
+<tr><td>Blender 4.2 LTS または 4.5 LTS</td><td data-label="用途">3D 空間の組み立てとレンダリング</td><td data-label="入手先・目安">公式サイトから無料。 Mac 版（ macOS 用）を入れる</td></tr>
+<tr><td>Python</td><td data-label="用途">この手引書では不要（ Blender に同梱の Python を使う）</td><td data-label="入手先・目安">別途の導入は要らない</td></tr>
+<tr><td>FFmpeg</td><td data-label="用途">連番画像の動画化、連結、最終フレームの切り出し</td><td data-label="入手先・目安">無料。コマンドで <code class="term">ffmpeg -version</code> が通ればよい</td></tr>
+<tr><td>動画生成 AI のアカウント</td><td data-label="用途">工程 5</td><td data-label="入手先・目安">画像から動画と、動画から動画のどちらを使うかで選ぶ。まず無料枠で試す</td></tr>
+<tr><td>コード実行ができる AI エージェント</td><td data-label="用途">スクリプトの修正、エラーの解決</td><td data-label="入手先・目安">任意。なくても、チャット型 AI にエラー全文を貼れば進められる</td></tr>
+<tr><td>PC の性能</td><td data-label="用途">レンダリング</td><td data-label="入手先・目安">本手引書は Eevee を使うため、 GPU があれば 1 フレーム数秒で済む。なくても動くが遅い</td></tr>
+</tbody>
+</table>
+
+<div class="checklist">
+<span class="cl-title">事前準備チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="c0-1"><label for="c0-1">Blender を起動でき、バージョンが 4.2 または 4.5 であることを確認した</label></li>
+<li><input type="checkbox" id="c0-2"><label for="c0-2"><code class="term">ffmpeg -version</code> を実行して、バージョンが表示された</label></li>
+<li><input type="checkbox" id="c0-3"><label for="c0-3">動画生成 AI のアカウントを作り、利用規約の商用利用の項目を読んだ</label></li>
+<li><input type="checkbox" id="c0-4"><label for="c0-4">作業用に、空き容量 20GB 以上の保存先を確保した</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
+
+<h3 id="sec3-2">3.2 作業フォルダの作り方</h3>
+<p>以降のコマンドは、次のフォルダ構成を前提にします。フォルダ名は <code>shibuya-fpv</code> のように、案件を表す名前にしてください。</p>
+<pre class="nocopy"><code>shibuya-fpv/
+  scripts/       build_scene.py, render_path.py, path.json
+  plateau/       ダウンロードした OBJ を展開する
+  work/          city.blend、レンダリング結果
+    render/rgb/    色の連番画像
+    render/depth/  深度の連番画像
+  ai/            動画生成 AI の出力（clip01.mp4 など）
+  final/         完成品</code></pre>
+
+<h2 id="sec4">4. 工程 1 PLATEAU データを入手する</h2>
+
+<h3 id="sec4-1">4.1 対象エリアを決める</h3>
+<p>PLATEAU のデータは、地域メッシュ（約 1km 四方の区画）ごとに分かれています。メッシュは 8 桁の番号で表されます。必要な区画だけを取れば、読み込みが軽く、失敗も減ります。</p>
+<p>渋谷駅からスクランブル交差点にかけての範囲は、概算ではメッシュ番号 <code>53393586</code> と <code>53393596</code> にまたがります。この番号は座標からの計算値なので、必ず地図で確かめてください。確かめ方は、次の 4.2 に書きます。</p>
+<div class="note">
+<p>最初は、 1 区画（ 1km 四方）で始めてください。複数区画を組むと、データ量が数倍になり、 Blender が重くなります。飛行経路が区画をまたぐ場合に限って、隣の区画を足します。</p>
+</div>
+
+<h3 id="sec4-2">4.2 ダウンロードと展開</h3>
+<ol>
+<li>ブラウザで、国土交通省の PLATEAU の公式サイトを開き、データ配布の案内から、 G 空間情報センターの「 3D 都市モデル（ Project PLATEAU ）東京都 23 区」のページへ進む。</li>
+<li>データの一覧から、 OBJ 形式のものを探す。形式の一覧に OBJ が見当たらないときは、 CityGML しかない年度である。その場合は、同じ地域の別のデータセットを探すか、 PLATEAU 公式の変換ツールで OBJ に変換する。</li>
+<li>メッシュ番号が先頭に付いたファイルの中から、 4.1 で決めた番号のものだけを選ぶ。地域全体の zip ファイルは、数 GB になることがあるので避ける。</li>
+<li>ダウンロードしたファイルを、作業フォルダの <code>plateau/</code> に展開する。</li>
+<li>展開後、建物（ <code>bldg</code> ）、地形（ <code>dem</code> ）、道路（ <code>tran</code> ）などの種別ごとに、 <code>.obj</code> ファイルがあることを確認する。</li>
+</ol>
+<p>建物のファイルが LOD1 （箱型）と LOD2 （屋根の形つき）の両方ある場合は、まず LOD2 を使います。テクスチャ（壁の写真）付きのデータは見栄えがよい反面、重いので、最初は付いていない方で通しで試す方が確実です。</p>
+
+<h3 id="sec4-3">4.3 利用条件と出典表示</h3>
+<ul>
+<li>PLATEAU のデータは、多くのデータセットで CC BY 4.0 の条件で提供されている。利用するデータセットのページで、実際のライセンス表記を必ず確認する。</li>
+<li>公開するときは、出典を表示する。書き方の例は「 3D 都市モデル（ Project PLATEAU ）を加工して作成」。表記の指定がデータセットのページにあれば、そちらに従う。</li>
+<li>出典の表示と、元データを加工した旨の明記は、動画の説明欄にも書く。</li>
+</ul>
+
+<h2 id="sec5">5. 工程 2 Blender で街を組み立てる</h2>
+<p>Blender の GUI で手作業をしても同じことができますが、手作業は再現しにくいので、スクリプトにします。スクリプトは自分で書く必要はありません。下のコードを保存して使い、エラーが出たら、エラー全文を AI に貼って直させます。</p>
+
+<h3 id="sec5-1">5.1 スクリプト build_scene.py</h3>
+<p>このスクリプトがやることは五つです。 OBJ の一括読み込み、向きの点検、街の中心を原点へ移動、空と太陽の設置、 <code>.blend</code> の保存です。 PLATEAU の座標は、原点から非常に遠い値になっていることがあり、そのままだと Blender の表示とレンダリングが乱れます。そのため、原点付近へ寄せます。</p>
+<p><code>scripts/build_scene.py</code> として保存します。</p>
+<pre><code>import bpy, sys, glob, os, math, argparse
+from mathutils import Vector
+
+
+def parse():
+    argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+    p = argparse.ArgumentParser()
+    p.add_argument("--obj-dir", required=True)
+    p.add_argument("--out", required=True)
+    p.add_argument("--up", default="Y")              # OBJ 側の上方向
+    p.add_argument("--forward", default="NEGATIVE_Z")
+    p.add_argument("--clay", action="store_true")    # 全面を灰色の粘土色にする
+    p.add_argument("--sun-elevation", type=float, default=12.0)  # 太陽高度(度)
+    p.add_argument("--sun-azimuth", type=float, default=-90.0)   # 太陽の向き(度)
+    return p.parse_args(argv)
+
+
+def bbox(objs):
+    pts = [o.matrix_world @ Vector(c) for o in objs for c in o.bound_box]
+    lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
+    hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
+    return lo, hi
+
+
+a = parse()
+bpy.ops.wm.read_factory_settings(use_empty=True)
+
+files = sorted(glob.glob(os.path.join(a.obj_dir, "**", "*.obj"), recursive=True))
+print("OBJ files:", len(files))
+for f in files:
+    print("import", f)
+    bpy.ops.wm.obj_import(filepath=f, forward_axis=a.forward, up_axis=a.up)
+
+bpy.context.view_layer.update()
+objs = [o for o in bpy.context.scene.objects if o.type == "MESH"]
+lo, hi = bbox(objs)
+size = hi - lo
+print("bbox min:", lo, "max:", hi, "size(m):", size)
+if not (size.z &lt; size.x and size.z &lt; size.y):
+    print("WARNING: 高さ方向が最小の寸法になっていません。--up と --forward を変えて再実行してください。")
+
+# 街の中心を原点へ、最も低い地点を高さ 0 へ
+shift = Vector(((lo.x + hi.x) / 2, (lo.y + hi.y) / 2, lo.z))
+for o in objs:
+    o.location -= shift
+bpy.context.view_layer.update()
+
+# 材質: 粘土色
+if a.clay:
+    mat = bpy.data.materials.new("clay")
+    mat.use_nodes = True
+    mat.node_tree.nodes["Principled BSDF"].inputs["Base Color"].default_value = (0.75, 0.75, 0.72, 1)
+    for o in objs:
+        o.data.materials.clear()
+        o.data.materials.append(mat)
+
+# 空(太陽の円盤は無効。影は Sun ライトで作る)
+world = bpy.data.worlds.new("world")
+bpy.context.scene.world = world
+world.use_nodes = True
+nt = world.node_tree
+sky = nt.nodes.new("ShaderNodeTexSky")
+sky.sky_type = "NISHITA"
+sky.sun_disc = False
+sky.sun_elevation = math.radians(a.sun_elevation)
+sky.sun_rotation = math.radians(a.sun_azimuth)
+nt.links.new(sky.outputs["Color"], nt.nodes["Background"].inputs["Color"])
+
+# 太陽: ライトは自分の -Z 方向へ光を出す
+sun_data = bpy.data.lights.new("sun", "SUN")
+sun_data.energy = 4.0
+sun_data.color = (1.0, 0.82, 0.62)
+sun = bpy.data.objects.new("sun", sun_data)
+bpy.context.scene.collection.objects.link(sun)
+sun.rotation_euler = (math.radians(90 - a.sun_elevation), 0, math.radians(a.sun_azimuth))
+
+bpy.ops.wm.save_as_mainfile(filepath=a.out)
+print("saved:", a.out)</code></pre>
+
+<h3 id="sec5-2">5.2 実行方法</h3>
+<p>Blender を GUI を使わずに起動し（ <code class="term">-b</code> ）、スクリプトを渡します（ <code class="term">-P</code> ）。スクリプトへの引数は、 <code class="term">--</code> の後ろに書きます。ターミナル（ zsh ）で、フォルダ <code>shibuya-fpv</code> に移動してから実行します。</p>
+<pre class="term"><code>/Applications/Blender.app/Contents/MacOS/Blender -b -P scripts/build_scene.py -- --obj-dir plateau --out work/city.blend --clay</code></pre>
+<p>最初は <code class="term">--clay</code> を付けてください。粘土色にすると、形が正しいかどうかを確かめやすくなります。実行後、出力に出る「 bbox 」と「 size 」の行を確認します。 size の三つの値のうち、 Z （高さ）が最小であれば、向きは正しい読み込みです。警告が出たときは、 <code class="term">--up Z --forward Y</code> のように変えて、再実行してください。</p>
+
+<h3 id="sec5-3">5.3 目視で確認する項目</h3>
+<p>Blender を GUI で起動し、 <code>work/city.blend</code> を開きます。ビューポート右上のレンダー表示（丸い球のアイコン）に切り替えて、次を確認します。</p>
+<div class="checklist">
+<span class="cl-title">工程 2 チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="c2-1"><label for="c2-1">テンキーの 7 （真上から）で、街が平面図のように見える</label></li>
+<li><input type="checkbox" id="c2-2"><label for="c2-2">横から見て、建物が地面から立ち上がっている（寝ていない、逆さでない）</label></li>
+<li><input type="checkbox" id="c2-3"><label for="c2-3">地形（ dem ）と道路が、建物の足元に合っている。建物が浮いたり、埋まったりしていない</label></li>
+<li><input type="checkbox" id="c2-4"><label for="c2-4">スクランブル交差点など、目印にする場所が、画面の中心付近にある</label></li>
+<li><input type="checkbox" id="c2-5"><label for="c2-5">端から端までの距離を、メジャーツールで測って、約 1,000m ほどである</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
+
+<h2 id="sec6">6. 工程 3 カメラ経路を設計する</h2>
+<p>ここが、この手法の中心です。経路を数値で確定しておけば、動画生成 AI のやり直しを何回しても、同じ飛行を基準にできます。</p>
+
+<h3 id="sec6-1">6.1 設計の数値目安</h3>
+<table class="cards">
+<thead><tr><th>項目</th><th>目安</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>全体の長さ</td><td data-label="目安">5 〜 8 秒を一区間にする</td><td data-label="理由">動画生成 AI が破綻せずに生成できる長さに合わせる。長い映像は区間を連結する</td></tr>
+<tr><td>フレームレート</td><td data-label="目安">24fps</td><td data-label="理由">映画的な動きになり、動画生成 AI の標準とも合う</td></tr>
+<tr><td>飛行速度</td><td data-label="目安">15 〜 30m/ 秒</td><td data-label="理由">これ以下だと、普通のドローンの映像に見える。これ以上だと、動画生成 AI が追従できない</td></tr>
+<tr><td>高度</td><td data-label="目安">低空は地上 3 〜 6m 、上昇時は 70m まで</td><td data-label="理由">低いほど速く見えるが、建物に近すぎると形が崩れる。壁面から最低 5m は離す</td></tr>
+<tr><td>焦点距離</td><td data-label="目安">12 〜 16mm （センサー幅 36mm ）</td><td data-label="理由">14mm で水平画角は約 104 度。 10mm 未満は端の歪みが強く、動画生成 AI が混乱する</td></tr>
+<tr><td>急旋回</td><td data-label="目安">1 秒あたり 90 度以内、ロール（傾き）は ±15 度</td><td data-label="理由">動きが急すぎると、動画生成 AI が前後のフレームの対応を見失う</td></tr>
+<tr><td>視線の先</td><td data-label="目安">常に、進行方向の少し先を見る</td><td data-label="理由">進行方向と視線がずれると、横滑りのような不自然な動きになる</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec6-2">6.2 座標の測り方</h3>
+<p>経路は、 Blender 上の座標（単位はメートル）で書きます。測り方は次のとおりです。</p>
+<ol>
+<li>Blender で <code>work/city.blend</code> を開き、テンキーの 7 で真上から見て、 テンキーの 5 で、平行投影に切り替える（テンキーがないときは、ビューポート上部の「ビュー」メニューから選ぶ）。</li>
+<li>通りたい道の上で、 Shift キーを押しながら右クリックして、 3D カーソルを置く。</li>
+<li>マウスを 3D ビューポートの上に置いて N キーを押し、サイドバーを開く。次に、「ビュー」タブの「 3D カーソル」の位置から、 X と Y の値を読む。</li>
+<li>高さ Z は、地面の高さに、希望する地上高を足して決める。地面の高さは、横から見て調べるか、まず 0 として試し撮りで確かめる。</li>
+<li>通過点を五つ程度（スタート、中間三つ、終点）書き留める。進行方向の少し先を、それぞれ「見る点」として書く。</li>
+</ol>
+<div class="note">
+<p>経路が建物の中を通ると、画面が真っ暗になったり、壁の内側が映ったりします。試し撮りで必ず確認します。通過点は、道路の中央に取ると安全です。</p>
+</div>
+
+<h3 id="sec6-3">6.3 経路ファイル path.json</h3>
+<p>通過点を、時刻（秒）と合わせて <code>scripts/path.json</code> に書きます。次の数値は<strong>書き方の例</strong>です。座標は、自分の測った値に置き換えます。</p>
+<pre><code>{
+  "lens": 14,
+  "fps": 24,
+  "shake": 0.5,
+  "depth_range": 300,
+  "waypoints": [
+    {"t": 0.0, "pos": [-60, -30, 6],  "look": [0, 0, 6],    "roll": 0},
+    {"t": 2.0, "pos": [-30, -12, 3],  "look": [10, 10, 5],  "roll": -8},
+    {"t": 4.0, "pos": [5, 5, 3],      "look": [40, 40, 10], "roll": 6},
+    {"t": 6.0, "pos": [35, 30, 12],   "look": [60, 60, 30], "roll": -10},
+    {"t": 8.0, "pos": [45, 45, 70],   "look": [50, 50, 120], "roll": 0}
+  ]
+}</code></pre>
+<table class="cards">
+<thead><tr><th>キー</th><th>意味</th></tr></thead>
+<tbody>
+<tr><td><code>lens</code></td><td data-label="意味">焦点距離（ mm ）</td></tr>
+<tr><td><code>fps</code></td><td data-label="意味">フレームレート</td></tr>
+<tr><td><code>shake</code></td><td data-label="意味">カメラの揺れの強さ。 0 で揺れなし、 1 で位置が約 5cm 、傾きが約 1.5 度揺れる。 AI に変換させる場合は 0.3 〜 0.5 にとどめる</td></tr>
+<tr><td><code>depth_range</code></td><td data-label="意味">深度画像の白から黒までの距離（ m ）。街の幅が約 1km なら 300 前後</td></tr>
+<tr><td><code>t</code></td><td data-label="意味">その通過点を通る時刻（秒）</td></tr>
+<tr><td><code>pos</code></td><td data-label="意味">カメラの位置 [X, Y, Z] （ m ）</td></tr>
+<tr><td><code>look</code></td><td data-label="意味">その時刻に見ている点 [X, Y, Z] （ m ）</td></tr>
+<tr><td><code>roll</code></td><td data-label="意味">傾き（度）。旋回方向に倒すと、ドローンらしく見える</td></tr>
+</tbody>
+</table>
+<p>例の経路の速度は、区間の距離を秒数で割ると約 17 〜 30m/ 秒になります。自分の経路でも、区間ごとに距離を測り、 6.1 の目安に収まるかを確かめてください。この計算は、 AI に任せても構いません。</p>
+
+<h2 id="sec7">7. 工程 4 レンダリングする</h2>
+
+<h3 id="sec7-1">7.1 スクリプト render_path.py</h3>
+<p>このスクリプトは、 <code>path.json</code> の通過点をなめらかな曲線でつないで、 1 フレームごとのカメラ位置と向きを計算し、色と深度の連番画像を書き出します。深度は、近いほど白く（ミスト パスの出力）なります。もし逆に出た場合は、 ffmpeg で反転します。</p>
+<p><code>scripts/render_path.py</code> として保存します。</p>
+<pre><code>import bpy, sys, os, json, math, random, argparse
+from mathutils import Vector, Quaternion
+
+
+def parse():
+    argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
+    p = argparse.ArgumentParser()
+    p.add_argument("--path", required=True)
+    p.add_argument("--out-dir", required=True)
+    p.add_argument("--width", type=int, default=1280)
+    p.add_argument("--height", type=int, default=720)
+    p.add_argument("--samples", type=int, default=32)
+    p.add_argument("--frame-start", type=int, default=None)
+    p.add_argument("--frame-end", type=int, default=None)
+    p.add_argument("--no-depth", action="store_true")
+    return p.parse_args(argv)
+
+
+def hermite(pts, ts, t):
+    """通過点を滑らかにつなぐ曲線(Catmull-Rom 型のエルミート補間)"""
+    n = len(ts)
+    if t &lt;= ts[0]:
+        return pts[0].copy()
+    if t &gt;= ts[-1]:
+        return pts[-1].copy()
+    i = max(k for k in range(n - 1) if ts[k] &lt;= t)
+    h = ts[i + 1] - ts[i]
+    s = (t - ts[i]) / h
+
+    def tangent(k):
+        lo, hi = max(k - 1, 0), min(k + 1, n - 1)
+        return (pts[hi] - pts[lo]) / (ts[hi] - ts[lo])
+
+    m0, m1 = tangent(i) * h, tangent(i + 1) * h
+    s2, s3 = s * s, s * s * s
+    return ((2 * s3 - 3 * s2 + 1) * pts[i] + (s3 - 2 * s2 + s) * m0
+            + (-2 * s3 + 3 * s2) * pts[i + 1] + (s3 - s2) * m1)
+
+
+a = parse()
+cfg = json.load(open(a.path, encoding="utf-8"))
+wps = cfg["waypoints"]
+ts = [w["t"] for w in wps]
+P = [Vector(w["pos"]) for w in wps]
+L = [Vector(w["look"]) for w in wps]
+R = [Vector((w.get("roll", 0), 0, 0)) for w in wps]
+fps = cfg.get("fps", 24)
+shake = cfg.get("shake", 0.0)
+
+scn = bpy.context.scene
+scn.render.fps = fps
+scn.render.resolution_x = a.width
+scn.render.resolution_y = a.height
+scn.render.resolution_percentage = 100
+try:
+    scn.render.engine = "BLENDER_EEVEE_NEXT"
+except TypeError:
+    scn.render.engine = "BLENDER_EEVEE"
+scn.eevee.taa_render_samples = a.samples
+
+# カメラ
+cam_data = bpy.data.cameras.new("fpv")
+cam_data.lens = cfg.get("lens", 14)
+cam_data.sensor_width = 36
+cam_data.clip_start = 0.1
+cam_data.clip_end = 5000
+cam = bpy.data.objects.new("fpv", cam_data)
+scn.collection.objects.link(cam)
+scn.camera = cam
+cam.rotation_mode = "QUATERNION"
+
+rnd = random.Random(7)
+ph = [rnd.uniform(0, 6.28) for _ in range(6)]
+
+
+def noise(t):
+    return Vector((
+        math.sin(t * 5.1 + ph[0]) + 0.5 * math.sin(t * 11 + ph[1]),
+        math.sin(t * 4.3 + ph[2]) + 0.5 * math.sin(t * 9 + ph[3]),
+        math.sin(t * 6.7 + ph[4]) + 0.5 * math.sin(t * 13 + ph[5])))
+
+
+total = int(round(ts[-1] * fps)) + 1
+scn.frame_start, scn.frame_end = 1, total
+for f in range(1, total + 1):
+    t = (f - 1) / fps
+    pos = hermite(P, ts, t)
+    look = hermite(L, ts, t)
+    roll = hermite(R, ts, t).x
+    n = noise(t)
+    pos += n * 0.05 * shake
+    roll += n.x * 1.5 * shake
+    q = (look - pos).to_track_quat("-Z", "Y")
+    q = q @ Quaternion((0, 0, 1), math.radians(roll))
+    cam.location = pos
+    cam.rotation_quaternion = q
+    cam.keyframe_insert("location", frame=f)
+    cam.keyframe_insert("rotation_quaternion", frame=f)
+
+if a.frame_start is not None:
+    scn.frame_start = a.frame_start
+if a.frame_end is not None:
+    scn.frame_end = a.frame_end
+
+# 出力先
+rgb_dir = os.path.join(a.out_dir, "rgb")
+os.makedirs(rgb_dir, exist_ok=True)
+scn.render.filepath = os.path.join(rgb_dir, "frame_")
+scn.render.image_settings.file_format = "PNG"
+
+# 深度(ミスト パス)を別の連番として出す
+if not a.no_depth:
+    depth_dir = os.path.join(a.out_dir, "depth")
+    os.makedirs(depth_dir, exist_ok=True)
+    scn.world.mist_settings.start = 0
+    scn.world.mist_settings.depth = cfg.get("depth_range", 300)
+    bpy.context.view_layer.use_pass_mist = True
+    scn.use_nodes = True
+    nt = scn.node_tree
+    nt.nodes.clear()
+    rl = nt.nodes.new("CompositorNodeRLayers")
+    comp = nt.nodes.new("CompositorNodeComposite")
+    fo = nt.nodes.new("CompositorNodeOutputFile")
+    fo.base_path = depth_dir
+    fo.format.file_format = "PNG"
+    fo.format.color_mode = "BW"
+    fo.format.color_depth = "16"
+    fo.file_slots[0].path = "depth_"
+    nt.links.new(rl.outputs["Image"], comp.inputs["Image"])
+    nt.links.new(rl.outputs["Mist"], fo.inputs[0])
+
+bpy.ops.render.render(animation=True)
+print("done:", a.out_dir)</code></pre>
+
+<h3 id="sec7-2">7.2 試し撮りから本番まで</h3>
+<p>いきなり全フレームを描くと、経路の間違いに気づくまでに時間がかかります。次の三段階で進めます。</p>
+<ol>
+<li><strong>静止画 1 枚</strong><br>最初のフレームだけを、既定の解像度（ 1280 x 720 ）で描く。構図と明るさを確かめる。</li>
+<li><strong>低解像度の全フレーム</strong><br>全体を 1280 x 720 で描き、動画にして、経路と速度感を確かめる。</li>
+<li><strong>本番</strong><br>解像度を上げて（ 1920 x 1080 ）、描き直す。</li>
+</ol>
+<p><strong>手順 1 ：</strong>静止画 1 枚を、深度なしで描きます。</p>
+<pre class="term"><code>/Applications/Blender.app/Contents/MacOS/Blender -b work/city.blend -P scripts/render_path.py -- --path scripts/path.json --out-dir work/render --frame-start 1 --frame-end 1 --no-depth</code></pre>
+<p><strong>手順 2 ：</strong>低解像度（既定は 1280 x 720 ）で、全フレームを描きます。</p>
+<pre class="term"><code>/Applications/Blender.app/Contents/MacOS/Blender -b work/city.blend -P scripts/render_path.py -- --path scripts/path.json --out-dir work/render</code></pre>
+<p><strong>手順 3 ：</strong>本番の解像度で描き直します。</p>
+<pre class="term"><code>/Applications/Blender.app/Contents/MacOS/Blender -b work/city.blend -P scripts/render_path.py -- --path scripts/path.json --out-dir work/render --width 1920 --height 1080 --samples 64</code></pre>
+<div class="checklist">
+<span class="cl-title">工程 4 チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="c4-1"><label for="c4-1">静止画で、建物の影が出ていて、空が夕方の色になっている</label></li>
+<li><input type="checkbox" id="c4-2"><label for="c4-2">低解像度の動画で、建物の中を通り抜けていない</label></li>
+<li><input type="checkbox" id="c4-3"><label for="c4-3">速度感が、 FPV らしい（ゆっくりに見えるなら、経路の秒数を縮める）</label></li>
+<li><input type="checkbox" id="c4-4"><label for="c4-4">深度画像が、近い建物ほど白く、遠いほど黒い</label></li>
+<li><input type="checkbox" id="c4-5"><label for="c4-5">最初の静止画（ frame_0001.png ）を、別の場所へコピーして保管した</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
+
+<h3 id="sec7-3">7.3 連番画像を動画にする</h3>
+<p>動画生成 AI は、連番画像ではなく動画ファイルを受け取ります。 FFmpeg で、色と深度をそれぞれ動画にします。深度が逆（遠いほど白）の場合は、 <code class="term">-vf negate</code> を付けて反転します。</p>
+<pre class="term"><code>ffmpeg -framerate 24 -i work/render/rgb/frame_%04d.png -c:v libx264 -pix_fmt yuv420p -crf 18 work/render/previz.mp4
+ffmpeg -framerate 24 -i work/render/depth/depth_%04d.png -c:v libx264 -pix_fmt yuv420p -crf 18 work/render/depth.mp4</code></pre>
+
+<h2 id="sec8">8. 工程 5 動画生成 AI で実写風にする</h2>
+<p>二つの方式があります。まず方式 A で全体を通し、街の崩れが目立つときに方式 B を試します。</p>
+
+<h3 id="sec8-1">8.1 方式 A 画像から動画</h3>
+<p>最も手軽な方式です。経路は、プロンプトの文章でしか伝わらないため、経路どおりには飛びません。</p>
+<ol>
+<li>工程 4 の <code>frame_0001.png</code> を、動画生成 AI の「画像から動画（ Image to Video ）」に入力する。</li>
+<li>終点の画像（最終フレーム）を入れられるサービスなら、 <code>frame_0193.png</code> のような最終フレームも入力する。始点と終点を固定すると、建物の位置がずれにくくなる。</li>
+<li>長さを 5 秒（選べないときは最短）にし、 8.3 のプロンプトを入力する。</li>
+<li>4 〜 8 本を生成し、 8.4 の基準で選ぶ。</li>
+</ol>
+
+<h3 id="sec8-2">8.2 方式 B 動画から動画</h3>
+<p>工程 4 で作った動画（ <code>previz.mp4</code> ）を元に、動画生成 AI が質感だけを作り替える方式です。経路が動画の中に含まれているので、飛行は経路どおりになり、建物の位置もずれにくくなります。</p>
+<ol>
+<li>動画生成 AI の「動画から動画（ video-to-video 、リスタイル、構造維持などの名前）」の機能を探す。</li>
+<li><code>previz.mp4</code> を入力し、 8.3 のプロンプトを入力する。変化の強さを調節する項目があれば、中程度（半分前後）から始める。強すぎると街が作り替えられ、弱すぎると CG のままになる。</li>
+<li>深度動画を入力できる機能（深度による制御）があれば、 <code>depth.mp4</code> も入力する。</li>
+<li>4 〜 8 本を生成し、 8.4 の基準で選ぶ。</li>
+</ol>
+<div class="note">
+<p>手元に高性能な GPU がある場合は、 ComfyUI などで、深度による制御つきの動画生成モデルを動かす方法もあります。設定の自由度は高いものの、環境づくりに手間がかかるので、まず商用サービスで試してください。</p>
+</div>
+
+<h3 id="sec8-3">8.3 プロンプトの組み立て</h3>
+<p>プロンプトは、英語の方が効くサービスが多く、本手引書も英語を勧めます。次の五つの要素を、この順に並べます。</p>
+<table class="cards">
+<thead><tr><th>要素</th><th>書くこと</th><th>例</th></tr></thead>
+<tbody>
+<tr><td>1. 場所と被写体</td><td data-label="書くこと">実在の街であること、画面にあるもの</td><td data-label="例">Tokyo Shibuya crossing, skyscrapers, wide asphalt streets</td></tr>
+<tr><td>2. 光と時間帯</td><td data-label="書くこと">夕方、空の色、反射</td><td data-label="例">golden hour, warm low sun, sun reflecting on glass facades</td></tr>
+<tr><td>3. カメラ</td><td data-label="書くこと">FPV ドローンであること、動き</td><td data-label="例">FPV drone shot, fast forward flight low above the street, then climbing along a tower</td></tr>
+<tr><td>4. 質感</td><td data-label="書くこと">実写らしさ</td><td data-label="例">photorealistic, cinematic, detailed asphalt texture, slight motion blur</td></tr>
+<tr><td>5. 守ってほしいこと</td><td data-label="書くこと">構造を変えない、余計なものを足さない</td><td data-label="例">keep the exact building layout and heights, no new buildings, no text overlays</td></tr>
+</tbody>
+</table>
+<p>つなげると、次のようになります。</p>
+<pre><code>Tokyo Shibuya crossing at golden hour, warm low sun reflecting on glass facades.
+FPV drone shot, fast forward flight low above the street between skyscrapers,
+then a steep climb along one tower. Photorealistic, cinematic, detailed asphalt
+texture, slight motion blur. Keep the exact building layout and heights.
+No new buildings, no text overlays.</code></pre>
+<p>ネガティブプロンプトの欄があるサービスでは、 <code>warping buildings, melting walls, floating objects, extra buildings, text, watermark, cartoon</code> のように、起こしてほしくないことを列挙します。</p>
+<div class="note">
+<p>動きの指示を、長く書きすぎないでください。経路は、方式 B なら動画に含まれ、方式 A でも画像で位置が固定されています。プロンプトは「質感」の指示に使い、動きは短い言葉にとどめる方が、結果が安定します。</p>
+</div>
+
+<h3 id="sec8-4">8.4 選別の基準</h3>
+<p>生成したクリップを、次の順で見て、落とします。上の項目ほど致命的で、直せません。</p>
+<ol>
+<li><strong>建物の形と高さが、元の 3D と合っているか</strong><br>最初と最後で、タワーの形が変わっていないか。変わっていれば不採用。</li>
+<li><strong>道路の向きと幅が合っているか</strong><br>交差点の位置が、経路の途中でずれていないか。</li>
+<li><strong>カメラが、期待した動きをしているか</strong><br>上昇のタイミングが大きくずれていないか。</li>
+<li><strong>ちらつき、変形がないか</strong><br>壁の窓が波打つ、車や人が溶ける、看板の文字が崩れる、などが目立たないか。小さい物の崩れは、速く飛ぶ映像なら目立ちにくい。</li>
+<li><strong>色と光が、夕方として自然か</strong><br>色は後で直せるので、最後に見る。</li>
+</ol>
+
+<h2 id="sec9">9. 工程 6 仕上げと書き出し</h2>
+<p>採用したクリップを、次の手順で一本にします。長い映像にしたいときは、工程 3 を次の区間用に作り直し、前のクリップの最終フレームを次の開始画像にして、工程 5 を繰り返します。</p>
+<ol>
+<li><strong>最終フレームの切り出し</strong><br>次のクリップの開始画像に使う。</li>
+<li><strong>連結</strong><br>クリップを並べる。コーデックと解像度が揃っていれば、再エンコードなしで連結できる。揃っていなければ、再エンコードする。</li>
+<li><strong>解像度と滑らかさ</strong><br>生成 AI の標準は 720p 〜 1080p が多い。必要に応じて、アップスケールや、フレーム補間（ 24fps から 30fps や 60fps へ）を使う。サービス内の機能か、専用のツールを使う。</li>
+<li><strong>色の調整</strong><br>クリップごとの色の差を揃える。夕方の色味を足すと、つなぎ目が目立たなくなる。</li>
+<li><strong>音</strong><br>風切り音や、街の環境音を重ねると、 FPV らしさが増す。音源の権利に注意する。</li>
+</ol>
+<p>FFmpeg での操作例です。</p>
+<pre class="term"><code>ffmpeg -sseof -0.1 -i ai/clip01.mp4 -update 1 -q:v 1 ai/last01.png
+ffmpeg -f concat -safe 0 -i ai/list.txt -c copy final/shibuya-fpv.mp4</code></pre>
+<p><code>list.txt</code> には、連結する順にクリップを書きます。</p>
+<pre><code>file 'clip01.mp4'
+file 'clip02.mp4'</code></pre>
+
+<h2 id="sec10">10. AI エージェントへの任せ方</h2>
+<p>手順の多くは、コード実行ができる AI エージェントに任せられます。ただし、任せてよいことと、人が決めることは分けてください。</p>
+<table class="cards">
+<thead><tr><th>分担</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td>AI に任せる</td><td data-label="内容">スクリプトの修正、エラーの原因調査、 FFmpeg のコマンド作成、ファイル名の整理、経路の速度計算</td></tr>
+<tr><td>人が決める</td><td data-label="内容">対象の場所、経路（どこをどう飛ぶか）、見た目の好み、生成結果の採否、公開の可否</td></tr>
+</tbody>
+</table>
+<p>依頼文の例です。エラーが出たときは、エラー全文を貼ります。</p>
+<pre><code>作業フォルダの scripts/build_scene.py を、次のコマンドで実行したところ、
+下のエラーが出ました。原因を調べて、スクリプトを修正してください。
+修正前に、元のファイルをバックアップしてください。
+
+[実行したコマンド]
+[エラー全文]</code></pre>
+<p>経路の相談は、次のように頼めます。</p>
+<pre><code>path.json の経路について、区間ごとの距離と速度(m/秒)を計算して表にしてください。
+速度が 15 〜 30m/秒に収まらない区間があれば、その区間の通過時刻の修正案を出してください。
+ファイルはまだ書き換えないでください。</code></pre>
+
+<h2 id="sec11">11. トラブルシューティング</h2>
+<table class="cards">
+<thead><tr><th>症状</th><th>考えられる原因</th><th>対処</th></tr></thead>
+<tbody>
+<tr><td>Blender で街が横倒し、または逆さ</td><td data-label="考えられる原因">取り込み時の上方向の指定が違う</td><td data-label="対処"><code class="term">--up</code> と <code class="term">--forward</code> を変えて再実行する</td></tr>
+<tr><td>画面が真っ白、または真っ黒</td><td data-label="考えられる原因">カメラが建物の中にある。または、街から遠すぎる</td><td data-label="対処">経路の座標を確かめる。 3D 表示で、カメラの位置を見る</td></tr>
+<tr><td>表示がガタガタ、建物が揺れる</td><td data-label="考えられる原因">座標が原点から遠い</td><td data-label="対処"><code>build_scene.py</code> の中心移動が効いているか確認する</td></tr>
+<tr><td>描画が遅い</td><td data-label="考えられる原因">データが大きい。または、 GPU がない</td><td data-label="対処">区画を減らす。解像度とサンプル数を下げる。テクスチャなし（ <code class="term">--clay</code> ）にする</td></tr>
+<tr><td>深度の白黒が逆</td><td data-label="考えられる原因">ミスト パスの出力の向き</td><td data-label="対処">FFmpeg に <code class="term">-vf negate</code> を付けて反転する</td></tr>
+<tr><td>AI の映像で、建物が別物になる</td><td data-label="考えられる原因">変化が強すぎる。またはクリップが長すぎる</td><td data-label="対処">方式 B に切り替える。変化の強さを下げる。 5 秒に短縮する</td></tr>
+<tr><td>AI の映像が、 CG のまま変わらない</td><td data-label="考えられる原因">変化が弱すぎる</td><td data-label="対処">変化の強さを上げる。プロンプトの「質感」の要素を強める</td></tr>
+<tr><td>つなぎ目で光や色が変わる</td><td data-label="考えられる原因">クリップごとに別の絵として生成された</td><td data-label="対処">前のクリップの最終フレームを、次の開始画像にする。仕上げで色を揃える</td></tr>
+<tr><td>看板や窓が崩れる</td><td data-label="考えられる原因">動画生成 AI の弱点</td><td data-label="対処">高速で飛ぶ構図にして、見える時間を短くする。ネガティブプロンプトに <code>text</code> を入れる</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec12">12. 公開前の確認</h2>
+<div class="must">
+<p>実在の街を、実写に見える映像にして公開する場合は、見た人が実写だと誤解しないようにしてください。特に、災害や事件、報道を思わせる使い方はしないでください。</p>
+</div>
+<div class="checklist">
+<span class="cl-title">公開前チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="c12-1"><label for="c12-1">説明欄に、 PLATEAU の出典と、加工した旨を書いた</label></li>
+<li><input type="checkbox" id="c12-2"><label for="c12-2">AI で生成した映像であることを、説明欄に明記した</label></li>
+<li><input type="checkbox" id="c12-3"><label for="c12-3">使った動画生成 AI の利用規約で、公開・商用利用が認められていることを確認した</label></li>
+<li><input type="checkbox" id="c12-4"><label for="c12-4">映り込んだ看板、人物、車のナンバーなどで、問題になりそうなものがない</label></li>
+<li><input type="checkbox" id="c12-5"><label for="c12-5">BGM と効果音の権利を確認した</label></li>
+<li><input type="checkbox" id="c12-6"><label for="c12-6">工程の記録（ <code>path.json</code> 、プロンプト、使ったサービスと日付）を保存した</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
+</main>
+<script>
+(function () {
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll("pre:not(.nocopy)").forEach(function (pre) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = "コピー";
+    btn.addEventListener("click", function () {
+      var text = pre.querySelector("code").textContent;
+      function done(ok) {
+        btn.textContent = ok ? "コピーしました" : "コピー失敗";
+        setTimeout(function () { btn.textContent = "コピー"; }, 1500);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(fallbackCopy(text)); });
+      } else {
+        done(fallbackCopy(text));
+      }
+    });
+    pre.appendChild(btn);
+  });
+})();
+</script>
+</body>
+</html>
