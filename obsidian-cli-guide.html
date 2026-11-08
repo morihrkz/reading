@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obsidian CLI 初心者ガイド</title>
+<style>
+  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
+  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
+  th { background: #e6edf3; white-space: nowrap; }
+  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
+  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
+  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
+  .meta { color: #555; font-size: .9rem; }
+  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
+  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:#555}
+  .toc a{color:#222;text-decoration:none}
+  .toc a:hover{color:#2a4d69;text-decoration:underline}
+  @media (max-width:40rem){
+    .toc>ol{columns:1}
+  }
+  sup{font-size:.72em}
+  sup a{color:#2a4d69;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:#e6edf3}
+  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
+  p { margin: 0 0 20px; }
+  @media (max-width: 40rem) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
+    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
+    table.cards td:first-child::before { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+<h1>Obsidian CLI 初心者ガイド</h1>
+<p class="meta">作成日 : 2026-11-08 ／ 対象 : Windows 11 の PowerShell 7 （ Mac の zsh は差分のみ記載） ／ 根拠 : 公式ヘルプと解説記事 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
+
+<div class="note">
+<strong>このガイドの確かさについて</strong><br>
+このガイドは、公式ヘルプと解説記事をもとに書き、コマンド名とオプションを、実機の <code class="term">obsidian help</code> の出力（ 2026-11-08 に取得）と照合しました。ただし、書き込み系コマンドの実際の動作や、 PowerShell での日本語・引用符の渡り方は、まだ実行して確かめていません。 Obsidian は更新が速いので、食い違いがあれば <code class="term">obsidian help</code> の出力を優先してください。
+</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">Obsidian CLI とは何か</a></li>
+<li><a href="#sec2">準備する</a>
+<ol>
+<li><a href="#sec2-1">有効化の手順</a></li>
+<li><a href="#sec2-2">動作確認</a></li>
+<li><a href="#sec2-3">うまくいかないとき</a></li>
+</ol>
+</li>
+<li><a href="#sec3">コマンドの書き方の決まり</a></li>
+<li><a href="#sec4">最初の一歩 : 読むだけのコマンドから</a>
+<ol>
+<li><a href="#sec4-1">ステップ 1 : 読むだけ</a></li>
+<li><a href="#sec4-2">ステップ 2 : 書き込みを試す</a></li>
+</ol>
+</li>
+<li><a href="#sec5">主なコマンドの早見表</a></li>
+<li><a href="#sec6">使い道の例</a></li>
+<li><a href="#sec7">知っておく注意点</a></li>
+<li><a href="#sec8">次に進むには</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. Obsidian CLI とは何か</h2>
+<p>CLI は Command Line Interface の略で、画面のボタンやメニューの代わりに、文字のコマンドで操作する方法です。 Obsidian CLI を使うと、「今日の日記に 1 行追記する」「ノートを検索する」「タグの一覧を出す」といった操作を、 PowerShell などのターミナルから実行できます。 2026 年 2 月に、 Obsidian 1.12 系の公式機能として加わりました <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</p>
+<p>何が嬉しいかというと、次の三つです。</p>
+<ul>
+<li>操作を文字で書けるので、スクリプトにして繰り返せる（自動化）。</li>
+<li>他のツール（ <code>jq</code> や Claude Code など）と組み合わせられる。</li>
+<li>ノートの移動や名前変更で、リンクが壊れないよう Obsidian 自身に処理させられる。</li>
+</ul>
+<div class="must">
+<strong>最も大事な前提</strong><br>
+CLI は、起動中の Obsidian アプリに命令を送る仕組みです。アプリを使わずにファイルだけを直接触るものではありません。 Obsidian が起動していなければ、最初のコマンドで Obsidian が自動的に起動します <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。パソコン専用で、スマートフォン版にはありません。
+</div>
+<div class="note">
+旧来、サードパーティ製の同名ツール（ npm 版の <code>obsidian-cli</code> ）もありました。これは別物です。このガイドが扱うのは、 Obsidian 本体に含まれる公式の CLI です。
+</div>
+
+<h2 id="sec2">2. 準備する</h2>
+<h3 id="sec2-1">2.1 有効化の手順</h3>
+<p>最初に、仕組みの説明をします。 CLI の有効化は、「 Obsidian が、ターミナルから <code class="term">obsidian</code> と打てるように、自分の場所を PATH （コマンドの探索先の一覧）に登録する」作業です。登録は Obsidian の設定画面から行います。</p>
+<ol>
+<li>Obsidian のバージョンを確認し、インストーラ版 1.12.7 以降にする。古ければ公式サイトから入れ直す <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。</li>
+<li>Obsidian の「設定」を開き、「 Obsidian について」へ進む。</li>
+<li>「コマンドラインインターフェース」（ Command line interface ）をオンにする。</li>
+<li>表示される案内に従って、登録を完了する。</li>
+<li>開いているターミナルをすべて閉じ、新しく開き直す（ PATH の変更は、新しいターミナルから有効になる）。</li>
+</ol>
+<table class="cards">
+<thead><tr><th>OS</th><th>登録で起きること</th></tr></thead>
+<tbody>
+<tr><td data-label="OS">Windows</td><td data-label="登録で起きること"><code>Obsidian.exe</code> と同じ場所にある <code>Obsidian.com</code> （ターミナル用の取り次ぎ役）が使われ、ユーザーの PATH に追加される。</td></tr>
+<tr><td data-label="OS">Mac</td><td data-label="登録で起きること"><code>/usr/local/bin/obsidian</code> に実体への近道（シンボリックリンク）が作られる。管理者の承認を求められる。</td></tr>
+<tr><td data-label="OS">Linux</td><td data-label="登録で起きること"><code>~/.local/bin/obsidian</code> にコピーされる。この場所を PATH に入れておく必要がある。</td></tr>
+</tbody>
+</table>
+<div class="note">
+Windows では、管理者として開いた PowerShell から実行すると、出力が空のまま何も起きないことがあるという報告があります <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。ふつうに開いた PowerShell を使ってください。
+</div>
+
+<h3 id="sec2-2">2.2 動作確認</h3>
+<p>確認は、「何も壊さない、読むだけのコマンド」で行います。 Obsidian を起動した状態で、新しい PowerShell に次を打ちます。</p>
+<pre class="term"><code>obsidian version
+obsidian help</code></pre>
+<p><code class="term">obsidian version</code> でバージョンが表示され、 <code class="term">obsidian help</code> でコマンドの一覧が出れば成功です。</p>
+<div class="checklist">
+<span class="cl-title">ステップ 0 チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="c0-1"><label for="c0-1">Obsidian のインストーラ版が 1.12.7 以降である。</label></li>
+<li><input type="checkbox" id="c0-2"><label for="c0-2">設定の「 Obsidian について」で、コマンドラインインターフェースをオンにして登録した。</label></li>
+<li><input type="checkbox" id="c0-3"><label for="c0-3">ターミナルを開き直した。</label></li>
+<li><input type="checkbox" id="c0-4"><label for="c0-4"><code>obsidian help</code> でコマンドの一覧が表示された。</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
+
+<h3 id="sec2-3">2.3 うまくいかないとき</h3>
+<table class="cards">
+<thead><tr><th>症状</th><th>確かめること</th></tr></thead>
+<tbody>
+<tr><td data-label="症状">設定にスイッチが見当たらない</td><td data-label="確かめること">インストーラ版が古い可能性がある。公式サイトから最新版を入れ直す。</td></tr>
+<tr><td data-label="症状"><code>obsidian</code> が見つからないと言われる</td><td data-label="確かめること">ターミナルを開き直したか。 Windows なら新しい PowerShell で試す。更新前の版から上げた場合は、設定のスイッチをいったんオフにしてオンに戻す。</td></tr>
+<tr><td data-label="症状">何も表示されない（ Windows ）</td><td data-label="確かめること">管理者権限のターミナルを避ける。 Obsidian が起動しているかも見る。</td></tr>
+<tr><td data-label="症状"><code>obsidian version</code> が <code>obsidian-cli vX.Y.Z</code> と出る</td><td data-label="確かめること">旧来のサードパーティ製ツールを呼んでいる。公式の CLI ではない。</td></tr>
+<tr><td data-label="症状">Mac で近道がない</td><td data-label="確かめること"><code>sudo ln -sf /Applications/Obsidian.app/Contents/MacOS/obsidian-cli /usr/local/bin/obsidian</code> で手動作成する <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec3">3. コマンドの書き方の決まり</h2>
+<p>コマンドの形は、いつも同じです。一度覚えれば、どのコマンドにも通用します。</p>
+<pre class="term"><code>obsidian [vault=Vault名] コマンド名 [パラメータ=値 ...] [フラグ ...]</code></pre>
+<table class="cards">
+<thead><tr><th>用語</th><th>意味</th><th>例</th></tr></thead>
+<tbody>
+<tr><td data-label="用語">パラメータ</td><td data-label="意味"><code>名前=値</code> の形で値を渡す。値に空白があるときは引用符で囲む。</td><td data-label="例"><code>query="meeting notes"</code></td></tr>
+<tr><td data-label="用語">フラグ</td><td data-label="意味">値を持たない単語。書けばオン、書かなければオフ。</td><td data-label="例"><code>open</code> ・ <code>overwrite</code></td></tr>
+<tr><td data-label="用語"><code>vault=</code></td><td data-label="意味">操作する Vault を指定する。指定するときは、必ず最初のパラメータにする。</td><td data-label="例"><code>obsidian vault=Notes daily</code></td></tr>
+<tr><td data-label="用語"><code>file=</code></td><td data-label="意味">ノートを名前で指定する。ウィキリンクと同じ解決の仕方で、パスも拡張子も要らない。</td><td data-label="例"><code>file=Recipe</code></td></tr>
+<tr><td data-label="用語"><code>path=</code></td><td data-label="意味">Vault の最上位からの正確なパスで指定する。</td><td data-label="例"><code>path=Templates/Recipe.md</code></td></tr>
+<tr><td data-label="用語">改行・タブ</td><td data-label="意味">内容の中の改行は <code>\n</code> 、タブは <code>\t</code> と書く。</td><td data-label="例"><code>content="1行目\n2行目"</code></td></tr>
+<tr><td data-label="用語"><code>--copy</code></td><td data-label="意味">出力をクリップボードにも送る。</td><td data-label="例"><code>obsidian read --copy</code></td></tr>
+</tbody>
+</table>
+<p><code>file=</code> も <code>path=</code> も書かなかった場合は、いま Obsidian で開いているノート（アクティブなノート）が対象になります <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 。意図しないノートに書き込まないよう、書き込み系では <code>file=</code> か <code>path=</code> を明示する習慣をお勧めします。</p>
+<p>各コマンドの細かい指定は、 <code class="term">obsidian help コマンド名</code> で見られます <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> 。</p>
+
+<h3>対話モード（ TUI ）</h3>
+<p>引数なしで <code class="term">obsidian</code> とだけ打つと、対話画面（ TUI ）が開きます。ここでは先頭の <code>obsidian</code> を省いてコマンドを打てます。</p>
+<table class="cards">
+<thead><tr><th>キー</th><th>働き</th></tr></thead>
+<tbody>
+<tr><td data-label="キー"><code>Tab</code></td><td data-label="働き">コマンド名の補完</td></tr>
+<tr><td data-label="キー"><code>Ctrl+R</code></td><td data-label="働き">過去に打ったコマンドの逆引き検索</td></tr>
+<tr><td data-label="キー"><code>Ctrl+L</code></td><td data-label="働き">画面を消す</td></tr>
+<tr><td data-label="キー"><code>Ctrl+C</code> ／ <code>Ctrl+D</code></td><td data-label="働き">終了</td></tr>
+</tbody>
+</table>
+<p>TUI の中で Vault を切り替えるには、 <code>vault:open 名前</code> を使います。</p>
+
+<h2 id="sec4">4. 最初の一歩 : 読むだけのコマンドから</h2>
+<p>小さく試して、納得しながら進める手順にしてあります。ステップごとに結果を確かめてから、次へ進んでください。</p>
+<div class="must">
+<strong>書き込み系を試す前に</strong><br>
+書き込み・削除をするコマンドは、最初は大切な Vault では試さず、練習用の空の Vault で試してください。 Obsidian 側に履歴（ファイル復元）の仕組みはありますが、まず安全な場所で挙動を見るのが確実です。
+</div>
+
+<h3 id="sec4-1">4.1 ステップ 1 : 読むだけ</h3>
+<p>理由 : 読むだけのコマンドは、ノートを変更しません。仕組みを覚える最初の練習に向いています。</p>
+<pre class="term"><code>obsidian vaults
+obsidian tags counts
+obsidian search query="会議" | Sort-Object
+obsidian read file=Recipe
+obsidian properties</code></pre>
+<ul>
+<li><code>vaults</code> は、 Obsidian が知っている Vault の一覧を出します。 <code>verbose</code> を付けると、場所（パス）も出ます。どの Vault が対象になるかを、最初に確かめられます。</li>
+<li><code>tags counts</code> は、タグごとの使用数を出します。</li>
+<li><code>search query=</code> は、該当するノートのパスを出します。本文の一致行まで見たいときは <code>search:context</code> を使います <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。</li>
+<li><code>read file=</code> は、指定したノートの内容を出力します。</li>
+<li><code>properties</code> は、 Vault のプロパティ（ノートの属性）を一覧します。</li>
+</ul>
+
+<h3 id="sec4-2">4.2 ステップ 2 : 書き込みを試す</h3>
+<p>理由 : 書き込みは、自動化の中心的な使い道です。ここからは練習用の Vault で試します。</p>
+<pre class="term"><code>obsidian daily:append content="- [ ] 牛乳を買う"
+obsidian create name="練習ノート" content="こんにちは"
+obsidian append file="練習ノート" content="追記の1行"
+obsidian read file="練習ノート"</code></pre>
+<ul>
+<li><code>daily:append</code> は、今日のデイリーノートの末尾に追記します。ノートを開いていなくても実行できます。</li>
+<li><code>create</code> は、新しいノートを作ります。同名のノートがあるときに上書きしたければ、フラグ <code>overwrite</code> を付けます。作成後に開きたければ <code>open</code> を付けます。</li>
+<li><code>append</code> は、指定したノートの末尾に追記します。</li>
+</ul>
+<div class="note">
+日本語や記号を含む引数は、 PowerShell の引用符の扱いで思いどおりに渡らないことがあります。うまくいかないときは、まず半角英数字だけで試し、結果を <code>read</code> で読み戻して確かめてください。
+</div>
+<div class="checklist">
+<span class="cl-title">ステップ 1 ・ 2 チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="c1-1"><label for="c1-1"><code>obsidian tags counts</code> でタグの一覧が出た。</label></li>
+<li><input type="checkbox" id="c1-2"><label for="c1-2"><code>obsidian search query="…"</code> で、ノートが見つかった。</label></li>
+<li><input type="checkbox" id="c1-3"><label for="c1-3">練習用の Vault で <code>daily:append</code> を実行し、デイリーノートに追記された。</label></li>
+<li><input type="checkbox" id="c1-4"><label for="c1-4"><code>create</code> と <code>append</code> と <code>read</code> で、ノートの作成と読み戻しができた。</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
+</div>
+
+<h2 id="sec5">5. 主なコマンドの早見表</h2>
+<p>よく使うものに絞っています。全体は <code class="term">obsidian help</code> で確認してください <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup> 。</p>
+<table class="cards">
+<thead><tr><th>分類</th><th>コマンド</th><th>働き</th></tr></thead>
+<tbody>
+<tr><td data-label="分類">デイリーノート</td><td data-label="コマンド"><code>daily</code> ・ <code>daily:read</code> ・ <code>daily:path</code> ・ <code>daily:append</code> ・ <code>daily:prepend</code></td><td data-label="働き">今日のノートを開く・読む・場所を出す・末尾や先頭に追記する。</td></tr>
+<tr><td data-label="分類">ノート操作</td><td data-label="コマンド"><code>create</code> ・ <code>read</code> ・ <code>append</code> ・ <code>prepend</code> ・ <code>open</code> ・ <code>rename</code> ・ <code>move</code> ・ <code>delete</code></td><td data-label="働き">作成・読み取り・追記・開く・名前変更・移動・削除。移動するとリンクも更新される。削除は既定でゴミ箱へ送る。</td></tr>
+<tr><td data-label="分類">一覧</td><td data-label="コマンド"><code>files</code> ・ <code>folders</code> ・ <code>recents</code> ・ <code>random</code> ・ <code>wordcount</code></td><td data-label="働き">ファイルやフォルダの一覧、最近開いたもの、ランダムなノート、文字数。</td></tr>
+<tr><td data-label="分類">検索とリンク</td><td data-label="コマンド"><code>search</code> ・ <code>search:context</code> ・ <code>backlinks</code> ・ <code>links</code> ・ <code>unresolved</code> ・ <code>orphans</code> ・ <code>deadends</code></td><td data-label="働き">検索、被リンク、リンク先、未解決リンク、どこからもリンクされないノート、リンクの出ないノート。</td></tr>
+<tr><td data-label="分類">タスク・タグ</td><td data-label="コマンド"><code>tasks</code> ・ <code>task</code> ・ <code>tags</code> ・ <code>tag</code></td><td data-label="働き">タスクやタグの一覧と操作。例 : <code>tasks daily</code> ・ <code>tags counts</code></td></tr>
+<tr><td data-label="分類">プロパティ</td><td data-label="コマンド"><code>properties</code> ・ <code>property:set</code> ・ <code>property:read</code> ・ <code>property:remove</code></td><td data-label="働き">ノートのプロパティの一覧・設定・読み取り・削除。</td></tr>
+<tr><td data-label="分類">履歴</td><td data-label="コマンド"><code>history</code> ・ <code>history:read</code> ・ <code>history:restore</code> ・ <code>diff</code></td><td data-label="働き">ファイル復元の履歴の参照と復元、版の差分。</td></tr>
+<tr><td data-label="分類">テンプレート・コマンド</td><td data-label="コマンド"><code>templates</code> ・ <code>template:insert</code> ・ <code>commands</code> ・ <code>command id=...</code></td><td data-label="働き">テンプレートの挿入。 Obsidian 内のコマンドを ID で実行する。</td></tr>
+<tr><td data-label="分類">プラグイン・テーマ</td><td data-label="コマンド"><code>plugins</code> ・ <code>plugin:enable</code> ・ <code>plugin:disable</code> ・ <code>themes</code> ・ <code>theme:set</code></td><td data-label="働き">プラグインやテーマの一覧と切り替え。</td></tr>
+<tr><td data-label="分類">Vault ・アプリ</td><td data-label="コマンド"><code>vault</code> ・ <code>vaults</code> ・ <code>version</code> ・ <code>reload</code> ・ <code>restart</code></td><td data-label="働き">Vault の情報、 Vault の一覧、バージョン、 Vault の再読み込み、アプリの再起動。 <code>restart</code> はアプリを再起動するので、作業中のときは使わない。</td></tr>
+<tr><td data-label="分類">見出し・しおり・画面</td><td data-label="コマンド"><code>outline</code> ・ <code>bookmarks</code> ・ <code>bookmark</code> ・ <code>tabs</code> ・ <code>workspace</code></td><td data-label="働き">ノートの見出し構造、ブックマークの一覧と追加、開いているタブ、ワークスペース。</td></tr>
+<tr><td data-label="分類">開発者向け</td><td data-label="コマンド"><code>eval</code> ・ <code>devtools</code> ・ <code>dev:console</code> ・ <code>dev:screenshot</code></td><td data-label="働き">アプリ内で JavaScript を実行する、開発者ツール、スクリーンショット。初心者は後回しでよい。</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec6">6. 使い道の例</h2>
+<p>ここからは応用です。どれも、ステップ 1 ・ 2 が動いてから試してください。</p>
+<h3>例 1 : どこからでも一言メモを取る</h3>
+<p>PowerShell の関数にしておくと、ターミナルで <code class="term">memo 買い物に行く</code> と打つだけで、デイリーノートにタスクが追記されます。 PowerShell のプロファイルに書けば、毎回使えます。</p>
+<pre><code>function memo {
+    obsidian daily:append content="- [ ] $($args -join ' ')"
+}</code></pre>
+<h3>例 2 : Vault の健康診断</h3>
+<p>どこからもリンクされていないノートや、リンク先が存在しないリンクを洗い出せます。定期的に実行して、整理の手がかりにします。</p>
+<pre class="term"><code>obsidian orphans
+obsidian unresolved
+obsidian tags counts</code></pre>
+<h3>例 3 : 出力を他のツールへ渡す</h3>
+<p>一部のコマンドは <code>format=json</code> で JSON を出力できます <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup> 。 <code>jq</code> などに渡せば、集計や加工に使えます。</p>
+<pre class="term"><code>obsidian search query="TODO" format=json</code></pre>
+<h3>例 4 : Claude Code などの AI エージェントに任せる</h3>
+<p>エージェントは、ターミナルのコマンドを打てます。 CLI があれば、「この Vault でリンク切れを調べて」「このタグのノートを一覧して」といった作業を、 Obsidian 本体の処理を通して任せられます。ただし、書き込み・削除・移動を任せるときは、最初は練習用の Vault で試してください。</p>
+
+<h2 id="sec7">7. 知っておく注意点</h2>
+<table class="cards">
+<thead><tr><th>注意点</th><th>内容</th></tr></thead>
+<tbody>
+<tr><td data-label="注意点">Obsidian の起動が必要</td><td data-label="内容">アプリを動かさずに使う（ヘッドレス）ことはできない。閉じていれば、最初のコマンドで起動する。</td></tr>
+<tr><td data-label="注意点">終了コードは常に 0</td><td data-label="内容">失敗しても、終了コード（ <code>$LASTEXITCODE</code> ）は 0 のまま。エラーは出力の文字から判断する <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><td data-label="注意点">書き込みの確認</td><td data-label="内容">成功と表示されても、変更されていないことがあるという報告がある。大事な書き込みは <code>read</code> で読み戻す。</td></tr>
+<tr><td data-label="注意点">一括処理は不向き</td><td data-label="内容">1 回ごとに約 1 秒かかるとされる。大量のファイルを処理するなら、ファイルを直接扱う方が速い。</td></tr>
+<tr><td data-label="注意点">並列実行を避ける</td><td data-label="内容"><code>move</code> や <code>eval</code> を同時に走らせると、衝突することがある。</td></tr>
+<tr><td data-label="注意点"><code>eval</code> は強力</td><td data-label="内容">プラグインと同じ権限でアプリ内のコードを実行する。特に AI が書いたコードは、中身を読んでから実行する。</td></tr>
+<tr><td data-label="注意点">複数の Vault</td><td data-label="内容">既定の対象は、操作中の Vault か、現在のフォルダに対応する Vault 。取り違えを防ぐには <code>vault=</code> を明示する。</td></tr>
+<tr><td data-label="注意点">削除</td><td data-label="内容"><code>delete</code> は既定でゴミ箱へ送る。完全に削除するオプションもあるため、実行前に <code>obsidian help delete</code> で確認する。</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec8">8. 次に進むには</h2>
+<ol>
+<li>この文書の 4 章を、練習用の Vault で一通り試す。</li>
+<li><code class="term">obsidian help</code> の一覧から、自分の使い方に合いそうなコマンドを三つ選び、 <code class="term">obsidian help コマンド名</code> で詳細を読む。</li>
+<li>例 1 の <code>memo</code> のように、よく使う操作を関数にする。</li>
+<li>慣れたら、スクリプトやタスクスケジューラ（ Mac は cron や launchd ）で定期実行する。</li>
+</ol>
+<p>疑問が出たら、実際に打ったコマンドと出力を持ってきてください。一緒に確かめながら進められます。</p>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> Obsidian 公式ヘルプ「 Obsidian CLI 」。 <a href="https://obsidian.md/help/cli">Obsidian 公式ヘルプ</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <sup><a href="#fnref-2-6">f</a></sup> <sup><a href="#fnref-2-7">g</a></sup> <sup><a href="#fnref-2-8">h</a></sup> 第三者による解説記事「 The Complete Guide to the Obsidian CLI 」。コマンド例、注意点、使い道はこの記事による。 <a href="https://www.dsebastien.net/the-complete-guide-to-the-obsidian-cli-everything-you-can-do-from-the-terminal/">解説記事</a></li>
+</ol>
+</div>
+</main>
+</body>
+</html>
