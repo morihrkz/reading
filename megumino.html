@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>経路案内</title>
+<style>
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --text: #22252a;
+  --muted: #5f6670;
+  --line: #dcd9d0;
+  --accent: #1f4e8c;
+  --accent-soft: #e6eef8;
+  --mark: #c0392b;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17191c;
+    --surface: #212429;
+    --text: #e8e6e1;
+    --muted: #a3a9b1;
+    --line: #3a3e45;
+    --accent: #8db4ea;
+    --accent-soft: #263446;
+    --mark: #ff8a7a;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  font-size: 16px;
+}
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+h1 {
+  font-size: 1.7rem;
+  margin: 0 0 8px;
+  letter-spacing: 0.04em;
+}
+h1 .sub {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: normal;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+.site { margin: 0 0 12px; }
+.site a { color: var(--accent); }
+.lead { color: var(--muted); margin: 0 0 32px; }
+h2 {
+  font-size: 1.3rem;
+  margin: 40px 0 16px;
+  padding-left: 12px;
+  border-left: 5px solid var(--accent);
+}
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+  margin: 0 0 20px;
+}
+.card h3 {
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+}
+.num {
+  display: inline-block;
+  min-width: 1.8em;
+  padding: 0 6px;
+  margin-right: 6px;
+  border-radius: 4px;
+  background: var(--accent);
+  color: var(--surface);
+  text-align: center;
+  font-size: 0.95rem;
+}
+dl {
+  display: grid;
+  grid-template-columns: 6.5em 1fr;
+  gap: 6px 12px;
+  margin: 0;
+}
+dt { color: var(--muted); }
+dd { margin: 0; }
+.alight {
+  font-weight: bold;
+  color: var(--mark);
+}
+.alight::before { content: "★ "; }
+.walk a { color: var(--accent); }
+figure {
+  margin: 24px 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+}
+figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+figure.tall img { max-width: 480px; margin: 0 auto; }
+figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+figcaption strong { color: var(--text); }
+.note { font-size: 0.9rem; color: var(--muted); }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+.picker { margin: 0 0 8px; }
+.picker-label {
+  margin: 0 0 10px;
+  font-weight: bold;
+}
+.picker ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.picker a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  min-height: 64px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  line-height: 1.4;
+}
+.picker a:hover { background: var(--accent-soft); }
+.picker a:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.picker .mode {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.picker .from {
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+.card { scroll-margin-top: 16px; }
+.card:target {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+@media (max-width: 600px) {
+  .picker ul { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  h1 { font-size: 1.45rem; }
+  dl { grid-template-columns: 5.5em 1fr; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1><span class="sub">経路案内</span></h1>
+<p class="site"><a href="https://meguminoie.salvationarmy.or.jp/">（救世軍恵みの家　ウェブサイト）</a></p>
+<p class="lead"><span class="alight"></span>印は降車する駅・停留所</p>
+
+<nav class="picker" aria-labelledby="picker-label">
+  <ul>
+    <li><a href="#from-higashikoenji"><span class="mode">地下鉄・丸の内線</span><span class="from">東高円寺から</span></a></li>
+    <li><a href="#from-shinjuku"><span class="mode">バス・宿 91</span><span class="from">新宿から</span></a></li>
+    <li><a href="#from-asagaya"><span class="mode">バス・渋 66</span><span class="from">阿佐ヶ谷から</span></a></li>
+    <li><a href="#from-shibuya"><span class="mode">バス・渋 66</span><span class="from">渋谷から</span></a></li>
+  </ul>
+</nav>
+
+<h2 id="subway">地下鉄</h2>
+<div class="card" id="from-higashikoenji">
+  <dl>
+    <dt>降車駅</dt>
+    <dd><span class="alight">東高円寺</span>（新宿から 7 分）</dd>
+    <dt>徒歩</dt>
+    <dd class="walk">駅から 10 ～ 15 分（<a href="#map1">経路図１</a>）</dd>
+  </dl>
+</div>
+<figure class="tall" id="map1">
+  <a href="route_1_web.png"><img src="route_1_web.png" width="1263" height="2959" loading="lazy" alt="東高円寺駅から救世軍恵みの家までの徒歩経路を示す地図。駅の南側から出て南へ進み、約 750 メートル、徒歩約 10 分。"></a>
+  <figcaption><strong>経路図１：</strong>駅から徒歩 10 ～ 15 分</figcaption>
+</figure>
+
+<h2 id="bus">バス</h2>
+<p>いずれも「堀ノ内（妙法寺前）」で降車</p>
+
+<div class="card" id="from-shinjuku">
+  <h3><span class="num">1</span> 新宿駅から</h3>
+  <dl>
+    <dt>のりば</dt>
+    <dd>「新宿駅西口」 9 番のりば</dd>
+    <dt>系統</dt>
+    <dd>宿 91 （新代田駅前ゆき）</dd>
+    <dt>運行会社</dt>
+    <dd>都営バス</dd>
+    <dt>乗車</dt>
+    <dd>約 21 分</dd>
+    <dt>降車</dt>
+    <dd><span class="alight">堀ノ内（妙法寺前）</span></dd>
+    <dt>徒歩</dt>
+    <dd class="walk">バス停から 7 ～ 10 分（<a href="#map2">経路図２</a>）</dd>
+  </dl>
+</div>
+
+<div class="card" id="from-asagaya">
+  <h3><span class="num">2</span> 阿佐ヶ谷駅から</h3>
+  <dl>
+    <dt>のりば</dt>
+    <dd>「阿佐ヶ谷駅前」</dd>
+    <dt>系統</dt>
+    <dd>渋 66 （渋谷駅前ゆき）</dd>
+    <dt>運行会社</dt>
+    <dd>都営バス・京王バス</dd>
+    <dt>乗車</dt>
+    <dd>約 13 分</dd>
+    <dt>降車</dt>
+    <dd><span class="alight">堀ノ内（妙法寺前）</span></dd>
+    <dt>徒歩</dt>
+    <dd class="walk">バス停から 7 ～ 10 分（<a href="#map2">経路図２</a>）</dd>
+  </dl>
+</div>
+
+<figure id="map2">
+  <a href="route_2_web.png"><img src="route_2_web.png" width="1763" height="888" loading="lazy" alt="バス停「堀ノ内（妙法寺前）」から救世軍恵みの家までの徒歩経路を示す地図。バス停から南へ進み、角を左に曲がって東へ向かう。約 500 メートル、徒歩約 7 分。"></a>
+  <figcaption><strong>経路図２：</strong>バス停から徒歩 7 ～ 10 分</figcaption>
+</figure>
+
+<div class="card" id="from-shibuya">
+  <h3><span class="num">3</span> 渋谷駅から</h3>
+  <dl>
+    <dt>のりば</dt>
+    <dd>「渋谷駅前（西側）」</dd>
+    <dt>系統</dt>
+    <dd>渋 66 （阿佐ヶ谷駅前ゆき）</dd>
+    <dt>運行会社</dt>
+    <dd>都営バス・京王バス</dd>
+    <dt>乗車</dt>
+    <dd>約 32 分</dd>
+    <dt>降車</dt>
+    <dd><span class="alight">堀ノ内（妙法寺前）</span></dd>
+    <dt>徒歩</dt>
+    <dd class="walk">バス停から 9 ～ 13 分（<a href="#map3">経路図３</a>）</dd>
+  </dl>
+</div>
+
+<figure id="map3">
+  <a href="route_3_web.png"><img src="route_3_web.png" width="1759" height="890" loading="lazy" alt="渋谷駅からのバスのバス停「堀ノ内（妙法寺前）」から救世軍恵みの家までの徒歩経路を示す地図。バス停から南へ進み、妙法寺東の交差点で道路を渡り、さらに南へ進んでから東へ向かう。約 600 メートル、徒歩約 9 分。"></a>
+  <figcaption><strong>経路図３：</strong>バス停から徒歩 9 ～ 13 分</figcaption>
+</figure>
+</main>
+</body>
+</html>
