@@ -5,125 +5,150 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Software AG とは何だったのか</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <h1>Software AG とは何だったのか : 1969 年のダルムシュタットから 2025 年の事業分割まで</h1>
-<p class="meta">作成日 : 2026-10-21 ／ 種別 : 調査結果のまとめ ／ 調査方法 : Web 検索と公開記事の確認</p>
+</header>
+<div class="wrap">
+<p class="meta band">作成日 : 2026-10-21 ／ 種別 : 調査結果のまとめ ／ 調査方法 : Web 検索と公開記事の確認</p>
 
-<div class="must">
+<div class="point">
 <p><strong>結論 : Software AG は、メインフレーム向けのデータベース Adabas と開発言語 Natural で成長した、ドイツ発の基盤ソフトウェア会社である。</strong> 1969 年に創業し、 1990 年代は北米・日本などの販売を米国の子会社が担っていた。 2000 年代に買収で統合・業務プロセス分野へ広がったが、 2023 年から 2025 年にかけて、投資ファンドの下で事業が切り分けられている。</p>
 </div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">要点</a></li>
-<li><a href="#sec2">年表</a></li>
-<li><a href="#sec3">1990 年代後半の Software AG</a>
+<li><a href="#s1">要点</a></li>
+<li><a href="#s2">年表</a></li>
+<li><a href="#s3">1990 年代後半の Software AG</a>
 <ol>
-<li><a href="#sec3-1">親会社と SAGA の二層構造</a></li>
-<li><a href="#sec3-2">何を売っていたか</a></li>
+<li><a href="#s3-1">親会社と SAGA の二層構造</a></li>
+<li><a href="#s3-2">何を売っていたか</a></li>
 </ol>
 </li>
-<li><a href="#sec4">2000 年代以降の変遷</a></li>
-<li><a href="#sec5">「何だったのか」への答え</a></li>
-<li><a href="#sec6">確認できていないこと</a></li>
-<li><a href="#sec7">出典</a></li>
+<li><a href="#s4">2000 年代以降の変遷</a></li>
+<li><a href="#s5">「何だったのか」への答え</a></li>
+<li><a href="#s6">確認できていないこと</a></li>
+<li><a href="#s7">出典</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 要点</h2>
+<section id="s1">
+<h2><span class="no">1</span>要点</h2>
 <ul>
 <li>1969 年、コンサルティング会社 AIV の若手 6 人が創業した。創業者の一人で数学者の Peter Schnell が、のちに長く取締役会長を務めた。</li>
 <li>1971 年に高性能なトランザクション処理向けのデータベース Adabas を出し、 1979 年に英語に近い第 4 世代言語 Natural を出した。この二つが長く事業の柱になった。</li>
@@ -132,69 +157,79 @@
 <li>2007 年に webMethods を買収して、統合（ミドルウェア）や業務プロセスの会社へ広がった。</li>
 <li>2023 年に Silver Lake が買収し、 2024 年に webMethods と StreamSets を IBM へ売却した。 2025 年には ARIS と Adabas &amp; Natural の二事業を軸にする方針になった。</li>
 </ul>
+</section>
 
-<h2 id="sec2">2. 年表</h2>
-<table class="cards">
+<section id="s2">
+<h2><span class="no">2</span>年表</h2>
+<div class="scroll"><table>
 <thead><tr><th>時期</th><th>出来事</th></tr></thead>
 <tbody>
-<tr><td data-label="時期">1969 年</td><td data-label="出来事">コンサルティング会社 AIV の従業員 6 人が創業</td></tr>
-<tr><td data-label="時期">1971 年</td><td data-label="出来事">Adabas を発表。北米に拠点を開設</td></tr>
-<tr><td data-label="時期">1974 年・ 1977 年</td><td data-label="出来事">日本（ 1974 年）、英国（ 1977 年）に拠点を開設</td></tr>
-<tr><td data-label="時期">1979 年</td><td data-label="出来事">Natural を発表。主な開発者は Peter Pagé</td></tr>
-<tr><td data-label="時期">1987 年</td><td data-label="出来事">従業員約 500 人、欧州に 12 の子会社、 50 か国超に拠点</td></tr>
-<tr><td data-label="時期">1997 年 前半</td><td data-label="出来事">Thayer Capital Partners が SAGA の過半数を 1 株 1.40 ドルで取得。親会社は約 8% を保有</td></tr>
-<tr><td data-label="時期">1997 年 11 月</td><td data-label="出来事">SAGA がニューヨーク証券取引所に 1 株 10 ドルで上場し、約 4,800 万ドルを調達</td></tr>
-<tr><td data-label="時期">1998 年 4 月</td><td data-label="出来事">SAGA の株価が 26.75 ドルまで上昇 (Thayer の 1 年間の収益率は約 1,900%)</td></tr>
-<tr><td data-label="時期">1999 年ごろ</td><td data-label="出来事">親会社がフランクフルト証券取引所に上場。その後、 XML データベース Tamino を発表（ただし上場年は資料により 1999 年と 2002 年に割れる）</td></tr>
-<tr><td data-label="時期">2005 年・ 2007 年</td><td data-label="出来事">Sabratec （ 2005 年）、 SPL Software と Jacada の事業（ 2007 年）を買収。 2007 年に webMethods を 5.46 億ドルで買収</td></tr>
-<tr><td data-label="時期">2009 年から 2011 年</td><td data-label="出来事">IDS Scheer の買収（ 2010 年 2 月に傘下）、 Data Foundations （ 2010 年 10 月）、 Terracotta と Metismo （ 2011 年 5 月）</td></tr>
-<tr><td data-label="時期">2023 年</td><td data-label="出来事">Silver Lake が約 22 億ユーロで買収に合意し、 6 月に 63% を確保。 12 月 18 日に、 StreamSets と webMethods を IBM へ約 21 億 3,000 万ユーロで売却すると発表</td></tr>
-<tr><td data-label="時期">2024 年</td><td data-label="出来事">社名の組織形態を AG から GmbH へ変更。 IBM への売却が 7 月に完了。 TrendMiner を 4 月に 4,700 万ユーロで Proemion へ売却</td></tr>
-<tr><td data-label="時期">2025 年 1 月</td><td data-label="出来事">CEO の Sanjay Brahmawar が任期満了で退任。 ARIS と Adabas &amp; Natural を独立した二事業として運営する方針が報じられる</td></tr>
+<tr><th scope="row">1969 年</th><td>コンサルティング会社 AIV の従業員 6 人が創業</td></tr>
+<tr><th scope="row">1971 年</th><td>Adabas を発表。北米に拠点を開設</td></tr>
+<tr><th scope="row">1974 年・ 1977 年</th><td>日本（ 1974 年）、英国（ 1977 年）に拠点を開設</td></tr>
+<tr><th scope="row">1979 年</th><td>Natural を発表。主な開発者は Peter Pagé</td></tr>
+<tr><th scope="row">1987 年</th><td>従業員約 500 人、欧州に 12 の子会社、 50 か国超に拠点</td></tr>
+<tr><th scope="row">1997 年 前半</th><td>Thayer Capital Partners が SAGA の過半数を 1 株 1.40 ドルで取得。親会社は約 8% を保有</td></tr>
+<tr><th scope="row">1997 年 11 月</th><td>SAGA がニューヨーク証券取引所に 1 株 10 ドルで上場し、約 4,800 万ドルを調達</td></tr>
+<tr><th scope="row">1998 年 4 月</th><td>SAGA の株価が 26.75 ドルまで上昇 (Thayer の 1 年間の収益率は約 1,900%)</td></tr>
+<tr><th scope="row">1999 年ごろ</th><td>親会社がフランクフルト証券取引所に上場。その後、 XML データベース Tamino を発表（ただし上場年は資料により 1999 年と 2002 年に割れる）</td></tr>
+<tr><th scope="row">2005 年・ 2007 年</th><td>Sabratec （ 2005 年）、 SPL Software と Jacada の事業（ 2007 年）を買収。 2007 年に webMethods を 5.46 億ドルで買収</td></tr>
+<tr><th scope="row">2009 年から 2011 年</th><td>IDS Scheer の買収（ 2010 年 2 月に傘下）、 Data Foundations （ 2010 年 10 月）、 Terracotta と Metismo （ 2011 年 5 月）</td></tr>
+<tr><th scope="row">2023 年</th><td>Silver Lake が約 22 億ユーロで買収に合意し、 6 月に 63% を確保。 12 月 18 日に、 StreamSets と webMethods を IBM へ約 21 億 3,000 万ユーロで売却すると発表</td></tr>
+<tr><th scope="row">2024 年</th><td>社名の組織形態を AG から GmbH へ変更。 IBM への売却が 7 月に完了。 TrendMiner を 4 月に 4,700 万ユーロで Proemion へ売却</td></tr>
+<tr><th scope="row">2025 年 1 月</th><td>CEO の Sanjay Brahmawar が任期満了で退任。 ARIS と Adabas &amp; Natural を独立した二事業として運営する方針が報じられる</td></tr>
 </tbody>
-</table>
+</table></div>
+</section>
 
-<h2 id="sec3">3. 1990 年代後半の Software AG</h2>
-<h3 id="sec3-1">3.1 親会社と SAGA の二層構造</h3>
+<section id="s3">
+<h2><span class="no">3</span>1990 年代後半の Software AG</h2>
+<h3 id="s3-1">3.1 親会社と SAGA の二層構造</h3>
 <p>1998 年当時の報道によると、 SAGA （米バージニア州レストン）は、 Software AG の製品を北米・南米・日本・イスラエルで独占的に販売していた。新製品の開発の多くは引き続きドイツで行われ、親会社は SAGA から使用料を受け取っていた。したがって、「 Software AG 」という名前で日本や米国の顧客が接した相手は、ドイツ本社ではなく、この販売会社だった可能性が高い（これは報道からの推論である）。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead><tr><th>項目</th><th>内容（ SAGA 、 1997 年度）</th></tr></thead>
 <tbody>
-<tr><td data-label="項目">売上</td><td data-label="内容">1.81 億ドル（前年比 16% 増）</td></tr>
-<tr><td data-label="項目">純利益</td><td data-label="内容">1,270 万ドル（前年の約 2 倍）</td></tr>
-<tr><td data-label="項目">従業員</td><td data-label="内容">約 950 人</td></tr>
-<tr><td data-label="項目">顧客</td><td data-label="内容">約 1,500 の企業・自治体・大学。内訳は企業が約 60% 、自治体が約 30% 、大学が約 10%</td></tr>
-<tr><td data-label="項目">主な顧客</td><td data-label="内容">Federal Express 、 Sprint 、バージニア州の自動車局、 Brown 大学、米国人事管理局</td></tr>
-<tr><td data-label="項目">競合</td><td data-label="内容">IBM 、 Sybase 、 Sterling Software 、 Iona Technologies</td></tr>
+<tr><th scope="row">売上</th><td>1.81 億ドル（前年比 16% 増）</td></tr>
+<tr><th scope="row">純利益</th><td>1,270 万ドル（前年の約 2 倍）</td></tr>
+<tr><th scope="row">従業員</th><td>約 950 人</td></tr>
+<tr><th scope="row">顧客</th><td>約 1,500 の企業・自治体・大学。内訳は企業が約 60% 、自治体が約 30% 、大学が約 10%</td></tr>
+<tr><th scope="row">主な顧客</th><td>Federal Express 、 Sprint 、バージニア州の自動車局、 Brown 大学、米国人事管理局</td></tr>
+<tr><th scope="row">競合</th><td>IBM 、 Sybase 、 Sterling Software 、 Iona Technologies</td></tr>
 </tbody>
-</table>
-<h3 id="sec3-2">3.2 何を売っていたか</h3>
+</table></div>
+<h3 id="s3-2">3.2 何を売っていたか</h3>
 <p>報道によれば、中心はソフトウェアの開発ツールと、異なるコンピュータやネットワークをつなぐミドルウェアだった。データベースは、分析 (OLAP) ではなく、大量の取引を処理する基幹システム向けの Adabas である。 Adabas はメインフレームでの定着が強みだったが、その強みが新しい基盤への移行をためらわせ、市場での存在感を下げたという見方も資料にある。</p>
+</section>
 
-<h2 id="sec4">4. 2000 年代以降の変遷</h2>
+<section id="s4">
+<h2><span class="no">4</span>2000 年代以降の変遷</h2>
 <ul>
 <li><strong>XML への展開 :</strong> 1999 年ごろの上場後に、 XML を扱う Tamino を出した。</li>
 <li><strong>統合・業務プロセスへ :</strong> webMethods （ 2007 年、 5.46 億ドル）で、サービス統合基盤や業務プロセス管理に入った。 IDS Scheer の取り込みで、業務プロセスのモデリング製品 ARIS を得た。</li>
 <li><strong>周辺の買収 :</strong> Terracotta （インメモリ処理）や Data Foundations （マスターデータ管理）などを取り込んだ。</li>
 <li><strong>2020 年代 :</strong> 投資ファンド Silver Lake の下で、統合基盤の事業を IBM に売り、 ARIS と Adabas &amp; Natural を残す形になった。</li>
 </ul>
-<div class="note">
+<div class="box">
 <p>IDS Scheer の買収年は、資料で食い違う。 Wikipedia は 2009 年の買収提案と 2010 年 2 月の傘下入りとし、 diginomica は 2007 年と書いている。本稿は Wikipedia の記述を採った。確定には一次資料が必要である。</p>
 </div>
+</section>
 
-<h2 id="sec5">5. 「何だったのか」への答え</h2>
-<table class="cards">
+<section id="s5">
+<h2><span class="no">5</span>「何だったのか」への答え</h2>
+<div class="scroll"><table>
 <thead><tr><th>見方</th><th>答え</th></tr></thead>
 <tbody>
-<tr><td data-label="見方">事業の性格</td><td data-label="答え">メインフレームの基幹処理を支えるデータベースと開発言語の会社。分析 (OLAP) の会社ではない</td></tr>
-<tr><td data-label="見方">資本の出自</td><td data-label="答え">ドイツ発。ただし 1990 年代の米州・日本の販売は、 1997 年から過半数が投資会社の持分となった米国子会社が担った</td></tr>
-<tr><td data-label="見方">強み</td><td data-label="答え">Adabas と Natural の長期利用による、顧客の囲い込み（基幹システムは入れ替えにくい）</td></tr>
-<tr><td data-label="見方">弱み</td><td data-label="答え">クラウドへの移行が難しかった。 diginomica は、 Adabas &amp; Natural はクラウド向きではなかったと論じる</td></tr>
-<tr><td data-label="見方">現在</td><td data-label="答え">統合基盤は IBM へ、他の事業も切り分けられ、 ARIS と Adabas &amp; Natural が中心に残る</td></tr>
+<tr><th scope="row">事業の性格</th><td>メインフレームの基幹処理を支えるデータベースと開発言語の会社。分析 (OLAP) の会社ではない</td></tr>
+<tr><th scope="row">資本の出自</th><td>ドイツ発。ただし 1990 年代の米州・日本の販売は、 1997 年から過半数が投資会社の持分となった米国子会社が担った</td></tr>
+<tr><th scope="row">強み</th><td>Adabas と Natural の長期利用による、顧客の囲い込み（基幹システムは入れ替えにくい）</td></tr>
+<tr><th scope="row">弱み</th><td>クラウドへの移行が難しかった。 diginomica は、 Adabas &amp; Natural はクラウド向きではなかったと論じる</td></tr>
+<tr><th scope="row">現在</th><td>統合基盤は IBM へ、他の事業も切り分けられ、 ARIS と Adabas &amp; Natural が中心に残る</td></tr>
 </tbody>
-</table>
+</table></div>
+</section>
 
-<h2 id="sec6">6. 確認できていないこと</h2>
+<section id="s6">
+<h2><span class="no">6</span>確認できていないこと</h2>
 <ul>
 <li>親会社の上場年（ 1999 年か 2002 年か）</li>
 <li>IDS Scheer の買収の正確な年（上の注記を参照）</li>
@@ -203,8 +238,10 @@
 <li>日本での 1990 年代の販売体制（日本は SAGA の担当地域と報じられたが、日本法人との関係は未確認）</li>
 <li>2025 年以降の Alfabet 、 Cumulocity の売却先（資料では未公表）</li>
 </ul>
+</section>
 
-<h2 id="sec7">7. 出典</h2>
+<section id="s7">
+<h2><span class="no">7</span>出典</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Software_AG">Software AG - Wikipedia</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Peter_Pag%C3%A9">Peter Pagé - Wikipedia</a></li>
@@ -214,6 +251,8 @@
 <li><a href="https://www.constellationr.com/blog-news/insights/ibm-buys-streamsets-webmethods-softwareag-213-billion">IBM buys StreamSets, webMethods from SoftwareAG for €2.13 billion - Constellation Research</a></li>
 <li><a href="https://diginomica.com/software-ag-retrenches-aris-adabas-natural">Software AG retrenches to its core ARIS process management and A&amp;N mainframe tools - diginomica （ 2025 年 1 月 8 日）</a></li>
 </ul>
-</main>
+</section>
+
+</div>
 </body>
 </html>

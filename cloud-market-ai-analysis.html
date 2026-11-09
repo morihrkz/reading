@@ -5,163 +5,191 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>クラウドコンピューティング市場の構造分析――生成 AI 需要による勢力図の変化</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
-<div class="kicker">産業構造分析</div>
+<header class="hero">
 <h1>クラウドコンピューティング市場の構造分析<br>――生成 AI 需要による勢力図の変化</h1>
 <p class="subtitle">A Structural Analysis of the Cloud Computing Market: Shifting Competitive Dynamics under Generative AI Demand</p>
+</header>
+<div class="wrap">
+<div class="kicker">産業構造分析</div>
 <div class="lede"><p>AWS ・ Azure ・ Google Cloud 、および Oracle ・ Alibaba Cloud ・ Tencent Cloud ・ IBM を対象に、市場シェアと決算データで現状を整理し、各社の AI 提携・投資と今後 1 〜 3 年のシナリオを一次資料と出典で積み上げて読み解く調査レポート。 2026 年 8 月。</p></div>
-<div class="note">【比較の前提】市場シェアは、 IaaS ・ PaaS ・ SaaS の範囲、地域、四半期、売上かランレートかで値が変わる。各社の会計年度・開示セグメントも一致しない。本稿中の実績、会社ガイダンス、調査会社の予測、筆者のシナリオは同じ確度の情報ではない。</div>
-<div class="note"><strong>凡例</strong><br>
+<div class="box">【比較の前提】市場シェアは、 IaaS ・ PaaS ・ SaaS の範囲、地域、四半期、売上かランレートかで値が変わる。各社の会計年度・開示セグメントも一致しない。本稿中の実績、会社ガイダンス、調査会社の予測、筆者のシナリオは同じ確度の情報ではない。</div>
+<div class="box"><strong>凡例</strong><br>
 予測 ―― 調査会社・金融機関等が具体的数値で公表した見通し<br>
 シナリオ ―― 本稿作成にあたり複数の情報を統合して検討した仮説的な将来像<br>
 （ラベルのない記述は決算発表・公式資料等の一次情報にもとづく事実）</div>
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">はじめに</a></li>
-<li><a href="#sec2">三社、および同種サービス提供企業の現状分析</a>
+<li><a href="#s1">はじめに</a></li>
+<li><a href="#s2">三社、および同種サービス提供企業の現状分析</a>
 <ol>
-<li><a href="#sec2-1">「市場シェア」「成長率」をどう読むか</a></li>
-<li><a href="#sec2-2">クラウドインフラ市場全体のシェア推移</a></li>
-<li><a href="#sec2-3">各社の直近決算（クラウド部門）</a></li>
-<li><a href="#sec2-4">その他の主要クラウド事業者</a></li>
+<li><a href="#s2-1">「市場シェア」「成長率」をどう読むか</a></li>
+<li><a href="#s2-2">クラウドインフラ市場全体のシェア推移</a></li>
+<li><a href="#s2-3">各社の直近決算（クラウド部門）</a></li>
+<li><a href="#s2-4">その他の主要クラウド事業者</a></li>
 </ol>
 </li>
-<li><a href="#sec3">AI ブームとの関係</a>
+<li><a href="#s3">AI ブームとの関係</a>
 <ol>
-<li><a href="#sec3-1">主要な提携・出資関係</a></li>
-<li><a href="#sec3-2">AI 関連設備投資 (CapEx) の規模</a></li>
-<li><a href="#sec3-3">AI 事業のクラウド成長への寄与</a></li>
+<li><a href="#s3-1">主要な提携・出資関係</a></li>
+<li><a href="#s3-2">AI 関連設備投資 (CapEx) の規模</a></li>
+<li><a href="#s3-3">AI 事業のクラウド成長への寄与</a></li>
 </ol>
 </li>
-<li><a href="#sec4">今後の予測・シナリオ分析</a>
+<li><a href="#s4">今後の予測・シナリオ分析</a>
 <ol>
-<li><a href="#sec4-1">市場規模に関するアナリスト予測</a></li>
-<li><a href="#sec4-2">「 AI バブル」論争――楽観論と悲観論</a></li>
-<li><a href="#sec4-3">各社の戦略動向</a></li>
-<li><a href="#sec4-4">リスク要因</a></li>
-<li><a href="#sec4-5">今後 1 〜 3 年のシナリオ分析</a></li>
+<li><a href="#s4-1">市場規模に関するアナリスト予測</a></li>
+<li><a href="#s4-2">「 AI バブル」論争――楽観論と悲観論</a></li>
+<li><a href="#s4-3">各社の戦略動向</a></li>
+<li><a href="#s4-4">リスク要因</a></li>
+<li><a href="#s4-5">今後 1 〜 3 年のシナリオ分析</a></li>
 </ol>
 </li>
-<li><a href="#sec5">まとめ・所感</a></li>
-<li><a href="#sec6">用語集</a></li>
-<li><a href="#sec7">参考文献・出典一覧</a></li>
+<li><a href="#s5">まとめ・所感</a></li>
+<li><a href="#s6">用語集</a></li>
+<li><a href="#s7">参考文献・出典一覧</a></li>
 </ol>
 </nav>
-<h2 id="sec1">1. はじめに</h2>
+<section id="s1">
+<h2><span class="no">1</span>はじめに</h2>
 <p>本稿は、 Amazon Web Services （以下 AWS ）、 Microsoft Azure （以下 Azure ）、 Google Cloud の大手クラウド事業者三社、および同種のクラウド計算サービスを提供するその他の企業（ Oracle 、 Alibaba Cloud 、 Tencent Cloud 、 IBM 等）を対象に、クラウドコンピューティング市場における市場シェア・成長動向を整理するとともに、 2023 年以降続いている生成 AI （人間のような自然な文章・画像・音声などを新たに「生成」できる AI 技術の総称）ブームとの関係性を検討する。</p>
 <p>クラウドコンピューティングとは、企業や個人が自前でサーバー機器を保有・管理する代わりに、インターネット経由で計算資源（サーバーの処理能力やデータの保存領域）を必要な分だけ借りて使う仕組みを指す。近年、この「借りる」対象に、生成 AI モデルの開発・運用に必要な高性能な計算資源（ GPU 等の専用半導体を大量に積んだサーバー）が急速に加わっており、クラウド市場の勢力図そのものが AI ブームによって書き換えられつつある。</p>
 <p>本稿で扱う範囲は、①AWS ・ Azure ・ Google Cloud の三大クラウド事業者（いわゆる「ハイパースケーラー」、超大規模にデータセンターを展開する事業者を指す業界用語）を主軸としつつ、②Oracle Cloud Infrastructure (OCI) のように AI 特化で急成長している事業者、③Alibaba Cloud ・ Tencent Cloud といった AI ・クラウド事業のグローバル展開を進める中国系事業者、④IBM のようにハイブリッドクラウドで独自の位置を占める事業者も視野に含める。</p>
 <p>本稿は 2026 年 8 月 5 日時点で Web 検索により収集できた情報にもとづく。数値の性質に応じて「確立した事実（決算発表・公式資料等の一次情報）」「業界アナリストの見立て（予測・推計）」「推測的なシナリオ（まとめ・所感の章で複数の情報を統合して検討する将来像）」の 3 段階を区別して記述し、分類基準は各章の該当箇所に明記する。</p>
-<h2 id="sec2">2. 三社、および同種サービス提供企業の現状分析</h2>
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span>三社、および同種サービス提供企業の現状分析</h2>
 <p>AWS ・ Azure ・ Google Cloud の市場シェア推移と、三社および Oracle ・ Alibaba Cloud ・ Tencent Cloud ・ IBM の直近決算を、一次資料・調査会社データで整理する部である。</p>
-<h3 id="sec2-1">2.1 「市場シェア」「成長率」をどう読むか</h3>
+<h3 id="s2-1">2.1 「市場シェア」「成長率」をどう読むか</h3>
 <p><strong>市場シェアとは</strong>、ある市場全体の売上のうち特定企業が占める割合であり、 Synergy Research Group や Canalys といった調査会社が各社の決算等から推計して算出する。どの調査会社も集計対象の定義が微妙に異なるため、同じ四半期でも数値が数ポイントずれることがある。</p>
 <p><strong>なぜシェアと成長率の両方を見る必要があるか</strong>。シェアは「今どれだけ大きいか」という静的な情報しか示さない。
 成長率（前年同期比の伸び）を合わせて見ることで「勢いが増しているか失速しているか」が分かる。後述の通り AWS は首位を保ちつつも成長率で他二社に見劣りしており、両方を見て初めて勢力図の変化が見えてくる。</p>
-<h3 id="sec2-2">2.2 クラウドインフラ市場全体のシェア推移</h3>
+<h3 id="s2-2">2.2 クラウドインフラ市場全体のシェア推移</h3>
 <p>Synergy Research Group によれば、世界のクラウドインフラサービス (IaaS/PaaS) 市場は 2026 年第 1 四半期（ 1 〜 3 月期）に四半期支出 1,286 億ドル、年換算 (ARR) で初めて 5,000 億ドルを突破した。前年同期比成長率は 35% で 10 四半期連続の加速という。シェアは AWS28% ・ Azure21% ・ Google Cloud14% （三社合計 63% ）。
 一方、成長率では前年同期比で Google Cloud+63% 、 Azure+40% と大きく伸びたのに対し AWS は +19% にとどまる。 AI 関連需要が市場全体に占める比率は 2023 年の約 8% から 2026 年時点で約 19% へ上昇したとも分析している（出典 : <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 、 2026 年 4 月 29 日）。</p>
 <p>一つ前の 2025 年第 3 四半期は、 AWS29% ・ Azure20% ・ Google Cloud13% （三社合計 63% ）、市場規模は四半期 1,069 億ドルで +30% 。 AWS シェアは 2021 年頃の 32% 台から緩やかに低下する一方、 Azure ・ Google Cloud は拡大、 Oracle や「ネオクラウド」（ GPU 特化型の新興事業者）もわずかにシェアを伸ばしていると指摘される（出典 : <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 、 2025 年 11 月 19 日）。</p>
 <p>別の調査会社 Canalys では、確認できた最新の一次的な数値 (2025 年 Q2) で AWS32% ・三社合計 65% と、 Synergy Research よりやや高めに出ている。市場規模は四半期 953 億ドルで +22% （出典 : <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 、 2025 年 9 月時点）。
 なお 2026 年 Q1 ・ Q2 の Canalys 確定値は一次情報源にアクセスできず未確認である。</p>
 <p><strong>総括</strong> : 調査会社によりシェアの絶対値には数ポイントの幅がある（ AWS で 28% 台〜 32% 台等）が、「 AWS が首位を維持しつつシェアはやや低下傾向、 Azure ・ Google Cloud が拡大」という方向性は複数の調査会社で一致する。</p>
-<h3 id="sec2-3">2.3 各社の直近決算（クラウド部門）</h3>
+<h3 id="s2-3">2.3 各社の直近決算（クラウド部門）</h3>
 <p>各社の会計区分の違いに注意が必要である。 AWS は Amazon の独立事業セグメント、 Azure は Microsoft の「 Intelligent Cloud 」というより大きなセグメントの一部として開示、 Google Cloud は Alphabet の独立セグメントである。
 単純な実額の横並び比較には限界がある。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr>
 <th>企業（セグメント）</th>
@@ -174,31 +202,31 @@
 <tbody>
 <tr>
 <td>AWS (Amazon)</td>
-<td data-label="対象四半期">2026 年 Q2 （ 4 〜 6 月）</td>
-<td data-label="売上高">422 億ドル</td>
-<td data-label="前年同期比成長率">+37% （ Jassy CEO は過去 18 四半期で最速と発言）</td>
-<td data-label="営業利益（率）">166 億ドル（営業利益率約 39.3% ）</td>
+<td>2026 年 Q2 （ 4 〜 6 月）</td>
+<td>422 億ドル</td>
+<td>+37% （ Jassy CEO は過去 18 四半期で最速と発言）</td>
+<td>166 億ドル（営業利益率約 39.3% ）</td>
 </tr>
 <tr>
 <td>Azure (Microsoft Intelligent Cloud)</td>
-<td data-label="対象四半期">FY2026 Q4 （暦年 4 〜 6 月）</td>
-<td data-label="売上高">Intelligent Cloud 全体 393 億ドル</td>
-<td data-label="前年同期比成長率">Azure 単体 +43% 、 Intelligent Cloud 全体 +32%</td>
-<td data-label="営業利益（率）">Intelligent Cloud 全体で約 160 億ドル</td>
+<td>FY2026 Q4 （暦年 4 〜 6 月）</td>
+<td>Intelligent Cloud 全体 393 億ドル</td>
+<td>Azure 単体 +43% 、 Intelligent Cloud 全体 +32%</td>
+<td>Intelligent Cloud 全体で約 160 億ドル</td>
 </tr>
 <tr>
 <td>Google Cloud (Alphabet)</td>
-<td data-label="対象四半期">2026 年 Q2 （ 4 〜 6 月）</td>
-<td data-label="売上高">248 億ドル</td>
-<td data-label="前年同期比成長率">+82%</td>
-<td data-label="営業利益（率）">88 億ドル（前年同期 28 億ドルから大幅増）</td>
+<td>2026 年 Q2 （ 4 〜 6 月）</td>
+<td>248 億ドル</td>
+<td>+82%</td>
+<td>88 億ドル（前年同期 28 億ドルから大幅増）</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>出典 : AWS は <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> （ 2026 年 7 月 30 日）。 Microsoft は <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> （ 2026 年 7 月 29 日）。 Google Cloud は <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 等の報道（ 2026 年 7 月 22 日、複数媒体で一致する数値。 SEC 一次資料には本調査ではアクセス不可）。</p>
 <p>AWS の営業利益率約 39% は、初期投資後は追加の顧客獲得コストが相対的に小さく済むというクラウド事業の高収益構造を示す。 Google Cloud の +82% という成長率も際立ち、長年の赤字先行から近年黒字化・拡大が進んでいる。
 Microsoft は商業向け残存履行義務（ RPO 、将来にわたり履行が約束された契約残高）が 6,250 億ドル（前年比 +110% ）に達し、うち約 45% が OpenAI 関連契約と FY2026 Q2 時点で開示している（出典 : <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> ）。</p>
-<h3 id="sec2-4">2.4 その他の主要クラウド事業者</h3>
+<h3 id="s2-4">2.4 その他の主要クラウド事業者</h3>
 <p><strong>Oracle Cloud Infrastructure (OCI)</strong>: 2026 会計年度 Q4 （暦年 3 〜 5 月、 6 月 10 日発表）で OCI 単体売上 58 億ドル、 +93% 。全社売上 192 億ドルで +21% 。
 残存履行義務 (RPO) は 6,380 億ドル、 +363% と急拡大（大半は AI 関連の大型契約）。 2027 会計年度はクラウド売上成長率 58 〜 64% を見込む（出典 : <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 、 2026 年 6 月 10 日）。</p>
 <p><strong>Alibaba Cloud</strong>: 2026 年 1 〜 3 月期売上 416.26 億人民元（約 60.35 億米ドル）、 +38% 。調整後 EBITA37.96 億人民元（約 5.5 億米ドル）、 +57% （出典 : <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 、 2026 年 5 月 12 日）。</p>
@@ -206,9 +234,12 @@ Microsoft は商業向け残存履行義務（ RPO 、将来にわたり履行�
 <p><strong>IBM</strong>: クラウド単独開示はなし。
 2026 年 Q2 （ 4 〜 6 月）のソフトウェアセグメントは 78 億ドル、 +5.1% (Red Hat/Hybrid Cloud 関連 +11%) 。ソフトウェア ARR246 億ドル、 +8% （出典 : <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 、 2026 年 7 月）。</p>
 <p>三大クラウド事業者による寡占構造自体は崩れていないが、成長率で見ると Oracle のような AI 特化型事業者が三社を上回るペースで拡大しており、市場周辺で新しい勢力図が形成されつつある。</p>
-<h2 id="sec3">3. AI ブームとの関係</h2>
+</section>
+
+<section id="s3">
+<h2><span class="no">3</span>AI ブームとの関係</h2>
 <p>本稿の中核部分である。各社の提携・出資関係、設備投資 (CapEx) 、売上への寄与という三つの側面から、生成 AI ブームがクラウド事業とどう結びついているかを検討する。</p>
-<h3 id="sec3-1">3.1 主要な提携・出資関係</h3>
+<h3 id="s3-1">3.1 主要な提携・出資関係</h3>
 <p>生成 AI の開発には膨大な計算資源が必要となる。「計算資源を大量に必要とする AI 企業」と「計算資源を提供できるクラウド事業者」の間で、出資を伴う深い提携関係が次々と築かれているのが 2023 年以降の大きな特徴である。</p>
 <p><strong>Microsoft × OpenAI</strong>: 2019 年以来の累計投資額は約 130 億ドルとされ、長らく Azure が独占クラウドプロバイダーであった（出典 : <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 、 2025 年 10 月 28 日）。
 同日、両社は提携を大幅改定。 Microsoft の持株比率は完全希薄化ベースで約 27% （持分価値約 1,350 億ドル）。 Azure 独占は終了し OpenAI は他クラウドも利用可能となったが、「サードパーティと共同開発した API 製品」は Azure 専有のまま。 Microsoft は OpenAI の IP へのアクセス権を 2032 年まで（非独占的に）保持する（出典 : <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> 、 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup> ）。
@@ -223,9 +254,9 @@ Google は Anthropic の出資者かつ TPU 供給元でありながら、自社
 <p><strong>Oracle × OpenAI (Stargate)</strong>: 2025 年 9 月、総額 3,000 億ドル・ 5 年間（ 2027 年開始予定）の計算契約を締結（出典 : <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> ）。
 OpenAI ・ Oracle ・ SoftBank 等の「 Stargate 」プロジェクト全体では米国内で最大約 30 ギガワット構築を目標に、総投資 5,000 億ドル〜 1 兆ドルとも報じられる。 2026 年 4 月時点でテキサス州アビリーン拠点（ 1.2 ギガワット）が稼働、複数州で建設中（出典 : <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> ）。</p>
 <p><strong>その他</strong> : xAI は 2025 年 6 月から OCI 上で Grok モデルを運用（出典 : <sup id="fnref-28-1"><a href="#ref-28">[28]</a></sup> ）。 Meta が Llama 向けに Google TPU を利用する契約を結んだとの報道（ 2026 年 2 月）もあるが金額は未確認である（出典 : <sup id="fnref-29-1"><a href="#ref-29">[29]</a></sup> ）。</p>
-<h3 id="sec3-2">3.2 AI 関連設備投資 (CapEx) の規模</h3>
+<h3 id="s3-2">3.2 AI 関連設備投資 (CapEx) の規模</h3>
 <p>生成 AI の開発・提供にはデータセンター建設や専用半導体調達など巨額の設備投資（ CapEx 、将来使用する固定資産への投資支出）が必要となる。各社とも「 AI 関連」と明示的に切り分けた金額は開示しておらず、以下は総設備投資額である点に留意されたい。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr>
 <th>企業</th>
@@ -236,64 +267,67 @@ OpenAI ・ Oracle ・ SoftBank 等の「 Stargate 」プロジェクト全体で
 <tbody>
 <tr>
 <td>Amazon</td>
-<td data-label="2025 年度実績">1,318 億ドル（前年 830 億ドルから +58.8% ）</td>
-<td data-label="2026 年見通し（直近ガイダンス）">当初約 2,000 億ドル→7 月 30 日決算で 2,200 億ドルに上方修正（メモリ価格上昇等）</td>
+<td>1,318 億ドル（前年 830 億ドルから +58.8% ）</td>
+<td>当初約 2,000 億ドル→7 月 30 日決算で 2,200 億ドルに上方修正（メモリ価格上昇等）</td>
 </tr>
 <tr>
 <td>Alphabet</td>
-<td data-label="2025 年度実績">914.47 億ドル（ガイダンス下限）</td>
-<td data-label="2026 年見通し（直近ガイダンス）">当初 1,750 〜 1,850 億ドル→4 月に 1,800 〜 1,900 億ドル→7 月 22 日決算で 1,950 〜 2,050 億ドルに再上方修正</td>
+<td>914.47 億ドル（ガイダンス下限）</td>
+<td>当初 1,750 〜 1,850 億ドル→4 月に 1,800 〜 1,900 億ドル→7 月 22 日決算で 1,950 〜 2,050 億ドルに再上方修正</td>
 </tr>
 <tr>
 <td>Microsoft</td>
-<td data-label="2025 年度実績">報道間で数値が食い違い未確定（ Q4 単独 242 億ドル）</td>
-<td data-label="2026 年見通し（直近ガイダンス）">当初約 1,900 億ドル→1,750 億ドルに下方修正（主因はリース会計区分変更）。 FY26 Q4 単体は 410 億ドルで四半期最高</td>
+<td>報道間で数値が食い違い未確定（ Q4 単独 242 億ドル）</td>
+<td>当初約 1,900 億ドル→1,750 億ドルに下方修正（主因はリース会計区分変更）。 FY26 Q4 単体は 410 億ドルで四半期最高</td>
 </tr>
 <tr>
 <td>Meta （比較対象）</td>
-<td data-label="2025 年度実績">約 722 億ドル</td>
-<td data-label="2026 年見通し（直近ガイダンス）">当初 1,150 〜 1,350 億ドル→4 月に 1,250 〜 1,450 億ドル→7 月 29 日決算で 1,300 〜 1,450 億ドルに絞り込み</td>
+<td>約 722 億ドル</td>
+<td>当初 1,150 〜 1,350 億ドル→4 月に 1,250 〜 1,450 億ドル→7 月 29 日決算で 1,300 〜 1,450 億ドルに絞り込み</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>出典 : Amazon <sup id="fnref-30-1"><a href="#ref-30">[30]</a></sup> 、 <sup id="fnref-31-1"><a href="#ref-31">[31]</a></sup> 。 Alphabet <sup id="fnref-32-1"><a href="#ref-32">[32]</a></sup> 、 <sup id="fnref-33-1"><a href="#ref-33">[33]</a></sup> 。 Microsoft <sup id="fnref-34-1"><a href="#ref-34">[34]</a></sup> 、 <sup id="fnref-35-1"><a href="#ref-35">[35]</a></sup> 。 Meta <sup id="fnref-36-1"><a href="#ref-36">[36]</a></sup> 、 <sup id="fnref-37-1"><a href="#ref-37">[37]</a></sup> 。</p>
 <p>複数の業界報道の集計では 4 社合計の 2025 年実績は約 4,000 億〜 4,130 億ドル、 2026 年見通しは約 7,250 億ドル (+77%) とされる（単一の一次情報源による確定値ではない、出典 : <sup id="fnref-38-1"><a href="#ref-38">[38]</a></sup> 、 <sup id="fnref-39-1"><a href="#ref-39">[39]</a></sup> ）。 Google ・ Amazon は決算のたびガイダンスを上方修正し続けており、設備投資計画が上振れし続ける状態は需要見通しの強さの表れである一方、後述の「 AI バブル」論争における懸念材料でもある。</p>
-<h3 id="sec3-3">3.3 AI 事業のクラウド成長への寄与</h3>
+<h3 id="s3-3">3.3 AI 事業のクラウド成長への寄与</h3>
 <p>Microsoft は 2026 年 3 月期第 3 四半期決算で、 AI 事業の年率換算収益（四半期ペースを 1 年換算した値）が 370 億ドル（前年比 +123% 、 2025 年 1 月の 130 億ドルから増加）に達したと公表。同四半期の Azure 成長率は +40% （出典 : <sup id="fnref-40-1"><a href="#ref-40">[40]</a></sup> ）。</p>
 <p>Amazon は 2026 年 7 月 30 日決算で Jassy CEO が「 AI ・チップ事業の年率換算収益が 250 億ドルを突破」と発言（出典 : <sup id="fnref-41-1"><a href="#ref-41">[41]</a></sup> ）。</p>
 <p>Google Cloud は 2026 年 Q2 決算で、 AI ソリューション・ AI インフラ需要が売上成長 (+82%) の牽引役と説明され、受注残高（バックログ）は 6 月末時点で 5,140 億ドル（第 1 四半期から 500 億ドル超増）（出典 : <sup id="fnref-42-1"><a href="#ref-42">[42]</a></sup> ）。</p>
 <p>以上は各社の公式開示であり「確立した事実」に区分できる。業界全体への寄与度については、 Synergy Research Group の分析（生成 AI 関連クラウドサービス成長率が前年比 165% 、 AI 関連支出シェアが 2023 年 8%→2026 年 19% ）もあるが、二次報道からの要約で一次資料は未確認のため「アナリストの見立て」として扱う（出典 : <sup id="fnref-43-1"><a href="#ref-43">[43]</a></sup> ）。</p>
 <p><strong>AI 関連事業は各社のクラウド部門にとって「将来の成長ドライバー候補」ではなく「現に成長率を押し上げている主要因」に転じつつある</strong>。
 Google Cloud ・ Azure の成長率が AWS を上回る背景には、 OpenAI ・ Anthropic との深い提携 (Azure) や TPU 基盤戦略 (Google Cloud) を強みにできている点が指摘できる。 AWS も大型契約と独自チップ Trainium で対抗しており、売上の絶対額では依然最大手である。</p>
-<h2 id="sec4">4. 今後の予測・シナリオ分析</h2>
+</section>
+
+<section id="s4">
+<h2><span class="no">4</span>今後の予測・シナリオ分析</h2>
 <p><strong>本章は確立した事実の記述ではなく、予測・仮説的なシナリオの検討である。</strong> 各予測・シナリオには予測またはシナリオのラベルを付す。ラベル基準は、①調査会社・金融機関等が具体的数値で公表した見通しには予測、②本稿作成にあたり複数の事実・予測を組み合わせて検討した仮説的な将来像にはシナリオである。</p>
-<h3 id="sec4-1">4.1 市場規模に関するアナリスト予測</h3>
+<h3 id="s4-1">4.1 市場規模に関するアナリスト予測</h3>
 <p>予測 Gartner は 2026 年の世界 IT 支出が前年比 14.2% 増の 6.37 兆ドルに達すると予測（年内に複数回上方修正、 2 月 +10.8%/6.15 兆ドル→4 月 +13.5%/6.31 兆ドル→7 月 14.2%/6.37 兆ドル）（出典 : <sup id="fnref-44-1"><a href="#ref-44">[44]</a></sup> 、 2026 年 7 月 27 日）。同社は世界 AI 支出を 2026 年に前年比 47% 増の 2.59 兆ドル、 2027 年に 3.49 兆ドルと予測、 AI インフラが支出全体の 45% 超で最大セグメントという（出典 : <sup id="fnref-45-1"><a href="#ref-45">[45]</a></sup> 、 2026 年 5 月 19 日）。</p>
 <p>予測 IDC は世界の企業向けパブリッククラウド支出が 2026 年に初めて 1 兆ドルを突破、 +21% 超で成長すると予測。 PaaS （アプリケーション開発・実行基盤をサービス提供する形態）が AI ワークロード需要を背景に +37% と最速という（出典 : <sup id="fnref-46-1"><a href="#ref-46">[46]</a></sup> 、 2026 年 3 月）。</p>
 <p>予測 McKinsey は 2030 年までに AI 関連インフラへの累計投資額が 6.7 兆ドル（データセンター単体 5.2 兆ドル、電力・冷却等の周辺投資 1.3 兆ドル）に達すると試算。世界のデータセンター容量は 219 ギガワット拡大し、うち AI 向けが 156 ギガワット、 AI 向け容量比率は 2025 年の約 33% から 2030 年に約 70% へ上昇する見込みという（出典 : <sup id="fnref-47-1"><a href="#ref-47">[47]</a></sup> 、発表時期は未確認）。</p>
 <p>予測 Goldman Sachs は 2026 年のハイパースケーラー CapEx が前年比 36% 増の約 5,390 億ドル、 2027 年は +17% の約 6,290 億ドルと予測し、「 2027 年の市場コンセンサスはむしろ保守的すぎる」との見方を示す（出典 : <sup id="fnref-48-1"><a href="#ref-48">[48]</a></sup> 、 2026 年 1 月）。</p>
 <p>これらの予測には「二桁〜数十 % の高成長が続く」という共通点がある。
 ただし、上方修正だけから市場実勢が予測を上回ったと結論づけることはできない。対象範囲、為替前提、価格、調査モデルの見直しも改定に影響する。予測の一致は方向性の参考であり、将来の実績を保証しない。</p>
-<h3 id="sec4-2">4.2 「 AI バブル」論争――楽観論と悲観論</h3>
+<h3 id="s4-2">4.2 「 AI バブル」論争――楽観論と悲観論</h3>
 <p><strong>悲観論・懸念</strong> : 国際決済銀行（ BIS 、各国中央銀行の中央銀行とも呼ばれる国際機関）は 2026 年 6 月 28 日の年次経済報告で、 AI 投資ブームを 19 世紀の運河・鉄道バブル、 1920 年代の電化ブーム、ドットコムバブルになぞらえ、実需を上回る資本流入の危険性を警告した。ハイパースケーラー 5 社の 2025 〜 2026 年累計 AI 投資額は 1 兆ドル超で、収益・フリーキャッシュフロー（事業活動で自由に使えるお金）の伸びを上回るペースで負債依存が強まっているという（出典 : <sup id="fnref-49-1"><a href="#ref-49">[49]</a></sup> 、 2026 年 6 月 29 日）。
 著名投資家 Michael Burry 氏は 2026 年 6 月 30 日、 Nvidia 等への空売り（値下がりを見込む取引）を公表し「需要の多くはオフバランスの資金調達に支えられた循環的なものだ」と論じた（出典 : <sup id="fnref-50-1"><a href="#ref-50">[50]</a></sup> ）。 Nvidia ・ OpenAI ・ Oracle ・ Microsoft 等の間で出資・供給契約が複雑に絡み合う「循環取引」への懸念もあり、総額は 2026 年時点で 8,000 億ドル超、需要の見かけ上の水増しではないかとの論点である（出典 : <sup id="fnref-51-1"><a href="#ref-51">[51]</a></sup> 、 2026 年 7 月 27 日）。
 ファンドマネージャー調査では「 AI バブルが最大のテールリスク」との回答が 45% に急増（前年 9 月の 11% から）した（出典 : <sup id="fnref-52-1"><a href="#ref-52">[52]</a></sup> 、 2026 年 6 月 8 日）。 Google の Sundar Pichai CEO 自身も「非合理性の要素がある」と認め、ドットコムとの類似を指摘し「バブルが弾ければ Google を含め無傷ではいられない」と発言している（出典 : <sup id="fnref-53-1"><a href="#ref-53">[53]</a></sup> ）。</p>
 <p><strong>楽観論</strong> : Goldman Sachs は「米ハイテクセクターは少なくとも現時点ではバブルではない」とし、支出はむしろ過小評価の可能性を指摘する（出典 : <sup id="fnref-54-1"><a href="#ref-54">[54]</a></sup> ）。一部アナリストは、 AI 投資が主に自己資金で賄われている点を挙げ、負債依存度が高かったドットコム期とは構造が異なると反論する（出典 : <sup id="fnref-52-2"><a href="#ref-52">[52]</a></sup> ）。
 Nvidia の Jensen Huang CEO は「バブルという声は多いが景色は全く違う。人類史上最大のインフラ構築だ」と実需の強さを強調（出典 : <sup id="fnref-55-1"><a href="#ref-55">[55]</a></sup> ）。 Microsoft の Satya Nadella CEO は「テック企業以外にも広く使われて初めて AI はバブルではないと言える」とし、現時点での判定を留保する立場を示す（出典 : <sup id="fnref-56-1"><a href="#ref-56">[56]</a></sup> ）。</p>
 <p>シナリオ以上を踏まえると、論争の核心は「 AI 技術の有用性」ではなく「現在の投資ペースが実需に見合っているか、資金調達構造は健全か」という点に集約できる。この論点の帰趨によってクラウド各社の立ち位置は大きく左右されうる。</p>
-<h3 id="sec4-3">4.3 各社の戦略動向</h3>
+<h3 id="s4-3">4.3 各社の戦略動向</h3>
 <p>AWS は 2026 年の CapEx が約 2,000 億ドル規模（ 2025 年約 1,250 億ドルから約 60% 増）とされ、大半がデータセンター・電力・独自チップ Trainium に充てられる。 Trainium2 はほぼ完売、 Trainium3 も 2026 年出荷分の大半が予約済みで、将来収益コミットメントは 2,250 億ドルと報じられる（出典 : <sup id="fnref-57-1"><a href="#ref-57">[57]</a></sup> ）。</p>
 <p>Microsoft は 2026 年 1 月、推論（学習済みモデルを使い実際に回答等を生成する処理）特化型自社チップ「 Maia 200 」を発表し、 Nvidia の開発者エコシステムへの対抗を鮮明にしている（出典 : <sup id="fnref-58-1"><a href="#ref-58">[58]</a></sup> 、 2026 年 1 月 26 日）。</p>
 <p>Google は 2026 年 4 月「 Google Cloud Next 2026 」で新世代 TPU 「 TPU 8 」（訓練特化 TPU 8t 、推論特化 TPU 8i ）を発表。 5 月には資産運用大手 Blackstone との合弁で TPU データセンター事業（初期出資 50 億ドル、 2027 年に 500 メガワット稼働予定）も発表し、直接販売や外部資本との共同事業も模索している（出典 : <sup id="fnref-59-1"><a href="#ref-59">[59]</a></sup> 、 <sup id="fnref-60-1"><a href="#ref-60">[60]</a></sup> ）。</p>
 <p>Oracle は汎用クラウドで AWS ・ Azure に正面から対抗するのではなく、 GPU 高密度・高性能計算 (HPC) 特化インフラ事業者としての位置づけを強めている、というのが複数アナリストの分析である。 2026 会計年度の OCI 売上は前年比 77% 増の 180 億ドルを見込むと CEO の Safra Catz 氏が言及したと報じられる（出典 : <sup id="fnref-26-2"><a href="#ref-26">[26]</a></sup> ）。</p>
-<h3 id="sec4-4">4.4 リスク要因</h3>
+<h3 id="s4-4">4.4 リスク要因</h3>
 <p>第一に<strong>電力・データセンター容量の制約</strong>。
 ボトルネックが「半導体の生産能力」から「電力網」へ移行しつつあると指摘される。米国では新規の電力接続の順番待ちが数年単位に及ぶとされる（出典 : <sup id="fnref-61-1"><a href="#ref-61">[61]</a></sup> 、一次情報の裏取りは未完了）。</p>
 <p>第二に<strong>半導体・ GPU 供給の制約</strong>。
 GPU 単体の生産能力は改善したが、ボトルネックは高帯域幅メモリ（ HBM 、 AI 処理向け高速メモリ）や先端パッケージング技術に移行している。需要が供給を上回る状態が 2027 年頃まで続くとの見方があり、ハイパースケーラーの大量先行発注が最新 GPU 供給の大半を占有し中小 AI 企業を圧迫しているとの指摘もある（出典 : <sup id="fnref-62-1"><a href="#ref-62">[62]</a></sup> ）。</p>
 <p>第三に<strong>規制動向</strong>。
 米国では 2026 年前半 M&amp;A 審査は相対的に緩和傾向にある一方、 FTC ・ DOJ は 2026 年 2 月、 AI 関連の競合企業間提携に関する新ガイドライン検討の意見募集を開始した。 EU でもデジタル市場法（ DMA 、大手デジタルプラットフォーマーの市場支配力を規制する EU 法）の適用範囲をクラウドサービスに拡大するかの検討が続く（出典 : <sup id="fnref-63-1"><a href="#ref-63">[63]</a></sup> 、 2026 年 7 月）。</p>
-<h3 id="sec4-5">4.5 今後 1 〜 3 年のシナリオ分析</h3>
+<h3 id="s4-5">4.5 今後 1 〜 3 年のシナリオ分析</h3>
 <p>以上を踏まえ、今後 1 〜 3 年程度を見据えた複数のシナリオを提示する。<strong>以下はいずれも本稿作成にあたり複数の情報を統合して検討した仮説的な将来像であり、確定した事実ではない。</strong></p>
 <p>シナリオ A<strong>AI 投資が持続的に拡大するケース</strong>。
 AI 関連の売上・受注残高が積み上がり続け、 CapEx に見合う収益が実現していく場合、 Azure ・ Google Cloud はそれぞれ OpenAI ・ Anthropic との提携や自社製 AI チップを武器に AWS へのシェア追い上げをさらに強め、三社の競争は「総合力」から「 AI 基盤としての実力」へ重心を移すと考えられる。 Oracle のような特化型プレイヤーも AI 特化領域でシェアを伸ばしうる。この場合、電力・半導体の供給制約が実質的な成長の天井として作用する可能性が高い。</p>
@@ -302,7 +336,10 @@ AI 関連の売上・受注残高が積み上がり続け、 CapEx に見合う�
 <p>シナリオ C <strong>選別的な成長が続くケース（ A と B の中間）</strong>。
 市場全体は成長を続けるが、投資家・顧客企業が AI プロジェクトの費用対効果をより厳しく見極めるようになり、成長率に「勝ち組」と「見劣りする陣営」の差が拡大していく。市場全体の急落ではなく、個別企業・個別プロジェクト単位での淘汰が進む可能性がある。</p>
 <p>いずれのシナリオが実現するにせよ、電力・半導体という物理的制約と規制当局の動向という制度的要因が、今後 1 〜 3 年の展開を左右する重要な変数になると考えられる。</p>
-<h2 id="sec5">5. まとめ・所感</h2>
+</section>
+
+<section id="s5">
+<h2><span class="no">5</span>まとめ・所感</h2>
 <p>クラウド市場は依然として AWS ・ Azure ・ Google Cloud の三社が 63% 前後のシェアを占める寡占構造にあるが、成長率で見ると Azure (+43%) ・ Google Cloud (+82%) が AWS (+37%) を上回るペースで拡大しており、シェアの序列もゆっくり変化しつつある。この変化を牽引しているのが生成 AI ブームであり、 Microsoft-OpenAI 、 Amazon-Anthropic/OpenAI 、 Google-Anthropic といった出資と大型クラウド契約を組み合わせた深い提携関係が各社のクラウド事業の成長エンジンとして機能していることは、複数の一次資料から確認できる事実である。</p>
 <p>一方、この成長を支える設備投資は年々上方修正され続けており、主要 4 社合計で 2026 年に 7,000 億ドルを超える規模との推計もある。投資ペースの持続可能性については、 BIS ・著名投資家による警鐘と、 Goldman Sachs や Nvidia ・ Microsoft 経営陣の楽観的な見方が対立しており、 2026 年 8 月時点で決着はついていない。
 筆者の見立てとしては、各社決算の売上・受注残高の伸びは事実として確認できる一方、その裏側にある資金の流れの持続性は外部からの検証が難しく、当面は楽観論・悲観論双方に留意しながら状況を注視するのが妥当と考える。</p>
@@ -310,8 +347,11 @@ AI 関連の売上・受注残高が積み上がり続け、 CapEx に見合う�
 AWS は売上規模・営業利益率で依然最大かつ最も収益性の高いクラウド事業者、 Azure は既存の企業向けソフトウェア基盤と OpenAI との提携を組み合わせた独自の強み、 Google Cloud は自社 TPU と検索・ AI 研究の技術力を武器に急成長している。 Oracle のような特化型プレイヤーの台頭も新たな競争軸をもたらしている。
 それぞれ異なる強み・リスクを抱えながら、同じ AI ブームの波に乗っている、というのが最も公平な整理であろう。</p>
 <p>今後 1 〜 3 年は、電力・半導体という物理的制約、規制当局の動き、そして「 AI 投資が実需に見合う収益を生み出せるか」という根本的な問いへの答えが、業界の勢力図を左右する。個々の企業の株価や短期的なニュースよりも、こうした構造的な変数の動きを継続的に追うことをお勧めしたい。</p>
-<h2 id="sec6">6. 用語集</h2>
-<table class="cards">
+</section>
+
+<section id="s6">
+<h2><span class="no">6</span>用語集</h2>
+<div class="scroll"><table>
 <thead>
 <tr>
 <th>用語</th>
@@ -321,69 +361,70 @@ AWS は売上規模・営業利益率で依然最大かつ最も収益性の高�
 <tbody>
 <tr>
 <td>ハイパースケーラー</td>
-<td data-label="定義">超大規模にデータセンターを展開するクラウド事業者を指す業界用語（ AWS ・ Azure ・ Google Cloud 等）</td>
+<td>超大規模にデータセンターを展開するクラウド事業者を指す業界用語（ AWS ・ Azure ・ Google Cloud 等）</td>
 </tr>
 <tr>
 <td>市場シェア</td>
-<td data-label="定義">ある市場全体の売上のうち特定企業が占める割合</td>
+<td>ある市場全体の売上のうち特定企業が占める割合</td>
 </tr>
 <tr>
 <td>営業利益率</td>
-<td data-label="定義">売上高に対して本業の儲けである営業利益が占める割合</td>
+<td>売上高に対して本業の儲けである営業利益が占める割合</td>
 </tr>
 <tr>
 <td>CapEx （設備投資）</td>
-<td data-label="定義">データセンター建設等、将来使用する固定資産への投資支出</td>
+<td>データセンター建設等、将来使用する固定資産への投資支出</td>
 </tr>
 <tr>
 <td>RPO （残存履行義務）</td>
-<td data-label="定義">将来にわたって履行が約束されている契約の残高。いわば積み上がった受注残</td>
+<td>将来にわたって履行が約束されている契約の残高。いわば積み上がった受注残</td>
 </tr>
 <tr>
 <td>ARR （年間経常収益 / 年換算）</td>
-<td data-label="定義">ある時点の売上ペースが 1 年間続いたと仮定した場合の年間換算値</td>
+<td>ある時点の売上ペースが 1 年間続いたと仮定した場合の年間換算値</td>
 </tr>
 <tr>
 <td>IaaS/PaaS</td>
-<td data-label="定義">IaaS はサーバー等の基盤機能を、 PaaS はアプリケーション開発・実行基盤をサービスとして提供する形態</td>
+<td>IaaS はサーバー等の基盤機能を、 PaaS はアプリケーション開発・実行基盤をサービスとして提供する形態</td>
 </tr>
 <tr>
 <td>TPU (Tensor Processing Unit)</td>
-<td data-label="定義">Google 独自開発の AI 向け専用半導体</td>
+<td>Google 独自開発の AI 向け専用半導体</td>
 </tr>
 <tr>
 <td>Trainium</td>
-<td data-label="定義">Amazon 独自開発の AI 向け専用半導体</td>
+<td>Amazon 独自開発の AI 向け専用半導体</td>
 </tr>
 <tr>
 <td>HBM （高帯域幅メモリ）</td>
-<td data-label="定義">AI 処理向けの高速メモリ。近年の半導体供給制約のボトルネックの一つ</td>
+<td>AI 処理向けの高速メモリ。近年の半導体供給制約のボトルネックの一つ</td>
 </tr>
 <tr>
 <td>フリーキャッシュフロー</td>
-<td data-label="定義">事業活動で実際に自由に使えるお金</td>
+<td>事業活動で実際に自由に使えるお金</td>
 </tr>
 <tr>
 <td>テールリスク</td>
-<td data-label="定義">発生確率は低いが、起きた場合の損失が甚大なリスク</td>
+<td>発生確率は低いが、起きた場合の損失が甚大なリスク</td>
 </tr>
 <tr>
 <td>循環取引</td>
-<td data-label="定義">企業間で出資・供給契約が相互に絡み合う取引構造。需要を見かけ上水増しするとの懸念の対象</td>
+<td>企業間で出資・供給契約が相互に絡み合う取引構造。需要を見かけ上水増しするとの懸念の対象</td>
 </tr>
 <tr>
 <td>DMA （デジタル市場法）</td>
-<td data-label="定義">大手デジタルプラットフォーマーの市場支配力を規制する EU の法律</td>
+<td>大手デジタルプラットフォーマーの市場支配力を規制する EU の法律</td>
 </tr>
 <tr>
 <td>ネオクラウド</td>
-<td data-label="定義">CoreWeave 等、 GPU 特化型の新興クラウド事業者を指す業界用語</td>
+<td>CoreWeave 等、 GPU 特化型の新興クラウド事業者を指す業界用語</td>
 </tr>
 </tbody>
-</table>
+</table></div>
+</section>
 <div class="refs">
-<h2 id="sec7">7. 参考文献・出典一覧</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<h2 id="s7">7. 参考文献・出典一覧</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1"><a href="#fnref-1-1">^</a> Synergy Research Group （クラウド市場 ARR ）。 2026/4/29 。 <a href="https://www.srgresearch.com/articles/cloud-market-annual-revenue-run-rate-topped-half-a-trillion-dollars-in-q1-as-growth-surge-continues">原文</a></li>
 <li id="ref-2"><a href="#fnref-2-1">^</a> Synergy Research Group （市場シェア推移）。 2025/11/19 。 <a href="https://www.srgresearch.com/articles/cloud-market-share-trends-big-three-together-hold-63-while-oracle-and-the-neoclouds-inch-higher">原文</a></li>
@@ -450,6 +491,6 @@ AWS は売上規模・営業利益率で依然最大かつ最も収益性の高�
 <li id="ref-63"><a href="#fnref-63-1">^</a> Goodwin Law （規制動向）。 2026/7 。 <a href="https://www.goodwinlaw.com/en/insights/publications/2026/07/insights-technology-antc-antitrust-competition-technology-1h-2026">原文</a></li>
 </ol>
 </div>
-</main>
+</div>
 </body>
 </html>

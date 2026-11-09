@@ -5,133 +5,158 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Essbase の来歴</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <h1>Essbase の来歴</h1>
-<p class="meta">作成日 : 2026-10-21 ／ 種別 : 調査結果のまとめ ／ 調査方法 : Web 検索と公開記事の確認</p>
+</header>
+<div class="wrap">
+<p class="meta band">作成日 : 2026-10-21 ／ 種別 : 調査結果のまとめ ／ 調査方法 : Web 検索と公開記事の確認</p>
 
-<div class="must">
+<div class="point">
 <p>結論 : Essbase の開発・販売元は米国の Arbor Software （アーバー・ソフトウェア）で、 1992 年に初版を出した。<br>1998 年に Hyperion Software と合併して Hyperion Solutions となり、製品名は Hyperion Essbase になった。<br>2007 年に Oracle が Hyperion を買収し、現在は Oracle Essbase である。</p>
 </div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">要点</a></li>
-<li><a href="#sec2">年表</a></li>
-<li><a href="#sec3">1998 年の Arbor と Hyperion の合併</a></li>
-<li><a href="#sec4">Essbase の技術の特徴</a>
+<li><a href="#s1">要点</a></li>
+<li><a href="#s2">年表</a></li>
+<li><a href="#s3">1998 年の Arbor と Hyperion の合併</a></li>
+<li><a href="#s4">Essbase の技術の特徴</a>
 <ol>
-<li><a href="#sec4-1">多次元モデル</a></li>
-<li><a href="#sec4-2">疎な次元と密な次元</a></li>
-<li><a href="#sec4-3">計算とインターフェース</a></li>
+<li><a href="#s4-1">多次元モデル</a></li>
+<li><a href="#s4-2">疎な次元と密な次元</a></li>
+<li><a href="#s4-3">計算とインターフェース</a></li>
 </ol>
 </li>
-<li><a href="#sec5">1990 年代の日本での販売について</a>
+<li><a href="#s5">1990 年代の日本での販売について</a>
 <ol>
-<li><a href="#sec5-1">手がかり 1 : Arbor 自身の拠点に日本がない</a></li>
-<li><a href="#sec5-2">手がかり 2 : 間接販売の提携先に日本企業が載っている</a></li>
-<li><a href="#sec5-3">手がかり 3 : 日本法人は合併後に現れる</a></li>
-<li><a href="#sec5-4">補足 : Comshare との争い</a></li>
+<li><a href="#s5-1">手がかり 1 : Arbor 自身の拠点に日本がない</a></li>
+<li><a href="#s5-2">手がかり 2 : 間接販売の提携先に日本企業が載っている</a></li>
+<li><a href="#s5-3">手がかり 3 : 日本法人は合併後に現れる</a></li>
+<li><a href="#s5-4">補足 : Comshare との争い</a></li>
 </ol>
 </li>
-<li><a href="#sec6">確認できていないこと</a></li>
-<li><a href="#sec7">出典</a></li>
+<li><a href="#s6">確認できていないこと</a></li>
+<li><a href="#s7">出典</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 要点</h2>
+<section id="s1">
+<h2><span class="no">1</span>要点</h2>
 <ul>
 <li>Essbase は多次元データベース (MDBMS) で、表計算ソフトの規模の限界を超えるために作られた。</li>
 <li>生みの親は Arbor Software 。 1992 年に初版を出荷し、同年に多次元データの格納・検索方法の特許を出願、 1994 年に成立した。</li>
@@ -139,64 +164,74 @@
 <li>IBM は 2005 年末ごろまで、 Essbase の OEM 版を「 DB2 OLAP Server 」として販売した。</li>
 <li>2007 年 4 月、 Oracle が約 33 億ドルで Hyperion を買収した。</li>
 </ul>
+</section>
 
-<h2 id="sec2">2. 年表</h2>
-<table class="cards">
+<section id="s2">
+<h2><span class="no">2</span>年表</h2>
+<div class="scroll"><table>
 <thead><tr><th>時期</th><th>出来事</th><th>当事者</th></tr></thead>
 <tbody>
-<tr><td data-label="時期">1992 年</td><td data-label="出来事">Essbase の初版を出荷。多次元データ格納の特許を出願（ 1994 年に成立）</td><td data-label="当事者">Arbor Software</td></tr>
-<tr><td data-label="時期">1995 年</td><td data-label="出来事">Arbor が株式を公開</td><td data-label="当事者">Arbor Software</td></tr>
-<tr><td data-label="時期">1997 年</td><td data-label="出来事">Arbor が Appsource を買収</td><td data-label="当事者">Arbor Software</td></tr>
-<tr><td data-label="時期">1998 年 5 月 26 日</td><td data-label="出来事">Hyperion Software と Arbor の合併を発表</td><td data-label="当事者">両社</td></tr>
-<tr><td data-label="時期">1998 年 8 月 24 日</td><td data-label="出来事">合併完了。翌日から Nasdaq で「 HYSL 」として取引開始</td><td data-label="当事者">Hyperion Solutions</td></tr>
-<tr><td data-label="時期">2005 年</td><td data-label="出来事">製品名を「 Hyperion System 9 BI+ Analytic Services 」に改称（現場ではほぼ定着せず）。 IBM の OEM 版も同年末ごろまで</td><td data-label="当事者">Hyperion / IBM</td></tr>
-<tr><td data-label="時期">2007 年 4 月 18 日</td><td data-label="出来事">Oracle による Hyperion 買収が完了（発表は 3 月 1 日、現金約 33 億ドル）</td><td data-label="当事者">Oracle</td></tr>
-<tr><td data-label="時期">2017 年</td><td data-label="出来事">Essbase Cloud が Oracle Analytics Cloud の一部になる</td><td data-label="当事者">Oracle</td></tr>
+<tr><th scope="row">1992 年</th><td>Essbase の初版を出荷。多次元データ格納の特許を出願（ 1994 年に成立）</td><td>Arbor Software</td></tr>
+<tr><th scope="row">1995 年</th><td>Arbor が株式を公開</td><td>Arbor Software</td></tr>
+<tr><th scope="row">1997 年</th><td>Arbor が Appsource を買収</td><td>Arbor Software</td></tr>
+<tr><th scope="row">1998 年 5 月 26 日</th><td>Hyperion Software と Arbor の合併を発表</td><td>両社</td></tr>
+<tr><th scope="row">1998 年 8 月 24 日</th><td>合併完了。翌日から Nasdaq で「 HYSL 」として取引開始</td><td>Hyperion Solutions</td></tr>
+<tr><th scope="row">2005 年</th><td>製品名を「 Hyperion System 9 BI+ Analytic Services 」に改称（現場ではほぼ定着せず）。 IBM の OEM 版も同年末ごろまで</td><td>Hyperion / IBM</td></tr>
+<tr><th scope="row">2007 年 4 月 18 日</th><td>Oracle による Hyperion 買収が完了（発表は 3 月 1 日、現金約 33 億ドル）</td><td>Oracle</td></tr>
+<tr><th scope="row">2017 年</th><td>Essbase Cloud が Oracle Analytics Cloud の一部になる</td><td>Oracle</td></tr>
 </tbody>
-</table>
+</table></div>
+</section>
 
-<h2 id="sec3">3. 1998 年の Arbor と Hyperion の合併</h2>
+<section id="s3">
+<h2><span class="no">3</span>1998 年の Arbor と Hyperion の合併</h2>
 <p>1990 年代後半の Essbase を語るうえで最大の出来事は、この合併である。 Hyperion Software は、財務連結・予算管理などの業務アプリケーションを持つ会社で、前身は 1981 年創業の IMRS だった。 Arbor は OLAP エンジンの Essbase を持つ会社で、両者は補完関係にあった。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead><tr><th>項目</th><th>内容</th></tr></thead>
 <tbody>
-<tr><td data-label="項目">株式の交換</td><td data-label="内容">Hyperion Software の普通株 1 株につき、 Arbor 株 0.95 株。持分プーリング方式</td></tr>
-<tr><td data-label="項目">持株比率</td><td data-label="内容">Hyperion 側の株主が約 60% 、 Arbor 側が約 40%</td></tr>
-<tr><td data-label="項目">売上（ 1998 年度）</td><td data-label="内容">Hyperion Software 約 2.95 億ドル、 Arbor 約 0.82 億ドル、合計約 3.75 億ドル。従業員は 1,800 人超</td></tr>
-<tr><td data-label="項目">製品の方針</td><td data-label="内容">Arbor Essbase を Hyperion Essbase に改名。予算管理の Hyperion Pillar 、連結の Hyperion Enterprise と統合。既存の Hyperion 製 OLAP の顧客には Essbase への移行を促す</td></tr>
-<tr><td data-label="項目">当時の評価</td><td data-label="内容">Hurwitz Group は、 OLAP 市場で Oracle をわずかに上回る首位になると評した。一方で、 Essbase を Pillar や Enterprise に組み込む際の後方互換性と、株主からの早期の成果要求をリスクに挙げた</td></tr>
+<tr><th scope="row">株式の交換</th><td>Hyperion Software の普通株 1 株につき、 Arbor 株 0.95 株。持分プーリング方式</td></tr>
+<tr><th scope="row">持株比率</th><td>Hyperion 側の株主が約 60% 、 Arbor 側が約 40%</td></tr>
+<tr><th scope="row">売上（ 1998 年度）</th><td>Hyperion Software 約 2.95 億ドル、 Arbor 約 0.82 億ドル、合計約 3.75 億ドル。従業員は 1,800 人超</td></tr>
+<tr><th scope="row">製品の方針</th><td>Arbor Essbase を Hyperion Essbase に改名。予算管理の Hyperion Pillar 、連結の Hyperion Enterprise と統合。既存の Hyperion 製 OLAP の顧客には Essbase への移行を促す</td></tr>
+<tr><th scope="row">当時の評価</th><td>Hurwitz Group は、 OLAP 市場で Oracle をわずかに上回る首位になると評した。一方で、 Essbase を Pillar や Enterprise に組み込む際の後方互換性と、株主からの早期の成果要求をリスクに挙げた</td></tr>
 </tbody>
-</table>
+</table></div>
+</section>
 
-<h2 id="sec4">4. Essbase の技術の特徴</h2>
-<h3 id="sec4-1">4.1 多次元モデル</h3>
+<section id="s4">
+<h2><span class="no">4</span>Essbase の技術の特徴</h2>
+<h3 id="s4-1">4.1 多次元モデル</h3>
 <p>データを「ハイパーキューブ」として持つ。地域別・製品別・期間別などの切り口ごとに表計算のシートを複製する運用をやめ、一つのモデルに集約する発想である。</p>
-<h3 id="sec4-2">4.2 疎な次元と密な次元</h3>
+<h3 id="s4-2">4.2 疎な次元と密な次元</h3>
 <p>ブロック格納方式では、開発者が各次元を「密 (dense) 」か「疎 (sparse) 」に指定する。データが実在する組み合わせにだけ記憶領域を割り当てるため、大半が空になる多次元データを効率よく持てる。</p>
-<h3 id="sec4-3">4.3 計算とインターフェース</h3>
+<h3 id="s4-3">4.3 計算とインターフェース</h3>
 <p>階層の集計、保存された計算メンバーと動的な計算メンバー、手続き型の計算スクリプトを備える。 C 、 Visual Basic 、 Java の API があり、利用者は主に Microsoft Excel のアドインから使う。 7 版でブロック格納 (BSO) に加えて集計格納 (ASO) が入り、後者では MDX で動的計算を書く。</p>
+</section>
 
-<h2 id="sec5">5. 1990 年代の日本での販売について</h2>
-<div class="must">
+<section id="s5">
+<h2><span class="no">5</span>1990 年代の日本での販売について</h2>
+<div class="point">
 <p><strong>結論 : 1990 年代の日本での販売会社は、今回の調査では特定できなかった。</strong> Arbor Software が日本に自社の拠点を持っていた形跡も、見つからなかった。ただし、販売経路をたどる手がかりは三つ見つかった。</p>
 </div>
-<h3 id="sec5-1">5.1 手がかり 1 : Arbor 自身の拠点に日本がない</h3>
+<h3 id="s5-1">5.1 手がかり 1 : Arbor 自身の拠点に日本がない</h3>
 <p>米国証券取引委員会 (SEC) に出された Arbor の年次報告書（ 1997 年 3 月期と 1998 年 3 月期）に、日本という語は出てこない。子会社は英国・フランス・ドイツにあり、 1997 年 3 月期の報告書に、パリ、フランクフルト、ハンブルク、ミュンヘン、シドニーに拠点を開いたと書かれている。販売地域は「米国、カナダ、欧州、環太平洋」で、海外売上は 1997 年 3 月期で全体の 11% 、その大半は欧州だった。このため、日本での販売は、自社の直販ではなく、他社を通じた間接販売が中心だったと考えられる（推論）。</p>
-<h3 id="sec5-2">5.2 手がかり 2 : 間接販売の提携先に日本企業が載っている</h3>
-<table class="cards">
+<h3 id="s5-2">5.2 手がかり 2 : 間接販売の提携先に日本企業が載っている</h3>
+<div class="scroll"><table>
 <thead><tr><th>提携先</th><th>報告書での記載</th><th>日本との関係</th></tr></thead>
 <tbody>
-<tr><td data-label="提携先">富士通</td><td data-label="報告書での記載">1997 年 3 月期の報告書（修正版）と 1998 年 3 月期の報告書の両方で、間接販売の提携先として名が挙がる</td><td data-label="日本との関係">日本の企業だが、日本での販売を担ったとは書かれていない</td></tr>
-<tr><td data-label="提携先">三菱商事</td><td data-label="報告書での記載">1998 年 3 月期の報告書（ 1998 年 6 月 10 日提出）で、販売提携先として名が挙がる</td><td data-label="日本との関係">同上。役割（ OEM 、再販業者、販売代理店のどれか）も書かれていない</td></tr>
-<tr><td data-label="提携先">Comshare</td><td data-label="報告書での記載">最大の再販業者で、 1996 年 3 月期の売上の 26% を占めた。 Essbase を世界で使い、複製し、再許諾する権利を持つ</td><td data-label="日本との関係">日本での活動は確認できず</td></tr>
+<tr><th scope="row">富士通</th><td>1997 年 3 月期の報告書（修正版）と 1998 年 3 月期の報告書の両方で、間接販売の提携先として名が挙がる</td><td>日本の企業だが、日本での販売を担ったとは書かれていない</td></tr>
+<tr><th scope="row">三菱商事</th><td>1998 年 3 月期の報告書（ 1998 年 6 月 10 日提出）で、販売提携先として名が挙がる</td><td>同上。役割（ OEM 、再販業者、販売代理店のどれか）も書かれていない</td></tr>
+<tr><th scope="row">Comshare</th><td>最大の再販業者で、 1996 年 3 月期の売上の 26% を占めた。 Essbase を世界で使い、複製し、再許諾する権利を持つ</td><td>日本での活動は確認できず</td></tr>
 </tbody>
-</table>
-<h3 id="sec5-3">5.3 手がかり 3 : 日本法人は合併後に現れる</h3>
+</table></div>
+<h3 id="s5-3">5.3 手がかり 3 : 日本法人は合併後に現れる</h3>
 <p>合併後の Hyperion Solutions については、 2001 年 2 月に Hyperion Solutions Japan の社長に就いた人物の経歴が確認できた（その人物は 1998 年 2 月に米国の Hyperion Solutions に入社している）。したがって、少なくとも 2001 年には日本法人があった。 Essbase 7.1 の日本語版は 2004 年に出荷が発表されている。設立の時期と、 1990 年代の Arbor 時代との関係は確認できなかった。</p>
-<h3 id="sec5-4">5.4 補足 : Comshare との争い</h3>
+<h3 id="s5-4">5.4 補足 : Comshare との争い</h3>
 <p>Comshare は Essbase を自社の販売網でも売っていたが、 Arbor との間でライセンスをめぐる争いが起き、 1996 年に仲裁の手続きが始まった。 1997 年の報告書でも訴訟中とされている。 Comshare の Essbase 関連の売上の約 50% から 60% は海外の顧客向けだったが、その中に日本が含まれるかどうかはわからない。</p>
+</section>
 
-<h2 id="sec6">6. 確認できていないこと</h2>
+<section id="s6">
+<h2><span class="no">6</span>確認できていないこと</h2>
 <ul>
 <li>Arbor Software の創業年と創業者（第三者の紹介ページには 1991 年にカリフォルニア州サニーベールで、 Bob Earle と Jim Dorrian が創業したとあるが、一次資料では確認していない）</li>
 <li>IBM と Arbor の OEM 契約の開始時期と契約条件</li>
@@ -205,8 +240,10 @@
 <li>日本語版の初出の時期（ 1990 年代のものは見つからず、確認できたのは 2004 年の 7.1 版）</li>
 <li>富士通と三菱商事の報告書での記載が、日本の販売を指すのかどうか（当時の日本の業界誌や、両社の発表資料に当たる必要がある）</li>
 </ul>
+</section>
 
-<h2 id="sec7">7. 出典</h2>
+<section id="s7">
+<h2><span class="no">7</span>出典</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Essbase">Essbase - Wikipedia</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Hyperion_Solutions">Hyperion Solutions - Wikipedia</a></li>
@@ -222,6 +259,8 @@
 <li><a href="https://www.renesas.cn/about/executive-team/takuya-hirano">Renesas 役員紹介（ Hyperion Solutions Japan の社長就任に言及した経歴）</a></li>
 <li><a href="https://github.com/api-evangelist/arbor-software">Arbor Software の第三者による紹介ページ（創業者の記述のみに使用。一次資料ではない）</a></li>
 </ul>
-</main>
+</section>
+
+</div>
 </body>
 </html>

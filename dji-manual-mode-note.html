@@ -5,161 +5,193 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>マニュアルモードの利点</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
-  /* 文書固有 */
-  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin: 1rem 0; }
-  .pair > div { background: #fff; border: 1px solid #bbb; border-radius: 4px; padding: .8rem 1rem; min-width: 0; }
-  .pair > div.hl { border-color: #2a4d69; border-width: 2px; }
-  .pair .big { display: block; font-weight: bold; margin: .3rem 0; }
-  .pair p { margin: 0; font-size: 1rem; }
-  @media (max-width: 40rem) { .pair { grid-template-columns: 1fr; } }
-  .bars { background: #fff; border: 1px solid #bbb; border-radius: 4px; padding: .3rem 1rem 1rem; margin: 1rem 0; }
-  .bar { display: grid; grid-template-columns: 4.5rem 1fr; align-items: center; gap: .6rem; margin: .5rem 0; font-size: .95rem; }
-  .bar .track { height: 1.4rem; }
-  .bar .fill { height: 100%; background: #555; border-radius: 2px; display: flex; align-items: center; justify-content: flex-end; padding-right: .5rem; color: #fff; font-size: .85rem; box-sizing: border-box; }
-  .bar.m .fill { background: #2a4d69; }
-  .bars .cap { font-size: .9rem; color: #555; margin: .8rem 0 0; }
-  .src { font-size: .95rem; color: #555; }
-  .src li { font-size: .95rem; overflow-wrap: anywhere; }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  .pair > div{background:#fff;border:1px solid var(--line);border-radius:4px;padding:12.8px 16px;min-width:0}
+  .pair > div.hl{border-color:var(--orange);border-width:2px}
+  .pair .big{display:block;font-weight:bold;margin:4.8px 0}
+  .pair p{margin:0;font-size:16px}
+  @media (max-width: 640px){.pair{grid-template-columns:1fr}}
+  .bars{background:#fff;border:1px solid var(--line);border-radius:4px;padding:4.8px 16px 16px;margin:16px 0}
+  .bar{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:9.6px;margin:8px 0;font-size:15.2px}
+  .bar .track{height:22.4px}
+  .bar .fill{height:100%;background:var(--muted);border-radius:2px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;color:#fff;font-size:13.6px;box-sizing:border-box}
+  .bar.m .fill{background:var(--orange)}
+  .bars .cap{font-size:14.4px;color:var(--muted);margin:12.8px 0 0}
+  .src{font-size:15.2px;color:var(--muted)}
+  .src li{font-size:15.2px;overflow-wrap:anywhere}
 </style>
 </head>
 <body>
-
-<main>
-  <h1>マニュアルモードで、何が手に入るのか</h1>
-  <p class="meta">DJI Avata 2 / Neo / Neo 2 ・調査ノート・ 2026 年 10 月 19 日時点。出典はメーカー仕様ページ、レビュー記事、販売店ブログ、フォーラム。 DJI 公式マニュアルの本文は確認できていない。</p>
+<header class="hero">
+<h1>マニュアルモードで、何が手に入るのか</h1>
+</header>
+<div class="wrap">
+    <p class="meta band">DJI Avata 2 / Neo / Neo 2 ・調査ノート・ 2026 年 10 月 19 日時点。出典はメーカー仕様ページ、レビュー記事、販売店ブログ、フォーラム。 DJI 公式マニュアルの本文は確認できていない。</p>
 
   <nav class="toc" aria-label="目次">
-  <p class="toc-title">目次</p>
+  <b>📖 目次</b>
   <ol>
-  <li><a href="#sec1">先に結論</a></li>
-  <li><a href="#sec2">スティックが指示する内容が変わる</a></li>
-  <li><a href="#sec3">Avata 2 で得られるもの</a>
+  <li><a href="#s1">先に結論</a></li>
+  <li><a href="#s2">スティックが指示する内容が変わる</a></li>
+  <li><a href="#s3">Avata 2 で得られるもの</a>
   <ol>
-  <li><a href="#sec3-1">最高水平速度 (m/s)</a></li>
+  <li><a href="#s3-1">最高水平速度 (m/s)</a></li>
   </ol>
   </li>
-  <li><a href="#sec4">Neo / Neo 2 で得られるもの</a></li>
-  <li><a href="#sec5">代わりに失うもの</a></li>
-  <li><a href="#sec6">始めるときの準備</a></li>
-  <li><a href="#sec7">あなたに必要か</a></li>
-  <li><a href="#sec8">確度について</a></li>
-  <li><a href="#sec9">出典</a></li>
+  <li><a href="#s4">Neo / Neo 2 で得られるもの</a></li>
+  <li><a href="#s5">代わりに失うもの</a></li>
+  <li><a href="#s6">始めるときの準備</a></li>
+  <li><a href="#s7">あなたに必要か</a></li>
+  <li><a href="#s8">確度について</a></li>
+  <li><a href="#s9">出典</a></li>
   </ol>
   </nav>
 
-  <h2 id="sec1">1. 先に結論</h2>
+  <section id="s1">
+<h2><span class="no">1</span>先に結論</h2>
   <p>マニュアルモードの利点は「速く飛べる」ことではなく、<strong>機体の姿勢と推力を自分で全部決められること</strong>である。ノーマル / スポーツでは機体が勝手に水平に戻り、止まり、障害物を避ける。マニュアルではそれが全部なくなる。</p>
   <p><strong>Avata 2</strong> では、最高速度が約 3.4 倍(8→27 m/s)になり、宙返りや急降下からの引き起こしなど、自動制御では出せない動きができる。 <strong>Neo / Neo 2</strong> では、速度や出力が小さいため、利点の中心は「 FPV の操縦を安い機体で覚えられること」と「狭い場所を自分の判断で飛べること」である。</p>
   <p>この機能に魅力を感じないのは自然である。撮影が目的なら、ノーマル / スポーツ(Avata 2 なら Easy ACRO も)で足りる人が多いはずだ。</p>
 
-  <h2 id="sec2">2. スティックが指示する内容が変わる</h2>
+  
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span>スティックが指示する内容が変わる</h2>
   <p>モードの違いは、スティックを倒したときに機体へ何を命令しているかの違いである。以下は一般的な FPV 機の仕組みに基づく説明で、 DJI の文書から直接引いたものではない。</p>
   <div class="pair">
     <div>
-      <span class="tag">NORMAL / SPORT</span>
+      <strong>NORMAL / SPORT</strong><br>
       <span class="big">「あっちへ、このくらいの速さで」</span>
       <p>スティックは目標の速度や方向である。離すと機体は水平に戻って止まる。傾きすぎないよう、角度にも上限がある。</p>
     </div>
     <div class="hl">
-      <span class="tag">MANUAL</span>
+      <strong>MANUAL</strong><br>
       <span class="big">「その向きに回れ、推力はこれだけ」</span>
       <p>エルロン・エレベーターは機体が回る速さ、スロットルはモーター出力そのものである。離しても水平には戻らず、スロットルを下げれば落ちる。</p>
     </div>
   </div>
   <p>手を離せばドローンが勝手に安定する状態は、安全だが、<strong>人が機体の姿勢を決められない</strong>ことでもある。逆さまでも、真下を向いても、そのまま飛び続けるには、姿勢を人が握る必要がある。マニュアルの利点はすべてここから出ている。</p>
 
-  <h2 id="sec3">3. Avata 2 で得られるもの</h2>
+  
+</section>
+
+<section id="s3">
+<h2><span class="no">3</span>Avata 2 で得られるもの</h2>
   <div class="bars" role="img" aria-label="Avata 2 の最高水平速度。ノーマル8、スポーツ16、マニュアル27メートル毎秒">
-    <h3 id="sec3-1">3.1 最高水平速度 (m/s)</h3>
+    <h3 id="s3-1">3.1 最高水平速度 (m/s)</h3>
     <div class="bar"><span>Normal</span><div class="track"><div class="fill" style="width:29.6%">8</div></div></div>
     <div class="bar"><span>Sport</span><div class="track"><div class="fill" style="width:59.3%">16</div></div></div>
     <div class="bar m"><span>Manual</span><div class="track"><div class="fill" style="width:100%">27</div></div></div>
@@ -173,7 +205,11 @@
     <li><strong>他の FPV 機への足がかりになる。</strong>マニュアルの操作感は、一般的なレース機・フリースタイル機と同じ種類のものである。</li>
   </ul>
 
-  <h2 id="sec4">4. Neo / Neo 2 で得られるもの</h2>
+  
+</section>
+
+<section id="s4">
+<h2><span class="no">4</span>Neo / Neo 2 で得られるもの</h2>
   <p>Neo は 151g 、 Neo 2 は 160g(送信機付き)で、 Avata 2 の 377g よりずっと軽く小さい機体である。 Neo 2 のスペックページにはマニュアル時の最高速度が載っておらず、ノーマル 8 m/s 、スポーツ 12 m/s までしか分からない。そのため、 Avata 2 のような速度面の利点は期待できない。</p>
   <ul>
     <li><strong>安く、壊れにくい練習機になる。</strong>プロペラガード付きの頑丈な機体で、練習中の墜落に比較的強い、と販売店ブログは述べている。 FPV のスティック操作を覚える入口として、これが最大の利点である。</li>
@@ -181,26 +217,34 @@
     <li><strong>ダイブやフリップができる。</strong> DroneXL の筆者は、マニュアルで機体の速度を引き出し、 GPS 系のモードではできないダイブやフリップを飛ばしたと書いている。ただし、機体のパワーには限りがあり、持続的な高速飛行やフリースタイルには向かない、という別の見方もある。</li>
     <li><strong>練習用の安全装置がある(初代 Neo)。</strong>姿勢制限(ガイド付きの補助輪)を有効にすれば、機体をひっくり返せないとされている。慣れてから外す手順である。ブレーキボタンを押すと、逆さまでも水平に戻って静止するとも書かれている。</li>
   </ul>
-  <div class="note">
+  <div class="box">
     <p><strong>Neo 2 の注意</strong></p>
     <p>Neo 2 は 2025 年 11 月のファームウェア 01.00.0400 で初めてマニュアルに対応した。必要なのは DJI FPV Remote Controller 3 と DJI Goggles N3 または Goggles 3 である。 RC-N3 と RC Motion 3 ではマニュアルに切り替えられない。</p>
   </div>
 
-  <h2 id="sec5">5. 代わりに失うもの</h2>
-  <table class="cards">
+  
+</section>
+
+<section id="s5">
+<h2><span class="no">5</span>代わりに失うもの</h2>
+  <div class="scroll"><table>
     <thead><tr><th>機能</th><th>Normal / Sport</th><th>Manual</th></tr></thead>
     <tbody>
-      <tr><td>ホバリング</td><td data-label="Normal / Sport">スティックを離すと位置を保つ</td><td data-label="Manual">保たない。スロットル中央でも落ちる</td></tr>
-      <tr><td>自動ブレーキ</td><td data-label="Normal / Sport">あり</td><td data-label="Manual">なし(ブレーキ / 一時停止ボタンは別)</td></tr>
-      <tr><td>自己水平</td><td data-label="Normal / Sport">あり</td><td data-label="Manual">なし</td></tr>
-      <tr><td>障害物回避</td><td data-label="Normal / Sport">Neo 2 はノーマルで全方向、スポーツは前方なし</td><td data-label="Manual">なし</td></tr>
-      <tr><td>GPS 補助</td><td data-label="Normal / Sport">あり</td><td data-label="Manual">なし。衛星が弱いと ATTI モードで風に流される</td></tr>
-      <tr><td>必要な機材</td><td data-label="Normal / Sport">RC-N3 、 Motion 3 など</td><td data-label="Manual">FPV Remote Controller 3 とゴーグル</td></tr>
+      <tr><th scope="row">ホバリング</th><td>スティックを離すと位置を保つ</td><td>保たない。スロットル中央でも落ちる</td></tr>
+      <tr><th scope="row">自動ブレーキ</th><td>あり</td><td>なし(ブレーキ / 一時停止ボタンは別)</td></tr>
+      <tr><th scope="row">自己水平</th><td>あり</td><td>なし</td></tr>
+      <tr><th scope="row">障害物回避</th><td>Neo 2 はノーマルで全方向、スポーツは前方なし</td><td>なし</td></tr>
+      <tr><th scope="row">GPS 補助</th><td>あり</td><td>なし。衛星が弱いと ATTI モードで風に流される</td></tr>
+      <tr><th scope="row">必要な機材</th><td>RC-N3 、 Motion 3 など</td><td>FPV Remote Controller 3 とゴーグル</td></tr>
     </tbody>
-  </table>
+  </table></div>
   <p>Avata 2 のレビューでは、マニュアルでの初飛行の失敗談が多く、「みんな墜落している」というコメントも見られた。一方で、ノーマル / スポーツは安定していて扱いやすいとの評価である。</p>
 
-  <h2 id="sec6">6. 始めるときの準備</h2>
+  
+</section>
+
+<section id="s6">
+<h2><span class="no">6</span>始めるときの準備</h2>
   <ol>
     <li><strong>機材。</strong> FPV Remote Controller 3 と Goggles 3 か N3 。 Neo 2 はデジタルトランスミッターも機体に付ける。</li>
     <li><strong>スロットルのバネを外す。</strong>同梱の工具で、スロットルスティックの自動中央復帰を無効にする。これがないと推力を保持できない。</li>
@@ -209,18 +253,26 @@
     <li><strong>最初はシミュレーターと広い場所で。</strong>各方向 20 m 以上空いた場所、離陸はノーマル、上空でマニュアルに入り、危なければノーマルに戻すのが定石である。</li>
   </ol>
 
-  <h2 id="sec7">7. あなたに必要か</h2>
-  <table class="cards">
+  
+</section>
+
+<section id="s7">
+<h2><span class="no">7</span>あなたに必要か</h2>
+  <div class="scroll"><table>
     <thead><tr><th>目的</th><th>おすすめ</th></tr></thead>
     <tbody>
-      <tr><td>きれいな映像を安全に撮りたい</td><td data-label="おすすめ">ノーマル / スポーツで十分。マニュアルは不要</td></tr>
-      <tr><td>見栄えのする動きを手軽に</td><td data-label="おすすめ">Avata 2 + Motion 3 の Easy ACRO(ワンタッチの宙返りやロール)</td></tr>
-      <tr><td>FPV の腕を上げたい</td><td data-label="おすすめ">Neo / Neo 2 + FPV Remote 3 で練習。まずシミュレーター</td></tr>
-      <tr><td>高速・急降下・自由な姿勢の飛行がしたい</td><td data-label="おすすめ">Avata 2 のマニュアル。ただし本格的な曲技なら専用の自作機が上、という意見もある</td></tr>
+      <tr><th scope="row">きれいな映像を安全に撮りたい</th><td>ノーマル / スポーツで十分。マニュアルは不要</td></tr>
+      <tr><th scope="row">見栄えのする動きを手軽に</th><td>Avata 2 + Motion 3 の Easy ACRO(ワンタッチの宙返りやロール)</td></tr>
+      <tr><th scope="row">FPV の腕を上げたい</th><td>Neo / Neo 2 + FPV Remote 3 で練習。まずシミュレーター</td></tr>
+      <tr><th scope="row">高速・急降下・自由な姿勢の飛行がしたい</th><td>Avata 2 のマニュアル。ただし本格的な曲技なら専用の自作機が上、という意見もある</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
-  <h2 id="sec8">8. 確度について</h2>
+  
+</section>
+
+<section id="s8">
+<h2><span class="no">8</span>確度について</h2>
   <ul>
     <li>Avata 2 の速度と EU の 19 m/s 制限、 Neo 2 の対応コントローラーは、 DJI 公式のスペックページで確認した。</li>
     <li>マニュアルで無効になる機能の一覧と準備手順は、販売店ブログ(HireDronePilot)と DroneXL に基づく。 DJI 公式の取扱説明書の本文は確認できていない。</li>
@@ -230,7 +282,11 @@
     <li>「操作の命令内容が変わる」という説明は、一般的な FPV 機の仕組みからの推論である。</li>
   </ul>
 
-  <h2 id="sec9">9. 出典</h2>
+  
+</section>
+
+<section id="s9">
+<h2><span class="no">9</span>出典</h2>
   <ul class="src">
     <li><a href="https://www.dji.com/avata-2/specs">DJI Avata 2 スペック</a></li>
     <li><a href="https://www.dji.com/neo-2/specs">DJI Neo 2 スペック</a></li>
@@ -243,6 +299,8 @@
     <li><a href="https://pilotinstitute.com/djis-avata-2-review/">Pilot Institute: Avata 2 レビュー</a></li>
     <li><a href="https://www.drohnen-forum.de/index.php/Thread/67607-DJI-Neo-als-Einstieg-in-FPV/">drohnen-forum.de: DJI Neo als Einstieg in FPV?</a></li>
   </ul>
-</main>
+</section>
+
+</div>
 </body>
 </html>

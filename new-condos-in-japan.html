@@ -5,98 +5,129 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>新築マンションの平均価格が一億円超え。一体、誰が買っているのか</title>
 <style>
-  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: #e6edf3; white-space: nowrap; }
-  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .meta { color: #555; font-size: .9rem; }
-  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
-  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
-  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
-  .checklist .cl-title::before { content: "✅ "; }
-  .checklist ul { list-style: none; padding: 0; margin: 0; }
-  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
-  .checklist label { cursor: pointer; }
-  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
-  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
-  .subtitle { color: #555; margin: 0 0 1rem; }
-  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
-  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
-  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: #2a4d69; }
-  .endnote { font-size: .9rem; color: #555; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:#555}
-  .toc a{color:#222;text-decoration:none}
-  .toc a:hover{color:#2a4d69;text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:#2a4d69;text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:#e6edf3}
-  /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
-  p { margin: 0 0 20px; }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
+  .meta.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin:0 0 40px;line-height:1.9}
 </style>
 </head>
 <body>
-<main>
-
+<header class="hero">
 <p class="kicker">解説記事・住宅市場の統計</p>
 <h1>新築マンションの平均価格が一億円超え。<br>一体、誰が買っているのか</h1>
 <p class="subtitle">Who Buys Japan's ¥100 Million New Condominiums? Reading Average Prices Against Buyer Survey Data</p>
+</header>
+<div class="wrap">
+
 <p class="meta">作成 : 2026-10-30 ／ 数値の確認日 : 2026-10-30</p>
 
 <div class="lede">
@@ -107,49 +138,50 @@
 <div class="meta band"><strong>【方法と限界】</strong>数値は、 2026 年 10 月 30 日までに確認した公表資料による。購入者の層（実需の共働き世帯、資産家、投資家、海外居住者）の割合を、一つの統計で示す資料は見つからなかった。そのため、各層を別々の資料で確かめ、確かめられなかった部分は推測であると明記している。不動産経済研究所の数値は、原資料ではなく解説記事で確認したものである（参考文献欄に明記）。</div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">平均価格の読み方</a>
+<li><a href="#s1">平均価格の読み方</a>
 <ol>
-<li><a href="#sec1-1">数字の推移</a></li>
-<li><a href="#sec1-2">平均は「実際の購入価格」ではない</a></li>
+<li><a href="#s1-1">数字の推移</a></li>
+<li><a href="#s1-2">平均は「実際の購入価格」ではない</a></li>
 </ol>
 </li>
-<li><a href="#sec2">購入者の主な層</a>
+<li><a href="#s2">購入者の主な層</a>
 <ol>
-<li><a href="#sec2-1">高所得の共働き世帯（実需層）</a></li>
-<li><a href="#sec2-2">資産性を重視する層と資産家</a></li>
-<li><a href="#sec2-3">投資家・法人</a></li>
-<li><a href="#sec2-4">海外居住者</a></li>
+<li><a href="#s2-1">高所得の共働き世帯（実需層）</a></li>
+<li><a href="#s2-2">資産性を重視する層と資産家</a></li>
+<li><a href="#s2-3">投資家・法人</a></li>
+<li><a href="#s2-4">海外居住者</a></li>
 </ol>
 </li>
-<li><a href="#sec3">なぜ価格は上がったのか</a></li>
-<li><a href="#sec4">買えない人の選択</a></li>
-<li><a href="#sec5">まとめ</a></li>
-<li><a href="#sec6">確かめられなかったこと</a></li>
+<li><a href="#s3">なぜ価格は上がったのか</a></li>
+<li><a href="#s4">買えない人の選択</a></li>
+<li><a href="#s5">まとめ</a></li>
+<li><a href="#s6">確かめられなかったこと</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 平均価格の読み方</h2>
+<section id="s1">
+<h2><span class="no">1</span>平均価格の読み方</h2>
 
-<h3 id="sec1-1">1.1 数字の推移</h3>
+<h3 id="s1-1">1.1 数字の推移</h3>
 <p>「平均価格 1 億円超え」の出どころは、不動産経済研究所が毎年公表する新築分譲マンションの市場動向である。東京 23 区の 1 戸当たりの平均価格は、次のように推移している。</p>
 
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>区分</th><th>平均価格</th><th>前年（度）比</th><th>補足</th></tr>
 </thead>
 <tbody>
-<tr><td>2023 年</td><td data-label="平均価格">1 億 1,483 万円</td><td data-label="前年（度）比">39.4% 上昇</td><td data-label="補足">調査開始以来、初めて 1 億円を超えた <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><td>2024 年</td><td data-label="平均価格">1 億 1,181 万円</td><td data-label="前年（度）比">2.6% 下落</td><td data-label="補足">発売戸数は 8,275 戸（30.5% 減）<sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><td>2025 年</td><td data-label="平均価格">1 億 3,613 万円</td><td data-label="前年（度）比">21.8% 上昇</td><td data-label="補足">発売戸数は 8,064 戸（2.5% 減）。都心 6 区の平均は 1 億 9,503 万円 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td>2025 年度（2025 年 4 月〜 2026 年 3 月）</td><td data-label="平均価格">1 億 3,784 万円</td><td data-label="前年（度）比">18.5% 上昇</td><td data-label="補足">発売戸数は 7,708 戸（6.8% 減）。暦年の数字とは別の集計期間 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">2023 年</th><td>1 億 1,483 万円</td><td>39.4% 上昇</td><td>調査開始以来、初めて 1 億円を超えた <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row">2024 年</th><td>1 億 1,181 万円</td><td>2.6% 下落</td><td>発売戸数は 8,275 戸（30.5% 減）<sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><th scope="row">2025 年</th><td>1 億 3,613 万円</td><td>21.8% 上昇</td><td>発売戸数は 8,064 戸（2.5% 減）。都心 6 区の平均は 1 億 9,503 万円 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">2025 年度（2025 年 4 月〜 2026 年 3 月）</th><td>1 億 3,784 万円</td><td>18.5% 上昇</td><td>発売戸数は 7,708 戸（6.8% 減）。暦年の数字とは別の集計期間 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
 </tbody>
-</table>
+</table></div>
 
 <p>平均価格は 3 年連続で 1 億円を超えている。ただし 2024 年は、前年を下回った。平均価格は物件の入れ替わりに左右されるため、この下落は、個々のマンションが値下がりしたことを意味しない。同時に、発売戸数が大きく減っている点にも注意が必要である。高額な物件が少数供給されるだけで、平均は動く。</p>
 
-<h3 id="sec1-2">1.2 平均は「実際の購入価格」ではない</h3>
+<h3 id="s1-2">1.2 平均は「実際の購入価格」ではない</h3>
 <p>不動産経済研究所の平均は、その年に発売された物件の価格の平均である。これに対し、リクルートの SUUMO リサーチセンターは、実際に契約した人に購入価格を尋ねている。 2025 年の調査では、首都圏の平均購入価格が 7,324 万円、東京 23 区の物件は 9,598 万円だった <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup> 。東京 23 区の物件で比べると、約 4,000 万円の開きがある。</p>
 <p>この開きの理由は、二つの資料からは確定できない。考えられるのは、次の 3 点である。</p>
 <ul>
@@ -158,45 +190,49 @@
 <li><strong>購入者の層の偏り</strong><br>億ション（1 億円以上の住戸）を買う人が、アンケートに答えにくい可能性がある。</li>
 </ul>
 <p>いずれも推測である。確実に言えるのは、「平均 1 億円超え」と「購入者が実際に払った額」を同じものとして読んではいけない、という点だ。契約者調査で購入価格の分布を見ると、首都圏では 6,000 〜 8,000 万円未満が 32.1% で最も多く、 1 億円以上は 14.3% である（1 億〜 1 億 5,000 万円未満が 11.3% 、 1 億 5,000 万円以上が 3.0%）<sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup> 。</p>
+</section>
 
-<h2 id="sec2">2. 購入者の主な層</h2>
+<section id="s2">
+<h2><span class="no">2</span>購入者の主な層</h2>
 <p>購入者の姿を最も詳しく示すのは、 SUUMO リサーチセンターの契約者動向調査である。 2025 年に首都圏（東京都・神奈川県・埼玉県・千葉県）で新築分譲マンションを契約した 5,140 件の回答を集計している <sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup> 。主な結果は、次のとおりである。</p>
 
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>項目</th><th>数値</th><th>読み取れること</th></tr>
 </thead>
 <tbody>
-<tr><td>世帯総年収の平均</td><td data-label="数値">1,213 万円（前年は 1,129 万円）</td><td data-label="読み取れること">2008 年以降で最も高い</td></tr>
-<tr><td>世帯総年収 1,200 万円以上</td><td data-label="数値">32.7%</td><td data-label="読み取れること">前年の 28.5% から増加</td></tr>
-<tr><td>共働き比率</td><td data-label="数値">全体 62.3% 、既婚世帯 78.2%</td><td data-label="読み取れること">既婚世帯では 2001 年の調査開始以来、最も高い</td></tr>
-<tr><td>世帯主の平均年齢</td><td data-label="数値">38.9 歳</td><td data-label="読み取れること">30 〜 34 歳が 30.2% で最多</td></tr>
-<tr><td>ローン借入総額の平均</td><td data-label="数値">5,956 万円</td><td data-label="読み取れること">2005 年以降で最も高い。 5,000 万円以上が 69%</td></tr>
-<tr><td>ペアローン</td><td data-label="数値">36.4%</td><td data-label="読み取れること">共働き世帯では 54.1% 、世帯総年収 1,000 万円以上の共働き世帯では 73.7%</td></tr>
-<tr><td>自己資金比率</td><td data-label="数値">平均 21.3%</td><td data-label="読み取れること">0% が 20.6% 、 5% 未満が 23.4% 、全額キャッシュが 11.3%</td></tr>
-<tr><td>購入理由の第 1 位</td><td data-label="数値">「資産を持ちたい、資産として有利だと思ったから」 36.7%</td><td data-label="読み取れること">この理由が首位になったのは、 2003 年以降で初めて</td></tr>
+<tr><th scope="row">世帯総年収の平均</th><td>1,213 万円（前年は 1,129 万円）</td><td>2008 年以降で最も高い</td></tr>
+<tr><th scope="row">世帯総年収 1,200 万円以上</th><td>32.7%</td><td>前年の 28.5% から増加</td></tr>
+<tr><th scope="row">共働き比率</th><td>全体 62.3% 、既婚世帯 78.2%</td><td>既婚世帯では 2001 年の調査開始以来、最も高い</td></tr>
+<tr><th scope="row">世帯主の平均年齢</th><td>38.9 歳</td><td>30 〜 34 歳が 30.2% で最多</td></tr>
+<tr><th scope="row">ローン借入総額の平均</th><td>5,956 万円</td><td>2005 年以降で最も高い。 5,000 万円以上が 69%</td></tr>
+<tr><th scope="row">ペアローン</th><td>36.4%</td><td>共働き世帯では 54.1% 、世帯総年収 1,000 万円以上の共働き世帯では 73.7%</td></tr>
+<tr><th scope="row">自己資金比率</th><td>平均 21.3%</td><td>0% が 20.6% 、 5% 未満が 23.4% 、全額キャッシュが 11.3%</td></tr>
+<tr><th scope="row">購入理由の第 1 位</th><td>「資産を持ちたい、資産として有利だと思ったから」 36.7%</td><td>この理由が首位になったのは、 2003 年以降で初めて</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>数値はいずれも首都圏全体の契約者の集計で、東京 23 区に限った値ではない。以下、層ごとに読み解く。</p>
 
-<h3 id="sec2-1">2.1 高所得の共働き世帯（実需層）</h3>
+<h3 id="s2-1">2.1 高所得の共働き世帯（実需層）</h3>
 <p>最も多いのは、住むために買う共働き世帯である。世帯総年収が 1,000 万円以上の既婚・共働き世帯だけで、契約者全体の 39% を占める。その平均購入価格は 8,483 万円で、最多の価格帯は 6,000 〜 8,000 万円未満（39%）である <sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup> 。年収が高い層ほど、東京 23 区の物件を選ぶ傾向もある。世帯総年収 1,000 万円以上の既婚・共働き世帯では、 41.3% が 23 区の物件を買った。 1,000 万円未満の世帯では 16.1% にとどまり、千葉県（20.1%）のほうが多い <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup> 。</p>
 <p>ただし、年収が高いことと、余裕を持って買っていることは別である。契約者の自己資金比率は、 0% が 20.6% 、 5% 未満が 23.4% で、頭金をほとんど入れない人が合わせて 4 割を超える。その分、借入が大きくなり、ペアローンの比率が高くなっている <sup id="fnref-5-7"><a href="#ref-5">[5]</a></sup> 。二人の収入が続くことを前提にした返済計画である点には、注意が必要だ。なお、この調査には職業の項目がなく、医師・弁護士・外資系勤務といった内訳は分からない。</p>
 
-<h3 id="sec2-2">2.2 資産性を重視する層と資産家</h3>
+<h3 id="s2-2">2.2 資産性を重視する層と資産家</h3>
 <p>購入理由の第 1 位は「資産を持ちたい、資産として有利だと思ったから」（36.7%）だった。この理由が首位になったのは、 2003 年以降で初めてである。一方、「金利が低く買い時だと思ったから」と「税制が有利で買い時だと思ったから」は、 2003 年以降で最も低くなった <sup id="fnref-5-8"><a href="#ref-5">[5]</a></sup> 。居住のために買う人の間でも、資産価値を意識して買う人が増えている。</p>
 <p>自己資金比率が「全額キャッシュ」の人は 11.3% である。 50 歳以上の夫婦のみ世帯（シニアカップル世帯）では、自己資金比率の平均が 73.6% に達し、手元資金の比重が大きい層があることが分かる <sup id="fnref-5-9"><a href="#ref-5">[5]</a></sup> 。ただし、この調査から、資産家・富裕層の割合を読み取ることはできない。</p>
 <p>相続対策としての購入については、制度が変わった。国税庁は、 2024 年 1 月 1 日以後に相続・遺贈・贈与で取得した居住用の分譲マンションについて、築年数・総階数・所在階・敷地持分の狭さから「評価乖離率」を求め、評価額を補正する新しいルールを定めている <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。従来の評価額が推計される市場価格の 6 割に届かない場合は、補正によって 6 割程度まで引き上げられる <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 。算式は、総階数が多く、所在階が高いほど乖離率が大きくなる設計だ。「タワーマンションの高層階で評価額を大きく圧縮する」という従来の方法は、 2024 年以降は効きにくくなっている。ただし、現金より評価が低くなる場面は残る。実際の判断は、個別の事情で大きく変わるため、税理士などの専門家に確認するのが前提である。</p>
 
-<h3 id="sec2-3">2.3 投資家・法人</h3>
+<h3 id="s2-3">2.3 投資家・法人</h3>
 <p>個人投資家や法人の購入割合を示す公的な統計は、今回確認した範囲では見つからなかった。契約者動向調査からも、この割合は読み取れない。したがって、「投資家が価格を押し上げている」とする見方は、現時点では数字で裏づけられていない。</p>
 <p>一般論としては、購入価格が高いほど賃料に対する利回りは下がりやすく、空室や金利上昇のリスクが相対的に大きくなる。金利については、日本銀行が 2026 年 9 月 18 日の金融政策決定会合で、短期金利の誘導目標を 1.0% 程度から 1.25% 程度へ引き上げた <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。借入で買う投資家にとって、金利の上昇は収支を悪化させる要因である。また、 2024 年のように平均価格が下がる年があることは、「値上がりが続く」前提が常には成り立たないことを示している <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</p>
 
-<h3 id="sec2-4">2.4 海外居住者</h3>
+<h3 id="s2-4">2.4 海外居住者</h3>
 <p>国土交通省は、不動産登記を基にした調査を初めて公表した。それによると、 2025 年 1 〜 6 月に東京 23 区で新築マンションを取得した人のうち、海外に居住する人の割合は 3.5% だった（2024 年通年は 1.6%）。都心 6 区では 7.5%（同 3.2%）、新宿区では 14.6% である。東京 23 区の海外居住者の取得 308 戸のうち、台湾が 192 戸（6 割超）、中国が 30 戸、シンガポールが 21 戸だった <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。</p>
 <p>この数字は、「海外に住所がある人」の割合である。日本に住む外国人や、外国法人の日本支店は含まれず、国籍も登記には記載されないため、「外国人の購入割合」そのものではない <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。逆に言えば、「外国人が大量に買い占めている」というイメージを、この調査だけで裏づけることも、否定することもできない。都心の一部の区では目立つものの、 23 区全体では 1 割に満たない、というのが確認できた範囲である。円安が海外からの需要を後押ししたという見方もあるが、今回確認した資料には、その因果を示すデータはない。</p>
+</section>
 
-<h2 id="sec3">3. なぜ価格は上がったのか</h2>
+<section id="s3">
+<h2><span class="no">3</span>なぜ価格は上がったのか</h2>
 <p>購入者の顔ぶれだけでなく、価格を押し上げた要因も見ておく必要がある。数字で確かめられたものと、一般に指摘されているだけのものを分けて挙げる。</p>
 <ul>
 <li><strong>建築費・人件費の高止まり（確認できた）</strong><br>不動産経済研究所は、資材・人件費ともに上昇し、販売価格が高止まりしていると説明している <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 。</li>
@@ -207,8 +243,10 @@
 <li><strong>円安と海外資金（因果は未確認）</strong><br>海外居住者の取得は 23 区全体で 3.5% にとどまり、これだけで価格を説明できるとは考えにくい水準である <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 。</li>
 </ul>
 <p>低金利は、これまで借入余力を支えてきた要因である。しかし、日本銀行は 2026 年 9 月に政策金利を 1.25% 程度へ引き上げ、今後も引き上げを続ける方針を示している <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> 。「金利が低いから買える」という前提は、すでに変わりつつある。</p>
+</section>
 
-<h2 id="sec4">4. 買えない人の選択</h2>
+<section id="s4">
+<h2><span class="no">4</span>買えない人の選択</h2>
 <p>平均 1 億円超という数字は、多くの世帯にとって手の届かない水準である。もっとも、実際の契約者は、それより低い価格帯に多くいる。首都圏の契約者の購入価格は、 6,000 〜 8,000 万円未満が最も多く、 1 億円以上は 14.3% だった <sup id="fnref-5-12"><a href="#ref-5">[5]</a></sup> 。</p>
 <p>年収によって、選ぶ場所も分かれる。既婚・共働き世帯のうち世帯総年収 1,000 万円未満の世帯は、 23 区より千葉県を選ぶ割合が高い <sup id="fnref-5-13"><a href="#ref-5">[5]</a></sup> 。また、新築を検討した人の 54% は、中古マンションも並行して検討していた <sup id="fnref-5-14"><a href="#ref-5">[5]</a></sup> 。郊外の物件、中古、賃貸の継続という選択肢が、現実に使い分けられている。</p>
 <p>注意したいのは、この調査が「買った人」だけを対象にしている点だ。買わなかった人・買えなかった人の数や理由は、この調査では分からない。「都心の新築が一部の高所得層のための市場になりつつある」という見方は広がっているが、その度合いを測るには、別の統計が必要である。</p>
@@ -216,8 +254,10 @@
 <blockquote>
 <p>「平均 1 億円超え」は、発売された物件の価格の平均である。実際に契約した人の平均購入価格は、 23 区の物件でも 9,598 万円で、 1 億円以上の契約は首都圏全体の 14.3% にとどまる。数字は、どの母集団の平均かを確かめてから読む必要がある。</p>
 </blockquote>
+</section>
 
-<h2 id="sec5">5. まとめ</h2>
+<section id="s5">
+<h2><span class="no">5</span>まとめ</h2>
 <ul>
 <li>東京 23 区の新築マンションの平均価格は、 2023 年から 3 年連続で 1 億円を超え、 2025 年は 1 億 3,613 万円。ただし 2024 年は前年を下回っており、毎年上がっているわけではない。</li>
 <li>この平均は発売物件の価格の平均で、契約者の平均購入価格（首都圏 7,324 万円、 23 区の物件 9,598 万円）とは約 4,000 万円の差がある。</li>
@@ -226,8 +266,10 @@
 <li>海外居住者の取得は、 2025 年 1 〜 6 月の 23 区で 3.5%（都心 6 区で 7.5%）。投資家・法人の割合を示す統計は確認できなかった。</li>
 <li>日本銀行は 2026 年 9 月に政策金利を 1.25% 程度へ引き上げた。「低金利だから買える」という前提は、変わりつつある。</li>
 </ul>
+</section>
 
-<h2 id="sec6">6. 確かめられなかったこと</h2>
+<section id="s6">
+<h2><span class="no">6</span>確かめられなかったこと</h2>
 <div class="box">
 <ul>
 <li>購入者の層（実需・資産家・投資家・海外居住者）ごとの、一つの基準による割合。</li>
@@ -238,11 +280,11 @@
 </ul>
 </div>
 
-<div class="note">※ 本記事は一般的な解説であり、特定の物件や投資・税務の判断を勧めるものではない。数値は調査機関や時期によって異なる。最新の統計（不動産経済研究所などの公表データ）で確認すること。投資や相続税に関わる判断は、必ず専門家に相談すること。</div>
-
+<div class="box">※ 本記事は一般的な解説であり、特定の物件や投資・税務の判断を勧めるものではない。数値は調査機関や時期によって異なる。最新の統計（不動産経済研究所などの公表データ）で確認すること。投資や相続税に関わる判断は、必ず専門家に相談すること。</div>
+</section>
 <div class="refs">
 <h2>参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> 不動産経済研究所の首都圏新築分譲マンション市場動向（2023 年）。東京都区部の平均価格 1 億 1,483 万円、前年比 39.4% 上昇。本稿は <em>nippon.com</em> の解説記事で確認した。 <a href="https://www.nippon.com/ja/japan-data/h01896/">nippon.com 解説記事</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> 不動産経済研究所の首都圏新築分譲マンション市場動向（2024 年）。東京都区部の平均価格 1 億 1,181 万円、発売戸数 8,275 戸。本稿は <em>nippon.com</em> の解説記事で確認した。 <a href="https://www.nippon.com/ja/japan-data/h02287/">nippon.com 解説記事</a></li>
@@ -254,7 +296,6 @@
 <li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> 日本銀行「金融市場調節方針の変更（2026 年 9 月金融政策決定会合）」、 2026 年 9 月 18 日。無担保コールレート（オーバーナイト物）を 1.25% 程度に引き上げ（従来は 1.0% 程度）。 <a href="https://www.boj.or.jp/mopo/mpmdeci/mpr_2026/k260918b.pdf">日本銀行 公開 PDF</a></li>
 </ol>
 </div>
-
-</main>
+</div>
 </body>
 </html>

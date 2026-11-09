@@ -5,128 +5,157 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>これからの大型選挙スケジュール 2026 年秋〜 2031 年</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
+  figure.diagram{margin:0 0 36px;padding:20px 18px 16px;background:#fff1e0;border:1px solid var(--line)}
+  figure.diagram svg{display:block;width:100%;height:auto;max-width:100%}
+  @media (max-width: 640px){figure.diagram{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative;padding-top:32px} figure.diagram svg{max-width:none} figure.diagram::before{content:"→ 横にスクロールできます";position:absolute;top:8px;right:14px;font-size:13px;color:var(--muted)}}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <h1>これからの大型選挙スケジュール 2026 年秋〜 2031 年</h1>
-<p class="meta">作成日 : 2026 年 10 月 22 日 ／ 対象 : 統一地方選挙・東京都議会議員選挙・東京都知事選挙・参議院議員選挙・衆議院議員選挙・自民党総裁選挙</p>
+</header>
+<div class="wrap">
+<p class="meta band">作成日 : 2026 年 10 月 22 日 ／ 対象 : 統一地方選挙・東京都議会議員選挙・東京都知事選挙・参議院議員選挙・衆議院議員選挙・自民党総裁選挙</p>
 
-<div class="note">
+<div class="box">
 <p>結論から言うと、次に国民の目が集まる大型選挙は <strong>2027 年 4 月 11 日と 25 日の統一地方選挙</strong>である。その後は <strong>2027 年 9 月の自民党総裁任期満了</strong>、 <strong>2028 年夏の参議院選挙と東京都知事選挙</strong>、 <strong>2029 年夏の東京都議会議員選挙</strong>と続く。衆議院議員選挙だけは、解散がなければ 2030 年 2 月まで行われない。</p>
 </div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">全体の見取り図</a></li>
-<li><a href="#sec2">一覧表</a></li>
-<li><a href="#sec3">統一地方選挙 : 2027 年 4 月の二つの日曜日</a>
+<li><a href="#s1">全体の見取り図</a></li>
+<li><a href="#s2">一覧表</a></li>
+<li><a href="#s3">統一地方選挙 : 2027 年 4 月の二つの日曜日</a>
 <ol>
-<li><a href="#sec3-1">前半戦の知事選</a></li>
+<li><a href="#s3-1">前半戦の知事選</a></li>
 </ol>
 </li>
-<li><a href="#sec4">2028 年の夏 : 参院選と都知事選が重なる</a></li>
-<li><a href="#sec5">自民党総裁選挙 : 任期は 2027 年 9 月まで</a></li>
-<li><a href="#sec6">東京都議会議員選挙と衆議院議員選挙</a></li>
-<li><a href="#sec7">この文書の確度</a></li>
+<li><a href="#s4">2028 年の夏 : 参院選と都知事選が重なる</a></li>
+<li><a href="#s5">自民党総裁選挙 : 任期は 2027 年 9 月まで</a></li>
+<li><a href="#s6">東京都議会議員選挙と衆議院議員選挙</a></li>
+<li><a href="#s7">この文書の確度</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 全体の見取り図</h2>
+<section id="s1">
+<h2><span class="no">1</span>全体の見取り図</h2>
 <p>図 1 は、 2026 年 10 月から 2031 年までの主な選挙を、日付の順に縦に並べたものである。間隔は時間の長さに比例しない。色は、紺が地方選挙、黄が政党の選挙、赤が国政選挙を表す。</p>
 
 <figure class="diagram">
-<svg viewBox="0 0 640 880" role="img" aria-label="2026 年 10 月から 2031 年までの主な選挙を日付順に並べた縦型の年表">
+<svg style="min-width:549px" viewBox="0 0 640 880" role="img" aria-label="2026 年 10 月から 2031 年までの主な選挙を日付順に並べた縦型の年表">
   <line x1="150" y1="30" x2="150" y2="840" stroke="#2a4d69" stroke-width="3"/>
 
   <text x="130" y="55" text-anchor="end" font-size="15" fill="#555">2026/10/25</text>
@@ -193,28 +222,32 @@
 </svg>
 <figcaption>図 1 : 主な選挙の年表。 2027 年 4 月の二つの日が黄色の枠で強調されている。</figcaption>
 </figure>
+</section>
 
-<h2 id="sec2">2. 一覧表</h2>
-<table class="cards">
+<section id="s2">
+<h2><span class="no">2</span>一覧表</h2>
+<div class="scroll"><table>
 <thead>
 <tr><th>選挙</th><th>時期</th><th>状態</th><th>備考</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="選挙">秋冬の知事選</td><td data-label="時期">2026 年 10 月 25 日〜 12 月 27 日</td><td data-label="状態"><span class="tag">予定</span></td><td data-label="備考">福島 10/25 、愛媛 11/15 、佐賀 12/20 、宮崎 12/27</td></tr>
-<tr><td data-label="選挙">統一地方選挙</td><td data-label="時期">2027 年 4 月 11 日・ 25 日</td><td data-label="状態"><span class="tag">法案</span></td><td data-label="備考">2026 年 10 月 16 日に臨時特例法案を閣議決定。成立を目指す段階</td></tr>
-<tr><td data-label="選挙">自民党総裁選挙</td><td data-label="時期">2027 年 9 月ごろ</td><td data-label="状態"><span class="tag">任期満了ベース</span></td><td data-label="備考">高市総裁の任期は前任の残りで 2027 年 9 月まで。日程は未定</td></tr>
-<tr><td data-label="選挙">参議院議員選挙</td><td data-label="時期">2028 年 7 月</td><td data-label="状態"><span class="tag">任期満了ベース</span></td><td data-label="備考">任期満了日は 2028 年 7 月 25 日。次は 2031 年 7 月 28 日</td></tr>
-<tr><td data-label="選挙">東京都知事選挙</td><td data-label="時期">2028 年 7 月</td><td data-label="状態"><span class="tag">任期満了ベース</span></td><td data-label="備考">任期満了日は 2028 年 7 月 30 日</td></tr>
-<tr><td data-label="選挙">東京都議会議員選挙</td><td data-label="時期">2029 年 6 〜 7 月</td><td data-label="状態"><span class="tag">任期満了ベース</span></td><td data-label="備考">任期満了日は 2029 年 7 月 22 日。前回は 2025 年 6 月 22 日</td></tr>
-<tr><td data-label="選挙">衆議院議員選挙</td><td data-label="時期">遅くとも 2030 年 2 月</td><td data-label="状態"><span class="tag">解散次第</span></td><td data-label="備考">任期満了日は 2030 年 2 月 7 日。解散すればいつでも</td></tr>
+<tr><th scope="row">秋冬の知事選</th><td>2026 年 10 月 25 日〜 12 月 27 日</td><td><strong>予定</strong><br></td><td>福島 10/25 、愛媛 11/15 、佐賀 12/20 、宮崎 12/27</td></tr>
+<tr><th scope="row">統一地方選挙</th><td>2027 年 4 月 11 日・ 25 日</td><td><strong>法案</strong><br></td><td>2026 年 10 月 16 日に臨時特例法案を閣議決定。成立を目指す段階</td></tr>
+<tr><th scope="row">自民党総裁選挙</th><td>2027 年 9 月ごろ</td><td><strong>任期満了ベース</strong><br></td><td>高市総裁の任期は前任の残りで 2027 年 9 月まで。日程は未定</td></tr>
+<tr><th scope="row">参議院議員選挙</th><td>2028 年 7 月</td><td><strong>任期満了ベース</strong><br></td><td>任期満了日は 2028 年 7 月 25 日。次は 2031 年 7 月 28 日</td></tr>
+<tr><th scope="row">東京都知事選挙</th><td>2028 年 7 月</td><td><strong>任期満了ベース</strong><br></td><td>任期満了日は 2028 年 7 月 30 日</td></tr>
+<tr><th scope="row">東京都議会議員選挙</th><td>2029 年 6 〜 7 月</td><td><strong>任期満了ベース</strong><br></td><td>任期満了日は 2029 年 7 月 22 日。前回は 2025 年 6 月 22 日</td></tr>
+<tr><th scope="row">衆議院議員選挙</th><td>遅くとも 2030 年 2 月</td><td><strong>解散次第</strong><br></td><td>任期満了日は 2030 年 2 月 7 日。解散すればいつでも</td></tr>
 </tbody>
-</table>
+</table></div>
+</section>
 
-<h2 id="sec3">3. 統一地方選挙 : 2027 年 4 月の二つの日曜日</h2>
+<section id="s3">
+<h2><span class="no">3</span>統一地方選挙 : 2027 年 4 月の二つの日曜日</h2>
 <p>統一地方選挙は、全国の自治体の選挙日をそろえて行う仕組みで、 4 年に一度の春に実施される。次回は、都道府県と政令指定都市の分を 4 月 11 日、それ以外の市区町村の分を 4 月 25 日とする法案を、政府が 2026 年 10 月 16 日に閣議決定した。主に 2027 年 3 月 1 日から 5 月 31 日までに任期が満了する首長と議員が対象で、全国で約 1000 の選挙になる見通しである。前回の 2023 年は 4 月 9 日と 23 日だった。</p>
 
 <figure class="diagram">
-<svg viewBox="0 0 640 330" role="img" aria-label="統一地方選挙の前半戦と後半戦を比べた図">
+<svg style="min-width:549px" viewBox="0 0 640 330" role="img" aria-label="統一地方選挙の前半戦と後半戦を比べた図">
   <rect x="20" y="20" width="290" height="250" rx="6" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
   <rect x="20" y="20" width="290" height="56" rx="6" fill="#2a4d69"/>
   <text x="165" y="46" text-anchor="middle" font-size="19" font-weight="bold" fill="#fff">前半戦 2027/4/11</text>
@@ -242,18 +275,20 @@
 <figcaption>図 2 : 統一地方選挙の前半戦と後半戦。対象の分け方は 2026 年 10 月 16 日閣議決定の法案による。</figcaption>
 </figure>
 
-<div class="must">
+<div class="caution">
 <p>この日程は、臨時特例法が国会で成立して初めて確定する。記事の時点では法案の段階である。大阪府の例では知事選の告示は 3 月 26 日ごろの見込みとされるが、正式な告示日は各選挙管理委員会の発表を待つ必要がある。</p>
 </div>
 
-<h3 id="sec3-1">3.1 前半戦の知事選</h3>
+<h3 id="s3-1">3.1 前半戦の知事選</h3>
 <p>解説記事では、前半戦に知事選があるのは北海道・神奈川・大阪・奈良・鳥取・島根・徳島・大分の 8 道府県とされている。ただし、この一覧は数か月前の情報に基づくので、最新の任期を確認したい。福井県は 2026 年 1 月に知事選を終え、任期が 2030 年まで続くため対象外である。</p>
+</section>
 
-<h2 id="sec4">4. 2028 年の夏 : 参院選と都知事選が重なる</h2>
+<section id="s4">
+<h2><span class="no">4</span>2028 年の夏 : 参院選と都知事選が重なる</h2>
 <p>2028 年は、参議院議員の半数の任期が 7 月 25 日に、東京都知事の任期が 7 月 30 日に満了する。公職選挙法は、任期満了による選挙を任期満了日の前 30 日以内に行うと定めている。この規定を当てはめると、投票できる期間はおおむね図 3 のようになる。二つの期間は 6 月 30 日から 7 月 25 日までの約 4 週間で重なり、投票日が近くなる可能性が高い。</p>
 
 <figure class="diagram">
-<svg viewBox="0 0 640 260" role="img" aria-label="2028 年 6 月下旬から 7 月末までの参院選と都知事選の実施可能期間を示す図">
+<svg style="min-width:591px" viewBox="0 0 640 260" role="img" aria-label="2028 年 6 月下旬から 7 月末までの参院選と都知事選の実施可能期間を示す図">
   <line x1="40" y1="200" x2="610" y2="200" stroke="#555" stroke-width="2"/>
   <line x1="40" y1="194" x2="40" y2="206" stroke="#555" stroke-width="2"/>
   <text x="40" y="226" text-anchor="middle" font-size="14" fill="#222">6/25</text>
@@ -284,15 +319,17 @@
 <figcaption>図 3 : 2028 年の参院選と都知事選の実施可能期間。目盛りは日付の間隔に比例している。「任期満了日の前 30 日以内」という原則を当てはめた目安で、実際の投票日ではない。</figcaption>
 </figure>
 
-<div class="note">
+<div class="box">
 <p>実際の投票日は、国会の会期や政権の判断などで決まる。 2022 年の参院選は 7 月 10 日、 2024 年の都知事選は 7 月 7 日だった。同じ日になるのか、別の日曜日になるのかは、本稿の時点では何も決まっていない。</p>
 </div>
+</section>
 
-<h2 id="sec5">5. 自民党総裁選挙 : 任期は 2027 年 9 月まで</h2>
+<section id="s5">
+<h2><span class="no">5</span>自民党総裁選挙 : 任期は 2027 年 9 月まで</h2>
 <p>自民党の総裁選は、公職選挙法の選挙ではなく政党の内部の選挙だが、総裁がそのまま首相になるため、実質的に政権を決める選挙である。 2025 年 10 月に高市早苗氏が総裁に選ばれた。その任期は前任の石破茂氏の残りに当たる 2027 年 9 月までである。</p>
 
 <figure class="diagram">
-<svg viewBox="0 0 640 230" role="img" aria-label="自民党総裁の任期を示す帯と、次の総裁選の時期を示す図">
+<svg style="min-width:591px" viewBox="0 0 640 230" role="img" aria-label="自民党総裁の任期を示す帯と、次の総裁選の時期を示す図">
   <line x1="40" y1="150" x2="600" y2="150" stroke="#555" stroke-width="2"/>
   <rect x="80" y="100" width="380" height="36" fill="#fff6d6" stroke="#d9a400" stroke-width="2"/>
   <text x="270" y="124" text-anchor="middle" font-size="17" font-weight="bold" fill="#222">高市総裁の任期（前任の残り）</text>
@@ -312,26 +349,32 @@
 </figure>
 
 <p>総裁選の日程は決まっていない。任期満了で実施される場合と、総裁が欠けて前倒しになる場合の、二つの筋書きがある。総裁任期は 1 期 3 年で、連続して務められるのは 3 期までと定められている。</p>
+</section>
 
-<h2 id="sec6">6. 東京都議会議員選挙と衆議院議員選挙</h2>
+<section id="s6">
+<h2><span class="no">6</span>東京都議会議員選挙と衆議院議員選挙</h2>
 <p>東京都議会議員選挙は定数 127 で、 4 年ごとに行われる。前回は 2025 年 6 月 22 日に投開票され、都民ファーストの会が 2021 年以来の第一党に返り咲いた。次回の任期満了日は 2029 年 7 月 22 日である。 2025 年のように参議院選挙との重なりを避けて調整されることもあるため、時期は 6 月か 7 月とみておくとよい。</p>
 <p>衆議院議員選挙は、 2026 年 2 月の総選挙で自民党と日本維新の会の連立が大勝した。任期満了日は 2030 年 2 月 7 日だが、衆議院には解散があるため、この日より前に行われる可能性が常にある。ここに挙げた選挙の中で、時期が最も読みにくい。</p>
+</section>
 
-<h2 id="sec7">7. この文書の確度</h2>
-<table class="cards">
+<section id="s7">
+<h2><span class="no">7</span>この文書の確度</h2>
+<div class="scroll"><table>
 <thead>
 <tr><th>区分</th><th>内容</th><th>確かさ</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="区分">任期満了日</td><td data-label="内容">都知事・都議・参院・衆院の満了日は、東京都選挙管理委員会の一覧による</td><td data-label="確かさ">高い</td></tr>
-<tr><td data-label="区分">統一地方選</td><td data-label="内容">日付は閣議決定された法案に基づく。法案の成立は未了</td><td data-label="確かさ">中程度</td></tr>
-<tr><td data-label="区分">秋冬の知事選</td><td data-label="内容">福島以外は選挙情報サイトの一覧による。任期満了日に資料間の食い違いがある</td><td data-label="確かさ">中程度</td></tr>
-<tr><td data-label="区分">実際の投票日</td><td data-label="内容">2028 年以降の投票日は未定。図 3 は法定の原則からの目安</td><td data-label="確かさ">低い</td></tr>
-<tr><td data-label="区分">自民党総裁選</td><td data-label="内容">任期満了の時期は報道による。日程は未定</td><td data-label="確かさ">中程度</td></tr>
+<tr><th scope="row">任期満了日</th><td>都知事・都議・参院・衆院の満了日は、東京都選挙管理委員会の一覧による</td><td>高い</td></tr>
+<tr><th scope="row">統一地方選</th><td>日付は閣議決定された法案に基づく。法案の成立は未了</td><td>中程度</td></tr>
+<tr><th scope="row">秋冬の知事選</th><td>福島以外は選挙情報サイトの一覧による。任期満了日に資料間の食い違いがある</td><td>中程度</td></tr>
+<tr><th scope="row">実際の投票日</th><td>2028 年以降の投票日は未定。図 3 は法定の原則からの目安</td><td>低い</td></tr>
+<tr><th scope="row">自民党総裁選</th><td>任期満了の時期は報道による。日程は未定</td><td>中程度</td></tr>
 </tbody>
-</table>
+</table></div>
 
-<p class="meta">参照した情報 : 東京都選挙管理委員会の任期満了日一覧、日本経済新聞の統一地方選の法案に関する報道、時事通信・日本経済新聞の自民党総裁に関する報道、選挙ドットコムなどの選挙日程一覧。最新の日程は、各選挙管理委員会の発表で確認してほしい。</p>
-</main>
+<p class="meta band">参照した情報 : 東京都選挙管理委員会の任期満了日一覧、日本経済新聞の統一地方選の法案に関する報道、時事通信・日本経済新聞の自民党総裁に関する報道、選挙ドットコムなどの選挙日程一覧。最新の日程は、各選挙管理委員会の発表で確認してほしい。</p>
+</section>
+
+</div>
 </body>
 </html>

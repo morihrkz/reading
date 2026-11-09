@@ -5,137 +5,162 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>生成 AI 企業比較の基礎資料――モデル・エージェント・コーディング環境</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
-  /* 文書固有 */
-  .company { border: 1px solid #bbb; background: #fff; margin: 0 0 2.5rem; scroll-margin-top: 16px; }
-  .company-head { background: #2a4d69; color: #fff; padding: 1.2rem 1.5rem; }
-  .company-head h2 { font-size: 1.5rem; color: #fff; background: none; padding: 0; margin: 0; border-radius: 0; }
-  .company-head .tagline { font-size: 1.03125rem; opacity: .92; margin-top: .4rem; line-height: 1.6; }
-  .field { border-top: 1px solid #bbb; padding: 1.2rem 1.5rem; }
-  .field:first-of-type { border-top: none; }
-  .field-label { font-size: .875rem; letter-spacing: .1em; color: #2a4d69; font-weight: bold; text-transform: uppercase; margin-bottom: .6rem; }
-  .field-body { font-size: 1.09375rem; line-height: 1.85; }
-  .field-body p { margin: 0 0 .7rem; }
-  .field-body p:last-child { margin-bottom: 0; }
-  .field-body ul { margin: .5rem 0 0; padding-left: 1.2em; }
-  .field-body li { margin-bottom: .5rem; }
-  .field-body strong { color: #2a4d69; }
-  @media (max-width: 480px) { .subtitle { font-size: 1.0625rem; } .lede { padding-left: .8rem; } .company-head { padding: 1rem 1.1rem; } .field { padding: 1rem 1.1rem; } }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
+  code{background:#fff1e0;padding:.1rem .35rem;border-radius:6px;font-size:.92em}
+  .company{border:1px solid var(--line);background:#fff;margin:0 0 40px;scroll-margin-top:16px}
+  .company-head{background:var(--yellow);color:var(--ink);padding:19.2px 24px}
+  .company-head h2{font-size:24px;color:var(--ink);background:none;padding:0;margin:0;border-radius:0}
+  .company-head .tagline{font-size:16.5px;margin-top:6.4px;line-height:1.6}
+  .field{border-top:1px solid var(--line);padding:19.2px 24px}
+  .field:first-of-type{border-top:none}
+  .field-label{font-size:14px;letter-spacing:.1em;color:#a36b00;font-weight:bold;text-transform:uppercase;margin-bottom:9.6px}
+  .field-body{font-size:17.5px;line-height:1.85}
+  .field-body p{margin:0 0 11.2px}
+  .field-body p:last-child{margin-bottom:0}
+  .field-body ul{margin:8px 0 0;padding-left:1.2em}
+  .field-body li{margin-bottom:8px}
+  .field-body strong{color:#a36b00}
+  @media (max-width: 480px){.company-head{padding:16px 17.6px} .field{padding:16px 17.6px}}
 </style>
 </head>
 <body>
-<main>
-<div class="kicker">産業動向・比較資料</div>
+<header class="hero">
 <h1>生成 AI 企業比較の基礎資料<br>――モデル・エージェント・コーディング環境</h1>
 <p class="subtitle">A Reference Compendium of Generative AI Enterprises: Foundation Models, Autonomous Agents, and Coding Environments</p>
+</header>
+<div class="wrap">
+<div class="kicker">産業動向・比較資料</div>
 <div class="lede"><p>生成 AI ・ AI エージェント・ AI コーディングを軸に、主要企業の基盤モデル・製品・コーディングツールの現状を整理した比較資料である。 AI 業界は製品名・モデル名・提供条件が短期間で変わり、買収も「契約締結」と「買収完了」を区別して読む必要がある。</p></div>
 
-<div class="note">【方法と限界】情報基準日は 2026 年 11 月 6 日。米国内の報道（ TechCrunch ・ CNBC ・ TIME ・ VentureBeat など）と各社の公式発表を中心に確認した。反映した主な動きは、 Meta の Muse の動画通話・利用者数・安全面の事案・オープンウェイト版 Muse Spark Open 、 Gemini 4 Carbon 、 GPT-6.1 Terra 、 Anthropic の上場申請書類（ S-1 ）、 X Subscription である。 Meta の新モデルの性能値は自社公表値と第三者指標が混在しており、暫定的なものとして読む必要がある。 SpaceX は xAI と Anysphere (Cursor) の買収を完了しており、本資料では便宜上「 SpaceX 」 1 社にまとめた。課金は X Subscription に一本化されたが、コーディングエージェントは Grok Build ・ Cursor Agent ・常時稼働型の Grok Bot の 3 系統が並ぶ。 Perplexity は他社のような大規模インフラ企業ではない独立系スタートアップだが、検索特化型の AI アシスタントとブラウザ / エージェント製品で存在感を増しているため、比較対象に加えた。</div>
+<div class="box">【方法と限界】情報基準日は 2026 年 11 月 6 日。米国内の報道（ TechCrunch ・ CNBC ・ TIME ・ VentureBeat など）と各社の公式発表を中心に確認した。反映した主な動きは、 Meta の Muse の動画通話・利用者数・安全面の事案・オープンウェイト版 Muse Spark Open 、 Gemini 4 Carbon 、 GPT-6.1 Terra 、 Anthropic の上場申請書類（ S-1 ）、 X Subscription である。 Meta の新モデルの性能値は自社公表値と第三者指標が混在しており、暫定的なものとして読む必要がある。 SpaceX は xAI と Anysphere (Cursor) の買収を完了しており、本資料では便宜上「 SpaceX 」 1 社にまとめた。課金は X Subscription に一本化されたが、コーディングエージェントは Grok Build ・ Cursor Agent ・常時稼働型の Grok Bot の 3 系統が並ぶ。 Perplexity は他社のような大規模インフラ企業ではない独立系スタートアップだが、検索特化型の AI アシスタントとブラウザ / エージェント製品で存在感を増しているため、比較対象に加えた。</div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">Google ―― Google の AI エコシステム</a></li>
-<li><a href="#sec2">OpenAI ―― 汎用 AI アシスタント + AI エージェント</a></li>
-<li><a href="#sec3">Anthropic ―― 高性能モデル + AI エージェント</a></li>
-<li><a href="#sec4">SpaceX ―― Grok + Cursor + 常時稼働エージェント</a></li>
-<li><a href="#sec5">Meta ―― 配布力 × スーパーインテリジェンス</a></li>
-<li><a href="#sec6">Perplexity ―― 検索特化型 AI アシスタント + ブラウザエージェント</a></li>
-<li><a href="#sec7">参考文献・資料</a></li>
+<li><a href="#s1">Google ―― Google の AI エコシステム</a></li>
+<li><a href="#s2">OpenAI ―― 汎用 AI アシスタント + AI エージェント</a></li>
+<li><a href="#s3">Anthropic ―― 高性能モデル + AI エージェント</a></li>
+<li><a href="#s4">SpaceX ―― Grok + Cursor + 常時稼働エージェント</a></li>
+<li><a href="#s5">Meta ―― 配布力 × スーパーインテリジェンス</a></li>
+<li><a href="#s6">Perplexity ―― 検索特化型 AI アシスタント + ブラウザエージェント</a></li>
+<li><a href="#s7">参考文献・資料</a></li>
 </ol>
 </nav>
 
 <section class="company" id="google">
 <div class="company-head">
-<h2 class="name" id="sec1">1. Google</h2>
+<h2 class="name" id="s1"><span class="no">1</span>Google</h2>
 <div class="tagline">「 Google の AI エコシステム」――検索・クラウド・ OS ・ Workspace まで含めた総合型。</div>
 </div>
 <div class="field">
@@ -199,7 +224,7 @@
 
 <section class="company" id="openai">
 <div class="company-head">
-<h2 class="name" id="sec2">2. OpenAI</h2>
+<h2 class="name" id="s2"><span class="no">2</span>OpenAI</h2>
 <div class="tagline">「汎用 AI アシスタント + AI エージェント」―― ChatGPT を入口に、調査・作業・コーディングまで広げる。</div>
 </div>
 <div class="field">
@@ -263,7 +288,7 @@
 
 <section class="company" id="anthropic">
 <div class="company-head">
-<h2 class="name" id="sec3">3. Anthropic</h2>
+<h2 class="name" id="s3"><span class="no">3</span>Anthropic</h2>
 <div class="tagline">「高性能モデル + AI エージェント」―― Claude Code を含む知的作業・開発への深い統合。</div>
 </div>
 <div class="field">
@@ -329,7 +354,7 @@
 
 <section class="company" id="spacex">
 <div class="company-head">
-<h2 class="name" id="sec4">4. SpaceX</h2>
+<h2 class="name" id="s4"><span class="no">4</span>SpaceX</h2>
 <div class="tagline">「 Grok + Cursor + 常時稼働エージェント」――基盤モデルからコーディング環境、 24 時間稼働するクラウドエージェントまで、 1 社で垂直統合する戦略。</div>
 </div>
 <div class="field">
@@ -385,7 +410,7 @@
 
 <section class="company" id="meta">
 <div class="company-head">
-<h2 class="name" id="sec5">5. Meta</h2>
+<h2 class="name" id="s5"><span class="no">5</span>Meta</h2>
 <div class="tagline">「配布力 × スーパーインテリジェンス」――30 億人規模のソーシャルグラフに Muse Wonder ・ Muse Spark ・ Muse ・ Muse Code を直接届ける企業。</div>
 </div>
 <div class="field">
@@ -465,7 +490,7 @@
 
 <section class="company" id="perplexity">
 <div class="company-head">
-<h2 class="name" id="sec6">6. Perplexity</h2>
+<h2 class="name" id="s6"><span class="no">6</span>Perplexity</h2>
 <div class="tagline">「検索特化型 AI アシスタント + ブラウザエージェント」――回答エンジンを起点に、ブラウザと自律エージェントへ拡張する独立系スタートアップ。</div>
 </div>
 <div class="field">
@@ -516,10 +541,9 @@
 </div>
 </div>
 </section>
-
 <div class="refs">
-<h2 id="sec7">7. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<h2 id="s7">7. 参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> Google, 「 Gemini API Release notes 」 , <em>Google AI for Developers</em> 。 <a href="https://ai.google.dev/gemini-api/docs/changelog">Google AI for Developers 更新履歴</a></li>
 <li id="ref-2"><a href="#fnref-2-1">^</a> OpenAI, 「 GPT-6 Astra: A new generation of intelligence 」（ 2026 年 9 月） , <em>OpenAI</em> 。 <a href="https://openai.com/index/gpt-6-astra/">OpenAI 公式発表</a></li>
@@ -579,7 +603,7 @@
 </ol>
 </div>
 
-<p class="note">各項目は公表情報および報道に基づく整理であり、非公開の内部資料は含まない。重要な判断に用いる場合は各社公式発表で再確認することが望ましい。このページは「 AI 各社の違いを把握するための概観表」であり、ベンチマーク順位や性能の絶対評価を示すものではない（情報基準日は冒頭の【方法と限界】を参照）。</p>
-</main>
+<p class="refs-note">各項目は公表情報および報道に基づく整理であり、非公開の内部資料は含まない。重要な判断に用いる場合は各社公式発表で再確認することが望ましい。このページは「 AI 各社の違いを把握するための概観表」であり、ベンチマーク順位や性能の絶対評価を示すものではない（情報基準日は冒頭の【方法と限界】を参照）。</p>
+</div>
 </body>
 </html>

@@ -5,155 +5,182 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>トランプ大統領はなぜオマル議員を名指しするのか</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <h1>トランプ大統領はなぜオマル議員を名指しするのか</h1>
-<p class="meta">作成日 : 2026 年 10 月 25 日／情報の時点 : 2026 年 10 月 24 日までの報道と公開データ／種別 : 調査結果のまとめ</p>
+</header>
+<div class="wrap">
+<p class="meta band">作成日 : 2026 年 10 月 25 日／情報の時点 : 2026 年 10 月 24 日までの報道と公開データ／種別 : 調査結果のまとめ</p>
 
 <div class="lede">
 <p>2026 年 10 月の中間選挙遊説で、トランプ大統領が民主党のイルハン・オマル下院議員（ミネソタ州選出）を繰り返し名指ししている。これは「国民の敵意を動員する」試みなのか。そうだとして、米国の世論はどう受け止めているのか。報道と世論調査を確認して整理した。</p>
 </div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">何が起きたか</a>
+<li><a href="#s1">何が起きたか</a>
 <ol>
-<li><a href="#sec1-1">発端 : 10 月 12 日の自宅捜索</a></li>
-<li><a href="#sec1-2">三つの集会での発言</a></li>
+<li><a href="#s1-1">発端 : 10 月 12 日の自宅捜索</a></li>
+<li><a href="#s1-2">三つの集会での発言</a></li>
 </ol>
 </li>
-<li><a href="#sec2">「敵意の動員」という見方は正しいか</a>
+<li><a href="#s2">「敵意の動員」という見方は正しいか</a>
 <ol>
-<li><a href="#sec2-1">見方を支える材料</a></li>
-<li><a href="#sec2-2">見方に留保が要る点</a></li>
+<li><a href="#s2-1">見方を支える材料</a></li>
+<li><a href="#s2-2">見方に留保が要る点</a></li>
 </ol>
 </li>
-<li><a href="#sec3">米国内の世論の動向</a>
+<li><a href="#s3">米国内の世論の動向</a>
 <ol>
-<li><a href="#sec3-1">全体の情勢</a></li>
-<li><a href="#sec3-2">移民問題の位置づけ</a></li>
-<li><a href="#sec3-3">オマル氏をめぐる反応と 2019 年の前例</a></li>
+<li><a href="#s3-1">全体の情勢</a></li>
+<li><a href="#s3-2">移民問題の位置づけ</a></li>
+<li><a href="#s3-3">オマル氏をめぐる反応と 2019 年の前例</a></li>
 </ol>
 </li>
-<li><a href="#sec4">この記事の限界</a></li>
-<li><a href="#sec5">参考文献・資料</a></li>
+<li><a href="#s4">この記事の限界</a></li>
+<li><a href="#s5">参考文献・資料</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 何が起きたか</h2>
+<section id="s1">
+<h2><span class="no">1</span>何が起きたか</h2>
 
-<h3 id="sec1-1">1.1 発端 : 10 月 12 日の自宅捜索</h3>
+<h3 id="s1-1">1.1 発端 : 10 月 12 日の自宅捜索</h3>
 <p>10 月 12 日（月）、国土安全保障省の捜査機関が、ワシントン DC にあるオマル氏の自宅を捜索した。司法省は、進行中の連邦刑事捜査の一環として、裁判所の承認を得た捜索令状を執行したと説明している。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 捜査の中心は、オマル氏の子ども時代にさかのぼる移民関係書類だと、情報源の話として報じられている。虚偽の陳述と移民詐欺の可能性が調べられているというが、公式には確認されておらず、起訴されたとの報道も確認できなかった。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> オマル氏の事務所は不正を否定している。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> オマル氏は捜索を「政治的な脅迫運動の最新のエスカレーション」と呼び、トランプ氏は記者団に、捜索には関与していないと述べた。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
 
-<h3 id="sec1-2">1.2 三つの集会での発言</h3>
+<h3 id="s1-2">1.2 三つの集会での発言</h3>
 <p>捜索の後、トランプ氏は 11 日間に三つの集会でオマル氏に触れた。報道で確認できた内容は次のとおりである。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>日付</th><th>場所</th><th>主な発言</th><th>聴衆の反応</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="日付">10 月 12 日（月）</td><td data-label="場所">オハイオ州ヤングスタウン</td><td data-label="主な発言">オマル氏を「災厄」と呼び、ソマリアを「世界最悪の国の一つ」と評した。ミシガン州上院選の民主党候補エルサイード氏を「聖戦主義者」と呼び、ソマリア系などの人々はオハイオに「属さない」と述べた。</td><td data-label="聴衆の反応">「 deport 」の連呼が、繰り返し起きた。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><td data-label="日付">10 月 22 日（木）</td><td data-label="場所">アイオワ州スーシティ</td><td data-label="主な発言">移民関連の不正疑惑を理由に、議員の辞職を求めた。オマル氏の二人目の夫は実は兄弟だ、という主張を繰り返した。</td><td data-label="聴衆の反応">「 lock her up 」の連呼が起きた。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td data-label="日付">10 月 23 日（金）</td><td data-label="場所">フロリダ州フォートマイヤーズ</td><td data-label="主な発言">「 Ilhan Omar 」は本名ではないと主張し、偽名で宣誓したのだから直ちに辞職すべきだと述べた。下院議長に、民主党はこの議席を失ったと伝えるよう求めた。</td><td data-label="聴衆の反応">確認した記事には記載がない。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">10 月 12 日（月）</th><td>オハイオ州ヤングスタウン</td><td>オマル氏を「災厄」と呼び、ソマリアを「世界最悪の国の一つ」と評した。ミシガン州上院選の民主党候補エルサイード氏を「聖戦主義者」と呼び、ソマリア系などの人々はオハイオに「属さない」と述べた。</td><td>「 deport 」の連呼が、繰り返し起きた。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row">10 月 22 日（木）</th><td>アイオワ州スーシティ</td><td>移民関連の不正疑惑を理由に、議員の辞職を求めた。オマル氏の二人目の夫は実は兄弟だ、という主張を繰り返した。</td><td>「 lock her up 」の連呼が起きた。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">10 月 23 日（金）</th><td>フロリダ州フォートマイヤーズ</td><td>「 Ilhan Omar 」は本名ではないと主張し、偽名で宣誓したのだから直ちに辞職すべきだと述べた。下院議長に、民主党はこの議席を失ったと伝えるよう求めた。</td><td>確認した記事には記載がない。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
 </tbody>
-</table>
+</table></div>
 <p>このうち、結婚についての主張は、オマル氏が 10 月 21 日のインタビューで「 insane 」と退け、オンラインのゴシップブログが出どころだと述べている。確認した報道には、この主張を裏付ける証拠は示されていない。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 名前についての主張に対するオマル氏本人の反応は、確認した記事には出ていない。</p>
+</section>
 
-<h2 id="sec2">2. 「敵意の動員」という見方は正しいか</h2>
+<section id="s2">
+<h2><span class="no">2</span>「敵意の動員」という見方は正しいか</h2>
 
-<h3 id="sec2-1">2.1 見方を支える材料</h3>
+<h3 id="s2-1">2.1 見方を支える材料</h3>
 <ul>
 <li><strong>本人が候補者ではない場所で言及している。</strong> 三つの集会の目的は、他の共和党候補の応援だった。オマル氏はミネソタ州の議員で、オハイオ・アイオワ・フロリダの選挙には出ていない。それでも毎回、名指しした。</li>
 <li><strong>素材が政策ではなく属性である。</strong> 出身国、名前、家族関係、宗教が使われている。エルサイード氏への「聖戦主義者」という呼称も同じ系統である。</li>
@@ -161,50 +188,54 @@
 <li><strong>主張が段階的に強まっている。</strong> 12 日はソマリアと移民、 22 日は結婚、 23 日は名前と辞職要求へと進んだ。裏付けが示されないまま、要求だけが重くなっている。</li>
 </ul>
 
-<h3 id="sec2-2">2.2 見方に留保が要る点</h3>
+<h3 id="s2-2">2.2 見方に留保が要る点</h3>
 <ul>
 <li><strong>捜査は実在する。</strong> 令状は裁判所の承認を得たものと司法省が説明している。移民書類に虚偽があったかどうかは、本来、議員の資格にかかわる正当な争点でもある。ただし、内容は匿名の情報源の話にとどまり、結論は出ていない。</li>
 <li><strong>トランプ氏は関与を否定している。</strong> これは本人の発言であり、外から確かめる材料は、確認した範囲にはない。</li>
 <li><strong>意図は断定できない。</strong> 支持層の投票率を上げる狙いかもしれないし、注目を集める習慣かもしれない。オマル氏自身が、 10 年にわたって標的にされてきたと述べている。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> どの説明を採るにしても、動機は発言からは読み取れない。</li>
 <li><strong>標的にされた側も、それを使っている。</strong> オマル氏は捜索の直後から寄付を呼びかけ、資金集めを始めた。 <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 注目を集める効果は、双方に働いている。</li>
 </ul>
+</section>
 
-<h2 id="sec3">3. 米国内の世論の動向</h2>
+<section id="s3">
+<h2><span class="no">3</span>米国内の世論の動向</h2>
 
-<h3 id="sec3-1">3.1 全体の情勢</h3>
+<h3 id="s3-1">3.1 全体の情勢</h3>
 <p>投票日（ 11 月 3 日）まで 11 日の時点で、情勢は民主党に有利である。 Silver Bulletin の平均では、議会選挙の「一般投票」（どちらの党に投票するかの調査）で民主党が 9 ポイント超リードし、差は 1 か月で広がった。トランプ氏の支持率は 36.9% 、不支持は 60.3% で、差し引き 23.4 ポイントの不支持超過である。個別の調査では、 NYT/Siena が 26 ポイント、 CNN/SSRS が 35 ポイントの不支持超過だった（いずれも 10 月 21 日付）。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
 
-<h3 id="sec3-2">3.2 移民問題の位置づけ</h3>
+<h3 id="s3-2">3.2 移民問題の位置づけ</h3>
 <p>オマル氏への攻撃は、移民問題と地続きである。そこで、 Fox News の 9 月調査を見る。 9 月 11 日から 14 日に、全米の登録有権者 1,211 人を対象に行われた。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>項目</th><th>結果</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="項目">移民取り締まりの水準</td><td data-label="結果">「行き過ぎ」が 53% 。「不十分」と「ちょうどよい」は、それぞれ 23% 。</td></tr>
-<tr><td data-label="項目">トランプ氏の移民政策への支持</td><td data-label="結果">43% 。夏の最高値の 48% から低下した。</td></tr>
-<tr><td data-label="項目">移民問題で信頼できる党</td><td data-label="結果">民主党 48% 、共和党 49% 。共和党の長い優位が、ほぼ消えた。</td></tr>
-<tr><td data-label="項目">党派別の見方</td><td data-label="結果">「行き過ぎ」は民主党支持者の 87% 、無党派の 60% 。共和党支持者は、「ちょうどよい」が 43% 、「不十分」が 40% 。</td></tr>
+<tr><th scope="row">移民取り締まりの水準</th><td>「行き過ぎ」が 53% 。「不十分」と「ちょうどよい」は、それぞれ 23% 。</td></tr>
+<tr><th scope="row">トランプ氏の移民政策への支持</th><td>43% 。夏の最高値の 48% から低下した。</td></tr>
+<tr><th scope="row">移民問題で信頼できる党</th><td>民主党 48% 、共和党 49% 。共和党の長い優位が、ほぼ消えた。</td></tr>
+<tr><th scope="row">党派別の見方</th><td>「行き過ぎ」は民主党支持者の 87% 、無党派の 60% 。共和党支持者は、「ちょうどよい」が 43% 、「不十分」が 40% 。</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>共和党支持者の取り締まりへの支持は固い。一方、無党派の過半数は行き過ぎだと見ている。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 移民を前面に出す手法が、かつてほど確実な切り札ではなくなっている、とは言える。ただし、これは取り締まりについての調査であり、オマル氏への攻撃への評価ではない。</p>
 
-<h3 id="sec3-3">3.3 オマル氏をめぐる反応と 2019 年の前例</h3>
+<h3 id="s3-3">3.3 オマル氏をめぐる反応と 2019 年の前例</h3>
 <p>筆者が調べた範囲では、今回のオマル氏への攻撃を直接たずねた全国調査は見つからなかった。代わりに、似た構図の前例を見る。 2019 年 7 月、トランプ氏が、オマル氏を含む 4 人の民主党の女性議員に、出身国へ「帰れ」という趣旨の投稿をした。同じ頃、集会では、オマル氏に向けた「 Send her back 」の連呼も起きた。 CBS News/YouGov が 7 月 17 日から 19 日に行った調査の結果は、次のとおりである。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>回答者</th><th>投稿への賛成</th><th>反対</th><th>人種差別的だと答えた割合</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="回答者">全体</td><td data-label="投稿への賛成">40%</td><td data-label="反対">59%</td><td data-label="人種差別的だと答えた割合">48%</td></tr>
-<tr><td data-label="回答者">共和党員</td><td data-label="投稿への賛成">82%</td><td data-label="反対">—</td><td data-label="人種差別的だと答えた割合">「人種差別的ではない」が 70%</td></tr>
-<tr><td data-label="回答者">民主党員</td><td data-label="投稿への賛成">—</td><td data-label="反対">88%</td><td data-label="人種差別的だと答えた割合">84%</td></tr>
+<tr><th scope="row">全体</th><td>40%</td><td>59%</td><td>48%</td></tr>
+<tr><th scope="row">共和党員</th><td>82%</td><td>—</td><td>「人種差別的ではない」が 70%</td></tr>
+<tr><th scope="row">民主党員</th><td>—</td><td>88%</td><td>84%</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>表の「—」は、確認した記事に数値がなかった項目である。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 全体では反対が多数でも、共和党支持者は大半が支持した。これを今回に当てはめれば、支持層は固まるが、全体の評価は上がらない、という構図が考えられる。ただし、これは 7 年前の別の事例からの推定であり、今回の実測ではない。</p>
+</section>
 
-<h2 id="sec4">4. この記事の限界</h2>
-<div class="note">
+<section id="s4">
+<h2><span class="no">4</span>この記事の限界</h2>
+<div class="box">
 <ul>
 <li>オマル氏への攻撃を直接測った世論調査は、確認できなかった。 3 章の数字は、周辺の情勢を示すものである。</li>
 <li>捜査の内容は、匿名の情報源による報道で、公式には確認されていない。起訴もされていない。</li>
@@ -214,10 +245,10 @@
 <li>投票日が近く、状況は日々動いている。この記事は 10 月 24 日までの報道に基づく。</li>
 </ul>
 </div>
-
+</section>
 <div class="refs">
-<h2 id="sec5">5. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<h2 id="s5">5. 参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> NBC News の記事 <em>Trump attacks Rep. Ilhan Omar and Senate hopeful Abdul El-Sayed at Ohio rally</em> 。 10 月 12 日のヤングスタウン集会と自宅捜索を報じている。 <a href="https://www.nbcnews.com/politics/2026-election/donald-trump-attacks-ilhan-omar-abdul-el-sayed-ohio-rally-youngstown-rcna603107">NBC News</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> CBS Minnesota の記事 <em>Rep. Ilhan Omar says Trump is trying to intimidate her before midterms</em> 。捜索の日付、報じられている捜査内容、オマル氏の反応を伝えている。 <a href="https://www.cbsnews.com/minnesota/news/ilhan-omar-responds-federal-search-home-video-midterms/">CBS Minnesota</a></li>
@@ -228,6 +259,6 @@
 <li id="ref-7"><a href="#fnref-7-1">^</a> CBS News/YouGov の調査（ 2019 年 7 月 17 日から 19 日、全米 2,099 人）の報道記事。 <a href="https://www.cbsnews.com/news/most-americans-disagree-with-trumps-go-back-tweets-cbs-news-poll/">CBS News</a></li>
 </ol>
 </div>
-</main>
+</div>
 </body>
 </html>

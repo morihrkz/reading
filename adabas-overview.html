@@ -5,143 +5,168 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Adabas とは何のための道具だったのか</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <h1>Adabas とは何のための道具だったのか : メインフレームの大量取引を支えたデータベース</h1>
-<p class="meta">作成日 : 2026-10-21 ／ 種別 : 調査結果のまとめ ／ 調査方法 : Web 検索と、公開されている公式文書・記事の確認 ／ 前作 : <a href="software-ag-overview.html">Software AG とは何だったのか</a></p>
+</header>
+<div class="wrap">
+<p class="meta band">作成日 : 2026-10-21 ／ 種別 : 調査結果のまとめ ／ 調査方法 : Web 検索と、公開されている公式文書・記事の確認 ／ 前作 : <a href="software-ag-overview.html">Software AG とは何だったのか</a></p>
 
-<div class="must">
+<div class="point">
 <p><strong>結論 : Adabas は、 IBM などのメインフレームで、多数の端末から同時に届く大量の取引を、少ない計算資源で速く、止めずに処理するためのデータベースである。</strong> 1971 年に Software AG が発表した。リレーショナル（表）型ではなく「転置リスト」型で、検索の鍵となる項目ごとに索引を持つ。主に開発言語 Natural と組み合わせて使われ、銀行・保険・行政などの基幹業務の裏側にあった。</p>
 </div>
 
-<div class="note">
+<div class="box">
 <p>用途の具体的な顧客名は、今回確認できた資料では多くは出てこなかった。行政の例（カリフォルニア州技術局）と、移行を請け負う事業者の事例が主である。性能や費用削減の数字は、メーカーや移行事業者の自己申告が大半なので、そう明記した。</p>
 </div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">要点</a></li>
-<li><a href="#sec2">何のために使われたか</a>
+<li><a href="#s1">要点</a></li>
+<li><a href="#s2">何のために使われたか</a>
 <ol>
-<li><a href="#sec2-1">想定された仕事</a></li>
-<li><a href="#sec2-2">なぜ「速く、安い」と言われたか</a></li>
+<li><a href="#s2-1">想定された仕事</a></li>
+<li><a href="#s2-2">なぜ「速く、安い」と言われたか</a></li>
 </ol>
 </li>
-<li><a href="#sec3">仕組み</a>
+<li><a href="#s3">仕組み</a>
 <ol>
-<li><a href="#sec3-1">三つの領域</a></li>
-<li><a href="#sec3-2">ISN とアドレス変換表</a></li>
-<li><a href="#sec3-3">転置リスト</a></li>
-<li><a href="#sec3-4">繰り返しの持ち方</a></li>
+<li><a href="#s3-1">三つの領域</a></li>
+<li><a href="#s3-2">ISN とアドレス変換表</a></li>
+<li><a href="#s3-3">転置リスト</a></li>
+<li><a href="#s3-4">繰り返しの持ち方</a></li>
 </ol>
 </li>
-<li><a href="#sec4">どう使われたか</a>
+<li><a href="#s4">どう使われたか</a>
 <ol>
-<li><a href="#sec4-1">アクセスの方法</a></li>
-<li><a href="#sec4-2">同時利用と障害への備え</a></li>
+<li><a href="#s4-1">アクセスの方法</a></li>
+<li><a href="#s4-2">同時利用と障害への備え</a></li>
 </ol>
 </li>
-<li><a href="#sec5">リレーショナル型との違い</a></li>
-<li><a href="#sec6">周辺の製品</a></li>
-<li><a href="#sec7">その後と、いまの位置</a></li>
-<li><a href="#sec8">確認できていないこと</a></li>
-<li><a href="#sec9">出典</a></li>
+<li><a href="#s5">リレーショナル型との違い</a></li>
+<li><a href="#s6">周辺の製品</a></li>
+<li><a href="#s7">その後と、いまの位置</a></li>
+<li><a href="#s8">確認できていないこと</a></li>
+<li><a href="#s9">出典</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 要点</h2>
+<section id="s1">
+<h2><span class="no">1</span>要点</h2>
 <ul>
 <li>名前は「 adaptable database system （適応できるデータベース）」の略で、 1971 年に非リレーショナルのデータベースとして出た。最初の版は IBM メインフレームの DOS/360 、 OS/MFT 、 OS/MVT で動いた。</li>
 <li>狙いは、大量のデータと大量の同時利用がある基幹業務を、少ない資源で処理すること。公式文書は、同種の製品の 10% から 50% の資源（ディスク、 CPU 、経過時間）で済むと述べる（メーカーの主張）。</li>
@@ -150,92 +175,106 @@
 <li>7 日 24 時間の運用を想定し、稼働したまま読み書き・バックアップができる。障害後は自動で回復する。</li>
 <li>2016 年に Software AG は、 Adabas と Natural を 2050 年以降も支援すると発表した。いまも Linux 、 Unix 、 Windows 向けを含めて販売されている。</li>
 </ul>
+</section>
 
-<h2 id="sec2">2. 何のために使われたか</h2>
-<h3 id="sec2-1">2.1 想定された仕事</h3>
+<section id="s2">
+<h2><span class="no">2</span>何のために使われたか</h2>
+<h3 id="s2-1">2.1 想定された仕事</h3>
 <p>公式文書は、数テラバイトのデータと数千台の端末をもつ大規模なオンライン業務を支えるものとして説明している。 Wikipedia は、大量データの処理と、取引の多いオンライン処理に使われると書く。つまり、集計や分析のために作られた製品ではなく、日々の受付・更新・照会を絶え間なく繰り返す業務のためのものである。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead><tr><th>用途の側面</th><th>内容</th><th>確度</th></tr></thead>
 <tbody>
-<tr><td data-label="用途の側面">大量のオンライン取引</td><td data-label="内容">多数の端末からの同時の照会・更新を、レコード単位の保持（ロック）と取引の確定／取消で整合させる</td><td data-label="確度">公式文書にもとづく</td></tr>
-<tr><td data-label="用途の側面">停止しない運用</td><td data-label="内容">稼働中のままファイルの読み書き、バックアップ、復元、性能分析ができる</td><td data-label="確度">公式文書にもとづく</td></tr>
-<tr><td data-label="用途の側面">資源の節約</td><td data-label="内容">項目の圧縮と、必要な項目だけを読む呼び出しで、ディスクと CPU を抑える</td><td data-label="確度">メーカーの主張</td></tr>
-<tr><td data-label="用途の側面">行政の基幹業務</td><td data-label="内容">カリフォルニア州技術局が、州の機関向けにメインフレーム上の共通サービスとして提供している（毎秒 100 万コマンド超という性能を掲げる）</td><td data-label="確度">運用側の説明（性能値はメーカー由来とみられる）</td></tr>
-<tr><td data-label="用途の側面">給与・金融・保険などの業務</td><td data-label="内容">移行事業者の事例に、給与システムや州政府のシステム、資産運用会社が登場する</td><td data-label="確度">事業者の事例（自己申告）</td></tr>
+<tr><th scope="row">大量のオンライン取引</th><td>多数の端末からの同時の照会・更新を、レコード単位の保持（ロック）と取引の確定／取消で整合させる</td><td>公式文書にもとづく</td></tr>
+<tr><th scope="row">停止しない運用</th><td>稼働中のままファイルの読み書き、バックアップ、復元、性能分析ができる</td><td>公式文書にもとづく</td></tr>
+<tr><th scope="row">資源の節約</th><td>項目の圧縮と、必要な項目だけを読む呼び出しで、ディスクと CPU を抑える</td><td>メーカーの主張</td></tr>
+<tr><th scope="row">行政の基幹業務</th><td>カリフォルニア州技術局が、州の機関向けにメインフレーム上の共通サービスとして提供している（毎秒 100 万コマンド超という性能を掲げる）</td><td>運用側の説明（性能値はメーカー由来とみられる）</td></tr>
+<tr><th scope="row">給与・金融・保険などの業務</th><td>移行事業者の事例に、給与システムや州政府のシステム、資産運用会社が登場する</td><td>事業者の事例（自己申告）</td></tr>
 </tbody>
-</table>
+</table></div>
 
-<h3 id="sec2-2">2.2 なぜ「速く、安い」と言われたか</h3>
+<h3 id="s2-2">2.2 なぜ「速く、安い」と言われたか</h3>
 <p>理由は主に三つ述べられている。第一に、データを圧縮して持つこと。第二に、検索の鍵ごとに用意した索引（転置リスト）で、該当レコードの位置をすぐ引けること。第三に、関係を実行時の結合に頼らず、構造として持つことである。公式文書は、多くのファイルで元データの 50% から 60% の容量で済む（索引などの約 25% を足した後でも）と述べる。</p>
+</section>
 
-<h2 id="sec3">3. 仕組み</h2>
-<h3 id="sec3-1">3.1 三つの領域</h3>
+<section id="s3">
+<h2><span class="no">3</span>仕組み</h2>
+<h3 id="s3-1">3.1 三つの領域</h3>
 <p>Adabas は、データ本体と、データを探すための仕組みを分けて持つ。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead><tr><th>領域</th><th>役割</th></tr></thead>
 <tbody>
-<tr><td data-label="領域">Data Storage （データ記憶域）</td><td data-label="役割">圧縮されたレコードを置く。ブロックには 1% から 90% （既定 10% ）の余白があり、レコードが伸びても別の場所へ動かさずに済む</td></tr>
-<tr><td data-label="領域">Associator （アソシエータ）</td><td data-label="役割">データを探すための構造を置く。項目定義表 (FDT) 、転置リスト、アドレス変換表などがここにある</td></tr>
-<tr><td data-label="領域">Work （作業域）</td><td data-label="役割">自動復旧に使う保護情報、検索の途中結果と最終結果（ ISN のリスト）、二相コミットの情報を置く</td></tr>
+<tr><th scope="row">Data Storage （データ記憶域）</th><td>圧縮されたレコードを置く。ブロックには 1% から 90% （既定 10% ）の余白があり、レコードが伸びても別の場所へ動かさずに済む</td></tr>
+<tr><th scope="row">Associator （アソシエータ）</th><td>データを探すための構造を置く。項目定義表 (FDT) 、転置リスト、アドレス変換表などがここにある</td></tr>
+<tr><th scope="row">Work （作業域）</th><td>自動復旧に使う保護情報、検索の途中結果と最終結果（ ISN のリスト）、二相コミットの情報を置く</td></tr>
 </tbody>
-</table>
-<h3 id="sec3-2">3.2 ISN とアドレス変換表</h3>
+</table></div>
+<h3 id="s3-2">3.2 ISN とアドレス変換表</h3>
 <p>各レコードには ISN （内部通番）が付く。新しいレコードには、既存の最大値に 1 を足した番号が付くのが基本である。 ISN と物理的な位置の対応は「アドレス変換表」が持つので、レコードを別の場所へ動かしても、更新するのはこの表だけで済み、索引は変わらない。</p>
-<h3 id="sec3-3">3.3 転置リスト</h3>
+<h3 id="s3-3">3.3 転置リスト</h3>
 <p>検索の鍵になる項目（ディスクリプタ）ごとに、索引（転置リスト）を持つ。値ごとに「その値」「該当レコード数」「該当する ISN の並び」を記録する。レコードの順に値を並べる通常の索引と逆に、値を起点にレコードを引くので「転置」と呼ばれる。複数の項目を組み合わせた鍵（スーパーディスクリプタ、 2 から 20 項目）や、音の近さで引く鍵（フォネティック）も作れる。</p>
-<h3 id="sec3-4">3.4 繰り返しの持ち方</h3>
+<h3 id="s3-4">3.4 繰り返しの持ち方</h3>
 <p>一つのレコードに同種の値を複数持つ「多値項目 (MU) 」と、項目の組を繰り返す「周期グループ (PE) 」がある。 MU は既定で 1 レコードあたり最大 191 回、設定により約 65,534 回まで持てる。 PE は繰り返しの順序を保つ点が MU と異なる。表を正規化して分けるかわりに、一つのレコードに畳み込む設計である。</p>
+</section>
 
-<h2 id="sec4">4. どう使われたか</h2>
-<h3 id="sec4-1">4.1 アクセスの方法</h3>
+<section id="s4">
+<h2><span class="no">4</span>どう使われたか</h2>
+<h3 id="s4-1">4.1 アクセスの方法</h3>
 <p>プログラムは、直接の呼び出し（コマンド）で Adabas を使う。検索、読み出し、追加・更新・削除、取引の確定と取消などのコマンドがあり、必要な項目だけを取り出せる。実際には、多くの業務は開発言語 Natural の READ 、 FIND 、 HISTOGRAM などの文で書かれ、裏で Adabas が呼ばれる。バックエンドに Adabas を使う古い業務アプリケーションの多くが Natural で作られているのは、このためである。</p>
-<h3 id="sec4-2">4.2 同時利用と障害への備え</h3>
+<h3 id="s4-2">4.2 同時利用と障害への備え</h3>
 <ul>
 <li>更新するレコードは「保持」状態にされ、他の利用者は待たされる（待たずにエラーを受け取る指定もできる）。</li>
 <li>取引は、保持から確定 (ET) または取消 (BT) までを単位とする。複数のデータベースにまたがる取引は、二相コミットで調整する。</li>
 <li>デッドロックのおそれは検出され、後から来た利用者にエラーが返る。</li>
 <li>障害後は自動で再開・取消が行われ、論理的に完結した取引だけが残る。ログとして、コマンドの記録、更新前後の記録（保護ログ）、復旧用の記録がある。</li>
 </ul>
+</section>
 
-<h2 id="sec5">5. リレーショナル型との違い</h2>
-<table class="cards">
+<section id="s5">
+<h2><span class="no">5</span>リレーショナル型との違い</h2>
+<div class="scroll"><table>
 <thead><tr><th>観点</th><th>Adabas</th><th>一般のリレーショナル型</th></tr></thead>
 <tbody>
-<tr><td data-label="観点">基本の形</td><td data-label="Adabas">ファイル・レコード・項目。転置リスト型</td><td data-label="一般のリレーショナル型">表・行・列。 SQL で操作</td></tr>
-<tr><td data-label="観点">SQL</td><td data-label="Adabas">本体は持たない。 SQL ゲートウェイ経由 (2004 年に買収した CONNX の技術。 ODBC 、 JDBC 、 OLE DB)</td><td data-label="一般のリレーショナル型">標準の操作言語</td></tr>
-<tr><td data-label="観点">参照整合性</td><td data-label="Adabas">本体では強制しない。親子の整合はアプリケーション側で保つ</td><td data-label="一般のリレーショナル型">外部キー制約で強制できる</td></tr>
-<tr><td data-label="観点">繰り返しデータ</td><td data-label="Adabas">MU と PE で一つのレコードに畳み込む</td><td data-label="一般のリレーショナル型">別の表に分けて結合する</td></tr>
-<tr><td data-label="観点">得意なこと</td><td data-label="Adabas">決まった検索と更新を、大量に、速く</td><td data-label="一般のリレーショナル型">自由な問い合わせと、表の組み合わせ</td></tr>
+<tr><th scope="row">基本の形</th><td>ファイル・レコード・項目。転置リスト型</td><td>表・行・列。 SQL で操作</td></tr>
+<tr><th scope="row">SQL</th><td>本体は持たない。 SQL ゲートウェイ経由 (2004 年に買収した CONNX の技術。 ODBC 、 JDBC 、 OLE DB)</td><td>標準の操作言語</td></tr>
+<tr><th scope="row">参照整合性</th><td>本体では強制しない。親子の整合はアプリケーション側で保つ</td><td>外部キー制約で強制できる</td></tr>
+<tr><th scope="row">繰り返しデータ</th><td>MU と PE で一つのレコードに畳み込む</td><td>別の表に分けて結合する</td></tr>
+<tr><th scope="row">得意なこと</th><td>決まった検索と更新を、大量に、速く</td><td>自由な問い合わせと、表の組み合わせ</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>同じ転置リスト型の主要製品として、 Model 204 (Computer Corporation of America) と Datacom/DB (ADR) が挙げられている。 2015 年の IBM の白書は、 Adabas のような関係型以前のデータベースを、もはや主流ではないと評した。</p>
+</section>
 
-<h2 id="sec6">6. 周辺の製品</h2>
-<table class="cards">
+<section id="s6">
+<h2><span class="no">6</span>周辺の製品</h2>
+<div class="scroll"><table>
 <thead><tr><th>製品</th><th>役割</th></tr></thead>
 <tbody>
-<tr><td data-label="製品">Natural</td><td data-label="役割">1979 年発表の第 4 世代言語。解釈実行も、コンパイルした実行もできる。強い型付けで、パック 10 進数などを扱う。 Oracle や DB2 とも連携する</td></tr>
-<tr><td data-label="製品">Predict</td><td data-label="役割">ファイル、関係、プログラムを管理するデータ辞書</td></tr>
-<tr><td data-label="製品">Natural Security</td><td data-label="役割">利用者、ライブラリ、ファイルの権限を管理する</td></tr>
-<tr><td data-label="製品">Natural Construct</td><td data-label="役割">コードの自動生成</td></tr>
-<tr><td data-label="製品">Entire Net-Work 、 EntireX</td><td data-label="役割">ネットワーク越しのアクセスと、サービスとしての公開（中間層）</td></tr>
-<tr><td data-label="製品">Event Replicator</td><td data-label="役割">データの変更をほぼ実時間で複製する</td></tr>
-<tr><td data-label="製品">Adabas SAF</td><td data-label="役割">RACF 、 Top Secret 、 ACF2 といった既存の保安機構と連携する</td></tr>
+<tr><th scope="row">Natural</th><td>1979 年発表の第 4 世代言語。解釈実行も、コンパイルした実行もできる。強い型付けで、パック 10 進数などを扱う。 Oracle や DB2 とも連携する</td></tr>
+<tr><th scope="row">Predict</th><td>ファイル、関係、プログラムを管理するデータ辞書</td></tr>
+<tr><th scope="row">Natural Security</th><td>利用者、ライブラリ、ファイルの権限を管理する</td></tr>
+<tr><th scope="row">Natural Construct</th><td>コードの自動生成</td></tr>
+<tr><th scope="row">Entire Net-Work 、 EntireX</th><td>ネットワーク越しのアクセスと、サービスとしての公開（中間層）</td></tr>
+<tr><th scope="row">Event Replicator</th><td>データの変更をほぼ実時間で複製する</td></tr>
+<tr><th scope="row">Adabas SAF</th><td>RACF 、 Top Secret 、 ACF2 といった既存の保安機構と連携する</td></tr>
 </tbody>
-</table>
+</table></div>
+</section>
 
-<h2 id="sec7">7. その後と、いまの位置</h2>
+<section id="s7">
+<h2><span class="no">7</span>その後と、いまの位置</h2>
 <ul>
 <li><strong>動作環境の拡大 :</strong> 現在は BS2000 、 z/VSE 、 z/OS 、 Unix 、 Linux 、 Windows で動く。</li>
 <li><strong>長期の支援 :</strong> 2016 年に、 2050 年以降まで支援すると表明した。</li>
 <li><strong>移行の動き :</strong> 使用料と保守費、そして Natural の技術者の減少を理由に、他の基盤へ移す動きがある。移行事業者は、年間 50 万ドルから 150 万ドル超の使用料の削減や、 6 か月での移行完了（従来の方式なら 3 年から 5 年との見積もり）といった成果を掲げる。いずれも事業者の自己申告で、独立した検証は見つからなかった。</li>
 <li><strong>Software AG 側 :</strong> 2025 年の報道では、 Adabas &amp; Natural は ARIS と並ぶ二つの中核事業として残された。</li>
 </ul>
-<div class="note">
+<div class="box">
 <p>移行事例の費用や期間の数字は、事業者の宣伝に近い。一方で、「使用料が高い」「技術者が減っている」という動機は、複数の事業者が共通して挙げている。</p>
 </div>
+</section>
 
-<h2 id="sec8">8. 確認できていないこと</h2>
+<section id="s8">
+<h2><span class="no">8</span>確認できていないこと</h2>
 <ul>
 <li>1990 年代の主要な顧客の一覧と、業種別の導入比率</li>
 <li>日本での導入状況と、日本法人の役割（今回の検索では情報が出なかった）</li>
@@ -243,8 +282,10 @@
 <li>各版（バージョン）の変遷の詳細と、 SQL ゲートウェイ以前の外部連携の方法</li>
 <li>Natural 自体の詳しい来歴（専用の百科事典の記事が取得できなかった）</li>
 </ul>
+</section>
 
-<h2 id="sec9">9. 出典</h2>
+<section id="s9">
+<h2><span class="no">9</span>出典</h2>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/ADABAS">ADABAS - Wikipedia</a></li>
 <li><a href="https://documentation.softwareag.com/adabas/azp843/concepts/cfdesign.htm">Adabas Design - Software AG Documentation</a></li>
@@ -255,6 +296,8 @@
 <li><a href="https://modernsystems.oneadvanced.com/news-and-opinion/natural-and-adabas-migration-mitigating-disaster-with-the-power-of-automation/">Natural and Adabas Migration - Advanced</a>（移行事業者の記事）</li>
 <li><a href="https://diginomica.com/software-ag-retrenches-aris-adabas-natural">Software AG retrenches to its core ARIS process management and A&amp;N mainframe tools - diginomica</a></li>
 </ul>
-</main>
+</section>
+
+</div>
 </body>
 </html>

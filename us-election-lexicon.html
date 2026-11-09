@@ -6,206 +6,237 @@
 <meta name="color-scheme" content="light">
 <title>U.S. Election &amp; Political Journalism Lexicon: Key Terms and Media Phrasing</title>
 <style>
-  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: #e6edf3; white-space: nowrap; }
-  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
-  pre code { background: none; padding: 0; }
-  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
-  pre.term { background: #000; color: #fff; }
-  pre.term code { color: #fff; }
-  code.term { background: #000; color: #fff; }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .meta { color: #555; font-size: .9rem; }
-  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
-  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
-  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
-  .checklist .cl-title::before { content: "✅ "; }
-  .checklist ul { list-style: none; padding: 0; margin: 0; }
-  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
-  .checklist label { cursor: pointer; }
-  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
-  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
-  .subtitle { color: #555; margin: 0 0 1rem; }
-  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
-  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
-  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: #2a4d69; }
-  .endnote { font-size: .9rem; color: #555; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:#555}
-  .toc a{color:#222;text-decoration:none}
-  .toc a:hover{color:#2a4d69;text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:#2a4d69;text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:#e6edf3}
-  /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
-  p { margin: 0 0 20px; }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
+  pre{overflow-x:auto;background:#faf3e2;padding:11.2px 16px;border-radius:3px;margin:0 0 20px}
+  pre code{background:none;padding:0}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <h1>U.S. Election &amp; Political Journalism Lexicon</h1>
+</header>
+<div class="wrap">
 <p class="meta">Political Journalism Reference &middot; English Lexicon &middot; Comprehensive Reference for U.S. Midterms &amp; National Elections</p>
 <p>An English-English explanatory dictionary defining standard newsroom phrasing, institutional idioms, and analytical terminology widely deployed across American political reporting.</p>
-<div class="note"><strong>About This Lexicon</strong><br>American political reporting relies on specialized idioms and analytical phrasing to communicate institutional power, razor-thin seat arithmetic, and high-velocity election night developments. This reference provides precise English definitions, journalistic nuances, and authentic newsroom usage examples for essential election terminology.</div>
+<div class="box"><strong>About This Lexicon</strong><br>American political reporting relies on specialized idioms and analytical phrasing to communicate institutional power, razor-thin seat arithmetic, and high-velocity election night developments. This reference provides precise English definitions, journalistic nuances, and authentic newsroom usage examples for essential election terminology.</div>
 <nav class="toc" aria-label="Table of Contents">
-<p class="toc-title">Contents</p>
+<b>📖 Contents</b>
 <ol>
-<li><a href="#sec1">Core Terms</a>
+<li><a href="#s1">Core Terms</a>
 <ol>
-<li><a href="#sec1-1">razor-thin majority</a></li>
-<li><a href="#sec1-2">reclaim the speaker&#39;s gavel</a></li>
-<li><a href="#sec1-3">flip the Senate</a></li>
-<li><a href="#sec1-4">open-seat clash</a></li>
-<li><a href="#sec1-5">mid-decade redistricting</a></li>
-<li><a href="#sec1-6">network decision desks</a></li>
-<li><a href="#sec1-7">certified canvass</a></li>
+<li><a href="#s1-1">razor-thin majority</a></li>
+<li><a href="#s1-2">reclaim the speaker&#39;s gavel</a></li>
+<li><a href="#s1-3">flip the Senate</a></li>
+<li><a href="#s1-4">open-seat clash</a></li>
+<li><a href="#s1-5">mid-decade redistricting</a></li>
+<li><a href="#s1-6">network decision desks</a></li>
+<li><a href="#s1-7">certified canvass</a></li>
 </ol>
 </li>
-<li><a href="#sec2">Supplementary Terms</a>
+<li><a href="#s2">Supplementary Terms</a>
 <ol>
-<li><a href="#sec2-1">too early to call vs. too close to call</a></li>
-<li><a href="#sec2-2">toss-up race</a></li>
-<li><a href="#sec2-3">wave election</a></li>
-<li><a href="#sec2-4">split-ticket voting</a></li>
-<li><a href="#sec2-5">down-ballot races</a></li>
-<li><a href="#sec2-6">lame-duck session</a></li>
-<li><a href="#sec2-7">divided government</a></li>
+<li><a href="#s2-1">too early to call vs. too close to call</a></li>
+<li><a href="#s2-2">toss-up race</a></li>
+<li><a href="#s2-3">wave election</a></li>
+<li><a href="#s2-4">split-ticket voting</a></li>
+<li><a href="#s2-5">down-ballot races</a></li>
+<li><a href="#s2-6">lame-duck session</a></li>
+<li><a href="#s2-7">divided government</a></li>
 </ol>
 </li>
 </ol>
 </nav>
-<h2 id="sec1">1. Core Terms</h2>
-<h3 id="sec1-1">1.1 razor-thin majority</h3>
-<p class="meta"><span class="tag">Core Term</span> Noun Phrase &middot; Congressional Math</p>
+<section id="s1">
+<h2><span class="no">1</span>Core Terms</h2>
+<h3 id="s1-1">1.1 razor-thin majority</h3>
+<p class="meta"><strong>Core Term</strong><br> Noun Phrase &middot; Congressional Math</p>
 <p><strong>Definition</strong><br>A legislative governing margin that is exceptionally narrow&mdash;frequently just a single seat or a handful of votes&mdash;leaving party leadership highly vulnerable to individual absences, member defections, and factional leverage.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>News organizations prefer "razor-thin majority" over neutral phrases like "small margin" because it conveys constant procedural instability. In coverage of the U.S. House or Senate, reporters deploy this term to explain why party leaders must appease internal ideological caucuses (e.g., hardline conservatives or vulnerable moderates) on routine floor votes.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>News organizations prefer "razor-thin majority" over neutral phrases like "small margin" because it conveys constant procedural instability. In coverage of the U.S. House or Senate, reporters deploy this term to explain why party leaders must appease internal ideological caucuses (e.g., hardline conservatives or vulnerable moderates) on routine floor votes.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;Governing with a razor-thin majority of just four seats, House leaders struggled to hold their conference together as rebellious backbenchers repeatedly threatened to derail federal funding bills.&quot;</em><br><span class="meta">&mdash; Modeled on AP and Politico Congressional coverage</span></div>
-<h3 id="sec1-2">1.2 reclaim the speaker&#39;s gavel</h3>
-<p class="meta"><span class="tag">Core Term</span> Verb Phrase (Idiomatic) &middot; House Leadership</p>
+<h3 id="s1-2">1.2 reclaim the speaker&#39;s gavel</h3>
+<p class="meta"><strong>Core Term</strong><br> Verb Phrase (Idiomatic) &middot; House Leadership</p>
 <p><strong>Definition</strong><br>For the minority party in the U.S. House of Representatives to win back the chamber majority in an election, thereby gaining the authority to elect the Speaker of the House (symbolized by the ceremonial wooden gavel used to preside over the floor).</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>The "gavel" functions as a classic metonym for sweeping institutional control. Beyond simply winning 218 seats, reclaiming the gavel signifies total mastery over which bills reach the floor, which committee chairs issue subpoenas, and how statutory deadlines are negotiated with the White House.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>The "gavel" functions as a classic metonym for sweeping institutional control. Beyond simply winning 218 seats, reclaiming the gavel signifies total mastery over which bills reach the floor, which committee chairs issue subpoenas, and how statutory deadlines are negotiated with the White House.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;Targeting vulnerable suburban incumbents across California and New York, Democrats mounted an aggressive offensive aimed at reclaiming the speaker&#39;s gavel after two years in the minority.&quot;</em><br><span class="meta">&mdash; Modeled on The Washington Post and AP reporting</span></div>
-<h3 id="sec1-3">1.3 flip the Senate</h3>
-<p class="meta"><span class="tag">Core Term</span> Verb Phrase &middot; Senate Balance of Power</p>
+<h3 id="s1-3">1.3 flip the Senate</h3>
+<p class="meta"><strong>Core Term</strong><br> Verb Phrase &middot; Senate Balance of Power</p>
 <p><strong>Definition</strong><br>To shift the partisan majority of the United States Senate from one political party to the other by achieving sufficient net seat pickups across an election cycle.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>In political journalism, the transitive verb "flip" denotes capturing a seat, chamber, or state previously held by the opposing party. "Flipping the Senate" carries enormous constitutional weight because Senate control dictates the confirmation of Supreme Court justices, federal appellate judges, and cabinet nominees.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>In political journalism, the transitive verb "flip" denotes capturing a seat, chamber, or state previously held by the opposing party. "Flipping the Senate" carries enormous constitutional weight because Senate control dictates the confirmation of Supreme Court justices, federal appellate judges, and cabinet nominees.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;Needing a net gain of four seats to flip the Senate, Democrats secured an early victory in North Carolina before turning their focus to tight ongoing counts in the Industrial Midwest.&quot;</em><br><span class="meta">&mdash; Modeled on Reuters and AP News analysis</span></div>
-<h3 id="sec1-4">1.4 open-seat clash</h3>
-<p class="meta"><span class="tag">Core Term</span> Noun Phrase &middot; Campaign Dynamics</p>
+<h3 id="s1-4">1.4 open-seat clash</h3>
+<p class="meta"><strong>Core Term</strong><br> Noun Phrase &middot; Campaign Dynamics</p>
 <p><strong>Definition</strong><br>A fiercely contested election for an office where the incumbent officeholder is not running for reelection&mdash;typically due to retirement, resignation, or seeking higher office&mdash;thereby eliminating the traditional electoral advantages of incumbency.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>Because incumbent lawmakers in Congress historically win reelection over 90% of the time, open seats represent the primary battlegrounds where majorities are won and lost. Journalists characterize these races as volatile, high-stakes "clashes" that attract massive outside spending and unvarnished candidate contrasts.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>Because incumbent lawmakers in Congress historically win reelection over 90% of the time, open seats represent the primary battlegrounds where majorities are won and lost. Journalists characterize these races as volatile, high-stakes "clashes" that attract massive outside spending and unvarnished candidate contrasts.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;The open-seat clash in Michigan quickly evolved into one of the nation&#39;s most expensive Senate battles following the longtime Democratic incumbent&#39;s decision to retire.&quot;</em><br><span class="meta">&mdash; Modeled on AP News and The Detroit News</span></div>
-<h3 id="sec1-5">1.5 mid-decade redistricting</h3>
-<p class="meta"><span class="tag">Core Term</span> Noun Phrase &middot; Electoral Law &amp; Maps</p>
+<h3 id="s1-5">1.5 mid-decade redistricting</h3>
+<p class="meta"><strong>Core Term</strong><br> Noun Phrase &middot; Electoral Law &amp; Maps</p>
 <p><strong>Definition</strong><br>The redraw of congressional or state legislative district lines outside the regular once-a-decade timeline that follows the U.S. Census, typically prompted by judicial rulings striking down unlawful maps or by partisan state legislatures seeking strategic advantages.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>Standard redistricting occurs once every ten years. When redistricting occurs "mid-decade," it disrupts established political coalitions and forces sitting incumbents into unfamiliar territory. Media outlets scrutinize these developments because line-drawing decisions in state capitols can determine control of the U.S. House before a single voter casts a ballot.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>Standard redistricting occurs once every ten years. When redistricting occurs "mid-decade," it disrupts established political coalitions and forces sitting incumbents into unfamiliar territory. Media outlets scrutinize these developments because line-drawing decisions in state capitols can determine control of the U.S. House before a single voter casts a ballot.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;Court-mandated mid-decade redistricting scrambled the congressional map across several southern states, creating newly competitive districts that bolstered the minority party&#39;s pickup prospects.&quot;</em><br><span class="meta">&mdash; Modeled on The New York Times and AP reporting</span></div>
-<h3 id="sec1-6">1.6 network decision desks</h3>
-<p class="meta"><span class="tag">Core Term</span> Noun Phrase &middot; Election Night Operations</p>
+<h3 id="s1-6">1.6 network decision desks</h3>
+<p class="meta"><strong>Core Term</strong><br> Noun Phrase &middot; Election Night Operations</p>
 <p><strong>Definition</strong><br>Specialized, nonpartisan operations within major television networks and news agencies (such as AP, CNN, NBC, ABC, CBS, and Fox News) staffed by statistical modelers, data scientists, and political legal experts who mathematically evaluate vote streams and survey data to project race winners.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>Decision desks operate with strict editorial independence from on-air anchors and commentary panels. In live election night reporting, anchors frequently refer to "our decision desk" to signal that a projection is grounded in statistical modeling rather than premature pundit speculation.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>Decision desks operate with strict editorial independence from on-air anchors and commentary panels. In live election night reporting, anchors frequently refer to "our decision desk" to signal that a projection is grounded in statistical modeling rather than premature pundit speculation.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;While the challenger maintained an early five-point lead, network decision desks withheld an official race call until tabulated results from the state&#39;s most populous mail-in precincts were verified.&quot;</em><br><span class="meta">&mdash; Modeled on CNN and AP live election coverage</span></div>
-<h3 id="sec1-7">1.7 certified canvass</h3>
-<p class="meta"><span class="tag">Core Term</span> Noun Phrase &middot; Election Law &amp; Certification</p>
+<h3 id="s1-7">1.7 certified canvass</h3>
+<p class="meta"><strong>Core Term</strong><br> Noun Phrase &middot; Election Law &amp; Certification</p>
 <p><strong>Definition</strong><br>The legally mandated administrative process conducted by county and state election boards to audit, tabulate, resolve provisional and challenged ballots, verify reconciliation reports, and formally execute certified final election results.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>Crucially distinguishes unofficial election-night tabulations (relayed by media outlets) from legally binding, unalterable outcomes. News outlets highlight the certified canvass during recount battles and tight contests to emphasize that legal certification rests exclusively with sworn election authorities, not media projections.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>Crucially distinguishes unofficial election-night tabulations (relayed by media outlets) from legally binding, unalterable outcomes. News outlets highlight the certified canvass during recount battles and tight contests to emphasize that legal certification rests exclusively with sworn election authorities, not media projections.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;With the margin separating the two candidates sitting at just 180 votes, state election directors stressed that official victory certificates will not be issued until the completion of the certified canvass.&quot;</em><br><span class="meta">&mdash; Modeled on Reuters and state election administrative reporting</span></div>
-<h2 id="sec2">2. Supplementary Terms</h2>
-<h3 id="sec2-1">2.1 too early to call vs. too close to call</h3>
-<p class="meta"><span class="tag">Supplementary Term</span> Adjective Phrases &middot; Election Night Designations</p>
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span>Supplementary Terms</h2>
+<h3 id="s2-1">2.1 too early to call vs. too close to call</h3>
+<p class="meta"><strong>Supplementary Term</strong><br> Adjective Phrases &middot; Election Night Designations</p>
 <p><strong>Definition</strong><br><strong>Too early to call:</strong> Insufficient vote data has been counted or processed to determine a winner with statistical certainty, regardless of how wide an initial lead appears.<br><strong>Too close to call:</strong> A significant proportion of the expected vote has been tabulated, but the margin separating the candidates remains narrower than the volume of uncounted ballots.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>Modern news decision desks draw a disciplined distinction between these two tags. "Too early" reflects timing and data volume; "too close" reflects genuine mathematical tightness. Using the wrong tag misleads audiences regarding whether an election outcome is genuinely in doubt.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>Modern news decision desks draw a disciplined distinction between these two tags. "Too early" reflects timing and data volume; "too close" reflects genuine mathematical tightness. Using the wrong tag misleads audiences regarding whether an election outcome is genuinely in doubt.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;The network labeled the Senate race &#39;too early to call&#39; when polls closed at 8 p.m., but shifted the status to &#39;too close to call&#39; by midnight as the margin hovered under half a percentage point with 92% of precincts reporting.&quot;</em><br><span class="meta">&mdash; Modeled on AP Decision Desk methodology statements</span></div>
-<h3 id="sec2-2">2.2 toss-up race</h3>
-<p class="meta"><span class="tag">Supplementary Term</span> Noun Phrase &middot; Election Forecasting</p>
+<h3 id="s2-2">2.2 toss-up race</h3>
+<p class="meta"><strong>Supplementary Term</strong><br> Noun Phrase &middot; Election Forecasting</p>
 <p><strong>Definition</strong><br>An election contest in which nonpartisan polling, demographic trends, past voting history, and campaign finance metrics demonstrate that neither candidate holds a distinct statistical advantage, rendering the final outcome as evenly balanced as a coin toss.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>The central classification utilized by nonpartisan prognosticators (e.g., The Cook Political Report, Sabato&#39;s Crystal Ball, Inside Elections). In coverage of congressional elections, reporters obsess over the "toss-up column" because these races form the battleground tipping points that dictate chamber majorities.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>The central classification utilized by nonpartisan prognosticators (e.g., The Cook Political Report, Sabato&#39;s Crystal Ball, Inside Elections). In coverage of congressional elections, reporters obsess over the "toss-up column" because these races form the battleground tipping points that dictate chamber majorities.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;Analysts designated approximately twenty-five House districts as pure toss-ups, warning that control of Capitol Hill could hinge on fewer than ten thousand votes dispersed across four states.&quot;</em><br><span class="meta">&mdash; Modeled on The Cook Political Report and AP News</span></div>
-<h3 id="sec2-3">2.3 wave election</h3>
-<p class="meta"><span class="tag">Supplementary Term</span> Noun Phrase &middot; Electoral Trends</p>
+<h3 id="s2-3">2.3 wave election</h3>
+<p class="meta"><strong>Supplementary Term</strong><br> Noun Phrase &middot; Electoral Trends</p>
 <p><strong>Definition</strong><br>An election cycle marked by substantial, widespread seat gains by one political party across multiple levels of government (federal, state, and gubernatorial), usually fueled by widespread public dissatisfaction with the incumbent president or governing party.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>Often invoked in midterm coverage (such as the historical "Republican waves" of 1994 and 2010, or the "Democratic wave" of 2018). Political reporters continually evaluate whether an election represents a genuine nationalized wave or a localized, district-by-district dogfight insulated by gerrymandering and polarization.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>Often invoked in midterm coverage (such as the historical "Republican waves" of 1994 and 2010, or the "Democratic wave" of 2018). Political reporters continually evaluate whether an election represents a genuine nationalized wave or a localized, district-by-district dogfight insulated by gerrymandering and polarization.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;While the opposition party anticipated a historic red wave propelled by inflation, high voter turnout in key suburban battlegrounds blunted their gains and preserved a competitive House.&quot;</em><br><span class="meta">&mdash; Modeled on Politico and Wall Street Journal post-election analyses</span></div>
-<h3 id="sec2-4">2.4 split-ticket voting</h3>
-<p class="meta"><span class="tag">Supplementary Term</span> Noun Phrase / Verb: to split a ticket &middot; Voter Behavior</p>
+<h3 id="s2-4">2.4 split-ticket voting</h3>
+<p class="meta"><strong>Supplementary Term</strong><br> Noun Phrase / Verb: to split a ticket &middot; Voter Behavior</p>
 <p><strong>Definition</strong><br>The voting practice whereby an elector casts votes for candidates of different political parties on the same ballot (for example, voting for a Democratic candidate for U.S. Senate and a Republican candidate for state governor).</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>In an era characterized by intense partisan calcification and straight-ticket voting, split-ticket voters are increasingly rare but disproportionately influential. Reporters scrutinize split-ticket results to gauge whether candidate brand quality can overcome broader national headwinds.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>In an era characterized by intense partisan calcification and straight-ticket voting, split-ticket voters are increasingly rare but disproportionately influential. Reporters scrutinize split-ticket results to gauge whether candidate brand quality can overcome broader national headwinds.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;Suburban precincts exhibited pronounced split-ticket voting, as thousands of independent electors supported the popular moderate Republican governor while simultaneously backing the Democratic nominee for Congress.&quot;</em><br><span class="meta">&mdash; Modeled on The Washington Post and AP Voter Poll breakdowns</span></div>
-<h3 id="sec2-5">2.5 down-ballot races</h3>
-<p class="meta"><span class="tag">Supplementary Term</span> Noun Phrase &middot; Ballot Architecture &amp; Local Offices</p>
+<h3 id="s2-5">2.5 down-ballot races</h3>
+<p class="meta"><strong>Supplementary Term</strong><br> Noun Phrase &middot; Ballot Architecture &amp; Local Offices</p>
 <p><strong>Definition</strong><br>Elections for public offices positioned physically below the marquee, top-of-the-ticket contests (such as the presidency or U.S. Senate), encompassing state legislative seats, judicial posts, attorneys general, secretaries of state, and municipal offices.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>While national news naturally gravitates toward top-of-the-ticket battles, savvy political reporters examine down-ballot contests because state lawmakers and election officials wield constitutional authority over voting laws, redistricting maps, and executive powers.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>While national news naturally gravitates toward top-of-the-ticket battles, savvy political reporters examine down-ballot contests because state lawmakers and election officials wield constitutional authority over voting laws, redistricting maps, and executive powers.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;Major donors poured millions into critical down-ballot races for state supreme court seats, recognizing that future abortion and voting rights disputes would be decided in state chambers.&quot;</em><br><span class="meta">&mdash; Modeled on AP News and Politico State Politics coverage</span></div>
-<h3 id="sec2-6">2.6 lame-duck session</h3>
-<p class="meta"><span class="tag">Supplementary Term</span> Noun Phrase &middot; Congressional Calendar &amp; Governance</p>
+<h3 id="s2-6">2.6 lame-duck session</h3>
+<p class="meta"><strong>Supplementary Term</strong><br> Noun Phrase &middot; Congressional Calendar &amp; Governance</p>
 <p><strong>Definition</strong><br>The period of congressional business that convenes following the November general election but prior to the formal inauguration of the newly elected Congress in early January, during which outgoing, retired, or defeated lawmakers still retain voting power.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>Known in Washington for unusual legislative volatility. Because departing lawmakers are unburdened by reelection considerations, party leaders frequently use the lame-duck session to negotiate complex compromise spending packages, judicial confirmations, or statutory debt-limit increases.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>Known in Washington for unusual legislative volatility. Because departing lawmakers are unburdened by reelection considerations, party leaders frequently use the lame-duck session to negotiate complex compromise spending packages, judicial confirmations, or statutory debt-limit increases.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;Facing the prospect of minority status in January, the outgoing Senate majority rushed to confirm dozens of pending federal judges during a marathon post-election lame-duck session.&quot;</em><br><span class="meta">&mdash; Modeled on The Hill and Reuters Congressional reporting</span></div>
-<h3 id="sec2-7">2.7 divided government</h3>
-<p class="meta"><span class="tag">Supplementary Term</span> Noun Phrase &middot; Institutional Balance of Power</p>
+<h3 id="s2-7">2.7 divided government</h3>
+<p class="meta"><strong>Supplementary Term</strong><br> Noun Phrase &middot; Institutional Balance of Power</p>
 <p><strong>Definition</strong><br>A structural condition in the American political system where the executive branch (the White House) is controlled by one political party, while the opposing party commands a majority in one or both chambers of the United States Congress.</p>
-<div class="note"><strong>Journalistic Nuance</strong><br>The default baseline of modern American governance. When midterms produce divided government, journalists frame the subsequent legislative horizon around high-stakes fiscal confrontations, weaponized committee investigations, and expanded reliance on executive actions and presidential vetoes.</div>
+<div class="box"><strong>Journalistic Nuance</strong><br>The default baseline of modern American governance. When midterms produce divided government, journalists frame the subsequent legislative horizon around high-stakes fiscal confrontations, weaponized committee investigations, and expanded reliance on executive actions and presidential vetoes.</div>
 <div class="box"><strong>In the News (Newsroom Example)</strong><br><em>&quot;The election outcomes ushered in a renewed era of divided government in Washington, closing the window on sweeping legislative overhauls and setting up a protracted war of attrition over the federal budget.&quot;</em><br><span class="meta">&mdash; Modeled on The New York Times and AP political analysis</span></div>
 <p class="meta">U.S. Election &amp; Political Journalism Lexicon &middot; Compiled for professional reference &middot; Data and definitions strictly conform to standard American newsroom usage.</p>
 <p class="meta">Cross-reference with <a href="us-midterm-2026.html">2026 U.S. Midterms: Democrats Win Congress</a></p>
-</main>
+</section>
+
+</div>
 </body>
 </html>

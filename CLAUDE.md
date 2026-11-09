@@ -91,18 +91,19 @@ HTML 文書の新規作成、既存文書の意匠修正・検証には、必ず
 
 ### 階層とマークアップ
 ```
-main
+header.hero              # 画面幅いっぱいのヒーロー帯（ main の外）
   p.kicker               # 「ポータル」
   h1                     # 作成文書インデックス
   p.subtitle             # A Reading Room
+main.wrap                # 幅 860px ・中央寄せ。検索スクリプトが `main > h2` を使うので、 main は残す
   div.lede > p           # Created: / Updated: / 収録 N 点
-  nav.toc                # 6 節へのページ内リンク（ pill 型。 a href="#secN" + span に件数）
+  nav.toc                # 6 節へのページ内リンク（ b「📖 目次」+ ol。 a href="#secN" + span に件数）
   form.search            # label + input#q + p#qstatus.search-status
-  h2#secN                # 節の見出し（「 N. 名前」）
+  h2#secN                # 節の見出し（ span.no に番号、続けて名前。節を section で包まない）
   p.sec-intro            # 節の説明（1 文）
   ul.cards
     li.card              # span.tag + a + p + span.lang
-  p.note                 # 末尾の注記
+  p.endnote              # 末尾の注記
 script                   # 本文検索
 ```
 - 新しい文書は、該当する節の `ul.cards` に `li.card` として追加する。合う節がなければ、節（ `h2` ・ `p.sec-intro` ・ `ul.cards` ）と `nav.toc` のリンクを足す。ただし、節の新設は構成の変更なので、先にユーザーへ相談する。
@@ -141,14 +142,16 @@ ls *.html | grep -v -e '^index.html$' -e '^portal.html$' | wc -l                
 文書ファイルのうち、どのカードからも `href` されていないものがないかも確かめる。
 
 ### 意匠の要点
-- 配色の基調は、文書用スキルと同じ紺（ `#2a4d69` ）である。変数は、 `:root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3;--link:#2a4d69}` で定める。
-- カードは 1 列の縦並び（ `ul.cards` はグリッドで `gap:14px` ）で、左に 4px のアクセント線を引く。カード全体をクリックできるよう、 `a::after` を `inset:0` に広げている。
+- 意匠は、文書と同じ kids の意匠（ `~/.claude/skills/kids-html-style/assets/kids-style.css` の全文を `<style>` に内包する）である。クリーム色の背景、丸ゴシック、黄色い h2 帯と丸数字、橙の差し色。変数は、スキルの CSS の `:root` で定める（ `--bg` `--ink` `--muted` `--card` `--line` `--orange` `--yellow` `--pale-yellow` など）。
+  - 例外として、 `portal.html` だけが一覧ページである。スキルの CSS の後ろに、 portal 固有の部品（カード・検索・目次の件数）を足す。
+  - スキルの `.card` は中央寄せの絵文字カードなので、一覧のカード（ `li.card` ）は左寄せに上書きしている。
+- カードは 1 列の縦並び（ `ul.cards` はグリッドで `gap:14px` ）で、左に 8px の橙の線を引く。カード全体をクリックできるよう、 `a::after` を `inset:0` に広げている。
 ```css
-.cards{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:14px}
-.card{position:relative;background:var(--box);border:1px solid var(--line);border-left:4px solid var(--accent);padding:14px 22px 12px}
+ul.cards{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:1fr;gap:14px}
+li.card{position:relative;text-align:left;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--orange);border-radius:14px;padding:14px 22px 12px}
 .card a::after{content:"";position:absolute;inset:0}
 ```
-- 文字サイズは rem で書く。余白は `main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; }` で決め、幅の上限を設けない。
+- 文字サイズは px で書く（スキルの規約）。本文は `main.wrap`（ `max-width: 860px` ・中央寄せ）に入れる。
 - 上記以外の値は、 `portal.html` の `<style>` が正である。この `CLAUDE.md` に全文を写さないのは、写しが古くなって実物と食い違うのを避けるためである。数値を変えたら、上の変数とコード片だけ合わせる。
 
 ### 構成についての相談

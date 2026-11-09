@@ -5,179 +5,222 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MacBook Pro で何が変わるか</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
-
+<header class="hero">
 <h1>MacBook Pro で何が変わるか ― 手元の機種で、 Windows PC との差を確かめる</h1>
-<p class="meta">調査日 : 2026-10-16 ／ 対象機種 : Apple M2 Max 、メモリ 32 GB 、 macOS 27.0.1</p>
+</header>
+<div class="wrap">
+
+<p class="meta band">調査日 : 2026-10-16 ／ 対象機種 : Apple M2 Max 、メモリ 32 GB 、 macOS 27.0.1</p>
 
 <p>この MacBook Pro で、 Windows の一般的な PC にはできないことは、あるのか。 Steam で遊ぶ FPV ドローンのゲームは、 Mac でも遊べるのか。手元の機種を出発点に、公式の資料で確かめた。</p>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">比べ方を決める</a></li>
-<li><a href="#sec2">手元の FPV ゲームは、 Mac で遊べるか</a></li>
-<li><a href="#sec3">iPhone とつながる機能</a>
+<li><a href="#s1">比べ方を決める</a></li>
+<li><a href="#s2">手元の FPV ゲームは、 Mac で遊べるか</a></li>
+<li><a href="#s3">iPhone とつながる機能</a>
 <ol>
-<li><a href="#sec3-1">iPhone をカメラにする (Continuity Camera)</a></li>
-<li><a href="#sec3-2">iPhone の画面を Mac で操作する (iPhone Mirroring)</a></li>
+<li><a href="#s3-1">iPhone をカメラにする (Continuity Camera)</a></li>
+<li><a href="#s3-2">iPhone の画面を Mac で操作する (iPhone Mirroring)</a></li>
 </ol>
 </li>
-<li><a href="#sec4">複数の機器を、一組のキーボードとマウスで操作する</a></li>
-<li><a href="#sec5">端末の中で AI を動かす</a></li>
-<li><a href="#sec6">まとめ</a></li>
-<li><a href="#sec7">限界</a></li>
-<li><a href="#sec8">参考文献・資料</a></li>
+<li><a href="#s4">複数の機器を、一組のキーボードとマウスで操作する</a></li>
+<li><a href="#s5">端末の中で AI を動かす</a></li>
+<li><a href="#s6">まとめ</a></li>
+<li><a href="#s7">限界</a></li>
+<li><a href="#s8">参考文献・資料</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 比べ方を決める</h2>
+<section id="s1">
+<h2><span class="no">1</span>比べ方を決める</h2>
 <p>対象の機種は、チップに Apple M2 Max を使い、 CPU (計算を担う部品) が 12 コア (計算を分担する単位が 12 個)、 GPU (画像処理を担う部品) が 38 コア、メモリが 32 GB 、 OS が macOS 27.0.1 の MacBook Pro である。 Apple の仕様ページ (16 インチ、 2023 年モデル) には、同じ M2 Max が、 12 コアの CPU 、 38 コアの GPU と載っている <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。以下では、この機種の値と Apple の公式資料を使う。</p>
 <p>比べる相手は、「一般的な Windows PC 」である。ここでは、 Windows 11 が動くノート PC を指す。 NPU (AI 向けの専用演算回路) を積んだ Copilot+ PC かどうかで結論が変わる項目は、そのつど書く。</p>
 <p>各項目は、次の三つの区分で書き分ける。</p>
-<table class="cards">
-<tr><th>区分</th><th>意味</th></tr>
-<tr><td data-label="区分">Mac でしか実現できない</td><td data-label="意味">Windows 側の公式情報と主要な第三者製品を確認し、同等の手段が見つからなかった。</td></tr>
-<tr><td data-label="区分">Windows でも可能だが Mac が有利</td><td data-label="意味">Windows 側にも手段があるが、手間や対応状況の差を、出典で示せる。</td></tr>
-<tr><td data-label="区分">Windows でも同等にできる</td><td data-label="意味">同等のことができると確認できた。</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>区分</th><th>意味</th></tr></thead>
+<tbody>
+<tr><th scope="row">Mac でしか実現できない</th><td>Windows 側の公式情報と主要な第三者製品を確認し、同等の手段が見つからなかった。</td></tr>
+<tr><th scope="row">Windows でも可能だが Mac が有利</th><td>Windows 側にも手段があるが、手間や対応状況の差を、出典で示せる。</td></tr>
+<tr><th scope="row">Windows でも同等にできる</th><td>同等のことができると確認できた。</td></tr>
+</tbody>
+</table></div>
 <p>「 Windows ではできない」と言い切るには、 Windows 側の確認が要る。確認しきれなかった項目は、どの区分にも入れず、そのとおり書く。また、第 3 章は iPhone を、第 4 章は二台目の Mac か iPad を持つ人向けの話で、持っていない人には当てはまらない。</p>
+</section>
 
-<h2 id="sec2">2. 手元の FPV ゲームは、 Mac で遊べるか</h2>
+<section id="s2">
+<h2><span class="no">2</span>手元の FPV ゲームは、 Mac で遊べるか</h2>
 <p>FPV (First Person View) とは、ドローンに積んだカメラの映像を見ながら操縦する遊び方である。ゲームでは、その操縦を画面上で練習する。 Steam (ゲームの販売・管理サービス) のストアページか開発元の公式サイトで、 Mac の動作環境を確認できた FPV 系のタイトルのうち、次の三つを取り上げる。網羅的な調査ではない。</p>
-<table class="cards">
-<tr><th>タイトル</th><th>macOS に関する記載 (2026-10-16 確認)</th></tr>
-<tr><td data-label="タイトル">Uncrashed : FPV Drone Simulator</td><td data-label="macOS に関する記載 (2026-10-16 確認)">対応 OS は Windows と macOS 。 macOS の推奨環境は「最新の macOS 」と M1 以上のチップ。コントローラーかリモコンが必須 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</td></tr>
-<tr><td data-label="タイトル">Liftoff : FPV Drone Racing</td><td data-label="macOS に関する記載 (2026-10-16 確認)">対応 OS は Windows 、 macOS 、 SteamOS + Linux 。 macOS の推奨は macOS Big Sur (macOS の旧版の名前) 以降。リモコンかコントローラーが必須 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。</td></tr>
-<tr><td data-label="タイトル">VelociDrone</td><td data-label="macOS に関する記載 (2026-10-16 確認)">開発元の公式サイトに Mac の動作環境の記載があり、プロセッサーの欄に「 Apple M 」とある <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。 Steam での掲載は確認できなかった。</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>タイトル</th><th>macOS に関する記載 (2026-10-16 確認)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Uncrashed : FPV Drone Simulator</th><td>対応 OS は Windows と macOS 。 macOS の推奨環境は「最新の macOS 」と M1 以上のチップ。コントローラーかリモコンが必須 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><th scope="row">Liftoff : FPV Drone Racing</th><td>対応 OS は Windows 、 macOS 、 SteamOS + Linux 。 macOS の推奨は macOS Big Sur (macOS の旧版の名前) 以降。リモコンかコントローラーが必須 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。</td></tr>
+<tr><th scope="row">VelociDrone</th><td>開発元の公式サイトに Mac の動作環境の記載があり、プロセッサーの欄に「 Apple M 」とある <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。 Steam での掲載は確認できなかった。</td></tr>
+</tbody>
+</table></div>
 <p>三つとも、ストアページや公式サイトに Mac の動作環境が載っている。記載から判断する限り、 Mac で遊べる可能性は高い。 Windows 側は、 Uncrashed と Liftoff が対応 OS として明記している <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。ただし、これは記載の確認であって、実際の動作の確認ではない。 Apple シリコン (Mac 用に Apple が作ったチップ) 上でそのまま動く版なのか、 Intel 向けの版を変換して動かしているのかは、確認できなかった。 macOS 27 での動作も、確認できなかった。</p>
 <p>操縦には、送信機 (手に持つ操縦用のリモコン) かゲームコントローラーが要る。 Bluetooth のコントローラーは、 Mac の「システム設定」の Bluetooth から接続する、と Apple は案内している <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。一方、 Uncrashed のストアページは「 Windows が認識するジョイスティックなら動く」と書いており、 Mac での扱いには触れていない <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。 Mac で、送信機が同じように認識されるかは、確認できなかった。手持ちの送信機が使えるかは、実際に接続して試すのが確実である。</p>
 <p>この章の判定は、次のとおりである。 FPV ゲームに限れば、 Mac でも遊べる見込みがある。ただし、 Mac だけでできる、という根拠はない。 Windows 側との動作の安定性の比較は、資料が見つからず、調べきれていない。</p>
+</section>
 
-<h2 id="sec3">3. iPhone とつながる機能</h2>
-<h3 id="sec3-1">3.1 iPhone をカメラにする (Continuity Camera)</h3>
+<section id="s3">
+<h2><span class="no">3</span>iPhone とつながる機能</h2>
+<h3 id="s3-1">3.1 iPhone をカメラにする (Continuity Camera)</h3>
 <p>Continuity Camera は、 iPhone を Mac のウェブカメラとして使う機能である。 iOS 16 以降で iPhone XR 以降の iPhone と、 macOS Ventura 13 以降の Mac が要り、同じ Apple アカウントで使う。有線でも無線でも動く <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。対象機種の macOS 27.0.1 は、この条件を満たす。</p>
 <p>Windows 側には、 Android のスマートフォンをウェブカメラにする機能がある、と報じられている <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。報道によれば、これは Android 専用で、 iPhone には使えない。ただし、これは Microsoft の公式ページでは確認できていない。 iPhone をウェブカメラにする第三者製品の有無も、調べきれていない。したがって、この機能は、どの区分にも入れない。</p>
 
-<h3 id="sec3-2">3.2 iPhone の画面を Mac で操作する (iPhone Mirroring)</h3>
+<h3 id="s3-2">3.2 iPhone の画面を Mac で操作する (iPhone Mirroring)</h3>
 <p>iPhone Mirroring は、 iPhone のアプリを、 Mac のマウスとキーボードで操作する機能である。 iPhone の通知も Mac に出る。 Mac は macOS Sequoia 15 以降で、 Apple シリコンか、セキュリティ用の T2 チップを積んだ機種であり、 iPhone は iOS 18 以降である <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。制限もある。 iPhone のカメラとマイクは使えない。 EU では使えない。ワイヤレスのゲームコントローラーは、 Mac ではなく iPhone に接続する必要がある <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。</p>
 <p>Windows には、スマートフォンと PC をつなぐ Microsoft のアプリ、 Phone Link がある。 2023 年の報道によれば、 iPhone との連携は通話、メッセージ、通知が中心で、機能は限られる <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。ただし、 Microsoft の公式ページを取得できなかったため、現在の機能は確認できていない。アプリを画面ごと操作する機能が Windows にあるかも、公式の資料では確認できていない。この機能も、どの区分にも入れない。</p>
+</section>
 
-<h2 id="sec4">4. 複数の機器を、一組のキーボードとマウスで操作する</h2>
+<section id="s4">
+<h2><span class="no">4</span>複数の機器を、一組のキーボードとマウスで操作する</h2>
 <p>Universal Control は、 Mac のキーボードとマウス (またはトラックパッド) で、近くにある最大二台の Mac や iPad を操作する機能である。同じ Apple アカウントでサインインし、 Bluetooth 、 Wi-Fi 、 Handoff (機器間で作業を引き継ぐ機能) をオンにしておく <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。</p>
 <p>Windows には、 Microsoft の PowerToys (Windows 向けの追加ツール集) に Mouse Without Borders がある。最大四台のコンピューターを、一組のキーボードとマウスで操作でき、クリップボードの共有とファイルの転送もできる。ただし、ファイルは単一のみ、 100MB までという制限がある <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</p>
 <p>基本の機能は、同等である。違いは双方向にある。 Universal Control は、 iPad も対象に含められる <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 。一方、 Mouse Without Borders は、 PowerToys を入れる手間がかかり、対象は Windows のコンピューターである。しかし、操作できる台数は最大四台と多く、ファイルの転送もできる <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。差が一方向ではなく、どちらが有利かを示せる指標もない。そのため、判定は「 Windows でも同等にできる」とする。</p>
+</section>
 
-<h2 id="sec5">5. 端末の中で AI を動かす</h2>
+<section id="s5">
+<h2><span class="no">5</span>端末の中で AI を動かす</h2>
 <p>この章は、アプリを通じて間接的に恩恵を受ける話である。 Apple の Foundation Models framework は、アプリの開発者が、端末の中で動く Apple のモデル (オンデバイスのモデル) を使えるようにする仕組みである。機能はオフラインで使え、開発者に推論 (AI が答えを出す処理) の費用はかからない。 macOS 26 以降で、 Apple Intelligence (Apple の AI 機能群) に対応する機器で、 Apple Intelligence をオンにしたときに使える <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 。対象機種が Apple Intelligence に対応するかは、確認できなかった。 2025 年 9 月の発表時点では、日本語を含む言語に対応するが、ベータ版と案内されていた。その後の状況は確認していない <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> 。</p>
 <p>Windows にも、同じ層の仕組みがある。 Microsoft の Foundry Local は、 20 以上のオープンソースの言語モデルなどを、 Windows のどの機器でも動かせる。 Windows ML は、アプリの開発者が、 CPU 、 GPU 、 NPU でモデルを動かすための仕組みで、これも Windows のどの機器でも使える <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup> 。一方、 Windows AI APIs (Phi Silica など、アプリの開発者が使う、 Microsoft 組み込みの AI 機能) の多くは、 Copilot+ PC (NPU を積み、メモリが 16GB 以上などの条件を満たす機種) が必要である。ただし、一部は他の Windows 11 の機器でも動く <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup> 。</p>
 <p>したがって、端末の中で AI を動かせること自体は、 Windows でも同等である。使える AI 機能の質や速さの差は、今回は示せていない。判定は「 Windows でも同等にできる」とする。</p>
+</section>
 
-<h2 id="sec6">6. まとめ</h2>
-<table class="cards">
-<tr><th>項目</th><th>判定</th><th>根拠の強さ</th></tr>
-<tr><td data-label="項目">FPV ゲーム (Mac で遊べるか)</td><td data-label="判定">区分なし (Mac での動作は記載の確認のみ。 Windows との動作の比較は未調査)</td><td data-label="根拠の強さ">ストアページ・公式サイトの記載 <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
-<tr><td data-label="項目">iPhone をカメラにする</td><td data-label="判定">区分なし (確認しきれなかった)</td><td data-label="根拠の強さ">Apple は公式 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 、 Windows 側は報道 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td></tr>
-<tr><td data-label="項目">iPhone の画面を Mac で操作する</td><td data-label="判定">区分なし (確認しきれなかった)</td><td data-label="根拠の強さ">Apple は公式 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 、 Windows 側は報道 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td></tr>
-<tr><td data-label="項目">一組のキーボードとマウスで複数の機器を操作する</td><td data-label="判定">Windows でも同等にできる</td><td data-label="根拠の強さ">両方とも公式 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td></tr>
-<tr><td data-label="項目">端末の中で AI を動かす</td><td data-label="判定">Windows でも同等にできる</td><td data-label="根拠の強さ">両方とも公式 <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-3"><a href="#ref-13">[13]</a></sup></td></tr>
-</table>
+<section id="s6">
+<h2><span class="no">6</span>まとめ</h2>
+<div class="scroll"><table>
+<thead><tr><th>項目</th><th>判定</th><th>根拠の強さ</th></tr></thead>
+<tbody>
+<tr><th scope="row">FPV ゲーム (Mac で遊べるか)</th><td>区分なし (Mac での動作は記載の確認のみ。 Windows との動作の比較は未調査)</td><td>ストアページ・公式サイトの記載 <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">iPhone をカメラにする</th><td>区分なし (確認しきれなかった)</td><td>Apple は公式 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 、 Windows 側は報道 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th scope="row">iPhone の画面を Mac で操作する</th><td>区分なし (確認しきれなかった)</td><td>Apple は公式 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 、 Windows 側は報道 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><th scope="row">一組のキーボードとマウスで複数の機器を操作する</th><td>Windows でも同等にできる</td><td>両方とも公式 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><th scope="row">端末の中で AI を動かす</th><td>Windows でも同等にできる</td><td>両方とも公式 <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-3"><a href="#ref-13">[13]</a></sup></td></tr>
+</tbody>
+</table></div>
 <p>「 Mac でしか実現できない」と言える項目は、今回の調査では見つからなかった。「 Windows でも可能だが Mac が有利」と、出典で示せた項目もなかった。 Mac ならではかもしれない項目は、 iPhone との連携の二つにあるが、 Windows 側の公式な確認が足りないため、断定できない。 Mac の価値は、機能の有無よりも、 Apple の機器を持っている人にとっての手間の少なさにあるのかもしれない。ただし、これは筆者の推測であり、今回の資料では示せていない。なお、 Uncrashed と Liftoff は Windows 版も明記している <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> 。 VelociDrone の Windows 版は確認していない。ゲームの面で Mac が有利と示せる材料はない。</p>
+</section>
 
-<h2 id="sec7">7. 限界</h2>
+<section id="s7">
+<h2><span class="no">7</span>限界</h2>
 <ul>
 <li>対象は、 Apple と Microsoft の公式ページ、 Steam のストアページ、開発元の公式サイトである。 Windows 側の Phone Link と Android のウェブカメラ機能は、報道を頼りにしており、公式ページでは確認できていない <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup> 。</li>
 <li>FPV ゲームは、実機で動かして確かめていない。 Apple シリコン上での動作の形態、 macOS 27 での動作、 Mac での送信機の認識は、確認できなかった。</li>
@@ -188,10 +231,10 @@
 <li>比較相手を Windows 11 のノート PC とし、 Copilot+ PC かどうかでの違いは第 5 章の範囲でしか見ていない。比較する PC の価格帯や性能帯は揃えていない。</li>
 <li>資料の日付は揃っていない。 Apple の Foundation Models の発表は 2025 年 9 月、 Microsoft の資料は 2026 年 6 月から 8 月の更新である。取得日は、すべて 2026-10-16 である。</li>
 </ul>
-
+</section>
 <div class="refs">
-<h2 id="sec8">8. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<h2 id="s8">8. 参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1"><a href="#fnref-1-1">^</a> <em>MacBook Pro (16-inch, 2023) - Tech Specs</em>. Apple. 取得日 : 2026-10-16 。 <a href="https://support.apple.com/en-us/111838">Apple サポート</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <em>Uncrashed : FPV Drone Simulator</em>. Steam (Valve). 取得日 : 2026-10-16 。 <a href="https://store.steampowered.com/app/1682970/Uncrashed__FPV_Drone_Simulator/">Steam ストアページ</a></li>
@@ -210,7 +253,6 @@
 <li id="ref-15"><a href="#fnref-15-1">^</a> <em>What's new in Games</em>. Apple Developer. 取得日 : 2026-10-16 。 <a href="https://developer.apple.com/games/whats-new/">Apple Developer</a></li>
 </ol>
 </div>
-
-</main>
+</div>
 </body>
 </html>

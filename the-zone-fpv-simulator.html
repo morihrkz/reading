@@ -5,143 +5,171 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Zone - FPV ドローンシミュレータの調査</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <h1>The Zone - FPV ドローンシミュレータの調査</h1>
-<p class="meta">調査日 : 2026 年 10 月 17 日 ／ 対象 : Steam 版 The Zone - FPV Drone Simulator ／ 開発 : Nils Vollenbruch (nils vo)</p>
+</header>
+<div class="wrap">
+<p class="meta band">調査日 : 2026 年 10 月 17 日 ／ 対象 : Steam 版 The Zone - FPV Drone Simulator ／ 開発 : Nils Vollenbruch (nils vo)</p>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">結論</a></li>
-<li><a href="#sec2">基本情報</a>
+<li><a href="#s1">結論</a></li>
+<li><a href="#s2">基本情報</a>
 <ol>
-<li><a href="#sec2-1">開発者について</a></li>
+<li><a href="#s2-1">開発者について</a></li>
 </ol>
 </li>
-<li><a href="#sec3">Steam での評価の全体像</a></li>
-<li><a href="#sec4">良い評価</a>
+<li><a href="#s3">Steam での評価の全体像</a></li>
+<li><a href="#s4">良い評価</a>
 <ol>
-<li><a href="#sec4-1">物理演算の手応え</a></li>
-<li><a href="#sec4-2">マルチプレイと観戦</a></li>
-<li><a href="#sec4-3">動作の軽快さ</a></li>
-<li><a href="#sec4-4">拡張性と開発者への信頼</a></li>
-<li><a href="#sec4-5">価格と価値</a></li>
+<li><a href="#s4-1">物理演算の手応え</a></li>
+<li><a href="#s4-2">マルチプレイと観戦</a></li>
+<li><a href="#s4-3">動作の軽快さ</a></li>
+<li><a href="#s4-4">拡張性と開発者への信頼</a></li>
+<li><a href="#s4-5">価格と価値</a></li>
 </ol>
 </li>
-<li><a href="#sec5">悪い評価</a>
+<li><a href="#s5">悪い評価</a>
 <ol>
-<li><a href="#sec5-1">コンテンツの少なさ</a></li>
-<li><a href="#sec5-2">グラフィックスと負荷の釣り合い</a></li>
-<li><a href="#sec5-3">細かな設定の不足</a></li>
-<li><a href="#sec5-4">環境による相性</a></li>
-<li><a href="#sec5-5">学習の壁</a></li>
+<li><a href="#s5-1">コンテンツの少なさ</a></li>
+<li><a href="#s5-2">グラフィックスと負荷の釣り合い</a></li>
+<li><a href="#s5-3">細かな設定の不足</a></li>
+<li><a href="#s5-4">環境による相性</a></li>
+<li><a href="#s5-5">学習の壁</a></li>
 </ol>
 </li>
-<li><a href="#sec6">評価の読み方</a></li>
-<li><a href="#sec7">出典</a></li>
+<li><a href="#s6">評価の読み方</a></li>
+<li><a href="#s7">出典</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 結論</h2>
+<section id="s1">
+<h2><span class="no">1</span>結論</h2>
 <p>The Zone は、実機の挙動に近い物理演算を最大の売りにした FPV ドローン練習用シミュレータで、 Steam のユーザー評価は非常に高い。良い評価は物理演算、マルチプレイ、軽快な動作に集中している。悪い評価は、コンテンツの少なさ、素朴なグラフィックスに対して重い GPU 負荷、細かい設定項目の不足に集まる。早期アクセス中の作品であり、「完成した総合シミュレータ」ではなく、「物理演算を磨いた練習ツールが育っている途中」と見るのが妥当である。</p>
 
-<div class="note">評価の数字と引用は、 2026 年 10 月 17 日時点で Steam のストアページとユーザーレビューから取得したものである。独立した第三者媒体によるレビュー記事は、今回の検索では見つからなかった。物理演算の正確さに関する評価は、ユーザーの体感と開発者自身の説明に基づく。</div>
+<div class="box">評価の数字と引用は、 2026 年 10 月 17 日時点で Steam のストアページとユーザーレビューから取得したものである。独立した第三者媒体によるレビュー記事は、今回の検索では見つからなかった。物理演算の正確さに関する評価は、ユーザーの体感と開発者自身の説明に基づく。</div>
+</section>
 
-<h2 id="sec2">2. 基本情報</h2>
-<table class="cardrow">
-<tr><th>項目</th><th>内容</th></tr>
+<section id="s2">
+<h2><span class="no">2</span>基本情報</h2>
+<div class="scroll"><table>
+<thead><tr><th>項目</th><th>内容</th></tr></thead>
+<tbody>
 <tr><th>開発・販売</th><td>Nils Vollenbruch (nils vo) 。開発者と販売元は同一人物</td></tr>
 <tr><th>公開</th><td>2025 年 3 月 7 日に Steam で早期アクセスとして公開</td></tr>
 <tr><th>価格</th><td>¥1,600 （開発者は、早期アクセス終了後も価格を変えないと表明）</td></tr>
@@ -151,22 +179,29 @@
 <tr><th>動作環境（ Windows 最低）</th><td>Core i5 6500 / Ryzen 1600 、 RAM 8 GB 、 Radeon Vega 8 / Intel Iris Plus G7 相当</td></tr>
 <tr><th>対応 OS</th><td>Windows 。 macOS の要件も掲載されているが、予定項目にも macOS 対応が残っている。 SteamOS と Linux のタブもあるが、要件は未掲載</td></tr>
 <tr><th>早期アクセス</th><td>開発者の見積もりは 3 〜 6 か月。予定は、マップ追加、マップエディタ、グラフィックスと UI の改善、動く障害物</td></tr>
-</table>
+</tbody>
+</table></div>
 
-<h3 id="sec2-1">2.1 開発者について</h3>
+<h3 id="s2-1">2.1 開発者について</h3>
 <p>Nils Vollenbruch 氏は、 YouTube チャンネル「 nils vo 」で活動するフリースタイル FPV パイロットで、スポンサー契約も持つと紹介されている。チャンネルの内容そのものは、今回取得できなかった。ストアページには、基本操作に慣れるまで 2 〜 5 時間かかるとの注意書きがあり、「練習なしで遊べる楽しいゲームではなく、シミュレーション兼トレーニングの道具だ」と明記されている。</p>
+</section>
 
-<h2 id="sec3">3. Steam での評価の全体像</h2>
-<table class="cardrow">
-<tr><th>集計</th><th>結果</th></tr>
+<section id="s3">
+<h2><span class="no">3</span>Steam での評価の全体像</h2>
+<div class="scroll"><table>
+<thead><tr><th>集計</th><th>結果</th></tr></thead>
+<tbody>
 <tr><th>全期間（ストアページ）</th><td>「非常に好評」、 438 件中 97% が好評</td></tr>
 <tr><th>直近 30 日（ストアページ）</th><td>非常に好評、 52 件中 100% が好評</td></tr>
 <tr><th>英語レビュー（ API 取得）</th><td>309 件中、好評 304 件・不評 5 件との集計値が返った</td></tr>
-</table>
-<div class="note">件数は取得手段で食い違う（全言語と英語のみの違い、取得時刻の違いによる）。不評レビューの本文は、実際に確認できた 3 件（英語 2 件、ロシア語 1 件）だけを下で扱う。</div>
+</tbody>
+</table></div>
+<div class="box">件数は取得手段で食い違う（全言語と英語のみの違い、取得時刻の違いによる）。不評レビューの本文は、実際に確認できた 3 件（英語 2 件、ロシア語 1 件）だけを下で扱う。</div>
+</section>
 
-<h2 id="sec4">4. 良い評価</h2>
-<h3 id="sec4-1">4.1 物理演算の手応え</h3>
+<section id="s4">
+<h2><span class="no">4</span>良い評価</h2>
+<h3 id="s4-1">4.1 物理演算の手応え</h3>
 <p>最も多い称賛である。「物理演算が素晴らしい」「最高の感触のシミュレータ」といった短い評が大量に並ぶ。具体的な声は次のとおり。</p>
 <ul>
 <li>実機の 5 インチに「そっくり」で、これまで試した中で最も現実的だという評（プレイ 16.5 時間）。</li>
@@ -174,46 +209,54 @@
 <li>実機の操縦が上達したという評。練習ツールとして機能していることを示す。</li>
 <li>Liftoff より正確だという比較評（プレイ 80.5 時間）。</li>
 </ul>
-<h3 id="sec4-2">4.2 マルチプレイと観戦</h3>
+<h3 id="s4-2">4.2 マルチプレイと観戦</h3>
 <p>最大 32 人で飛べるオンライン機能が、他のシミュレータとの差別化点として挙がる。「他の人と一緒に飛べるのがいい」「マルチプレイが現実的な物理演算とよく合う」という声がある。</p>
-<h3 id="sec4-3">4.3 動作の軽快さ</h3>
+<h3 id="s4-3">4.3 動作の軽快さ</h3>
 <p>非力な環境でも滑らかに動くという評がある。高フレームレートで滑らかだという評や、 Linux のネイティブ対応と描画改善を歓迎する評もある。</p>
-<h3 id="sec4-4">4.4 拡張性と開発者への信頼</h3>
+<h3 id="s4-4">4.4 拡張性と開発者への信頼</h3>
 <p>カスタムマップやコミュニティ製マップ、機体まわりのモジュール性を評価する声がある。開発者の動画解説を評価する声もあり、開発者本人の発信力が支持の一因と読める。</p>
-<h3 id="sec4-5">4.5 価格と価値</h3>
+<h3 id="s4-5">4.5 価格と価値</h3>
 <p>「この値段なら最良級」という評があり、¥1,600 という価格は好意的に受け止められている。</p>
+</section>
 
-<h2 id="sec5">5. 悪い評価</h2>
+<section id="s5">
+<h2><span class="no">5</span>悪い評価</h2>
 <p>不評は少数だが、好評レビューの中にも「推奨するが、ここは不満」という指摘が含まれる。両方をまとめる。</p>
-<h3 id="sec5-1">5.1 コンテンツの少なさ</h3>
+<h3 id="s5-1">5.1 コンテンツの少なさ</h3>
 <p>不評レビューの中心はここである。プレイ 16.9 時間の不評レビューは「有望な出だし、それ以上ではない」と述べ、コンテンツが乏しく、 GUI は機能するだけで、素材の磨き込みが必要だと評している。好評側でも、マップ数、チャレンジやレースの不足、機体カスタマイズの未完成を挙げる声がある。</p>
-<h3 id="sec5-2">5.2 グラフィックスと負荷の釣り合い</h3>
+<h3 id="s5-2">5.2 グラフィックスと負荷の釣り合い</h3>
 <p>「高設定でも低解像度のように見える」という不評がある。また、単純な見た目のわりに GPU 負荷が高く、エンジンの最適化が必要だという指摘がある。好評側にも、 AI で生成したようなグラフィティへの不満や、ビジュアル改善の要望がある。統合 GPU の AMD 環境で魚眼状の描画不具合が出るという報告もある。</p>
-<h3 id="sec5-3">5.3 細かな設定の不足</h3>
+<h3 id="s5-3">5.3 細かな設定の不足</h3>
 <p>好評レビューの中に、単独のシミュレータとしては簡素すぎ、スロットルやプロップウォッシュの設定がほしいという声があった。浮遊感が少しあり、 G 力の表現を増やしてほしいという声もある。ストアの説明でも、物理演算のプリセットは 5 インチのフリースタイルが中心とされる。</p>
-<h3 id="sec5-4">5.4 環境による相性</h3>
+<h3 id="s5-4">5.4 環境による相性</h3>
 <ul>
 <li>M1 の MacBook Air では動かなかった、という報告がある。このレビューは「推奨」で投稿されており、本文と評価が食い違っている。</li>
 <li>プレイ 0.6 時間の不評レビューは、強力なデスクトップ向けであり、 Mac ノートでのタイニーウープには向かないと述べる。室内マップがないこと、 Air65 の実機と挙動が違うことも指摘する。</li>
 <li>ロシア語の不評レビュー（プレイ 30.7 時間）は、左スティックが右へ流れ始めたと訴える。機器側の不具合の可能性があり、ゲーム本体の評価とは切り分けるべきだが、不評の内訳としては記録しておく。</li>
 </ul>
-<h3 id="sec5-5">5.5 学習の壁</h3>
+<h3 id="s5-5">5.5 学習の壁</h3>
 <p>開発者自身が、操作に慣れるまでに 2 〜 5 時間かかり、練習が前提だと明記している。気軽に遊べるゲームを期待した人には、これが不満の種になり得る。</p>
+</section>
 
-<h2 id="sec6">6. 評価の読み方</h2>
-<div class="must">物理演算の「正しさ」は、開発者の説明と、実機を持つ一部ユーザーの体感に支えられている。測定による第三者検証は見つからなかった。購入判断では、この点を割り引いて読むこと。</div>
+<section id="s6">
+<h2><span class="no">6</span>評価の読み方</h2>
+<div class="caution"><p>物理演算の「正しさ」は、開発者の説明と、実機を持つ一部ユーザーの体感に支えられている。測定による第三者検証は見つからなかった。購入判断では、この点を割り引いて読むこと。</p></div>
 <ul>
-<li><span class="tag">向く人</span>実機の感覚に近い練習をしたい人。オンラインで仲間と飛びたい人。¥1,600 で試したい人。</li>
-<li><span class="tag">向かない人</span>豊富なマップやレース、細かい機体調整を今すぐ求める人。 Mac ノートや非力な統合 GPU だけで動かしたい人。</li>
-<li><span class="tag">注意</span>コントローラまたは RC 送信機が必須。早期アクセスの内容は更新で変わる。</li>
+<li><strong>向く人</strong><br>実機の感覚に近い練習をしたい人。オンラインで仲間と飛びたい人。¥1,600 で試したい人。</li>
+<li><strong>向かない人</strong><br>豊富なマップやレース、細かい機体調整を今すぐ求める人。 Mac ノートや非力な統合 GPU だけで動かしたい人。</li>
+<li><strong>注意</strong><br>コントローラまたは RC 送信機が必須。早期アクセスの内容は更新で変わる。</li>
 </ul>
+</section>
 
-<h2 id="sec7">7. 出典</h2>
+<section id="s7">
+<h2><span class="no">7</span>出典</h2>
 <ul>
 <li><a href="https://store.steampowered.com/app/3491280/The_Zone__FPV_Drone_Simulator/">Steam ストアページ : The Zone - FPV Drone Simulator</a></li>
 <li><a href="https://www.youtube.com/@nils_vo">YouTube: nils vo</a></li>
 <li>Steam ユーザーレビュー（ストアの公開 API 経由で取得）</li>
 </ul>
-</main>
+</section>
+
+</div>
 </body>
 </html>

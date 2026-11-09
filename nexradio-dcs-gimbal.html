@@ -5,103 +5,131 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NexRadio 14 と DCS ジンバル</title>
 <style>
-  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: #e6edf3; white-space: nowrap; }
-  code { background: #eee; padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  pre { overflow-x: auto; background: #eee; padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
-  pre code { background: none; padding: 0; }
-  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力の表示」) */
-  pre.term { background: #000; color: #fff; }
-  pre.term code { color: #fff; }
-  code.term { background: #000; color: #fff; }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .meta { color: #555; font-size: .9rem; }
-  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
-  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
-  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
-  .checklist .cl-title::before { content: "✅ "; }
-  .checklist ul { list-style: none; padding: 0; margin: 0; }
-  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
-  .checklist label { cursor: pointer; }
-  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
-  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
-  .subtitle { color: #555; margin: 0 0 1rem; }
-  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
-  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
-  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: #2a4d69; }
-  .endnote { font-size: .9rem; color: #555; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:#555}
-  .toc a{color:#222;text-decoration:none}
-  .toc a:hover{color:#2a4d69;text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:#2a4d69;text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:#e6edf3}
-  /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
-  p { margin: 0 0 20px; }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
+  code{background:#fff1e0;padding:.1rem .35rem;border-radius:6px;font-size:.92em}
+  pre{overflow-x:auto;background:#faf3e2;padding:11.2px 16px;border-radius:3px;margin:0 0 20px}
+  pre code{background:none;padding:0}
 </style>
 </head>
 <body>
-<main>
-
+<header class="hero">
 <h1>BETAFPV NexRadio 14 と DCS ジンバル</h1>
+</header>
+<div class="wrap">
+
+
+
 <p class="meta">情報の確認日 : 2026 年 11 月 5 日。 TX16S MK II の所有を前提に改訂し、全体を査読した。</p>
 
 <div class="lede">
@@ -109,44 +137,45 @@
 </div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">要点</a></li>
-<li><a href="#sec2">NexRadio 14 の仕様</a>
+<li><a href="#s1">要点</a></li>
+<li><a href="#s2">NexRadio 14 の仕様</a>
 <ol>
-<li><a href="#sec2-1">本体仕様</a></li>
-<li><a href="#sec2-2">RF と拡張性</a></li>
+<li><a href="#s2-1">本体仕様</a></li>
+<li><a href="#s2-2">RF と拡張性</a></li>
 </ol>
 </li>
-<li><a href="#sec3">スティック検出方式の技術解説</a>
+<li><a href="#s3">スティック検出方式の技術解説</a>
 <ol>
-<li><a href="#sec3-1">三方式の比較</a></li>
-<li><a href="#sec3-2">静電容量センシングの原理</a></li>
-<li><a href="#sec3-3">DCS の利点と留意点</a></li>
+<li><a href="#s3-1">三方式の比較</a></li>
+<li><a href="#s3-2">静電容量センシングの原理</a></li>
+<li><a href="#s3-3">DCS の利点と留意点</a></li>
 </ol>
 </li>
-<li><a href="#sec4">NexRadio DCS Gimbal 単体品</a>
+<li><a href="#s4">NexRadio DCS Gimbal 単体品</a>
 <ol>
-<li><a href="#sec4-1">仕様と価格</a></li>
-<li><a href="#sec4-2">TX16S MK II への換装</a></li>
-<li><a href="#sec4-3">換装のメリットとリスク</a></li>
+<li><a href="#s4-1">仕様と価格</a></li>
+<li><a href="#s4-2">TX16S MK II への換装</a></li>
+<li><a href="#s4-3">換装のメリットとリスク</a></li>
 </ol>
 </li>
-<li><a href="#sec5">コスト比較</a></li>
-<li><a href="#sec6">日本国内の流通状況と法規</a>
+<li><a href="#s5">コスト比較</a></li>
+<li><a href="#s6">日本国内の流通状況と法規</a>
 <ol>
-<li><a href="#sec6-1">流通状況</a></li>
-<li><a href="#sec6-2">技適との関係</a></li>
-<li><a href="#sec6-3">個人輸入するときの注意</a></li>
+<li><a href="#s6-1">流通状況</a></li>
+<li><a href="#s6-2">技適との関係</a></li>
+<li><a href="#s6-3">個人輸入するときの注意</a></li>
 </ol>
 </li>
-<li><a href="#sec7">導入判断チェックリスト</a></li>
-<li><a href="#sec8">未確認事項</a></li>
-<li><a href="#sec9">参考文献・資料</a></li>
+<li><a href="#s7">導入判断チェックリスト</a></li>
+<li><a href="#s8">未確認事項</a></li>
+<li><a href="#s9">参考文献・資料</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 要点</h2>
+<section id="s1">
+<h2><span class="no">1</span>要点</h2>
 <ul>
 <li><strong>NexRadio 14</strong> は、 BETAFPV が「世界初」とうたうデジタル静電容量方式 (DCS) ジンバルを搭載した、 EdgeTX 搭載のプロポである。内蔵 RF は ELRS Gemini-X （デュアルバンド）で、現在はベータテスト枠で先行販売されている <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。</li>
 <li><strong>NexRadio DCS Gimbal</strong> は、同じジンバルの単体品である。他社製プロポへの後付けを想定しており、ベータ枠は限定 100 台、価格は約 32 米ドルである <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</li>
@@ -155,59 +184,65 @@
 <li>日本国内では、主要ショップ・ EC での一般販売は確認できていない。ジンバルは電波を発する部品ではないため、換装しても技適の状態は変わらないと考えられる。</li>
 </ul>
 
-<div class="note">
-<span class="tag">注意</span>本書の「世界初」「ほぼ半永久」「磁気の影響を一切受けない」などの表現は、メーカーの主張を整理したものである。実測で確かめた結果ではない。確度の低い事項は、第 8 章にまとめた。
+<div class="box">
+<strong>注意</strong><br>本書の「世界初」「ほぼ半永久」「磁気の影響を一切受けない」などの表現は、メーカーの主張を整理したものである。実測で確かめた結果ではない。確度の低い事項は、第 8 章にまとめた。
 </div>
 
-<h2 id="sec2">2. NexRadio 14 の仕様</h2>
+</section>
 
-<h3 id="sec2-1">2.1 本体仕様</h3>
+<section id="s2">
+<h2><span class="no">2</span>NexRadio 14 の仕様</h2>
+
+<h3 id="s2-1">2.1 本体仕様</h3>
 <p>製品ページと報道記事から確認できた仕様を示す <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup><sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。</p>
 
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>項目</th><th>内容</th><th>補足</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="項目">OS</td><td data-label="内容">EdgeTX</td><td data-label="補足">オープンソースのプロポ用ファームウェア。モデル設定の資産を流用しやすい。</td></tr>
-<tr><td data-label="項目">MCU</td><td data-label="内容">STM32H5</td><td data-label="補足">商品ページの記載として報告されている。</td></tr>
-<tr><td data-label="項目">チャンネル数</td><td data-label="内容">14</td><td data-label="補足"></td></tr>
-<tr><td data-label="項目">ジンバル</td><td data-label="内容">NexRadio DCS ジンバル</td><td data-label="補足">デジタル静電容量方式。詳細は第 3 章と第 4 章。</td></tr>
-<tr><td data-label="項目">ディスプレイ</td><td data-label="内容">1.3 インチ OLED （ EdgeTX 用）、 0.77 インチ OLED （ ELRS の情報用）</td><td data-label="補足">解像度は未記載。</td></tr>
-<tr><td data-label="項目">アンテナ</td><td data-label="内容">折りたたみ式デュアルバンドアンテナ 2 本</td><td data-label="補足">Gemini-X の 2 バンド同時送信に対応する構成。</td></tr>
-<tr><td data-label="項目">電源</td><td data-label="内容">6.6 〜 8.4 V （公称 7.4 V ）。 21700 リチウムイオン電池 2 本を推奨</td><td data-label="補足">電池は付属しない。稼働時間は未記載。</td></tr>
-<tr><td data-label="項目">外形寸法</td><td data-label="内容">180 × 141 × 77 mm</td><td data-label="補足">報道記事の表記は「 180 × 141 × 77 mm 」のみで、各数値がどの方向の寸法かは明記がない。</td></tr>
-<tr><td data-label="項目">重量</td><td data-label="内容">約 350 g （電池を除く）</td><td data-label="補足">電池込みでは増える。</td></tr>
+<tr><th scope="row">OS</th><td>EdgeTX</td><td>オープンソースのプロポ用ファームウェア。モデル設定の資産を流用しやすい。</td></tr>
+<tr><th scope="row">MCU</th><td>STM32H5</td><td>商品ページの記載として報告されている。</td></tr>
+<tr><th scope="row">チャンネル数</th><td>14</td><td></td></tr>
+<tr><th scope="row">ジンバル</th><td>NexRadio DCS ジンバル</td><td>デジタル静電容量方式。詳細は第 3 章と第 4 章。</td></tr>
+<tr><th scope="row">ディスプレイ</th><td>1.3 インチ OLED （ EdgeTX 用）、 0.77 インチ OLED （ ELRS の情報用）</td><td>解像度は未記載。</td></tr>
+<tr><th scope="row">アンテナ</th><td>折りたたみ式デュアルバンドアンテナ 2 本</td><td>Gemini-X の 2 バンド同時送信に対応する構成。</td></tr>
+<tr><th scope="row">電源</th><td>6.6 〜 8.4 V （公称 7.4 V ）。 21700 リチウムイオン電池 2 本を推奨</td><td>電池は付属しない。稼働時間は未記載。</td></tr>
+<tr><th scope="row">外形寸法</th><td>180 × 141 × 77 mm</td><td>報道記事の表記は「 180 × 141 × 77 mm 」のみで、各数値がどの方向の寸法かは明記がない。</td></tr>
+<tr><th scope="row">重量</th><td>約 350 g （電池を除く）</td><td>電池込みでは増える。</td></tr>
 </tbody>
-</table>
+</table></div>
 
-<h3 id="sec2-2">2.2 RF と拡張性</h3>
+<h3 id="s2-2">2.2 RF と拡張性</h3>
 <ul>
 <li><strong>内蔵 RF</strong><br>ExpressLRS (ELRS) の Gemini-X に対応するデュアルバンド送信モジュールを内蔵する。 2.4 GHz 帯と 900 MHz / 868 MHz 帯の組み合わせで、 2 系統を同時に使うことで、リンクの安定性を高める方式である。</li>
 <li><strong>外部モジュールベイ</strong><br>背面に Micro / Nano サイズのモジュールを載せるベイがある（モジュールは付属しない）。これにより、 ELRS 以外のプロトコルを追加できる <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。</li>
 <li><strong>国内での利用</strong><br>内蔵モジュールの周波数帯や出力が、日本の技適・運用条件に適合するかは、別に確認が必要である。とくに 900 MHz / 868 MHz 帯は、 2.4 GHz 帯と国内での扱いが異なる。本書では扱わない（第 6 章を参照）。</li>
 </ul>
 
-<h2 id="sec3">3. スティック検出方式の技術解説</h2>
+</section>
 
-<h3 id="sec3-1">3.1 三方式の比較</h3>
+<section id="s3">
+<h2><span class="no">3</span>スティック検出方式の技術解説</h2>
+
+<h3 id="s3-1">3.1 三方式の比較</h3>
 <p>工学・製造の分野では、「 Digital Capacitive Sensing 」は一般に「静電容量方式」または「デジタル静電容量方式」と呼ばれる。プロポのスティックで使われる三方式を比べる。</p>
 
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>項目</th><th>① ポテンショメータ（抵抗式）</th><th>② ホールエフェクト（磁気式）</th><th>③ デジタル静電容量（ DCS 方式）</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="項目">仕組み</td><td data-label="① ポテンショメータ（抵抗式）">ブラシが炭素皮膜の上を擦り、抵抗値の変化で位置を検出する。</td><td data-label="② ホールエフェクト（磁気式）">磁石とセンサーの位置関係による磁束密度の変化を検出する。</td><td data-label="③ デジタル静電容量（DCS 方式）">電極間の静電容量（電荷の蓄えやすさ）の変化を検出し、デジタル信号として出力する。</td></tr>
-<tr><td data-label="項目">接触の有無</td><td data-label="① ポテンショメータ（抵抗式）">接触あり。経年で摩耗する。</td><td data-label="② ホールエフェクト（磁気式）">非接触。検出部は摩耗しない。</td><td data-label="③ デジタル静電容量（DCS 方式）">非接触。検出部は摩耗しない。</td></tr>
-<tr><td data-label="項目">耐久性・寿命</td><td data-label="① ポテンショメータ（抵抗式）">ゴミや摩擦に弱く、ガリ（チャタリング）が出やすい。</td><td data-label="② ホールエフェクト（磁気式）">検出部は長寿命。機械部品の摩耗は別に残る。</td><td data-label="③ デジタル静電容量（DCS 方式）">メーカーは「実質無制限」とする。独立した検証はない。</td></tr>
-<tr><td data-label="項目">磁気干渉</td><td data-label="① ポテンショメータ（抵抗式）">受けない。</td><td data-label="② ホールエフェクト（磁気式）">外部の磁石、金属、モーターなどの影響を受けうる。</td><td data-label="③ デジタル静電容量（DCS 方式）">磁気は使わないため、磁気由来のずれは原理的に生じない。</td></tr>
-<tr><td data-label="項目">出力の形</td><td data-label="① ポテンショメータ（抵抗式）">アナログ電圧を ADC で読む。</td><td data-label="② ホールエフェクト（磁気式）">アナログ電圧を ADC で読む方式が多い。</td><td data-label="③ デジタル静電容量（DCS 方式）">センサー側でデジタル化し、通信で本体へ送る。</td></tr>
-<tr><td data-label="項目">分解能・精度</td><td data-label="① ポテンショメータ（抵抗式）">経年劣化で低下する。</td><td data-label="② ホールエフェクト（磁気式）">高いが、アナログのノイズ対策が要る。</td><td data-label="③ デジタル静電容量（DCS 方式）">13 ビット（ 8,192 段階）と報告されている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><th scope="row">仕組み</th><td>ブラシが炭素皮膜の上を擦り、抵抗値の変化で位置を検出する。</td><td>磁石とセンサーの位置関係による磁束密度の変化を検出する。</td><td>電極間の静電容量（電荷の蓄えやすさ）の変化を検出し、デジタル信号として出力する。</td></tr>
+<tr><th scope="row">接触の有無</th><td>接触あり。経年で摩耗する。</td><td>非接触。検出部は摩耗しない。</td><td>非接触。検出部は摩耗しない。</td></tr>
+<tr><th scope="row">耐久性・寿命</th><td>ゴミや摩擦に弱く、ガリ（チャタリング）が出やすい。</td><td>検出部は長寿命。機械部品の摩耗は別に残る。</td><td>メーカーは「実質無制限」とする。独立した検証はない。</td></tr>
+<tr><th scope="row">磁気干渉</th><td>受けない。</td><td>外部の磁石、金属、モーターなどの影響を受けうる。</td><td>磁気は使わないため、磁気由来のずれは原理的に生じない。</td></tr>
+<tr><th scope="row">出力の形</th><td>アナログ電圧を ADC で読む。</td><td>アナログ電圧を ADC で読む方式が多い。</td><td>センサー側でデジタル化し、通信で本体へ送る。</td></tr>
+<tr><th scope="row">分解能・精度</th><td>経年劣化で低下する。</td><td>高いが、アナログのノイズ対策が要る。</td><td>13 ビット（ 8,192 段階）と報告されている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</td></tr>
 </tbody>
-</table>
+</table></div>
 
-<h3 id="sec3-2">3.2 静電容量センシングの原理</h3>
+<h3 id="s3-2">3.2 静電容量センシングの原理</h3>
 <p>静電容量は、向き合う二つの電極の間に電荷をどれだけ蓄えられるかを表す量である。電極の重なる面積や間隔が変わると、静電容量も変わる。スティックの動きを、この電極配置の変化に置き換えて読み取るのが、静電容量式のジンバルである。以下は一般的な原理の説明であり、 NexRadio の内部構造を示すものではない。</p>
 <ol>
 <li><strong>位置から容量へ</strong><br>スティックの傾きに連動して、電極の重なり方が変わる。その結果、静電容量が連続的に変化する。</li>
@@ -216,7 +251,7 @@
 </ol>
 <p>商品ページは、 13 ビット（ 8,192 段階）の分解能と、最大 1 kHz の「スマートサンプリング」を挙げていると報告されている <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup><sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。スマートサンプリングの具体的な処理内容は、公開情報からは分からない。なお、 1 kHz という数字は、再確認で裏取りできていない（第 8 章）。</p>
 
-<h3 id="sec3-3">3.3 DCS の利点と留意点</h3>
+<h3 id="s3-3">3.3 DCS の利点と留意点</h3>
 <p><strong>期待される利点</strong></p>
 <ol>
 <li><strong>磁気干渉からの解放</strong><br>スマートフォンのスピーカー、モーター、工具などの磁場によるセンターずれや誤動作を、原理的に避けられる。 TX16S MK II の標準ジンバルは磁気式（ホール式）なので、換装で得られる差の中心はここにある。</li>
@@ -230,23 +265,26 @@
 <li><strong>機械部分の寿命は別</strong><br>検出部が摩耗しなくても、スティックの軸、バネ、ギアなどの機械部品は消耗する。「ジンバル全体が半永久」という意味ではない。</li>
 </ul>
 
-<h2 id="sec4">4. NexRadio DCS Gimbal 単体品</h2>
+</section>
 
-<h3 id="sec4-1">4.1 仕様と価格</h3>
-<table class="cardrow">
+<section id="s4">
+<h2><span class="no">4</span>NexRadio DCS Gimbal 単体品</h2>
+
+<h3 id="s4-1">4.1 仕様と価格</h3>
+<div class="scroll"><table>
 <tbody>
-<tr><th>方式</th><td data-label="内容">デジタル静電容量センシング (DCS)</td></tr>
-<tr><th>分解能</th><td data-label="内容">13 ビット（ 8,192 段階）と報告されている <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><th>価格（ベータ枠）</th><td data-label="内容">約 32 米ドル。限定 100 台の割引価格</td></tr>
-<tr><th>価格（異説）</th><td data-label="内容">39.99 米ドルとする情報もある。通常価格とベータ価格の違いか、時期による変動かは未確認</td></tr>
-<tr><th>販売形態</th><td data-label="内容">BETAFPV 公式サイトの「 BETA TEST 」枠で先行販売</td></tr>
-<tr><th>販売単位</th><td data-label="内容">1 個か左右 2 個の組かは未確認。プロポには左右 2 本のジンバルがあるため、両方を換装するなら 2 個分の費用が要る可能性がある</td></tr>
-<tr><th>動作電圧</th><td data-label="内容">3.3 V と報告されている。要再確認</td></tr>
+<tr><th>方式</th><td>デジタル静電容量センシング (DCS)</td></tr>
+<tr><th>分解能</th><td>13 ビット（ 8,192 段階）と報告されている <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><th>価格（ベータ枠）</th><td>約 32 米ドル。限定 100 台の割引価格</td></tr>
+<tr><th>価格（異説）</th><td>39.99 米ドルとする情報もある。通常価格とベータ価格の違いか、時期による変動かは未確認</td></tr>
+<tr><th>販売形態</th><td>BETAFPV 公式サイトの「 BETA TEST 」枠で先行販売</td></tr>
+<tr><th>販売単位</th><td>1 個か左右 2 個の組かは未確認。プロポには左右 2 本のジンバルがあるため、両方を換装するなら 2 個分の費用が要る可能性がある</td></tr>
+<tr><th>動作電圧</th><td>3.3 V と報告されている。要再確認</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>円換算は為替で変わる。約 32 米ドルは、 1 米ドルが 155 円前後なら、約 5,000 円である。送料と税は含まない。左右 2 個が必要で、この価格が 1 個分なら、約 1 万円になる。</p>
 
-<h3 id="sec4-2">4.2 TX16S MK II への換装</h3>
+<h3 id="s4-2">4.2 TX16S MK II への換装</h3>
 <p>BETAFPV は、 RadioMaster 製プロポ向けの取付ガイドと、 EdgeTX 用ファームウェア(<code>.uf2</code>)を配布している。公式情報から確認できた点は次のとおり <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。</p>
 <ul>
 <li><strong>対応機種</strong><br>BETAFPV の別ページには、 RadioMaster の TX16 / TX15 / Boxer が対応機種として挙げられている。取付ガイドは、 <strong>TX16S MK II</strong> を対象にしている。お手元の機体は、この対象に当たる。</li>
@@ -256,54 +294,58 @@
 <li><strong>装着中のジンバルの種類</strong><br>MK II の標準はホール式のジンバルである。 CNC 製の AG01 などへ交換済みの場合、ガイドの手順どおりに外せるとは限らない。ガイドの図で、取り付け方式が合うかを確かめる。</li>
 </ul>
 
-<div class="must">
-<strong>購入前に、取付ガイドの最新版を原文で読むこと。</strong>本書が根拠にしたガイドの内容は、検索結果の要約を通じて得たものである。ベータ品は、ガイドが更新されうる。とくに、ケーブルの長さとコネクタ形状、 UART の割り当て、ファームウェアの書き込み手順は、原文で照合してから注文すること。
-</div>
+<div class="caution"><p><strong>購入前に、取付ガイドの最新版を原文で読むこと。</strong>本書が根拠にしたガイドの内容は、検索結果の要約を通じて得たものである。ベータ品は、ガイドが更新されうる。とくに、ケーブルの長さとコネクタ形状、 UART の割り当て、ファームウェアの書き込み手順は、原文で照合してから注文すること。</p></div>
 
-<h3 id="sec4-3">4.3 換装のメリットとリスク</h3>
-<table class="cards">
+<h3 id="s4-3">4.3 換装のメリットとリスク</h3>
+<div class="scroll"><table>
 <thead>
 <tr><th>観点</th><th>メリット</th><th>リスク・注意</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="観点">技適</td><td data-label="メリット">ジンバルは電波を出さないため、既存の機体の技適の状態を保てると考えられる。</td><td data-label="リスク・注意">改造が機器の仕様変更に当たるかは、念のため確認したい（第 6 章）。</td></tr>
-<tr><td data-label="観点">費用</td><td data-label="メリット">1 個分なら約 5,000 円前後で、次世代方式を試せる。</td><td data-label="リスク・注意">左右 2 個が必要なら倍額になりうる。送料・関税・ケーブル代も加わる。</td></tr>
-<tr><td data-label="観点">性能</td><td data-label="メリット">磁気由来のずれとアナログノイズを避けられる。</td><td data-label="リスク・注意">実測データが少なく、体感差は個人差がある。</td></tr>
-<tr><td data-label="観点">作業</td><td data-label="メリット">公式の取付ガイドとファームウェアがある。</td><td data-label="リスク・注意">分解・配線・ファームウェア書き込みが必要。失敗すると本体を傷める。</td></tr>
-<tr><td data-label="観点">保証</td><td data-label="メリット">元のジンバルを保管すれば、元に戻せる。</td><td data-label="リスク・注意">分解により、販売店・メーカーの保証が受けられなくなる場合がある。</td></tr>
+<tr><th scope="row">技適</th><td>ジンバルは電波を出さないため、既存の機体の技適の状態を保てると考えられる。</td><td>改造が機器の仕様変更に当たるかは、念のため確認したい（第 6 章）。</td></tr>
+<tr><th scope="row">費用</th><td>1 個分なら約 5,000 円前後で、次世代方式を試せる。</td><td>左右 2 個が必要なら倍額になりうる。送料・関税・ケーブル代も加わる。</td></tr>
+<tr><th scope="row">性能</th><td>磁気由来のずれとアナログノイズを避けられる。</td><td>実測データが少なく、体感差は個人差がある。</td></tr>
+<tr><th scope="row">作業</th><td>公式の取付ガイドとファームウェアがある。</td><td>分解・配線・ファームウェア書き込みが必要。失敗すると本体を傷める。</td></tr>
+<tr><th scope="row">保証</th><td>元のジンバルを保管すれば、元に戻せる。</td><td>分解により、販売店・メーカーの保証が受けられなくなる場合がある。</td></tr>
 </tbody>
-</table>
+</table></div>
 
-<h2 id="sec5">5. コスト比較</h2>
+</section>
+
+<section id="s5">
+<h2><span class="no">5</span>コスト比較</h2>
 <p>RadioMaster 純正の CNC ジンバル（ AG01 など）は、元資料に約 2 万〜 2.5 万円とある。ただし、本書では店頭価格を確かめておらず、左右 2 個の組の価格かどうかも分からない。これに対して、 DCS ジンバルは約 32 米ドルである <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。この価格も 1 個分か 2 個分かが未確認なので、下の表は左右 2 個分に換算して比べる必要がある。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>選択肢</th><th>費用の目安</th><th>検出方式</th><th>特徴</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="選択肢">TX16S MK II 標準のジンバルのまま</td><td data-label="費用の目安">0 円</td><td data-label="検出方式">ホール式</td><td data-label="特徴">追加作業なし。</td></tr>
-<tr><td data-label="選択肢">RadioMaster 純正の CNC ジンバル</td><td data-label="費用の目安">約 2 万〜 2.5 万円（未確認）</td><td data-label="検出方式">ホール式</td><td data-label="特徴">金属加工による剛性と質感。実績がある。</td></tr>
-<tr><td data-label="選択肢">NexRadio DCS Gimbal</td><td data-label="費用の目安">約 5,000 円前後（1 個分の場合）+ 送料・税</td><td data-label="検出方式">デジタル静電容量</td><td data-label="特徴">低価格。実績はこれから。</td></tr>
+<tr><th scope="row">TX16S MK II 標準のジンバルのまま</th><td>0 円</td><td>ホール式</td><td>追加作業なし。</td></tr>
+<tr><th scope="row">RadioMaster 純正の CNC ジンバル</th><td>約 2 万〜 2.5 万円（未確認）</td><td>ホール式</td><td>金属加工による剛性と質感。実績がある。</td></tr>
+<tr><th scope="row">NexRadio DCS Gimbal</th><td>約 5,000 円前後（1 個分の場合）+ 送料・税</td><td>デジタル静電容量</td><td>低価格。実績はこれから。</td></tr>
 </tbody>
-</table>
+</table></div>
 <p>価格差は大きいが、比べているのは検出方式だけではない。純正 CNC ジンバルは、筐体の剛性、スティックの感触、調整機構も含めた商品である。 DCS ジンバルの機械的な作りの品質は、実物のレビューを待って判断したい。また、 TX16S MK II の標準ジンバルはすでに非接触のホール式である。換装で得られる差は、接触式から非接触式への改善ではなく、磁気式から静電容量式への違いに限られる。この差に費用をかける価値があるかが、判断の中心になる。</p>
 
-<h2 id="sec6">6. 日本国内の流通状況と法規</h2>
+</section>
 
-<h3 id="sec6-1">6.1 流通状況</h3>
+<section id="s6">
+<h2><span class="no">6</span>日本国内の流通状況と法規</h2>
+
+<h3 id="s6-1">6.1 流通状況</h3>
 <ul>
 <li><strong>国内販売</strong><br>日本国内の主要ドローン専門店（ Goldstone Japan 、 Goohobby 、 DAYSCAPE など）や主要 EC サイト（ Amazon 、楽天）では、一般販売・在庫を確認できていない。</li>
 <li><strong>現在の立ち位置</strong><br>海外の BETAFPV 公式サイトで、「 BETA TEST 」枠として先行販売されている段階である。</li>
 <li><strong>今後の見通し</strong><br>海外で量産・通常販売が始まれば、国内の代理店やショップがカスタムパーツとして取り扱う可能性は高い。ただし、時期は不明である。 NexRadio 14 本体については、公開済みの発売時期の情報はない <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 。</li>
 </ul>
 
-<h3 id="sec6-2">6.2 技適との関係</h3>
+<h3 id="s6-2">6.2 技適との関係</h3>
 <p>技適（技術基準適合証明）は、電波を発する無線設備に求められる制度である。ジンバルは位置を検出して信号に変える部品で、電波を発しないため、単体では技適の対象外と考えられる。したがって、技適に適合した状態の TX16S MK II のスティック部分だけを入れ替えても、無線部分の適合状態は変わらないと考えられる。</p>
-<div class="note">
-<span class="tag">注意</span>上の判断は、一般的な理解にもとづく。個別の改造が法令上どう扱われるかを確認する場合は、総務省や専門家の見解を参照すること。一方、 NexRadio 14 <strong>本体</strong>は、無線設備を内蔵するため、国内で適法に使うには技適の確認が不可欠である。
+<div class="box">
+<strong>注意</strong><br>上の判断は、一般的な理解にもとづく。個別の改造が法令上どう扱われるかを確認する場合は、総務省や専門家の見解を参照すること。一方、 NexRadio 14 <strong>本体</strong>は、無線設備を内蔵するため、国内で適法に使うには技適の確認が不可欠である。
 </div>
 
-<h3 id="sec6-3">6.3 個人輸入するときの注意</h3>
+<h3 id="s6-3">6.3 個人輸入するときの注意</h3>
 <ul>
 <li><strong>送料と税</strong><br>国際送料に加え、輸入時に消費税などがかかる。少額の商品でも、合計は商品価格より高くなる。</li>
 <li><strong>ベータ品の性質</strong><br>ベータ枠の商品は、仕様・ファームウェア・取付ガイドが更新される可能性がある。初期ロットの不具合も覚悟したい。</li>
@@ -311,7 +353,10 @@
 <li><strong>入手を待つ選択肢</strong><br>国内の取り扱いや、レビューが出てから決めるのも合理的である。</li>
 </ul>
 
-<h2 id="sec7">7. 導入判断チェックリスト</h2>
+</section>
+
+<section id="s7">
+<h2><span class="no">7</span>導入判断チェックリスト</h2>
 <p>換装を検討するときの点検項目を示す。</p>
 <div class="checklist">
 <span class="cl-title">購入前チェックリスト</span>
@@ -329,27 +374,31 @@
 <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
 </div>
 
-<h2 id="sec8">8. 未確認事項</h2>
+</section>
+
+<section id="s8">
+<h2><span class="no">8</span>未確認事項</h2>
 <p>本書の作成時に、裏取りができなかった事項、または情報源が食い違った事項を示す。今回の査読では、 BETAFPV と RadioMaster の公式ページが取得制限（ HTTP 429 ）で再確認できなかった。本体仕様は報道記事との照合にとどまる。</p>
-<table class="cards">
+<div class="scroll"><table>
 <thead>
 <tr><th>事項</th><th>状況</th><th>確認方法</th></tr>
 </thead>
 <tbody>
-<tr><td data-label="事項">ジンバルの価格</td><td data-label="状況">約 32 米ドルとする情報と、 39.99 米ドルとする情報がある。</td><td data-label="確認方法">BETAFPV 公式の商品ページで、購入時の表示を確かめる。</td></tr>
-<tr><td data-label="事項">取付ガイドの原文</td><td data-label="状況">本書は検索結果の要約を根拠にしており、 UART4 の既定設定、ケーブル長、コネクタ形状を原文で確かめていない。</td><td data-label="確認方法">BETAFPV サポートの取付ガイドを直接読み、 TX16S MK II の実機と照合する。</td></tr>
-<tr><td data-label="事項">販売単位（1 個か 2 個か）</td><td data-label="状況">約 32 米ドルが、ジンバル 1 個の価格か、左右 2 個の組の価格かが分からない。</td><td data-label="確認方法">公式の商品ページの内容物の欄を確かめる。</td></tr>
-<tr><td data-label="事項">RadioMaster 純正 CNC ジンバルの価格</td><td data-label="状況">約 2 万〜 2.5 万円は元資料の目安で、本書では店頭価格を確かめていない。</td><td data-label="確認方法">国内ショップの現在価格と、組の内容を確かめる。</td></tr>
-<tr><td data-label="事項">3.3 V と 1 kHz</td><td data-label="状況">一次検索で報告されたが、再確認では裏取りできなかった。</td><td data-label="確認方法">公式の仕様欄と取付ガイドを直接読む。</td></tr>
-<tr><td data-label="事項">精度・寿命の実測</td><td data-label="状況">独立したレビューは見つかっていない。</td><td data-label="確認方法">今後のレビュー、ユーザー報告を待つ。</td></tr>
-<tr><td data-label="事項">国内の取り扱い</td><td data-label="状況">元資料の調査時点では、主要ショップ・ EC で確認できていない。</td><td data-label="確認方法">各ショップの新着情報を、定期的に確かめる。</td></tr>
-<tr><td data-label="事項">NexRadio 14 本体の価格</td><td data-label="状況">報道記事には価格の記載がなく、別の検索結果は 135.99 米ドルと報告している。</td><td data-label="確認方法">公式の商品ページを直接確かめる。</td></tr>
+<tr><th scope="row">ジンバルの価格</th><td>約 32 米ドルとする情報と、 39.99 米ドルとする情報がある。</td><td>BETAFPV 公式の商品ページで、購入時の表示を確かめる。</td></tr>
+<tr><th scope="row">取付ガイドの原文</th><td>本書は検索結果の要約を根拠にしており、 UART4 の既定設定、ケーブル長、コネクタ形状を原文で確かめていない。</td><td>BETAFPV サポートの取付ガイドを直接読み、 TX16S MK II の実機と照合する。</td></tr>
+<tr><th scope="row">販売単位（1 個か 2 個か）</th><td>約 32 米ドルが、ジンバル 1 個の価格か、左右 2 個の組の価格かが分からない。</td><td>公式の商品ページの内容物の欄を確かめる。</td></tr>
+<tr><th scope="row">RadioMaster 純正 CNC ジンバルの価格</th><td>約 2 万〜 2.5 万円は元資料の目安で、本書では店頭価格を確かめていない。</td><td>国内ショップの現在価格と、組の内容を確かめる。</td></tr>
+<tr><th scope="row">3.3 V と 1 kHz</th><td>一次検索で報告されたが、再確認では裏取りできなかった。</td><td>公式の仕様欄と取付ガイドを直接読む。</td></tr>
+<tr><th scope="row">精度・寿命の実測</th><td>独立したレビューは見つかっていない。</td><td>今後のレビュー、ユーザー報告を待つ。</td></tr>
+<tr><th scope="row">国内の取り扱い</th><td>元資料の調査時点では、主要ショップ・ EC で確認できていない。</td><td>各ショップの新着情報を、定期的に確かめる。</td></tr>
+<tr><th scope="row">NexRadio 14 本体の価格</th><td>報道記事には価格の記載がなく、別の検索結果は 135.99 米ドルと報告している。</td><td>公式の商品ページを直接確かめる。</td></tr>
 </tbody>
-</table>
+</table></div>
 
+</section>
 <div class="refs">
-<h2 id="sec9">9. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<h2 id="s9">9. 参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> BETAFPV, <em>[BETA TEST] NexRadio 14 Radio Controller</em>, 製品ページ。 <a href="https://betafpv.com/products/nexradio-14-radio-controller">BETAFPV 公式</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> BETAFPV, <em>[BETA TEST] NexRadio Gimbal</em>, 製品ページ。 <a href="https://betafpv.com/products/nexradio-gimbal">BETAFPV 公式</a></li>
@@ -359,6 +408,6 @@
 </ol>
 </div>
 
-</main>
+</div>
 </body>
 </html>

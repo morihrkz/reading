@@ -5,152 +5,181 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FPV ドローンのマニューバ――操縦の仕組みと語の来歴</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
+  figure.diagram{margin:0 0 36px;padding:20px 18px 16px;background:#fff1e0;border:1px solid var(--line)}
+  figure.diagram svg{display:block;width:100%;height:auto;max-width:100%}
+  @media (max-width: 640px){figure.diagram{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative;padding-top:32px} figure.diagram svg{max-width:none} figure.diagram::before{content:"→ 横にスクロールできます";position:absolute;top:8px;right:14px;font-size:13px;color:var(--muted)}}
 </style>
 </head>
 <body>
-<main>
-<p class="meta">航空・言語・ホビー工学</p>
+<header class="hero">
 <h1>FPV ドローンのマニューバ<br>――操縦の仕組みと語の来歴</h1>
 <p class="subtitle">Flying by Camera Eye: How FPV Drone Maneuvers Work, and Where the Word Maneuver Comes From</p>
+</header>
+<div class="wrap">
+<p class="meta band">航空・言語・ホビー工学</p>
 <div class="lede">
 <p>機体の目の高さで見る映像の中で、ドローンが宙返りし、建物の壁面に沿って落ち、木のまわりを回る。 FPV （一人称視点）ドローンの動画では、こうした動きに、ロール、スプリット S 、パワーループといった名前がついている。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 本稿は、これらの技が機体のどんな動きで、操縦者のどんな操作から生まれるのかを整理し、そのうえで「マニューバ」という語そのものの来歴をたどる。</p><p>調べていくと、技の定義は出典ごとに揺れ、語源の説明も辞書ごとに経路が少しずつ違った。揺れていることは隠さず、確認できた範囲だけを書く。</p>
 </div>
-<div class="note"><strong>【方法と限界】</strong> 本稿は、確認できた事実と、そこから導いた筆者の解釈を、節を分けて書く。技の定義は販売元のブログやフォーラムの投稿が主な出典で、公的資料や書籍は確認できなかった。語源の専門辞典の本文も取得できなかった。制度の記述は 2026 年 10 月 16 日時点で、個別の法的助言ではない。</div>
+<div class="box"><strong>【方法と限界】</strong> 本稿は、確認できた事実と、そこから導いた筆者の解釈を、節を分けて書く。技の定義は販売元のブログやフォーラムの投稿が主な出典で、公的資料や書籍は確認できなかった。語源の専門辞典の本文も取得できなかった。制度の記述は 2026 年 10 月 16 日時点で、個別の法的助言ではない。</div>
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">はじめに――四つの問い</a></li>
-<li><a href="#sec2">操縦の仕組み</a>
+<li><a href="#s1">はじめに――四つの問い</a></li>
+<li><a href="#s2">操縦の仕組み</a>
 <ol>
-<li><a href="#sec2-1">FPV とは何か</a></li>
-<li><a href="#sec2-2">四つの操作と三つの軸</a></li>
-<li><a href="#sec2-3">三つの飛行モード</a></li>
-<li><a href="#sec2-4">回転の速さを決める設定</a></li>
+<li><a href="#s2-1">FPV とは何か</a></li>
+<li><a href="#s2-2">四つの操作と三つの軸</a></li>
+<li><a href="#s2-3">三つの飛行モード</a></li>
+<li><a href="#s2-4">回転の速さを決める設定</a></li>
 </ol>
 </li>
-<li><a href="#sec3">主な技</a>
+<li><a href="#s3">主な技</a>
 <ol>
-<li><a href="#sec3-1">一つの軸を回す技――ロール、フリップ、ヨースピン</a></li>
-<li><a href="#sec3-2">有人機と同じ名前の技――スプリット S とインメルマンターン</a></li>
-<li><a href="#sec3-3">縦の円を描く技――パワーループ</a></li>
-<li><a href="#sec3-4">場所と組む技――ダイブ、オービット、トリッピー・スピン、ウォールタップ</a></li>
-<li><a href="#sec3-5">定義が割れる技――マティ・フリップとリワインド</a></li>
+<li><a href="#s3-1">一つの軸を回す技――ロール、フリップ、ヨースピン</a></li>
+<li><a href="#s3-2">有人機と同じ名前の技――スプリット S とインメルマンターン</a></li>
+<li><a href="#s3-3">縦の円を描く技――パワーループ</a></li>
+<li><a href="#s3-4">場所と組む技――ダイブ、オービット、トリッピー・スピン、ウォールタップ</a></li>
+<li><a href="#s3-5">定義が割れる技――マティ・フリップとリワインド</a></li>
 </ol>
 </li>
-<li><a href="#sec4">技の名前の出どころ</a></li>
-<li><a href="#sec5">「マニューバ」の成り立ち</a>
+<li><a href="#s4">技の名前の出どころ</a></li>
+<li><a href="#s5">「マニューバ」の成り立ち</a>
 <ol>
-<li><a href="#sec5-1">語源の骨格</a></li>
-<li><a href="#sec5-2">フランス語での意味の移り変わり</a></li>
-<li><a href="#sec5-3">英語への入り方と綴り</a></li>
-<li><a href="#sec5-4">日本語での表記</a></li>
-<li><a href="#sec5-5">分野ごとの用法</a></li>
-<li><a href="#sec5-6">FPV の技を「マニューバ」と呼ぶ慣行の実態</a></li>
+<li><a href="#s5-1">語源の骨格</a></li>
+<li><a href="#s5-2">フランス語での意味の移り変わり</a></li>
+<li><a href="#s5-3">英語への入り方と綴り</a></li>
+<li><a href="#s5-4">日本語での表記</a></li>
+<li><a href="#s5-5">分野ごとの用法</a></li>
+<li><a href="#s5-6">FPV の技を「マニューバ」と呼ぶ慣行の実態</a></li>
 </ol>
 </li>
-<li><a href="#sec6">語源と操縦は結びつくか</a></li>
-<li><a href="#sec7">日本の制度と安全</a>
+<li><a href="#s6">語源と操縦は結びつくか</a></li>
+<li><a href="#s7">日本の制度と安全</a>
 <ol>
-<li><a href="#sec7-1">航空法、登録、飛行禁止法</a></li>
-<li><a href="#sec7-2">FPV で引っかかりやすい二つの点</a></li>
-<li><a href="#sec7-3">危険性と、釣り合いの取り方</a></li>
+<li><a href="#s7-1">航空法、登録、飛行禁止法</a></li>
+<li><a href="#s7-2">FPV で引っかかりやすい二つの点</a></li>
+<li><a href="#s7-3">危険性と、釣り合いの取り方</a></li>
 </ol>
 </li>
-<li><a href="#sec8">この記事の限界</a></li>
-<li><a href="#sec9">おわりに</a></li>
-<li><a href="#sec10">参考文献・資料</a></li>
+<li><a href="#s8">この記事の限界</a></li>
+<li><a href="#s9">おわりに</a></li>
+<li><a href="#s10">参考文献・資料</a></li>
 </ol>
 </nav>
-<h2 id="sec1">1. はじめに――四つの問い</h2>
+<section id="s1">
+<h2><span class="no">1</span>はじめに――四つの問い</h2>
 
 <p>FPV （一人称視点）ドローンの動画では、宙返りや壁面の急降下といった動きに、ロール、スプリット S 、パワーループといった名前がついている。英語圏の解説ページには、こうした技名を並べた一覧がいくつもある。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 本稿は、この世界をめぐる四つの問いを順に扱う。</p>
 
@@ -162,21 +191,23 @@
 </ol>
 
 <p>先に用語の断りをしておく。本稿の表題は「マニューバ」だが、調べた英語の解説ページでは、技の総称として「 trick 」（技、芸）を使う例が目立った。日本語圏での実際の使われ方は、今回の調査では確認できなかった。この点は 5.6 で詳しく述べる。</p>
+</section>
 
-<h2 id="sec2">2. 操縦の仕組み</h2>
+<section id="s2">
+<h2><span class="no">2</span>操縦の仕組み</h2>
 
-<h3 id="sec2-1">2.1 FPV とは何か</h3>
+<h3 id="s2-1">2.1 FPV とは何か</h3>
 
 <p>FPV (First-person view) は、機体に載せたカメラの映像を、ゴーグルやモニターで見ながら操縦する方式である。百科事典の記述では、基本の構成は、機体側にカメラとアナログ映像の送信機、地上側に受信機と表示装置の組み合わせで、固定翼機とマルチコプター（回転翼が複数ある機体）が代表的な機体にあたる。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> この方式が広まったのは 2000 年代後半から 2010 年代初頭にかけてと説明されている。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> ただし、この百科事典の記事自身が根拠にしているのは、ゴーグルの紹介記事や 2009 年の入門ガイドなどで、学術的な文献ではない。</p>
 
 <p>FPV ドローンの楽しみ方は、主に二つに分かれる。 iFlight のブログによれば、フリースタイルは狭い角や木の下、障害物のまわり、小さな開口部を抜けながら技を行う飛び方で、レースは障害物コースを最短時間で回る競技である。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 映像制作でも使われ、 2021 年の映画『 Red Notice 』は、 FPV ドローンを多用した最初期のハリウッド作品の一つとされる。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></p>
 
-<h3 id="sec2-2">2.2 四つの操作と三つの軸</h3>
+<h3 id="s2-2">2.2 四つの操作と三つの軸</h3>
 
 <p>FPV ドローンの操縦は、ロール、ピッチ、ヨー、スロットルの四つの操作でできている。ロールは機体の前後方向の軸まわりの回転で、機体が左右に傾く。ピッチは左右方向の軸まわりの回転で、機首が上下に振れる。ヨーは上下方向の軸まわりの回転で、機首が左右を向く。四つの操作という構成と軸の呼び方は、航空機の一般的な説明に従ったもので、出典で確かめたのは次の二点にとどまる。ある解説は、ロールを「前後軸まわり」、フリップを「左右軸（ピッチ軸）まわり」の回転としている。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 別の解説は、ヨースピンを「ヨー軸まわりに機体を回す」動きとしている。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 四つ目のスロットルは、一般に推力の加減にあたるとされる。図 1 に、三つの軸と四つの操作の関係を示す。</p>
 
 <figure class="diagram">
-<svg viewBox="0 0 640 260" role="img" aria-label="機体の三つの軸と四つの操作の模式図">
+<svg style="min-width:591px" viewBox="0 0 640 260" role="img" aria-label="機体の三つの軸と四つの操作の模式図">
 <defs>
 <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2a4d69"/></marker>
 </defs>
@@ -208,7 +239,7 @@
 <figcaption>図 1 　機体の三つの軸と四つの操作（模式図）。ロールは前後軸、ピッチは左右軸、ヨーは上下軸まわりの回転。スロットルは推力の加減にあたる。ヨー軸は紙面に垂直で、弧の矢印がその回転を表す。</figcaption>
 </figure>
 
-<h3 id="sec2-3">2.3 三つの飛行モード</h3>
+<h3 id="s2-3">2.3 三つの飛行モード</h3>
 
 <p>機体制御ソフトウェア Betaflight の公式文書は、飛行モードを三つに分けて説明している。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
 
@@ -221,7 +252,7 @@
 <p>別の解説も、 Acro は Rate や Manual とも呼ばれると述べている。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup> 呼称は一つに決まっておらず、「マニュアル」は手動一般と紛れやすいが、ここでは自動で水平に戻さないモードを指す。図 2 は、同じ操作をしたときの姿勢の違いを描いたものである。</p>
 
 <figure class="diagram">
-<svg viewBox="0 0 640 250" role="img" aria-label="Angle モードと Acro モードの姿勢の違いの模式図">
+<svg style="min-width:549px" viewBox="0 0 640 250" role="img" aria-label="Angle モードと Acro モードの姿勢の違いの模式図">
 <g stroke="#555" stroke-width="2" fill="none">
 <line x1="30" y1="125" x2="610" y2="125" stroke-dasharray="4 5" stroke="#bbb"/>
 </g>
@@ -248,19 +279,21 @@
 
 <p><strong>筆者の解釈</strong><br>Horizon で一回転できるとする出典はなく、倒し方しだいでは回れる可能性も残る。そこで筆者は「多くの技は Acro で行われる」と読む。理由として考えられるのは、 Angle ではスティックが傾きの角度を指示することである。傾き角に上限があるなら、逆さまには向けられない。ただし、上限の有無は出典で確かめていない。 Acro ではスティックが回転の速さを決めるので、倒し続ければ何回転でも続けられる。</p>
 
-<h3 id="sec2-4">2.4 回転の速さを決める設定</h3>
+<h3 id="s2-4">2.4 回転の速さを決める設定</h3>
 
 <p>Acro では、スティックの倒し量が回転の速さを決める。 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> Betaflight のレートの文書によれば、レートはスティックの位置を回転速度（度毎秒）に変える数式で、 RC Rate 、 Rate 、 Expo の三つの値が曲線の形を決める。この文書はモードには触れていないが、筆者は、 Acro の操作感がこの設定に左右されると考える。典型的な曲線は、中央付近では鈍く、端に向かって敏感になる。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 同じ文書は、最大の回転速度の目安として、レースで 550 〜 650 度毎秒、フリースタイルで 850 〜 1200 度毎秒という範囲を挙げている。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></p>
 
 <p>この数字から、一つの計算ができる。最大の速さで 360 度回るとすれば、一回転に要する時間は、 850 度毎秒で約 0.42 秒、 1200 度毎秒で約 0.30 秒である。ただし、これは最大の速さで回り続けたと仮定した筆者の計算であり、実機の所要時間を測ったものではない。</p>
 
 <p>同じ文書は、映像向けの飛び方では中央付近を平らにして滑らかさを優先するという考え方も示している。 <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup> 筆者の推測では、同じ名前の技でも、機体の設定しだいで映像の印象は変わりうる。</p>
+</section>
 
-<h2 id="sec3">3. 主な技</h2>
+<section id="s3">
+<h2><span class="no">3</span>主な技</h2>
 
 <p>ここからは、技ごとの定義を見ていく。先に、出典の性格を明らかにしておく。 FPV の技の定義を示した資料は、機体や部品の販売元のブログ、個人のブログ、フォーラムの投稿が中心で、公的な機関や学術資料は見つからなかった。そこで本稿は、独立した複数の出典の記述が一致する技を「定義がそろう技」、食い違う技を「定義が割れる技」として分けて書く。なお、本稿はどの技についても、操作の手順は扱わない。</p>
 
-<h3 id="sec3-1">3.1 一つの軸を回す技――ロール、フリップ、ヨースピン</h3>
+<h3 id="s3-1">3.1 一つの軸を回す技――ロール、フリップ、ヨースピン</h3>
 
 <p>最も基本的なのが、一つの軸だけを回す技である。ロールは機体を前後軸まわりに、左右どちらかへ 360 度回す。フリップは左右軸まわりに、前または後ろへ 360 度回す。この定義は複数の出典でそろう。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> iFlight の一覧は、ロールもフリップも最も易しい「 novice 」（初心者向け）の段に置いている。 <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup></p>
 
@@ -268,12 +301,12 @@
 
 <p><strong>筆者の解釈</strong><br>見た目はどうなるのか。百科事典はパン・チルト（首振り）のカメラを高度な構成に挙げている。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> そこから筆者は、基本の構成ではカメラが機体に固定されていると推定する。だとすれば、視聴者が見る映像は機体とともに回る。ロールでは水平線が傾いて回り、フリップでは空と地面が入れ替わり、ヨースピンでは景色が横へ流れる。一つの軸を回す技は、この見え方の違いで区別するとわかりやすい。</p>
 
-<h3 id="sec3-2">3.2 有人機と同じ名前の技――スプリット S とインメルマンターン</h3>
+<h3 id="s3-2">3.2 有人機と同じ名前の技――スプリット S とインメルマンターン</h3>
 
 <p>スプリット S とインメルマンターンは、有人機の曲技にもある名前である。まず有人機の側の定義を確認する。百科事典の記述では、スプリット S は、操縦者が機体を半ロール（横に半回転する動き）で逆さまにし、そこから下降しながら半ループ（縦に半円を描く動き）を描き、反対向きに、より低い高度で水平飛行に戻る機動である。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 空戦では、戦闘から離脱するときに使われるという。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 一方、インメルマンターンは、上昇しながら半ループを描いたあと半ロールで水平に戻り、反対向きに、より高い高度で飛ぶ機動で、スプリット S の対になる。 <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup><sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> スプリット S を「逆のインメルマンターン」と呼ぶこともあるという。 <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup> 図 3 に、この二つの軌跡を横から見た模式図で示す。</p>
 
 <figure class="diagram">
-<svg viewBox="0 0 640 230" role="img" aria-label="スプリット S とインメルマンターンの軌跡の模式図">
+<svg style="min-width:591px" viewBox="0 0 640 230" role="img" aria-label="スプリット S とインメルマンターンの軌跡の模式図">
 <defs>
 <marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2a4d69"/></marker>
 </defs>
@@ -299,7 +332,7 @@
 
 <p>インメルマンターンについて、有人機の側は注意が要る。百科事典によれば、この名前には二つの機動が重なっている。第一次世界大戦で、急降下で攻撃したあと、敵のそばを通り過ぎて上昇し、失速（翼が十分な揚力を得られなくなること）の手前でラダー（方向舵）を踏み込んで機首を振り向け、再び敵と向き合って降下に入る戦術があった。現代の曲技の「上昇半ループ＋半ロール」は、その戦術の名前を借りた別の機動だとされる。 <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 名の由来は、第一次世界大戦のドイツのエース、マックス・インメルマン少尉である。 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup> ただし、同じ記事は、インメルマン本人がその機動を行ったことを直接には裏づけておらず、現代版が名前を借りたとする箇所には「出典が必要」の印が付いている。 FPV でのインメルマンターンは、一覧に一行の説明（上昇する半ループのあと、ロールで正立に戻る）があるだけで、現代の曲技の定義と同じ内容である。 <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> そのため、 FPV での使われ方は、本稿では詳しく扱わない。</p>
 
-<h3 id="sec3-3">3.3 縦の円を描く技――パワーループ</h3>
+<h3 id="s3-3">3.3 縦の円を描く技――パワーループ</h3>
 
 <p>パワーループは、縦に一回転する技である。ある一覧は「円を描くように 360 度のループを完了する」と説明し、中級の技に分類している。 <sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup> 別の解説は、これをスプリット S の「より大きく大胆な兄弟」と呼び、半分ではなく一周を描く技だとする。 <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> ここまでは、出典がおおむね一致する。</p>
 
@@ -307,7 +340,7 @@
 
 <p>名前の「パワー」が何を指すかは、確認できる出典がなかった。</p>
 
-<h3 id="sec3-4">3.4 場所と組む技――ダイブ、オービット、トリッピー・スピン、ウォールタップ</h3>
+<h3 id="s3-4">3.4 場所と組む技――ダイブ、オービット、トリッピー・スピン、ウォールタップ</h3>
 
 <p>ここから先の技は、建物や木、壁といった場所があって成り立つ。そのぶん、出典の記述は薄くなる。</p>
 
@@ -319,28 +352,32 @@
 
 <p>ウォールタップは、最も扱いに迷う技である。ある案内は、技の見出しに「ウォールタップと接触を伴う技」という区分を置くが、中身の説明はない。 <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 接触のさせ方や反動の使い方を述べた出典は、見つからなかった。フォーラムには、旋回中に「見えない壁にぶつかって跳ね返る」ような動きを述べた書き込みがあるが、名前はつけられておらず、ウォールタップとの関係は不明である。 <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> そのため、この技の動きと操作の要点は、本稿では書かない。接触を前提にする技は、とくに危害にもつながりうる。</p>
 
-<h3 id="sec3-5">3.5 定義が割れる技――マティ・フリップとリワインド</h3>
+<h3 id="s3-5">3.5 定義が割れる技――マティ・フリップとリワインド</h3>
 
 <p>最後に、出典の記述が食い違う技を表で見る。どれが正しいかは決めない。誰が、どんな性格の資料に、どう書いたかを並べる。</p>
 
-<table class="cardspan">
-<tr><th>技</th><th>出典</th><th>記述の要旨</th><th>出典の性格</th></tr>
-<tr data-group="マティ・フリップ"><td rowspan="5">マティ・フリップ</td><td data-label="出典">案内ページ（ 2021 年更新） <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td><td data-label="記述の要旨">「バックワード・スイング」と言い換える</td><td data-label="出典の性格">販売元のサポート文書。説明文なし</td></tr>
-<tr data-group="マティ・フリップ"><td data-label="出典">技の一覧 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td><td data-label="記述の要旨">障害物の上を後ろ向きに回り、ループを決める</td><td data-label="出典の性格">販売元の一覧。日付なし</td></tr>
-<tr data-group="マティ・フリップ"><td data-label="出典">ブログ（著者 David 、 2026 年 6 月）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td><td data-label="記述の要旨">物体から離れながら始める後方ループで、その上を越えて元の方向へ抜ける。名はマティ・スタンツに由来</td><td data-label="出典の性格">出典の引用なし</td></tr>
-<tr data-group="マティ・フリップ"><td data-label="出典">販売系ブログ（ 2026 年 3 月） <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup></td><td data-label="記述の要旨">バックフリップとヨースピンの組み合わせ。カナダ人操縦者マット・シャーウッドに由来</td><td data-label="出典の性格">販売系</td></tr>
-<tr data-group="マティ・フリップ"><td data-label="出典">フォーラムのスレッド（ 2024 年 7 〜 8 月） <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td data-label="記述の要旨">半分のマティ（または逆スプリット S ）から後ろ向きの失速へ入る動き、と書く</td><td data-label="出典の性格">個人の投稿</td></tr>
-<tr data-group="リワインド"><td rowspan="2">リワインド</td><td data-label="出典">技の一覧 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></td><td data-label="記述の要旨">横へずれたあと、後ろへ急に戻って進路を逆転させる</td><td data-label="出典の性格">販売元の一覧</td></tr>
-<tr data-group="リワインド"><td data-label="出典">フォーラム投稿（ 2024 年 8 月） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></td><td data-label="記述の要旨">「巻き戻し」の技の一群があり、旋回点のまわりを回ってから急に逆へ戻る（上級）</td><td data-label="出典の性格">個人の投稿</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>技</th><th>出典</th><th>記述の要旨</th><th>出典の性格</th></tr></thead>
+<tbody>
+<tr><td rowspan="5">マティ・フリップ</td><td>案内ページ（ 2021 年更新） <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td><td>「バックワード・スイング」と言い換える</td><td>販売元のサポート文書。説明文なし</td></tr>
+<tr><td>技の一覧 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td><td>障害物の上を後ろ向きに回り、ループを決める</td><td>販売元の一覧。日付なし</td></tr>
+<tr><td>ブログ（著者 David 、 2026 年 6 月）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td><td>物体から離れながら始める後方ループで、その上を越えて元の方向へ抜ける。名はマティ・スタンツに由来</td><td>出典の引用なし</td></tr>
+<tr><td>販売系ブログ（ 2026 年 3 月） <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup></td><td>バックフリップとヨースピンの組み合わせ。カナダ人操縦者マット・シャーウッドに由来</td><td>販売系</td></tr>
+<tr><td>フォーラムのスレッド（ 2024 年 7 〜 8 月） <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td>半分のマティ（または逆スプリット S ）から後ろ向きの失速へ入る動き、と書く</td><td>個人の投稿</td></tr>
+<tr><td rowspan="2">リワインド</td><td>技の一覧 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></td><td>横へずれたあと、後ろへ急に戻って進路を逆転させる</td><td>販売元の一覧</td></tr>
+<tr><td>フォーラム投稿（ 2024 年 8 月） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></td><td>「巻き戻し」の技の一群があり、旋回点のまわりを回ってから急に逆へ戻る（上級）</td><td>個人の投稿</td></tr>
+</tbody>
+</table></div>
 
 <p>マティ・フリップでは、「後ろ向きの動き」を含むという点は複数の出典で重なる。しかし、ループなのか、フリップとヨーの組み合わせなのか、物体を越えるのか、失速へ入るのかといった中身は割れている。由来も、マティ・スタンツ、マット・シャーウッドと人物名が食い違う。このため、人名に由来するとされるが詳細は出典によって異なる、という線を越えては書けない。</p>
 
 <p>リワインドの出典が描くのは、進路や旋回を逆戻しにする動きである。名前の「巻き戻し」は共通しているが、何を巻き戻すかが違う。</p>
 
 <p>なお、ジューシー・フリックという技の名前も見かける。一覧には「素早いフリックと素早い復帰」という一行があり、 <sup id="fnref-2-10"><a href="#ref-2">[2]</a></sup> フォーラムにも名前は出てくる。 <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup> しかし、動きの定義を二つ以上の独立した出典で確かめることはできなかった。このため、この技は本稿では詳しく扱わなかった。</p>
+</section>
 
-<h2 id="sec4">4. 技の名前の出どころ</h2>
+<section id="s4">
+<h2><span class="no">4</span>技の名前の出どころ</h2>
 
 <p>技の名前は、どこから来たのか。出典で確認できた範囲で整理する。</p>
 
@@ -349,44 +386,48 @@
 <p>次に、有人機との対応が確認できない名前がある。マティ・フリップは人名に由来するとされる。ただし、前章で見たとおり、人名は出典によって異なる。もう一つ、ヴァニー・ロールという名前を、案内ページは「後ろ向きのロール」と言い換えている。 <sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup> 名前の由来が出典に明記されていた例は、ほとんどなかった。ある一覧は、「ジャッキー・チェン」という技の名が、その武術家に由来すると書いている。 <sup id="fnref-2-11"><a href="#ref-2">[2]</a></sup> 名前の由来が出典で確認できたのは、ここまでである。</p>
 
 <p><strong>筆者の判断</strong><br>以上から言えるのは、次の範囲にとどまる。有人機の曲技から借りた名前は、スプリット S とインメルマンターンの二つが確認できた。有人機との対応が確認できない名前のうち、由来を出典で確かめられた例は、ごく少ない。どの名前がどちらの系統に属するかを、網羅的に仕分けることは、この調査ではできなかった。</p>
+</section>
 
-<h2 id="sec5">5. 「マニューバ」の成り立ち</h2>
+<section id="s5">
+<h2><span class="no">5</span>「マニューバ」の成り立ち</h2>
 
 <p>ここからは、語としての「マニューバ」を調べる。この章は事実の整理にあたり、筆者の解釈は次の章に回す。</p>
 
-<h3 id="sec5-1">5.1 語源の骨格</h3>
+<h3 id="s5-1">5.1 語源の骨格</h3>
 
 <p>英語の maneuver （イギリス英語では manoeuvre ）は、フランス語から入った語である。 Wiktionary によれば、中期フランス語の manœuvre と manouvrer に由来し、さらにさかのぼると古フランス語の manovre （手仕事、肉体労働）、中世ラテン語の manopera または manuopera （手でなされる仕事）に行き着く。 <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 後者は、 manu （手で）と operari （働く）の組み合わせとされる。 <sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup> Dictionary.com も、ラテン語の manū operāre （手仕事をする）を起点とし、 operāre は「 operate 」の語根でもあると説明する。 <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> この骨格は、調べた英語とフランス語の辞書三種で一致していた。</p>
 
 <p>細部は少し違う。フランス語のウィクショナリーは、俗ラテン語の *manuopera という、文献に見つかっていない再建形を挙げ、 manus （手）と opera （仕事）の合成と説明する。 <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> つまり、経路を「中世ラテン語」とするか、「俗ラテン語」とするかが、辞書によって違う。さらに英語版の Wiktionary は、この語が 800 年のカール大帝の勅令集に、「雑用、手作業」の意味で初めて現れたとし、フランク語の「手仕事」を意味する語を、意味ごと写し取った翻訳借用だった可能性が高いと書く。 <sup id="fnref-14-3"><a href="#ref-14">[14]</a></sup> 動詞は、 manure と同じ語から別々に分かれた二重語でもあるという。 <sup id="fnref-14-4"><a href="#ref-14">[14]</a></sup></p>
 
-<h3 id="sec5-2">5.2 フランス語での意味の移り変わり</h3>
+<h3 id="s5-2">5.2 フランス語での意味の移り変わり</h3>
 
 <p>フランス語のウィクショナリーは、 manœuvre の意味を次の順に並べている。 <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 非熟練の労働者、手で器具を動かす操作、海事（索具や船の操り）、軍事（部隊の移動）、そして比喩としての策略である。ここで注意したいのは、この並びが歴史の順を示しているとは限らないことである。同じ項目の用例には、 1769 年の船の索具の用例、 1832 年の軍事演習の用例、そして 1883 年の「労働者」の用例が並ぶ。 <sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup> 労働者の意味の用例が、いちばん新しい。意味の並びを、そのまま時間の流れとして読んではならない。</p>
 
-<h3 id="sec5-3">5.3 英語への入り方と綴り</h3>
+<h3 id="s5-3">5.3 英語への入り方と綴り</h3>
 
 <p>Dictionary.com は、英語での最初の記録を 1470 〜 1480 年とし、これは「手仕事」を表す以前の意味にあたると述べる。この意味では、中期フランス語から借りた maanorre という形が使われていた。現在の名詞の意味は 1750 〜 1760 年のものとされる。 <sup id="fnref-15-2"><a href="#ref-15">[15]</a></sup> 同じ辞書によれば、現在の主な意味は、部隊や艦船の計画的な移動、針路を変えること、そして巧みな、あるいはずる賢い動きである。 <sup id="fnref-15-3"><a href="#ref-15">[15]</a></sup></p>
 
 <p>綴りは、 maneuver がアメリカ式、 manoeuvre がイギリスなど英連邦式である。 manœuvre は古風な綴りで、 maneuvre と manoeuver は標準的でないとされる。 <sup id="fnref-14-5"><a href="#ref-14">[14]</a></sup> なお、本稿はこれ以外の辞書、たとえば Merriam-Webster 、 Etymonline 、 OED の本文を直接確かめることができなかった。これらは取得できなかった。この点は 8 章で改めて述べる。</p>
 
-<h3 id="sec5-4">5.4 日本語での表記</h3>
+<h3 id="s5-4">5.4 日本語での表記</h3>
 
 <p>日本語の辞書での扱いは、少し様子が違う。国語辞典を収めたコトバンクの見出しは「マヌーバー」で、『デジタル大辞泉』は「作戦」「策略」「術策」、『精選版 日本国語大辞典』は「策略」「策動」「作戦」とし、「演習」の意味もあるとする。後者は『アルス新語辞典』（ 1930 年）を出典に挙げている。 <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup> 一方で、分野の用語辞典は操縦の意味を前に出す。パラグライダー用語辞典は、元は軍隊用語で、機動作戦、巧妙な手段の意味があり、パラグライダーでは機体を巧みに操作する技術を指すと説明する。 <sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup> 別の項目の「マニューバー」では、サーフィン用語集が、ライディング中の個々の動きの総称と定義する。 <sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup></p>
 
 <p>表記は、分野ごとに揺れている。国語辞典は「マヌーバー」、サーフィンは「マニューバー」、そして宇宙機関の公式発表は「マヌーバ」である。 2007 年 9 月 16 日の JAXA の報道資料は、月周回衛星「かぐや」の「軌道制御誤差補正マヌーバ（ΔVa1 ）」の実施を知らせ、その説明に、ロケットが投入した軌道の誤差を直す軌道制御を「軌道投入誤差修正マヌーバ」と呼んでいる。 <sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup> 本稿は表題と本文で「マニューバ」と書くが、これは辞書や JAXA の表記（マヌーバー、マヌーバ）とは異なる。この表記が辞書にどう載っているか、また「機動」という訳語との対応が辞書にあるかは、今回の調査では確認できなかった。</p>
 
-<h3 id="sec5-5">5.5 分野ごとの用法</h3>
+<h3 id="s5-5">5.5 分野ごとの用法</h3>
 
 <p>以上をまとめると、辞書と公的資料で確認できる用法は次のとおりである。軍事では、部隊や艦船の計画的な移動と、大規模な演習。 <sup id="fnref-15-4"><a href="#ref-15">[15]</a></sup> 乗り物では、船や車両の針路を変える操作や、乗り物を操る制御された動き。 <sup id="fnref-15-5"><a href="#ref-15">[15]</a></sup><sup id="fnref-14-6"><a href="#ref-14">[14]</a></sup> 宇宙では、前述の軌道制御の操作。 <sup id="fnref-19-2"><a href="#ref-19">[19]</a></sup> 比喩では、策略や、ずる賢い動き。 <sup id="fnref-15-6"><a href="#ref-15">[15]</a></sup><sup id="fnref-17-3"><a href="#ref-17">[17]</a></sup> 英語の辞書は、さらに体や道具の巧みな動きや、発明者の名を冠した医療の手技も挙げている。 <sup id="fnref-14-7"><a href="#ref-14">[14]</a></sup> 航空、自動車、宇宙といった分野ごとの専門資料を、すべて当たったわけではない。</p>
 
-<h3 id="sec5-6">5.6 FPV の技を「マニューバ」と呼ぶ慣行の実態</h3>
+<h3 id="s5-6">5.6 FPV の技を「マニューバ」と呼ぶ慣行の実態</h3>
 
 <p>最後に、 FPV の側から見る。調べた英語の解説では、技の総称は「 trick 」が優勢だった。 iFlight の寄稿は「 trick 」を全体で使い、「 maneuver 」は一度だけ現れる。 <sup id="fnref-4-6"><a href="#ref-4">[4]</a></sup> Rotor Riot の案内は「 freestyle tricks 」という見出しを置く。 <sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup> 個人ブログの Cédric Walter は「 figures 」を使う。 <sup id="fnref-6-8"><a href="#ref-6">[6]</a></sup> WREKD の一覧は、ページの題に「 tricks and manuevers 」（原文の綴り）とあり、本文は一行の要約を添えた一覧になっている。 <sup id="fnref-2-12"><a href="#ref-2">[2]</a></sup> ある販売系ブログは、スプリット S を「有人機から借りた古典的な曲技 (manoeuvre) 」と呼んでいる。 <sup id="fnref-5-8"><a href="#ref-5">[5]</a></sup> ただし、調べたのは数件のページにすぎず、傾向と呼べる程度にとどまる。</p>
 
 <p>日本語で FPV の技を解説した資料は、 2026 年 10 月 16 日の検索（二回）では見つからなかった。このため、日本の FPV の世界で、技を総称して「マニューバ」と呼ぶ慣行がどれほどあるのかは、確認できていない。</p>
+</section>
 
-<h2 id="sec6">6. 語源と操縦は結びつくか</h2>
+<section id="s6">
+<h2><span class="no">6</span>語源と操縦は結びつくか</h2>
 
 <p>ここから先は、筆者の解釈である。事実の章とは別に書く。</p>
 
@@ -405,37 +446,43 @@
 <p><strong>確かめられない点</strong><br>辞書で確認できる範囲では、「巧みな動き」の語義が「手仕事」から連続して来たことを示す記述は見つからなかった。この語が航空や FPV に転用された時期と経緯も、確認できなかった。</p>
 
 <p><strong>読み込みになる点</strong><br>語源が FPV の用法を説明すると断定すること、また語源から FPV のマニューバの価値や正しさを導くことは、読み込みである。</p>
+</section>
 
-<h2 id="sec7">7. 日本の制度と安全</h2>
+<section id="s7">
+<h2><span class="no">7</span>日本の制度と安全</h2>
 
 <p>日本で FPV ドローンを飛ばす読者が、まず知っておきたい制度をまとめる。取得日は 2026 年 10 月 16 日で、制度は同日の時点のものである。以下は一般的な案内であり、個別の法的助言ではない。実際に飛ばす前に、示した一次の出典と、管轄の機関で確認してほしい。</p>
 
-<h3 id="sec7-1">7.1 航空法、登録、飛行禁止法</h3>
+<h3 id="s7-1">7.1 航空法、登録、飛行禁止法</h3>
 
-<table class="cards">
-<tr><th>法令・制度</th><th>確認できた内容（ 2026 年 10 月時点）</th><th>重さなどによる区分</th><th>一次の出典</th></tr>
-<tr><td data-label="法令・制度">航空法（無人航空機の定義）</td><td data-label="確認できた内容（ 2026 年 10 月時点）">飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td data-label="重さなどによる区分">機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td data-label="一次の出典">国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
-<tr><td data-label="法令・制度">機体登録とリモート ID</td><td data-label="確認できた内容（ 2026 年 10 月時点）">令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td data-label="重さなどによる区分">100g 以上</td><td data-label="一次の出典">国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
-<tr><td data-label="法令・制度">飛行禁止空域</td><td data-label="確認できた内容（ 2026 年 10 月時点）">空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td data-label="重さなどによる区分">—</td><td data-label="一次の出典">国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
-<tr><td data-label="法令・制度">飛行の方法</td><td data-label="確認できた内容（ 2026 年 10 月時点）">全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td data-label="重さなどによる区分">25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td data-label="一次の出典">同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
-<tr><td data-label="法令・制度">小型無人機等飛行禁止法</td><td data-label="確認できた内容（ 2026 年 10 月時点）">対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td data-label="重さなどによる区分">重量の制限なし</td><td data-label="一次の出典">神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>法令・制度</th><th>確認できた内容（ 2026 年 10 月時点）</th><th>重さなどによる区分</th><th>一次の出典</th></tr></thead>
+<tbody>
+<tr><th scope="row">航空法（無人航空機の定義）</th><td>飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td>機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td>国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
+<tr><th scope="row">機体登録とリモート ID</th><td>令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td>100g 以上</td><td>国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
+<tr><th scope="row">飛行禁止空域</th><td>空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td>—</td><td>国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
+<tr><th scope="row">飛行の方法</th><td>全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td>25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td>同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
+<tr><th scope="row">小型無人機等飛行禁止法</th><td>対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td>重量の制限なし</td><td>神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
+</tbody>
+</table></div>
 
-<h3 id="sec7-2">7.2 FPV で引っかかりやすい二つの点</h3>
+<h3 id="s7-2">7.2 FPV で引っかかりやすい二つの点</h3>
 
 <p>FPV に特有の論点は、目視外飛行と電波である。まず目視外飛行（肉眼で機体を見ずに行う飛行）から述べる。国土交通省のページ自体には、 FPV やゴーグルへの言及が見当たらなかった。 <sup id="fnref-22-3"><a href="#ref-22">[22]</a></sup><sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup> 行政書士事務所の解説（ 2017 年公開、 2020 年更新）は、画面を常に見ながらの飛行は目視外飛行にあたり承認が要ること、レース用の FPV ゴーグルは目視外にあたること、屋内は規制の対象外であることを述べる。 <sup id="fnref-25-1"><a href="#ref-25">[25]</a></sup> これは民間の二次的な整理であり、現在の国土交通省の解釈と一致するかは、一次の文書では確認できなかった。 FPV の飛行が承認の対象になりうることを前提に、航空局の解釈と申請の案内で確かめてほしい。</p>
 
 <p>電波についても、確認できた範囲は限られる。総務省の 2026 年 7 月 10 日の報道資料によれば、ドローンの 5.8GHz 帯の無線について、特定実験試験局（免許などの手続を簡略にする趣旨の実験用の無線局）の制度で、 5755 〜 5795MHz は最大 1W 、 5795 〜 5815MHz は最大 25mW と定められている。使用期限は令和 9 年 3 月 31 日までで、使用できる地域は調査の途中だった。この帯域は ETC などの既存の無線システムと共用されている。 <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> ただし、趣味の FPV で使う映像送信機に、免許や資格が要るのかどうかという点は、一次の資料で確認できなかった。ここは、総務省または総合通信局（総務省の地方機関）に問い合わせるのが確実である。</p>
 
-<h3 id="sec7-3">7.3 危険性と、釣り合いの取り方</h3>
+<h3 id="s7-3">7.3 危険性と、釣り合いの取り方</h3>
 
 <p>危険について、出典で確かめられたことを書く。製品評価技術基盤機構 (NITE) の 2025 年 6 月 26 日の発表では、 2020 年から 2024 年の 5 年間に、リチウムイオン電池搭載製品の事故は 1860 件あり、約 85% （ 1587 件）が火災事故に発展した。注意点として、高温の場所に放置しない、強い衝撃を与えない、膨らむなどの異常があれば使用をやめる、が挙がる。「リチウムポリマー」や「 Li-Po 」と書かれた製品にも、リチウムイオン電池が使われているという。 <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> これはドローン専用の統計ではないが、 FPV 機のバッテリーにも通じる注意である。機体の墜落や接触で電池に衝撃が加わる場面は、 FPV では珍しくないと思われる。これは筆者の推測である。</p>
 
 <p>壁や人の近くを飛ぶ技の危険性については、直接の統計を見つけられなかった。分かるのは次のことである。人や物件との距離が取れない飛行には承認が要る。 <sup id="fnref-22-4"><a href="#ref-22">[22]</a></sup> 有人機のスプリット S でさえ、降下しながら半ループを描くため、十分な高度がなければ完了できず、最小の安全高度は速度や機体の性質で変わると説明されている。 <sup id="fnref-9-5"><a href="#ref-9">[9]</a></sup> FPV でも、同じ技は高度と速度の余裕が前提になると考えられるが、これは筆者の推論である。</p>
 
 <p>FPV には、狭い隙間を抜けるフリースタイルやレース、映画の撮影といった魅力がある。 <sup id="fnref-4-8"><a href="#ref-4">[4]</a></sup><sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup> 同時に、機体の登録、飛行禁止空域、電池の取り扱いといった責任も伴う。魅力だけを語るのも、危険ばかりを強調するのも、実態からは離れる。</p>
+</section>
 
-<h2 id="sec8">8. この記事の限界</h2>
+<section id="s8">
+<h2><span class="no">8</span>この記事の限界</h2>
 
 <ul>
 <li>技の定義の出典は、販売元や個人のブログ、フォーラムの投稿が中心で、公的機関や学術資料、書籍の本文を確認できなかった。このため「定義がそろう技」も、確立した定説とは言えない。</li>
@@ -445,16 +492,16 @@
 <li>FPV が目視外飛行にあたるかは二次的な資料しかなく、電波法上の免許・資格の扱いも一次資料で確認できなかった。小型無人機等飛行禁止法は警察機関のページに依拠しており、法令本文や警察庁の資料は確認しておらず、改正の施行日も不明である。制度は 2026 年 10 月 16 日の時点のもので、改正で変わりうる。</li>
 <li>「語源と操縦の結びつき」は筆者の解釈であり、辞書が述べていることではない。</li>
 </ul>
+</section>
 
-<h2 id="sec9">9. おわりに</h2>
+<section id="s9">
+<h2><span class="no">9</span>おわりに</h2>
 
 <p>四つの問いに、確認できた範囲で答えておく。第一に、 FPV の操縦は、四つの操作が三つの軸の回転と推力に対応する仕組みで、宙返りなどが多く Acro で行われるのは、 Acro ではスティックが回転の速さを決め、 Angle では角度を指示する仕組みが一回転に向かないと考えられるからである。第二に、技の定義は、ロールやフリップのようにそろうものと、マティ・フリップやリワインドのように割れるものがあり、名前の由来を出典で確かめられた例は少ない。第三に、「マニューバ」の語源は手仕事に行き着くが、それが FPV の用法を決めるとは言えず、語源が FPV の用法を説明すると言い切る根拠は得られなかった。第四に、日本で飛ばすには、機体の登録、飛行の方法、電波、飛行禁止の区域の各面で確かめるべき点があり、危険としては、電池の事故と、技に必要な高度の余裕が出典から読み取れる。</p>
-
-
-
+</section>
 <div class="refs">
-<h2 id="sec10">10. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<h2 id="s10">10. 参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> Rotor Riot Support 『 How do I do freestyle tricks? 』、 2021-10-26 更新。販売元のサポート文書で、技名の一覧が中心。取得日 2026-10-16 。 <a href="https://rotorriotsupport.helpscoutdocs.com/article/35-how-do-i-do-freestyle-tricks">Rotor Riot サポート文書</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <sup><a href="#fnref-2-6">f</a></sup> <sup><a href="#fnref-2-7">g</a></sup> <sup><a href="#fnref-2-8">h</a></sup> <sup><a href="#fnref-2-9">i</a></sup> <sup><a href="#fnref-2-10">j</a></sup> <sup><a href="#fnref-2-11">k</a></sup> <sup><a href="#fnref-2-12">l</a></sup> <sup><a href="#fnref-2-13">m</a></sup> WREKD Co. 『 a master list of fpv tricks and manuevers and how to do them 』（原文の綴り）。販売元の技の一覧で、公開日の表示なし（© 2026 ）。取得日 2026-10-16 。 <a href="https://wrekd.com/pages/a-master-list-of-fpv-tricks-and-manuevers-and-how-to-do-them">WREKD 技の一覧</a></li>
@@ -485,7 +532,7 @@
 <li id="ref-27"><a href="#fnref-27-1">^</a> 製品評価技術基盤機構 (NITE) 『「夏バテ（夏のバッテリー）」にご用心――「リチウムイオン電池搭載製品」の火災事故を防ぐ三つのポイント』、ニュースリリース、 2025-06-26 。取得日 2026-10-16 。 <a href="https://www.nite.go.jp/data/000158238.pdf">NITE 公開 PDF</a></li>
 </ol>
 </div>
-<p class="note">本稿は、公開されている資料を 2026 年 10 月 16 日に確認してまとめた読み物である。技の定義の多くは民間の資料に基づいており、確立した定説として示したものではない。制度は変わりうるので、実際に機体を飛ばす前に、示した一次の出典と管轄の機関で最新の内容を確認してほしい。</p>
-</main>
+<p class="refs-note">本稿は、公開されている資料を 2026 年 10 月 16 日に確認してまとめた読み物である。技の定義の多くは民間の資料に基づいており、確立した定説として示したものではない。制度は変わりうるので、実際に機体を飛ばす前に、示した一次の出典と管轄の機関で最新の内容を確認してほしい。</p>
+</div>
 </body>
 </html>

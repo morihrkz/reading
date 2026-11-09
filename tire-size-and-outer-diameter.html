@@ -5,247 +5,317 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>タイヤのサイズとは何か ―― 刻印の読み方から、国産車と欧州車の傾向まで</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
-  /* 文書固有 */
-  p.subtitle { font-size:1.25rem;color:#555;line-height:1.8;margin:0 0 28px }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <p class="kicker">自動車の基礎知識・規格の読み解き</p>
 <h1>タイヤのサイズとは何か<br>――刻印の読み方から、国産車と欧州車の傾向まで</h1>
 <p class="subtitle">What a Tyre Size Tells You: A Primer on Passenger-Car Tyre Markings, with Notes on Japanese and European Fitment</p>
+</header>
+<div class="wrap">
 <div class="lede">
 <p>タイヤの側面には、「 205/55R16 91V 」のような文字列が刻まれている。これが何を表すのかを、初めて学ぶ人のために、一から順に説明するのがこの記事である。</p>
 <p>読み終えると、次の三つが分かる。一つ目は、刻印の各部分が何を表すか。二つ目は、刻印に書かれていない外径が、なぜ計算で求まり、なぜ大切か。三つ目は、実際の国産車と欧州車に、どんなサイズが付いているかである。</p>
 </div>
 <div class="meta"><strong>【方法と限界】</strong> 寸法の定義と算式は、国土交通省の告示と国連規則の条文で確かめた。各車種の純正サイズは、販売サイトやタイヤメーカーの一覧という二次情報に頼っている。外径の計算と、国産車・欧州車の傾向の読み取りは筆者によるもので、文中に明記した。個別の車に当てはまる判断は、本稿の射程の外にある。</div>
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">まず、タイヤの側面を見る</a></li>
-<li><a href="#sec2">数字を一つずつ読む</a></li>
-<li><a href="#sec3">荷重指数と速度記号</a></li>
-<li><a href="#sec4">タイヤの種類と区分けの軸</a></li>
-<li><a href="#sec5">刻印にない外径を、計算で求める</a></li>
-<li><a href="#sec6">外径が大切な理由――速度計を例に</a></li>
-<li><a href="#sec7">外径をほぼ保ったまま、サイズを変える――インチアップ</a></li>
-<li><a href="#sec8">国産車で採用されるタイヤの傾向</a></li>
-<li><a href="#sec9">欧州メーカーのタイヤの傾向</a></li>
-<li><a href="#sec10">二つを並べて見る</a></li>
-<li><a href="#sec11">まとめ</a></li>
-<li><a href="#sec12">この記事の限界</a></li>
-<li><a href="#sec13">参考文献・資料</a></li>
+<li><a href="#s1">まず、タイヤの側面を見る</a></li>
+<li><a href="#s2">数字を一つずつ読む</a></li>
+<li><a href="#s3">荷重指数と速度記号</a></li>
+<li><a href="#s4">タイヤの種類と区分けの軸</a></li>
+<li><a href="#s5">刻印にない外径を、計算で求める</a></li>
+<li><a href="#s6">外径が大切な理由――速度計を例に</a></li>
+<li><a href="#s7">外径をほぼ保ったまま、サイズを変える――インチアップ</a></li>
+<li><a href="#s8">国産車で採用されるタイヤの傾向</a></li>
+<li><a href="#s9">欧州メーカーのタイヤの傾向</a></li>
+<li><a href="#s10">二つを並べて見る</a></li>
+<li><a href="#s11">まとめ</a></li>
+<li><a href="#s12">この記事の限界</a></li>
+<li><a href="#s13">参考文献・資料</a></li>
 </ol>
 </nav>
-<h2 id="sec1">1. まず、タイヤの側面を見る</h2>
+<section id="s1">
+<h2><span class="no">1</span>まず、タイヤの側面を見る</h2>
 <p>乗用車のタイヤの側面には、たとえば「 205/55R16 91V 」と刻まれている。これがタイヤの「サイズ表記」である。暗号のように見えるが、中身は寸法と性能の目安を決まった順に並べただけで、読み方は一度覚えれば足りる。</p>
 <p>この文字列は、前から順に次のように分けられる。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
-<table class="cards">
-<tr><th>刻印</th><th>呼び名</th><th>意味</th><th>単位</th></tr>
-<tr><td data-label="刻印">205</td><td data-label="呼び名">断面幅</td><td data-label="意味">タイヤの側面の、最も幅が広い所の幅</td><td data-label="単位">mm</td></tr>
-<tr><td data-label="刻印">55</td><td data-label="呼び名">偏平比</td><td data-label="意味">断面の高さが、断面幅の何 % にあたるか</td><td data-label="単位">%</td></tr>
-<tr><td data-label="刻印">R</td><td data-label="呼び名">構造記号</td><td data-label="意味">ラジアル構造であること</td><td data-label="単位">（文字）</td></tr>
-<tr><td data-label="刻印">16</td><td data-label="呼び名">リム径</td><td data-label="意味">タイヤをはめるホイール（リム）の直径</td><td data-label="単位">インチ</td></tr>
-<tr><td data-label="刻印">91</td><td data-label="呼び名">荷重指数</td><td data-label="意味">一本が支えられる重さの目安を示す番号</td><td data-label="単位">（番号）</td></tr>
-<tr><td data-label="刻印">V</td><td data-label="呼び名">速度記号</td><td data-label="意味">走れる最高速度の目安を示す文字</td><td data-label="単位">（文字）</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>刻印</th><th>呼び名</th><th>意味</th><th>単位</th></tr></thead>
+<tbody>
+<tr><th scope="row">205</th><td>断面幅</td><td>タイヤの側面の、最も幅が広い所の幅</td><td>mm</td></tr>
+<tr><th scope="row">55</th><td>偏平比</td><td>断面の高さが、断面幅の何 % にあたるか</td><td>%</td></tr>
+<tr><th scope="row">R</th><td>構造記号</td><td>ラジアル構造であること</td><td>（文字）</td></tr>
+<tr><th scope="row">16</th><td>リム径</td><td>タイヤをはめるホイール（リム）の直径</td><td>インチ</td></tr>
+<tr><th scope="row">91</th><td>荷重指数</td><td>一本が支えられる重さの目安を示す番号</td><td>（番号）</td></tr>
+<tr><th scope="row">V</th><td>速度記号</td><td>走れる最高速度の目安を示す文字</td><td>（文字）</td></tr>
+</tbody>
+</table></div>
 <p>初めて読む人が戸惑うのは、単位が混ざっている点だろう。幅はミリメートル、リム径はインチである。しかも、刻印のどこにも、タイヤ全体の直径（外径）は書かれていない。外径は書かれていないだけで、他の数字から計算できる。この計算は 5 章で扱う。</p>
 <p>もう一つ、言葉の注意がある。「サイズ」は、刻印された記号を指すこともあれば、実際に測った寸法を指すこともある。国の規格は、前者を「タイヤサイズの呼び」と呼ぶ。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 以下で「サイズ表記」と書くときは、この呼びを指す。</p>
-<h2 id="sec2">2. 数字を一つずつ読む</h2>
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span>数字を一つずつ読む</h2>
 <p><strong>断面幅</strong><br>205 は、タイヤの幅が約 205 mm であることを示す。幅が広いほど路面に接する面積が広がる傾向があるが、その分、重くなり、車体に収まるかどうかも問題になる。数字は 5 mm きざみで並ぶことが多く、 195 、 205 、 215 、 225 のようになる。</p>
 <p><strong>偏平比</strong><br>55 は、断面の高さが幅の 55% であることを示す。規格は、偏平比を「断面高さを断面幅で割って 100 倍した数」と定める。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 205/55 なら、断面高さは 205×0.55 ＝ 112.75 mm である（筆者の計算）。数字が小さいほど、ゴムの壁（サイドウォール）が低く、薄いタイヤになる。逆に大きいほど、壁が高く、ふくよかな見た目になる。</p>
 <p><strong>構造記号</strong><br>R は、ラジアル構造を表す。タイヤの骨格にあたる繊維（コード）が、走る向きに対してほぼ直角に並ぶ構造である。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 現在の乗用車用は、ほとんどがラジアルである。構造の区分は 4 章で述べる。</p>
 <p><strong>リム径</strong><br>16 は、ホイールの直径が 16 インチであることを示す。 1 インチは 25.4 mm なので、 16×25.4 ＝ 406.4 mm である（筆者の計算）。国の規格の表でも、 205R16 のリム径の呼びに 406 mm が対応している。 <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 同じ幅のタイヤでも、リム径が違えばホイールにはまらない。タイヤ選びで最初に確かめる数字は、これである。</p>
 <p><strong>単位が混ざっている理由</strong><br>幅だけミリメートル、リム径だけインチという組み合わせは、歴史の名残だとされる。百科事典の記述によれば、米国では 1964 年以前、断面高さは断面幅のおよそ 90% で、サイズは幅もリム径もインチで書かれていた。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup> ただし、これは二次情報であり、リム径だけがインチのまま残った理由は、この資料には書かれていない。</p>
 <p><strong>偏平比の代わりに外径を書く形</strong><br>刻印の中央の数字は、偏平比とは限らない。規格は、偏平比の代わりに、ミリメートルで表した外径の呼びを入れる設計も認めている。 <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 百科事典には、 200 を超える値が入っていれば外径を表すとあり、日本向けサイズの例として 195/620R16 が挙げられている。 <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup> 見慣れない数字に出会ったときの手がかりになる。</p>
-<h2 id="sec3">3. 荷重指数と速度記号</h2>
+</section>
+
+<section id="s3">
+<h2><span class="no">3</span>荷重指数と速度記号</h2>
 <p>サイズ表記の末尾にある「 91V 」のような部分は、寸法ではなく性能の目安である。</p>
 <p><strong>荷重指数</strong><br>荷重指数は、英語でロードインデックスと言い、 LI と略される。そのタイヤ一本が支えられる重さに対応する番号である。番号が大きいほど、多くの重さを支えられる。同じサイズでも、規格や仕様によって番号が違うことがある。ブリヂストンの保有サイズ一覧には、 205/55R16 に 91 と 94 の二つの値が並んでいる。表の注記は、無印のサイズを日本のタイヤ規格 (JATMA) または欧州のタイヤ規格 (ETRTO) の標準、★印のサイズを ETRTO のエクストラロード (XL) とレインフォースド規格と区分している。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 同じ一覧は、同じサイズでタイヤを替えるときは、荷重指数を標準サイズより下回らないよう注意を促している。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></p>
 <p><strong>速度記号</strong><br>速度記号は、そのタイヤで走れる最高速度の目安を、文字で表す。たとえば H は 210 km/h に対応する。 <sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup> 国産メーカーの一覧にも、 S 、 H 、 V 、 W 、 Y 、 Z といった記号が、製品とサイズごとに載っている。 <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup> 日常の街乗りで最高速度を気にする場面はまずないが、規格の上では、荷重指数とともに、タイヤを選ぶときに外せない項目である。</p>
-<h2 id="sec4">4. タイヤの種類と区分けの軸</h2>
+</section>
+
+<section id="s4">
+<h2><span class="no">4</span>タイヤの種類と区分けの軸</h2>
 <p>タイヤの区分けは、一つの軸では済まない。国の規格を読むと、用途、構造、目的の三つの軸が並行して使われている。下の表は、規格の定義と、タイヤに刻む表示を軸ごとに並べたものである。 <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></p>
-<table class="cards">
-<tr><th>軸</th><th>区分</th><th>規格の定義（要旨）</th><th>刻む表示</th></tr>
-<tr><td data-label="軸">用途</td><td data-label="区分">一般道路用</td><td data-label="規格の定義（要旨）">通常の走行条件で、道路上で使うことを目的としたもの</td><td data-label="刻む表示">規定なし</td></tr>
-<tr><td data-label="軸">用途</td><td data-label="区分">スノー</td><td data-label="規格の定義（要旨）">雪路での運転に関し、一般道路用より優れた性能を優先して設計されたもの</td><td data-label="刻む表示">M+S など</td></tr>
-<tr><td data-label="軸">用途</td><td data-label="区分">特殊用途</td><td data-label="規格の定義（要旨）">不整地その他の特殊な走行条件（雪路を除く）で使うことを目的としたもの</td><td data-label="刻む表示">ET または POR</td></tr>
-<tr><td data-label="軸">構造</td><td data-label="区分">バイアスプライ</td><td data-label="規格の定義（要旨）">コードがトレッド中心線に対して 90 度未満の角度で並ぶもの</td><td data-label="刻む表示">リム径の前は無表示または D</td></tr>
-<tr><td data-label="軸">構造</td><td data-label="区分">バイアスベルテッド</td><td data-label="規格の定義（要旨）">バイアスの骨格を、伸びにくい二層以上のベルトで締めたもの</td><td data-label="刻む表示">リム径の前に B</td></tr>
-<tr><td data-label="軸">構造</td><td data-label="区分">ラジアルプライ</td><td data-label="規格の定義（要旨）">コードがほぼ 90 度で並び、周方向のベルトで固定されたもの</td><td data-label="刻む表示">リム径の前に R (300 km/h 超は ZR)</td></tr>
-<tr><td data-label="軸">目的</td><td data-label="区分">ランフラット</td><td data-label="規格の定義（要旨）">パンク状態でも、 80 km/h で 80 km まで基本的な機能を保つ特徴を持つもの</td><td data-label="刻む表示">リム径の前に F など</td></tr>
-<tr><td data-label="軸">目的</td><td data-label="区分">応急用スペア</td><td data-label="規格の定義（要旨）">限られた走行条件の下で、応急的に使うことを目的としたもの</td><td data-label="刻む表示">TEMPORARY USE ONLY</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>軸</th><th>区分</th><th>規格の定義（要旨）</th><th>刻む表示</th></tr></thead>
+<tbody>
+<tr><th scope="row">用途</th><td>一般道路用</td><td>通常の走行条件で、道路上で使うことを目的としたもの</td><td>規定なし</td></tr>
+<tr><th scope="row">用途</th><td>スノー</td><td>雪路での運転に関し、一般道路用より優れた性能を優先して設計されたもの</td><td>M+S など</td></tr>
+<tr><th scope="row">用途</th><td>特殊用途</td><td>不整地その他の特殊な走行条件（雪路を除く）で使うことを目的としたもの</td><td>ET または POR</td></tr>
+<tr><th scope="row">構造</th><td>バイアスプライ</td><td>コードがトレッド中心線に対して 90 度未満の角度で並ぶもの</td><td>リム径の前は無表示または D</td></tr>
+<tr><th scope="row">構造</th><td>バイアスベルテッド</td><td>バイアスの骨格を、伸びにくい二層以上のベルトで締めたもの</td><td>リム径の前に B</td></tr>
+<tr><th scope="row">構造</th><td>ラジアルプライ</td><td>コードがほぼ 90 度で並び、周方向のベルトで固定されたもの</td><td>リム径の前に R (300 km/h 超は ZR)</td></tr>
+<tr><th scope="row">目的</th><td>ランフラット</td><td>パンク状態でも、 80 km/h で 80 km まで基本的な機能を保つ特徴を持つもの</td><td>リム径の前に F など</td></tr>
+<tr><th scope="row">目的</th><td>応急用スペア</td><td>限られた走行条件の下で、応急的に使うことを目的としたもの</td><td>TEMPORARY USE ONLY</td></tr>
+</tbody>
+</table></div>
 <p>世間でよく聞く「夏タイヤ」や「オールシーズン」という語は、この規格には出てこない。規格にあるのは、雪路での性能を優先して設計されたかどうかという線引きで、スノータイヤには M+S などの表示が求められる。 <sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup> 俗称と規格上の区分は一致しない、ということである。</p>
 <p>構造の軸では、サイズ表記の R が、リム径の直前に置かれている。 <sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup> 構造を示す文字と寸法の数字が、一続きの記号の中に同居しているわけである。三つの軸のどれにも寸法は入っておらず、大きさは別に、呼びと算式で扱われる。 <sup id="fnref-1-10"><a href="#ref-1">[1]</a></sup> 性格を表すのが区分けと表示、大きさを表すのが呼び、という役割分担である。</p>
-<h2 id="sec5">5. 刻印にない外径を、計算で求める</h2>
+</section>
+
+<section id="s5">
+<h2><span class="no">5</span>刻印にない外径を、計算で求める</h2>
 <p>外径は、国内の規格も国連規則も、次の式で求めると定めている。 <sup id="fnref-1-11"><a href="#ref-1">[1]</a></sup> <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
 <div class="box"><strong>外径 D ＝ d ＋ 2H</strong><br>d はリム径をミリメートルに直した値、 H は断面高さである。 H は、断面幅×0.01×偏平比で求める。国連規則では、 H を最も近いミリメートルに丸める。</div>
 <p>205/55R16 の場合を、順に計算する（筆者の計算）。</p>
-<table class="cards">
-<tr><th>手順</th><th>計算</th><th>結果</th></tr>
-<tr><td data-label="手順">リム径をミリメートルに直す</td><td data-label="計算">16×25.4</td><td data-label="結果">406.4 mm</td></tr>
-<tr><td data-label="手順">断面高さを求める</td><td data-label="計算">205×0.55</td><td data-label="結果">112.75 mm</td></tr>
-<tr><td data-label="手順">外径を求める</td><td data-label="計算">406.4 ＋ 2×112.75</td><td data-label="結果">631.9 mm</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>手順</th><th>計算</th><th>結果</th></tr></thead>
+<tbody>
+<tr><th scope="row">リム径をミリメートルに直す</th><td>16×25.4</td><td>406.4 mm</td></tr>
+<tr><th scope="row">断面高さを求める</th><td>205×0.55</td><td>112.75 mm</td></tr>
+<tr><th scope="row">外径を求める</th><td>406.4 ＋ 2×112.75</td><td>631.9 mm</td></tr>
+</tbody>
+</table></div>
 <p>壁（サイドウォール）はホイールの上下に一枚ずつあるので、断面高さを二倍して足す。図にすれば、ホイールの直径に、上の壁と下の壁を足した長さである。</p>
 <p>実物の外径には、幅がある。規格は、外径が D の最小値と最大値の間になければならないと定める。最小値は d ＋ 2H×0.97 、最大値は一般の路上用ラジアルタイヤで d ＋ 2H×1.04 である。 <sup id="fnref-1-12"><a href="#ref-1">[1]</a></sup> 国連規則の改正文にも、最小値の係数 0.97 が見える。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 205/55R16 に当てはめると、およそ 625.1 mm から 640.9 mm の範囲になる（筆者の計算）。幅は約 16 mm 、率にして約 2.5% である。刻印された呼びから計算した 631.9 mm は、実物の中心的な値にすぎない。</p>
 <p>規格には、外径そのものを表にした例もある。偏平比を持たない寸法体系のタイヤについて、呼びごとに外径、断面幅、リム径を並べた表があり、たとえば 165R14 は外径 622 mm 、 195R14 は 666 mm とされている。 <sup id="fnref-1-13"><a href="#ref-1">[1]</a></sup> 外径が規格の中で軽く扱われているわけではなく、呼びの外側で、許容範囲つきで管理されている、というのが条文から読み取れる姿である。</p>
-<h2 id="sec6">6. 外径が大切な理由――速度計を例に</h2>
+</section>
+
+<section id="s6">
+<h2><span class="no">6</span>外径が大切な理由――速度計を例に</h2>
 <p>外径は、なぜ気にしなければならないのか。身近な例が、速度計である。</p>
 <p>タイヤが一回転すると、車は外周の長さだけ進む。外径が大きいほど、同じ回転数でも速く進む。速度計が車輪の回転数から速度を求める方式なら、外径が変われば、実際の速度と表示の関係がずれる。なお、国の速度計の技術基準は、速度を検出する部分があると述べるだけで、検出方法を指定していない。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> したがって、以下は「回転から求める方式」を前提にした筆者の仮定である。衛星測位で速度を得る方式なら、この議論は当てはまらない。</p>
 <p>同じ基準は、速度計の指度を V1 、実際の走行速度を V2 として、 0≦V1−V2≦V2/10 ＋ 4 を満たすよう求めている。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 速度計は、実際の速度を下回ってはならない。たとえば指度が 100 km/h なら、実際の速度は 87.3 km/h 以上 100 km/h 以下である（筆者の計算）。ただし、これは自動車の製作者が、通常装着するタイヤのいずれか一つで行う試験の条件である。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 使い手がタイヤを替えた後にこの式がどう適用されるかは、条文からは分からない。</p>
 <p><strong>筆者の整理</strong><br>外径が約 1.5% 小さいタイヤに替えると、同じ回転数での実際の速度は約 1.5% 遅くなり、指度との差が開く。逆に大きいタイヤに替えると、実際の速度が指度に近づき、「下回ってはならない」という条件に触れる側へ寄る。許容の余裕がどれだけあるかは、車ごとに違うはずで、この資料からは分からない。確かなのは、外径が変わると、表示と実際の関係が変わるという算術までである。</p>
-<h2 id="sec7">7. 外径をほぼ保ったまま、サイズを変える――インチアップ</h2>
+</section>
+
+<section id="s7">
+<h2><span class="no">7</span>外径をほぼ保ったまま、サイズを変える――インチアップ</h2>
 <p>ホイールを大きくして、その分、タイヤを薄くする方法を、インチアップ、またはプラスサイジングという。百科事典は、これを「より大きな直径のホイールに、より低い偏平比のタイヤを組み合わせる行為」と説明し、目的を、元のタイヤに近い直径と円周を保つことだとしている。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 速度計の精度や、駆動力を制御する装置への影響を小さくするためである。リム径を一インチ上げることを「プラス 1 」という。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></p>
 <p>数字で見ると、仕組みが分かる（筆者の計算）。</p>
-<table class="cards">
-<tr><th>サイズ</th><th>リム径</th><th>断面高さ</th><th>外径</th><th>基準との差</th></tr>
-<tr><td data-label="サイズ">205/55R16 ・基準</td><td data-label="リム径">406.4 mm</td><td data-label="断面高さ">112.75 mm</td><td data-label="外径">631.9 mm</td><td data-label="基準との差">―</td></tr>
-<tr><td data-label="サイズ">225/45R17 ・プラス 1</td><td data-label="リム径">431.8 mm</td><td data-label="断面高さ">101.25 mm</td><td data-label="外径">634.3 mm</td><td data-label="基準との差">＋ 0.4%</td></tr>
-<tr><td data-label="サイズ">225/40R18 ・プラス 2</td><td data-label="リム径">457.2 mm</td><td data-label="断面高さ">90.0 mm</td><td data-label="外径">637.2 mm</td><td data-label="基準との差">＋ 0.8%</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>サイズ</th><th>リム径</th><th>断面高さ</th><th>外径</th><th>基準との差</th></tr></thead>
+<tbody>
+<tr><th scope="row">205/55R16 ・基準</th><td>406.4 mm</td><td>112.75 mm</td><td>631.9 mm</td><td>―</td></tr>
+<tr><th scope="row">225/45R17 ・プラス 1</th><td>431.8 mm</td><td>101.25 mm</td><td>634.3 mm</td><td>＋ 0.4%</td></tr>
+<tr><th scope="row">225/40R18 ・プラス 2</th><td>457.2 mm</td><td>90.0 mm</td><td>637.2 mm</td><td>＋ 0.8%</td></tr>
+</tbody>
+</table></div>
 <p>リム径が 16 から 18 インチへと 50.8 mm 大きくなっても、壁が 22.75 mm ずつ低くなって、外径は 1% 未満しか動かない。幅は 205 から 225 mm へ広がっている。この「径を上げ、壁を低くし、幅を広げる」という組み合わせが、現代の乗用車のグレード展開の基本形である。壁が低いほどタイヤのたわみが減り、曲がりやすくなる、というのが一般的な説明だが、乗り心地は硬くなりやすい。 <sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup></p>
 <p>交換するときの注意として、前述のとおり、荷重指数を標準サイズより下げないことが挙げられる。 <sup id="fnref-8-4"><a href="#ref-8">[8]</a></sup> また、基準より外径が大きく違うサイズに替えれば、 6 章の速度計の問題が表に出る。</p>
-<h2 id="sec8">8. 国産車で採用されるタイヤの傾向</h2>
+</section>
+
+<section id="s8">
+<h2><span class="no">8</span>国産車で採用されるタイヤの傾向</h2>
 <p>ここからは、実際の車にどんなサイズが付いているかを見る。国産車の純正サイズは、国内のタイヤ販売サイトなどの一覧を使った。サイズは車種ごとに、年式やグレードで違うため、二つの一覧が一致したものを中心に拾い、外径は先の式で計算した（筆者の計算）。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
-<table class="cards">
-<tr><th>区分</th><th>車種の例</th><th>純正サイズの例</th><th>外径の計算値</th></tr>
-<tr><td data-label="区分">軽自動車（ハイトワゴン）</td><td data-label="車種の例">ホンダ N-BOX</td><td data-label="純正サイズの例">155/65R14</td><td data-label="外径の計算値">557.1 mm</td></tr>
-<tr><td data-label="区分">軽自動車（上位・ SUV 風）</td><td data-label="車種の例">スズキ ハスラー</td><td data-label="純正サイズの例">165/60R15</td><td data-label="外径の計算値">579.0 mm</td></tr>
-<tr><td data-label="区分">コンパクトカー</td><td data-label="車種の例">ホンダ フィット</td><td data-label="純正サイズの例">185/60R15</td><td data-label="外径の計算値">603.0 mm</td></tr>
-<tr><td data-label="区分">セダン・ハッチバック</td><td data-label="車種の例">トヨタ カローラ</td><td data-label="純正サイズの例">195/65R15</td><td data-label="外径の計算値">634.5 mm</td></tr>
-<tr><td data-label="区分">ミニバン</td><td data-label="車種の例">トヨタ ノア・ヴォクシー</td><td data-label="純正サイズの例">205/60R16</td><td data-label="外径の計算値">652.4 mm</td></tr>
-<tr><td data-label="区分">SUV</td><td data-label="車種の例">トヨタ RAV4 、マツダ CX-5</td><td data-label="純正サイズの例">225/65R17</td><td data-label="外径の計算値">724.3 mm</td></tr>
-<tr><td data-label="区分">スポーツ志向</td><td data-label="車種の例">ホンダ シビック</td><td data-label="純正サイズの例">235/40R18</td><td data-label="外径の計算値">645.2 mm</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>区分</th><th>車種の例</th><th>純正サイズの例</th><th>外径の計算値</th></tr></thead>
+<tbody>
+<tr><th scope="row">軽自動車（ハイトワゴン）</th><td>ホンダ N-BOX</td><td>155/65R14</td><td>557.1 mm</td></tr>
+<tr><th scope="row">軽自動車（上位・ SUV 風）</th><td>スズキ ハスラー</td><td>165/60R15</td><td>579.0 mm</td></tr>
+<tr><th scope="row">コンパクトカー</th><td>ホンダ フィット</td><td>185/60R15</td><td>603.0 mm</td></tr>
+<tr><th scope="row">セダン・ハッチバック</th><td>トヨタ カローラ</td><td>195/65R15</td><td>634.5 mm</td></tr>
+<tr><th scope="row">ミニバン</th><td>トヨタ ノア・ヴォクシー</td><td>205/60R16</td><td>652.4 mm</td></tr>
+<tr><th scope="row">SUV</th><td>トヨタ RAV4 、マツダ CX-5</td><td>225/65R17</td><td>724.3 mm</td></tr>
+<tr><th scope="row">スポーツ志向</th><td>ホンダ シビック</td><td>235/40R18</td><td>645.2 mm</td></tr>
+</tbody>
+</table></div>
 <p>この表と周辺の資料から、国産車の傾向として、次の点が読み取れる。</p>
 <p><strong>軽自動車は、 155/65R14 に集中する</strong><br>二つの一覧で、 N-BOX を含むハイトワゴンの標準サイズとして、 155/65R14 が挙がっている。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 幅 155 mm 、リム径 14 インチは、乗用車用としては小さく細い部類で、外径は 557 mm である。ブリヂストンの一覧には、さらに小さい 12 インチの 135/80R12 や、 13 インチの 145/80R13 も載っており、小さく細いサイズが現役の品揃えに残っていることが分かる。 <sup id="fnref-8-5"><a href="#ref-8">[8]</a></sup></p>
 <p><strong>コンパクトカーは 14 から 15 インチ、偏平比は 60 から 70 が中心</strong><br>一覧に挙がるコンパクトカーは 14 から 15 インチ台が中心で、 185/65R15 が多いとされる。 <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> 偏平比は 60 から 70 程度と、壁の高いタイヤが多い。ただし、同じ車種でも一覧によってサイズが食い違う例（ノートやアクアなど）があり、グレードや年式で違うことがうかがえる。 <sup id="fnref-6-4"><a href="#ref-6">[6]</a></sup> <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup></p>
 <p><strong>車格が上がると、幅と径が大きくなる</strong><br>ミニバンは 16 から 17 インチ、 SUV は 17 から 19 インチ前後が並び、幅も 205 から 235 mm に広がる。 <sup id="fnref-6-5"><a href="#ref-6">[6]</a></sup> RAV4 の 225/65R17 は、偏平比が高いまま径が大きいため、外径は 724 mm と、表の中で飛び抜けて大きい。悪路や荷重に備えた設計の表れだと考えられるが、その理由を述べた資料は確認していない。</p>
 <p><strong>グレードが上がると、薄いタイヤになる</strong><br>プリウスの 50 系は、 195/65R15 と 215/45R17 の二つのサイズが挙がっている。 <sup id="fnref-6-6"><a href="#ref-6">[6]</a></sup> 外径は 634.5 mm と 625.3 mm で、約 1.5% の違いに収まる（筆者の計算）。上位グレードほど、偏平比の低い大径サイズになるという説明が、一覧にも見える。 <sup id="fnref-6-7"><a href="#ref-6">[6]</a></sup> 7 章で見たインチアップを、メーカーが最初からグレード展開に組み込んでいる形である。</p>
-<h2 id="sec9">9. 欧州メーカーのタイヤの傾向</h2>
+</section>
+
+<section id="s9">
+<h2><span class="no">9</span>欧州メーカーのタイヤの傾向</h2>
 <p>欧州車については、国産車ほど多くの資料に当たれなかった。確認できたのは、タイヤメーカー（コンチネンタル）の欧州向け一覧に載る、欧州で Clio の名で売られるルノー・ルーテシアの装着サイズと、それと共通するとされる車種である。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> また、フォルクスワーゲン・ゴルフの装着一覧も参考にしたが、こちらは米国市場向けの車種名やグレードを含んでおり、欧州の仕様そのものではない。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></p>
-<table class="cards">
-<tr><th>サイズ</th><th>外径の計算値</th><th>ルーテシアでの装着例</th><th>共通するとされる車種</th></tr>
-<tr><td data-label="サイズ">185/65R15</td><td data-label="外径の計算値">621.5 mm</td><td data-label="ルーテシアでの装着例">2018 から 2020 年の Zen ・ Intens</td><td data-label="共通するとされる車種">フォルクスワーゲン・ポロ、セアト・イビサ、シトロエン・ C3 （多くの場合）</td></tr>
-<tr><td data-label="サイズ">195/55R16</td><td data-label="外径の計算値">620.9 mm</td><td data-label="ルーテシアでの装着例">2015 から 2017 年の Limited ・ GT Line 、 2021 から 2026 年の Evolution ・ Techno</td><td data-label="共通するとされる車種">ポロ、アウディ・ A1 、イビサ、プジョー・ 208</td></tr>
-<tr><td data-label="サイズ">205/45R17</td><td data-label="外径の計算値">616.3 mm</td><td data-label="ルーテシアでの装着例">2021 から 2026 年の Esprit Alpine</td><td data-label="共通するとされる車種">アウディ・ A1</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>サイズ</th><th>外径の計算値</th><th>ルーテシアでの装着例</th><th>共通するとされる車種</th></tr></thead>
+<tbody>
+<tr><th scope="row">185/65R15</th><td>621.5 mm</td><td>2018 から 2020 年の Zen ・ Intens</td><td>フォルクスワーゲン・ポロ、セアト・イビサ、シトロエン・ C3 （多くの場合）</td></tr>
+<tr><th scope="row">195/55R16</th><td>620.9 mm</td><td>2015 から 2017 年の Limited ・ GT Line 、 2021 から 2026 年の Evolution ・ Techno</td><td>ポロ、アウディ・ A1 、イビサ、プジョー・ 208</td></tr>
+<tr><th scope="row">205/45R17</th><td>616.3 mm</td><td>2021 から 2026 年の Esprit Alpine</td><td>アウディ・ A1</td></tr>
+</tbody>
+</table></div>
 <p>出典は、タイヤメーカーの適合一覧である。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 外径は、先の式による筆者の計算である。この表から、次の点が読み取れる。</p>
 <p><strong>小型車でも、最初から偏平比 55 が現れる</strong><br>ルーテシアやポロの 195/55R16 は、国産コンパクトの 185/65R15 よりも、一回り薄いタイヤである。ポロやルーテシアの一覧には、 185/65R15 も並んでおり、それが 15 インチの基本サイズに当たると見える。 <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup> 国産コンパクトの標準サイズと同じ大きさのタイヤが、欧州の小型車にも使われている。</p>
 <p><strong>径が違っても、外径はほぼ同じ</strong><br>表の三つのサイズは、リム径が 15 、 16 、 17 インチと違うのに、外径は 616 から 622 mm の範囲に収まる（筆者の計算）。同じ車種の中で、グレードに応じてホイールを大きくしても、外径がほぼ変わらないように、サイズが選ばれていると読める。 7 章のインチアップが、車種の設計の中に組み込まれている。</p>
 <p>ゴルフの一覧にも、同じ構図が見える。米国市場向けの一覧では、 2010 年代のゴルフに 195/65R15 、 205/55R16 、 225/45R17 、 225/40R18 が並び、外径は 632 から 637 mm に収まる（筆者の計算）。 <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 最上位の 235/35R19 だけは 647.1 mm と、少し大きい。同じ一覧には、 1985 年のゴルフの標準が 175/70R13 、 GTI が 185/60R14 と載っており、30 年のうちに、標準サイズが 13 から 15 インチへ大きくなったことが分かる。 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup> ただし、この一覧は米国向けで、欧州での推移と同じとは限らない。</p>
 <p>欧州には、タイヤの性能表示に関する共通の規則もある。欧州連合の規則 2020/740 は、 2021 年 5 月 1 日から、乗用車用などのタイヤに、転がり抵抗（燃費）、ウェットグリップ、走行騒音の等級を示すラベルを付けるよう求めている。ラベルには、サイズ表記、荷重指数、速度記号も載る。 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> これは寸法の規格ではなく性能の表示制度だが、サイズ表記が、性能表示と一体で流通していることが分かる。</p>
-<h2 id="sec10">10. 二つを並べて見る</h2>
+</section>
+
+<section id="s10">
+<h2><span class="no">10</span>二つを並べて見る</h2>
 <p>ここまでの資料を、観点ごとに並べる。どちらが優れているかを比べる表ではなく、国と車種ごとの違いを見渡すための整理である。</p>
-<table class="cards">
-<tr><th>観点</th><th>国産車の例</th><th>欧州車の例</th></tr>
-<tr><td data-label="観点">最も小さいサイズ</td><td data-label="国産車の例">軽自動車の 155/65R14 が中心で、外径は 557.1 mm</td><td data-label="欧州車の例">確認できた範囲では 185/65R15 で、外径は 621.5 mm</td></tr>
-<tr><td data-label="観点">小型車の標準</td><td data-label="国産車の例">175/70R14 、 185/60R15 、 185/65R15 など</td><td data-label="欧州車の例">185/65R15 、 195/55R16</td></tr>
-<tr><td data-label="観点">上位グレード</td><td data-label="国産車の例">プリウスでは、 195/65R15 に対し 215/45R17</td><td data-label="欧州車の例">ルーテシアや A1 では、 195/55R16 に対し 205/45R17</td></tr>
-<tr><td data-label="観点">グレードごとの外径の動き</td><td data-label="国産車の例">約 1.5% の違いに収まる例がある</td><td data-label="欧州車の例">約 0.7% の違いに収まる例がある</td></tr>
-<tr><td data-label="観点">大きな車</td><td data-label="国産車の例">ミニバン 205/60R16 、 SUV 225/65R17 など</td><td data-label="欧州車の例">今回は確認できず</td></tr>
-</table>
+<div class="scroll"><table>
+<thead><tr><th>観点</th><th>国産車の例</th><th>欧州車の例</th></tr></thead>
+<tbody>
+<tr><th scope="row">最も小さいサイズ</th><td>軽自動車の 155/65R14 が中心で、外径は 557.1 mm</td><td>確認できた範囲では 185/65R15 で、外径は 621.5 mm</td></tr>
+<tr><th scope="row">小型車の標準</th><td>175/70R14 、 185/60R15 、 185/65R15 など</td><td>185/65R15 、 195/55R16</td></tr>
+<tr><th scope="row">上位グレード</th><td>プリウスでは、 195/65R15 に対し 215/45R17</td><td>ルーテシアや A1 では、 195/55R16 に対し 205/45R17</td></tr>
+<tr><th scope="row">グレードごとの外径の動き</th><td>約 1.5% の違いに収まる例がある</td><td>約 0.7% の違いに収まる例がある</td></tr>
+<tr><th scope="row">大きな車</th><td>ミニバン 205/60R16 、 SUV 225/65R17 など</td><td>今回は確認できず</td></tr>
+</tbody>
+</table></div>
 <p><strong>筆者の整理</strong><br>共通点は、グレードを上げるときに、外径をほぼ保ったまま径を上げ、壁を低くする点である。国産車でも欧州車でも、 7 章の考え方が使われていると言える。違いとして見えるのは、二つある。一つは、国産車には、軽自動車という、外径 557 mm 前後の細く小さなタイヤが大きな割合を占める区分があること。もう一つは、欧州の小型車では、基本サイズの次の段として、偏平比 55 や 45 のサイズが同じ車種の中で選べる様子が確認できたことである。ただし、これは例示にすぎず、全体の統計ではない。欧州の大型車や、日本国内で販売される輸入車については、資料を確認していない。</p>
-<h2 id="sec11">11. まとめ</h2>
+</section>
+
+<section id="s11">
+<h2><span class="no">11</span>まとめ</h2>
 <p>サイズ表記は、断面幅、偏平比、構造、リム径、荷重指数、速度記号の順に読む。外径は書かれていないが、リム径に断面高さの二倍を足して計算できる。外径は規格で許容範囲つきで管理されており、速度計の表示などに関わる。</p>
 <p>グレードを上げるときは、径を大きく、壁を薄く、幅を広くしながら、外径をほぼ保つのが基本の考え方である。国産車は軽自動車の細く小さなサイズから、 SUV の大きなサイズまで幅広く、欧州の小型車も同じ考え方で段を組んでいる。実際に付けるサイズは、車の取扱説明書や、運転席側のドアの開口部にあるラベルで確かめるのが確実である。</p>
-<h2 id="sec12">12. この記事の限界</h2>
+</section>
+
+<section id="s12">
+<h2><span class="no">12</span>この記事の限界</h2>
 <p>確認できなかった点を挙げておく。第一に、日本自動車タイヤ協会 (JATMA) や欧州タイヤ・リム技術機構 (ETRTO) の規格書そのものは入手できなかった。サイズ表記を実際に定めている民間規格は読んでおらず、荷重指数の具体的な数値表も載せていない。第二に、国産車と欧州車の純正サイズは、いずれも販売サイトやタイヤメーカーの一覧という二次情報に頼った。メーカー公式の諸元表には当たっていない。同じ車種でも一覧によって食い違いがあり、グレードや年式で変わる。第三に、欧州車の資料は小型車に偏り、ドイツの高級車などは確認していない。第四に、表記の歴史は百科事典の記述に頼っており、一次資料は確認していない。</p>
 <p>条文に関する限界もある。読んだ国内の条文は 2013 年の版で、現行のものではない。国連規則は 2017 年の改正文である。速度計の議論は、速度計が車輪の回転から速度を求めるという仮定に立っており、それが成り立たない車には当てはまらない。外径と速度計の関係の計算は、いずれも筆者によるものである。</p>
-
+</section>
 <div class="refs">
-<h2 id="sec13">13. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<h2 id="s13">13. 参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> <sup><a href="#fnref-1-10">j</a></sup> <sup><a href="#fnref-1-11">k</a></sup> <sup><a href="#fnref-1-12">l</a></sup> <sup><a href="#fnref-1-13">m</a></sup> 国土交通省「道路運送車両の保安基準の細目を定める告示」別添 3 「乗用車用空気入タイヤの技術基準」（ 2013 年 1 月 25 日の版。各頁に「 2015.10.8 削除」と付記）。 <a href="https://www.mlit.go.jp/jidosha/content/B003.pdf">国土交通省 公開 PDF</a> （閲覧日 2026-10-12 ）</li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> 国際連合欧州経済委員会 (UNECE)<em>Règlement no 30: Prescriptions uniformes relatives à l'homologation des pneumatiques pour automobiles et leurs remorques</em>, Révision 3 − Amendement 4 (E/ECE/324/Rev.1/Add.29/Rev.3/Amend.4) , 2017 年 2 月 22 日。フランス語版の情報提供用の写しで、法的拘束力を持つ原文は ECE/TRANS/WP.29/2016/51 とされる。 <a href="https://www.tnpf.fr/wp-content/uploads/2019/01/R030r3am4f.pdf">写しの PDF</a> （閲覧日 2026-10-12 ）</li>
@@ -259,8 +329,8 @@
 <li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> <sup><a href="#fnref-10-3">c</a></sup> TireSize.com 「 Volkswagen Golf Tire Sizes 」（米国市場向けの年式・グレード別装着サイズ。二次情報）。 <a href="https://tiresize.com/tires/Volkswagen/Golf/">TireSize.com</a> （閲覧日 2026-10-13 ）</li>
 <li id="ref-11"><a href="#fnref-11-1">^</a> ヨコハマタイヤ（欧州）「 Tyre Regulation 」（欧州連合規則 2020/740 のラベル制度の解説。二次情報）。 <a href="https://www.yokohama.eu/tyre-regulation/">ヨコハマ欧州サイト</a>（閲覧日 2026-10-13 ）</li>
 </ol>
-<p class="note">本稿は、条文の算式と数値を確かめた部分と、筆者の計算・解釈に基づく部分とで、確からしさが異なる。後者は文中に明記した。タイヤの選定や交換の判断には、車両の取扱説明書と販売店・整備工場の確認を受けられたい。</p>
+<p class="refs-note">本稿は、条文の算式と数値を確かめた部分と、筆者の計算・解釈に基づく部分とで、確からしさが異なる。後者は文中に明記した。タイヤの選定や交換の判断には、車両の取扱説明書と販売店・整備工場の確認を受けられたい。</p>
 </div>
-</main>
+</div>
 </body>
 </html>

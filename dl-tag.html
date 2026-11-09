@@ -6,230 +6,148 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTML の説明リストタグ【 dl ・ dt ・ dd 】の使い方を徹底解説｜ webliker （ウェブライカー）</title>
   <style>
-  body { font-size: 1.05rem; line-height: 1.85; color: #222; background: #fafaf7; margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  h1 { font-size: 1.4rem; border-bottom: 3px solid #2a4d69; padding-bottom: .5rem; }
-  h2 { font-size: 1.05rem; color: #fff; background: #2a4d69; padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; color: #2a4d69; border-left: 4px solid #2a4d69; padding-left: .6rem; margin-top: 1.8rem; }
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid #bbb; padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: #e6edf3; white-space: nowrap; }
-  code { background: #f0f2f5; margin: 0 .2em; padding: .2em .4em; border-radius: 4px; font-size: .9em; vertical-align: .1em; }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .meta { color: #555; font-size: .9rem; }
-  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
-  .checklist { background: #e6edf3; border: 1px solid #bbb; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
-  .checklist .cl-title { display: block; font-weight: bold; color: #2a4d69; margin-bottom: .6rem; }
-  .checklist .cl-title::before { content: "✅ "; }
-  .checklist ul { list-style: none; padding: 0; margin: 0; }
-  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed #ddd; }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: #2a4d69; cursor: pointer; }
-  .checklist label { cursor: pointer; }
-  .save-note { font-size: .8125rem; color: #555; text-align: center; margin: .5rem 0 0; }
-  .tag { display: inline-block; font-size: .8rem; background: #2a4d69; color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。記事にこの意匠を使うときだけ使う) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: #2a4d69; font-weight: 700; margin: 0 0 .4rem; }
-  .subtitle { color: #555; margin: 0 0 1rem; }
-  .lede { border-left: 4px solid #2a4d69; padding-left: 1rem; margin: 1rem 0; }
-  .meta.band { border-top: 1px solid #bbb; border-bottom: 1px solid #bbb; padding: 1rem 0; margin: 0 0 2.5rem; line-height: 1.9; }
-  .box { background: #e6edf3; border: 1px solid #bbb; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: #2a4d69; }
-  .endnote { font-size: .9rem; color: #555; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:#e6edf3;border:1px solid #bbb;padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:#2a4d69;font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:#555}
-  .toc a{color:#222;text-decoration:none}
-  .toc a:hover{color:#2a4d69;text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:#2a4d69;text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid #bbb;margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:#e6edf3}
-  /* 本文サイズ(記事型に揃える) */
-  p, li, .note, .must, .say, .lede p { font-size: 1.05rem; }
-  p { margin: 0 0 20px; }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cards td:first-child { background: #e6edf3; font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: #e6edf3; font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid #e3e3e3; }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid #bbb; margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: #2a4d69; }
-    table.cardrow th { background: #e6edf3; font-size: 1rem; border: 0; border-bottom: 1px solid #e3e3e3; padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
-
-    /* コード例: 元記事（webliker）のコードブロックに合わせる。濃紺地・行番号・右上の言語ラベル・構文色 */
-    .hcb_wrap {
-      position: relative;
-      margin: 2em 0;
-    }
-
-    .hcb_wrap pre {
-      margin: 0;
-      padding: 1.75em 1.5em 1.25em 3.75em;
-      overflow: auto;
-      box-sizing: border-box;
-      background: #1d2128;
-      color: #fff;
-      font-size: 14px;
-      letter-spacing: .1px;
-      line-height: 1;
-      tab-size: 4;
-      white-space: pre;
-    }
-
-    .hcb_wrap pre code {
-      position: relative;
-      display: block;
-      margin: 0;
-      padding: 0;
-      background: none;
-      color: inherit;
-      font-size: inherit;
-      line-height: 1.5;
-      vertical-align: baseline;
-    }
-
-    /* 右上の言語ラベル */
-    .hcb_wrap pre::before {
-      content: attr(data-lang);
-      position: absolute;
-      top: 0;
-      right: 0;
-      min-width: 4em;
-      padding: 0 10px;
-      box-sizing: border-box;
-      background: #111;
-      color: #fff;
-      font-size: 12px;
-      line-height: 20px;
-      text-align: center;
-    }
-
-    /* 行番号（行数ぶんの空 span に CSS カウンターで番号を振る） */
-    .hcb_wrap pre { counter-reset: linenumber; }
-
-    .line-numbers-rows {
-      position: absolute;
-      top: -2px;
-      left: -3.75em;
-      width: 3em;
-      border-right: 1px solid #999;
-      letter-spacing: -1px;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .line-numbers-rows > span {
-      display: block;
-      counter-increment: linenumber;
-    }
-
-    .line-numbers-rows > span::before {
-      content: counter(linenumber);
-      display: block;
-      padding-right: .8em;
-      color: #999;
-      text-align: right;
-    }
-
-    /* 構文色（元記事のダーク配色） */
-    .token.punctuation { color: #f8f8f2; }
-    .token.tag, .token.property { color: #ff2c78; }
-
-    /* 文書側のラベル部品 .tag（背景・余白つき）と名前が衝突するので、コード内では装飾を打ち消す */
-    .hcb_wrap .token.tag {
-      display: inline;
-      margin: 0;
-      padding: 0;
-      border-radius: 0;
-      background: none;
-      font-size: inherit;
-    }
-    .token.attr-name, .token.selector { color: #b4ec43; }
-    .token.attr-value, .token.string { color: #f3e880; }
-    .token.number { color: #ae81ff; }
-
-    /* コード例の直後に置く、ブラウザでの表示例 */
-    .demo {
-      margin: 0.5em 0 1.5em;
-      border: 1px solid #ccc;
-      background: #fff;
-      color: #000;
-    }
-
-    .demo__label {
-      margin: 0;
-      padding: 0.3em 0.8em;
-      border-bottom: 1px solid #ccc;
-      background: #eee;
-      color: #333;
-      font-size: 0.85em;
-    }
-
-    .demo__body {
-      padding: 0.5em 1em;
-    }
-
-    /* 「dt と dd を横並びにする」のコード例に対応 */
-    .demo__body--float dt {
-      float: left;
-    }
-
-    .demo__body--float dt::after {
-      content: "：";
-    }
-
-    /* 「dt と dd に下線をつける」のコード例に対応 */
-    .demo__body--border dl div {
-      border-bottom: dashed 1px #333333;
-      margin: 5px 0;
-    }
-
-    .demo__body--border dt {
-      float: left;
-    }
-
-    .demo__body--border dt::after {
-      content: "：";
-    }
-  </style>
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
+  pre{overflow-x:auto;background:#fff1e0;border:2px solid #f6cf9d;border-radius:12px;padding:12px 16px;margin:12px 0;font-size:15px;line-height:1.6}
+  pre code{background:none;padding:0}
+  img{max-width:100%;height:auto}
+  code{background:#fff1e0;padding:.1rem .35rem;border-radius:6px;font-size:.92em}
+  .hcb_wrap{position:relative;margin:2em 0}
+  .hcb_wrap pre{margin:0;padding:1.75em 1.5em 1.25em 3.75em;overflow:auto;box-sizing:border-box;background:#1d2128;color:#fff;font-size:14px;letter-spacing:.1px;line-height:1;tab-size:4;white-space:pre}
+  .hcb_wrap pre code{position:relative;display:block;margin:0;padding:0;background:none;color:inherit;font-size:inherit;line-height:1.5;vertical-align:baseline}
+  .hcb_wrap pre::before{content:attr(data-lang);position:absolute;top:0;right:0;min-width:4em;padding:0 10px;box-sizing:border-box;background:#111;color:#fff;font-size:12px;line-height:20px;text-align:center}
+  .hcb_wrap pre{counter-reset:linenumber}
+  .line-numbers-rows{position:absolute;top:-2px;left:-3.75em;width:3em;border-right:1px solid #999;letter-spacing:-1px;pointer-events:none;user-select:none}
+  .line-numbers-rows > span{display:block;counter-increment:linenumber}
+  .line-numbers-rows > span::before{content:counter(linenumber);display:block;padding-right:.8em;color:#999;text-align:right}
+  .token.punctuation{color:#f8f8f2}
+  .token.tag, .token.property{color:#ff2c78}
+  .hcb_wrap .token.tag{display:inline;margin:0;padding:0;border-radius:0;background:none;font-size:inherit}
+  .demo{margin:0.5em 0 1.5em;border:1px solid #ccc;background:#fff;color:#000}
+  .demo__label{margin:0;padding:0.3em 0.8em;border-bottom:1px solid #ccc;background:#faf3e2;color:#333;font-size:0.85em}
+  .demo__body{padding:0.5em 1em}
+  .demo__body--float dt{float:left}
+  .demo__body--float dt::after{content:"："}
+  .demo__body--border dl div{border-bottom:dashed 1px #333333;margin:5px 0}
+  .demo__body--border dt{float:left}
+  .demo__body--border dt::after{content:"："}
+</style>
 </head>
 <body>
-  <main class="p-archive__list">
+<header class="hero">
+<h1>HTML の説明リストタグ【 dl ・ dt ・ dd 】の使い方を徹底解説</h1>
+</header>
+<div class="wrap">
     <div class="l-inner">
       <div class="l-2col">
         <div class="l-2col__main">
@@ -244,8 +162,7 @@
               </div>
               <div class="header-title">
                 <p class="img"><img src="https://webliker.info/wp-content/uploads/2022/01/56-1.png" decoding="async" loading="lazy" alt=""></p>
-                <h1>HTML の説明リストタグ【 dl ・ dt ・ dd 】の使い方を徹底解説</h1>
-              </div>
+                              </div>
             </header>
             <!-- /.p-single__header -->
 
@@ -259,45 +176,45 @@
               </div>
 
               <nav class="toc" aria-label="目次">
-              <p class="toc-title">目次</p>
+              <b>📖 目次</b>
               <ol>
-              <li><a href="#sec1">dl ・ dt ・ dd ってどんな意味？</a>
+              <li><a href="#s1">dl ・ dt ・ dd ってどんな意味？</a>
               <ol>
-              <li><a href="#sec1-1">定義リストから説明リストへ</a></li>
+              <li><a href="#s1-1">定義リストから説明リストへ</a></li>
               </ol>
               </li>
-              <li><a href="#sec2">dl ・ dt ・ dt の使い方</a>
+              <li><a href="#s2">dl ・ dt ・ dt の使い方</a>
               <ol>
-              <li><a href="#sec2-1">一つの dt に対し複数の dd</a></li>
-              <li><a href="#sec2-2">複数の dt に対し一つの dd</a></li>
-              <li><a href="#sec2-3">複数の dt に対して複数の dd</a></li>
+              <li><a href="#s2-1">一つの dt に対し複数の dd</a></li>
+              <li><a href="#s2-2">複数の dt に対し一つの dd</a></li>
+              <li><a href="#s2-3">複数の dt に対して複数の dd</a></li>
               </ol>
               </li>
-              <li><a href="#sec3">dfn タグで辞典的な意味を強調</a></li>
-              <li><a href="#sec4">dl ・ dt ・ dd の実例サンプル</a>
+              <li><a href="#s3">dfn タグで辞典的な意味を強調</a></li>
+              <li><a href="#s4">dl ・ dt ・ dd の実例サンプル</a>
               <ol>
-              <li><a href="#sec4-1">サービス名とサービスの説明</a></li>
-              <li><a href="#sec4-2">質問とその回答</a></li>
-              <li><a href="#sec4-3">人物の詳細を説明</a></li>
+              <li><a href="#s4-1">サービス名とサービスの説明</a></li>
+              <li><a href="#s4-2">質問とその回答</a></li>
+              <li><a href="#s4-3">人物の詳細を説明</a></li>
               </ol>
               </li>
-              <li><a href="#sec5">table や ul とはどう使い分ける？</a>
+              <li><a href="#s5">table や ul とはどう使い分ける？</a>
               <ol>
-              <li><a href="#sec5-1">単純なリストは ul 、リストに説明が必要なら dl</a></li>
-              <li><a href="#sec5-2">一つの項目に対しての説明なら dl を使う</a></li>
+              <li><a href="#s5-1">単純なリストは ul 、リストに説明が必要なら dl</a></li>
+              <li><a href="#s5-2">一つの項目に対しての説明なら dl を使う</a></li>
               </ol>
               </li>
-              <li><a href="#sec6">dl の見た目を css で調整する</a>
+              <li><a href="#s6">dl の見た目を css で調整する</a>
               <ol>
-              <li><a href="#sec6-1">dt と dd を横並びにする</a></li>
-              <li><a href="#sec6-2">dt と dd に下線をつける</a></li>
+              <li><a href="#s6-1">dt と dd を横並びにする</a></li>
+              <li><a href="#s6-2">dt と dd に下線をつける</a></li>
               </ol>
               </li>
-              <li><a href="#sec7">dl リストのまとめ</a></li>
+              <li><a href="#s7">dl リストのまとめ</a></li>
               </ol>
               </nav>
 
-              <h2 class="wp-block-heading" id="sec1">1. dl ・ dt ・ dd ってどんな意味？</h2>
+              <h2 class="wp-block-heading" id="s1"><span class="no">1</span>dl ・ dt ・ dd ってどんな意味？</h2>
 
               <p class="wp-block-paragraph">実は、この dl ・ dt ・ dd というタグは少し前まではそれぞれ</p>
 
@@ -338,7 +255,7 @@
                 </div>
               </div>
 
-              <h3 class="wp-block-heading" id="sec1-1">1.1 定義リストから説明リストへ</h3>
+              <h3 class="wp-block-heading" id="s1-1">1.1 定義リストから説明リストへ</h3>
 
               <p class="wp-block-paragraph">HTML5 からそれぞれ</p>
 
@@ -381,7 +298,7 @@
                 </div>
               </div>
 
-              <h2 class="wp-block-heading" id="sec2">2. dl ・ dt ・ dt の使い方</h2>
+              <h2 class="wp-block-heading" id="s2"><span class="no">2</span>dl ・ dt ・ dt の使い方</h2>
 
               <p class="wp-block-paragraph">基本的な用途と意味がわかったところでコードの書き方を学習しましょう。</p>
 
@@ -395,7 +312,7 @@
 
               <p class="wp-block-paragraph">dl の中に dt と dd はいくらかいても OK です。また、「 dt が一つに対して、 dd も一つ」というルールはなく、内容によっては数にばらつきがうまれます。詳しくは後述します。</p>
 
-              <h3 class="wp-block-heading" id="sec2-1">2.1 一つの dt に対し複数の dd</h3>
+              <h3 class="wp-block-heading" id="s2-1">2.1 一つの dt に対し複数の dd</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -422,7 +339,7 @@
                 </div>
               </div>
 
-              <h3 class="wp-block-heading" id="sec2-2">2.2 複数の dt に対し一つの dd</h3>
+              <h3 class="wp-block-heading" id="s2-2">2.2 複数の dt に対し一つの dd</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -451,7 +368,7 @@
                 </div>
               </div>
 
-              <h3 class="wp-block-heading" id="sec2-3">2.3 複数の dt に対して複数の dd</h3>
+              <h3 class="wp-block-heading" id="s2-3">2.3 複数の dt に対して複数の dd</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -484,7 +401,7 @@
                 </div>
               </div>
 
-              <h2 class="wp-block-heading" id="sec3">3. dfn タグで辞典的な意味を強調</h2>
+              <h2 class="wp-block-heading" id="s3"><span class="no">3</span>dfn タグで辞典的な意味を強調</h2>
 
               <p class="wp-block-paragraph">さきほど html5 では「定義リスト」と「説明リスト」の二つの役割があると説明しました。</p>
 
@@ -515,13 +432,13 @@
                 </div>
               </div>
 
-              <h2 class="wp-block-heading" id="sec4">4. dl ・ dt ・ dd の実例サンプル</h2>
+              <h2 class="wp-block-heading" id="s4"><span class="no">4</span>dl ・ dt ・ dd の実例サンプル</h2>
 
               <p class="wp-block-paragraph">dl ・ dt ・ dd の基本的な使い方がわかったところで実際どんなシーンで使うのが適切なのかサンプルをいくつか紹介していきます。</p>
 
               <p class="wp-block-paragraph">一応おさらいですが、 dl は「 dt が dd によって説明されている」という関係が成り立っていれば OK です。それを踏まえて自身でもどんな使い方が適切かイメージしてみましょう。</p>
 
-              <h3 class="wp-block-heading" id="sec4-1">4.1 サービス名とサービスの説明</h3>
+              <h3 class="wp-block-heading" id="s4-1">4.1 サービス名とサービスの説明</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -552,7 +469,7 @@
                 </div>
               </div>
 
-              <h3 class="wp-block-heading" id="sec4-2">4.2 質問とその回答</h3>
+              <h3 class="wp-block-heading" id="s4-2">4.2 質問とその回答</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -577,7 +494,7 @@
                 </div>
               </div>
 
-              <h3 class="wp-block-heading" id="sec4-3">4.3 人物の詳細を説明</h3>
+              <h3 class="wp-block-heading" id="s4-3">4.3 人物の詳細を説明</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -616,13 +533,13 @@
                 </div>
               </div>
 
-              <h2 class="wp-block-heading" id="sec5">5. table や ul とはどう使い分ける？</h2>
+              <h2 class="wp-block-heading" id="s5"><span class="no">5</span>table や ul とはどう使い分ける？</h2>
 
               <p class="wp-block-paragraph">「役割が似ている table や ul とどう使い分けたらいいの？」と思っている人もいるはず。</p>
 
               <p class="wp-block-paragraph">html のタグの定義は決して正解があるとというわけではないですが、以下のことを判断基準にすることで正解に近いタグ付けをできるはずです。</p>
 
-              <h3 class="wp-block-heading" id="sec5-1">5.1 単純なリストは ul 、リストに説明が必要なら dl</h3>
+              <h3 class="wp-block-heading" id="s5-1">5.1 単純なリストは ul 、リストに説明が必要なら dl</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -678,7 +595,7 @@
                 </div>
               </div>
 
-              <h3 class="wp-block-heading" id="sec5-2">5.2 一つの項目に対しての説明なら dl を使う</h3>
+              <h3 class="wp-block-heading" id="s5-2">5.2 一つの項目に対しての説明なら dl を使う</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -698,14 +615,14 @@
                     <p class="demo__label">ブラウザでの表示</p>
                     <div class="demo__body">
                       <p>web サイトを作る言語の種類</p>
-                      <table>
+                      <div class="scroll"><table>
                         <tr>
                           <th>言語名</th><td>html</td><td>css</td>
                         </tr>
                         <tr>
                           <th>役割</th><td>論理構造を定義</td><td>見た目の調整</td>
                         </tr>
-                      </table>
+                      </table></div>
                     </div>
                   </div>
 
@@ -744,11 +661,11 @@
 
               <p class="wp-block-paragraph">そんな時は「表っぽくなりそうなら table を使う」という考え方でも OK です。</p>
 
-              <h2 class="wp-block-heading" id="sec6">6. dl の見た目を css で調整する</h2>
+              <h2 class="wp-block-heading" id="s6"><span class="no">6</span>dl の見た目を css で調整する</h2>
 
               <p class="wp-block-paragraph">dl でのリストははデフォルトでは以下のような見た目になっているのでいくつか css での調整方法を紹介します。</p>
 
-              <h3 class="wp-block-heading" id="sec6-1">6.1 dt と dd を横並びにする</h3>
+              <h3 class="wp-block-heading" id="s6-1">6.1 dt と dd を横並びにする</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -805,7 +722,7 @@
                 </div>
               </div>
 
-              <h3 class="wp-block-heading" id="sec6-2">6.2 dt と dd に下線をつける</h3>
+              <h3 class="wp-block-heading" id="s6-2">6.2 dt と dd に下線をつける</h3>
 
               <div class="wp-block-columns is-layout-flex wp-container-core-columns-is-layout-8f761849 wp-block-columns-is-layout-flex">
                 <div class="wp-block-column is-layout-flow wp-block-column-is-layout-flow">
@@ -875,7 +792,7 @@
                 </div>
               </div>
 
-              <h2 class="wp-block-heading" id="sec7">7. dl リストのまとめ</h2>
+              <h2 class="wp-block-heading" id="s7"><span class="no">7</span>dl リストのまとめ</h2>
 
               <p class="wp-block-paragraph">本記事で学習したことのまとめです。</p>
 
@@ -910,7 +827,9 @@
         <!-- /.l-2col__main -->
       </div>
     </div>
-  </main>
-  <!-- /.p-archive__list -->
+  
+
+</div>
+<!-- /.p-archive__list -->
 </body>
 </html>

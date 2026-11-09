@@ -5,147 +5,169 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>国際刑事裁判所所長に対する米国の制裁措置 ――指定の理由と経緯をめぐる検討</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
-  /* 文書固有 */
-  .box ul { margin:0;list-style:none;padding-left:0 }
-  .box li:last-child { margin-bottom:0 }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
+<header class="hero">
 <p class="kicker">国際刑事法・国際関係論的検討</p>
 <h1>国際刑事裁判所所長に対する米国の制裁措置<br>――指定の理由と経緯をめぐる検討</h1>
 <p class="subtitle">U.S. Sanctions on the President of the International Criminal Court: An Examination of the Stated Grounds and the Sequence of Escalation</p>
+</header>
+<div class="wrap">
 <div class="lede">
 <p>2026 年 8 月 18 日、米国政府は国際刑事裁判所 (ICC) の赤根智子所長を、大統領令 14203 号に基づく制裁対象に指定した。公式の理由は、 ICC の管轄権に同意していない国の公務員を訴追しようとする取り組みへの関与である。</p>
 <p>本稿は、この指定を、 2025 年 2 月に始まる制裁の段階的拡大と、 2026 年 10 月の機関指定の中に位置づけ、公表された理由が実質的な動機をどこまで説明するかを検討する。</p>
 </div>
 <div class="meta"><strong>【方法と限界】</strong> 本稿は公開された報道、弁護士会声明、国連の発表に基づく文献調査である。米国務省・財務省の原文書は直接確認できなかった。確認できる事実と、そこから導かれる筆者の解釈は区別して記し、後者には「筆者の判断」などの表示を付した。</div>
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">問題の所在</a></li>
-<li><a href="#sec2">背景――大統領令 14203 号と制裁の段階的拡大</a>
+<li><a href="#s1">問題の所在</a></li>
+<li><a href="#s2">背景――大統領令 14203 号と制裁の段階的拡大</a>
 <ol>
-<li><a href="#sec2-1">大統領令 14203 号の成立</a></li>
-<li><a href="#sec2-2">対象者の拡大</a></li>
+<li><a href="#s2-1">大統領令 14203 号の成立</a></li>
+<li><a href="#s2-2">対象者の拡大</a></li>
 </ol>
 </li>
-<li><a href="#sec3">赤根所長に対する指定</a>
+<li><a href="#s3">赤根所長に対する指定</a>
 <ol>
-<li><a href="#sec3-1">指定の事実関係</a></li>
-<li><a href="#sec3-2">公表された理由</a></li>
-<li><a href="#sec3-3">一次資料についての留意</a></li>
+<li><a href="#s3-1">指定の事実関係</a></li>
+<li><a href="#s3-2">公表された理由</a></li>
+<li><a href="#s3-3">一次資料についての留意</a></li>
 </ol>
 </li>
-<li><a href="#sec4">理由の分析</a>
+<li><a href="#s4">理由の分析</a>
 <ol>
-<li><a href="#sec4-1">形式的な理由――「同意していない国」の公務員</a></li>
-<li><a href="#sec4-2">個別の事件との関係</a></li>
-<li><a href="#sec4-3">戦略的な意図</a></li>
+<li><a href="#s4-1">形式的な理由――「同意していない国」の公務員</a></li>
+<li><a href="#s4-2">個別の事件との関係</a></li>
+<li><a href="#s4-3">戦略的な意図</a></li>
 </ol>
 </li>
-<li><a href="#sec5">指定後の展開</a>
+<li><a href="#s5">指定後の展開</a>
 <ol>
-<li><a href="#sec5-1">本人と国際社会の反応</a></li>
-<li><a href="#sec5-2">機関指定への拡大</a></li>
-<li><a href="#sec5-3">日本政府の対応</a></li>
+<li><a href="#s5-1">本人と国際社会の反応</a></li>
+<li><a href="#s5-2">機関指定への拡大</a></li>
+<li><a href="#s5-3">日本政府の対応</a></li>
 </ol>
 </li>
-<li><a href="#sec6">考察</a></li>
-<li><a href="#sec7">結論</a></li>
-<li><a href="#sec8">参考文献・資料</a></li>
+<li><a href="#s6">考察</a></li>
+<li><a href="#s7">結論</a></li>
+<li><a href="#s8">参考文献・資料</a></li>
 </ol>
 </nav>
-<h2 id="sec1">1. 問題の所在</h2>
+<section id="s1">
+<h2><span class="no">1</span>問題の所在</h2>
 <p>国際刑事裁判所 (ICC) は、集団殺害犯罪、人道に対する犯罪、戦争犯罪、侵略犯罪の四つを扱う常設の国際裁判所であり、オランダのハーグに置かれている。加盟国は 125 の国と地域にのぼり、日本は 2007 年に加盟した。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 米国は加盟していない。</p>
 <p>2026 年 8 月 18 日、米国政府はこの裁判所の所長である赤根智子判事を、制裁対象に指定した。同裁判所の所長に日本人が就いたのは赤根氏が初めてであり、その現職に対する措置は、日本国内でも大きな反響を呼んだ。さらに 10 月 9 日には、米国は個人にとどまらず裁判所そのものを指定するに至っている。</p>
 <p>本稿は、次の三つの問いに答えることを目的とする。</p>
@@ -156,73 +178,92 @@
 <li><strong>第三の問い</strong><br>公表された理由は、指定の実質的な動機を十分に説明しているか。</li>
 </ul>
 </div>
-<h2 id="sec2">2. 背景――大統領令 14203 号と制裁の段階的拡大</h2>
-<h3 id="sec2-1">2.1 大統領令 14203 号の成立</h3>
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span>背景――大統領令 14203 号と制裁の段階的拡大</h2>
+<h3 id="s2-1">2.1 大統領令 14203 号の成立</h3>
 <p>赤根所長への指定の法的根拠は、 2025 年 2 月 6 日にトランプ大統領が署名した大統領令 14203 号「国際刑事裁判所に対する制裁の賦課」である（連邦官報への掲載は 2 月 12 日）。この命令は、米国市民や米国の同盟国に対する捜査を ICC が行う際に、これを支援する者へ査証上の制限と金融上の制裁を科す枠組みを定める。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></p>
 <p>直接の契機は、 2024 年 11 月に ICC がイスラエルのネタニヤフ首相とガラント前国防相に逮捕状を出したことだと広く受け止められている。ロイター通信は、トランプ大統領が自身や側近の訴追を懸念していたとも報じた。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> ただし、制裁の発想自体は新しいものではない。第 1 期政権の 2020 年にも、米国はアフガニスタンでの捜査により米兵が訴追されることを強く懸念して、 ICC の検察官らに制裁を科している。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
-<h3 id="sec2-2">2.2 対象者の拡大</h3>
+<h3 id="s2-2">2.2 対象者の拡大</h3>
 <p>大統領令の発出以降、指定の対象は次のとおり段階的に広がった。愛知県弁護士会は、これを、検察官から次席検察官、判事、所長へと対象が広がったものと整理している。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
-<table class="cards">
+<div class="scroll"><table>
 <thead><tr><th>時期</th><th>対象・出来事</th></tr></thead>
 <tbody>
-<tr><td data-label="時期">2025 年 2 月</td><td data-label="対象・出来事">大統領令の発出。カリム・カーン検察官が制裁対象となる。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td data-label="時期">2025 年 6 月 5 日</td><td data-label="対象・出来事">判事 4 人を指定。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td data-label="時期">2025 年 8 月 20 日</td><td data-label="対象・出来事">判事および次席検察官の計 4 人を指定。 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
-<tr><td data-label="時期">2025 年 12 月 18 日</td><td data-label="対象・出来事">判事 2 人を指定。 <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><td data-label="時期">2026 年 7 月 13 日</td><td data-label="対象・出来事">国務省が ICC を「解体」するための政府横断の運動を開始。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
-<tr><td data-label="時期">2026 年 8 月 18 日</td><td data-label="対象・出来事">赤根智子所長とアブドゥライェ・セイ上級法廷法律家を指定。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
-<tr><td data-label="時期">2026 年 10 月 9 日</td><td data-label="対象・出来事">ICC を機関として指定。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th scope="row">2025 年 2 月</th><td>大統領令の発出。カリム・カーン検察官が制裁対象となる。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">2025 年 6 月 5 日</th><td>判事 4 人を指定。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">2025 年 8 月 20 日</th><td>判事および次席検察官の計 4 人を指定。 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">2025 年 12 月 18 日</th><td>判事 2 人を指定。 <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">2026 年 7 月 13 日</th><td>国務省が ICC を「解体」するための政府横断の運動を開始。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><th scope="row">2026 年 8 月 18 日</th><td>赤根智子所長とアブドゥライェ・セイ上級法廷法律家を指定。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><th scope="row">2026 年 10 月 9 日</th><td>ICC を機関として指定。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
 </tbody>
-</table>
+</table></div>
 <p>この表の数え方によれば、機関指定の直前までに、個人としては判事と検察官の計 13 人が対象となっていた。国連ニュースも「 13 人の判事と検察官」と伝えている。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></p>
-<h2 id="sec3">3. 赤根所長に対する指定</h2>
-<h3 id="sec3-1">3.1 指定の事実関係</h3>
+</section>
+
+<section id="s3">
+<h2><span class="no">3</span>赤根所長に対する指定</h2>
+<h3 id="s3-1">3.1 指定の事実関係</h3>
 <p>2026 年 8 月 18 日（米国時間）、ルビオ国務長官は赤根所長とセイ氏の 2 人を、大統領令 14203 号に基づいて指定したと発表した。財務省の制裁一覧にも掲載されたと報じられている。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 日本の報道では、発表は 19 日付で伝えられた。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></p>
 <p>指定の効果は、米国内にある資産の凍結と、米国の金融システムからの事実上の排除である。日本の報道と弁護士会声明は、米国への入国禁止も効果に含めて伝えている。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup><sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup> 財務省は、赤根氏との取引の整理を認める一般許可を 9 月 17 日まで出したとされる。 <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup></p>
 <p>セイ氏はセネガル出身で、ネタニヤフ首相の逮捕状を請求した検察チームの一員であり、 ICC 判事の候補にも指名されていたと報じられている。 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup></p>
-<h3 id="sec3-2">3.2 公表された理由</h3>
+<h3 id="s3-2">3.2 公表された理由</h3>
 <p>ルビオ長官の声明は、 2 人が「統治機構が ICC の管轄権に同意していない国の公務員を、捜査し、逮捕し、拘束し、または訴追する ICC の取り組みに、直接関与した」ことを理由に挙げた。 <sup id="fnref-10-4"><a href="#ref-10">[10]</a></sup><sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> また長官は、 ICC を「腐敗し、致命的なまでに政治化された超国家的な裁判所」と非難し、米国民を「この茶番の裁判所」から守るために、 ICC の「解体」を進める運動の一環として措置をとると述べた。 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup><sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup></p>
-<h3 id="sec3-3">3.3 一次資料についての留意</h3>
+<h3 id="s3-3">3.3 一次資料についての留意</h3>
 <p>米国務省と財務省の原文は、本稿の作業では取得できなかった（国務省のサイトは取得時に拒否応答を返した）。以上の引用は、複数の報道と、国内の弁護士会声明が伝える内容に依拠している。声明の文言そのものは、報道間で大きく食い違っていない。</p>
-<h2 id="sec4">4. 理由の分析</h2>
-<h3 id="sec4-1">4.1 形式的な理由――「同意していない国」の公務員</h3>
+</section>
+
+<section id="s4">
+<h2><span class="no">4</span>理由の分析</h2>
+<h3 id="s4-1">4.1 形式的な理由――「同意していない国」の公務員</h3>
 <p>指定の根拠として示されたのは、「 ICC の管轄権に同意していない国の公務員」への捜査・訴追に関与したという点である。ここで念頭に置かれているのは、 ICC の非加盟国である米国とイスラエルである。 <sup id="fnref-7-4"><a href="#ref-7">[7]</a></sup></p>
 <p>この論理には、管轄権の理解をめぐる対立が含まれている。 ICC は、加盟国の領域内で行われた犯罪について、行為者の国籍を問わず管轄権を行使できる。アフガニスタンでの捜査も、パレスチナ情勢の捜査も、この領域管轄に依拠している。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> これに対し米国は、自国民が非加盟国の国民として管轄の外にあると主張し、領域管轄に基づく訴追そのものを正当性のない行為とみなしている。</p>
-<h3 id="sec4-2">4.2 個別の事件との関係</h3>
+<h3 id="s4-2">4.2 個別の事件との関係</h3>
 <p>報道は、指定の背景に二つの事件を挙げている。一つは 2020 年に始まったアフガニスタンでの捜査であり、米国はこれを自国の軍・情報機関要員に及びうるものと見ている。もう一つは、 2024 年のネタニヤフ首相らに対する逮捕状である。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup><sup id="fnref-7-5"><a href="#ref-7">[7]</a></sup></p>
 <p>赤根氏自身の関与について、時事通信は次のように説明している。判事時代の同氏は、プーチン大統領への逮捕状発付の審査や、アフガニスタンでの紛争をめぐる捜査の可否の判断に携わり、ネタニヤフ首相への逮捕状が出された時点では所長の職にあった。 <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 経歴の面では、赤根氏は元検察官で、 2018 年 3 月に判事に就任し、 2024 年 3 月に所長に選ばれた。 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup></p>
 <p><strong>筆者の判断</strong><br>
 ここで注意すべき点が二つある。第一に、公表された理由は、赤根氏個人が行った特定の行為を挙げていない。第二に、所長は裁判所の運営を統括する立場にあり、個々の事件の令状を出す審理部の判断と同一視できるとは限らない。本稿が確認できた範囲では、ネタニヤフ首相の逮捕状に赤根氏が審理部の裁判官として関与したことを裏づける資料は見当たらなかった。したがって、この指定は個別の司法判断への制裁というより、裁判所の代表者への制裁として読むほうが、公表された事実に整合的であると考える。</p>
-<h3 id="sec4-3">4.3 戦略的な意図</h3>
+<h3 id="s4-3">4.3 戦略的な意図</h3>
 <p>指定の意図を理解する手がかりは、国務省が 7 月 13 日に始めた運動にある。この運動は、 ICC が米国の軍人や公務員を標的にする能力を「体系的に無力化する」ことを掲げ、加盟国に対して脱退と資金の拠出停止を働きかけ、 ICC 職員への査証取り消しや渡航禁止、 ICC と関連組織への追加制裁を手段に含むとされる。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> ルビオ長官は、 ICC が移民政策や船舶攻撃の任務にあたる米国要員を脅かすと論じたとも報じられている。 <sup id="fnref-10-5"><a href="#ref-10">[10]</a></sup></p>
 <p>Just Security の論考は、この運動の仕組みを次のように説明する。米国は加盟国ではなく、通常予算にも拠出していないため、資金面から ICC を追い込むことはできない。その代わりに、世界の主要銀行が避けられない米国の金融システムの影響力を使って、 ICC を支える側の費用を引き上げている。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></p>
 <p>また、赤根氏の指定は日本の事情とも結びつけて論じられている。日本は ICC の分担金の約 15% を負担する最大の拠出国であり、日本の対応が他のアジア諸国の動向を左右しうるという見方である。 <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 一方、米国側がこの点を理由として明示した資料は確認できなかったため、これは分析者の推測にとどまる。</p>
-<h2 id="sec5">5. 指定後の展開</h2>
-<h3 id="sec5-1">5.1 本人と国際社会の反応</h3>
+</section>
+
+<section id="s5">
+<h2><span class="no">5</span>指定後の展開</h2>
+<h3 id="s5-1">5.1 本人と国際社会の反応</h3>
 <p>ICC は声明で、司法関係者を法の適用を理由に攻撃することは国際法秩序を危うくすると述べた。 <sup id="fnref-7-6"><a href="#ref-7">[7]</a></sup> 日本の外務省は 19 日、「大変残念」との趣旨を表明し、 ICC への支持を改めて示した。オランダのベレンセン外相は不支持を表明し、赤根氏を招いて今後の支援を話し合うと述べた。 <sup id="fnref-7-7"><a href="#ref-7">[7]</a></sup><sup id="fnref-10-6"><a href="#ref-10">[10]</a></sup> 他方、ネタニヤフ首相は措置を歓迎し、 ICC を「カンガルー裁判所」と呼んだ。 <sup id="fnref-7-8"><a href="#ref-7">[7]</a></sup></p>
 <p>赤根氏は 8 月 26 日、ハーグからオンラインで日本記者クラブの会見に臨み、制裁を受ける理由は「全くない」と述べた。すでにクレジットカードなどが使えなくなっていることも明らかにしている。 <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 同日の報道は、撤回を求める署名が約 8 万 5 千筆に達したとも伝える。 <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></p>
 <p>法廷でも争いが続いている。 2026 年 6 月には ICC の判事 3 人が制裁を「恣意的で気まぐれ」だとして米政権を提訴し、 8 月の指定の直前には人権団体 4 団体がニューヨークで提訴した。 <sup id="fnref-7-9"><a href="#ref-7">[7]</a></sup> これらの訴訟の帰結は、本稿の作成時点では確認できていない。</p>
-<h3 id="sec5-2">5.2 機関指定への拡大</h3>
+<h3 id="s5-2">5.2 機関指定への拡大</h3>
 <p>2026 年 10 月 9 日、米国は ICC そのものを大統領令 14203 号に基づく制裁対象に指定した。ルビオ長官は「この無法な裁判所との取引を禁じる」と述べ、 ICC が脅威をやめなければ「れんが一つずつ解体する」と警告した。 <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup><sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup> 米国市民は「この偽物の ICC の管轄に服さない」とも述べている。 <sup id="fnref-8-4"><a href="#ref-8">[8]</a></sup></p>
 <p>措置は、裁判所の米国内の財産を凍結し、裁判所への資金・役務の提供を禁じる。ただし、保守点検、情報技術、年金制度などの役務には暫定的な適用除外があり、国務省はこれを、加盟国が米国の懸念への対応を示すための猶予だと説明している。 <sup id="fnref-8-5"><a href="#ref-8">[8]</a></sup> 財務省は 180 日の一般許可を出したとも報じられている。 ICC の職員は約 900 人にのぼる。 <sup id="fnref-8-6"><a href="#ref-8">[8]</a></sup></p>
 <p>ICC は、この措置を前例のないものと呼び、「法の支配と国際法秩序の根幹に対する攻撃」だと批判した。 <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup> グテーレス国連事務総長は「国際刑事司法を追求する私たちの営みへの深刻な打撃」と述べた。 <sup id="fnref-9-5"><a href="#ref-9">[9]</a></sup> 赤根所長は 9 日のビデオ声明で、「最も重大な罪を犯した者だけを利する外部からの脅迫」に屈しないと表明した。 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></p>
-<h3 id="sec5-3">5.3 日本政府の対応</h3>
+<h3 id="s5-3">5.3 日本政府の対応</h3>
 <p>日本の対応は、慎重さと批判の両方を伴った。高市首相は当初、「大変残念」と述べるにとどまり、米国への抗議には言及しなかった。 <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 25 日には「大変深刻に受け止めている」と述べ、制裁は日本の立場と「相いれない」と説明した。 <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup><sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 超党派の議員連盟や野党党首からは、政府の対応が「弱腰」だとの批判が出た。 <sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup></p>
 <p>愛知県弁護士会は 8 月 24 日の会長声明で、政府に五つの対応を求めた。米国への明確な抗議と撤回要求、 ICC の判断を独立した司法判断として尊重する旨の公的な表明、有志国との共同行動、赤根氏が職務を続けるための実務的支援と国内金融機関への情報提供、 ICC に協力する日本の個人・企業の法的保護の検討である。 <sup id="fnref-4-5"><a href="#ref-4">[4]</a></sup></p>
 <p>機関指定の後、茂木外相は 10 月 10 日夜に赤根所長とルビオ長官のそれぞれと約 15 分ずつ電話で話した。外務省の発表によれば、日本の立場を伝え、緊密な意思疎通を続けることで一致した。米国務省は、ルビオ長官が制裁の必要性を伝えたと説明している。 <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 日本を含む 21 か国が ICC の議長団を通じて制裁の撤回を求めたとの見出しも確認できるが、本文は取得できなかった。 <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup></p>
 <p>論壇では、問題を「法の支配か日米同盟か」の二者択一とみなすこと自体を戒め、首脳間の対立に引き上げずに外交実務で処理すべきだとの主張もある。 <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup></p>
-<h2 id="sec6">6. 考察</h2>
+</section>
+
+<section id="s6">
+<h2><span class="no">6</span>考察</h2>
 <p>以上の整理から、三つの問いには次のように答えられる。</p>
 <p>第一の問いについて、米国が公式に挙げた理由は、「同意していない国の公務員を捜査・訴追する取り組みへの直接関与」という定型的な表現であり、大統領令の指定要件に沿った形式的な説明にとどまる。赤根氏個人の具体的な行為は、本稿が確認した範囲では示されていない。</p>
 <p>第二の問いについて、この指定は、 2025 年 2 月の大統領令に始まる段階的な拡大の一局面であり、 2026 年 7 月の「解体」運動の宣言を経て、 10 月の機関指定へ至る流れの中間に位置する。対象が検察官、次席検察官、判事、所長、機関へと上がっていったことは、個別の事件への報復から、裁判所の運営基盤の破壊へと目的が移ったことを示唆する。</p>
 <p>第三の問いについて、公表された理由だけでは動機を説明しきれない。特に、非加盟国の国民への管轄権をめぐる対立、アフガニスタンとイスラエルをめぐる個別事件、そして ICC を財政的・実務的に機能不全にするという運動全体の目的が、理由の背後に重なっていると考えられる。</p>
 <p>ただし、本稿には限界がある。米国側の一次資料を直接確認できなかったこと、訴訟の帰結が未確定であること、日本政府の対応が現在進行中であることから、ここでの評価は暫定的なものである。</p>
-<h2 id="sec7">7. 結論</h2>
+</section>
+
+<section id="s7">
+<h2><span class="no">7</span>結論</h2>
 <p>米国政府が赤根智子所長を制裁対象に指定した公式の理由は、 ICC が自国や同盟国の公務員を捜査・訴追しようとしていることへの関与である。しかし、その実質は、 2025 年 2 月に始まり 2026 年 10 月に機関指定へ至った、 ICC 全体に対する圧力の拡大の一環として理解するのが妥当である。所長という職責の象徴性と、日本が最大の拠出国であるという事情が、この時期の指定に影響した可能性はあるが、それを裏づける公式の説明は見当たらない。</p>
 <p>今後の焦点は、提訴された各訴訟の判断、加盟国の脱退と拠出をめぐる動向、そして日本を含む加盟国が米国の金融上の圧力から ICC の実務を守る具体策を示せるかどうかである。</p>
+</section>
 <div class="refs">
-<h2 id="sec8">8. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<h2 id="s8">8. 参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> 時事通信「【やさしく解説】アメリカは国際刑事裁判所長をなぜ制裁したか」 2026 年 9 月。 <a href="https://www.jiji.com/jc/v8?id=202609ICC-team">時事ドットコム</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> Just Security, "The Road to Dismantling the ICC Runs Through Tokyo," 2026 年。 <a href="https://www.justsecurity.org/154571/us-dismantling-icc-challenges-tokyo/">Just Security</a></li>
@@ -241,8 +282,8 @@
 <li id="ref-15"><a href="#fnref-15-1">^</a> NHK 「米 ルビオ国務長官 茂木外相に ICC 制裁の必要性を伝達」 2026 年 10 月 11 日。 <a href="https://news.web.nhk/newsweb/na/nd-20261011de57812">NHK</a></li>
 <li id="ref-16"><a href="#fnref-16-1">^</a> 佐藤優「国際刑事裁判所の赤根智子所長への制裁を、これ以上首脳間レベルの問題にしてはいけない理由」東洋経済オンライン、 2026 年 10 月 3 日（有料記事。無料部分のみ確認）。 <a href="https://toyokeizai.net/articles/-/959777?display=b">東洋経済オンライン</a></li>
 </ol>
-<p class="note-end">本稿は、 2026 年 10 月 11 日時点で公開されていた報道、弁護士会声明、国連の発表などに基づく整理である。米国政府の原文書は直接確認できておらず、記載した事実と評価は、その後の公表や訴訟の進展により変わりうる。評価に関わる記述は筆者の判断であり、確立した法的結論ではない。</p>
+<p class="endnote">本稿は、 2026 年 10 月 11 日時点で公開されていた報道、弁護士会声明、国連の発表などに基づく整理である。米国政府の原文書は直接確認できておらず、記載した事実と評価は、その後の公表や訴訟の進展により変わりうる。評価に関わる記述は筆者の判断であり、確立した法的結論ではない。</p>
 </div>
-</main>
+</div>
 </body>
 </html>

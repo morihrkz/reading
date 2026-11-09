@@ -5,148 +5,163 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>哲学的思考の技術と独学カリキュラムの設計</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
-  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
-  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin-bottom: .6rem; }
-  .checklist .cl-title::before { content: "✅ "; }
-  .checklist ul { list-style: none; padding: 0; margin: 0; }
-  .checklist li { padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
-  .checklist li:last-child { border-bottom: none; }
-  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .7rem; width: 1.25rem; height: 1.25rem; accent-color: var(--accent); cursor: pointer; }
-  .checklist label { cursor: pointer; }
-  .save-note { font-size: .8125rem; color: var(--muted); text-align: center; margin: .5rem 0 0; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
 </style>
 </head>
 <body>
-<main>
-<div class="kicker">哲学入門</div>
+<header class="hero">
 <h1>哲学的思考の技術と独学カリキュラムの設計</h1>
 <p class="subtitle">The Art of Philosophical Thinking and the Design of a Self-Study Curriculum</p>
+</header>
+<div class="wrap">
+<div class="kicker">哲学入門</div>
 <div class="lede"><p>哲学的な思考は、哲学者の名前や学説を暗記することではなく、問いを立て、概念を区別し、論証を検討する技術である。専門的な素養を持たない独学者にとって難しいのは、教材が少ないことではなく、むしろ多すぎて何から手をつければよいか分からなくなることである。本稿は、その「考え方」と「学び方の設計」に絞って整理する実践ノートである。</p></div>
-<div class="note">【方法と限界】専門的な素養を持たない成人が、哲学・倫理学を独学で学ぶための実践ノート。
+<div class="box">【方法と限界】専門的な素養を持たない成人が、哲学・倫理学を独学で学ぶための実践ノート。
 哲学史や各分野の内容そのものの解説ではなく、「どう考え、どう学習を組み立てるか」という方法論に絞って整理する。</div>
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">哲学的に考えるとは何か</a>
+<li><a href="#s1">哲学的に考えるとは何か</a>
 <ol>
-<li><a href="#sec1-1">問いを正確にする</a></li>
-<li><a href="#sec1-2">概念を区別する</a></li>
-<li><a href="#sec1-3">意見と論証を分ける</a></li>
-<li><a href="#sec1-4">スティールマンと反対意見の扱い</a></li>
+<li><a href="#s1-1">問いを正確にする</a></li>
+<li><a href="#s1-2">概念を区別する</a></li>
+<li><a href="#s1-3">意見と論証を分ける</a></li>
+<li><a href="#s1-4">スティールマンと反対意見の扱い</a></li>
 </ol>
 </li>
-<li><a href="#sec2">独学カリキュラムの組み立て方</a>
+<li><a href="#s2">独学カリキュラムの組み立て方</a>
 <ol>
-<li><a href="#sec2-1">第 1 段階――まず地図を作る</a></li>
-<li><a href="#sec2-2">第 2 段階――一つの問題を選ぶ</a></li>
-<li><a href="#sec2-3">第 3 段階――哲学者を「答え」ではなく「対話相手」として読む</a></li>
-<li><a href="#sec2-4">第 4 段階――原典と解説を往復する</a></li>
-<li><a href="#sec2-5">第 5 段階――ノートを「知識の倉庫」から「思考の実験室」へ変える</a></li>
-<li><a href="#sec2-6">学習の深さを測る</a></li>
+<li><a href="#s2-1">第 1 段階――まず地図を作る</a></li>
+<li><a href="#s2-2">第 2 段階――一つの問題を選ぶ</a></li>
+<li><a href="#s2-3">第 3 段階――哲学者を「答え」ではなく「対話相手」として読む</a></li>
+<li><a href="#s2-4">第 4 段階――原典と解説を往復する</a></li>
+<li><a href="#s2-5">第 5 段階――ノートを「知識の倉庫」から「思考の実験室」へ変える</a></li>
+<li><a href="#s2-6">学習の深さを測る</a></li>
 </ol>
 </li>
-<li><a href="#sec3">次のアクション</a></li>
-<li><a href="#sec4">参考文献・資料</a></li>
+<li><a href="#s3">次のアクション</a></li>
+<li><a href="#s4">参考文献・資料</a></li>
 </ol>
 </nav>
-<h2 id="sec1">1. 哲学的に考えるとは何か</h2>
+<section id="s1">
+<h2><span class="no">1</span>哲学的に考えるとは何か</h2>
 <p>知識の暗記ではなく、問い・概念・論証を扱う技術。</p>
 <p>哲学を独学する際、最初に理解しておきたいのは、哲学は哲学者の名前と学説を大量に覚えるだけの学問ではないということである。歴史上の思想家を知ることは重要だが、それ以上に重要なのは、その思想家が「何を問題にし、どの前提から出発し、どのような理由によって結論へ到達したのか」を追跡することである。</p>
 <p>その意味で、哲学の学習は読書と論証の訓練が一体になっている。難解な文章に出会ったとき、「何となく深いことを言っている」と受け取るのではなく、問い、定義、前提、理由、結論、反例を分けて読む。この読み方を身につけると、古典哲学だけでなく、政治・法律・科学・ AI ・日常生活に関する議論にも応用できる。</p>
-<h3 id="sec1-1">1.1 問いを正確にする</h3>
+<h3 id="s1-1">1.1 問いを正確にする</h3>
 <p>哲学的な議論では、問いの形が曖昧なままだと結論も曖昧になる。「 AI は危険か」という問いは広すぎる。安全性の問題なのか、雇用なのか、プライバシーなのか、責任なのかによって論点は変わる。「自由とは何か」も同様で、他者から干渉されないことを意味するのか、自分の欲望に従って選択することを意味するのか、それとも別の能力を意味するのかで議論は大きく変わる。</p>
 <p>したがって独学者は、気になるテーマを見つけたら、まず一文で問いを書き、その問いに含まれる曖昧な語を列挙するとよい。これは地味だが、哲学的思考の出発点になる。</p>
-<h3 id="sec1-2">1.2 概念を区別する</h3>
+<h3 id="s1-2">1.2 概念を区別する</h3>
 <p>哲学では、似ているようで異なる概念を区別することが議論の成否を左右する。「合法」と「正当」、「幸福」と「快楽」、「自由」と「好きなことができること」、「平等」と「公平」は、日常会話では近い意味で使われることがある。しかし、それらを同一視すると論証の途中で意味がずれてしまう。</p>
 <p><strong>概念分析の基本形 :</strong> ある言葉について、次を順番に確認する。</p>
 <p>① 自分が最初に想定した意味</p>
@@ -154,35 +169,38 @@
 <p>③ 論者が議論の中で与えている意味</p>
 <p>④ その定義では説明できない事例</p>
 <p>定義そのものに唯一の正解があるとは限らないが、少なくとも議論の途中で意味を無意識に変更しないことが重要である。</p>
-<h3 id="sec1-3">1.3 意見と論証を分ける</h3>
+<h3 id="s1-3">1.3 意見と論証を分ける</h3>
 <p>「私はそう思う」は一つの意見である。しかし、哲学的な議論では、その意見を他者が検討できる形にする必要がある。そのためには、何を前提としているのか、なぜその前提から結論が導かれるのかを明示する。</p>
 <p>独学では、読んだ文章を「要約する」だけで終わらせず、筆者の主張を「前提 A 、前提 B 、したがって結論 C 」という形に置き換えてみるとよい。
 さらに「 A は本当に正しいか」「 B が正しいとしても C が導かれるか」「反例はないか」と問い直す。論理学を専門的に学ぶ前でも、この習慣は身につけられる。</p>
-<h3 id="sec1-4">1.4 スティールマンと反対意見の扱い</h3>
+<h3 id="s1-4">1.4 スティールマンと反対意見の扱い</h3>
 <p>哲学を学ぶうえで意外に難しいのが、反対意見を公平に理解することである。自分が賛成しやすい立場だけを強く書き、反対側を弱い形で紹介すると、議論は簡単に勝てる。しかし、それでは理解は深まらない。</p>
 <p>そこで有効なのが、相手の立場を、本人が認めてもよいと思えるほど強い形にしてから検討する方法である。一般にスティールマンと呼ばれるこの姿勢は、単に「相手に優しくする」ためのものではない。最も強い反論を受けても維持できる部分だけを残すことで、自分の立場の本当の強さと弱さが見えるからである。</p>
 <p>※「スティールマン (steelman) 」は伝統的な哲学用語ではなく、相手の主張を弱く歪めて反論する「藁人形論法（ストローマン）」の対義語として、 2010 年代前半にオンラインの合理主義コミュニティ（ LessWrong 等）で広まった比較的新しい言い方である <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。学術的な起源を持つ概念ではない点に注意する。</p>
-<h2 id="sec2">2. 独学カリキュラムの組み立て方</h2>
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span>独学カリキュラムの組み立て方</h2>
 <p>関心から出発し、基礎・原典・論争へ進む実践的な設計。</p>
 <p>哲学の独学で最も困りやすいのは、教材が少ないことではなく、むしろ多すぎることである。入門書、哲学史、個別の哲学者の研究書、原典、大学講義、論文、動画など、入口はいくらでもある。その結果、「何から始めればよいのか分からない」という状態になりやすい。</p>
 <p>この問題には、唯一の正解となるカリキュラムがあるわけではない。ただし、学習を「地図を作る段階」「一つの問題を深く考える段階」「原典と研究書を往復する段階」「自分で論証する段階」に分けると、迷走をかなり減らせる。</p>
-<h3 id="sec2-1">2.1 第 1 段階――まず地図を作る</h3>
+<h3 id="s2-1">2.1 第 1 段階――まず地図を作る</h3>
 <p>最初から一人の哲学者の原典を完全に理解しようとするより、哲学全体の地図を先に持つ方が、自分がどこにいるのかを把握しやすい。形而上学、認識論、倫理学、論理学、美学という大きな区分に加え、政治哲学、科学哲学、心の哲学、言語哲学などの存在を知るだけでもよい。</p>
 <p>それぞれが問う中心的な問いは異なる。実在とは何か、何が存在するのかを問うのが形而上学、知識とは何か・何をもって「知っている」と言えるのかを問うのが認識論、善悪や「なすべきこと」の基準を問うのが倫理学、推論の妥当性そのものを扱うのが論理学、美や芸術的価値の性格を問うのが美学である。同様に、権力や正義の根拠を問うのが政治哲学、科学的説明や方法の性格を問うのが科学哲学、意識や心的状態の本性を問うのが心の哲学、意味や指示の仕組みを問うのが言語哲学である <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。</p>
 <p>この段階の目標は「詳しく知る」ことではなく、「知らない領域がどこにあるかを知る」ことである。百科事典的な知識を増やすことより、全体像を一枚の地図として持つことを優先する。</p>
 <p>地図ができたら、どの分野から入るかを決める。これにも唯一の正解はないが、判断の目安はある。倫理学は「他者をどこまで助けるべきか」のように日常の問いから入りやすく、動機を保ちやすい。一方、認識論や形而上学は、「知っている」とは何か、「ある」とは何かという、あらゆる議論の前提を掘り下げるので、入口は抽象的になるが、他の分野を読むときの足場になる。関心が続く方から入り、行き詰まったら別の分野へ移ってよい。分野の選択は、一度決めたら変えられない契約ではない。</p>
-<h3 id="sec2-2">2.2 第 2 段階――一つの問題を選ぶ</h3>
+<h3 id="s2-2">2.2 第 2 段階――一つの問題を選ぶ</h3>
 <p>地図ができたら、自分が本当に考えたい問題を一つ選ぶ。「人は自由なのか」「幸福とは何か」「他者をどこまで助けるべきか」「動物にどのような権利を認めるべきか」「 AI の判断に責任を負うのは誰か」など、具体的な問いで構わない。</p>
 <p>重要なのは、問題を選んだあとにすぐ自分の結論を確定しないことである。最初の直観を仮説として保持し、賛成・反対双方の最も強い理由を調べる。自分の考えが変わることは、学習の失敗ではなく、学習が進んだ証拠である。</p>
 <p>独学が途中で止まる大きな原因は、最初の直観を確かめないまま結論にしてしまうか、逆に、確かめる作業が重すぎて手が止まるかの、どちらかである。前者には、直観を「仮説」と書き直して理由を点検する手順が効き、後者には、一度に扱う問いを一つに絞り、 1 日の作業量を小さく決めておくことが効く。</p>
-<h3 id="sec2-3">2.3 第 3 段階――哲学者を「答え」ではなく「対話相手」として読む</h3>
+<h3 id="s2-3">2.3 第 3 段階――哲学者を「答え」ではなく「対話相手」として読む</h3>
 <p>哲学史を学ぶとき、「カントはこう言った」「功利主義はこう考える」という暗記に偏ると、思想が平板になる。むしろ一人の哲学者を、自分の問いに対して一つの答えを提示する対話相手として読むとよい。</p>
 <p>たとえば義務論を読むなら、「なぜ結果だけではなく行為の原理を問題にするのか」と問い、功利主義を読むなら、「なぜ結果を評価することが重要なのか」と問う。そして双方を対決させる。さらに徳倫理学を加えることで、「そもそも正しい行為だけを決めれば十分なのか」という別の問いが生まれる。このように思想を比較すると、哲学史が単なる年代順の知識ではなく、問題をめぐる長い対話として見えてくる。</p>
 <p>※ 義務論・功利主義・徳倫理学の三分類は現代の規範倫理学で標準的に使われる整理である <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。特に徳倫理学は二十世紀半ばまで下火だったが、アンスコムが 1958 年の論文「近代道徳哲学」で義務論・功利主義双方の前提を批判したことが、その後の復興の大きな契機になったとされる <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。</p>
-<h3 id="sec2-4">2.4 第 4 段階――原典と解説を往復する</h3>
+<h3 id="s2-4">2.4 第 4 段階――原典と解説を往復する</h3>
 <p>原典だけを読むと、前提となる議論や時代背景が分からず、解説だけを読むと、著者自身の議論を直接検証できない。この両方に弱点がある。そのため、独学では「解説で地図を得る → 原典の該当箇所を読む → 自分の言葉で要約する → 解説に戻って確認する」という往復が有効である。</p>
 <p>原典を一冊すべて読破することを、必ずしも最初の目標にする必要はない。重要なのは、哲学者の議論を自分の目で追い、どこまで理解でき、どこから理解できなくなるのかを確認することである。</p>
-<h3 id="sec2-5">2.5 第 5 段階――ノートを「知識の倉庫」から「思考の実験室」へ変える</h3>
+<h3 id="s2-5">2.5 第 5 段階――ノートを「知識の倉庫」から「思考の実験室」へ変える</h3>
 <p>哲学のノートは、読んだ内容を保存するだけではもったいない。各テーマについて「問い」「自分の暫定的な答え」「根拠」「反対意見」「反対意見への再反論」「まだ解決していない点」を記録すると、ノートそのものが思考の履歴になる。</p>
 <p><strong>一つのテーマに使えるノートの型 :</strong></p>
 <ol>
@@ -209,10 +227,13 @@
 </li>
 </ol>
 <p>この形式なら、後から読み返したときに「何を知っていたか」だけでなく「どのように考えが変化したか」まで確認できる。独学では、この変化そのものが重要な学習成果になる。</p>
-<h3 id="sec2-6">2.6 学習の深さを測る</h3>
+<h3 id="s2-6">2.6 学習の深さを測る</h3>
 <p>哲学では、読んだ本の冊数や覚えた哲学者の人数が、そのまま理解の深さを示すわけではない。一つの立場を、自分と反対の立場からでも公平に説明できるか。その立場の前提を指摘できるか。反例を考えられるか。自分の考えがどの条件で変わるかを説明できるか。こうした能力の方が、哲学的理解の目安になりやすい。知識を披露すること自体が目的になり、学ぶ喜びが衒学にすり替わっていないかも、折々に確かめたい。</p>
 <p>したがって、独学の成果確認には小さな「論文」を定期的に書く方法が向いている。長文である必要はない。問い、立場 A 、立場 B 、自分の評価、未解決問題を数ページにまとめるだけでも、受け身の読書から能動的な研究へ移行できる。</p>
-<h2 id="sec3">3. 次のアクション</h2>
+</section>
+
+<section id="s3">
+<h2><span class="no">3</span>次のアクション</h2>
 <div class="checklist">
 <span class="cl-title">次のアクション チェックリスト</span>
 <ul>
@@ -221,9 +242,10 @@
 </ul>
 <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
 </div>
+</section>
 <div class="refs">
-<h2 id="sec4">4. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<h2 id="s4">4. 参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1"><a href="#fnref-1-1">^</a> 哲学の伝統的な分野区分（形而上学・認識論・倫理学・論理学・美学、および政治哲学・科学哲学・心の哲学・言語哲学などの派生分野）の概説として、 <a href="https://www.britannica.com/topic/philosophy">Encyclopaedia Britannica, "Philosophy"</a> 。</li>
 <li id="ref-2"><a href="#fnref-2-1">^</a> 義務論・功利主義（帰結主義）・徳倫理学という現代規範倫理学の三分類について、 Stanford Encyclopedia of Philosophy の各項目――<a href="https://plato.stanford.edu/entries/ethics-deontological/">"Deontological Ethics"</a> 、 <a href="https://plato.stanford.edu/entries/consequentialism/">"Consequentialism"</a> 、 <a href="https://plato.stanford.edu/entries/ethics-virtue/">"Virtue Ethics"</a> 。</li>
@@ -231,6 +253,6 @@
 <li id="ref-4"><a href="#fnref-4-1">^</a> 「スティールマン」の語の成立と 2010 年代前半の合理主義コミュニティにおける広まりについて、 <a href="https://en.wikipedia.org/wiki/Steelman">Wikipedia, "Steelman"</a> 。</li>
 </ol>
 </div>
-</main>
+</div>
 </body>
 </html>
