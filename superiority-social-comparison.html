@@ -5,118 +5,134 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>「上か下か」を考える心――優位への欲求と比較の習性の成因をめぐる学際的考察</title>
 <style>
-  /* 配色(紺の基調)。色はここだけで決め、以降は var() で参照する */
-  :root{--bg:#fafaf7;--text:#222;--muted:#555;--accent:#2a4d69;--line:#bbb;--box:#e6edf3}
-  body { font-size: 1.05rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
-  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--accent); }
-  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: .9rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 1.4rem; color: var(--text); }
-  .subtitle { color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: .9rem; line-height: 1.9; }
-  /* 見出し */
-  h2 { font-size: 1.05rem; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
-  h3 { font-size: 1.05rem; margin-top: 1.8rem; }
-  /* 段落・箇条書き(font-size は書かず、body から継承) */
-  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
-  /* 表 */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
-  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; }
-  th { background: var(--box); white-space: nowrap; }
-  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: .92em; }
-  /* 情報ボックス・注記・必須・ラベル・チェックリスト */
-  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--accent); }
-  .note { background: #fff6d6; border-left: 5px solid #d9a400; padding: .7rem 1rem; margin: 1rem 0; }
-  .must { background: #fde8e6; border-left: 5px solid #c0392b; padding: .7rem 1rem; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: .8rem; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「目次のマークアップ」) */
-  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
-  .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:.9rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:.9rem;margin-bottom:.3rem;break-inside:avoid}
-  .toc li li{color:var(--muted)}
-  .toc a{color:var(--text);text-decoration:none}
-  .toc a:hover{color:var(--accent);text-decoration:underline}
-  @media (max-width:40rem){
-    .toc>ol{columns:1}
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em}
-  sup a{color:var(--accent);text-decoration:none}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"💡 ここがポイント！";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"⚠️ きをつけよう";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"🔬 やってみよう";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
-  /* 参考文献欄(div.refs) */
-  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:.9rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--box)}
-  /* 末尾の注記 */
-  .endnote { font-size: .9rem; color: var(--muted); }
-  /* 図(figure.diagram。マークアップは SKILL.md の「図」) */
-  figure.diagram { margin: 0 0 36px; padding: 20px 18px 16px; background: var(--box); border: 1px solid var(--line); }
-  figure.diagram svg { display: block; width: 100%; height: auto; max-width: 100%; }
-  figcaption { font-size: .9375rem; color: var(--muted); margin-top: 12px; text-align: center; line-height: 1.7; }
-  figcaption .fig-label { color: var(--accent); font-weight: 700; margin-right: .3em; }
-  @media (max-width: 40rem) {
-    figure.diagram { overflow-x: auto; -webkit-overflow-scrolling: touch; position: relative; padding-top: 32px; }
-    figure.diagram svg { max-width: none; }
-    figure.diagram::before { content: "→ 横にスクロールできます"; position: absolute; top: 8px; right: 14px; font-size: .8125rem; color: var(--muted); }
-  }
-  /* 表のカード化(幅 40rem 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
-  @media (max-width: 40rem) {
-    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; box-sizing: border-box; }
-    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1rem; }
-    table.cards td:first-child::before { display: none; }
-    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; box-sizing: border-box; }
-    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
-    table.cardspan td[rowspan] { display: none; }
-    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; box-sizing: border-box; }
-    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: .95rem; }
-    table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; font-size: .8rem; font-weight: bold; color: var(--accent); }
-    table.cardrow th { background: var(--box); font-size: 1rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; white-space: normal; text-align: left; }
-  }
-  mark { background: linear-gradient(transparent 55%, #ffe94d 55%); color: inherit; font-weight: bold; padding: 0 .1em; }
-dl div{
-  border-bottom:dashed 1px #333333;
-  margin:5px 0;
-}
-dt{
-  float: left;
-}
-dt::after{
-  content: "："
-}
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書だけの追加 */
+  thead th:nth-child(4){background:var(--green)}
+  .scroll table{min-width:600px}
+  nav.toc>ol>li{break-inside:avoid}
+  .hero h1{font-size:clamp(22px,4.2vw,34px);text-wrap:balance}
 </style>
 </head>
 <body>
-<main>
-
+<header class="hero">
 <p class="kicker">社会心理学・哲学・精神医学からの考察</p>
-<h1><br>「上か下か」を考える心<br>――優位への欲求と比較の習性の成因をめぐる学際的考察</h1>
+<h1>「上か下か」を考える心<br>――優位への欲求と比較の習性の成因をめぐる学際的考察</h1>
 <p class="subtitle">On the Mind That Keeps Asking Whether One Stands Above or Below: An Interdisciplinary Inquiry into the Origins of Superiority Striving and Habitual Social Comparison</p>
+</header>
+<div class="wrap">
 
 <div class="lede">
 <p><strong>要旨</strong><br>その場にいる人の中で、自分が優位な立ち位置にありたいという思いを抱き、虚栄心を満たす習性について、優越感・優越への欲求・虚栄心の区別を整理したうえで、その成因と修正の可能性を、心理学・哲学・精神医学の文献から検討する。<br>成因をめぐっては、六つの系統の説明が見いだされた。ただし、六つは同じ種類の「原因」ではなく、実証的に検討された心理的な機序、発達上の関連、臨床的な理論、哲学的な解釈の枠組みが含まれる。</p>
-<dl>
+<dl class="summary">
   <div>
     <dt><mark>自己価値の随伴性</mark></dt>
     <dd>自己評価の維持と、自己価値の随伴性（心理学）</dd>
@@ -149,69 +165,68 @@ dt::after{
 <p><strong>キーワード</strong>：社会的比較、上方比較、社会的ランク、自己愛、承認</p>
 </div>
 
-<div class="note">
-<p><strong>【方法と限界】</strong><br>心理学・哲学・精神医学の文献を検索し、要旨・抄録・百科事典の記述から確認できた内容を記している。<br>診断を行うものではなく、精神医学の概念は、成因を考える枠組みとして参照するにとどめる。</p>
-</div>
+<div class="meta band"><strong>【方法と限界】</strong>心理学・哲学・精神医学の文献を検索し、要旨・抄録・百科事典の記述から確認できた内容を記している。<br>診断を行うものではなく、精神医学の概念は、成因を考える枠組みとして参照するにとどめる。</div>
 
 <nav class="toc" aria-label="目次">
-<p class="toc-title">目次</p>
+<b>📖 目次</b>
 <ol>
-<li><a href="#sec1">序論</a>
+<li><a href="#s1">序論</a>
 <ol>
-<li><a href="#sec1-1">問題の所在</a></li>
-<li><a href="#sec1-2">研究課題</a></li>
+<li><a href="#s1-1">問題の所在</a></li>
+<li><a href="#s1-2">研究課題</a></li>
 </ol>
 </li>
-<li><a href="#sec2">方法と資料</a>
+<li><a href="#s2">方法と資料</a>
 <ol>
-<li><a href="#sec2-1">文献の収集と扱い</a></li>
-<li><a href="#sec2-2">想定する人物像</a></li>
+<li><a href="#s2-1">文献の収集と扱い</a></li>
+<li><a href="#s2-2">想定する人物像</a></li>
 </ol>
 </li>
-<li><a href="#sec3">先行研究：社会的比較の基本的知見</a>
+<li><a href="#s3">先行研究：社会的比較の基本的知見</a>
 <ol>
-<li><a href="#sec3-1">社会的比較と上方比較</a></li>
-<li><a href="#sec3-2">比較の結果は対比として現れる</a></li>
-<li><a href="#sec3-3">比較志向の個人差</a></li>
-<li><a href="#sec3-4">感情・動機・提示の区別</a></li>
+<li><a href="#s3-1">社会的比較と上方比較</a></li>
+<li><a href="#s3-2">比較の結果は対比として現れる</a></li>
+<li><a href="#s3-3">比較志向の個人差</a></li>
+<li><a href="#s3-4">感情・動機・提示の区別</a></li>
 </ol>
 </li>
-<li><a href="#sec4">考察 1 ：成因をめぐる諸説</a>
+<li><a href="#s4">考察 1 ：成因をめぐる諸説</a>
 <ol>
-<li><a href="#sec4-1"><mark>自己価値の随伴性</mark>：自己評価の維持と、自己価値の随伴性（心理学）</a></li>
-<li><a href="#sec4-2"><mark>社会的ランクの感受性</mark>：社会的ランクとソシオメーター（心理学・進化的視点）</a></li>
-<li><a href="#sec4-3"><mark>条件付きの関心を受けた経験</mark>：幼少期の経験：条件付きの関心（発達心理学）</a></li>
-<li><a href="#sec4-4"><mark>劣等感の補償</mark>：劣等感と優越性への努力（アドラー心理学）</a></li>
-<li><a href="#sec4-5"><mark>脆弱な自己愛の自己調整</mark>：自己愛の二つの型と自己調整（精神医学・臨床心理学）</a></li>
-<li><a href="#sec4-6"><mark>承認の比較的な構造</mark>：承認と「まなざし」（哲学）</a></li>
-<li><a href="#sec4-7">諸説の整理と、この類型への当てはめ</a></li>
+<li><a href="#s4-1"><mark>自己価値の随伴性</mark>：自己評価の維持と、自己価値の随伴性（心理学）</a></li>
+<li><a href="#s4-2"><mark>社会的ランクの感受性</mark>：社会的ランクとソシオメーター（心理学・進化的視点）</a></li>
+<li><a href="#s4-3"><mark>条件付きの関心を受けた経験</mark>：幼少期の経験：条件付きの関心（発達心理学）</a></li>
+<li><a href="#s4-4"><mark>劣等感の補償</mark>：劣等感と優越性への努力（アドラー心理学）</a></li>
+<li><a href="#s4-5"><mark>脆弱な自己愛の自己調整</mark>：自己愛の二つの型と自己調整（精神医学・臨床心理学）</a></li>
+<li><a href="#s4-6"><mark>承認の比較的な構造</mark>：承認と「まなざし」（哲学）</a></li>
+<li><a href="#s4-7">諸説の整理と、この類型への当てはめ</a></li>
 </ol>
 </li>
-<li><a href="#sec5">考察 2 ：習性が不幸を生む仕組み</a></li>
-<li><a href="#sec6">考察 3 ：習性は修正できるか</a>
+<li><a href="#s5">考察 2 ：習性が不幸を生む仕組み</a></li>
+<li><a href="#s6">考察 3 ：習性は修正できるか</a>
 <ol>
-<li><a href="#sec6-1">習性を消すことは可能か</a></li>
-<li><a href="#sec6-2">比較への向き合い方を変える</a></li>
-<li><a href="#sec6-3">比較の対象と場を選ぶ</a></li>
-<li><a href="#sec6-4">自己価値を「優位」から切り離す方向</a></li>
-<li><a href="#sec6-5">各方策の根拠の区分</a></li>
+<li><a href="#s6-1">習性を消すことは可能か</a></li>
+<li><a href="#s6-2">比較への向き合い方を変える</a></li>
+<li><a href="#s6-3">比較の対象と場を選ぶ</a></li>
+<li><a href="#s6-4">自己価値を「優位」から切り離す方向</a></li>
+<li><a href="#s6-5">各方策の根拠の区分</a></li>
 </ol>
 </li>
-<li><a href="#sec7">比較がもたらす利点と反対の立場</a></li>
-<li><a href="#sec8">結論</a></li>
-<li><a href="#sec9">この記事の限界</a></li>
-<li><a href="#sec10">参考文献・資料</a></li>
+<li><a href="#s7">比較がもたらす利点と反対の立場</a></li>
+<li><a href="#s8">結論</a></li>
+<li><a href="#s9">この記事の限界</a></li>
+<li><a href="#s10">参考文献・資料</a></li>
 </ol>
 </nav>
 
-<h2 id="sec1">1. 序論</h2>
-<h3 id="sec1-1">1.1 問題の所在</h3>
+<section id="s1">
+<h2><span class="no">1</span>序論</h2>
+<h3 id="s1-1">1.1 問題の所在</h3>
 <p>目の前の相手と自分を比べ、「自分の方が上か、下か」を無意識に考えてしまう。その場にいる人の中で、自分が優位な立ち位置にありたいと思う。こうした思いは、日常的にありふれたものに見える。しかし、それが子供のころから続き、常に自分と他者を比較し、そのたびに虚栄心を満たすことで保たれているとき、当人にとっては重い問題になりうる。</p>
 <p>こうした習性が大人になっても続いていることを、自覚している人がいる。自覚があるからこそ、恥ずかしく、情けなく感じ、「この癖をなくしたい」と望む。同時に、この癖があるために、自分で自分を不幸にしているとも感じる。習性への気づきが、解決ではなく、苦しさの一部になっているという点が、こうした人に見られる特徴である。</p>
 <p>この思いには、自分が相手より上にいるという感覚（優越感）と、その位置を他者の目に示して飾ろうとする傾向（虚栄心）とが、重なって含まれている。両者の区別は、 3.4 で整理する。</p>
 <p>こうした感情について、本稿は打ち消す対象としては扱わない。ただし、感情があることと、その感情が習性の正体を示していることは別の問題である。ここでは、感情は一つの事実として受け止めたうえで、習性の成因を、既存の学問の言葉で確かめていく。</p>
 
-<h3 id="sec1-2">1.2 研究課題</h3>
+<h3 id="s1-2">1.2 研究課題</h3>
 <p>本稿が答えたい問いは三つある。</p>
 <ul>
 <li><strong>課題 1</strong><br>相手と比べて上か下かを考える心の働きと、それに伴う優越感や虚栄心を、心理学や社会科学は何と呼び、どう説明しているか。</li>
@@ -219,13 +234,15 @@ dt::after{
 <li><strong>課題 3</strong><br>この習性を修正することは可能か。可能だとすれば、どんな方策が、どれほどの根拠を持つか。</li>
 </ul>
 <p>課題 3 の「修正できるか」は、調べる前から答えが決まっているものとしては扱わない。</p>
+</section>
 
-<h2 id="sec2">2. 方法と資料</h2>
-<h3 id="sec2-1">2.1 文献の収集と扱い</h3>
+<section id="s2">
+<h2><span class="no">2</span>方法と資料</h2>
+<h3 id="s2-1">2.1 文献の収集と扱い</h3>
 <p>文献は、 Web 検索で書誌と要旨を確認できたものに限った。確認の範囲は、論文の要旨、出版社や大学の書誌記録、百科事典の記述である。原著の本文は確認していない。したがって、効果の大きさや標本の詳細など、要旨に現れない事項は、本文で「確認できていない」と記した。確認できなかった書誌事項（巻号・頁・著者名など）は、参考文献欄に「要確認」と記した。</p>
 <p>哲学の議論は、原典ではなく、スタンフォード哲学百科事典 (SEP) の記述を通して確認した。そのため、哲学者本人の主張の詳細ではなく、百科事典が整理した範囲での主張を扱う。アドラーについても、原著ではなく、ブリタニカ百科事典の記述に依拠する。</p>
 
-<h3 id="sec2-2">2.2 想定する人物像</h3>
+<h3 id="s2-2">2.2 想定する人物像</h3>
 <p>本稿が念頭に置くのは、次の四つの特徴を自覚している人物である。特定の個人の報告ではなく、本稿が議論のために置いた類型である。</p>
 <ul>
   <li>子供のころから、その場の人の中で優位でありたいという思いが強い、</li>
@@ -234,23 +251,25 @@ dt::after{
   <li>その癖のために、自分で自分を不幸にしていると感じている、</li>
 </ul>
 <p>以下、この四点をあわせ持つ人物を「この習性を自覚する人」と呼ぶ。この類型は、成因を考える手がかりとして用いる。類型から成因を証明することはできない。ある説明がこの類型に「当てはまる」と書く場合も、当てはまる可能性があるという意味にとどめる。</p>
+</section>
 
-<h2 id="sec3">3. 先行研究：社会的比較の基本的知見</h2>
-<h3 id="sec3-1">3.1 社会的比較と上方比較</h3>
+<section id="s3">
+<h2><span class="no">3</span>先行研究：社会的比較の基本的知見</h2>
+<h3 id="s3-1">3.1 社会的比較と上方比較</h3>
 <p>相手と自分を比べて、自分の位置を知ろうとする働きは、社会的比較と呼ばれている。社会的比較の理論の出発点として、しばしばレオン・フェスティンガーの 1954 年の論文が挙げられる <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。フェスティンガーは、人が自分の意見や能力を客観的な物差しで確かめられないとき、周囲の人と比べて評価しようとすると論じたとされる。ここで述べた内容は、原典を確認できていない二次情報に基づくものであり、以降の議論は、より新しい研究の整理に依拠している。</p>
 <p>比較の相手が自分より優れていると見なされる場合を上方比較、劣っていると見なされる場合を下方比較と呼ぶ。社会的比較の研究を 60 年以上にわたって整理したメタ分析（多数の研究の結果を統計的にまとめる手法）では、比較の相手を選ぶ場面において、上方と下方の二つの選択肢を示した研究では、脅威を感じていない条件で上方の相手を選ぶ傾向が強いことが示された <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。ただし、自分と同程度の相手（横方向）も選べる研究では、選択の差は小さくなった、とされている（要旨による）。</p>
 <p>この結果は、直感とは逆に見えるかもしれない。自分が下だと感じたくないなら、下方の相手と比べたほうが楽になりそうに思える。しかし研究では、脅威を感じた条件でも、下方比較が優勢な選択肢にはならなかった。つまり、上と下のどちらかを選ぶ場面では、人は自分より上の人を選びやすいという傾向が、研究の上では確認されている。これを、人間に固定した性質として読むことはできない。また、上方の相手を選ぶことは、「優位でありたい」という欲求の証拠ではない。上方の相手は、自分を改善するための情報を得たいときにも選ばれうるからである。</p>
 
-<h3 id="sec3-2">3.2 比較の結果は対比として現れる</h3>
+<h3 id="s3-2">3.2 比較の結果は対比として現れる</h3>
 <p>比較の結果として、人の気分や自己評価はどう動くのか。同じメタ分析は、主な反応が対比であることを示した <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。対比とは、比べた相手と自分の差が強調され、差の向きと逆に自分が感じられることを指す。上方比較の後には自分を低く感じやすく、下方比較の後には自分を高く感じやすい。この効果は、能力の自己評価と、感情（気分）において最も強く現れたとされている。要旨に示された効果の推定値は、比較の相手の水準を変えた研究で、能力について −0.75 〜 −0.65 、感情について −0.83 〜 −0.65 である（負の値は対比の向きを表す。幅をもつ表記は要旨のとおりで、幅の意味は原著で確認していない）。</p>
 <p>この結果は、比較の影響が気分や自信という形で表れやすいことを意味する。この習性を自覚する人が「情けない」と感じる場面は、この対比の効果と重なる部分があるかもしれない。ただし、どの場面がどの感情に結びつくかまでは、研究の範囲では確認できなかった。また、対比の効果が能力の自己評価と感情で最も強いという点も、読み方に注意が要る。それ以外の次元、たとえば人柄や生き方について同じことが言えるかどうかは、本稿の範囲では分からない。</p>
 <p>さらに、同じメタ分析は、比較の相手と自分が似ているという意識を喚起した条件では、対比ではなく、わずかに同化の効果が見られたとしている <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。ただし、この同化の効果は弱く、出版バイアス（効果の見られた研究ほど公表されやすい偏り）をどう補正するかによって、結果が左右されたとされる。同化とは、比べた相手に自分を近づけて感じる反応を指す。この点は、第 6 節で方策を考えるときの手がかりになる。</p>
 
-<h3 id="sec3-3">3.3 比較志向の個人差</h3>
+<h3 id="s3-3">3.3 比較志向の個人差</h3>
 <p>社会的比較の頻度や強さには、個人差がある。ギボンズとブンクは、人が自分を他者と比べる傾向の個人差を測る尺度（アイオワ・オランダ比較志向尺度、 INCOM ）を、アメリカとオランダの双方で使えるものとして開発した <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。この尺度は、実験室と現場の研究で、比較の行動を予測できたと報告されている（書誌記録の要旨による）。</p>
 <p>この知見は、本稿が想定する人物像（ 2.2 ）を位置づける手がかりになる。比較は誰にでも起こるが、起こしやすさには幅がある。「常に比較し続ける」というこの人物像の特徴は、比較志向の高い側にあると考えられる。ただし、この人物像を実際に尺度で測ったわけではなく、これは推測にとどまる。そして、なぜ比較志向に個人差が生じるのかは、この尺度開発の論文が答える問いではない。続く 3.4 は、比較から生じる思いの内訳を区別する。第 4 節以降が、その成因の候補を検討する。</p>
 
-<h3 id="sec3-4">3.4 感情・動機・提示の区別</h3>
+<h3 id="s3-4">3.4 感情・動機・提示の区別</h3>
 <p>ここまで「その場で優位でありたい」とひとまとめに呼んできた事柄には、性質の異なる三つの層が含まれうる。<br>
 第一は<strong>優越感</strong>で、自分が相手より上にいると感じる感情である。<br>
 第二は<strong>優越への欲求</strong>で、上にいようとする動機である。<br>
@@ -259,23 +278,31 @@ dt::after{
 <p>感情としての優越感については、誇りの研究が手がかりになる。トレーシーとロビンズは、誇りを「真正の誇り」と「傲慢な誇り」という二つの側面に分け、両者を測る尺度を作った <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> 。紹介された範囲では、傲慢な誇りは自己愛や恥の感じやすさと、真正の誇りは外向性・誠実性・本来の自尊心と、それぞれ関連したとされる（報道記事と二次的な紹介による。原典の要旨は未確認）。この研究が扱ったのは誇りであり、優越感そのものを測ったものではない。したがって、優越感を傲慢な誇りと同一視することはできない。ただし、「上にいる」という感覚の背後にある性質が一様ではない、という見方の手がかりにはなる。</p>
 <p>動機としての優越への欲求は、自己高揚の研究の中に位置づけられる。セディキデスとグレッグは、自己高揚（自分を偏って肯定的に捉える現象の総称）を、観察される効果、進行中の過程、人格の特性、背後にある動機の四つの水準に整理した <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> （要旨と抜粋による。本文の詳細は未確認）。この整理に従えば、比較の場面で優越感を覚えること（効果）、比較のたびに自分を高く見ようとすること（過程）、その傾向の強さ（特性）、そして上にいようとする欲求（動機）は、別々に問える事柄になる。</p>
 <p>虚栄心は、承認の欲求の側から位置づけられる。 4.6 で見るルソーの amour propre は、他者との比較に伴って生じ、他者から優れた者として尊重されることを求める情念である。虚栄心は、この承認の欲求のうち、他者の目に映る見え方に向かう形として読める。優越感が、自分の内側で「上にいる」と確かめることに重心があるのに対し、虚栄心は、その位置を他者に見せ、認めさせることに重心がある。ただし、この対比は概念上の整理であり、両者を区別して検討した実証研究は、本稿の検索の範囲では確認できなかった。</p>
-<table class="cards">
+<div class="scroll">
+<table>
+<thead>
 <tr><th>概念</th><th>層</th><th>重心</th><th>本稿での手がかり</th></tr>
-<tr><td data-label="概念"><strong>優越感</strong></td><td data-label="層">感情</td><td data-label="重心">自分の内側で「上にいる」と感じる</td><td data-label="本稿での手がかり">誇りの二つの側面（ 3.4 ）</td></tr>
-<tr><td data-label="概念"><strong>優越への欲求</strong></td><td data-label="層">動機</td><td data-label="重心">上にいようとする</td><td data-label="本稿での手がかり">自己高揚の四つの水準（ 3.4 ）、 4.1 〜 4.5</td></tr>
-<tr><td data-label="概念"><strong>虚栄心</strong></td><td data-label="層">提示</td><td data-label="重心">他者の目に映る見え方を飾り、示す</td><td data-label="本稿での手がかり">承認の比較的な構造（ 4.6 ）</td></tr>
+</thead>
+<tbody>
+<tr><td><strong>優越感</strong></td><td>感情</td><td>自分の内側で「上にいる」と感じる</td><td>誇りの二つの側面（ 3.4 ）</td></tr>
+<tr><td><strong>優越への欲求</strong></td><td>動機</td><td>上にいようとする</td><td>自己高揚の四つの水準（ 3.4 ）、 4.1 〜 4.5</td></tr>
+<tr><td><strong>虚栄心</strong></td><td>提示</td><td>他者の目に映る見え方を飾り、示す</td><td>承認の比較的な構造（ 4.6 ）</td></tr>
+</tbody>
 </table>
+</div>
 <p>三つの層は、実際には結びつきうる。上にいるという感覚が得られると、それを他者に示したくなる。示して他者に認められると、その感覚が確かめられる。この往復が繰り返されるなら、優越感も虚栄心も一度満たせば済むものではなく、比較のたびに満たし直す必要が生じる。この読みは、 4.6 で見るルソーの整理や、第 5 節で組み立てる連なりと重なる。ただし、これは複数の知見をつなぎ合わせた仮説であり、検証された事実ではない。</p>
+</section>
 
-<h2 id="sec4">4. 考察 1 ：成因をめぐる諸説</h2>
+<section id="s4">
+<h2><span class="no">4</span>考察 1 ：成因をめぐる諸説</h2>
 <p>ここでは、「その場の人の中で優位でありたい」という欲求と、比較の習性が強まる原因について、確認できた範囲の説明を、領域ごとに順に見る。六つの説は、証拠の種類が同じではない。 4.1 と 4.2 は実証研究で検討された心理的な機序、 4.3 は発達上の関連を示す調査、 4.4 と 4.5 は臨床的な理論とその周辺の研究、 4.6 は哲学的な解釈の枠組みである。とくに 4.6 は、個人の習性の原因を示すものではなく、習性を理解するための背景として扱う。各説の根拠の強さは、 4.7 の表でまとめる。</p>
 
-<h3 id="sec4-1">4.1 <mark>自己価値の随伴性</mark>：自己評価の維持と、自己価値の随伴性（心理学）</h3>
+<h3 id="s4-1">4.1 <mark>自己価値の随伴性</mark>：自己評価の維持と、自己価値の随伴性（心理学）</h3>
 <p>テッサーの自己評価維持モデルは、人が自己評価を維持・高めようとし、その自己評価が他者との関係の影響を受けると仮定する <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。このモデルでは、他者の心理的な近さ、その人の相対的な成績、そしてその領域が自分にとってどれほど重要か、の三つの変数が、比較の結果の受け止め方を左右するとされる。つまり、比較は、自分にとって重要な領域で、身近な相手が自分より優れているときに、とくに苦痛になりうる。</p>
 <p>クロッカーとパークは、自尊心を追求すること自体の代償に注目した <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。この論文の主張は、自尊心が高いか低いかよりも、どのように追求するかのほうが重要だという点にある。自尊心の追求は、短期的には感情面の利益をもたらすが、長期的には代償のほうが大きくなることが多い、と論じられている。ここで重要なのは、自己価値が特定の条件（たとえば、他者より優れていること）に懸かっている状態、すなわち<mark>自己価値の随伴性</mark> (contingencies of self-worth) である。この概念は、クロッカーらの研究の系統に属し、前の段落のテッサーの自己評価維持モデルとは別の系統である。テッサーのモデルが、相手との近さや領域の重要性といった比較の場面の条件を扱うのに対し、自己価値の随伴性は、何を条件に自分の価値を感じるかという、その人の側の構えを扱う。本節の見出しは後者を指し、前者は、比較が苦痛になりやすい場面を示す隣接の説明として併せて挙げている。要約から確認できた範囲では、随伴性が強いほど、動機づけは高まる一方で、感情面の脆弱さも増す、と整理されている。</p>
 <p>この説をこの習性を自覚する人に当てはめると、次のようになる。「その場の人の中で優位である」ことが自己価値の条件になっているなら、場が変わるたびに、また相手が変わるたびに、自己価値が試されることになる。比較は、その条件が満たされているかを確かめる作業として、常に作動し続ける。これは、「常に自分と他者を比較し続ける」という特徴と整合する。この読みでは、優越感は条件が満たされたことを知らせる感情として働き、虚栄心は、その条件を他者の目の前で満たして見せる行為として現れうる（ 3.4 の区別による）。ただし、その人の自己価値が実際に優位に懸かっているかどうかは、測定されておらず、仮説である。</p>
 
-<h3 id="sec4-2">4.2 <mark>社会的ランクの感受性</mark>：社会的ランクとソシオメーター（心理学・進化的視点）</h3>
+<h3 id="s4-2">4.2 <mark>社会的ランクの感受性</mark>：社会的ランクとソシオメーター（心理学・進化的視点）</h3>
 <p>リアリーらのソシオメーター仮説は、自尊心を、他者からの受容や排除を監視する装置と見なす <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。この見方では、自尊心の低下は、社会的に排除されるおそれを知らせる警報である。心理学が当然のものとしてきた「自尊心を守る動機」に、なぜそのような動機があるのか、という問いに答えようとした点に、この論文の意義がある（要旨による）。</p>
 <p>ギルバートは、恥、社会的不安、抑うつが、社会的ランクの評価を介して結びつくと論じた <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。学生 109 人と抑うつ患者 50 人を対象とした自己記入式の調査で、恥、社会的不安、抑うつ（罪悪感は除く）は、劣等感と服従的な行動に強く関連していた、と報告されている（二次要約による。全文は未確認）。望まない低い地位に置かれたときの、防衛的な服従の戦略が、これらの状態に共通するという見立てである。</p>
 <p>社会的ランクへの感受性は、地位への欲求を扱う研究からも検討されている。アンダーソンらは、地位への欲求が基本的な動機であるかどうかを、実証研究の総説で検討した <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup> 。ここでの地位は、他者からの尊敬や賞賛、他者の自発的な服従、社会的な価値から成るものとして定義され、権力や経済的な成功とは区別されている。検討の基準には、地位の獲得が心身の健康に寄与するか、地位が手段としてではなくそれ自体として求められるか、文化・性別・年齢・性格を超えて普遍的か、などが含まれる（二次的な紹介による。要旨の原文と結論の詳細は未確認）。</p>
@@ -285,14 +312,14 @@ dt::after{
 <p>この区別を踏まえたうえで、本節の説明を合わせると、「その場で優位でありたい」という思いは、集団の中での位置を絶えず確認し、低い位置に置かれることを避けようとする、感受性の高さとして理解できる。低い位置は、恥や不安と結びつく。そのため、優位であることは、単なる虚栄心の満足ではなく、苦痛を避けるための手段にもなりうる。この見方は、「虚栄心を満たしている」という自己描写に、もう一つの層を加えるが、この習性を自覚する人で実際にそうなのかは確認できていない。</p>
 <p>虚栄心の側から見ても、同様の読みができる。低い位置が恥や不安と結びつくなら、他者の目に映る自分の見え方を飾ることは、位置が下がったと見られる事態を避ける働きを持ちうる。このとき虚栄心は、優越を誇る行為である以前に、評価される側の防衛として働く。ただし、これは 3.4 の区別を用いた本稿の読みであり、虚栄心をこの観点から検討した研究は、確認できなかった。</p>
 
-<h3 id="sec4-3">4.3 <mark>条件付きの関心を受けた経験</mark>：幼少期の経験：条件付きの関心（発達心理学）</h3>
+<h3 id="s4-3">4.3 <mark>条件付きの関心を受けた経験</mark>：幼少期の経験：条件付きの関心（発達心理学）</h3>
 <p>想定する人物像（ 2.2 ）には、「子供のころから」という時間の指定がある。幼少期の経験が、のちの比較の習性に影響しうるかを考える手がかりとして、アソー、ロス、デシの研究がある <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。この研究は、親が子の望ましい行動に対してのみ関心や愛情を示す「条件付きの関心」を扱い、それが望ましい行動を引き出す一方で、感情面で大きな代償を伴うと結論した。大学生を対象とした研究では、条件付きの関心を受けたという知覚が、取り入れられた（自分のものになりきらない）動機、自尊心の変動、親への憤りと関連していた（要旨による）。</p>
 <p>後続の研究は、「条件付きの関心」を、二つの形に分けて比べている。ロスらは、イスラエルの 9 年生を対象にした二つの研究（ 169 人と 156 人）で、条件付きの肯定的な関心、条件付きの否定的な関心、自律性の支援という、三つの親の関わり方を比べた <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup> 。要旨の要約によれば、条件付きの否定的な関心は、親への憤りを介して、感情調整の不全と学業からの離脱を予測した。条件付きの肯定的な関心は、内的な強制感を介して、感情を抑え込む調整と、成績に偏った関与を予測した。自律性の支援は、選んでいるという感覚を介して、感情の統合的な調整と、興味に基づく関与を予測した。</p>
 <p>注目すべきは、肯定的な形、つまり望ましい行動のときに関心や愛情を増やす関わり方にも、自律性の支援に比べて、感情面と学業面の代償が確認された点である。条件付きの関心は、冷たい関わり方だけを指すのではない。好ましく見える関わり方でも、「優れているときに、より価値がある」という感覚を育てる経路になりうる。ただし、これは研究が示した範囲からの推論である。</p>
 <p>この知見は、「他者より優れているときにだけ、自分に価値がある」という感覚と、幼少期の経験とが関連する可能性を考えるための、間接的な資料である。研究が示したのは、特定の時点での関連や予測であり、幼少期の経験が成人後の優位への欲求を生むという因果ではない。また、この習性を自覚する人が幼少期にどのような関心を受けたかについて、本稿は何も想定していない。したがって、この説は、この類型に適用できる可能性のある一つの仮説として挙げるにとどめる。また、この研究は条件付きの関心と自尊心の変動の関連を扱ったもので、比較の習性を直接扱ったものではない。</p>
 <p>この系統の研究には、本稿の問いに対して、三つの限界がある。第一に、対象は青年期の学生で、測定は感情調整や学業が中心である。他者との比較の習性は、測られていない。第二に、成人期の習性への長期的な影響は、本稿では確認できていない。第三に、この研究は、自己価値が優位に懸かることを、直接には扱っていない。ここまでの 4.1 の議論（自己価値の随伴性）と、 4.6 の「愛」の形態（無条件のケア）と合わせて読むと、概念の上では、幼少期の経験から優位への執着へ向かう一つの経路が描けるが、その経路の全体を裏づける研究は、確認できなかった。</p>
 
-<h3 id="sec4-4">4.4 <mark>劣等感の補償</mark>：劣等感と優越性への努力（アドラー心理学）</h3>
+<h3 id="s4-4">4.4 <mark>劣等感の補償</mark>：劣等感と優越性への努力（アドラー心理学）</h3>
 <p>アルフレッド・アドラーは、人の主要な動機を、優越性への努力と捉えた。ブリタニカ百科事典の記述によれば、この努力は、自己の実現や完成を目指すものであり、身体的な欠陥、低い地位、幼少期の甘やかしや放任に由来する劣等感によって、妨げられうるとされる <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。アドラーは、 1907 年の研究で、器官の劣等性を心理的に補う過程を論じた。補償がうまくいかないと神経症に結びつき、補償が過剰になると、他者を犠牲にした権力の追求や自己誇大化として現れる、とも整理されている。</p>
 <p>アドラーはまた、優越性への努力の対極にある、生来の傾向として「共同体感覚」を挙げた。これは、共通の利益のために他者と協力しようとする傾向である。さらに、同じ記述は、優越性への努力が正常な過程であり、劣等感が持続して生じる「劣等コンプレックス」から、優越を誇示する「優越コンプレックス」が生じる、という区別を示している（二次資料による）。したがって、アドラーの「優越性への努力」は、他者に勝つこと、他者より上に立つことだけを指す概念ではない。想定する人物像の「その場で優位でありたい」という思いは、その努力のうち、他者との比較に向かう形に当たると考えられる。また、「優越を誇示する」という側面は、 3.4 で区別した虚栄心と重なりうる。ただし、アドラー自身が虚栄心をそう位置づけたかどうかは、二次資料の範囲では確認できていない。</p>
 <p>アドラーの概念は、のちに尺度として操作化された。チェクルリヤとミルコヴィチは、劣等コンプレックスと優越コンプレックスを測る尺度を 10 項目ずつの短縮版にし、 395 人の学生で因子構造を探り、 187 人の学生で確認した。結果は、劣等と優越が、相関する二つの次元として分けられる、というものだった <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup>（掲載ページの要旨による。相関の大きさと向きは、要旨からは確認できなかった）。劣等感と優越への志向を、別の次元として測れることは、「優位への執着の背後に劣等感がある」という読みを、原理的には検証できる形にする。ただし、この研究は尺度の構造を検討したものであり、劣等感が優越の追求を引き起こす、という補償の過程そのものを示したものではない。</p>
@@ -300,13 +327,13 @@ dt::after{
 <p>アドラーの補償の読みと、この「回避」の読みは、重なる部分が大きい。どちらも、優位への執着の背後に、劣位への恐れや劣等感を置くからである。違いは、前者が個人の発達史（幼少期の劣等感）に説明を求めるのに対し、後者が、その場の評価の脅威への反応に光を当てる点にある。どちらがこの習性を自覚する人に近いかは、判断できない。ただし、どちらの読みでも、習性を「消す」よりも、劣位への恐れとの付き合い方を変える方向が示される。これは、第 6 節のセルフ・コンパッションの検討と、論理の上ではつながる。ただし、これは本稿の推測である。</p>
 <p>この説をこの習性を自覚する人に当てはめると、「常に優位でありたい」という思いは、強い劣等感を補償する過程として読める。この読みでは、優位であることへの執着の背後に、「自分は劣っているかもしれない」という感覚が潜んでいる。ただし、アドラーの理論は、検証可能性や実証的な裏づけの面で議論の多い領域である。本稿は、原著ではなく二次資料に依拠しており、この説を、この類型を解釈するための一つの見方として扱うにとどめる。</p>
 
-<h3 id="sec4-5">4.5 <mark>脆弱な自己愛の自己調整</mark>：自己愛の二つの型と自己調整（精神医学・臨床心理学）</h3>
+<h3 id="s4-5">4.5 <mark>脆弱な自己愛の自己調整</mark>：自己愛の二つの型と自己調整（精神医学・臨床心理学）</h3>
 <p>自己愛（ナルシシズム）の研究は、優位でありたいという欲求と、その裏にある脆さの関係を扱ってきた。ディキンソンとピンカスは、誇大型と脆弱型の自己愛を、人格障害の基準、対人関係の問題、成人の愛着様式から比較した <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。非臨床の集団を対象とした研究で、誇大型は支配的・復讐的な対人問題を報告するが、対人関係の苦痛は否定した。脆弱型は、回避性の人格障害の傾向が高く、対人関係の苦痛が高かった。愛着様式は、誇大型では肯定的な自己像を反映するもの（安定型・拒絶型）が、脆弱型では否定的な自己像を反映するもの（恐れ型・とらわれ型）が、それぞれ多数を占めた（要旨による）。</p>
 <p>モーフとローデワルトは、自己愛を固定した特性ではなく、自己像を築き維持する自己調整の過程として捉えた <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。この見方では、自己愛的な人の、認知的・感情的・対人的な方略は、肯定的な自己像を維持するためのものである。しかし、その努力はしばしば逆効果になり、求めている肯定的なフィードバックを、結局は妨げる、と論じられている（要旨による）。</p>
 <p>これらの知見のうち、想定する人物像に関わる点は二つある。第一に、優位でありたいという欲求が、尊大な自己像だけでなく、否定的な自己像と苦痛を抱えた形でも現れうるという点である。この習性を自覚する人は、自分の習性を恥じ、不幸の原因と感じることがある。こうした苦痛の自覚は、脆弱型で報告される、対人関係の苦痛の高さと、重なる部分がある。ただし、恥や苦痛の自覚は多くの状態に共通するものであり、それだけで脆弱型との重なりを示すことはできない。第二に、優位を保とうとする努力が、かえって望む結果を遠ざけるという点である。これは、「自分で自分を不幸にしている」という実感と、構造が似ている。</p>
 <p>ただし、この重なりは、診断を意味しない。また、本稿は、誇大型と脆弱型を、人を二つに分ける固定した類型としては扱わない。本稿は、特定の個人を診断せず、自己愛性パーソナリティ障害などの診断名を当てはめることもしない。上の二つの研究は、診断を受けていない一般の集団や、自己調整の理論を扱ったものであり、個人の判断に用いるものではない。この領域は、苦痛が強く続く場合に、専門の相談先で扱うべきものである（第 9 節）。</p>
 
-<h3 id="sec4-6">4.6 <mark>承認の比較的な構造</mark>：承認と「まなざし」（哲学）</h3>
+<h3 id="s4-6">4.6 <mark>承認の比較的な構造</mark>：承認と「まなざし」（哲学）</h3>
 <p>哲学は、「他者との比較の中で自分の位置を確かめたい」という欲求を、人間の社会的なあり方の根本から考えてきた。</p>
 <p>ルソーは、自己保存を目指す本能的な愛である「自己愛 (amour de soi) 」と、社会の中で他者との比較を通じて生じる「自尊心・虚栄 (amour propre) 」を区別した。スタンフォード哲学百科事典によれば、 amour propre は、他者との比較に伴って生じる社会的な情念であり、「承認の欲求は、つねに比較の側面を持つ」とされる。人は他者から優れた者として尊重されることを求め、それが対立と憤りを生む。 amour propre は、人類の堕落の原因であると同時に、救済の可能性でもある、とも整理されている <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 。この見方では、「その場で優位でありたい」という欲求は、個人の癖である以前に、社会の中で承認を求める人間に、広く備わった傾向の現れである。</p>
 <p>同じ百科事典の項は、 amour propre の二面性も整理している。ルソーは、 amour propre を amour de soi とは別のものとして描く箇所（『人間不平等起源論』）と、社会の中で amour de soi がとる形として描く箇所（『エミール』）の両方をもつ。後者の見方では、 amour propre は、社会の中で生きる人に避けがたいものになる。ただし、その通常の傾向は、「有害で自滅的な（炎症を起こした）」形をとることだとされる。不平等が強まると、従属する側と優位な側が互いに依存し、偽りの自己呈示が促され、力のある側も満たされないままになる、と整理されている <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> 。</p>
@@ -317,21 +344,29 @@ dt::after{
 <p>この区分を借りると、この習性を自覚する人に対して、一つの読みが可能になる。「その場で優位である」ことは、第三の「評価」の領域で承認を得る形であり、自己価値の大半をそこに託している状態として読める。もし「愛」の領域で、条件に懸からない承認が十分に得られなかったとすれば、評価の領域の承認への依存は強まりうる。これは、 4.3 で見た条件付きの関心と、概念の上でつながる。ただし、これは本稿の解釈であり、「愛」の形態がどうだったかについて、本稿は何も想定していない。次に述べるとおり、哲学は習性の個人差を説明する枠組みではなく、この限界は、ここでも変わらない。</p>
 <p>ルソー、ヘーゲル、サルトル、そして現代の承認論は、いずれも、「他者の目の中での自分」を、人間にとって避けがたいものとして描く。これらは、実証的な成因の説明ではなく、習性を理解するための枠組みである。この枠組みの含意は、習性が個人の欠陥だけに帰されるものではない、という点にある。ただし、その含意は、習性の強さの個人差を説明するものではない。個人差の説明は、前の各説に委ねられる。「評価」と「愛」の区別は、その委ね先として 4.3 を指す。</p>
 
-<h3 id="sec4-7">4.7 諸説の整理と、この類型への当てはめ</h3>
+<h3 id="s4-7">4.7 諸説の整理と、この類型への当てはめ</h3>
 <p>ここまでの各説を、主張の要点、この類型への当てはめ、根拠の状態の順に整理する。「根拠の状態」は、確認できた範囲での見立てであり、この類型に対する妥当性を保証するものではない。</p>
-<table class="cards">
+<div class="scroll">
+<table>
+<thead>
 <tr><th>説（領域）</th><th>主張の要点</th><th>この類型への当てはめ（可能性）</th><th>根拠の状態</th></tr>
-<tr><td data-label="説（領域）"><mark>自己価値の随伴性</mark>：自己評価の維持と、自己価値の随伴性（心理学）<sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></td><td data-label="主張の要点">自己価値が「他者より優れていること」などの条件に懸かると、比較が常に作動し、感情面が脆くなる。</td><td data-label="この類型への当てはめ（可能性）">「その場の優位」が自己価値の条件になっていると読める。</td><td data-label="根拠の状態">理論と実証研究がある。この類型への適用は仮説。</td></tr>
-<tr><td data-label="説（領域）"><mark>社会的ランクの感受性</mark>：社会的ランクとソシオメーター（心理学・進化的視点）<sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup><sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup><sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup><sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup></td><td data-label="主張の要点">自尊心は排除のおそれを知らせる装置であり、低いランクは恥・不安・抑うつと結びつく。地位は他者の評価によって与えられ、敗北感は抑うつと関連する。</td><td data-label="この類型への当てはめ（可能性）">優位でいることが、恥や不安を避ける手段になっている可能性がある。</td><td data-label="根拠の状態">理論と調査がある。ギルバートの研究は二次要約による。地位の総説は要旨の原文が未確認。この類型への適用は仮説。</td></tr>
-<tr><td data-label="説（領域）"><mark>条件付きの関心を受けた経験</mark>：幼少期の経験：条件付きの関心（発達心理学）<sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup><sup id="fnref-21-2"><a href="#ref-21">[21]</a></sup></td><td data-label="主張の要点">親の関心が行動に懸かる経験は、自尊心の変動や憤りと関連する。肯定的な形の条件付きの関心にも、自律性の支援に比べて代償がある。</td><td data-label="この類型への当てはめ（可能性）">「子供のころから」という時間の指定と整合しうるが、想定する人物の幼少期については何も想定していない。</td><td data-label="根拠の状態">調査研究がある。比較の習性を直接扱ってはいない。この類型への適用は仮説。</td></tr>
-<tr><td data-label="説（領域）"><mark>劣等感の補償</mark>：劣等感と優越性への努力（アドラー心理学）<sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup><sup id="fnref-24-2"><a href="#ref-24">[24]</a></sup><sup id="fnref-25-2"><a href="#ref-25">[25]</a></sup></td><td data-label="主張の要点">劣等感を補う過程として、優越への努力が強まる。劣位を避ける努力としても読める。</td><td data-label="この類型への当てはめ（可能性）">優位への執着の背後に、劣っているという感覚があると読める。</td><td data-label="根拠の状態">二次資料による。実証的な裏づけは本稿では確認していない。尺度研究はあるが、補償の過程そのものを示したものではない。解釈の一つ。</td></tr>
-<tr><td data-label="説（領域）"><mark>脆弱な自己愛の自己調整</mark>：自己愛の二つの型と自己調整（精神医学・臨床心理学）<sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup></td><td data-label="主張の要点">優位の追求は、否定的な自己像と苦痛を抱えた形でも現れ、その努力は逆効果になりうる。</td><td data-label="この類型への当てはめ（可能性）">苦痛の自覚と、「自分で自分を不幸にしている」という構造が似ている。診断ではない。</td><td data-label="根拠の状態">要旨による。非臨床の集団の研究と理論。診断には用いない。</td></tr>
-<tr><td data-label="説（領域）"><mark>承認の比較的な構造</mark>：承認と「まなざし」（哲学）<sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup><sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup><sup id="fnref-20-2"><a href="#ref-20">[20]</a></sup></td><td data-label="主張の要点">承認の欲求は比較を含み、他者の目の中で自分を確かめることは人間に避けがたい。承認は愛・尊重・評価に分けられ、誤承認は自己との関係を損なう。</td><td data-label="この類型への当てはめ（可能性）">習性の普遍的な背景を示す。個人差は説明しない。評価の領域への依存として読める。</td><td data-label="根拠の状態">百科事典の記述による。実証研究ではなく、理解の枠組み。</td></tr>
+</thead>
+<tbody>
+<tr><td><mark>自己価値の随伴性</mark>：自己評価の維持と、自己価値の随伴性（心理学）<sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></td><td>自己価値が「他者より優れていること」などの条件に懸かると、比較が常に作動し、感情面が脆くなる。</td><td>「その場の優位」が自己価値の条件になっていると読める。</td><td>理論と実証研究がある。この類型への適用は仮説。</td></tr>
+<tr><td><mark>社会的ランクの感受性</mark>：社会的ランクとソシオメーター（心理学・進化的視点）<sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup><sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup><sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup><sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup></td><td>自尊心は排除のおそれを知らせる装置であり、低いランクは恥・不安・抑うつと結びつく。地位は他者の評価によって与えられ、敗北感は抑うつと関連する。</td><td>優位でいることが、恥や不安を避ける手段になっている可能性がある。</td><td>理論と調査がある。ギルバートの研究は二次要約による。地位の総説は要旨の原文が未確認。この類型への適用は仮説。</td></tr>
+<tr><td><mark>条件付きの関心を受けた経験</mark>：幼少期の経験：条件付きの関心（発達心理学）<sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup><sup id="fnref-21-2"><a href="#ref-21">[21]</a></sup></td><td>親の関心が行動に懸かる経験は、自尊心の変動や憤りと関連する。肯定的な形の条件付きの関心にも、自律性の支援に比べて代償がある。</td><td>「子供のころから」という時間の指定と整合しうるが、想定する人物の幼少期については何も想定していない。</td><td>調査研究がある。比較の習性を直接扱ってはいない。この類型への適用は仮説。</td></tr>
+<tr><td><mark>劣等感の補償</mark>：劣等感と優越性への努力（アドラー心理学）<sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup><sup id="fnref-24-2"><a href="#ref-24">[24]</a></sup><sup id="fnref-25-2"><a href="#ref-25">[25]</a></sup></td><td>劣等感を補う過程として、優越への努力が強まる。劣位を避ける努力としても読める。</td><td>優位への執着の背後に、劣っているという感覚があると読める。</td><td>二次資料による。実証的な裏づけは本稿では確認していない。尺度研究はあるが、補償の過程そのものを示したものではない。解釈の一つ。</td></tr>
+<tr><td><mark>脆弱な自己愛の自己調整</mark>：自己愛の二つの型と自己調整（精神医学・臨床心理学）<sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup></td><td>優位の追求は、否定的な自己像と苦痛を抱えた形でも現れ、その努力は逆効果になりうる。</td><td>苦痛の自覚と、「自分で自分を不幸にしている」という構造が似ている。診断ではない。</td><td>要旨による。非臨床の集団の研究と理論。診断には用いない。</td></tr>
+<tr><td><mark>承認の比較的な構造</mark>：承認と「まなざし」（哲学）<sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup><sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup><sup id="fnref-20-2"><a href="#ref-20">[20]</a></sup></td><td>承認の欲求は比較を含み、他者の目の中で自分を確かめることは人間に避けがたい。承認は愛・尊重・評価に分けられ、誤承認は自己との関係を損なう。</td><td>習性の普遍的な背景を示す。個人差は説明しない。評価の領域への依存として読める。</td><td>百科事典の記述による。実証研究ではなく、理解の枠組み。</td></tr>
+</tbody>
 </table>
+</div>
 <p>六つの説は、競合するものではなく、異なる層の説明として併存しうる。ただし、その併存のしかたや相互作用を検証した研究は、確認できなかった。哲学は、原因ではなく、習性の普遍的な背景を示す。心理学は、自己価値の仕組みと社会的な位置の感受性を示し、発達心理学は、その形成の経路の候補を示す。アドラー心理学と精神医学は、優位の追求の背後にある苦痛を示す。</p>
 <p>この習性を自覚する人について、どの説が最もよく当てはまるかは、本稿の範囲では判断できない。一つの説明で足りるとも考えにくい。たとえば、幼少期に条件付きの関心を受け (4.3) 、自己価値が優位に懸かるようになり (4.1) 、低い位置が恥と結びつく (4.2) という連なりは、論理的には成り立つ。しかし、この連なりを裏づける研究は、確認できなかった。</p>
+</section>
 
-<h2 id="sec5">5. 考察 2 ：習性が不幸を生む仕組み</h2>
+<section id="s5">
+<h2><span class="no">5</span>考察 2 ：習性が不幸を生む仕組み</h2>
 <p>習性が不幸を生む仕組みを、確認できた知見から組み立てる。次の連なりは、複数の研究の知見をつなぎ合わせた本稿の仮説であり、一つの研究で検証されたものではない。</p>
 <ol>
 <li><strong>比較が起きる</strong><br>優位が自己価値の条件になっていれば、場に入るたびに比較が作動する <sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup> 。</li>
@@ -343,14 +378,16 @@ dt::after{
 <p>この連なりのうち、第 2 と第 3 の段階は、メタ分析で支持されている。第 4 の段階は、自己愛についての理論に基づく。第 1 と第 5 の段階は、<mark>自己価値の随伴性</mark>についての知見の、本稿による当てはめである。したがって、全体としては仮説であり、確立した事実ではない。</p>
 <p>3.4 の区別を加えると、この連なりには別の側面が見える。第 5 の段階で自己価値が不安定なまま次の比較へ進むとき、優越感は一時的にしか得られない。そのため、位置を確かめ直そうとして、他者の目に映る見え方を整える行為、すなわち虚栄心の充足が繰り返されうる。この往復は、満たすたびに次の比較の必要を生むので、満足が積み上がりにくい。ただし、これは 3.4 と 4.6 の整理をつないだ本稿の仮説であり、この往復を検証した研究は、確認できなかった。</p>
 <p>さらに、この習性を自覚する人には、この連なりに加わる、もう一つの層がある。習性を自覚していること自体が、恥ずかしさ、情けなさ、みっともなさという感情を生むことがある。つまり、比較をする自分を、さらに比較の目で眺め、劣ると判定している可能性がある。これは、本稿の仮説であり、確認できた研究はない。習性への気づきが、改善の出発点であると同時に、新しい苦痛の源にもなりうる、という点は、方策を考えるときに重要になる。</p>
+</section>
 
-<h2 id="sec6">6. 考察 3 ：習性は修正できるか</h2>
+<section id="s6">
+<h2><span class="no">6</span>考察 3 ：習性は修正できるか</h2>
 <p>ここでは、課題 3 を検討する。各方策の根拠の強さは、 6.5 の区分に従って示す。方策を挙げるにあたっては、「効果がある」と断定せず、研究で何が確認できたかを書く。本稿では、 6.5 の区分の基準、すなわち独立した複数の研究またはメタ分析で一貫して支持されているかに従って、各方策を評価することにした。対象の近さは、表の根拠の欄に併記する。</p>
 
-<h3 id="sec6-1">6.1 習性を消すことは可能か</h3>
+<h3 id="s6-1">6.1 習性を消すことは可能か</h3>
 <p>この習性を自覚する人が知りたいのは、習性を修正する方法である。しかし、比較する心そのものを消すことができるかどうかについて、本稿の検索の範囲では、比較の傾向そのものの消去を主な目標にした研究を確認できなかった。考察 1 で見たとおり、比較は、人が自分の位置を知ろうとする働きや、承認を求める人間のあり方と結びついている。ただし、確認できなかったことは、そうした研究が存在しないことの証明ではない。そのため、本稿では「消すこと」を検討の対象外とし、比較が起きたときにどう受け止め、どう付き合うかという方向に焦点を当てる。</p>
 
-<h3 id="sec6-2">6.2 比較への向き合い方を変える</h3>
+<h3 id="s6-2">6.2 比較への向き合い方を変える</h3>
 <p>比較への向き合い方を変える方策として、セルフ・コンパッション（自分に対する思いやり）の研究がある。ネフは、セルフ・コンパッションを、自分への優しさ、人間としての共通性、マインドフルネスの三つの要素から成るものとして概念化し、自尊心の追求に代わる、健康な自己への態度として提案した <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 。セルフ・コンパッションは、失敗や弱点に直面したときに、自分を責めすぎず、人間として誰もが抱える困難として受け止める態度を指す。</p>
 <p>ブラインズとチェンは、四つの実験で、セルフ・コンパッションが自己改善の動機を強めることを報告した <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> 。そのうち第 4 の実験では、自分の弱点を振り返ったあと、セルフ・コンパッションの条件に置かれた参加者が、自尊心を高める条件や統制条件の参加者に比べて、上方の比較を好み、弱点を変えようとする動機も高かった（要旨による）。これは本稿の解釈では、自分を責めずに受け止めることが、比較を否定的な方向だけに使わせない可能性を示唆すると考えられる。</p>
 <p>より直接的に比較に働きかけた研究もある。外見の比較は、女性の身体への不満や否定的な感情と結びつくとされる。ヴィマラカンタンは、女性を対象に、比較の相手に対して、競争ではなく配慮（ケア）の姿勢で向き合う条件を、競争的な姿勢の条件や、気をそらす統制条件と比べた（三つの実験）。配慮の姿勢は、その場では、穏やかさを高め、苦痛を和らげ、さらに外見を比べようとする動機を下げ、セルフ・コンパッションと他者とのつながりの感覚を高めた。数日間の実践を求めた第 3 の研究では、外見を比べる傾向が下がり、社会的な安心感が高まったものの、時間を追った結果は、競争的な姿勢の条件と有意には違わなかった <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup>（要旨による）。</p>
@@ -358,45 +395,58 @@ dt::after{
 <p>これらの研究では、一部の指標や一部の群で改善が見られた。一方で、数日間の実践で競争的な姿勢の条件と差が出なかった結果や、イメージ課題を加えた群で改善が見られなかった結果もある。若い女性 126 人を対象にした日誌研究（観察研究）では、上方の外見比較とセルフ・コンパッションが身体イメージに与える影響に、交互作用は見られなかった <sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup> 。この結果は、方策の効果を支持しない方向の材料として併記する。</p>
 <p>確認できた研究は、実験室での検討や小規模な試験が中心であり、日常の比較の習性そのものを対象にした無作為化比較試験は、今回の調査では確認できなかった。したがって、この方策は根拠として確立したとは言えず、未確定の仮説として扱う。なお、この方策は、考察 2 で見た「自覚が新しい苦痛を生む」層に、直接働きかける可能性がある。比較する自分を責める代わりに、人間に共通の傾向として受け止めるという態度は、第二の層の恥を和らげる方向にあるからである。ただし、これも本稿の推測であり、確認された事実ではない。</p>
 
-<h3 id="sec6-3">6.3 比較の対象と場を選ぶ</h3>
+<h3 id="s6-3">6.3 比較の対象と場を選ぶ</h3>
 <p>比較の対象と場を選ぶという方策は、比較の影響がどこで強く出るかという実験的な知見から導かれる方向である。前述のとおり、比較の相手と自分が似ているという意識を喚起すると、対比ではなく弱い同化が見られたにとどまり、その結果も出版バイアスの補正のしかたに左右された <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup> 。同化とは、相手の水準へ自己評価が引き寄せられる反応であり、下方の相手と比べた場合には、かえって自己評価が下がりうる。</p>
 <p>この知見は、比較の場面をどう設計するかという発想につながる。たとえば、比較が起きやすい場や相手を意識的に減らすこと、あるいは比較の軸を自分にとって意味のある次元に絞ること、などが考えられる。ただし、これは実験の知見から示唆される方向であり、日常の生活でその効果を確認した研究は、今回の調査では見つからなかった。共通点を思い出すことが比較の強さを和らげるかどうかも、本稿では確認できていない。</p>
 
-<h3 id="sec6-4">6.4 自己価値を「優位」から切り離す方向</h3>
+<h3 id="s6-4">6.4 自己価値を「優位」から切り離す方向</h3>
 <p>考察 1 の成因論から導かれる、もう一つの方向がある。自己価値が「優位であること」に懸かっていることが問題の核心であるなら、その条件を緩めることが、論理的には習性の根に働きかける方策になる。クロッカーとパークの論文は、自尊心の追求の代償だけでなく、その代替についても論じているが <sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup> 、代替の具体的な内容は、本稿では原著で確認していない。</p>
 <p>この方向を支える補助的な材料は二つある。第一に、ルソーの教育論は、自尊心 (amour propre) が「非競争的な基礎」の上に立つことを教育の目標としている、と百科事典に整理されている <sup id="fnref-12-4"><a href="#ref-12">[12]</a></sup> 。第二に、アドラーの「共同体感覚」は、優越性への努力の対極にある傾向として挙げられている <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup> 。これらは、比較の習性を、競争的でない基礎の上に置き直す方向を示唆する。しかし、いずれも理論や哲学上の議論であり、介入として検証されたものではない。したがって、この方向は、未確定の仮説にとどまる。</p>
 
-<h3 id="sec6-5">6.5 各方策の根拠の区分</h3>
+<h3 id="s6-5">6.5 各方策の根拠の区分</h3>
 <p>本稿では、「確立した事実」と「未確定の仮説」の二つの区分を用いて各方策の根拠を示す。区分の基準は、独立した複数の研究またはメタ分析で一貫して支持されているかどうかに置いた。</p>
-<table class="cards">
+<div class="scroll">
+<table>
+<thead>
 <tr><th>方策・主張</th><th>区分</th><th>根拠の概要</th></tr>
-<tr><td data-label="方策・主張">比較の対象として上方を選びやすい、比較の結果は対比として現れやすい</td><td data-label="区分">確立した事実（実験研究の範囲）</td><td data-label="根拠の概要">60 年以上の研究を整理したメタ分析で、主な傾向として確認された <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup> 。上方の選びやすさは、上方と下方の二つから選ぶ研究で強く、同程度の相手も選べる研究では差が小さくなる。</td></tr>
-<tr><td data-label="方策・主張">セルフ・コンパッションによる比較への向き合い方の変化</td><td data-label="区分">未確定の仮説</td><td data-label="根拠の概要">有望な結果はあるが、対象が外見の比較をする女性や健康な青年などに限られ、日常の習性を対象にした無作為化比較試験は確認できない <sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup><sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup> 。自己改善動機に関する研究は間接的な示唆にとどまる <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 。日誌研究では効果を支持しない結果もある <sup id="fnref-19-2"><a href="#ref-19">[19]</a></sup> 。</td></tr>
-<tr><td data-label="方策・主張">比較の場と相手を選ぶ、類似性を意識する</td><td data-label="区分">未確定の仮説</td><td data-label="根拠の概要">比較の影響の強さに関する実験的知見から導かれる方向だが、日常の場面での検証が確認できない <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><td data-label="方策・主張">自己価値を「優位」から切り離す（非競争的な基礎に置き直す）</td><td data-label="区分">未確定の仮説</td><td data-label="根拠の概要">成因論からの論理的な帰結であり、理論と哲学上の議論に基づく <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup><sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup><sup id="fnref-12-5"><a href="#ref-12">[12]</a></sup> 。介入としての検証は確認できない。</td></tr>
+</thead>
+<tbody>
+<tr><td>比較の対象として上方を選びやすい、比較の結果は対比として現れやすい</td><td>確立した事実（実験研究の範囲）</td><td>60 年以上の研究を整理したメタ分析で、主な傾向として確認された <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup> 。上方の選びやすさは、上方と下方の二つから選ぶ研究で強く、同程度の相手も選べる研究では差が小さくなる。</td></tr>
+<tr><td>セルフ・コンパッションによる比較への向き合い方の変化</td><td>未確定の仮説</td><td>有望な結果はあるが、対象が外見の比較をする女性や健康な青年などに限られ、日常の習性を対象にした無作為化比較試験は確認できない <sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup><sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup> 。自己改善動機に関する研究は間接的な示唆にとどまる <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 。日誌研究では効果を支持しない結果もある <sup id="fnref-19-2"><a href="#ref-19">[19]</a></sup> 。</td></tr>
+<tr><td>比較の場と相手を選ぶ、類似性を意識する</td><td>未確定の仮説</td><td>比較の影響の強さに関する実験的知見から導かれる方向だが、日常の場面での検証が確認できない <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><td>自己価値を「優位」から切り離す（非競争的な基礎に置き直す）</td><td>未確定の仮説</td><td>成因論からの論理的な帰結であり、理論と哲学上の議論に基づく <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup><sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup><sup id="fnref-12-5"><a href="#ref-12">[12]</a></sup> 。介入としての検証は確認できない。</td></tr>
+</tbody>
 </table>
+</div>
 <p>この区分は、研究の強さの見立てであり、方策が個々の人にとって効果があるかどうかを保証するものではない。区分の使い方について補足する。「未確定の仮説」とは、効果を示す研究はあるものの、その数が少ない、対象が限られる、結果が研究によって割れている、といった事情がある状態を指す。この区分にある方策は、試してみる価値の判断材料にはなりうるが、効果が確かめられたものとして扱うことはできない。実際に試す場合には、その効果を自分の生活の中で確かめる必要がある。研究が示せるのは、そのための出発点までである。</p>
+</section>
 
-<h2 id="sec7">7. 比較がもたらす利点と反対の立場</h2>
+<section id="s7">
+<h2><span class="no">7</span>比較がもたらす利点と反対の立場</h2>
 <p>比較の習性を修正するべきだという立場に対しては、反対の見方もありうる。比較は、自分が目指すべき水準を知らせ、努力や成長の動機になりうると考えられる。前述の研究では、弱点を振り返ったあとにセルフ・コンパッションの条件に置かれた参加者が上方の比較を好んでおり、上方比較が自己改善の手段として使われうることを示唆している <sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup> 。優位への欲求も、動機づけとして働く側面を持つ。クロッカーとパークの論文が、自尊心の追求について、動機づけと感情面の脆さのトレードオフを論じていることも、この点と重なる <sup id="fnref-5-7"><a href="#ref-5">[5]</a></sup> 。</p>
 <p>より強い形の反対論もある。比較は、自分の能力や位置を知るために必要な情報を得る働きであり、それを修正の対象とすること自体が問題だという立場である。この立場の根拠を、本稿では十分に確認していない。</p>
 <p>一方で、同じメタ分析では、上方比較の後に自己評価が下がる対比が主な反応として示されている <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup> 。どちらの方向に働くかは、比較の相手、場面、そして比較する人の受け止め方によって変わると考えられる。比較が努力や成長の動機になりうるという最初の立場には一定の根拠があり、本稿もその可能性を退けるものではない。比較が動機になっているのか、それとも苦しさを生んでいるのかは、研究ではなく、その人自身が確かめるべき問題である。この習性を自覚する人が、自ら「不幸にしている」と評価している場合、その評価は尊重される。</p>
+</section>
 
-<h2 id="sec8">8. 結論</h2>
+<section id="s8">
+<h2><span class="no">8</span>結論</h2>
 <p>課題 1 について、研究は、相手と比べて上か下かを考える働きを社会的比較と呼び、上方と下方の二つから選ぶ場面では人は上方の相手を選びやすく、比較の結果は対比として現れやすいことを示している。これは、確認できた範囲では、特殊な癖というより広く見られる働きと考えられる。比較の強さには個人差がある。また、「優位でありたい」という思いは、優越感（感情）、優越への欲求（動機）、虚栄心（他者の目に映る見え方を飾り、示す傾向）に分けて整理でき、三つは比較のたびに満たし直される往復として結びつきうる（ 3.4 ）。ただし、この区別は本稿が置いた作業上のもので、区別を検討した実証研究は確認できなかった。</p>
 <p>課題 2 について、「常に優位でありたい」という欲求が強まる原因をめぐって、六つの系統の説明が見いだされた。<mark>自己価値の随伴性</mark>、<mark>社会的ランクの感受性</mark>、<mark>条件付きの関心を受けた経験</mark>、<mark>劣等感の補償</mark>、<mark>脆弱な自己愛の自己調整</mark>、<mark>承認の比較的な構造</mark>である。六つは証拠の種類が異なり、最後の<mark>承認の比較的な構造</mark>は、原因ではなく、習性を理解するための哲学的な枠組みである。単独で決定的な説明はない。複数の説明が相補的に関わる可能性はあるが、その相互作用や因果の順序は検証されていない。各系統は、掘り下げると接続する。たとえば、「愛」の領域での無条件の承認の欠如 (4.6) と条件付きの関心 (4.3) 、低い位置への恐れ (4.2) と劣位を避ける努力 (4.4) である。ただし、これらの接続を裏づける研究は、確認できなかった。「自分で自分を不幸にする」仕組みは、比較、対比、恥、逆効果の努力、自己価値の不安定という連なりとして整理できるが、これは複数の知見をつなぎ合わせた仮説である。習性を自覚することが新しい苦痛を生む層があるという指摘も、仮説にとどまる。</p>
 <p>課題 3 について、比較の習性を消すことは検討の対象外とした。比較への向き合い方を変える方策として、セルフ・コンパッションの研究は有望な結果を示すが、日常の場面での検証は確認できず、未確定の仮説にとどまる。自己価値を優位から切り離す方向も、論理的な帰結としては筋が通るが、介入として検証されてはいない。どの方策も、効果が確立したとは言えない。</p>
 <p>本稿の貢献は、新しい知見の提示にはなく、散らばった説明を一つの見取り図にまとめ、各説の根拠の強さを区別して示した点にある。今後の課題として、日常の場面での比較の習性の研究、幼少期の経験と比較志向の関連を追う縦断的な研究、そして<mark>自己価値の随伴性</mark>を緩める介入の検証が挙げられる。</p>
+</section>
 
-<h2 id="sec9">9. この記事の限界</h2>
+<section id="s9">
+<h2><span class="no">9</span>この記事の限界</h2>
 <p>本稿には、いくつかの限界がある。第一に、調査は文献の検索と要約・抄録・百科事典に基づいており、網羅的なものではない。また、本稿は、検索したデータベース、検索語、検索日、文献の採否の基準を記していない。そのため、検索を再現することも、検索の網羅性を評価することもできない。本稿で「確認できなかった」と書いた事項は、この検索の範囲で確認できなかったという意味であり、該当する研究が存在しないことを意味しない。第二に、本稿が想定する人物像は、議論のために置いた類型であり、特定の個人の調査や測定に基づくものではない。そのため、成因を特定することも、実在の人々に一般化することもできない。第三に、日常の場面で比較の方策を検証した研究は乏しく、本稿で挙げた方策の多くは、実験や、学生・青年などを対象とした研究から類推している。</p>
 <p>第四に、 1954 年のフェスティンガーの論文については、原典を確認しておらず、二次情報に基づいている。トレーシーとロビンズの論文も、原典の要旨を確認できておらず、報道記事と二次的な紹介による。また、 3.4 の優越感・優越への欲求・虚栄心の区別は、本稿が整理のために置いたものであり、確立した用語法ではない。同様に、アドラーはブリタニカ百科事典、ルソー・ヘーゲル・サルトルと、ホネットらの承認論はスタンフォード哲学百科事典の記述に依拠しており、原典の確認を経ていない。第五に、いくつかの研究の数値や標本の詳細は、要約や抄録から得たものであり、原著で確認していない。研究の対象集団や研究の種類が確認できなかったものは、本文中でその旨を記した。これらについては、本文中で示した範囲を超えて解釈しないよう努めた。</p>
 <p>読者が誤解しやすい点を、あらかじめ挙げておく。第一に、本稿の方策は、比較の習性を消すための手順ではない。第二に、研究で「効果があった」とされた結果は、その研究の対象や条件の中での話であり、同じ結果が誰にでも得られるとは限らない。第三に、本稿は、この習性を自覚する人の感情の正しさを判断するものではない。第四に、本稿で参照した精神医学の概念は、成因を考える枠組みであり、特定の個人や読者への診断ではない。</p>
 <p>さらに、この記事は医療や心理療法の代わりになるものではない。強い苦しさが続く場合や、日常生活に支障が出ている場合は、専門の相談先に相談することが望ましい。ただし、本稿では相談先の具体的な情報を、公式ページで確認できていないため挙げていない。</p>
+</section>
 
 <div class="refs">
-<h2 id="sec10">10. 参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<h2 id="s10">参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1"><a href="#fnref-1-1">^</a> Festinger, L. (1954) . A theory of social comparison processes. <em>Human Relations</em>, 7 (2) , 117–140. DOI: 10.1177/001872675400700202 。原典の本文は未確認で、本文の記述は二次情報による。</li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <sup><a href="#fnref-2-6">f</a></sup> <sup><a href="#fnref-2-7">g</a></sup> <sup><a href="#fnref-2-8">h</a></sup> <sup><a href="#fnref-2-9">i</a></sup> Gerber, J. P., Wheeler, L., & Suls, J. (2018) . A social comparison theory meta-analysis 60+ years on. <em>Psychological Bulletin</em>, 144 (2) , 177–197. DOI: 10.1037/bul0000127 。種類はメタ分析。対象の詳細は要確認。 <a href="https://www.apa.org/pubs/highlights/spotlight/issue-115.aspx">APA 解説ページ</a></li>
@@ -426,9 +476,9 @@ dt::after{
 <li id="ref-26"><a href="#fnref-26-1">^</a> Tracy, J. L., & Robins, R. W. (2007) . The psychological structure of pride: A tale of two facets. <em>Journal of Personality and Social Psychology</em>, 92 (3) , 506–525. DOI: 10.1037/0022-3514.92.3.506 。種類は尺度の開発と検証。原典の要旨は未確認で、報道記事と二次的な紹介による。 <a href="https://sciencedaily.com/releases/2007/06/070615214643.htm">ScienceDaily （報道）</a></li>
 <li id="ref-27"><a href="#fnref-27-1">^</a> Sedikides, C., & Gregg, A. P. (2008) . Self-enhancement: Food for thought. <em>Perspectives on Psychological Science</em>, 3 (2) , 102–116. DOI: 10.1111/j.1745-6916.2008.00068.x 。種類は総説。要旨と抜粋による。本文の詳細は未確認。 <a href="https://eprints.soton.ac.uk/54630">サウサンプトン大学リポジトリ（書誌）</a></li>
 </ol>
-<p class="note">本稿の研究結果は、検索で得た要約と抄録に基づく部分を含む。原著の確認が済んでいない項目には、本文中で「要確認」または「確認できなかった」と記した。研究の解釈は本稿の整理であり、研究者の結論そのものではない。</p>
+<p class="endnote">本稿の研究結果は、検索で得た要約と抄録に基づく部分を含む。原著の確認が済んでいない項目には、本文中で「要確認」または「確認できなかった」と記した。研究の解釈は本稿の整理であり、研究者の結論そのものではない。</p>
 </div>
 
-</main>
+</div>
 </body>
 </html>
