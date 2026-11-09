@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>買取専門店が増えた理由と収益の仕組み、質屋との違い</title>
+<style>
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">調査まとめ</p>
+<h1>買取専門店はなぜ増えたのか、どう稼いでいるのか</h1>
+<p class="subtitle">フランチャイズ展開の実情と、見かけなくなった質屋との違い</p>
+<p>街中の買取専門店は、金相場の高騰と開業しやすさを追い風に増えた。同じ「物をお金に換える」店でも、質屋は半世紀で 8 割減った。何が違うのかを整理する。</p>
+</header>
+<div class="wrap">
+
+<div class="lede">
+<p>買取店が増えた理由は、売りたい人の増加、出口（売り先）の確保、フランチャイズ (FC) による開業のしやすさが重なったことにある。収益の柱は「買値と売値の差」で、多くの店は品物を店頭で売らず、市場や精錬業者、本部へ回す。質屋は「品物を預かって貸す」業で、貸す手段が他に増えたことで数を減らした。</p>
+</div>
+
+<p class="meta band"><strong>【方法と限界】</strong>公開されている報道・企業発表・統計をもとにした。作成は 2026 年 11 月 10 日。店舗数と売上高は、出典ごとに時点と定義が違い、そのまま比べられない。確認できなかった数字は、その旨を書いた。</p>
+
+<nav class="toc"><b>📖 目次</b>
+<ol>
+<li><a href="#s1">買取店が増えている理由</a>
+<ol>
+<li><a href="#s1-1">売りたい人が増えた</a></li>
+<li><a href="#s1-2">売り先が広がった</a></li>
+<li><a href="#s1-3">開業しやすくなった</a></li>
+</ol></li>
+<li><a href="#s2">収益の仕組み</a></li>
+<li><a href="#s3">主な FC チェーンの規模と収益</a></li>
+<li><a href="#s4">質屋はなぜ見かけなくなったか</a></li>
+<li><a href="#s5">質屋と買取専門店の違い</a></li>
+<li><a href="#s6">業界の現状と注意点</a></li>
+</ol>
+</nav>
+
+<section id="s1">
+<h2><span class="no">1</span> 買取店が増えている理由</h2>
+
+<h3 id="s1-1">① 売りたい人が増えた</h3>
+<ul>
+<li><strong>金相場の高騰</strong><br>田中貴金属の国内小売価格は、 2026 年 1 月末に 1 グラム 30,248 円（税込）の史上最高値を付けた。直後に約 20% 急落したが、 3 月には 3 万円前後へ戻っている <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。壊れたネックレスや片方だけのピアスでも、金なら重さに応じた値が付く。「引き出しに眠っていた物が高く売れる」状況が、来店のきっかけを生んでいる <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</li>
+<li><strong>物価高</strong><br>新品より安い中古品を選ぶ人が増え、手持ちのジュエリーやブランド品を現金に換えたい需要も高まった <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</li>
+<li><strong>中古品への抵抗感の低下</strong><br>国内のリユース市場は 2024 年に約 3.3 兆円で、 15 年連続で拡大した。 2030 年には 4 兆円規模になると見込まれる（リユース経済新聞社の推計）<sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。推計の機関によって金額は異なるので、傾向をみる目安にとどめる。</li>
+</ul>
+
+<h3 id="s1-2">② 売り先が広がった</h3>
+<p>円安で、日本の中古ブランド品や貴金属は海外から見て割安になった。訪日客や海外の業者が買い求めるようになり、買取店にとって「高く売れる出口」が増えた <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。大手の中には、香港・中国・北米・ ASEAN に販路を広げる企業もある <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。</p>
+
+<h3 id="s1-3">③ 開業しやすくなった</h3>
+<p>買取店が「急に」増えたように見える大きな理由は、フランチャイズ (FC) の広がりである。</p>
+<ul>
+<li>本部が査定の相談と研修を用意し、 AI による真贋判定や、貴金属を壊さずに成分を測る分析装置も使える。専門知識が乏しくても開業しやすい <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> 。</li>
+<li>大きな売り場や設備が要らず、少人数の小型店舗で回せる。人件費を抑えられ、空き区画を埋めたい商業施設とも相性がよい <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。</li>
+<li>資金力のある大手は、大量の広告を打ち、好立地へ出店を進められる <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup> 。</li>
+</ul>
+<div class="point"><p>伸び方の例として、「おたからや」は 2014 年の 360 店から 2022 年 1 月の 1,227 店、 2025 年 12 月の約 1,630 店へ増えた <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 。「買取大吉」は 2025 年 9 月期に 1,500 店を超え、 2025 年 12 月 2 日時点で 1,623 店だった（うち FC が 1,436 店、約 88% ） <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。</p></div>
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span> 収益の仕組み</h2>
+
+<h3>① 基本は「買値と売値の差」</h3>
+<p>買取店の売上の中心は、客から買った値段と、それを売った値段の差（粗利）である。金なら、その日の相場から手数料分を引いた価格で買い、相場に近い価格で売る。ブランド品なら、業者間の取引相場から利幅と手数料を引いた額を査定額にする。</p>
+<p>大事なのは、買取店の多くが「客に売る店」ではなく、<mark>「仕入れ専門の窓口」</mark>だという点である。買った物は別の場所で売る。</p>
+
+<figure>
+<svg viewBox="0 0 480 372" role="img" aria-label="お客さんから買取店、本部や自社の販路を経て、業者間市場、精錬業者、海外の業者へ品物が流れる図">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2b2b3a"/></marker></defs>
+<rect x="100" y="8" width="280" height="50" rx="12" fill="#e8f1ff" stroke="#3b82f6" stroke-width="3"/>
+<text class="t tb" style="font-size:20px" x="240" y="40" text-anchor="middle">お客さん（売りたい人）</text>
+<line x1="240" y1="60" x2="240" y2="100" stroke="#2b2b3a" stroke-width="3" marker-end="url(#ah)"/>
+<text class="t" style="font-size:19px" x="256" y="86">品物を渡す</text>
+<rect x="100" y="104" width="280" height="66" rx="12" fill="#fff5cf" stroke="#f5b800" stroke-width="3"/>
+<text class="t tb" style="font-size:20px" x="240" y="132" text-anchor="middle">買取店（加盟店）</text>
+<text class="t" style="font-size:19px" x="240" y="156" text-anchor="middle">買値＝相場−利幅</text>
+<line x1="240" y1="172" x2="240" y2="212" stroke="#2b2b3a" stroke-width="3" marker-end="url(#ah)"/>
+<text class="t" style="font-size:19px" x="256" y="198">まとめて出荷</text>
+<rect x="100" y="216" width="280" height="50" rx="12" fill="#e4f6ec" stroke="#2fa36b" stroke-width="3"/>
+<text class="t tb" style="font-size:20px" x="240" y="248" text-anchor="middle">本部・自社の販路</text>
+<line x1="240" y1="268" x2="80" y2="306" stroke="#2b2b3a" stroke-width="3" marker-end="url(#ah)"/>
+<line x1="240" y1="268" x2="240" y2="306" stroke="#2b2b3a" stroke-width="3" marker-end="url(#ah)"/>
+<line x1="240" y1="268" x2="400" y2="306" stroke="#2b2b3a" stroke-width="3" marker-end="url(#ah)"/>
+<rect x="10" y="310" width="140" height="50" rx="12" fill="#fff" stroke="#e6dcc8" stroke-width="3"/>
+<text class="t" style="font-size:20px" x="80" y="341" text-anchor="middle">業者間市場</text>
+<rect x="170" y="310" width="140" height="50" rx="12" fill="#fff" stroke="#e6dcc8" stroke-width="3"/>
+<text class="t" style="font-size:20px" x="240" y="341" text-anchor="middle">精錬業者</text>
+<rect x="330" y="310" width="140" height="50" rx="12" fill="#fff" stroke="#e6dcc8" stroke-width="3"/>
+<text class="t" style="font-size:20px" x="400" y="341" text-anchor="middle">海外の業者</text>
+</svg>
+<figcaption>買い取った品物の流れ。店頭で客に売るのは、一部の大手や状態のよい品に限られる。</figcaption>
+</figure>
+
+<h3>② 主な売り先</h3>
+<div class="scroll"><table>
+<thead><tr><th>売り先</th><th>主に流れる物</th><th>特徴</th></tr></thead>
+<tbody>
+<tr><th>業者間オークション（古物市場）</th><td>ブランド品、時計、ジュエリー、家電など</td><td>古物商どうしが売り買いする市場。出品すれば短期間で現金にできる <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><th>地金商・精錬業者</th><td>金・プラチナの製品</td><td>溶かして地金に戻すので、デザインや傷は関係ない。相場に連動した価格で売れる。</td></tr>
+<tr><th>海外の業者・バイヤー</th><td>ブランド品、時計、カメラなど</td><td>円安で、国内より高く売れることがある <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><th>自社の店舗・ EC サイト</th><td>状態のよい品、人気の品</td><td>小売まで自社でやれば利幅は大きいが、在庫と手間がかかる。大手チェーンの販路。</td></tr>
+<tr><th>FC 本部</th><td>加盟店が買い取った品全般</td><td>チェーンによっては、本部が加盟店の仕入れ品を買い取る。加盟店の在庫リスクはさらに小さくなる <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+</tbody>
+</table></div>
+
+<h3>③ 在庫を持たないから小さな店で回る</h3>
+<p>出口が決まっていて、買った物を早く現金に戻せるため、売れ残りの心配が小さい <sup id="fnref-2-10"><a href="#ref-2">[2]</a></sup> 。 1 件あたりの利幅は小さくても、「買う → 数日で売る → また買う」を繰り返して資金を回せば、利益が積み上がる。</p>
+<div class="caution"><p>金は相場に連動して値が付くので、出口は確実だ。ただし、相場は動く。 2026 年 1 月末の最高値の直後に約 20% 急落した例 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> のように、買ってから売るまでが長いほど、相場変動のリスクを負う。回転の速さは、利益だけでなく安全にも効く。</p></div>
+
+<h3>④ FC 本部の稼ぎ方</h3>
+<p>FC チェーンでは、稼ぎ手は加盟店だけではない。一般的な FC の仕組みとして、本部は次のような収入を得る。</p>
+<ul>
+<li>加盟金・研修費などの、開業時の収入</li>
+<li>毎月のロイヤリティ（定額、または売上・粗利に応じた額）</li>
+<li>加盟店から集めた品を、まとめて有利な条件で売りさばく差益</li>
+</ul>
+<p>店舗が増えるほど、本部の収入も集まる品の量も増える。大手が出店を急ぐのは、このためだと考えられる。ただし、加盟金やロイヤリティの具体額は、今回の調査で公式の資料から確認できなかった。本部ごとに異なり、資料請求などで確かめる必要がある。</p>
+
+<h3>⑤ 費用はどこにかかるか</h3>
+<p>売り場も在庫も小さい代わりに、大きな費用になるのが<strong>集客</strong>である。買取店は「売りたい物がある人」が来ないと仕入れができない。大手が大量の広告を打てることが、資金力の差になっている <sup id="fnref-2-11"><a href="#ref-2">[2]</a></sup> 。人通りの多い場所に小さな店を構えるのも、看板そのものが広告になるからだと考えられる。</p>
+</section>
+
+<section id="s3">
+<h2><span class="no">3</span> 主な FC チェーンの規模と収益</h2>
+<p>買取専門店で FC を展開する主な企業とブランドを、確認できた範囲で並べる。数字は出典と時点が揃っていないので、下の注意を先に読んでほしい。</p>
+
+<div class="caution"><p>店舗数には、海外・催事・出店待機を含む数え方がある。売上高は、会社単体の値か、加盟店を含む全店売上かが、出典から読み取れないものがある。たとえば「おたからや」の売上は、 989 億円（ 2025 年 6 月期） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> と 2,112 億円（ 27 期） <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> で 2 倍を超えて開く。この差の理由は確認できていない。順位や規模の比較には使わず、各社の公式資料で確かめてから使うこと。</p></div>
+
+<h3>大手 2 ブランドと、上場する関連企業</h3>
+<div class="scroll"><table>
+<thead><tr><th>ブランド（運営会社）</th><th>店舗数（時点）</th><th>売上高</th><th>備考</th></tr></thead>
+<tbody>
+<tr><th>買取大吉<br>（エンパワー）</th><td>直営 187 + FC 1,436 = 1,623 店（ 2025 年 12 月 2 日） <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。 2026 年秋には 2,200 店前後とする比較記事がある <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> が、数字は一定しない。</td><td>464.7 億円（ 2023 年 9 月期）→ 810.1 億円（ 2024 年 9 月期）→ 977.6 億円（ 2025 年 9 月期） <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></td><td>店舗の約 88% が FC 。売上は会社の値で、加盟店の売上を含むかは確認できていない。</td></tr>
+<tr><th>おたからや<br>（いーふらん）</th><td>直営 410 （催事・海外含む） + 加盟約 1,220 = 約 1,630 店（ 2025 年 12 月） <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup> 。会社は 2026 年 7 月に「世界 1,930 店舗突破」と発表 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</td><td>989 億円（ 2025 年 6 月期） <sup id="fnref-12-4"><a href="#ref-12">[12]</a></sup> 。会社概要は 2,112 億円（ 27 期） <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 、プレスリリースは 2,030 億円（取材時点）<sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。</td><td>『リユース経済新聞』の 2026 年のランキングで 3 位（前年は 4 位）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup> 。売上の定義は上の注意を参照。</td></tr>
+<tr><th>大黒屋<br>（大黒屋ホールディングス）</th><td>285 店（ 2026 年 8 月） <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td><td>連結 114.7 億円（ 2026 年 3 月期）。営業損失 6.5 億円 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td>直営と FC の内訳は確認できていない。</td></tr>
+<tr><th>買取王国<br>（買取王国）</th><td>87 店、うち FC 7 店（ 2026 年 4 月 10 日） <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup></td><td>約 93 億円（ 2026 年 2 月期） <sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup></td><td>上場企業。 FC は少数で、直営が中心。</td></tr>
+</tbody>
+</table></div>
+
+<h3>売上高を確認できなかった中堅ブランド</h3>
+<div class="scroll"><table>
+<thead><tr><th>ブランド</th><th>運営会社</th><th>店舗数（時点）</th></tr></thead>
+<tbody>
+<tr><th>エコリング</th><td>エコリング</td><td>341 店（ 2026 年 6 月 1 日） <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th>WAKABA</th><td>フォーナイン</td><td>274 店以上（ 2026 年 1 月） <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th>売るナビ</th><td>MTC</td><td>213 店（ 2026 年 1 月） <sup id="fnref-9-5"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th>こやし屋</th><td>トリアイナ</td><td>206 店以上（ 2026 年 1 月） <sup id="fnref-9-6"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th>さすがや</th><td>さすがや</td><td>133 店（ 2026 年 7 月） <sup id="fnref-9-7"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th>いくらや</th><td>エニワン</td><td>98 店以上（ 2026 年 1 月） <sup id="fnref-9-8"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th>キングラム</th><td>ベストバイ</td><td>95 店以上（ 2026 年 1 月） <sup id="fnref-9-9"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th>質屋かんてい局</th><td>FTC</td><td>71 店以上（ 2026 年 1 月） <sup id="fnref-9-10"><a href="#ref-9">[9]</a></sup></td></tr>
+</tbody>
+</table></div>
+<p style="font-size:15px;color:var(--muted)">参考として、買取専門店ではなく総合リユースの最大手であるセカンドストリート（ゲオホールディングスグループ）は、東京商工リサーチの調査対象 251 社の首位で、売上高 1,161.8 億円だった（ 2025 年 3 月〜 2026 年 2 月期） <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。</p>
+</section>
+
+<section id="s4">
+<h2><span class="no">4</span> 質屋はなぜ見かけなくなったか</h2>
+
+<h3>① 数の変化</h3>
+<ul>
+<li>質屋は 1950 〜 60 年代に、全国で 2 万軒を超えていた <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup><sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> 。</li>
+<li>警察庁の統計で、 2017 年に営業許可を受けていた質屋は全国で 2,865 件。前年から 147 件が廃業した <sup id="fnref-15-2"><a href="#ref-15">[15]</a></sup> 。約 60 年で、規模は 8 割縮んだ <sup id="fnref-15-3"><a href="#ref-15">[15]</a></sup> 。</li>
+<li>全質連は、加盟店を「約 2,000 店」とする <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup> 。これは加盟数で、全国の総数ではない。最新の全国の許可件数は、今回確認できなかった。</li>
+</ul>
+
+<h3>② 減った理由</h3>
+<ol>
+<li><strong>借りる手段が増えた</strong><br>日経 xtech は、消費者金融やカードローンなど借金の手段が多様化したことを、減少の理由に挙げる <sup id="fnref-15-4"><a href="#ref-15">[15]</a></sup> 。質屋は、品物を預けないと借りられない。品物が要らず、速く借りられる手段が広がるほど、質屋に行く理由は薄れる。</li>
+<li><strong>物を手放す手段が増えた（推測）</strong><br>品物を売る側の選択肢として、買取専門店、リサイクルショップ、フリマアプリが広がった。「預けて借りる」より「売って現金にする」ほうが簡単な場面が増えたと考えられる。この点は、今回の調査で出典を確認していない。</li>
+<li><strong>業態が変わった</strong><br>質屋は買取サービスと質入れの両方を行う業種で <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 、看板だけでは買取店と区別がつきにくい。「質屋」の名で見かけなくなったことと、店そのものが消えたことは、完全には一致しない可能性がある（推測）。</li>
+</ol>
+<div class="point"><p>買取専門店の増加と質屋の減少は、「持ち物を現金に換えたい」という同じ需要に対する、応え方の交代だと見ることができる。質屋は「貸す」、買取店は「買う」。ただし、これは本稿の解釈であり、両者の増減の因果関係を示す資料は確認できていない。</p></div>
+</section>
+
+<section id="s5">
+<h2><span class="no">5</span> 質屋と買取専門店の違い</h2>
+<div class="scroll"><table>
+<thead><tr><th>項目</th><th>質屋</th><th>買取専門店</th></tr></thead>
+<tbody>
+<tr><th>取引の性格</th><td>品物（質草）を預けて、お金を借りる。担保つきの貸付</td><td>品物を売る売買。所有権は店に移る</td></tr>
+<tr><th>品物の行方</th><td>期限内に元金と質料を払えば、取り戻せる。払わなければ品物は店のものになる（流質）。流質期限は、質契約の成立から 3 か月以上とされる <sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup></td><td>売った品物は、原則として戻らない</td></tr>
+<tr><th>費用</th><td>質料（利息に当たる）。質屋営業法の上限は年 109.5% とされ、店頭の表示は月利で 0.95 〜 8% の例がある。質草の保管料を含むので、貸金業者の金利より高く見える <sup id="fnref-16-4"><a href="#ref-16">[16]</a></sup></td><td>利息はない。代わりに、買値が相場より低く抑えられる（店の利幅）</td></tr>
+<tr><th>返済</th><td>借りた金を返さなくても、質草を手放せばよい。審査はなく、品物の価値で貸す <sup id="fnref-16-5"><a href="#ref-16">[16]</a></sup></td><td>借金ではないので、返済はない。売った時点で取引は終わる</td></tr>
+<tr><th>主な法律</th><td>質屋営業法（都道府県公安委員会の許可）と古物営業法 <sup id="fnref-16-6"><a href="#ref-16">[16]</a></sup> 。貸金業者とは別の法律で規制される</td><td>古物営業法（古物商の許可）</td></tr>
+<tr><th>店の収益</th><td>質料と、流質した品物の販売</td><td>買値と売値の差</td></tr>
+<tr><th>店の数の目安</th><td>2,865 件（ 2017 年） <sup id="fnref-15-5"><a href="#ref-15">[15]</a></sup></td><td>買取大吉だけで 1,623 店（ 2025 年 12 月） <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup></td></tr>
+</tbody>
+</table></div>
+<p style="font-size:15px;color:var(--muted)">質料の上限と流質期限は、価格 .com マガジンの解説による。質屋営業法の条文そのものは確認できなかったので、数字を使う前に最新の条文を見ること。</p>
+
+<div class="box">
+<strong>要するに、どこが違うか</strong><br>質屋は、品物を担保にした「お金を貸す商売」で、戻せる可能性が残る。買取専門店は、品物を買い取る「仕入れの商売」で、売ったら終わりである。借りたいのか、売りたいのかで、選ぶ店が変わる。迷う品物は、まず買取価格を調べてから、質入れという選択肢も比べるとよい。
+</div>
+</section>
+
+<section id="s6">
+<h2><span class="no">6</span> 業界の現状と注意点</h2>
+<ul>
+<li><strong>大手と中小の二極化</strong><br>東京商工リサーチの調査（ 2026 年 5 月発表、対象 251 社）では、売上高 100 億円以上の企業は 15 社で、 4 期前の 7 社から 2 倍以上に増えた。一方、 2025 年のリユース業の休廃業・解散は 122 件（前年比 29.7% 増）で、 10 年間で最多だった <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。数えているのは企業で、店舗ではない。調査対象も、業界全体ではない。</li>
+<li><strong>トラブル</strong><br>国民生活センターに寄せられた訪問購入（自宅に来て買い取る「押し買い」を含む）の相談は、 2023 年度が 8,623 件、 2024 年度が 7,909 件、 2025 年度が 7,523 件だった（ 2026 年 5 月 31 日時点） <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。数字は後から更新されるため、他の記事の件数と少しずれることがある。店頭買取ではなく、自宅への訪問型の相談である点にも注意する。飛び込みの訪問購入は、契約書面を受け取った日から 8 日以内なら、原則としてクーリング・オフができる <sup id="fnref-2-12"><a href="#ref-2">[2]</a></sup> 。</li>
+<li><strong>比べない客が多い</strong><br>消費者庁の調査では、店頭買取を利用した人の 74.1% が、複数の店で査定額を比べていなかった <sup id="fnref-2-13"><a href="#ref-2">[2]</a></sup> 。比べられにくいことが買取店の利幅を支えている可能性があるが、これは推測である。</li>
+</ul>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> 東京商工リサーチ「リユース業の売上高 100 億円以上の企業が 15 社」データインサイト、 2026 年 5 月 25 日発表。対象は 251 社（最新期は 2025 年 3 月期〜 2026 年 2 月期）。 <a href="https://www.tsr-net.co.jp/data/detail/1202885_1527.html">東京商工リサーチ</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <sup><a href="#fnref-2-6">f</a></sup> <sup><a href="#fnref-2-7">g</a></sup> <sup><a href="#fnref-2-8">h</a></sup> <sup><a href="#fnref-2-9">i</a></sup> <sup><a href="#fnref-2-10">j</a></sup> <sup><a href="#fnref-2-11">k</a></sup> <sup><a href="#fnref-2-12">l</a></sup> <sup><a href="#fnref-2-13">m</a></sup> J-CAST ニュース「なぜ『買取専門店』が不気味なほど増えているのか　素人でも簡単に開業できる買取ビジネスのカラクリ」、 2026 年 7 月。記事末尾に、引用元の確認ミスで一部を削除した旨の追記がある。 <a href="https://www.j-cast.com/2026/07/18516379.html?p=all">J-CAST ニュース</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> 国民生活センター「訪問購入」の相談トピックス。 PIO-NET に登録された年度別の相談件数。 2026 年 7 月 31 日更新、集計は 2026 年 5 月 31 日時点で、消費生活センター等からの経由相談は含まない。 <a href="https://www.kokusen.go.jp/soudan_topics/data/doorstep_purchase.html">国民生活センター</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> リユース経済新聞社『リユース市場データブック 2025 』の発刊を伝えるプレスリリース（ 2025 年 10 月）。 <a href="https://netshop.impress.co.jp/r/prtimes/items/000000005.000167741">ネットショップ担当者フォーラム（ PR TIMES 転載）</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 日本貿易振興機構 (JETRO) 「インバウンドデータと AI を活用、日本型リユースの海外展開」地域・分析レポート、 2026 年 10 月 13 日。コメ兵ホールディングスへの取材に基づく。 <a href="https://www.jetro.go.jp/biz/areareports/2026/44569f34646f064b.html">JETRO 地域・分析レポート</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> Business Insider Japan の金の売買に関する記事、 2026 年 3 月 10 日。田中貴金属の国内小売価格が 2026 年 1 月末に 30,248 円の史上最高値を付け、直後に約 20% 急落したと述べる。 <a href="https://www.businessinsider.jp/article/2603-5-key-points-to-remember-when-buying-and-selling-physical-gold/">Business Insider Japan</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> <sup><a href="#fnref-7-3">c</a></sup> 『ビジネスチャンス』 2026 年 2 月号の抜粋「【エンパワー】買取 FC ナンバーワンの 1500 店舗超えを達成」、 2026 年 2 月 2 日掲載。直営 187 店・ FC 1,436 店の計 1,623 店（「 12 月 2 日時点」。年は記事にないため、掲載日から 2025 年と推定した）。 <a href="https://www.bc01.net/topinterview/enpower_202602/">ビジネスチャンス</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> マイナビ 2028 の企業情報「株式会社エンパワー」。売上高は 2023 年 9 月期が 464 億 7,378 万円、 2024 年 9 月期が 810 億 765 万円、 2025 年 9 月期が 977 億 5,831 万円。同ページには店舗数 2,400 店ともあるが、ページの最終更新日（ 2026 年 5 月 1 日）と記載の時期が合わず、店舗数には使っていない。 <a href="https://job.mynavi.jp/28/pc/search/corp295635/outline.html">マイナビ 2028 企業情報</a></li>
+<li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> <sup><a href="#fnref-9-3">c</a></sup> <sup><a href="#fnref-9-4">d</a></sup> <sup><a href="#fnref-9-5">e</a></sup> <sup><a href="#fnref-9-6">f</a></sup> <sup><a href="#fnref-9-7">g</a></sup> <sup><a href="#fnref-9-8">h</a></sup> <sup><a href="#fnref-9-9">i</a></sup> <sup><a href="#fnref-9-10">j</a></sup> 買取フランチャイズの比較記事 (web-repo) 、 2026 年 9 月 2 日公開。各ブランドの店舗数と時点を一覧にした二次資料で、同じブランドでも記事内で数字が一定しない。 <a href="https://web-repo.jp/articles/1011">web-repo 比較記事</a></li>
+<li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> 株式会社いーふらん 会社概要。売上高 2,112 億円（ 27 期）、従業員 2,236 名（ 2026 年 9 月 30 日時点）。決算月は記載がなく、店舗数の記載もない。 <a href="https://e-fran.jp/company/">いーふらん 会社概要</a></li>
+<li id="ref-11">^ <sup><a href="#fnref-11-1">a</a></sup> <sup><a href="#fnref-11-2">b</a></sup> <sup><a href="#fnref-11-3">c</a></sup> いーふらん プレスリリース「リユース売上ランキング 2026 にて初の TOP3 入り」、 2026 年 7 月 31 日。ランキングは『リユース経済新聞』 2026 年 7 月 25 日号。取材時点の売上高は 2,030 億円、店舗数は 1,780 店で、 7 月 28 日時点では「世界 1,930 店舗突破」とする。直営と FC の内訳は記載がない。 <a href="https://prtimes.jp/main/html/rd/p/000000302.000080252.html">PR TIMES</a></li>
+<li id="ref-12">^ <sup><a href="#fnref-12-1">a</a></sup> <sup><a href="#fnref-12-2">b</a></sup> <sup><a href="#fnref-12-3">c</a></sup> <sup><a href="#fnref-12-4">d</a></sup> Wikipedia 「いーふらん」。売上高 989 億円（ 2025 年 6 月期）、直営店 410 店（催事・海外含む）、加盟店約 1,220 店（ 2025 年 12 月現在）。過去の店舗数は 2014 年 360 店、 2020 年 900 店、 2022 年 1 月 1,227 店。個別の出典注記がない項目が多い二次資料。 <a href="https://ja.wikipedia.org/wiki/%E3%81%84%E3%83%BC%E3%81%B5%E3%82%89%E3%82%93">Wikipedia</a></li>
+<li id="ref-13"><a href="#fnref-13-1">^</a> 大黒屋ホールディングス 2026 年 3 月期 決算短信（連結）、 2026 年 5 月 15 日。連結売上高 114 億 7,200 万円、営業損失 6 億 5,200 万円。 <a href="https://www2.jpx.co.jp/disc/69930/081220260515537665_tse-acedjpsm-69930-20260515369930-ixbrl.htm">決算短信</a></li>
+<li id="ref-14">^ <sup><a href="#fnref-14-1">a</a></sup> <sup><a href="#fnref-14-2">b</a></sup> 買取王国 IR ニュース、 2026 年 4 月 9 日。 2026 年 4 月 10 日時点で 87 店（うち FC 7 店）、 2026 年 2 月期の売上高は約 93 億円。 PDF の本文を直接は読めず、検索結果の要約で確認した。 <a href="https://okoku.co.jp/company/ir/pdf/irnews_20260409.pdf">買取王国 IR</a></li>
+<li id="ref-15">^ <sup><a href="#fnref-15-1">a</a></sup> <sup><a href="#fnref-15-2">b</a></sup> <sup><a href="#fnref-15-3">c</a></sup> <sup><a href="#fnref-15-4">d</a></sup> <sup><a href="#fnref-15-5">e</a></sup> 日経 xtech 「『質屋』はどこに消えた？シェア社会で我々が失うもの」、 2019 年 4 月 4 日。警察庁の統計として、 2017 年の営業許可は 2,865 件で前年から 147 件の廃業とする。 <a href="https://xtech.nikkei.com/atcl/nxt/column/18/00138/040200262/">日経 xtech</a></li>
+<li id="ref-16">^ <sup><a href="#fnref-16-1">a</a></sup> <sup><a href="#fnref-16-2">b</a></sup> <sup><a href="#fnref-16-3">c</a></sup> <sup><a href="#fnref-16-4">d</a></sup> <sup><a href="#fnref-16-5">e</a></sup> <sup><a href="#fnref-16-6">f</a></sup> 価格 .com マガジンの質屋の解説記事、 2019 年 4 月 21 日。質料の例は 2019 年 4 月 19 日時点の紹介店舗のもの。法令の原文ではなく、質屋営業法の条文は今回確認していない。 <a href="https://kakakumag.com/money/?id=13680">価格 .com マガジン</a></li>
+<li id="ref-17"><a href="#fnref-17-1">^</a> 全国質屋組合連合会（全質連）の公式サイト。「全国約 2,000 店の質屋さんを統括する」とする。加盟店の数であり、全国の質屋の総数ではない。 <a href="https://www.zenshichi.gr.jp/">全質連</a></li>
+</ol>
+<p class="endnote">店舗数・売上高の一部は、比較記事や百科事典などの二次資料による。消費者庁の調査 (74.1%) は、一次資料を確認できず、 J-CAST の記述に拠った。企業の最新の数字は、各社の決算資料・公式発表で確かめること。</p>
+</div>
+
+<footer>おわり。数字は 2026 年 11 月 10 日までに確認できたものである。</footer>
+</div>
+</body>
+</html>
