@@ -5,186 +5,177 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>経路案内</title>
 <style>
-:root {
-  --bg: #f7f6f2;
-  --surface: #ffffff;
-  --text: #22252a;
-  --muted: #5f6670;
-  --line: #dcd9d0;
-  --accent: #1f4e8c;
-  --accent-soft: #e6eef8;
-  --mark: #c0392b;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #17191c;
-    --surface: #212429;
-    --text: #e8e6e1;
-    --muted: #a3a9b1;
-    --line: #3a3e45;
-    --accent: #8db4ea;
-    --accent-soft: #263446;
-    --mark: #ff8a7a;
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
   }
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.8;
-  font-size: 16px;
-}
-main {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 32px 16px 64px;
-}
-h1 {
-  font-size: 1.7rem;
-  margin: 0 0 8px;
-  letter-spacing: 0.04em;
-}
-h1 .sub {
-  display: block;
-  font-size: 1.05rem;
-  font-weight: normal;
-  color: var(--muted);
-  letter-spacing: 0.02em;
-}
-.site { margin: 0 0 12px; }
-.site a { color: var(--accent); }
-.lead { color: var(--muted); margin: 0 0 32px; }
-h2 {
-  font-size: 1.3rem;
-  margin: 40px 0 16px;
-  padding-left: 12px;
-  border-left: 5px solid var(--accent);
-}
-.card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 20px;
-  margin: 0 0 20px;
-}
-.card h3 {
-  font-size: 1.1rem;
-  margin: 0 0 12px;
-}
-.num {
-  display: inline-block;
-  min-width: 1.8em;
-  padding: 0 6px;
-  margin-right: 6px;
-  border-radius: 4px;
-  background: var(--accent);
-  color: var(--surface);
-  text-align: center;
-  font-size: 0.95rem;
-}
-dl {
-  display: grid;
-  grid-template-columns: 6.5em 1fr;
-  gap: 6px 12px;
-  margin: 0;
-}
-dt { color: var(--muted); }
-dd { margin: 0; }
-.alight {
-  font-weight: bold;
-  color: var(--mark);
-}
-.alight::before { content: "★ "; }
-.walk a { color: var(--accent); }
-figure {
-  margin: 24px 0;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 16px;
-}
-figure img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-}
-figure.tall img { max-width: 480px; margin: 0 auto; }
-figcaption {
-  margin-top: 10px;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-figcaption strong { color: var(--text); }
-.note { font-size: 0.9rem; color: var(--muted); }
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
-.picker { margin: 0 0 8px; }
-.picker-label {
-  margin: 0 0 10px;
-  font-weight: bold;
-}
-.picker ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-.picker a {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  min-height: 64px;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-left: 5px solid var(--accent);
-  border-radius: 8px;
-  background: var(--surface);
-  color: var(--text);
-  text-decoration: none;
-  line-height: 1.4;
-}
-.picker a:hover { background: var(--accent-soft); }
-.picker a:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 2px;
-}
-.picker .mode {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-.picker .from {
-  font-size: 1.05rem;
-  font-weight: bold;
-}
-.card { scroll-margin-top: 16px; }
-.card:target {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-}
-@media (max-width: 600px) {
-  .picker ul { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  h1 { font-size: 1.45rem; }
-  dl { grid-template-columns: 5.5em 1fr; }
-  .card { padding: 16px; }
-}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* 経路案内に固有の部品(wafu-style.css の後ろに足す) */
+  .card{text-align:left;font-size:20px;line-height:1.9;padding:14px 20px;margin:0 0 20px;scroll-margin-top:16px}
+  .card h3{margin:0 0 12px}
+  .card:target{border-color:var(--orange);box-shadow:0 0 0 3px var(--pale-yellow)}
+  dl.route{display:grid;grid-template-columns:6.5em 1fr;gap:6px 12px;margin:0}
+  dl.route dt{color:var(--muted)}
+  dl.route dd{margin:0}
+  .alight{font-weight:bold;color:var(--red)}
+  .alight::before{content:"★ "}
+  figure.tall img{max-width:480px;margin:0 auto}
+  figure img{display:block;width:100%;height:auto;border-radius:6px}
+  figcaption strong{color:var(--ink)}
+  .picker{margin:0 0 8px}
+  .picker ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .picker a{display:flex;flex-direction:column;justify-content:center;height:100%;min-height:64px;padding:10px 12px;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--orange);border-radius:12px;color:var(--ink);text-decoration:none;line-height:1.5}
+  .picker a:hover{background:var(--pale-yellow)}
+  .picker .mode{font-size:16px;color:var(--muted)}
+  .picker .from{font-weight:bold}
+  @media(max-width:600px){.picker ul{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){dl.route{grid-template-columns:5.5em 1fr}.card{padding:12px 16px}}
 </style>
 </head>
 <body>
-<main>
-<h1><span class="sub">経路案内</span></h1>
-<p class="site"><a href="https://meguminoie.salvationarmy.or.jp/">（救世軍恵みの家　ウェブサイト）</a></p>
-<p class="lead"><span class="alight"></span>印は降車する駅・停留所</p>
+<header class="hero">
+<h1>経路案内</h1>
+<p class="subtitle"><a href="https://meguminoie.salvationarmy.or.jp/">（救世軍恵みの家　ウェブサイト）</a></p>
+</header>
+<div class="wrap">
+<p style="margin-top:24px"><span class="alight"></span>印は降車する駅・停留所</p>
 
-<nav class="picker" aria-labelledby="picker-label">
+<nav class="picker" aria-label="出発地の選択">
   <ul>
     <li><a href="#from-higashikoenji"><span class="mode">地下鉄・丸の内線</span><span class="from">東高円寺から</span></a></li>
     <li><a href="#from-shinjuku"><span class="mode">バス・宿 91</span><span class="from">新宿から</span></a></li>
@@ -193,26 +184,29 @@ html { scroll-behavior: smooth; }
   </ul>
 </nav>
 
-<h2 id="subway">地下鉄</h2>
+<section id="s1">
+<h2><span class="no">1</span>地下鉄</h2>
 <div class="card" id="from-higashikoenji">
-  <dl>
+  <dl class="route">
     <dt>降車駅</dt>
     <dd><span class="alight">東高円寺</span>（新宿から 7 分）</dd>
     <dt>徒歩</dt>
-    <dd class="walk">駅から 10 ～ 15 分（<a href="#map1">経路図１</a>）</dd>
+    <dd>駅から 10 ～ 15 分（<a href="#map1">経路図１</a>）</dd>
   </dl>
 </div>
 <figure class="tall" id="map1">
   <a href="route_1_web.png"><img src="route_1_web.png" width="1263" height="2959" loading="lazy" alt="東高円寺駅から救世軍恵みの家までの徒歩経路を示す地図。駅の南側から出て南へ進み、約 750 メートル、徒歩約 10 分。"></a>
   <figcaption><strong>経路図１：</strong>駅から徒歩 10 ～ 15 分</figcaption>
 </figure>
+</section>
 
-<h2 id="bus">バス</h2>
+<section id="s2">
+<h2><span class="no">2</span>バス</h2>
 <p>いずれも「堀ノ内（妙法寺前）」で降車</p>
 
 <div class="card" id="from-shinjuku">
-  <h3><span class="num">1</span> 新宿駅から</h3>
-  <dl>
+  <h3>① 新宿駅から</h3>
+  <dl class="route">
     <dt>のりば</dt>
     <dd>「新宿駅西口」 9 番のりば</dd>
     <dt>系統</dt>
@@ -224,13 +218,13 @@ html { scroll-behavior: smooth; }
     <dt>降車</dt>
     <dd><span class="alight">堀ノ内（妙法寺前）</span></dd>
     <dt>徒歩</dt>
-    <dd class="walk">バス停から 7 ～ 10 分（<a href="#map2">経路図２</a>）</dd>
+    <dd>バス停から 7 ～ 10 分（<a href="#map2">経路図２</a>）</dd>
   </dl>
 </div>
 
 <div class="card" id="from-asagaya">
-  <h3><span class="num">2</span> 阿佐ヶ谷駅から</h3>
-  <dl>
+  <h3>② 阿佐ヶ谷駅から</h3>
+  <dl class="route">
     <dt>のりば</dt>
     <dd>「阿佐ヶ谷駅前」</dd>
     <dt>系統</dt>
@@ -242,7 +236,7 @@ html { scroll-behavior: smooth; }
     <dt>降車</dt>
     <dd><span class="alight">堀ノ内（妙法寺前）</span></dd>
     <dt>徒歩</dt>
-    <dd class="walk">バス停から 7 ～ 10 分（<a href="#map2">経路図２</a>）</dd>
+    <dd>バス停から 7 ～ 10 分（<a href="#map2">経路図２</a>）</dd>
   </dl>
 </div>
 
@@ -252,8 +246,8 @@ html { scroll-behavior: smooth; }
 </figure>
 
 <div class="card" id="from-shibuya">
-  <h3><span class="num">3</span> 渋谷駅から</h3>
-  <dl>
+  <h3>③ 渋谷駅から</h3>
+  <dl class="route">
     <dt>のりば</dt>
     <dd>「渋谷駅前（西側）」</dd>
     <dt>系統</dt>
@@ -265,7 +259,7 @@ html { scroll-behavior: smooth; }
     <dt>降車</dt>
     <dd><span class="alight">堀ノ内（妙法寺前）</span></dd>
     <dt>徒歩</dt>
-    <dd class="walk">バス停から 9 ～ 13 分（<a href="#map3">経路図３</a>）</dd>
+    <dd>バス停から 9 ～ 13 分（<a href="#map3">経路図３</a>）</dd>
   </dl>
 </div>
 
@@ -273,6 +267,7 @@ html { scroll-behavior: smooth; }
   <a href="route_3_web.png"><img src="route_3_web.png" width="1759" height="890" loading="lazy" alt="渋谷駅からのバスのバス停「堀ノ内（妙法寺前）」から救世軍恵みの家までの徒歩経路を示す地図。バス停から南へ進み、妙法寺東の交差点で道路を渡り、さらに南へ進んでから東へ向かう。約 600 メートル、徒歩約 9 分。"></a>
   <figcaption><strong>経路図３：</strong>バス停から徒歩 9 ～ 13 分</figcaption>
 </figure>
-</main>
+</section>
+</div>
 </body>
 </html>
