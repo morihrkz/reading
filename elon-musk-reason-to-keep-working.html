@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>イーロン・マスクが語る「働き続ける理由」</title>
+<style>
+  :root{
+    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
+    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
+    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.95;font-size:17px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+  ruby rt{font-size:.55em;color:var(--muted)}
+  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:560px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:44px 0}
+  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
+  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:10px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--orange)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
+  .card .e{font-size:38px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#faf3e2}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
+  .scroll{overflow-x:auto}
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--green)}
+  .quiz .ans{color:var(--green);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:14px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.72em;line-height:0}
+  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs a{color:#a36b00}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .white{fill:#fff}
+
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">映像の要約</p>
+<h1>イーロン・マスクが語る<br>「働き続ける理由」</h1>
+<p class="subtitle">Why Elon Musk Keeps Working</p>
+</header>
+<div class="wrap">
+
+<div class="lede">
+<p>「そんなにお金があるのに、どうしてまだ働くの？」と聞かれたマスク氏の答えをまとめた。お金や名声の話ではなく、<mark>「宇宙について、正しい問いを見つけたい」</mark>という答えだった。</p>
+</div>
+
+<p class="meta band"><strong>【方法と限界】</strong> YouTube で広まっている切り抜き映像 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> を手がかりに探した。ただし、元の動画の投稿者・日付・インタビュアーは確かめられていない。内容は、書き起こしを載せた要約サイト <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> で読んだものに基づく。本人の発言を一語ずつ確かめたものではないので、引用は短い語句にとどめた。</p>
+
+<nav class="toc"><b>📖 目次</b>
+<ol>
+<li><a href="#s0">どんな映像か</a></li>
+<li><a href="#s1">マスク氏の答え</a></li>
+<li><a href="#s2">答えを四つの段に分けると</a></li>
+<li><a href="#s3">読むときの注意</a></li>
+<li><a href="#s4">ことば集</a></li>
+</ol>
+</nav>
+
+<section id="s0">
+<h2><span class="no">0</span> どんな映像か</h2>
+<p>よく見かけるのは、「 Elon Musk, why are you still working? 」という題の切り抜きである。「純資産が 1,840 億ドルもあるのに、なぜまだ働くのか」という意味だ <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。</p>
+<p>同じ内容の映像は、題に入る金額が違う形でも出回っている。 5,000 億ドル <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 、 8,000 億ドルと、投稿の時期によって数字が変わる。これは、同じ質問と答えの切り抜きが、何度も作り直されて広まっていることを示す。</p>
+<div class="point"><p>題の金額は目安にすぎない。この文書では、金額ではなく「何と答えたか」だけを扱う。</p></div>
+</section>
+
+<section id="s1">
+<h2><span class="no">1</span> マスク氏の答え</h2>
+<p>質問の中身は、「なぜ、政治にも、人類が複数の惑星に住むことにも力を入れるのか」というものだった。マスク氏は、お金の話をせずに、 10 代のころの悩みから答え始める。</p>
+
+<h3>① 十代の「人生の意味」の悩み</h3>
+<p>若いころ、人生の意味が分からなくなって深く悩んだ。宗教の本を読んだが、納得できなかった。そこで哲学者の本に進み、ショーペンハウアーやニーチェを読んだ。若い人には重い読書だった、と振り返る。</p>
+
+<h3>② 『銀河ヒッチハイク・ガイド』との出会い</h3>
+<p>救いになったのは、 SF 小説の『銀河ヒッチハイク・ガイド』だった。この物語では、巨大なコンピューターが「答えは 42 」と告げる。しかし、本当に難しいのは<mark>答えを見つけることより、何を問うべきかを知ること</mark>だ。マスク氏は、この考えに強く引かれたと語る。</p>
+
+<h3>③ 「宇宙が答えで、問いを探している」</h3>
+<p>そこから出てきたのが、短いこの言葉である。</p>
+<div class="box"><p>“the universe is the answer. What is the question?”<sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup><br>（宇宙が答えだ。では、問いは何か。）</p></div>
+<p>宇宙そのものが答えなら、私たちの仕事は「正しい問い」を見つけることになる。</p>
+
+<h3>④ だから、意識を広げる</h3>
+<p>正しい問いを立てるには、考える力そのものを大きくするしかない。マスク氏は、人間の<ruby>意識<rt>いしき</rt></ruby>と、コンピューターなど電子の意識の両方を、数も範囲も増やすべきだと考える。そうすれば、宇宙の仕組みを理解できるかもしれない。</p>
+<p>その手段が、人類を複数の惑星に、やがては複数の恒星にも広げることだ。目的は、はっきり言えば「宇宙の性質を理解すること」である。</p>
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span> 答えを四つの段に分けると</h2>
+<div class="cards">
+<div class="card"><span class="e">😟</span>人生の意味が分からない（ 10 代）</div>
+<div class="card"><span class="e">📚</span>本で「問いが大事」と知る</div>
+<div class="card"><span class="e">🧠</span>意識を増やし、広げる</div>
+<div class="card"><span class="e">🚀</span>複数の惑星・恒星へ進む</div>
+</div>
+<div class="point"><p>お金のために働いているのではない。「知りたい」という思いが、働き続ける理由になっている、というのが筋道である。</p></div>
+<div class="try"><p>あなたなら、「お金がいくらあっても続けたいこと」は何だろう？　紙に一つ書いて、その理由も一行で添えてみよう。</p></div>
+</section>
+
+<section id="s3">
+<h2><span class="no">3</span> 読むときの注意</h2>
+<div class="caution"><p>この要約は、元の動画を直接見て確かめたものではない。投稿者・日付・インタビュアーが分からない切り抜きなので、引用や数字を別の場で使うときは、元の映像で言葉を確かめてほしい。</p></div>
+<ul>
+<li>要約サイトの文面は、題の金額と書き起こしの内容が合っていない。書き起こしには、資産の話は出てこない。「資産があるのに」という前置きは、題をつけた人の演出と考えられる。</li>
+<li>これは本人の主張であり、事実の証明ではない。「意識を広げる」「複数の惑星に住む」ことへの賛否は、別に考える必要がある。</li>
+<li>探したかぎり、「働き続ける理由」を直接たずねた一次資料（元の放送・全編）は見つからなかった。</li>
+</ul>
+</section>
+
+<section id="s4">
+<h2><span class="no">4</span> ことば集</h2>
+<dl class="words">
+<dt>銀河ヒッチハイク・ガイド（ぎんがヒッチハイク・ガイド）</dt>
+<dd>ダグラス・アダムスの SF 小説。答えの「 42 」は有名だが、「問いが分からない」という皮肉が物語の核にある。</dd>
+<dt>意識（いしき）</dt>
+<dd>ものごとを感じ、考える働き。マスク氏は、人間だけでなく電子の意識も増やすべきだと言う。</dd>
+</dl>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> 切り抜き動画「 Elon Musk, why are you still working? You are worth $184B 」。題名のみを確かめた。 <a href="https://www.youtube.com/watch?v=P7iRUw3Imw4">YouTube</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> 「 Elon Musk: Why I Keep Working With a $800 Billion Net Worth — Transcript &amp; Summary 」。書き起こしと要約。元の動画の情報は載っていない。 <a href="https://sozai.app/transcript/elon-musk-why-i-keep-working-with-a-800-billion-net-w-transcript/">SozAI</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> 「 Elon Musk: Why I Keep Working Even With $500 Billion Net Worth 」。題名のみを確かめた。 <a href="https://recapio.com/digest/elon-musk-why-i-keep-working-even-with-500-billion-net-worth-by-clim">Recapio</a></li>
+</ol>
+<p class="endnote">要約サイトの内容は自動生成の可能性があり、誤りを含みうる。</p>
+</div>
+
+<footer>おわり。「答え」より「問い」を大事にする、という話だった。</footer>
+</div>
+</body>
+</html>
