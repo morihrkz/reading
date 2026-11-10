@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>消費減税法案、採決で退席した 4 人は何に賛成できなかったのか</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;height:auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8;white-space:nowrap}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* 指示書・報告書向けの部品(SKILL.md の「指示書・報告書向けの部品」)。コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">解説 2026 年 11 月 10 日時点</p>
+<h1>消費減税法案、採決で退席した 4 人は何に賛成できなかったのか</h1>
+<p class="subtitle">Why Four LDP Lawmakers Walked Out of the Consumption Tax Cut Vote, and How Their Objections Overlap with and Diverge from the Opposition's</p>
+</header>
+<div class="wrap">
+
+<div class="lede">
+<p>2026 年 11 月 6 日の衆議院本会議で、食料品の消費税を下げる法案が採決された。直前に、自民党の石破茂前首相ら 4 人が席を立ち、賛成も反対もしなかった。この文書は、 4 人が何に引っかかったのか、その理屈が野党の反対理由と同じものなのかを、報道をもとに整理する。</p>
+</div>
+
+<p class="meta band"><strong>【方法と限界】</strong> 2026 年 11 月 10 日までの新聞・通信社・ネット媒体の報道を読んで整理した。国会会議録や法案の条文そのものは確認していない。発言は、記者団への説明や報道での紹介に基づく。人物ごとに、発言が確認できたものと、できなかったものを分けて書く。</p>
+
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#s0">先に結論</a></li>
+<li><a href="#s1">何が起きたのか</a></li>
+<li><a href="#s2">法案の中身</a></li>
+<li><a href="#s3">4 人は何に賛成できなかったのか</a></li>
+<li><a href="#s4">野党の理屈と同じなのか</a></li>
+<li><a href="#s5">見方が分かれる点と、これから</a></li>
+<li><a href="#s6">確認できなかったこと</a></li>
+</ol>
+</nav>
+
+<section id="s0">
+<h2><span class="no">0</span> 先に結論</h2>
+<div class="point">
+<p><mark>4 人に共通するのは、「財源がはっきりしない」という疑問である。</mark>この点は、国民民主党や公明党が挙げる反対理由と重なる。</p>
+<p>ただし、重なるのは「説明不足」への不満までである。<mark>結論の向きは同じではない。</mark> 4 人のうち少なくとも石破氏・小渕氏・船田氏は、財政悪化や減税の効果への疑問から、減税という手段そのものに慎重である。一方、国民民主党は、減税の形が不十分だと批判している。</p>
+</div>
+<p>この結論は、報道された発言を私が突き合わせて導いた整理である。 4 人自身が「野党と同じ考えだ」と述べたわけではない。</p>
+</section>
+
+<section id="s1">
+<h2><span class="no">1</span> 何が起きたのか</h2>
+<ul class="tl">
+<li><span class="yr">11 月 6 日</span><b>衆院本会議</b><br>法案は与党などの賛成多数で可決された。石破茂氏、小渕優子氏、古川禎久氏、船田元氏の 4 人は、採決前に退席した。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 野党は全党が反対した。</li>
+<li><span class="yr">11 月 9 日</span><b>自民党が 4 人を戒告</b><br>鈴木俊一幹事長は「党紀と党内結束の観点から看過できない」との考えを示した。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 総理経験者が処分されるのは初めてと報じられている。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></li>
+<li><span class="yr">その前後</span><b>役職の辞任</b><br>小渕氏と古川氏は、退席を理由に党税制調査会の副会長を辞めたと報じられている。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 小林鷹之政調会長は、 4 人の退席を「非常に遺憾」と述べた。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></li>
+<li><span class="yr">11 月 11 日</span><b>参議院で審議入りの予定</b><br>参院では与党が過半数に届いていない。</li>
+</ul>
+<p>4 人は反対票を投じたのではなく、<strong>席を立って採決に加わらなかった</strong>点に注意が必要である。党議拘束のある採決で、賛成には回れず、反対票も投じにくいときの、ぎりぎりの意思表示と見られる。これは私の推測で、 4 人が理由を明言したものではない。</p>
+</section>
+
+<section id="s2">
+<h2><span class="no">2</span> 法案の中身</h2>
+<p>報道によると、法案の柱は次の三つである。</p>
+<div class="box">
+<ul>
+<li><strong>食料品の税率を下げる</strong><br>2027 年 4 月から 2 年間、食料品の消費税率を 8% から 1% にする。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></li>
+<li><strong>所得に応じた給付・支援金</strong><br>2027 〜 28 年に、消費税 1% 分に当たる約 6,000 億円を、所得に応じて給付する。 2029 年度からは「就業者負担軽減支援金」を始めるとされる。高市首相は、給付の対象を年収 100 万〜 350 万円の層、約 2,000 万人と説明している。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></li>
+<li><strong>財源</strong><br>「特例公債（赤字国債）に頼らず、歳出・歳入全般の見直しで確保する」とされている。しかし、具体策は示されていない。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></li>
+</ul>
+</div>
+<p>報道によって、給付や支援金の始まる時期の書き方に差がある。ここでは、複数の報道で共通する骨格だけを書いた。</p>
+<div class="caution">
+<p>「 2 年限定」の減税が終わるとき、税率は 8% に戻る。この「出口」をどう考えるかが、 4 人と野党の双方が気にする点の一つである。</p>
+</div>
+</section>
+
+<section id="s3">
+<h2><span class="no">3</span> 4 人は何に賛成できなかったのか</h2>
+<p>4 人の理由は、完全に同じではない。確認できた発言を、人ごとに並べる。</p>
+
+<table>
+<thead><tr><th>人物</th><th>報じられた理由</th><th>理由の性格</th></tr></thead>
+<tbody>
+<tr><th>石破茂氏（前首相）</th><td data-label="報じられた理由">記者団に「財源が明らかではなく、財政を毀損する。懸念を払拭できない」と説明した。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> 10 月の講演では、物価や円安への懸念も示していた。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td><td data-label="理由の性格">財政規律と、物価・為替への懸念</td></tr>
+<tr><th>小渕優子氏（元選挙対策委員長）</th><td data-label="報じられた理由">「決められた期間とはいえ減税に賛成できない」と説明した。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 7 月には、党税調の非公式幹部会合のメンバーを辞任していた。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td><td data-label="理由の性格">減税そのものへの反対。財源への懸念も挙げた</td></tr>
+<tr><th>古川禎久氏（元法相）</th><td data-label="報じられた理由">退席理由についての本人の直接の発言は、確認できなかった。減税より給付による支援を重視してきたと報じられている。 <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup></td><td data-label="理由の性格">減税より給付を重く見る立場（報道による推定）</td></tr>
+<tr><th>船田元氏（元経済企画庁長官）</th><td data-label="報じられた理由">「財源がまだ明確に示されていない上、減税をしても食料品が確実に下がる効果が期待できない」と述べた。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 2 年後に税率を戻そうとしても、政治的な反発で難しくなる可能性も指摘した。 <sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup></td><td data-label="理由の性格">財源・効果・出口への疑問</td></tr>
+</tbody>
+</table>
+
+<h3>① 財源が示されていない</h3>
+<p>石破氏と船田氏が、はっきり挙げた点である。法案は赤字国債に頼らないとするが、どの歳出を削り、どの収入を増やすかは示されていない。石破氏は、その結果として「財政を毀損する」と見ている。</p>
+
+<h3>② 減税が食料品の値下がりにつながる保証がない</h3>
+<p>船田氏の指摘である。税率が下がっても、店の価格がその分だけ下がるかどうかは、事業者の判断にも左右される。確実でない効果のために、税収を手放してよいのか、という疑問である。</p>
+
+<h3>③ 2 年後に戻せるのか</h3>
+<p>船田氏が示した懸念である。一度下げた税を、期限が来たからといって元に戻すのは、政治的に大きな抵抗を生むと見ている。「 2 年限定」という説明そのものを疑う見方である。</p>
+
+<h3>④ 減税という手段そのもの</h3>
+<p>小渕氏の発言は、期間を区切った減税であっても賛成できないというものである。古川氏は、減税より給付を重くみてきたと報じられている。この二人は、「説明が足りない」というより、「手段として好ましくない」という性格が強く見える。</p>
+<div class="caution">
+<p>古川氏の理由は、本人の発言ではなく、これまでの立場についての報道から推し量ったものである。断定はできない。</p>
+</div>
+</section>
+
+<section id="s4">
+<h2><span class="no">4</span> 野党の理屈と同じなのか</h2>
+<p>まず、野党側の反対理由を確認する。確認できたのは、国民民主党と公明党の発言である。立憲民主党などの反対理由は、今回の調査では確認できなかった。</p>
+
+<h3>国民民主党・玉木雄一郎代表</h3>
+<p>10 日の会見で、 4 人の退席について「元総理の方が反対せざるを得ないような内容だということが証明された」と述べた。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 反対の理由としては、次の点を挙げている。</p>
+<ul>
+<li>支援金で、どの所得層がいくらもらえるのかが分からない。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></li>
+<li>2 年限定の 1% が 8% に戻ると、中間層は事実上の増税になる。 <sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup></li>
+<li>支援金の対象や金額を変えても、中間層の負担は軽くならない。税額控除、つまり減税が欠けている。令和 11 年（ 2029 年）からの住民税減税を求める。 <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup></li>
+</ul>
+
+<h3>公明党・岡本三成代表</h3>
+<p>BS11 の番組で、物価高対策として非効率だと批判し、「このままだと賛成しない」と述べた。 <sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup> 衆院通過後には「誰が対象で、どれだけの負担になるかも分からない」とも批判している。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup></p>
+
+<h3>重なる点と、ずれる点</h3>
+<table>
+<thead><tr><th>論点</th><th>退席した 4 人</th><th>野党（国民民主・公明）</th></tr></thead>
+<tbody>
+<tr><th>財源</th><td data-label="退席した 4 人">石破氏・船田氏・小渕氏が不明確さを挙げた。</td><td data-label="野党（国民民主・公明）">財源の不明確さも問題視されているが、発言で確認できたのは、給付の対象や負担が不明確だという指摘が中心。</td></tr>
+<tr><th>設計の分かりにくさ</th><td data-label="退席した 4 人">船田氏が、値下がりの確実性と、 2 年後の出口を問題にした。</td><td data-label="野党（国民民主・公明）">誰がいくら得をするのか分からない。 2 年後に中間層が事実上の増税になる。</td></tr>
+<tr><th>減税への姿勢</th><td data-label="退席した 4 人">小渕氏は減税そのものに反対。古川氏は減税より給付を重視。石破氏は財政への悪影響を警戒。</td><td data-label="野党（国民民主・公明）">国民民主は、税額控除や住民税減税など、別の形の減税を求める。公明は、物価高対策として非効率と見る。</td></tr>
+<tr><th>投票行動</th><td data-label="退席した 4 人">反対票ではなく退席。党内で処分を受けた。</td><td data-label="野党（国民民主・公明）">反対票。</td></tr>
+</tbody>
+</table>
+
+<div class="point">
+<p><strong>通底しているのは、「説明が足りず、設計が不透明だ」という点である。</strong>財源・対象・出口について、政府が納得できる答えを出していないという不満は、与野党をまたいで共通している。</p>
+<p><strong>通底していないのは、「では、どうすべきか」である。</strong> 4 人のうち少なくとも 3 人は、減税そのものへの慎重さが強く見える。国民民主党は、むしろ減税が足りないと主張している。</p>
+</div>
+<p>玉木氏が 4 人の退席を引き合いに出したのは、政治的な意味合いが強い発言である。「元総理が反対した」と言うことで、法案の弱点が与党内にも共有されていると示す狙いが読み取れる。ただし、 4 人の理屈を野党がそのまま共有しているわけではない。</p>
+</section>
+
+<section id="s5">
+<h2><span class="no">5</span> 見方が分かれる点と、これから</h2>
+<h3>① 退席は「造反」か「良心の表明」か</h3>
+<p>自民党は、党紀の観点から戒告とした。一方で、財源の疑問は多くの人が共有する論点でもあり、 4 人の行動を評価する声も出ている。評価は、法案のどこを重く見るかで分かれる。</p>
+
+<h3>② 参議院での展開</h3>
+<p>参院では、与党が過半数に届いていない。与党から棄権や反対が出れば、否決のおそれがある。その場合も衆院での再可決は可能だが、手続きに時間がかかる。 12 月 12 日の会期末に間に合わない可能性も指摘されている。 <sup id="fnref-4-5"><a href="#ref-4">[4]</a></sup> 玉木氏は「また欠席者が出るのではないか」と述べている。 <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup></p>
+<p>公明党の動きも注目されている。岡本氏は、現状のままでは賛成しない姿勢である。修正がどこまで行われるかで、参院の情勢は変わる。</p>
+
+<h3>③ 石破氏の今後</h3>
+<p>一部の見出しには、石破氏が次の総裁選で「反高市」の連携の中心になるかもしれない、という見方が出ている。本文での裏付けは確認できておらず、今の段階では観測にとどまる。</p>
+</section>
+
+<section id="s6">
+<h2><span class="no">6</span> 確認できなかったこと</h2>
+<div class="caution">
+<p>次の点は、今回の調査で裏付けが取れなかった。文書の内容として扱わない。</p>
+</div>
+<ul>
+<li><strong>古川氏本人の退席理由</strong><br>直接の発言は見つからなかった。</li>
+<li><strong>立憲民主党・日本共産党・れいわ新選組などの反対理由</strong><br>国民民主党と公明党以外は、確認できていない。「野党全体の理屈」とは言い切れない。</li>
+<li><strong>採決の票数と会派別の内訳</strong><br>報道の範囲では、賛成・反対の数は分からなかった。</li>
+<li><strong>公明党代表の「法律の体をなしていない」という表現</strong><br>一部の見出しにあったが、本文で確かめられず、この文書では引用していない。</li>
+<li><strong>支援金の開始時期の細部</strong><br>報道で書き方に差がある。正確には、法案の条文や政府資料の確認が必要である。</li>
+</ul>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> 「消費税減税法案、石破茂・小渕優子氏ら 4 人が採決退席　衆院本会議」、<em>日本経済新聞</em>、 2026 年 11 月。 <a href="https://www.nikkei.com/article/DGXZQOUA064YF0W6A101C2000000/">日本経済新聞</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> 「玉木氏、石破氏らの採決退席に『反対せざるを得ない内容』」、<em>産経新聞</em>、 2026 年 11 月 10 日配信（ Yahoo! ニュース掲載）。 <a href="https://news.yahoo.co.jp/articles/3043603f237c938b12cc8b79abe2646e7b1d181d">Yahoo! ニュース</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> 「石破茂ら 4 人が『造反』で処分　総理経験者への処分は初めて」、<em>集英社オンライン</em>、 2026 年 11 月（ドコモ d メニューニュース掲載）。 <a href="https://topics.smt.docomo.ne.jp/article/shueisha/politics/shueisha-259167">d メニューニュース</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> <sup><a href="#fnref-4-3">c</a></sup> <sup><a href="#fnref-4-4">d</a></sup> <sup><a href="#fnref-4-5">e</a></sup> 時事通信の報道に基づく解説記事、<em>アゴラ</em>、 2026 年 11 月 7 日。 <a href="https://agora-web.jp/?p=546149">アゴラ</a></li>
+<li id="ref-5">^ <sup><a href="#fnref-5-1">a</a></sup> <sup><a href="#fnref-5-2">b</a></sup> <sup><a href="#fnref-5-3">c</a></sup> <sup><a href="#fnref-5-4">d</a></sup> 「公明代表が法案反対言及　消費税減税関連、物価高に非効率」、<em>熊本日日新聞</em>、 2026 年 11 月。 <a href="https://kumanichi.com/articles/2044695">熊本日日新聞</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> 「『消費税減税関連法案』衆院通過…反対した公明党は参院で『握る』のか？」、<em>日刊ゲンダイ</em>、 2026 年 11 月。 <a href="https://www.nikkan-gendai.com/articles/view/news/395309">日刊ゲンダイ</a></li>
+</ol>
+<p class="endnote">各記事の本文は、検索・要約ツールを通して読んだ部分を含む。発言の細部を引用などに使うときは、元記事で確かめること。</p>
+</div>
+
+</div>
+</body>
+</html>
