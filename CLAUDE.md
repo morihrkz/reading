@@ -1,12 +1,13 @@
 # reading リポジトリの作業指示
 
-「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 28 本）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
+「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 44 本）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
 
 ## HTML 文書の意匠
-HTML 文書の新規作成、既存文書の意匠修正・検証には、必ずローカルスキル `doc-html-style`(`~/.claude/skills/doc-html-style/SKILL.md`)を使う。
+HTML 文書の新規作成、既存文書の意匠修正・検証には、必ずローカルスキル `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。
 
 - 文書の意匠の正はこのスキルである。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
-- 記事用の意匠スキル `library-html-style` は、このリポジトリでは使わない。両者は排他的で、同じ文書に両方を適用しない。
+- 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。 4 つの意匠は排他的で、同じ文書に重ねて適用しない。
+- `color-palette.html` と `megumino.html` には、 wafu を適用していない(適用作業の対象から除いた)。この 2 本の意匠を直すときは、先にユーザーへ方針を確認する。
 - スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は文書と別の意匠で、仕様は後述の「 portal.html の構造」にある。文書用の検査を `portal.html` にそのまま当てて、誤検出を直さない。
 - 文書の冒頭部（ `.kicker` ・ `.subtitle` ・ `.lede` ・ `.meta` ）の有無は、文書ごとに揺れている。揃っていない文書を見つけても、頼まれていないのに揃えない。新しい文書は、スキルの定めに従う。
 
@@ -142,13 +143,13 @@ ls *.html | grep -v -e '^index.html$' -e '^portal.html$' | wc -l                
 文書ファイルのうち、どのカードからも `href` されていないものがないかも確かめる。
 
 ### 意匠の要点
-- 意匠は、文書と同じ kids の意匠（ `~/.claude/skills/kids-html-style/assets/kids-style.css` の全文を `<style>` に内包する）である。クリーム色の背景、丸ゴシック、黄色い h2 帯と丸数字、橙の差し色。変数は、スキルの CSS の `:root` で定める（ `--bg` `--ink` `--muted` `--card` `--line` `--orange` `--yellow` `--pale-yellow` など）。
+- 意匠は、文書と同じ wafu の意匠（ `~/.claude/skills/wafu-html-style/assets/wafu-style.css` の全文を `<style>` に内包する）である。生成り色の背景、 UD ゴシック系の書体、黄朽葉の h2 帯と丸数字、柿色の差し色。本文は 20px 、最小の文字も 16px である。変数は、スキルの CSS の `:root` で定める（ `--bg` `--ink` `--muted` `--card` `--line` `--orange` `--yellow` `--pale-yellow` `--link` など）。
   - 例外として、 `portal.html` だけが一覧ページである。スキルの CSS の後ろに、 portal 固有の部品（カード・検索・目次の件数）を足す。
   - スキルの `.card` は中央寄せの絵文字カードなので、一覧のカード（ `li.card` ）は左寄せに上書きしている。
 - カードは 1 列の縦並び（ `ul.cards` はグリッドで `gap:14px` ）で、左に 8px の橙の線を引く。カード全体をクリックできるよう、 `a::after` を `inset:0` に広げている。
 ```css
 ul.cards{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:1fr;gap:14px}
-li.card{position:relative;text-align:left;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--orange);border-radius:14px;padding:14px 22px 12px}
+li.card{position:relative;text-align:left;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--orange);border-radius:12px;padding:14px 22px 12px}
 .card a::after{content:"";position:absolute;inset:0}
 ```
 - 文字サイズは px で書く（スキルの規約）。本文は `main.wrap`（ `max-width: 860px` ・中央寄せ）に入れる。

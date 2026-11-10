@@ -3,146 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2a4d69">
+<meta name="theme-color" content="#f3ead7">
 <meta name="description" content="ドコモから ahamo へプラン変更するときの手順書。お店の使い方、事前確認、持ち物、d 払い・ iD 、杉並区周辺の店舗を、スマートフォンで読みやすくまとめています。">
 <title>ドコモから ahamo へ変更する手順書</title>
 <style>
   :root{
-    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
-    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
-    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.95;font-size:17px}
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
   .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
-  ruby rt{font-size:.55em;color:var(--muted)}
-  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
-  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
-  .hero p{margin:0 auto;max-width:560px}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(30px,6vw,46px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:600px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0}
   nav.toc b{display:block;margin-bottom:4px}
   nav.toc ol{margin:0;padding-left:1.4em}
   nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  nav.toc a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:.2em}
   @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:44px 0}
-  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
-  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:10px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  section{margin:48px 0}
+  h2{font-size:clamp(24px,4.8vw,30px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:22px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
   figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
   .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
   .checklist .cl-title::before{content:"✅ "}
   .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
   .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
   .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
   .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--orange)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
-  .card .e{font-size:38px;display:block}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
   .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
   .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
   .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
   thead th{color:#fff}
   thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#efe3c8;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
-  .scroll{overflow-x:auto}
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--green)}
-  .quiz .ans{color:var(--green);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:16px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
   .hero .subtitle{color:var(--ink)}
   .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
   .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
   .box ul{margin:6px 0 0;padding-left:1.4em}
   .box strong{color:var(--ink)}
   .lede>:first-child,.box>:first-child{margin-top:0}
   .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:14px;color:var(--muted)}
+  .endnote{font-size:16px;color:var(--muted)}
   /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
   dl.summary{margin:14px 0}
   dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
   dl.summary dt{white-space:nowrap}
   dl.summary dt::after{content:"："}
   dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em;line-height:0}
-  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
-  sup a:hover{text-decoration:underline}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold}
   .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
   .refs ol{padding-left:1.8em}
   .refs .refs-note{color:var(--muted)}
-  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs li>a:first-child{font-weight:bold}
   .refs sup a{font-style:italic}
   .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
   /* SVG common */
   .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
   .white{fill:#fff}
-  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
-  code{background:#fff1e0;padding:.1rem .35rem;border-radius:6px;font-size:.92em}
-  body{word-break: auto-phrase;overflow-wrap: anywhere;text-wrap: pretty}
-  a:focus-visible, summary:focus-visible, input:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
-  caption{text-align:left;color:var(--muted);padding-bottom:4.8px}
-  .say{background:#fff1e0;border-left:5px solid var(--orange);padding:11.2px 16px;margin:9.6px 0}
+  /* この文書に固有の部品(和色に合わせたもの) */
+  code{background:#f8e4cb;padding:.1rem .35rem;border-radius:6px;font-size:max(16px,.92em);overflow-wrap:anywhere}
+  body{word-break:auto-phrase;overflow-wrap:anywhere;text-wrap:pretty}
+  caption{text-align:left;color:var(--muted);padding-bottom:5px}
+  @media(max-width:640px){caption{display:block;width:100%}}
+  .say{background:#f8e4cb;border-left:6px solid var(--orange);padding:12px 16px;margin:10px 0}
   ol.steps{list-style:none;counter-reset:step;padding:0;margin:16px 0}
-  ol.steps > li{counter-increment:step;position:relative;background:#fff;border:1px solid var(--line);border-radius:4px;padding:11.2px 16px 11.2px 54.4px;margin:0 0 20.8px}
-  ol.steps > li::before{content:counter(step);position:absolute;left:11.2px;top:11.2px;width:30.4px;height:30.4px;line-height:30.4px;text-align:center;border-radius:50%;background:var(--ink);color:#fff;font-weight:bold}
-  ol.steps > li:not(:last-child)::after{content:"\2193";position:absolute;left:11.2px;width:30.4px;text-align:center;bottom:-20.8px;line-height:20.8px;color:#a36b00;font-weight:bold}
-  ol.steps ul{margin:4.8px 0 0;padding-left:19.2px}
-  .cols{display:grid;gap:12.8px;grid-template-columns:repeat(auto-fit, minmax(224px, 1fr));margin:16px 0}
-  .col{background:#fff;border:1px solid var(--line);border-top:5px solid var(--orange);border-radius:4px;padding:8px 16px}
+  ol.steps > li{counter-increment:step;position:relative;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px 12px 62px;margin:0 0 24px}
+  ol.steps > li::before{content:counter(step);position:absolute;left:12px;top:12px;width:36px;height:36px;line-height:36px;text-align:center;border-radius:50%;background:var(--ink);color:#fff;font-weight:bold}
+  ol.steps > li:not(:last-child)::after{content:"\2193";position:absolute;left:12px;width:36px;text-align:center;bottom:-24px;line-height:24px;color:var(--link);font-weight:bold}
+  ol.steps ul{margin:5px 0 0;padding-left:20px}
+  .cols{display:grid;gap:13px;grid-template-columns:repeat(auto-fit,minmax(224px,1fr));margin:16px 0}
+  .col{background:var(--card);border:2px solid var(--line);border-top:6px solid var(--orange);border-radius:12px;padding:8px 16px}
   .col.warn{border-top-color:var(--yellow)}
   .col.ask{border-top-color:var(--red)}
-  .col p{margin:3.2px 0;font-weight:bold}
-  .col ul{margin:0 0 6.4px;padding-left:19.2px}
+  .col p{margin:4px 0;font-weight:bold}
+  .col ul{margin:0 0 6px;padding-left:20px}
   dl.terms{margin:16px 0}
-  dl.terms dt{font-weight:bold;color:#a36b00;margin-top:16px;border-bottom:1px solid var(--line)}
-  dl.terms dd{margin:3.2px 0 0}
+  dl.terms dt{font-weight:bold;color:var(--link);margin-top:16px;border-bottom:2px solid var(--line)}
+  dl.terms dd{margin:4px 0 0}
   ol.sources{padding-left:32px}
-  ol.sources li{margin:12.8px 0;scroll-margin-top:16px}
-  ol.sources li:target{background:var(--yellow);background:var(--pale-yellow)}
-  ol.sources a.url{display:block;font-size:14.4px}
-  .totop{position:fixed;right:max(12px, env(safe-area-inset-right));bottom:max(12px, env(safe-area-inset-bottom));min-width:44px;min-height:44px;padding:0 14.4px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;border-radius:22.4px;text-decoration:none;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+  ol.sources li{margin:13px 0;scroll-margin-top:16px;font-size:17px;line-height:1.7}
+  ol.sources li:target{background:var(--pale-yellow);border-radius:6px}
+  ol.sources a.url{display:block;font-size:16px}
+  .totop{position:fixed;right:max(12px,env(safe-area-inset-right));bottom:max(12px,env(safe-area-inset-bottom));min-width:48px;min-height:48px;padding:0 16px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:var(--ink);color:#fff;border-radius:24px;text-decoration:none;font-weight:bold;font-size:16px;box-shadow:0 2px 6px rgba(0,0,0,.35)}
 </style>
 </head>
 <body>
@@ -227,18 +254,18 @@
 
 <h3 id="s1-1">1.1 お店でのお手伝いと、自分でする場合を比べる</h3>
 <p>「お店で手続きしたい」という望みに最も近いのは、お申込みサポートを使う方法です。ほかの方法も、同じ観点で並べます。</p>
-<div class="scroll"><table>
+<table>
 <caption>手続き方法の比較</caption>
 <thead>
 <tr><th scope="col">方法</th><th scope="col">費用</th><th scope="col">事前の準備</th><th scope="col">ご本人の負担</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">A. お店のお申込みサポートを使う</th><td>税込 3,300 円（出典 <a href="#src1">1</a> ）</td><td>端末の持参、来店予約（予約が必須かは要確認）</td><td>申し込みの操作は自分で行う。内容の確認も自分で行う。新規契約には審査があり、契約成立は保証されないと案内されている（プラン変更も同じかは要確認）。</td></tr>
-<tr><th scope="row">B. 自宅で ahamo サイトから自分で申し込む</th><td>事務手数料 0 円、解約金なし（出典 <a href="#src3">3</a> ・ <a href="#src8">8</a> ）</td><td>対応端末の確認、 d アカウントのログインなど</td><td>すべて自分で行う。困ったときは ahamo のチャットに相談する（AI チャットは年中無休、スタッフチャットは午前 9 時から午後 10 時）。</td></tr>
-<tr><th scope="row">C. 家族や知人に手伝ってもらう</th><td>公式の定めなし（要確認）</td><td>名義や本人確認書類の確認</td><td>契約者本人の書類や端末が必要になる場合がある。代わりに申し込めるかは、確認できていません（要確認）。</td></tr>
-<tr><th scope="row">D. ahamo に変更せず、ドコモのままにする</th><td>変更の手続きは不要</td><td>なし</td><td>月額料金が自分に合うかは、ドコモの公式の料金ページで確認する。</td></tr>
+<tr><th scope="row">A. お店のお申込みサポートを使う</th><td data-label="費用">税込 3,300 円（出典 <a href="#src1">1</a> ）</td><td data-label="事前の準備">端末の持参、来店予約（予約が必須かは要確認）</td><td data-label="ご本人の負担">申し込みの操作は自分で行う。内容の確認も自分で行う。新規契約には審査があり、契約成立は保証されないと案内されている（プラン変更も同じかは要確認）。</td></tr>
+<tr><th scope="row">B. 自宅で ahamo サイトから自分で申し込む</th><td data-label="費用">事務手数料 0 円、解約金なし（出典 <a href="#src3">3</a> ・ <a href="#src8">8</a> ）</td><td data-label="事前の準備">対応端末の確認、 d アカウントのログインなど</td><td data-label="ご本人の負担">すべて自分で行う。困ったときは ahamo のチャットに相談する（AI チャットは年中無休、スタッフチャットは午前 9 時から午後 10 時）。</td></tr>
+<tr><th scope="row">C. 家族や知人に手伝ってもらう</th><td data-label="費用">公式の定めなし（要確認）</td><td data-label="事前の準備">名義や本人確認書類の確認</td><td data-label="ご本人の負担">契約者本人の書類や端末が必要になる場合がある。代わりに申し込めるかは、確認できていません（要確認）。</td></tr>
+<tr><th scope="row">D. ahamo に変更せず、ドコモのままにする</th><td data-label="費用">変更の手続きは不要</td><td data-label="事前の準備">なし</td><td data-label="ご本人の負担">月額料金が自分に合うかは、ドコモの公式の料金ページで確認する。</td></tr>
 </tbody>
-</table></div>
+</table>
 <p><strong>助言 :</strong> 操作に不安がある方は、 A をおすすめします。理由は、画面の前で分からないところをその場で聞けるからです。その代わり、お店の人は説明の義務を負っていません（出典 <a href="#src1">1</a> ）。分からない点は、遠慮せず質問してください。 ahamo にするかどうかの判断は、ご自身でなさってください。</p>
 </section>
 
@@ -267,18 +294,18 @@
 
 <section id="s3">
 <h2><span class="no">3</span>持ち物</h2>
-<div class="scroll"><table>
+<table>
 <caption>持ち物と、ないときの対応</caption>
 <thead>
 <tr><th scope="col">持ち物</th><th scope="col">なぜ必要か</th><th scope="col">ないとき</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">今使っているスマートフォン</th><td>お申込みサポートは、自分の端末を使って行います（出典 <a href="#src1">1</a> ）。</td><td>お店に貸してもらえるとは書かれていません。必ず持参する。</td></tr>
-<tr><th scope="row">本人確認書類（マイナンバーカード、運転免許証、特別永住者証明書、在留カードのいずれか）</th><td>ahamo の申し込みで使う書類として案内されています。氏名と住所が申し込み内容と一致している必要があります（出典 <a href="#src2">2</a> ）。</td><td>プラン変更でも同じ書類が必要かは確認できていません（要確認）。来店前に店舗へ電話で聞く。</td></tr>
-<tr><th scope="row">クレジットカード、または口座を確認できる通帳・キャッシュカード</th><td>新しく支払い方法を登録する場合に使います（出典 <a href="#src2">2</a> ）。</td><td>今の支払い方法が引き継がれる場合は、使わない可能性があります。</td></tr>
-<tr><th scope="row">d アカウントの ID とパスワード（覚えていること）</th><td>申し込みのとき、ログインします（出典 <a href="#src2">2</a> ）。</td><td>紙に書いて持ち歩かない。覚えていない場合は、先に再設定する。</td></tr>
+<tr><th scope="row">今使っているスマートフォン</th><td data-label="なぜ必要か">お申込みサポートは、自分の端末を使って行います（出典 <a href="#src1">1</a> ）。</td><td data-label="ないとき">お店に貸してもらえるとは書かれていません。必ず持参する。</td></tr>
+<tr><th scope="row">本人確認書類（マイナンバーカード、運転免許証、特別永住者証明書、在留カードのいずれか）</th><td data-label="なぜ必要か">ahamo の申し込みで使う書類として案内されています。氏名と住所が申し込み内容と一致している必要があります（出典 <a href="#src2">2</a> ）。</td><td data-label="ないとき">プラン変更でも同じ書類が必要かは確認できていません（要確認）。来店前に店舗へ電話で聞く。</td></tr>
+<tr><th scope="row">クレジットカード、または口座を確認できる通帳・キャッシュカード</th><td data-label="なぜ必要か">新しく支払い方法を登録する場合に使います（出典 <a href="#src2">2</a> ）。</td><td data-label="ないとき">今の支払い方法が引き継がれる場合は、使わない可能性があります。</td></tr>
+<tr><th scope="row">d アカウントの ID とパスワード（覚えていること）</th><td data-label="なぜ必要か">申し込みのとき、ログインします（出典 <a href="#src2">2</a> ）。</td><td data-label="ないとき">紙に書いて持ち歩かない。覚えていない場合は、先に再設定する。</td></tr>
 </tbody>
-</table></div>
+</table>
 </section>
 
 <section id="s4">
@@ -398,33 +425,33 @@
 <p>各店舗ページには、 ahamo の取り扱いの記載がありません。一方、 ahamo の公式案内では、お申込みサポートは「全国のドコモショップ」で受け付けるとされています（出典 <a href="#src1">1</a> ）。<strong>来店予約の前に、各店舗へ電話で、受け付けているか確認してください。</strong></p>
 
 <h3 id="s7-1">7.1 杉並区内</h3>
-<div class="scroll"><table>
+<table>
 <caption>杉並区内の店舗</caption>
 <thead>
 <tr><th scope="col">店名</th><th scope="col">住所</th><th scope="col">営業時間</th><th scope="col">定休日</th><th scope="col">電話番号</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">荻窪タウンセブン店</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区上荻1-9-1 荻窪タウンセブン">杉並区上荻 1-9-1 荻窪タウンセブン 6 階</a></td><td>10:00 〜 20:00（受付は 10:00 〜 19:00）</td><td>無休</td><td><a href="tel:0120806870">0120-806-870</a> ／ <a href="tel:05034564923">050-3456-4923</a></td></tr>
-<tr><th scope="row">阿佐ヶ谷店</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区阿佐谷南1-35-11 アークコミュー阿佐谷">杉並区阿佐谷南 1-35-11 アークコミュー阿佐谷 1 階</a></td><td>10:00 〜 18:30</td><td>無休</td><td><a href="tel:0120530407">0120-530-407</a> ／ <a href="tel:05034564935">050-3456-4935</a></td></tr>
-<tr><th scope="row">高円寺店</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区高円寺南4-25-4 RESTA Koenji">杉並区高円寺南 4-25-4 RESTA Koenji</a></td><td>10:00 〜 19:00</td><td>第 2 火曜</td><td><a href="tel:0120536413">0120-536-413</a> ／ <a href="tel:0353053971">03-5305-3971</a></td></tr>
-<tr><th scope="row">西荻窪店</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区西荻南3-14-6 FESTAE西荻窪">杉並区西荻南 3-14-6 FESTAE 西荻窪 1 階</a></td><td>10:00 〜 18:30</td><td>無休</td><td><a href="tel:0120885306">0120-885-306</a> ／ <a href="tel:05034564946">050-3456-4946</a></td></tr>
-<tr><th scope="row">久我山店</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区久我山4-2-26 Mile High">杉並区久我山 4-2-26 Mile High 1 階</a></td><td>10:00 〜 18:30</td><td>無休</td><td><a href="tel:0120071321">0120-071-321</a> ／ <a href="tel:05034564912">050-3456-4912</a></td></tr>
-<tr><th scope="row">浜田山店</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区浜田山3-30-10">杉並区浜田山 3-30-10 1 階</a></td><td>9:30 〜 18:00</td><td>無休</td><td><a href="tel:0120876171">0120-876-171</a> ／ <a href="tel:0363797524">03-6379-7524</a></td></tr>
+<tr><th scope="row">荻窪タウンセブン店</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区上荻1-9-1 荻窪タウンセブン">杉並区上荻 1-9-1 荻窪タウンセブン 6 階</a></td><td data-label="営業時間">10:00 〜 20:00（受付は 10:00 〜 19:00）</td><td data-label="定休日">無休</td><td data-label="電話番号"><a href="tel:0120806870">0120-806-870</a> ／ <a href="tel:05034564923">050-3456-4923</a></td></tr>
+<tr><th scope="row">阿佐ヶ谷店</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区阿佐谷南1-35-11 アークコミュー阿佐谷">杉並区阿佐谷南 1-35-11 アークコミュー阿佐谷 1 階</a></td><td data-label="営業時間">10:00 〜 18:30</td><td data-label="定休日">無休</td><td data-label="電話番号"><a href="tel:0120530407">0120-530-407</a> ／ <a href="tel:05034564935">050-3456-4935</a></td></tr>
+<tr><th scope="row">高円寺店</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区高円寺南4-25-4 RESTA Koenji">杉並区高円寺南 4-25-4 RESTA Koenji</a></td><td data-label="営業時間">10:00 〜 19:00</td><td data-label="定休日">第 2 火曜</td><td data-label="電話番号"><a href="tel:0120536413">0120-536-413</a> ／ <a href="tel:0353053971">03-5305-3971</a></td></tr>
+<tr><th scope="row">西荻窪店</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区西荻南3-14-6 FESTAE西荻窪">杉並区西荻南 3-14-6 FESTAE 西荻窪 1 階</a></td><td data-label="営業時間">10:00 〜 18:30</td><td data-label="定休日">無休</td><td data-label="電話番号"><a href="tel:0120885306">0120-885-306</a> ／ <a href="tel:05034564946">050-3456-4946</a></td></tr>
+<tr><th scope="row">久我山店</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区久我山4-2-26 Mile High">杉並区久我山 4-2-26 Mile High 1 階</a></td><td data-label="営業時間">10:00 〜 18:30</td><td data-label="定休日">無休</td><td data-label="電話番号"><a href="tel:0120071321">0120-071-321</a> ／ <a href="tel:05034564912">050-3456-4912</a></td></tr>
+<tr><th scope="row">浜田山店</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都杉並区浜田山3-30-10">杉並区浜田山 3-30-10 1 階</a></td><td data-label="営業時間">9:30 〜 18:00</td><td data-label="定休日">無休</td><td data-label="電話番号"><a href="tel:0120876171">0120-876-171</a> ／ <a href="tel:0363797524">03-6379-7524</a></td></tr>
 </tbody>
-</table></div>
+</table>
 <h3 id="s7-2">7.2 隣の区・市（杉並区の主要駅から行きやすい店舗）</h3>
 <p>高円寺・阿佐ヶ谷・荻窪・西荻窪と同じ中央線沿線の街の店舗を、筆者の判断で選びました（公式ページに駅からの時間の記載はありません）。</p>
-<div class="scroll"><table>
+<table>
 <caption>隣の区・市の店舗</caption>
 <thead>
 <tr><th scope="col">店名</th><th scope="col">住所</th><th scope="col">営業時間</th><th scope="col">定休日</th><th scope="col">電話番号</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">吉祥寺店（武蔵野市）</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都武蔵野市吉祥寺本町2-1-8 吉祥寺AZUMAビル">武蔵野市吉祥寺本町 2-1-8 吉祥寺 AZUMA ビル 1 階</a></td><td>10:00 〜 19:00</td><td>第 2 火曜</td><td><a href="tel:0120511608">0120-511-608</a> ／ <a href="tel:0422231081">0422-23-1081</a></td></tr>
-<tr><th scope="row">三鷹店（三鷹市）</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都三鷹市下連雀3-36-1 トリコナ">三鷹市下連雀 3-36-1 トリコナ 1 階</a></td><td>10:00 〜 19:00</td><td>第 2 水曜</td><td><a href="tel:0120522608">0120-522-608</a> ／ <a href="tel:0422728318">0422-72-8318</a></td></tr>
-<tr><th scope="row">中野駅前店（中野区）</th><td><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都中野区中野4-9-18 NTTドコモ中野ビル">中野区中野 4-9-18 NTT ドコモ中野ビル 1 階</a></td><td>10:00 〜 19:00</td><td>第 2 水曜</td><td><a href="tel:0120731168">0120-731-168</a> ／ <a href="tel:0353182772">03-5318-2772</a></td></tr>
+<tr><th scope="row">吉祥寺店（武蔵野市）</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都武蔵野市吉祥寺本町2-1-8 吉祥寺AZUMAビル">武蔵野市吉祥寺本町 2-1-8 吉祥寺 AZUMA ビル 1 階</a></td><td data-label="営業時間">10:00 〜 19:00</td><td data-label="定休日">第 2 火曜</td><td data-label="電話番号"><a href="tel:0120511608">0120-511-608</a> ／ <a href="tel:0422231081">0422-23-1081</a></td></tr>
+<tr><th scope="row">三鷹店（三鷹市）</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都三鷹市下連雀3-36-1 トリコナ">三鷹市下連雀 3-36-1 トリコナ 1 階</a></td><td data-label="営業時間">10:00 〜 19:00</td><td data-label="定休日">第 2 水曜</td><td data-label="電話番号"><a href="tel:0120522608">0120-522-608</a> ／ <a href="tel:0422728318">0422-72-8318</a></td></tr>
+<tr><th scope="row">中野駅前店（中野区）</th><td data-label="住所"><a href="https://www.google.com/maps/search/?api=1&amp;query=東京都中野区中野4-9-18 NTTドコモ中野ビル">中野区中野 4-9-18 NTT ドコモ中野ビル 1 階</a></td><td data-label="営業時間">10:00 〜 19:00</td><td data-label="定休日">第 2 水曜</td><td data-label="電話番号"><a href="tel:0120731168">0120-731-168</a> ／ <a href="tel:0353182772">03-5318-2772</a></td></tr>
 </tbody>
-</table></div>
+</table>
 <p>予約は、各店舗ページの「来店予約」から、スマートフォンやパソコンでできます。 d アカウントでログインして予約する方法もあります（出典 <a href="#src9">9</a> ）。店舗の公式ページ : <a href="https://shop.smt.docomo.ne.jp/"><code>https://shop.smt.docomo.ne.jp/</code></a> で店名を検索してください。杉並区内にほかの店舗がないかも、この公式検索で確かめられます。</p>
 </section>
 

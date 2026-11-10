@@ -6,103 +6,154 @@
 <title>Obsidian CLI 初心者ガイド</title>
 <style>
   :root{
-    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
-    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
-    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.95;font-size:17px}
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
   .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
-  ruby rt{font-size:.55em;color:var(--muted)}
-  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
-  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
-  .hero p{margin:0 auto;max-width:560px}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(30px,6vw,46px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:600px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0}
   nav.toc b{display:block;margin-bottom:4px}
   nav.toc ol{margin:0;padding-left:1.4em}
   nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  nav.toc a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:.2em}
   @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:44px 0}
-  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
-  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:10px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  section{margin:48px 0}
+  h2{font-size:clamp(24px,4.8vw,30px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:22px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
   figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
   .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
   .checklist .cl-title::before{content:"✅ "}
   .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
   .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
   .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
   .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--orange)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
-  .card .e{font-size:38px;display:block}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
   .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
   .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
   .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
   thead th{color:#fff}
   thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
-  .scroll{overflow-x:auto}
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--green)}
-  .quiz .ans{color:var(--green);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:16px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink)}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
   /* SVG common */
   .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
   .white{fill:#fff}
-
-  /* この文書に固有の部品（スキルに無いもの。配色だけスキルに合わせる） */
-  .meta{font-size:15px}
-  code{background:#f1e9d6;padding:1px 6px;border-radius:6px;font-size:.92em;line-height:1.5}
-  pre{overflow-x:auto;background:#f1e9d6;padding:12px 16px;border-radius:12px;margin:12px 0 20px;font-size:15px;line-height:1.7}
-  pre code{background:none;padding:0}
+  /* この文書に固有の部品(和色に合わせたもの) */
+  code{background:#f8e4cb;padding:.1rem .35rem;border-radius:6px;font-size:max(16px,.92em);overflow-wrap:anywhere}
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#efe3c8;padding:12px 16px;border-radius:12px;margin:0 0 20px;font-size:16px;line-height:1.6}
+  pre code{background:none;padding:0;font-size:inherit}
   pre.term{background:var(--ink);color:#fff}
   pre.term code{color:#fff}
   code.term{background:var(--ink);color:#fff}
-  .note{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .must{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
-  nav.toc li{font-size:15px;line-height:1.7;break-inside:avoid}
+  .note{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  nav.toc li{break-inside:avoid}
   nav.toc li li{color:var(--muted)}
-  sup{font-size:.72em}
-  sup a{color:#a36b00;text-decoration:none}
-  sup a:hover{text-decoration:underline}
-  .refs{border-top:2px solid var(--line);margin-top:48px;padding-top:8px}
-  .refs section{margin:0}
-  .refs p,.refs li{font-size:15px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs li>a:first-child{font-weight:700;text-decoration:none}
-  .refs sup a{font-style:italic;font-weight:700}
-  .refs li:target,sup:target{background:var(--pale-yellow)}
 </style>
 </head>
 <body>
@@ -171,14 +222,14 @@ CLI は、起動中の Obsidian アプリに命令を送る仕組みです。ア
 <li>表示される案内に従って、登録を完了する。</li>
 <li>開いているターミナルをすべて閉じ、新しく開き直す（ PATH の変更は、新しいターミナルから有効になる）。</li>
 </ol>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>OS</th><th>登録で起きること</th></tr></thead>
 <tbody>
-<tr><td>Windows</td><td><code>Obsidian.exe</code> と同じ場所にある <code>Obsidian.com</code> （ターミナル用の取り次ぎ役）が使われ、ユーザーの PATH に追加される。</td></tr>
-<tr><td>Mac</td><td><code>/usr/local/bin/obsidian</code> に実体への近道（シンボリックリンク）が作られる。管理者の承認を求められる。</td></tr>
-<tr><td>Linux</td><td><code>~/.local/bin/obsidian</code> にコピーされる。この場所を PATH に入れておく必要がある。</td></tr>
+<tr><td data-label="OS">Windows</td><td data-label="登録で起きること"><code>Obsidian.exe</code> と同じ場所にある <code>Obsidian.com</code> （ターミナル用の取り次ぎ役）が使われ、ユーザーの PATH に追加される。</td></tr>
+<tr><td data-label="OS">Mac</td><td data-label="登録で起きること"><code>/usr/local/bin/obsidian</code> に実体への近道（シンボリックリンク）が作られる。管理者の承認を求められる。</td></tr>
+<tr><td data-label="OS">Linux</td><td data-label="登録で起きること"><code>~/.local/bin/obsidian</code> にコピーされる。この場所を PATH に入れておく必要がある。</td></tr>
 </tbody>
-</table></div>
+</table>
 <div class="note">
 Windows では、管理者として開いた PowerShell から実行すると、出力が空のまま何も起きないことがあるという報告があります <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。ふつうに開いた PowerShell を使ってください。
 </div>
@@ -200,48 +251,48 @@ obsidian help</code></pre>
 </div>
 
 <h3 id="s2-3">2.3 うまくいかないとき</h3>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>症状</th><th>確かめること</th></tr></thead>
 <tbody>
-<tr><td>設定にスイッチが見当たらない</td><td>インストーラ版が古い可能性がある。公式サイトから最新版を入れ直す。</td></tr>
-<tr><td><code>obsidian</code> が見つからないと言われる</td><td>ターミナルを開き直したか。 Windows なら新しい PowerShell で試す。更新前の版から上げた場合は、設定のスイッチをいったんオフにしてオンに戻す。</td></tr>
-<tr><td>何も表示されない（ Windows ）</td><td>管理者権限のターミナルを避ける。 Obsidian が起動しているかも見る。</td></tr>
-<tr><td><code>obsidian version</code> が <code>obsidian-cli vX.Y.Z</code> と出る</td><td>旧来のサードパーティ製ツールを呼んでいる。公式の CLI ではない。</td></tr>
-<tr><td>Mac で近道がない</td><td><code>sudo ln -sf /Applications/Obsidian.app/Contents/MacOS/obsidian-cli /usr/local/bin/obsidian</code> で手動作成する <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。</td></tr>
+<tr><td data-label="症状">設定にスイッチが見当たらない</td><td data-label="確かめること">インストーラ版が古い可能性がある。公式サイトから最新版を入れ直す。</td></tr>
+<tr><td data-label="症状"><code>obsidian</code> が見つからないと言われる</td><td data-label="確かめること">ターミナルを開き直したか。 Windows なら新しい PowerShell で試す。更新前の版から上げた場合は、設定のスイッチをいったんオフにしてオンに戻す。</td></tr>
+<tr><td data-label="症状">何も表示されない（ Windows ）</td><td data-label="確かめること">管理者権限のターミナルを避ける。 Obsidian が起動しているかも見る。</td></tr>
+<tr><td data-label="症状"><code>obsidian version</code> が <code>obsidian-cli vX.Y.Z</code> と出る</td><td data-label="確かめること">旧来のサードパーティ製ツールを呼んでいる。公式の CLI ではない。</td></tr>
+<tr><td data-label="症状">Mac で近道がない</td><td data-label="確かめること"><code>sudo ln -sf /Applications/Obsidian.app/Contents/MacOS/obsidian-cli /usr/local/bin/obsidian</code> で手動作成する <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。</td></tr>
 </tbody>
-</table></div>
+</table>
 </section>
 
 <section id="s3">
 <h2><span class="no">3</span>コマンドの書き方の決まり</h2>
 <p>コマンドの形は、いつも同じです。一度覚えれば、どのコマンドにも通用します。</p>
 <pre class="term"><code>obsidian [vault=Vault名] コマンド名 [パラメータ=値 ...] [フラグ ...]</code></pre>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>用語</th><th>意味</th><th>例</th></tr></thead>
 <tbody>
-<tr><td>パラメータ</td><td><code>名前=値</code> の形で値を渡す。値に空白があるときは引用符で囲む。</td><td><code>query="meeting notes"</code></td></tr>
-<tr><td>フラグ</td><td>値を持たない単語。書けばオン、書かなければオフ。</td><td><code>open</code> ・ <code>overwrite</code></td></tr>
-<tr><td><code>vault=</code></td><td>操作する Vault を指定する。指定するときは、必ず最初のパラメータにする。</td><td><code>obsidian vault=Notes daily</code></td></tr>
-<tr><td><code>file=</code></td><td>ノートを名前で指定する。ウィキリンクと同じ解決の仕方で、パスも拡張子も要らない。</td><td><code>file=Recipe</code></td></tr>
-<tr><td><code>path=</code></td><td>Vault の最上位からの正確なパスで指定する。</td><td><code>path=Templates/Recipe.md</code></td></tr>
-<tr><td>改行・タブ</td><td>内容の中の改行は <code>\n</code> 、タブは <code>\t</code> と書く。</td><td><code>content="1行目\n2行目"</code></td></tr>
-<tr><td><code>--copy</code></td><td>出力をクリップボードにも送る。</td><td><code>obsidian read --copy</code></td></tr>
+<tr><td data-label="用語">パラメータ</td><td data-label="意味"><code>名前=値</code> の形で値を渡す。値に空白があるときは引用符で囲む。</td><td data-label="例"><code>query="meeting notes"</code></td></tr>
+<tr><td data-label="用語">フラグ</td><td data-label="意味">値を持たない単語。書けばオン、書かなければオフ。</td><td data-label="例"><code>open</code> ・ <code>overwrite</code></td></tr>
+<tr><td data-label="用語"><code>vault=</code></td><td data-label="意味">操作する Vault を指定する。指定するときは、必ず最初のパラメータにする。</td><td data-label="例"><code>obsidian vault=Notes daily</code></td></tr>
+<tr><td data-label="用語"><code>file=</code></td><td data-label="意味">ノートを名前で指定する。ウィキリンクと同じ解決の仕方で、パスも拡張子も要らない。</td><td data-label="例"><code>file=Recipe</code></td></tr>
+<tr><td data-label="用語"><code>path=</code></td><td data-label="意味">Vault の最上位からの正確なパスで指定する。</td><td data-label="例"><code>path=Templates/Recipe.md</code></td></tr>
+<tr><td data-label="用語">改行・タブ</td><td data-label="意味">内容の中の改行は <code>\n</code> 、タブは <code>\t</code> と書く。</td><td data-label="例"><code>content="1行目\n2行目"</code></td></tr>
+<tr><td data-label="用語"><code>--copy</code></td><td data-label="意味">出力をクリップボードにも送る。</td><td data-label="例"><code>obsidian read --copy</code></td></tr>
 </tbody>
-</table></div>
+</table>
 <p><code>file=</code> も <code>path=</code> も書かなかった場合は、いま Obsidian で開いているノート（アクティブなノート）が対象になります <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 。意図しないノートに書き込まないよう、書き込み系では <code>file=</code> か <code>path=</code> を明示する習慣をお勧めします。</p>
 <p>各コマンドの細かい指定は、 <code class="term">obsidian help コマンド名</code> で見られます <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> 。</p>
 
 <h3>対話モード（ TUI ）</h3>
 <p>引数なしで <code class="term">obsidian</code> とだけ打つと、対話画面（ TUI ）が開きます。ここでは先頭の <code>obsidian</code> を省いてコマンドを打てます。</p>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>キー</th><th>働き</th></tr></thead>
 <tbody>
-<tr><td><code>Tab</code></td><td>コマンド名の補完</td></tr>
-<tr><td><code>Ctrl+R</code></td><td>過去に打ったコマンドの逆引き検索</td></tr>
-<tr><td><code>Ctrl+L</code></td><td>画面を消す</td></tr>
-<tr><td><code>Ctrl+C</code> ／ <code>Ctrl+D</code></td><td>終了</td></tr>
+<tr><td data-label="キー"><code>Tab</code></td><td data-label="働き">コマンド名の補完</td></tr>
+<tr><td data-label="キー"><code>Ctrl+R</code></td><td data-label="働き">過去に打ったコマンドの逆引き検索</td></tr>
+<tr><td data-label="キー"><code>Ctrl+L</code></td><td data-label="働き">画面を消す</td></tr>
+<tr><td data-label="キー"><code>Ctrl+C</code> ／ <code>Ctrl+D</code></td><td data-label="働き">終了</td></tr>
 </tbody>
-</table></div>
+</table>
 <p>TUI の中で Vault を切り替えるには、 <code>vault:open 名前</code> を使います。</p>
 </section>
 
@@ -297,23 +348,23 @@ obsidian read file="練習ノート"</code></pre>
 <section id="s5">
 <h2><span class="no">5</span>主なコマンドの早見表</h2>
 <p>よく使うものに絞っています。全体は <code class="term">obsidian help</code> で確認してください <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup> 。</p>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>分類</th><th>コマンド</th><th>働き</th></tr></thead>
 <tbody>
-<tr><td>デイリーノート</td><td><code>daily</code> ・ <code>daily:read</code> ・ <code>daily:path</code> ・ <code>daily:append</code> ・ <code>daily:prepend</code></td><td>今日のノートを開く・読む・場所を出す・末尾や先頭に追記する。</td></tr>
-<tr><td>ノート操作</td><td><code>create</code> ・ <code>read</code> ・ <code>append</code> ・ <code>prepend</code> ・ <code>open</code> ・ <code>rename</code> ・ <code>move</code> ・ <code>delete</code></td><td>作成・読み取り・追記・開く・名前変更・移動・削除。移動するとリンクも更新される。削除は既定でゴミ箱へ送る。</td></tr>
-<tr><td>一覧</td><td><code>files</code> ・ <code>folders</code> ・ <code>recents</code> ・ <code>random</code> ・ <code>wordcount</code></td><td>ファイルやフォルダの一覧、最近開いたもの、ランダムなノート、文字数。</td></tr>
-<tr><td>検索とリンク</td><td><code>search</code> ・ <code>search:context</code> ・ <code>backlinks</code> ・ <code>links</code> ・ <code>unresolved</code> ・ <code>orphans</code> ・ <code>deadends</code></td><td>検索、被リンク、リンク先、未解決リンク、どこからもリンクされないノート、リンクの出ないノート。</td></tr>
-<tr><td>タスク・タグ</td><td><code>tasks</code> ・ <code>task</code> ・ <code>tags</code> ・ <code>tag</code></td><td>タスクやタグの一覧と操作。例 : <code>tasks daily</code> ・ <code>tags counts</code></td></tr>
-<tr><td>プロパティ</td><td><code>properties</code> ・ <code>property:set</code> ・ <code>property:read</code> ・ <code>property:remove</code></td><td>ノートのプロパティの一覧・設定・読み取り・削除。</td></tr>
-<tr><td>履歴</td><td><code>history</code> ・ <code>history:read</code> ・ <code>history:restore</code> ・ <code>diff</code></td><td>ファイル復元の履歴の参照と復元、版の差分。</td></tr>
-<tr><td>テンプレート・コマンド</td><td><code>templates</code> ・ <code>template:insert</code> ・ <code>commands</code> ・ <code>command id=...</code></td><td>テンプレートの挿入。 Obsidian 内のコマンドを ID で実行する。</td></tr>
-<tr><td>プラグイン・テーマ</td><td><code>plugins</code> ・ <code>plugin:enable</code> ・ <code>plugin:disable</code> ・ <code>themes</code> ・ <code>theme:set</code></td><td>プラグインやテーマの一覧と切り替え。</td></tr>
-<tr><td>Vault ・アプリ</td><td><code>vault</code> ・ <code>vaults</code> ・ <code>version</code> ・ <code>reload</code> ・ <code>restart</code></td><td>Vault の情報、 Vault の一覧、バージョン、 Vault の再読み込み、アプリの再起動。 <code>restart</code> はアプリを再起動するので、作業中のときは使わない。</td></tr>
-<tr><td>見出し・しおり・画面</td><td><code>outline</code> ・ <code>bookmarks</code> ・ <code>bookmark</code> ・ <code>tabs</code> ・ <code>workspace</code></td><td>ノートの見出し構造、ブックマークの一覧と追加、開いているタブ、ワークスペース。</td></tr>
-<tr><td>開発者向け</td><td><code>eval</code> ・ <code>devtools</code> ・ <code>dev:console</code> ・ <code>dev:screenshot</code></td><td>アプリ内で JavaScript を実行する、開発者ツール、スクリーンショット。初心者は後回しでよい。</td></tr>
+<tr><td data-label="分類">デイリーノート</td><td data-label="コマンド"><code>daily</code> ・ <code>daily:read</code> ・ <code>daily:path</code> ・ <code>daily:append</code> ・ <code>daily:prepend</code></td><td data-label="働き">今日のノートを開く・読む・場所を出す・末尾や先頭に追記する。</td></tr>
+<tr><td data-label="分類">ノート操作</td><td data-label="コマンド"><code>create</code> ・ <code>read</code> ・ <code>append</code> ・ <code>prepend</code> ・ <code>open</code> ・ <code>rename</code> ・ <code>move</code> ・ <code>delete</code></td><td data-label="働き">作成・読み取り・追記・開く・名前変更・移動・削除。移動するとリンクも更新される。削除は既定でゴミ箱へ送る。</td></tr>
+<tr><td data-label="分類">一覧</td><td data-label="コマンド"><code>files</code> ・ <code>folders</code> ・ <code>recents</code> ・ <code>random</code> ・ <code>wordcount</code></td><td data-label="働き">ファイルやフォルダの一覧、最近開いたもの、ランダムなノート、文字数。</td></tr>
+<tr><td data-label="分類">検索とリンク</td><td data-label="コマンド"><code>search</code> ・ <code>search:context</code> ・ <code>backlinks</code> ・ <code>links</code> ・ <code>unresolved</code> ・ <code>orphans</code> ・ <code>deadends</code></td><td data-label="働き">検索、被リンク、リンク先、未解決リンク、どこからもリンクされないノート、リンクの出ないノート。</td></tr>
+<tr><td data-label="分類">タスク・タグ</td><td data-label="コマンド"><code>tasks</code> ・ <code>task</code> ・ <code>tags</code> ・ <code>tag</code></td><td data-label="働き">タスクやタグの一覧と操作。例 : <code>tasks daily</code> ・ <code>tags counts</code></td></tr>
+<tr><td data-label="分類">プロパティ</td><td data-label="コマンド"><code>properties</code> ・ <code>property:set</code> ・ <code>property:read</code> ・ <code>property:remove</code></td><td data-label="働き">ノートのプロパティの一覧・設定・読み取り・削除。</td></tr>
+<tr><td data-label="分類">履歴</td><td data-label="コマンド"><code>history</code> ・ <code>history:read</code> ・ <code>history:restore</code> ・ <code>diff</code></td><td data-label="働き">ファイル復元の履歴の参照と復元、版の差分。</td></tr>
+<tr><td data-label="分類">テンプレート・コマンド</td><td data-label="コマンド"><code>templates</code> ・ <code>template:insert</code> ・ <code>commands</code> ・ <code>command id=...</code></td><td data-label="働き">テンプレートの挿入。 Obsidian 内のコマンドを ID で実行する。</td></tr>
+<tr><td data-label="分類">プラグイン・テーマ</td><td data-label="コマンド"><code>plugins</code> ・ <code>plugin:enable</code> ・ <code>plugin:disable</code> ・ <code>themes</code> ・ <code>theme:set</code></td><td data-label="働き">プラグインやテーマの一覧と切り替え。</td></tr>
+<tr><td data-label="分類">Vault ・アプリ</td><td data-label="コマンド"><code>vault</code> ・ <code>vaults</code> ・ <code>version</code> ・ <code>reload</code> ・ <code>restart</code></td><td data-label="働き">Vault の情報、 Vault の一覧、バージョン、 Vault の再読み込み、アプリの再起動。 <code>restart</code> はアプリを再起動するので、作業中のときは使わない。</td></tr>
+<tr><td data-label="分類">見出し・しおり・画面</td><td data-label="コマンド"><code>outline</code> ・ <code>bookmarks</code> ・ <code>bookmark</code> ・ <code>tabs</code> ・ <code>workspace</code></td><td data-label="働き">ノートの見出し構造、ブックマークの一覧と追加、開いているタブ、ワークスペース。</td></tr>
+<tr><td data-label="分類">開発者向け</td><td data-label="コマンド"><code>eval</code> ・ <code>devtools</code> ・ <code>dev:console</code> ・ <code>dev:screenshot</code></td><td data-label="働き">アプリ内で JavaScript を実行する、開発者ツール、スクリーンショット。初心者は後回しでよい。</td></tr>
 </tbody>
-</table></div>
+</table>
 </section>
 
 <section id="s6">
@@ -338,19 +389,19 @@ obsidian tags counts</code></pre>
 
 <section id="s7">
 <h2><span class="no">7</span>知っておく注意点</h2>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>注意点</th><th>内容</th></tr></thead>
 <tbody>
-<tr><td>Obsidian の起動が必要</td><td>アプリを動かさずに使う（ヘッドレス）ことはできない。閉じていれば、最初のコマンドで起動する。</td></tr>
-<tr><td>終了コードは常に 0</td><td>失敗しても、終了コード（ <code>$LASTEXITCODE</code> ）は 0 のまま。エラーは出力の文字から判断する <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup> 。</td></tr>
-<tr><td>書き込みの確認</td><td>成功と表示されても、変更されていないことがあるという報告がある。大事な書き込みは <code>read</code> で読み戻す。</td></tr>
-<tr><td>一括処理は不向き</td><td>1 回ごとに約 1 秒かかるとされる。大量のファイルを処理するなら、ファイルを直接扱う方が速い。</td></tr>
-<tr><td>並列実行を避ける</td><td><code>move</code> や <code>eval</code> を同時に走らせると、衝突することがある。</td></tr>
-<tr><td><code>eval</code> は強力</td><td>プラグインと同じ権限でアプリ内のコードを実行する。特に AI が書いたコードは、中身を読んでから実行する。</td></tr>
-<tr><td>複数の Vault</td><td>既定の対象は、操作中の Vault か、現在のフォルダに対応する Vault 。取り違えを防ぐには <code>vault=</code> を明示する。</td></tr>
-<tr><td>削除</td><td><code>delete</code> は既定でゴミ箱へ送る。完全に削除するオプションもあるため、実行前に <code>obsidian help delete</code> で確認する。</td></tr>
+<tr><td data-label="注意点">Obsidian の起動が必要</td><td data-label="内容">アプリを動かさずに使う（ヘッドレス）ことはできない。閉じていれば、最初のコマンドで起動する。</td></tr>
+<tr><td data-label="注意点">終了コードは常に 0</td><td data-label="内容">失敗しても、終了コード（ <code>$LASTEXITCODE</code> ）は 0 のまま。エラーは出力の文字から判断する <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><td data-label="注意点">書き込みの確認</td><td data-label="内容">成功と表示されても、変更されていないことがあるという報告がある。大事な書き込みは <code>read</code> で読み戻す。</td></tr>
+<tr><td data-label="注意点">一括処理は不向き</td><td data-label="内容">1 回ごとに約 1 秒かかるとされる。大量のファイルを処理するなら、ファイルを直接扱う方が速い。</td></tr>
+<tr><td data-label="注意点">並列実行を避ける</td><td data-label="内容"><code>move</code> や <code>eval</code> を同時に走らせると、衝突することがある。</td></tr>
+<tr><td data-label="注意点"><code>eval</code> は強力</td><td data-label="内容">プラグインと同じ権限でアプリ内のコードを実行する。特に AI が書いたコードは、中身を読んでから実行する。</td></tr>
+<tr><td data-label="注意点">複数の Vault</td><td data-label="内容">既定の対象は、操作中の Vault か、現在のフォルダに対応する Vault 。取り違えを防ぐには <code>vault=</code> を明示する。</td></tr>
+<tr><td data-label="注意点">削除</td><td data-label="内容"><code>delete</code> は既定でゴミ箱へ送る。完全に削除するオプションもあるため、実行前に <code>obsidian help delete</code> で確認する。</td></tr>
 </tbody>
-</table></div>
+</table>
 </section>
 
 <section id="s8">
@@ -366,7 +417,7 @@ obsidian tags counts</code></pre>
 
 <section class="refs">
 <h2>参考文献・資料</h2>
-<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> Obsidian 公式ヘルプ「 Obsidian CLI 」。 <a href="https://obsidian.md/help/cli">Obsidian 公式ヘルプ</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <sup><a href="#fnref-2-6">f</a></sup> <sup><a href="#fnref-2-7">g</a></sup> <sup><a href="#fnref-2-8">h</a></sup> 第三者による解説記事「 The Complete Guide to the Obsidian CLI 」。コマンド例、注意点、使い道はこの記事による。 <a href="https://www.dsebastien.net/the-complete-guide-to-the-obsidian-cli-everything-you-can-do-from-the-terminal/">解説記事</a></li>

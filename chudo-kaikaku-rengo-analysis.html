@@ -6,120 +6,143 @@
 <title>なぜ立憲民主党出身者は立憲民主党に戻らなかったのか――「民主改革の会」結成の論理と、加わらなかった議員たち</title>
 <style>
   :root{
-    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
-    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
-    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.95;font-size:17px}
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
   .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
-  ruby rt{font-size:.55em;color:var(--muted)}
-  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
-  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
-  .hero p{margin:0 auto;max-width:560px}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(30px,6vw,46px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:600px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0}
   nav.toc b{display:block;margin-bottom:4px}
   nav.toc ol{margin:0;padding-left:1.4em}
   nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  nav.toc a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:.2em}
   @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:44px 0}
-  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
-  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:10px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  section{margin:48px 0}
+  h2{font-size:clamp(24px,4.8vw,30px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:22px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
   figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
   .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
   .checklist .cl-title::before{content:"✅ "}
   .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
   .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
   .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
   .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--orange)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
-  .card .e{font-size:38px;display:block}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
   .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
   .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
   .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
   thead th{color:#fff}
   thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#efe3c8;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
-  .scroll{overflow-x:auto}
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--green)}
-  .quiz .ans{color:var(--green);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:16px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
   .hero .subtitle{color:var(--ink)}
   .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
   .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
   .box ul{margin:6px 0 0;padding-left:1.4em}
   .box strong{color:var(--ink)}
   .lede>:first-child,.box>:first-child{margin-top:0}
   .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:14px;color:var(--muted)}
+  .endnote{font-size:16px;color:var(--muted)}
   /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
   dl.summary{margin:14px 0}
   dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
   dl.summary dt{white-space:nowrap}
   dl.summary dt::after{content:"："}
   dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em;line-height:0}
-  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
-  sup a:hover{text-decoration:underline}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold}
   .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
   .refs ol{padding-left:1.8em}
   .refs .refs-note{color:var(--muted)}
-  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs li>a:first-child{font-weight:bold}
   .refs sup a{font-style:italic}
   .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
   /* SVG common */
   .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
   .white{fill:#fff}
-  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
-  figure.diagram{margin:0 0 36px;padding:20px 18px 16px;background:#fff1e0;border:1px solid var(--line)}
-  figure.diagram svg{display:block;width:100%;height:auto;max-width:100%}
-  @media (max-width: 640px){figure.diagram{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative;padding-top:32px} figure.diagram svg{max-width:none} figure.diagram::before{content:"→ 横にスクロールできます";position:absolute;top:8px;right:14px;font-size:13px;color:var(--muted)}}
 </style>
 </head>
 <body>
@@ -157,7 +180,6 @@
 </ol>
 </li>
 <li><a href="#s6">結論――「戻らなかった」のか「戻れなかった」のか</a></li>
-<li><a href="#s7">参考文献・資料</a></li>
 </ol>
 </nav>
 
@@ -169,61 +191,57 @@
 
 <p>実際の経過は次のとおりである。 9 月 16 日の議員総会で、中道は所属議員 48 人の離党を確認した。立憲民主党出身者のうち渡辺創氏は、清算手続きを担うために中道に残り、代表に就いた。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 翌 17 日には、残る 20 人を軸に新党「民主改革の会」が政治団体として届け出られ、代表は小川淳也氏、幹事長は階猛氏となった。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> ところが 9 月 24 日の初の議員総会で入党が確認できたのは 18 人にとどまり、元立憲民主党代表の泉健太氏と、元民進党幹事長の大島敦氏は加わらなかった。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 21 人の内訳は、新党に入った 18 人、中道に残った渡辺氏、そして新党に入らなかった泉氏と大島氏である（図 1 ）。</p>
 
-<figure class="diagram">
-<svg style="min-width:835px" viewBox="0 0 800 270" role="img" aria-labelledby="f1-title f1-desc">
+<figure>
+<svg viewBox="0 0 440 700" role="img" aria-labelledby="f1-title f1-desc">
 <title id="f1-title">旧立憲系 21 人の行き先</title>
 <desc id="f1-desc">中道改革連合の立憲民主党出身の衆院議員 21 人が、民主改革の会に入った 18 人、中道に残った渡辺創氏、新党に入らなかった泉健太氏と大島敦氏に分かれたことを示す図。</desc>
-<rect x="250" y="10" width="300" height="52" fill="#eceee7" stroke="#d7dcd2"/>
-<text x="400" y="32" font-size="14" fill="#242522" text-anchor="middle">中道改革連合の旧立憲系</text>
-<text x="400" y="52" font-size="12" fill="#65695f" text-anchor="middle">衆院議員 21 人</text>
-<line x1="400" y1="62" x2="400" y2="92" stroke="#65695f" stroke-width="1.5"/>
-<line x1="110" y1="92" x2="690" y2="92" stroke="#65695f" stroke-width="1.5"/>
-<line x1="110" y1="92" x2="110" y2="118" stroke="#65695f" stroke-width="1.5"/>
-<line x1="320" y1="92" x2="320" y2="118" stroke="#65695f" stroke-width="1.5"/>
-<line x1="530" y1="92" x2="530" y2="118" stroke="#65695f" stroke-width="1.5"/>
-<line x1="690" y1="92" x2="690" y2="118" stroke="#65695f" stroke-width="1.5"/>
-<rect x="20" y="120" width="180" height="84" fill="#f7f8f6" stroke="#3d5a52" stroke-width="1.5"/>
-<text x="110" y="146" font-size="14" fill="#3d5a52" text-anchor="middle" font-weight="700">民主改革の会</text>
-<text x="110" y="168" font-size="13" fill="#242522" text-anchor="middle">18 人が入党</text>
-<text x="110" y="188" font-size="11.5" fill="#65695f" text-anchor="middle">9 月 24 日に確認</text>
-<rect x="240" y="120" width="160" height="84" fill="#f7f8f6" stroke="#d7dcd2"/>
-<text x="320" y="146" font-size="14" fill="#242522" text-anchor="middle">渡辺創氏</text>
-<text x="320" y="168" font-size="13" fill="#242522" text-anchor="middle">中道に残留</text>
-<text x="320" y="188" font-size="11.5" fill="#65695f" text-anchor="middle">清算手続きを担う</text>
-<rect x="450" y="120" width="160" height="84" fill="#f7f8f6" stroke="#d7dcd2"/>
-<text x="530" y="146" font-size="14" fill="#242522" text-anchor="middle">泉健太氏</text>
-<text x="530" y="168" font-size="13" fill="#242522" text-anchor="middle">新党に入らず</text>
-<text x="530" y="188" font-size="11.5" fill="#65695f" text-anchor="middle">当面は無所属</text>
-<rect x="630" y="120" width="150" height="84" fill="#f7f8f6" stroke="#d7dcd2"/>
-<text x="705" y="146" font-size="14" fill="#242522" text-anchor="middle">大島敦氏</text>
-<text x="705" y="168" font-size="13" fill="#242522" text-anchor="middle">新党に入らず</text>
-<text x="705" y="188" font-size="11.5" fill="#65695f" text-anchor="middle">当面は無所属</text>
-<line x1="110" y1="204" x2="110" y2="232" stroke="#65695f" stroke-width="1.5" stroke-dasharray="4 3"/>
-<line x1="320" y1="204" x2="320" y2="232" stroke="#65695f" stroke-width="1.5" stroke-dasharray="4 3"/>
-<line x1="705" y1="204" x2="705" y2="232" stroke="#65695f" stroke-width="1.5" stroke-dasharray="4 3"/>
-<line x1="110" y1="232" x2="705" y2="232" stroke="#65695f" stroke-width="1.5" stroke-dasharray="4 3"/>
-<text x="400" y="256" font-size="12.5" fill="#242522" text-anchor="middle">大島氏と渡辺氏は、公明系を含む統一会派「中道」には加わっている</text>
+<rect x="30" y="8" width="380" height="84" rx="10" fill="#e3dec6" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="220" y="42" font-size="24" text-anchor="middle">中道改革連合の旧立憲系</text>
+<text class="t" x="220" y="76" font-size="22" text-anchor="middle" style="fill:#6d5640">衆院議員 21 人</text>
+<line x1="30" y1="92" x2="30" y2="590" stroke="#6d5640" stroke-width="3"/>
+<line x1="30" y1="170" x2="60" y2="170" stroke="#6d5640" stroke-width="3"/>
+<line x1="30" y1="304" x2="60" y2="304" stroke="#6d5640" stroke-width="3"/>
+<line x1="30" y1="438" x2="60" y2="438" stroke="#6d5640" stroke-width="3"/>
+<line x1="30" y1="572" x2="60" y2="572" stroke="#6d5640" stroke-width="3"/>
+<rect x="60" y="112" width="360" height="116" rx="10" fill="#fbf6ea" stroke="#a55b3a" stroke-width="4"/>
+<text class="t tb" x="240" y="148" font-size="24" text-anchor="middle" style="fill:#8b4429">民主改革の会</text>
+<text class="t" x="240" y="182" font-size="22" text-anchor="middle">18 人が入党</text>
+<text class="t" x="240" y="212" font-size="22" text-anchor="middle" style="fill:#6d5640">9 月 24 日に確認</text>
+<rect x="60" y="246" width="360" height="116" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="240" y="282" font-size="24" text-anchor="middle">渡辺創氏</text>
+<text class="t" x="240" y="316" font-size="22" text-anchor="middle">中道に残留</text>
+<text class="t" x="240" y="346" font-size="22" text-anchor="middle" style="fill:#6d5640">清算手続きを担う</text>
+<rect x="60" y="380" width="360" height="116" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="240" y="416" font-size="24" text-anchor="middle">泉健太氏</text>
+<text class="t" x="240" y="450" font-size="22" text-anchor="middle">新党に入らず</text>
+<text class="t" x="240" y="480" font-size="22" text-anchor="middle" style="fill:#6d5640">当面は無所属</text>
+<rect x="60" y="514" width="360" height="116" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="240" y="550" font-size="24" text-anchor="middle">大島敦氏</text>
+<text class="t" x="240" y="584" font-size="22" text-anchor="middle">新党に入らず</text>
+<text class="t" x="240" y="614" font-size="22" text-anchor="middle" style="fill:#6d5640">当面は無所属</text>
+<text class="t" x="220" y="664" font-size="22" text-anchor="middle">大島氏と渡辺氏は、公明系を含む</text>
+<text class="t" x="220" y="692" font-size="22" text-anchor="middle">統一会派「中道」には加わっている</text>
 </svg>
 <figcaption>図 1: 旧立憲系 21 人は、新党に入った 18 人と、入らなかった 3 人に分かれた。</figcaption>
 </figure>
 
-<div class="scroll"><table>
+<table>
 <thead>
 <tr><th>日付</th><th>出来事</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">8 月 28 日</th><td>立憲民主党が 3 党党首会談で「組織的合流はしない」ことを確認 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><th scope="row">8 月 31 日</th><td>3 党合流の見送りを確認 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
-<tr><th scope="row">9 月 2 日</th><td>立憲の田名部匡代幹事長が、立憲民主党出身者の復党について「個別の働きかけや受け入れは考えていない」と発言 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
-<tr><th scope="row">9 月 9 日</th><td>中道が解体を決定。立憲民主党出身者は新党結成を目指すと発表 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><th scope="row">9 月 16 日</th><td>中道が 48 人の離党を確認。渡辺創氏が代表に <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><th scope="row">9 月 17 日</th><td>民主改革の会が政治団体として届け出 <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup></td></tr>
-<tr><th scope="row">9 月 18 日</th><td>泉健太氏と大島敦氏が不参加の意向 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
-<tr><th scope="row">9 月 24 日</th><td>18 人で初の議員総会。公明系と統一会派「中道」を結成 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></td></tr>
-<tr><th scope="row">9 月 28 日</th><td>立憲の水岡俊一代表が、民主改革の会との再結集に意欲 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></td></tr>
-<tr><th scope="row">10 月 6 日</th><td>民主改革の階幹事長が、立憲との合流の前提を示す <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th scope="row">8 月 28 日</th><td data-label="出来事">立憲民主党が 3 党党首会談で「組織的合流はしない」ことを確認 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><th scope="row">8 月 31 日</th><td data-label="出来事">3 党合流の見送りを確認 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">9 月 2 日</th><td data-label="出来事">立憲の田名部匡代幹事長が、立憲民主党出身者の復党について「個別の働きかけや受け入れは考えていない」と発言 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><th scope="row">9 月 9 日</th><td data-label="出来事">中道が解体を決定。立憲民主党出身者は新党結成を目指すと発表 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row">9 月 16 日</th><td data-label="出来事">中道が 48 人の離党を確認。渡辺創氏が代表に <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">9 月 17 日</th><td data-label="出来事">民主改革の会が政治団体として届け出 <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">9 月 18 日</th><td data-label="出来事">泉健太氏と大島敦氏が不参加の意向 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><th scope="row">9 月 24 日</th><td data-label="出来事">18 人で初の議員総会。公明系と統一会派「中道」を結成 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></td></tr>
+<tr><th scope="row">9 月 28 日</th><td data-label="出来事">立憲の水岡俊一代表が、民主改革の会との再結集に意欲 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><th scope="row">10 月 6 日</th><td data-label="出来事">民主改革の階幹事長が、立憲との合流の前提を示す <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
 </tbody>
-</table></div>
+</table>
 </section>
 
 <section id="s2">
@@ -312,7 +330,7 @@
 <p>今後の観察点は四つある。<br>第一に、統一地方選後に立憲と民主改革の会が実際に合流協議へ進むか。階氏が示した「中道の旗を尊重すること」という条件を、立憲がどう受け止めるかが焦点になる。<br>第二に、 2027 年分以降の政党交付金の扱い。泉氏が問題にした得票割の分を返還するのかが問われる。<br>第三に、泉氏・大島氏・渡辺氏の最終的な行き先。<br>第四に、地方議員を持たない新党が、統一地方選をどう戦うのかである。</p>
 </section>
 <div class="refs">
-<h2 id="s7">7. 参考文献・資料</h2>
+<h2>参考文献・資料</h2>
 <p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <em>時事通信</em>「中道解体、立民系は新党　 8 カ月で幕、公明系復党へ」（ 2026 年 9 月 9 日）。 <a href="https://www.jiji.com/jc/article?k=2026090900156&amp;g=pol" target="_blank" rel="noopener">時事ドットコム</a></li>

@@ -6,124 +6,152 @@
 <title>PLATEAU と AI で作る FPV ドローン風映像</title>
 <style>
   :root{
-    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
-    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
-    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.95;font-size:17px}
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
   .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
-  ruby rt{font-size:.55em;color:var(--muted)}
-  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
-  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
-  .hero p{margin:0 auto;max-width:560px}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(30px,6vw,46px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:600px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0}
   nav.toc b{display:block;margin-bottom:4px}
   nav.toc ol{margin:0;padding-left:1.4em}
   nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  nav.toc a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:.2em}
   @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:44px 0}
-  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
-  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:10px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  section{margin:48px 0}
+  h2{font-size:clamp(24px,4.8vw,30px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:22px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
   figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
   .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
   .checklist .cl-title::before{content:"✅ "}
   .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
   .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
   .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
   .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--orange)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
-  .card .e{font-size:38px;display:block}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
   .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
   .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
   .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
   thead th{color:#fff}
   thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#efe3c8;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
-  .scroll{overflow-x:auto}
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--green)}
-  .quiz .ans{color:var(--green);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:16px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
   .hero .subtitle{color:var(--ink)}
   .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
   .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
   .box ul{margin:6px 0 0;padding-left:1.4em}
   .box strong{color:var(--ink)}
   .lede>:first-child,.box>:first-child{margin-top:0}
   .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:14px;color:var(--muted)}
+  .endnote{font-size:16px;color:var(--muted)}
   /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
   dl.summary{margin:14px 0}
   dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
   dl.summary dt{white-space:nowrap}
   dl.summary dt::after{content:"："}
   dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em;line-height:0}
-  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
-  sup a:hover{text-decoration:underline}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold}
   .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
   .refs ol{padding-left:1.8em}
   .refs .refs-note{color:var(--muted)}
-  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs li>a:first-child{font-weight:bold}
   .refs sup a{font-style:italic}
   .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
   /* SVG common */
   .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
   .white{fill:#fff}
-  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
-  code{background:#fff1e0;padding:.1rem .35rem;border-radius:6px;font-size:.92em}
-  pre{overflow-x:auto;background:#faf3e2;padding:11.2px 16px;border-radius:3px;margin:0 0 20px}
-  pre code{background:none;padding:0}
-  pre.term{background:#000;color:#fff}
+  /* この文書に固有の部品(和色に合わせたもの) */
+  code{background:#f8e4cb;padding:.1rem .35rem;border-radius:6px;font-size:max(16px,.92em);overflow-wrap:anywhere}
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#efe3c8;padding:12px 16px;border-radius:12px;margin:0 0 20px;font-size:16px;line-height:1.6}
+  pre code{background:none;padding:0;font-size:inherit}
+  pre.term{background:var(--ink);color:#fff}
   pre.term code{color:#fff}
-  code.term{background:#000;color:#fff}
+  code.term{background:var(--ink);color:#fff}
   pre{position:relative}
+  .copy-btn{font:inherit;font-size:16px;padding:4px 14px;margin-top:8px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -202,18 +230,18 @@
 <h3 id="s1-1">1.1 完成物と所要時間</h3>
 <p>完成物は、東京・渋谷のように実在する街の構造を保った、 8 〜 16 秒ほどの FPV ドローン風の映像です。 FPV とは、機体のカメラ視点で飛ぶ、低空・高速・急旋回を特徴とする撮影様式を指します。</p>
 <p>所要時間の目安は次のとおりです。初回は、準備とつまずきの解消に時間を取られます。 2 回目以降は、同じ街なら工程 3 から繰り返せます。</p>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>工程</th><th>内容</th><th>初回の目安</th><th>2 回目以降</th></tr></thead>
 <tbody>
-<tr><th scope="row">準備</th><td>ソフトの導入、フォルダ作成</td><td>1 〜 2 時間</td><td>なし</td></tr>
-<tr><th scope="row">工程 1</th><td>PLATEAU データの入手</td><td>30 分</td><td>なし</td></tr>
-<tr><th scope="row">工程 2</th><td>Blender で街を組む</td><td>1 時間</td><td>なし</td></tr>
-<tr><th scope="row">工程 3</th><td>カメラ経路の設計</td><td>1 〜 2 時間</td><td>30 分</td></tr>
-<tr><th scope="row">工程 4</th><td>レンダリング</td><td>30 分〜数時間</td><td>同左</td></tr>
-<tr><th scope="row">工程 5</th><td>動画生成 AI で変換</td><td>1 〜 3 時間</td><td>同左</td></tr>
-<tr><th scope="row">工程 6</th><td>連結・仕上げ</td><td>30 分</td><td>同左</td></tr>
+<tr><th scope="row">準備</th><td data-label="内容">ソフトの導入、フォルダ作成</td><td data-label="初回の目安">1 〜 2 時間</td><td data-label="2 回目以降">なし</td></tr>
+<tr><th scope="row">工程 1</th><td data-label="内容">PLATEAU データの入手</td><td data-label="初回の目安">30 分</td><td data-label="2 回目以降">なし</td></tr>
+<tr><th scope="row">工程 2</th><td data-label="内容">Blender で街を組む</td><td data-label="初回の目安">1 時間</td><td data-label="2 回目以降">なし</td></tr>
+<tr><th scope="row">工程 3</th><td data-label="内容">カメラ経路の設計</td><td data-label="初回の目安">1 〜 2 時間</td><td data-label="2 回目以降">30 分</td></tr>
+<tr><th scope="row">工程 4</th><td data-label="内容">レンダリング</td><td data-label="初回の目安">30 分〜数時間</td><td data-label="2 回目以降">同左</td></tr>
+<tr><th scope="row">工程 5</th><td data-label="内容">動画生成 AI で変換</td><td data-label="初回の目安">1 〜 3 時間</td><td data-label="2 回目以降">同左</td></tr>
+<tr><th scope="row">工程 6</th><td data-label="内容">連結・仕上げ</td><td data-label="初回の目安">30 分</td><td data-label="2 回目以降">同左</td></tr>
 </tbody>
-</table></div>
+</table>
 
 <h3 id="s1-2">1.2 できないこと・注意点</h3>
 <div class="caution">
@@ -245,17 +273,17 @@
 <h2><span class="no">3</span>事前準備</h2>
 
 <h3 id="s3-1">3.1 必要なもの</h3>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>項目</th><th>用途</th><th>入手先・目安</th></tr></thead>
 <tbody>
-<tr><th scope="row">Blender 4.2 LTS または 4.5 LTS</th><td>3D 空間の組み立てとレンダリング</td><td>公式サイトから無料。 Mac 版（ macOS 用）を入れる</td></tr>
-<tr><th scope="row">Python</th><td>この手引書では不要（ Blender に同梱の Python を使う）</td><td>別途の導入は要らない</td></tr>
-<tr><th scope="row">FFmpeg</th><td>連番画像の動画化、連結、最終フレームの切り出し</td><td>無料。コマンドで <code class="term">ffmpeg -version</code> が通ればよい</td></tr>
-<tr><th scope="row">動画生成 AI のアカウント</th><td>工程 5</td><td>画像から動画と、動画から動画のどちらを使うかで選ぶ。まず無料枠で試す</td></tr>
-<tr><th scope="row">コード実行ができる AI エージェント</th><td>スクリプトの修正、エラーの解決</td><td>任意。なくても、チャット型 AI にエラー全文を貼れば進められる</td></tr>
-<tr><th scope="row">PC の性能</th><td>レンダリング</td><td>本手引書は Eevee を使うため、 GPU があれば 1 フレーム数秒で済む。なくても動くが遅い</td></tr>
+<tr><th scope="row">Blender 4.2 LTS または 4.5 LTS</th><td data-label="用途">3D 空間の組み立てとレンダリング</td><td data-label="入手先・目安">公式サイトから無料。 Mac 版（ macOS 用）を入れる</td></tr>
+<tr><th scope="row">Python</th><td data-label="用途">この手引書では不要（ Blender に同梱の Python を使う）</td><td data-label="入手先・目安">別途の導入は要らない</td></tr>
+<tr><th scope="row">FFmpeg</th><td data-label="用途">連番画像の動画化、連結、最終フレームの切り出し</td><td data-label="入手先・目安">無料。コマンドで <code class="term">ffmpeg -version</code> が通ればよい</td></tr>
+<tr><th scope="row">動画生成 AI のアカウント</th><td data-label="用途">工程 5</td><td data-label="入手先・目安">画像から動画と、動画から動画のどちらを使うかで選ぶ。まず無料枠で試す</td></tr>
+<tr><th scope="row">コード実行ができる AI エージェント</th><td data-label="用途">スクリプトの修正、エラーの解決</td><td data-label="入手先・目安">任意。なくても、チャット型 AI にエラー全文を貼れば進められる</td></tr>
+<tr><th scope="row">PC の性能</th><td data-label="用途">レンダリング</td><td data-label="入手先・目安">本手引書は Eevee を使うため、 GPU があれば 1 フレーム数秒で済む。なくても動くが遅い</td></tr>
 </tbody>
-</table></div>
+</table>
 
 <div class="checklist">
 <span class="cl-title">事前準備チェックリスト</span>
@@ -419,18 +447,18 @@ print("saved:", a.out)</code></pre>
 <p>ここが、この手法の中心です。経路を数値で確定しておけば、動画生成 AI のやり直しを何回しても、同じ飛行を基準にできます。</p>
 
 <h3 id="s6-1">6.1 設計の数値目安</h3>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>項目</th><th>目安</th><th>理由</th></tr></thead>
 <tbody>
-<tr><th scope="row">全体の長さ</th><td>5 〜 8 秒を一区間にする</td><td>動画生成 AI が破綻せずに生成できる長さに合わせる。長い映像は区間を連結する</td></tr>
-<tr><th scope="row">フレームレート</th><td>24fps</td><td>映画的な動きになり、動画生成 AI の標準とも合う</td></tr>
-<tr><th scope="row">飛行速度</th><td>15 〜 30m/ 秒</td><td>これ以下だと、普通のドローンの映像に見える。これ以上だと、動画生成 AI が追従できない</td></tr>
-<tr><th scope="row">高度</th><td>低空は地上 3 〜 6m 、上昇時は 70m まで</td><td>低いほど速く見えるが、建物に近すぎると形が崩れる。壁面から最低 5m は離す</td></tr>
-<tr><th scope="row">焦点距離</th><td>12 〜 16mm （センサー幅 36mm ）</td><td>14mm で水平画角は約 104 度。 10mm 未満は端の歪みが強く、動画生成 AI が混乱する</td></tr>
-<tr><th scope="row">急旋回</th><td>1 秒あたり 90 度以内、ロール（傾き）は ±15 度</td><td>動きが急すぎると、動画生成 AI が前後のフレームの対応を見失う</td></tr>
-<tr><th scope="row">視線の先</th><td>常に、進行方向の少し先を見る</td><td>進行方向と視線がずれると、横滑りのような不自然な動きになる</td></tr>
+<tr><th scope="row">全体の長さ</th><td data-label="目安">5 〜 8 秒を一区間にする</td><td data-label="理由">動画生成 AI が破綻せずに生成できる長さに合わせる。長い映像は区間を連結する</td></tr>
+<tr><th scope="row">フレームレート</th><td data-label="目安">24fps</td><td data-label="理由">映画的な動きになり、動画生成 AI の標準とも合う</td></tr>
+<tr><th scope="row">飛行速度</th><td data-label="目安">15 〜 30m/ 秒</td><td data-label="理由">これ以下だと、普通のドローンの映像に見える。これ以上だと、動画生成 AI が追従できない</td></tr>
+<tr><th scope="row">高度</th><td data-label="目安">低空は地上 3 〜 6m 、上昇時は 70m まで</td><td data-label="理由">低いほど速く見えるが、建物に近すぎると形が崩れる。壁面から最低 5m は離す</td></tr>
+<tr><th scope="row">焦点距離</th><td data-label="目安">12 〜 16mm （センサー幅 36mm ）</td><td data-label="理由">14mm で水平画角は約 104 度。 10mm 未満は端の歪みが強く、動画生成 AI が混乱する</td></tr>
+<tr><th scope="row">急旋回</th><td data-label="目安">1 秒あたり 90 度以内、ロール（傾き）は ±15 度</td><td data-label="理由">動きが急すぎると、動画生成 AI が前後のフレームの対応を見失う</td></tr>
+<tr><th scope="row">視線の先</th><td data-label="目安">常に、進行方向の少し先を見る</td><td data-label="理由">進行方向と視線がずれると、横滑りのような不自然な動きになる</td></tr>
 </tbody>
-</table></div>
+</table>
 
 <h3 id="s6-2">6.2 座標の測り方</h3>
 <p>経路は、 Blender 上の座標（単位はメートル）で書きます。測り方は次のとおりです。</p>
@@ -460,19 +488,19 @@ print("saved:", a.out)</code></pre>
     {"t": 8.0, "pos": [45, 45, 70],   "look": [50, 50, 120], "roll": 0}
   ]
 }</code></pre>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>キー</th><th>意味</th></tr></thead>
 <tbody>
-<tr><th scope="row"><code>lens</code></th><td>焦点距離（ mm ）</td></tr>
-<tr><th scope="row"><code>fps</code></th><td>フレームレート</td></tr>
-<tr><th scope="row"><code>shake</code></th><td>カメラの揺れの強さ。 0 で揺れなし、 1 で位置が約 5cm 、傾きが約 1.5 度揺れる。 AI に変換させる場合は 0.3 〜 0.5 にとどめる</td></tr>
-<tr><th scope="row"><code>depth_range</code></th><td>深度画像の白から黒までの距離（ m ）。街の幅が約 1km なら 300 前後</td></tr>
-<tr><th scope="row"><code>t</code></th><td>その通過点を通る時刻（秒）</td></tr>
-<tr><th scope="row"><code>pos</code></th><td>カメラの位置 [X, Y, Z] （ m ）</td></tr>
-<tr><th scope="row"><code>look</code></th><td>その時刻に見ている点 [X, Y, Z] （ m ）</td></tr>
-<tr><th scope="row"><code>roll</code></th><td>傾き（度）。旋回方向に倒すと、ドローンらしく見える</td></tr>
+<tr><th scope="row"><code>lens</code></th><td data-label="意味">焦点距離（ mm ）</td></tr>
+<tr><th scope="row"><code>fps</code></th><td data-label="意味">フレームレート</td></tr>
+<tr><th scope="row"><code>shake</code></th><td data-label="意味">カメラの揺れの強さ。 0 で揺れなし、 1 で位置が約 5cm 、傾きが約 1.5 度揺れる。 AI に変換させる場合は 0.3 〜 0.5 にとどめる</td></tr>
+<tr><th scope="row"><code>depth_range</code></th><td data-label="意味">深度画像の白から黒までの距離（ m ）。街の幅が約 1km なら 300 前後</td></tr>
+<tr><th scope="row"><code>t</code></th><td data-label="意味">その通過点を通る時刻（秒）</td></tr>
+<tr><th scope="row"><code>pos</code></th><td data-label="意味">カメラの位置 [X, Y, Z] （ m ）</td></tr>
+<tr><th scope="row"><code>look</code></th><td data-label="意味">その時刻に見ている点 [X, Y, Z] （ m ）</td></tr>
+<tr><th scope="row"><code>roll</code></th><td data-label="意味">傾き（度）。旋回方向に倒すと、ドローンらしく見える</td></tr>
 </tbody>
-</table></div>
+</table>
 <p>例の経路の速度は、区間の距離を秒数で割ると約 17 〜 30m/ 秒になります。自分の経路でも、区間ごとに距離を測り、 6.1 の目安に収まるかを確かめてください。この計算は、 AI に任せても構いません。</p>
 </section>
 
@@ -674,16 +702,16 @@ ffmpeg -framerate 24 -i work/render/depth/depth_%04d.png -c:v libx264 -pix_fmt y
 
 <h3 id="s8-3">8.3 プロンプトの組み立て</h3>
 <p>プロンプトは、英語の方が効くサービスが多く、本手引書も英語を勧めます。次の五つの要素を、この順に並べます。</p>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>要素</th><th>書くこと</th><th>例</th></tr></thead>
 <tbody>
-<tr><th scope="row">1. 場所と被写体</th><td>実在の街であること、画面にあるもの</td><td>Tokyo Shibuya crossing, skyscrapers, wide asphalt streets</td></tr>
-<tr><th scope="row">2. 光と時間帯</th><td>夕方、空の色、反射</td><td>golden hour, warm low sun, sun reflecting on glass facades</td></tr>
-<tr><th scope="row">3. カメラ</th><td>FPV ドローンであること、動き</td><td>FPV drone shot, fast forward flight low above the street, then climbing along a tower</td></tr>
-<tr><th scope="row">4. 質感</th><td>実写らしさ</td><td>photorealistic, cinematic, detailed asphalt texture, slight motion blur</td></tr>
-<tr><th scope="row">5. 守ってほしいこと</th><td>構造を変えない、余計なものを足さない</td><td>keep the exact building layout and heights, no new buildings, no text overlays</td></tr>
+<tr><th scope="row">1. 場所と被写体</th><td data-label="書くこと">実在の街であること、画面にあるもの</td><td data-label="例">Tokyo Shibuya crossing, skyscrapers, wide asphalt streets</td></tr>
+<tr><th scope="row">2. 光と時間帯</th><td data-label="書くこと">夕方、空の色、反射</td><td data-label="例">golden hour, warm low sun, sun reflecting on glass facades</td></tr>
+<tr><th scope="row">3. カメラ</th><td data-label="書くこと">FPV ドローンであること、動き</td><td data-label="例">FPV drone shot, fast forward flight low above the street, then climbing along a tower</td></tr>
+<tr><th scope="row">4. 質感</th><td data-label="書くこと">実写らしさ</td><td data-label="例">photorealistic, cinematic, detailed asphalt texture, slight motion blur</td></tr>
+<tr><th scope="row">5. 守ってほしいこと</th><td data-label="書くこと">構造を変えない、余計なものを足さない</td><td data-label="例">keep the exact building layout and heights, no new buildings, no text overlays</td></tr>
 </tbody>
-</table></div>
+</table>
 <p>つなげると、次のようになります。</p>
 <pre><code>Tokyo Shibuya crossing at golden hour, warm low sun reflecting on glass facades.
 FPV drone shot, fast forward flight low above the street between skyscrapers,
@@ -727,13 +755,13 @@ file 'clip02.mp4'</code></pre>
 <section id="s10">
 <h2><span class="no">10</span>AI エージェントへの任せ方</h2>
 <p>手順の多くは、コード実行ができる AI エージェントに任せられます。ただし、任せてよいことと、人が決めることは分けてください。</p>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>分担</th><th>内容</th></tr></thead>
 <tbody>
-<tr><th scope="row">AI に任せる</th><td>スクリプトの修正、エラーの原因調査、 FFmpeg のコマンド作成、ファイル名の整理、経路の速度計算</td></tr>
-<tr><th scope="row">人が決める</th><td>対象の場所、経路（どこをどう飛ぶか）、見た目の好み、生成結果の採否、公開の可否</td></tr>
+<tr><th scope="row">AI に任せる</th><td data-label="内容">スクリプトの修正、エラーの原因調査、 FFmpeg のコマンド作成、ファイル名の整理、経路の速度計算</td></tr>
+<tr><th scope="row">人が決める</th><td data-label="内容">対象の場所、経路（どこをどう飛ぶか）、見た目の好み、生成結果の採否、公開の可否</td></tr>
 </tbody>
-</table></div>
+</table>
 <p>依頼文の例です。エラーが出たときは、エラー全文を貼ります。</p>
 <pre><code>作業フォルダの scripts/build_scene.py を、次のコマンドで実行したところ、
 下のエラーが出ました。原因を調べて、スクリプトを修正してください。
@@ -749,20 +777,20 @@ file 'clip02.mp4'</code></pre>
 
 <section id="s11">
 <h2><span class="no">11</span>トラブルシューティング</h2>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>症状</th><th>考えられる原因</th><th>対処</th></tr></thead>
 <tbody>
-<tr><th scope="row">Blender で街が横倒し、または逆さ</th><td>取り込み時の上方向の指定が違う</td><td><code class="term">--up</code> と <code class="term">--forward</code> を変えて再実行する</td></tr>
-<tr><th scope="row">画面が真っ白、または真っ黒</th><td>カメラが建物の中にある。または、街から遠すぎる</td><td>経路の座標を確かめる。 3D 表示で、カメラの位置を見る</td></tr>
-<tr><th scope="row">表示がガタガタ、建物が揺れる</th><td>座標が原点から遠い</td><td><code>build_scene.py</code> の中心移動が効いているか確認する</td></tr>
-<tr><th scope="row">描画が遅い</th><td>データが大きい。または、 GPU がない</td><td>区画を減らす。解像度とサンプル数を下げる。テクスチャなし（ <code class="term">--clay</code> ）にする</td></tr>
-<tr><th scope="row">深度の白黒が逆</th><td>ミスト パスの出力の向き</td><td>FFmpeg に <code class="term">-vf negate</code> を付けて反転する</td></tr>
-<tr><th scope="row">AI の映像で、建物が別物になる</th><td>変化が強すぎる。またはクリップが長すぎる</td><td>方式 B に切り替える。変化の強さを下げる。 5 秒に短縮する</td></tr>
-<tr><th scope="row">AI の映像が、 CG のまま変わらない</th><td>変化が弱すぎる</td><td>変化の強さを上げる。プロンプトの「質感」の要素を強める</td></tr>
-<tr><th scope="row">つなぎ目で光や色が変わる</th><td>クリップごとに別の絵として生成された</td><td>前のクリップの最終フレームを、次の開始画像にする。仕上げで色を揃える</td></tr>
-<tr><th scope="row">看板や窓が崩れる</th><td>動画生成 AI の弱点</td><td>高速で飛ぶ構図にして、見える時間を短くする。ネガティブプロンプトに <code>text</code> を入れる</td></tr>
+<tr><th scope="row">Blender で街が横倒し、または逆さ</th><td data-label="考えられる原因">取り込み時の上方向の指定が違う</td><td data-label="対処"><code class="term">--up</code> と <code class="term">--forward</code> を変えて再実行する</td></tr>
+<tr><th scope="row">画面が真っ白、または真っ黒</th><td data-label="考えられる原因">カメラが建物の中にある。または、街から遠すぎる</td><td data-label="対処">経路の座標を確かめる。 3D 表示で、カメラの位置を見る</td></tr>
+<tr><th scope="row">表示がガタガタ、建物が揺れる</th><td data-label="考えられる原因">座標が原点から遠い</td><td data-label="対処"><code>build_scene.py</code> の中心移動が効いているか確認する</td></tr>
+<tr><th scope="row">描画が遅い</th><td data-label="考えられる原因">データが大きい。または、 GPU がない</td><td data-label="対処">区画を減らす。解像度とサンプル数を下げる。テクスチャなし（ <code class="term">--clay</code> ）にする</td></tr>
+<tr><th scope="row">深度の白黒が逆</th><td data-label="考えられる原因">ミスト パスの出力の向き</td><td data-label="対処">FFmpeg に <code class="term">-vf negate</code> を付けて反転する</td></tr>
+<tr><th scope="row">AI の映像で、建物が別物になる</th><td data-label="考えられる原因">変化が強すぎる。またはクリップが長すぎる</td><td data-label="対処">方式 B に切り替える。変化の強さを下げる。 5 秒に短縮する</td></tr>
+<tr><th scope="row">AI の映像が、 CG のまま変わらない</th><td data-label="考えられる原因">変化が弱すぎる</td><td data-label="対処">変化の強さを上げる。プロンプトの「質感」の要素を強める</td></tr>
+<tr><th scope="row">つなぎ目で光や色が変わる</th><td data-label="考えられる原因">クリップごとに別の絵として生成された</td><td data-label="対処">前のクリップの最終フレームを、次の開始画像にする。仕上げで色を揃える</td></tr>
+<tr><th scope="row">看板や窓が崩れる</th><td data-label="考えられる原因">動画生成 AI の弱点</td><td data-label="対処">高速で飛ぶ構図にして、見える時間を短くする。ネガティブプロンプトに <code>text</code> を入れる</td></tr>
 </tbody>
-</table></div>
+</table>
 </section>
 
 <section id="s12">

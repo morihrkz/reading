@@ -7,135 +7,159 @@
 <title>2026 U.S. Midterms: Democrats Win Congress</title>
 <style>
   :root{
-    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
-    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
-    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.95;font-size:17px}
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
   .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
-  ruby rt{font-size:.55em;color:var(--muted)}
-  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
-  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
-  .hero p{margin:0 auto;max-width:560px}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(30px,6vw,46px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:600px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0}
   nav.toc b{display:block;margin-bottom:4px}
   nav.toc ol{margin:0;padding-left:1.4em}
   nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  nav.toc a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:.2em}
   @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:44px 0}
-  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
-  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:10px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  section{margin:48px 0}
+  h2{font-size:clamp(24px,4.8vw,30px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:22px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
   figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
   .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
   .checklist .cl-title::before{content:"✅ "}
   .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
   .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
   .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
   .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--orange)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
-  .card .e{font-size:38px;display:block}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
   .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
   .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
   .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
   thead th{color:#fff}
   thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#efe3c8;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
-  .scroll{overflow-x:auto}
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--green)}
-  .quiz .ans{color:var(--green);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:16px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
   .hero .subtitle{color:var(--ink)}
   .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
   .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
   .box ul{margin:6px 0 0;padding-left:1.4em}
   .box strong{color:var(--ink)}
   .lede>:first-child,.box>:first-child{margin-top:0}
   .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:14px;color:var(--muted)}
+  .endnote{font-size:16px;color:var(--muted)}
   /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
   dl.summary{margin:14px 0}
   dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
   dl.summary dt{white-space:nowrap}
   dl.summary dt::after{content:"："}
   dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em;line-height:0}
-  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
-  sup a:hover{text-decoration:underline}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold}
   .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
   .refs ol{padding-left:1.8em}
   .refs .refs-note{color:var(--muted)}
-  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs li>a:first-child{font-weight:bold}
   .refs sup a{font-style:italic}
   .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
   /* SVG common */
   .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
   .white{fill:#fff}
-  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
-  pre{overflow-x:auto;background:#faf3e2;padding:11.2px 16px;border-radius:3px;margin:0 0 20px}
-  pre code{background:none;padding:0}
-  .fig-pair{display:grid;grid-template-columns:repeat(auto-fit, minmax(min(100%, 352px), 1fr));gap:16px;margin:24px 0}
-  .diagram{margin:0;padding:16px;background:#fff;border:1px solid var(--line)}
-  .diagram svg{display:block;width:100%;height:auto;max-width:100%}
-  .diagram figcaption{font-size:14.4px;color:var(--muted);margin-top:12px;line-height:1.7}
-  .diagram .fig-label{color:#a36b00;font-weight:700;margin-right:.3em}
+  /* この文書に固有の部品(和色に合わせたもの) */
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#efe3c8;padding:12px 16px;border-radius:12px;margin:0 0 20px;font-size:16px;line-height:1.6}
+  pre code{background:none;padding:0;font-size:inherit}
+  .fig-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,352px),1fr));gap:16px;margin:24px 0}
+  .fig-pair figure{margin:0}
+  .fig-label{color:var(--link);font-weight:bold;margin-right:.3em}
   .legend{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:4px 16px}
-  .legend li{font-size:13.6px;margin:0;color:var(--ink)}
+  .legend li{font-size:17px;margin:0;color:var(--ink)}
   .sw{display:inline-block;width:.85em;height:.85em;border-radius:50%;margin-right:.35em;vertical-align:-.08em;box-sizing:border-box}
-  .sw-d{background:var(--orange)}
-  .sw-r{background:var(--red)}
-  .sw-i{background:var(--muted)}
-  .sw-vac{background:#fff1e0;border:2px solid var(--muted)}
-  .sw-dhold{background:#fff1e0;border:2px solid var(--orange)}
-  .sw-rhold{background:#fff1e0;border:2px solid var(--red)}
-  .sw-flip{background:var(--orange);border:2px solid var(--red)}
-  .scroll>svg{display:block;height:auto}
+  .sw-d{background:#5e3d50}
+  .sw-r{background:#b7282e}
+  .sw-i{background:#6d5640}
+  .sw-vac{background:#efe3c8;border:3px solid #6d5640}
+  .sw-dhold{background:#efe3c8;border:3px solid #5e3d50}
+  .sw-rhold{background:#efe3c8;border:3px solid #b7282e}
+  .sw-flip{background:#5e3d50;border:3px solid #b7282e}
 </style>
 </head>
 <body>
@@ -175,7 +199,6 @@
 <li><a href="#s7-3">So who leads when nobody does?</a></li>
 </ol>
 </li>
-<li><a href="#s8">Sources and Editorial Notes</a></li>
 </ol>
 </nav>
 <section id="s1">
@@ -188,26 +211,26 @@
 
 <section id="s2">
 <h2><span class="no">2</span>How the Midterms Work</h2>
-<p>Held at the midpoint of a president&#39;s four-year term, midterm elections determine the composition of the United States Congress. While the presidency is not on the ballot, shifts in congressional control reshape legislative priorities, federal spending, subpoena and oversight powers, and the confirmation of judicial and executive nominees.</p><div class="scroll"><table><thead><tr><th>Feature</th><th>House of Representatives</th><th>Senate</th></tr></thead>
-<tbody><tr><th scope="row">Total Seats</th><td>435</td><td>100</td></tr><tr><th scope="row">Term Length</th><td>2 years</td><td>6 years</td></tr><tr><th scope="row">Seats Up in 2026</th><td>All 435 seats</td><td>Roughly one-third (35 seats)</td></tr><tr><th scope="row">Majority Threshold</th><td>218 seats</td><td>51 seats (or 50 with the Vice President breaking a tie)</td></tr></tbody></table></div><p class="meta">In the Senate, working majorities can shift depending on vacancies and the party affiliation of the sitting Vice President.</p>
+<p>Held at the midpoint of a president&#39;s four-year term, midterm elections determine the composition of the United States Congress. While the presidency is not on the ballot, shifts in congressional control reshape legislative priorities, federal spending, subpoena and oversight powers, and the confirmation of judicial and executive nominees.</p><table><thead><tr><th>Feature</th><th>House of Representatives</th><th>Senate</th></tr></thead>
+<tbody><tr><th scope="row">Total Seats</th><td data-label="House of Representatives">435</td><td data-label="Senate">100</td></tr><tr><th scope="row">Term Length</th><td data-label="House of Representatives">2 years</td><td data-label="Senate">6 years</td></tr><tr><th scope="row">Seats Up in 2026</th><td data-label="House of Representatives">All 435 seats</td><td data-label="Senate">Roughly one-third (35 seats)</td></tr><tr><th scope="row">Majority Threshold</th><td data-label="House of Representatives">218 seats</td><td data-label="Senate">51 seats (or 50 with the Vice President breaking a tie)</td></tr></tbody></table><p class="meta">In the Senate, working majorities can shift depending on vacancies and the party affiliation of the sitting Vice President.</p>
 </section>
 
 <section id="s3">
 <h2><span class="no">3</span>The Battle for Congress</h2>
 
-<div class="scroll"><table>
+<table>
 <thead><tr><th>Item</th><th>Status</th><th>Detail</th></tr></thead>
 <tbody>
-<tr><th scope="row">House: 218 needed</th><td>Democrats win control</td><td>Called by CBS News (10:15 PM EST), NBC News, and CNN (about 10:19 PM EST). NBC (9:29 AM EST, Nov. 5): 249 D / 158 R called, 28 uncalled; estimate about 259 D / 176 R. CNBC (earlier check): at least 250 D / 160 R.</td></tr>
-<tr><th scope="row">Senate: 51 needed</th><td>Democrats win control</td><td>NBC tally: 54 D (including 2 independents) / 44 R, with Alaska and Mississippi uncalled. CBS News projected control shortly after 11:30 PM EST; CNBC says at least 54 D / 42 R.</td></tr>
-<tr><th scope="row">Senate flips (7)</th><td>NC, SC, TX, OH, KS, IA, ME</td><td>Call times (EST, per CBS News): North Carolina 8:30 PM; South Carolina 10:00 PM; Texas 10:55 PM; Ohio 11:11 PM; Kansas 11:26 PM; Iowa 11:34 PM; Maine 12:52 AM, after Susan Collins conceded.</td></tr>
-<tr><th scope="row">Senate races still open</th><td>Alaska, Mississippi</td><td>Alaska: Peltola (D) 48.2% vs. Sullivan (R) 47.9%, 74.1% in. Mississippi: Colom (D) 49.0% vs. Hyde-Smith (R) 48.9%, 95.7% in (NBC tallies as of 9:29 AM EST, Nov. 5).</td></tr>
+<tr><th scope="row">House: 218 needed</th><td data-label="Status">Democrats win control</td><td data-label="Detail">Called by CBS News (10:15 PM EST), NBC News, and CNN (about 10:19 PM EST). NBC (9:29 AM EST, Nov. 5): 249 D / 158 R called, 28 uncalled; estimate about 259 D / 176 R. CNBC (earlier check): at least 250 D / 160 R.</td></tr>
+<tr><th scope="row">Senate: 51 needed</th><td data-label="Status">Democrats win control</td><td data-label="Detail">NBC tally: 54 D (including 2 independents) / 44 R, with Alaska and Mississippi uncalled. CBS News projected control shortly after 11:30 PM EST; CNBC says at least 54 D / 42 R.</td></tr>
+<tr><th scope="row">Senate flips (7)</th><td data-label="Status">NC, SC, TX, OH, KS, IA, ME</td><td data-label="Detail">Call times (EST, per CBS News): North Carolina 8:30 PM; South Carolina 10:00 PM; Texas 10:55 PM; Ohio 11:11 PM; Kansas 11:26 PM; Iowa 11:34 PM; Maine 12:52 AM, after Susan Collins conceded.</td></tr>
+<tr><th scope="row">Senate races still open</th><td data-label="Status">Alaska, Mississippi</td><td data-label="Detail">Alaska: Peltola (D) 48.2% vs. Sullivan (R) 47.9%, 74.1% in. Mississippi: Colom (D) 49.0% vs. Hyde-Smith (R) 48.9%, 95.7% in (NBC tallies as of 9:29 AM EST, Nov. 5).</td></tr>
 </tbody>
-</table></div>
+</table>
 <div class="fig-pair">
-<figure class="diagram">
-<div class="scroll"><svg style="min-width:424px" viewBox="0 0 600 330" role="img" aria-label="House composition after the midterms (435 seats), NBC News tally as of 9:29 AM ET, Nov. 5: 249 Democrats called, 28 uncalled, 158 Republicans called. Democrats are past the 218-seat majority.">
-  <g fill="#2a4d69"><title>Democrats called 249</title>
+<figure>
+<svg viewBox="0 -28 600 358" role="img" aria-label="House composition after the midterms (435 seats), NBC News tally as of 9:29 AM ET, Nov. 5: 249 Democrats called, 28 uncalled, 158 Republicans called. Democrats are past the 218-seat majority.">
+  <g fill="#5e3d50"><title>Democrats called 249</title>
     <circle cx="197.4" cy="315.0" r="6.6"/>
     <circle cx="180.8" cy="315.0" r="6.6"/>
     <circle cx="164.2" cy="315.0" r="6.6"/>
@@ -458,7 +481,7 @@
     <circle cx="326.5" cy="198.8" r="6.6"/>
     <circle cx="359.7" cy="53.3" r="6.6"/>
   </g>
-  <g fill="#e6edf3" stroke="#555" stroke-width="2.5"><title>Uncalled 28</title>
+  <g fill="#efe3c8" stroke="#6d5640" stroke-width="2.5"><title>Uncalled 28</title>
     <circle cx="351.0" cy="102.4" r="6.6"/>
     <circle cx="342.3" cy="151.5" r="6.6"/>
     <circle cx="359.5" cy="87.4" r="6.6"/>
@@ -488,7 +511,7 @@
     <circle cx="408.7" cy="69.6" r="6.6"/>
     <circle cx="422.6" cy="57.7" r="6.6"/>
   </g>
-  <g fill="#c0392b"><title>Republicans called 158</title>
+  <g fill="#b7282e"><title>Republicans called 158</title>
     <circle cx="374.4" cy="163.3" r="6.6"/>
     <circle cx="382.7" cy="148.9" r="6.6"/>
     <circle cx="391.0" cy="134.5" r="6.6"/>
@@ -648,9 +671,9 @@
     <circle cx="568.4" cy="315.0" r="6.6"/>
     <circle cx="585.0" cy="315.0" r="6.6"/>
   </g>
-  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#222" stroke-width="1.5" stroke-dasharray="4 3"/>
-  <text x="300" y="10" text-anchor="middle" font-size="17" fill="#222">Majority: 218</text>
-</svg></div>
+  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#3a2e2a" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text class="t" x="300" y="-4" text-anchor="middle" font-size="28">Majority: 218</text>
+</svg>
 <ul class="legend">
 <li><span class="sw sw-d"></span>Democrats called 249</li>
 <li><span class="sw sw-vac"></span>Uncalled 28</li>
@@ -658,13 +681,13 @@
 </ul>
 <figcaption><span class="fig-label">Figure 1</span> House of Representatives after the midterms (435 seats), per the NBC News tally at 9:29 AM ET on Nov. 5 (up from 242 Democratic, 151 Republican, and 42 uncalled at 12:46 AM ET). Each circle is one seat; the 28 uncalled seats sit between the parties. The dashed line marks the midpoint, where the 218th seat falls; the 249 seats already called for Democrats extend well past it. NBC estimates a final split of about 259 Democrats and 176 Republicans.</figcaption>
 </figure>
-<figure class="diagram">
-<div class="scroll"><svg style="min-width:424px" viewBox="0 0 600 330" role="img" aria-label="Senate composition after the midterms (100 seats), NBC News tally as of 9:29 AM ET, Nov. 5: 54 Democrats including 2 independents, 44 Republicans, 2 uncalled (Alaska and Mississippi). Democrats flipped 7 Republican-held seats.">
-  <g fill="#555"><title>Independents 2 (caucus with Democrats; not up)</title>
+<figure>
+<svg viewBox="0 -28 600 358" role="img" aria-label="Senate composition after the midterms (100 seats), NBC News tally as of 9:29 AM ET, Nov. 5: 54 Democrats including 2 independents, 44 Republicans, 2 uncalled (Alaska and Mississippi). Democrats flipped 7 Republican-held seats.">
+  <g fill="#6d5640"><title>Independents 2 (caucus with Democrats; not up)</title>
     <circle cx="197.4" cy="315.0" r="14.6"/>
     <circle cx="160.9" cy="315.0" r="14.6"/>
   </g>
-  <g fill="#2a4d69"><title>Democrats, seat not up 32</title>
+  <g fill="#5e3d50"><title>Democrats, seat not up 32</title>
     <circle cx="124.4" cy="315.0" r="14.6"/>
     <circle cx="88.0" cy="315.0" r="14.6"/>
     <circle cx="51.5" cy="315.0" r="14.6"/>
@@ -698,7 +721,7 @@
     <circle cx="153.9" cy="113.9" r="14.6"/>
     <circle cx="157.5" cy="68.2" r="14.6"/>
   </g>
-  <g fill="#e6edf3" stroke="#2a4d69" stroke-width="5.5"><title>Democratic holds 13 (on the ballot)</title>
+  <g fill="#efe3c8" stroke="#5e3d50" stroke-width="5.5"><title>Democratic holds 13 (on the ballot)</title>
     <circle cx="187.2" cy="93.6" r="11.8"/>
     <circle cx="205.5" cy="125.2" r="11.8"/>
     <circle cx="223.8" cy="156.8" r="11.8"/>
@@ -713,7 +736,7 @@
     <circle cx="280.2" cy="177.3" r="11.8"/>
     <circle cx="262.8" cy="32.4" r="11.8"/>
   </g>
-  <g fill="#2a4d69" stroke="#c0392b" stroke-width="5.5"><title>Democratic flips 7: NC, SC, TX, OH, KS, IA, ME</title>
+  <g fill="#5e3d50" stroke="#b7282e" stroke-width="5.5"><title>Democratic flips 7: NC, SC, TX, OH, KS, IA, ME</title>
     <circle cx="280.4" cy="103.9" r="11.8"/>
     <circle cx="300.0" cy="212.4" r="11.8"/>
     <circle cx="300.0" cy="139.4" r="11.8"/>
@@ -722,11 +745,11 @@
     <circle cx="319.6" cy="103.9" r="11.8"/>
     <circle cx="337.2" cy="32.4" r="11.8"/>
   </g>
-  <g fill="#e6edf3" stroke="#555" stroke-width="5.5"><title>Uncalled 2: Alaska, Mississippi (Republican-held)</title>
+  <g fill="#efe3c8" stroke="#6d5640" stroke-width="5.5"><title>Uncalled 2: Alaska, Mississippi (Republican-held)</title>
     <circle cx="319.8" cy="177.3" r="11.8"/>
     <circle cx="338.9" cy="69.5" r="11.8"/>
   </g>
-  <g fill="#e6edf3" stroke="#c0392b" stroke-width="5.5"><title>Republican holds 13 (on the ballot)</title>
+  <g fill="#efe3c8" stroke="#b7282e" stroke-width="5.5"><title>Republican holds 13 (on the ballot)</title>
     <circle cx="339.1" cy="143.8" r="11.8"/>
     <circle cx="373.8" cy="39.7" r="11.8"/>
     <circle cx="358.0" cy="111.1" r="11.8"/>
@@ -741,7 +764,7 @@
     <circle cx="446.1" cy="113.9" r="11.8"/>
     <circle cx="427.8" cy="145.8" r="11.8"/>
   </g>
-  <g fill="#c0392b"><title>Republicans, seat not up 31</title>
+  <g fill="#b7282e"><title>Republicans, seat not up 31</title>
     <circle cx="473.5" cy="88.9" r="14.6"/>
     <circle cx="409.5" cy="177.7" r="14.6"/>
     <circle cx="391.1" cy="209.9" r="14.6"/>
@@ -774,9 +797,9 @@
     <circle cx="548.5" cy="315.0" r="14.6"/>
     <circle cx="585.0" cy="315.0" r="14.6"/>
   </g>
-  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#222" stroke-width="1.5" stroke-dasharray="4 3"/>
-  <text x="300" y="10" text-anchor="middle" font-size="17" fill="#222">Majority: 51</text>
-</svg></div>
+  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#3a2e2a" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text class="t" x="300" y="-4" text-anchor="middle" font-size="28">Majority: 51</text>
+</svg>
 <ul class="legend">
 <li><span class="sw sw-d"></span>Democrats, not up 32</li>
 <li><span class="sw sw-i"></span>Independents 2 (caucus with Dems)</li>
@@ -841,15 +864,15 @@
 <h3 id="s7-1">7.1 Who spoke for the parties on election night?</h3>
 <p>Scroll back through the night&#39;s coverage and a pattern appears. Donald Trump wrote that he &ldquo;wasn&#39;t on the Ballot,&rdquo; and a senior Republican strategist blamed him for the result. On the Democratic side, Hakeem Jeffries, Chuck Schumer, Nancy Pelosi, and Barack Obama each weighed in on the result, yet none of them is &ldquo;the leader of the Democratic Party.&rdquo; A reader used to Japanese or British politics keeps looking for one: the party president (the LDP&#39;s <i>s&#333;sai</i>) or party leader who becomes prime minister when the party wins.<sup id="fnref-7-19"><a href="#ref-7">[7]</a></sup></p>
 <p>The short answer is that American parties do have officials, but no single office that combines what a parliamentary leader holds at once: head of the party organization, chooser of candidates, head of the legislative caucus, and head of government. The closest candidates are these.</p>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>Position</th><th>Who (as of this report)</th><th>What they actually control</th></tr></thead>
 <tbody>
-<tr><th scope="row">President (when in office)</th><td>Donald Trump (Republican). The Democrats have no equivalent.</td><td>Nothing by party rule. The president is leader only by custom: the governing party looks to the White House for direction, and voters judge the party by the president.</td></tr>
-<tr><th scope="row">National committee chair</th><td>Ken Martin (DNC, elected Feb. 1, 2025). Joe Gruters (RNC, elected Aug. 22, 2025, after Michael Whatley left to run for the Senate in North Carolina; see 5.1).</td><td>Fundraising, the national convention, and party rules and messaging. The DNC has no direct authority over elected officials.</td></tr>
-<tr><th scope="row">Congressional leaders</th><td>John Thune (Senate Republicans), Chuck Schumer (Senate Democrats), Hakeem Jeffries (House Democrats).</td><td>Their own chamber&#39;s caucus: floor schedule and tactics. They do not speak for the whole party and do not choose its presidential nominee.</td></tr>
-<tr><th scope="row">State parties and governors</th><td>50 state party organizations; state committee chairs sit on the national committee.</td><td>Their own organizations, under state law, including the state&#39;s primary or caucus rules.</td></tr>
+<tr><th scope="row">President (when in office)</th><td data-label="Who (as of this report)">Donald Trump (Republican). The Democrats have no equivalent.</td><td data-label="What they actually control">Nothing by party rule. The president is leader only by custom: the governing party looks to the White House for direction, and voters judge the party by the president.</td></tr>
+<tr><th scope="row">National committee chair</th><td data-label="Who (as of this report)">Ken Martin (DNC, elected Feb. 1, 2025). Joe Gruters (RNC, elected Aug. 22, 2025, after Michael Whatley left to run for the Senate in North Carolina; see 5.1).</td><td data-label="What they actually control">Fundraising, the national convention, and party rules and messaging. The DNC has no direct authority over elected officials.</td></tr>
+<tr><th scope="row">Congressional leaders</th><td data-label="Who (as of this report)">John Thune (Senate Republicans), Chuck Schumer (Senate Democrats), Hakeem Jeffries (House Democrats).</td><td data-label="What they actually control">Their own chamber&#39;s caucus: floor schedule and tactics. They do not speak for the whole party and do not choose its presidential nominee.</td></tr>
+<tr><th scope="row">State parties and governors</th><td data-label="Who (as of this report)">50 state party organizations; state committee chairs sit on the national committee.</td><td data-label="What they actually control">Their own organizations, under state law, including the state&#39;s primary or caucus rules.</td></tr>
 </tbody>
-</table></div>
+</table>
 <h3 id="s7-2">7.2 Four structural reasons</h3>
 <ol>
 <li><strong>Separation of powers.</strong> A parliamentary leader&#39;s power rests on making or breaking the government. In the United States, the president is elected separately from Congress, cannot be brought down by a vote of no confidence (removal requires impeachment), and cannot dissolve it. The Constitution does not mention parties at all. A member of Congress owes the seat to local voters, so no one in Washington can enforce a party line the way a prime minister can.</li>
@@ -863,7 +886,7 @@
 <p>So the missing party leader is less a gap than a design choice. The system hands out pieces of leadership to different people and lets a presidency and a primary fill in the rest. For anyone following Washington from Tokyo, the better question is not &ldquo;Who leads the party?&rdquo; but &ldquo;Who controls this particular lever?&rdquo;</p>
 </section>
 <div class="refs">
-<h2 id="s8">8. Sources and Editorial Notes</h2>
+<h2>Sources and Editorial Notes</h2>
 <p>This report synthesizes coverage from major U.S. news organizations as of Nov. 5, 2026, 7:45 AM JST (5:45 PM EST, Nov. 4). It draws on NBC News&#39;s Senate and House results pages (both updated 9:29 AM EST on Nov. 5; the Senate seat count is unchanged from the 5:45 PM EST update on Nov. 4), CNBC&#39;s Election Desk (page updated 5:23 PM EST), and CBS News&#39;s live updates (earlier, at 7:13 AM EST; its later posts gave no new seat totals); because the pages were retrieved at different times, figures may not be mutually consistent. CNN&#39;s pages could not be fetched directly, so CNN&#39;s position is taken from its published headline and summaries as returned by search. Vote shares are partial tallies, and the NBC Senate table does not label every candidate&#39;s party, so labels here follow the battleground cards and the other outlets. The background in the Coffee Break column comes from encyclopedia entries and is a general account, not a legal analysis. Final seat counts and certified winners should be tracked via official state election authorities and ongoing live decision desk updates.</p>
 <p class="refs-note">Click ^ beside each item to return to the passage that cites it. Where a source is cited in several places, the letters a, b, c after ^ link to each citation in turn.</p>
 <ol>

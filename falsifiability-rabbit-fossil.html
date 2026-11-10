@@ -6,124 +6,150 @@
 <title>反証可能性と「ウサギの化石」――古い地層からの発見は何を意味するか</title>
 <style>
   :root{
-    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
-    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
-    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.95;font-size:17px}
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
   .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
-  ruby rt{font-size:.55em;color:var(--muted)}
-  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
-  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
-  .hero p{margin:0 auto;max-width:560px}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(30px,6vw,46px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:600px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0}
   nav.toc b{display:block;margin-bottom:4px}
   nav.toc ol{margin:0;padding-left:1.4em}
   nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  nav.toc a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:.2em}
   @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:44px 0}
-  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
-  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:10px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  section{margin:48px 0}
+  h2{font-size:clamp(24px,4.8vw,30px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:22px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
   figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
   .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
   .checklist .cl-title::before{content:"✅ "}
   .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
   .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
   .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
   .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--orange)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
-  .card .e{font-size:38px;display:block}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
   .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
   .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
   .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
   thead th{color:#fff}
   thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#efe3c8;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
-  .scroll{overflow-x:auto}
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--green)}
-  .quiz .ans{color:var(--green);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:16px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
   .hero .subtitle{color:var(--ink)}
   .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
   .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
   .box ul{margin:6px 0 0;padding-left:1.4em}
   .box strong{color:var(--ink)}
   .lede>:first-child,.box>:first-child{margin-top:0}
   .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:14px;color:var(--muted)}
+  .endnote{font-size:16px;color:var(--muted)}
   /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
   dl.summary{margin:14px 0}
   dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
   dl.summary dt{white-space:nowrap}
   dl.summary dt::after{content:"："}
   dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em;line-height:0}
-  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
-  sup a:hover{text-decoration:underline}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold}
   .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
   .refs ol{padding-left:1.8em}
   .refs .refs-note{color:var(--muted)}
-  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs li>a:first-child{font-weight:bold}
   .refs sup a{font-style:italic}
   .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
   /* SVG common */
   .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
   .white{fill:#fff}
-  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
-  pre{overflow-x:auto;background:#faf3e2;padding:11.2px 16px;border-radius:3px;margin:0 0 20px}
-  pre code{background:none;padding:0}
-  pre.term{background:#000;color:#fff}
+  /* この文書に固有の部品(和色に合わせたもの) */
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#efe3c8;padding:12px 16px;border-radius:12px;margin:0 0 20px;font-size:16px;line-height:1.6}
+  pre code{background:none;padding:0;font-size:inherit}
+  pre.term{background:var(--ink);color:#fff}
   pre.term code{color:#fff}
-  code.term{background:#000;color:#fff}
-  .meta.band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin:0 0 40px;line-height:1.9}
-  .scroll>svg{display:block;height:auto}
+  code.term{background:var(--ink);color:#fff}
+  figure svg.vert{max-width:360px;margin:0 auto}
 </style>
 </head>
 <body>
@@ -213,20 +239,24 @@
 <p>たとえば「明日は雨が降るか、降らないかのどちらかだ」という主張は、何が起きても正しい。したがって、確かめる方法がない。一方、「このボールを離すと下に落ちる」は、上に浮かべば誤りだとわかる。後者のように、<strong>外れる可能性をもつ主張</strong>が、検証を重ねて信頼を積み上げられる。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:665px" width="100%" viewBox="0 0 720 230" role="img" aria-label="反証できる主張とできない主張の比較">
-  <rect x="10" y="10" width="340" height="210" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-  <text x="180" y="40" text-anchor="middle" font-size="16" font-weight="700">反証できる主張</text>
-  <text x="180" y="75" text-anchor="middle" font-size="13">「ウサギの化石は新生代以降にしか出ない」</text>
-  <text x="180" y="110" text-anchor="middle" font-size="13">→ 古い地層から出れば誤りとわかる</text>
-  <text x="180" y="145" text-anchor="middle" font-size="13">→ 調べるたびに、外れる機会にさらされる</text>
-  <text x="180" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="#2a4d69">科学的な主張</text>
-  <rect x="370" y="10" width="340" height="210" rx="10" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
-  <text x="540" y="40" text-anchor="middle" font-size="16" font-weight="700">反証できない主張</text>
-  <text x="540" y="75" text-anchor="middle" font-size="13">「明日は雨か、雨でないかのどちらかだ」</text>
-  <text x="540" y="110" text-anchor="middle" font-size="13">→ どんな結果でも正しいことになる</text>
-  <text x="540" y="145" text-anchor="middle" font-size="13">→ 調べても、何も確かめられない</text>
-  <text x="540" y="190" text-anchor="middle" font-size="13" font-weight="700" fill="#c0392b">確かめようがない主張</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 498" role="img" aria-label="反証できる主張とできない主張の比較">
+<defs><marker id="a0" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="8" y="8" width="424" height="248" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="50" font-size="24" text-anchor="middle">反証できる主張</text>
+<text class="t" x="24" y="88" font-size="22" text-anchor="start">「ウサギの化石は新生代以降</text>
+<text class="t" x="24" y="118" font-size="22" text-anchor="start">にしか出ない」</text>
+<text class="t" x="24" y="148" font-size="22" text-anchor="start">→ 古い地層から出れば誤りとわかる</text>
+<text class="t" x="24" y="178" font-size="22" text-anchor="start">→ 調べるたびに、外れる機会に</text>
+<text class="t" x="24" y="208" font-size="22" text-anchor="start">　さらされる</text>
+<text class="t tb" x="220" y="238" font-size="22" text-anchor="middle" style="fill:#5e3d50">科学的な主張</text>
+<rect x="8" y="272" width="424" height="218" rx="10" fill="#f3d5cc" stroke="#b7282e" stroke-width="3"/>
+<text class="t tb" x="220" y="314" font-size="24" text-anchor="middle">反証できない主張</text>
+<text class="t" x="24" y="352" font-size="22" text-anchor="start">「明日は雨か、雨でない</text>
+<text class="t" x="24" y="382" font-size="22" text-anchor="start">かのどちらかだ」</text>
+<text class="t" x="24" y="412" font-size="22" text-anchor="start">→ どんな結果でも正しいことになる</text>
+<text class="t" x="24" y="442" font-size="22" text-anchor="start">→ 調べても、何も確かめられない</text>
+<text class="t tb" x="220" y="472" font-size="22" text-anchor="middle" style="fill:#b7282e">確かめようがない主張</text>
+</svg>
 <figcaption>「外れる可能性がある」ことは、理論の弱点ではなく、検証できるという条件である。</figcaption>
 </figure>
 
@@ -234,20 +264,26 @@
 <p>進化生物学者の J ・ B ・ S ・ホールデンが、進化論を誤りとするなら何が見つかればよいかと問われ、「先カンブリア時代の化石ウサギ」と答えたという逸話が広く引かれる。ただし、この言葉を記した一次資料は確認できていない。言い回しも伝わるうちに変わっている。ここでは、進化論が「どうなれば誤りか」を明確に指定できる理論であることの例として扱う。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup></p>
 
 <figure>
-<div class="scroll"><svg style="min-width:665px" width="100%" viewBox="0 0 720 220" role="img" aria-label="反証可能性の図">
-  <rect x="10" y="60" width="190" height="100" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-  <text x="105" y="95" text-anchor="middle" font-size="16" font-weight="700">理論（予測）</text>
-  <text x="105" y="120" text-anchor="middle" font-size="13">ウサギの出現は</text>
-  <text x="105" y="140" text-anchor="middle" font-size="13">新生代以降のはず</text>
-  <line x1="205" y1="110" x2="300" y2="60" stroke="#888" stroke-width="2" marker-end="url(#a1)"/>
-  <line x1="205" y1="110" x2="300" y2="165" stroke="#888" stroke-width="2" marker-end="url(#a1)"/>
-  <rect x="305" y="25" width="400" height="60" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-  <text x="505" y="52" text-anchor="middle" font-size="14" font-weight="700">調べた結果：古い地層にウサギはいない</text>
-  <text x="505" y="72" text-anchor="middle" font-size="13">→ 予測は支持された（反証は得られていない）</text>
-  <rect x="305" y="135" width="400" height="60" rx="10" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
-  <text x="505" y="162" text-anchor="middle" font-size="14" font-weight="700">調べた結果：先カンブリア時代にウサギの化石</text>
-  <text x="505" y="182" text-anchor="middle" font-size="13">→ 理論は大きな修正を迫られる（反証）</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 510" role="img" aria-label="反証可能性の図">
+<defs><marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="8" y="8" width="424" height="128" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="46" font-size="24" text-anchor="middle">理論（予測）</text>
+<text class="t" x="220" y="82" font-size="22" text-anchor="middle">ウサギの出現は</text>
+<text class="t" x="220" y="112" font-size="22" text-anchor="middle">新生代以降のはず</text>
+<rect x="52" y="176" width="380" height="148" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="66" y="210" font-size="22" text-anchor="start">調べた結果：</text>
+<text class="t tb" x="66" y="240" font-size="22" text-anchor="start">古い地層にウサギはいない</text>
+<text class="t" x="66" y="276" font-size="22" text-anchor="start">→ 予測は支持された</text>
+<text class="t" x="66" y="306" font-size="22" text-anchor="start">（反証は得られていない）</text>
+<rect x="52" y="352" width="380" height="148" rx="10" fill="#f3d5cc" stroke="#b7282e" stroke-width="3"/>
+<text class="t tb" x="66" y="386" font-size="22" text-anchor="start">調べた結果：</text>
+<text class="t tb" x="66" y="416" font-size="22" text-anchor="start">先カンブリア時代にウサギの化石</text>
+<text class="t" x="66" y="452" font-size="22" text-anchor="start">→ 理論は大きな修正を迫られる</text>
+<text class="t" x="66" y="482" font-size="22" text-anchor="start">（反証）</text>
+<line x1="28" y1="136" x2="28" y2="426.0" stroke="#6d5640" stroke-width="3"/>
+<line x1="28" y1="250.0" x2="48" y2="250.0" stroke="#6d5640" stroke-width="3" marker-end="url(#a1)"/>
+<line x1="28" y1="426.0" x2="48" y2="426.0" stroke="#6d5640" stroke-width="3" marker-end="url(#a1)"/>
+</svg>
 <figcaption>理論は、当たるか外れるかを確かめられる形をしている。これまでのところ、外れた例は報告されていない。</figcaption>
 </figure>
 
@@ -263,42 +299,41 @@
 <p>地層は、川や海で運ばれた泥や砂が下から順に積もってできる。ふつうは<strong>下の層ほど古く、上の層ほど新しい</strong>。これを地層累重の法則という。化石はその層に閉じ込められているため、どの化石がどの深さから出るかを調べると、生物の登場順がわかる。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:720px" width="100%" viewBox="0 0 720 380" role="img" aria-label="地層ができる様子">
-  <g font-size="13">
-    <text x="20" y="22" font-weight="700">① 昔：海底に泥や砂が積もる</text>
-    <rect x="20" y="30" width="200" height="90" fill="#9ec5e0"/>
-    <rect x="20" y="95" width="200" height="25" fill="#7d6b4b"/>
-    <ellipse cx="80" cy="93" rx="14" ry="5" fill="#fff" stroke="#555"/>
-    <text x="20" y="140" font-size="12" fill="#555">生き物が死んで底に沈む</text>
-    <text x="250" y="22" font-weight="700">② 上にどんどん積もる</text>
-    <rect x="250" y="30" width="200" height="90" fill="#9ec5e0"/>
-    <rect x="250" y="55" width="200" height="25" fill="#b39c72"/>
-    <rect x="250" y="80" width="200" height="40" fill="#7d6b4b"/>
-    <ellipse cx="310" cy="105" rx="14" ry="5" fill="#fff" stroke="#555"/>
-    <text x="250" y="140" font-size="12" fill="#555">骨は新しい堆積物の下に埋もれる</text>
-    <text x="480" y="22" font-weight="700">③ 固まって地層・化石に</text>
-    <rect x="480" y="30" width="200" height="30" fill="#d9c9a3"/>
-    <rect x="480" y="60" width="200" height="30" fill="#b39c72"/>
-    <rect x="480" y="90" width="200" height="30" fill="#7d6b4b"/>
-    <ellipse cx="540" cy="105" rx="14" ry="5" fill="#fff" stroke="#555"/>
-    <text x="480" y="140" font-size="12" fill="#555">長い時間をかけて岩になる</text>
-  </g>
-  <g>
-    <text x="20" y="190" font-size="14" font-weight="700">④ 現在：隆起して陸になり、削られて断面が現れる</text>
-    <rect x="40" y="205" width="360" height="55" fill="#d9c9a3"/>
-    <rect x="40" y="260" width="360" height="55" fill="#b39c72"/>
-    <rect x="40" y="315" width="360" height="55" fill="#7d6b4b"/>
-    <rect x="40" y="205" width="360" height="165" fill="none" stroke="#222" stroke-width="1.5"/>
-    <text x="60" y="238" font-size="13">上：新しい層（新しい生物の化石）</text>
-    <text x="60" y="293" font-size="13">中</text>
-    <text x="60" y="348" font-size="13" fill="#fff">下：古い層（古い生物の化石）</text>
-    <line x1="440" y1="360" x2="440" y2="215" stroke="#888" stroke-width="2" marker-end="url(#a1)"/>
-    <text x="455" y="225" font-size="12">新しい</text>
-    <text x="455" y="360" font-size="12">古い</text>
-    <text x="520" y="260" font-size="13">地層は積み重なった順に</text>
-    <text x="520" y="282" font-size="13">過去を記録している</text>
-  </g>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 874" role="img" aria-label="地層ができる様子">
+<defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<text class="t tb" x="20" y="26" font-size="22" text-anchor="start">① 昔：海底に泥や砂が積もる</text>
+<rect x="100" y="40" width="240" height="84" fill="#e8dae0"/>
+<rect x="100" y="100" width="240" height="24" fill="#917347"/>
+<ellipse cx="160" cy="96" rx="16" ry="6" fill="#fff" stroke="#6d5640" stroke-width="2"/>
+<text class="t" x="220" y="150" font-size="22" text-anchor="middle">生き物が死んで底に沈む</text>
+<text class="t tb" x="20" y="206" font-size="22" text-anchor="start">② 上にどんどん積もる</text>
+<rect x="100" y="220" width="240" height="84" fill="#e8dae0"/>
+<rect x="100" y="244" width="240" height="30" fill="#c4a972"/>
+<rect x="100" y="274" width="240" height="30" fill="#917347"/>
+<ellipse cx="160" cy="298" rx="16" ry="6" fill="#fff" stroke="#6d5640" stroke-width="2"/>
+<text class="t" x="220" y="330" font-size="22" text-anchor="middle">骨は新しい堆積物の下に埋もれる</text>
+<text class="t tb" x="20" y="386" font-size="22" text-anchor="start">③ 固まって地層・化石に</text>
+<rect x="100" y="400" width="240" height="84" fill="#e8dae0"/>
+<rect x="100" y="400" width="240" height="28" fill="#e0c38c"/>
+<rect x="100" y="428" width="240" height="28" fill="#c4a972"/>
+<rect x="100" y="456" width="240" height="28" fill="#917347"/>
+<ellipse cx="160" cy="470" rx="16" ry="6" fill="#fff" stroke="#6d5640" stroke-width="2"/>
+<text class="t" x="220" y="510" font-size="22" text-anchor="middle">長い時間をかけて岩になる</text>
+<text class="t tb" x="20" y="566" font-size="22" text-anchor="start">④ 現在：隆起して陸になり、</text>
+<text class="t tb" x="20" y="596" font-size="22" text-anchor="start">　　削られて断面が現れる</text>
+<rect x="20" y="612" width="340" height="52" fill="#e0c38c"/>
+<text class="t" x="30" y="646" font-size="20" text-anchor="start" style="fill:#3a2e2a">上：新しい層（新しい生物の化石）</text>
+<rect x="20" y="664" width="340" height="52" fill="#c4a972"/>
+<text class="t" x="30" y="698" font-size="22" text-anchor="start" style="fill:#3a2e2a">中</text>
+<rect x="20" y="716" width="340" height="52" fill="#917347"/>
+<text class="t" x="30" y="750" font-size="20" text-anchor="start" style="fill:#fff">下：古い層（古い生物の化石）</text>
+<rect x="20" y="612" width="340" height="156" fill="none" stroke="#3a2e2a" stroke-width="2"/>
+<line x1="396" y1="762" x2="396" y2="648" stroke="#6d5640" stroke-width="3" marker-end="url(#a2)"/>
+<text class="t" x="396" y="634" font-size="20" text-anchor="middle">新しい</text>
+<text class="t" x="396" y="788" font-size="20" text-anchor="middle">古い</text>
+<text class="t" x="220" y="826" font-size="22" text-anchor="middle">地層は積み重なった順に</text>
+<text class="t" x="220" y="856" font-size="22" text-anchor="middle">過去を記録している</text>
+</svg>
 <figcaption>地層は積もった順に並ぶ。生物の遺骸が堆積物に覆われると、化石として保存されることがある。</figcaption>
 </figure>
 
@@ -306,16 +341,17 @@
 <p>生き物が死んでも、ほとんどは他の動物に食べられるか、腐って消える。化石になるのは、死後すぐに土砂に埋もれるなどの限られた場合だけである。そのため、化石の記録には大きな欠けがある。それでも、世界各地で多数の化石が調べられてきた結果、はっきりした登場順のパターンが見えている。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:720px" width="100%" viewBox="0 0 720 200" role="img" aria-label="化石になる量の漏斗図">
-  <polygon points="40,30 680,30 560,100 200,100" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-  <text x="360" y="62" text-anchor="middle" font-size="14" font-weight="700">かつて生きていた生物</text>
-  <text x="360" y="84" text-anchor="middle" font-size="12">（膨大な数）</text>
-  <polygon points="200,100 560,100 460,150 300,150" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
-  <text x="380" y="130" text-anchor="middle" font-size="13">埋もれて化石になる</text>
-  <polygon points="300,150 460,150 420,190 340,190" fill="#fff" stroke="#222" stroke-width="2"/>
-  <text x="380" y="176" text-anchor="middle" font-size="12">発見・採集される</text>
-  <text x="60" y="140" font-size="12" fill="#555">ごく一部だけが残る →</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 312" role="img" aria-label="化石になる量の漏斗図">
+<defs><marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<polygon points="20,10 420,10 380,100 60,100" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="50" font-size="22" text-anchor="middle">かつて生きていた生物</text>
+<text class="t" x="220" y="82" font-size="22" text-anchor="middle">（膨大な数）</text>
+<polygon points="60,100 380,100 350,180 90,180" fill="#f3d5cc" stroke="#b7282e" stroke-width="3"/>
+<text class="t" x="220" y="148" font-size="22" text-anchor="middle">埋もれて化石になる</text>
+<polygon points="90,180 350,180 320,260 120,260" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="220" y="228" font-size="22" text-anchor="middle">発見・採集される</text>
+<text class="t" x="220" y="298" font-size="22" text-anchor="middle" style="fill:#6d5640">ごく一部だけが残る ↓</text>
+</svg>
 <figcaption>化石はごく一部の偶然の産物である。見つからないことだけで「いなかった」とは言えない。一方で、多数の地点を通して一貫したパターンが見られれば、それは重要な情報になる。</figcaption>
 </figure>
 </section>
@@ -332,31 +368,35 @@
 <p>岩石に含まれる放射性元素は、一定のペースで別の元素に変わる。元の量が半分になるまでの時間を半減期といい、元素ごとに決まっている。残っている量と変化後の量の比から、岩石ができてからの時間がわかる。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 280" role="img" aria-label="放射性元素の半減期の図">
-  <line x1="70" y1="30" x2="70" y2="230" stroke="#222" stroke-width="1.5"/>
-  <line x1="70" y1="230" x2="400" y2="230" stroke="#222" stroke-width="1.5"/>
-  <text x="62" y="36" text-anchor="end" font-size="11">100%</text>
-  <text x="62" y="136" text-anchor="end" font-size="11">50%</text>
-  <text x="62" y="186" text-anchor="end" font-size="11">25%</text>
-  <text x="62" y="234" text-anchor="end" font-size="11">0</text>
-  <path d="M70,30 C110,80 140,110 170,130 C210,155 240,170 270,180 C320,195 360,205 390,210" stroke="#c0392b" stroke-width="3" fill="none"/>
-  <line x1="70" y1="130" x2="170" y2="130" stroke="#888" stroke-dasharray="4 4"/>
-  <line x1="170" y1="130" x2="170" y2="230" stroke="#888" stroke-dasharray="4 4"/>
-  <line x1="70" y1="180" x2="270" y2="180" stroke="#888" stroke-dasharray="4 4"/>
-  <line x1="270" y1="180" x2="270" y2="230" stroke="#888" stroke-dasharray="4 4"/>
-  <text x="70" y="250" text-anchor="middle" font-size="11">0</text>
-  <text x="170" y="250" text-anchor="middle" font-size="11">一半減期</text>
-  <text x="270" y="250" text-anchor="middle" font-size="11">二半減期</text>
-  <text x="235" y="272" text-anchor="middle" font-size="12">経過時間 →</text>
-  <text x="440" y="60" font-size="13" font-weight="700">原理</text>
-  <text x="440" y="84" font-size="13">元の元素は一定の割合で減っていく</text>
-  <text x="440" y="106" font-size="13">→ 残量を測れば経過時間がわかる</text>
-  <text x="440" y="140" font-size="13" font-weight="700">例</text>
-  <text x="440" y="164" font-size="13">炭素 14 ：半減期 約 5730 年</text>
-  <text x="440" y="184" font-size="12" fill="#555">（数万年前までの生物遺骸に使う）</text>
-  <text x="440" y="212" font-size="13">ウラン 238 ：半減期 約 45 億年</text>
-  <text x="440" y="232" font-size="12" fill="#555">（数億〜数十億年前の岩石に使う）</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 612" role="img" aria-label="放射性元素の半減期の図">
+<defs><marker id="a4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<line x1="70" y1="20" x2="70" y2="220" stroke="#3a2e2a" stroke-width="2"/>
+<line x1="70" y1="220" x2="360" y2="220" stroke="#3a2e2a" stroke-width="2"/>
+<text class="t" x="62" y="26" font-size="20" text-anchor="end">100%</text>
+<text class="t" x="62" y="126" font-size="20" text-anchor="end">50%</text>
+<text class="t" x="62" y="176" font-size="20" text-anchor="end">25%</text>
+<text class="t" x="62" y="224" font-size="20" text-anchor="end">0</text>
+<g transform="translate(70 -10) scale(0.9 1) translate(-70 0)">
+<path d="M70,30 C110,80 140,110 170,130 C210,155 240,170 270,180 C320,195 360,205 390,210" stroke="#b7282e" stroke-width="4" fill="none"/>
+<line x1="70" y1="130" x2="170" y2="130" stroke="#6d5640" stroke-width="2" stroke-dasharray="5 5"/>
+<line x1="170" y1="130" x2="170" y2="230" stroke="#6d5640" stroke-width="2" stroke-dasharray="5 5"/>
+<line x1="70" y1="180" x2="270" y2="180" stroke="#6d5640" stroke-width="2" stroke-dasharray="5 5"/>
+<line x1="270" y1="180" x2="270" y2="230" stroke="#6d5640" stroke-width="2" stroke-dasharray="5 5"/>
+</g>
+<text class="t" x="70" y="246" font-size="20" text-anchor="middle">0</text>
+<text class="t" x="160" y="246" font-size="20" text-anchor="middle">一半減期</text>
+<text class="t" x="250" y="246" font-size="20" text-anchor="middle">二半減期</text>
+<text class="t" x="215" y="278" font-size="20" text-anchor="middle" style="fill:#6d5640">経過時間 →</text>
+<rect x="8" y="304" width="424" height="296" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="24" y="342" font-size="24" text-anchor="start">原理</text>
+<text class="t" x="24" y="376" font-size="22" text-anchor="start">元の元素は一定の割合で減っていく</text>
+<text class="t" x="24" y="406" font-size="22" text-anchor="start">→ 残量を測れば経過時間がわかる</text>
+<text class="t tb" x="24" y="450" font-size="24" text-anchor="start">例</text>
+<text class="t" x="24" y="484" font-size="22" text-anchor="start">炭素 14 ：半減期 約 5730 年</text>
+<text class="t" x="24" y="510" font-size="20" text-anchor="start" style="fill:#6d5640">（数万年前までの生物遺骸に使う）</text>
+<text class="t" x="24" y="548" font-size="22" text-anchor="start">ウラン 238 ：半減期 約 45 億年</text>
+<text class="t" x="24" y="574" font-size="20" text-anchor="start" style="fill:#6d5640">（数億〜数十億年前の岩石に使う）</text>
+</svg>
 <figcaption>放射性元素は、決まったペースで減る「自然の時計」である。炭素 14 の半減期は約 5730 年、ウラン 238 の半減期は約 44 億 7000 万年とされる。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></figcaption>
 </figure>
 
@@ -364,23 +404,24 @@
 <p>古い化石そのものを直接測ることは難しい場合が多い。そのため実際には、化石をはさむ<strong>火山灰の層</strong>などを測り、年代の範囲を絞り込む。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:720px" width="100%" viewBox="0 0 720 250" role="img" aria-label="火山灰層で化石の年代をはさむ図">
-  <rect x="60" y="20" width="320" height="50" fill="#d9c9a3"/>
-  <rect x="60" y="70" width="320" height="22" fill="#888"/>
-  <rect x="60" y="92" width="320" height="50" fill="#b39c72"/>
-  <rect x="60" y="142" width="320" height="22" fill="#888"/>
-  <rect x="60" y="164" width="320" height="50" fill="#7d6b4b"/>
-  <rect x="60" y="20" width="320" height="194" fill="none" stroke="#222" stroke-width="1.5"/>
-  <ellipse cx="150" cy="117" rx="26" ry="9" fill="#fff" stroke="#c0392b" stroke-width="2.5"/>
-  <text x="220" y="121" font-size="13">★ 化石</text>
-  <text x="100" y="86" font-size="12" fill="#fff">火山灰（上）</text>
-  <text x="100" y="158" font-size="12" fill="#fff">火山灰（下）</text>
-  <text x="410" y="50" font-size="13" font-weight="700">上の火山灰： 5000 万年前</text>
-  <text x="410" y="82" font-size="13">下の火山灰： 5400 万年前</text>
-  <text x="410" y="134" font-size="13" font-weight="700" fill="#c0392b">→ 化石は 5000 万〜 5400 万年前の</text>
-  <text x="410" y="156" font-size="13" fill="#c0392b">　あいだに生きていた</text>
-  <text x="410" y="200" font-size="12" fill="#555">※数値は説明のための仮の例である。</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 424" role="img" aria-label="火山灰層で化石の年代をはさむ図">
+<defs><marker id="a5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="20" y="10" width="400" height="50" fill="#e0c38c"/>
+<rect x="20" y="60" width="400" height="34" fill="#6d5640"/>
+<rect x="20" y="94" width="400" height="50" fill="#c4a972"/>
+<rect x="20" y="144" width="400" height="34" fill="#6d5640"/>
+<rect x="20" y="178" width="400" height="50" fill="#917347"/>
+<rect x="20" y="10" width="400" height="218" fill="none" stroke="#3a2e2a" stroke-width="2"/>
+<text class="t" x="34" y="84" font-size="22" text-anchor="start" style="fill:#fff">火山灰（上）</text>
+<text class="t" x="34" y="168" font-size="22" text-anchor="start" style="fill:#fff">火山灰（下）</text>
+<ellipse cx="110" cy="119" rx="28" ry="10" fill="#fff" stroke="#b7282e" stroke-width="3"/>
+<text class="t" x="160" y="127" font-size="22" text-anchor="start">★ 化石</text>
+<text class="t tb" x="20" y="266" font-size="22" text-anchor="start">上の火山灰： 5000 万年前</text>
+<text class="t" x="20" y="298" font-size="22" text-anchor="start">下の火山灰： 5400 万年前</text>
+<text class="t tb" x="20" y="340" font-size="22" text-anchor="start" style="fill:#b7282e">→ 化石は 5000 万〜 5400 万年前の</text>
+<text class="t tb" x="20" y="370" font-size="22" text-anchor="start" style="fill:#b7282e">　あいだに生きていた</text>
+<text class="t" x="20" y="410" font-size="20" text-anchor="start" style="fill:#6d5640">※数値は説明のための仮の例である。</text>
+</svg>
 <figcaption>火山灰は、噴火した時点の時計をもつ。化石をはさむ上下の火山灰の年代がわかれば、化石の年代の範囲が決まる。</figcaption>
 </figure>
 </section>
@@ -392,21 +433,28 @@
 <p>地球は約 46 億年前に生まれた。下の図は、その全歴史を一本の帯にしたものである。帯の長さは時間に比例している。先カンブリア時代が全体のおよそ 88% を占め、新生代は約 1.4% に過ぎない。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 200" role="img" aria-label="地球史の帯グラフ（時間に比例）">
-  <rect x="20" y="60" width="600" height="50" fill="#6b5b45"/>
-  <rect x="620" y="60" width="43" height="50" fill="#8a9a5b"/>
-  <rect x="663" y="60" width="27" height="50" fill="#d4a017"/>
-  <rect x="690" y="60" width="10" height="50" fill="#c0392b"/>
-  <text x="320" y="90" text-anchor="middle" font-size="14" fill="#fff">先カンブリア時代（約 46 億〜 5.4 億年前）</text>
-  <text x="641" y="30" text-anchor="middle" font-size="12">古生代</text>
-  <text x="676" y="30" text-anchor="middle" font-size="12">中生代</text>
-  <text x="695" y="130" text-anchor="end" font-size="12" fill="#c0392b">新生代 →</text>
-  <line x1="20" y1="115" x2="20" y2="135" stroke="#222"/>
-  <text x="20" y="152" font-size="12">46 億年前（地球誕生）</text>
-  <line x1="620" y1="115" x2="620" y2="135" stroke="#222"/>
-  <text x="620" y="152" font-size="12" text-anchor="end">5.4 億年前</text>
-  <text x="20" y="180" font-size="11" fill="#555">縦線の位置：古生代の始まり（ 5.4 億年前）。中生代・新生代の幅は数ピクセルに縮むため、拡大して見る。</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 444" role="img" aria-label="地球史の帯グラフ（時間に比例）">
+<defs><marker id="a6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="20.0" y="30" width="352.9" height="44" fill="#6d5640"/>
+<rect x="372.9" y="30" width="25.3" height="44" fill="#8c7f5e"/>
+<rect x="398.2" y="30" width="15.9" height="44" fill="#d19826"/>
+<rect x="414.1" y="30" width="5.9" height="44" fill="#b7282e"/>
+<text class="t tb" x="196" y="54" font-size="22" text-anchor="middle" style="fill:#fff">先カンブリア時代</text>
+<text class="t" x="196" y="100" font-size="20" text-anchor="middle" style="fill:#3a2e2a">（約 46 億〜 5.4 億年前）</text>
+<path d="M385.6 74 V143 H378" fill="none" stroke="#6d5640" stroke-width="2"/>
+<text class="t" x="368" y="150" font-size="22" text-anchor="end" style="fill:#6d5640">古生代</text>
+<path d="M406.2 74 V189 H378" fill="none" stroke="#6d5640" stroke-width="2"/>
+<text class="t" x="368" y="196" font-size="22" text-anchor="end" style="fill:#6d5640">中生代</text>
+<path d="M417.1 74 V235 H378" fill="none" stroke="#6d5640" stroke-width="2"/>
+<text class="t tb" x="368" y="242" font-size="22" text-anchor="end" style="fill:#b7282e">新生代 →</text>
+<line x1="20" y1="70" x2="20" y2="300" stroke="#6d5640" stroke-width="2" stroke-dasharray="4 4"/>
+<line x1="372.94117647058823" y1="110" x2="372.94117647058823" y2="300" stroke="#6d5640" stroke-width="2" stroke-dasharray="4 4"/>
+<text class="t" x="30" y="296" font-size="20" text-anchor="start">46 億年前（地球誕生）</text>
+<text class="t" x="364.94117647058823" y="330" font-size="20" text-anchor="end">5.4 億年前</text>
+<text class="t" x="20" y="378" font-size="20" text-anchor="start" style="fill:#6d5640">縦線の位置：古生代の始まり</text>
+<text class="t" x="20" y="404" font-size="20" text-anchor="start" style="fill:#6d5640">（ 5.4 億年前）。中生代・新生代の幅は</text>
+<text class="t" x="20" y="430" font-size="20" text-anchor="start" style="fill:#6d5640">数ピクセルに縮むため、拡大して見る。</text>
+</svg>
 <figcaption>地球史を 46 億年とすると、先カンブリア時代が約 88% 、古生代が約 6% 、中生代が約 4% 、新生代が約 1.4% である。ウサギ目の仲間が現れるのは、この最後の幅の中である。</figcaption>
 </figure>
 
@@ -414,31 +462,48 @@
 <p>数字が大きすぎて実感がわきにくいので、地球の歴史を<strong>一日（ 24 時間）</strong>に縮め、最後の三時間（ 21 時〜 24 時）を拡大してみよう。一時間は約 1 億 9000 万年に当たる。 0 時の地球誕生から 21 時ごろまでは、ほぼ微生物の時代である。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 300" role="img" aria-label="地球の一日の最後の三時間">
-  <!-- 21:00-24:00 を x 60〜680 に対応（180分、約3.44px/分） -->
-  <line x1="60" y1="150" x2="680" y2="150" stroke="#222" stroke-width="3"/>
-  <g font-size="11" fill="#555" text-anchor="middle">
-    <text x="60" y="175">21:00</text><text x="267" y="175">22:00</text><text x="473" y="175">23:00</text><text x="680" y="175">24:00</text>
-  </g>
-  <g stroke="#222">
-    <line x1="60" y1="145" x2="60" y2="155"/><line x1="267" y1="145" x2="267" y2="155"/>
-    <line x1="473" y1="145" x2="473" y2="155"/><line x1="680" y1="145" x2="680" y2="155"/>
-  </g>
-  <g font-size="12">
-    <circle cx="98" cy="150" r="6" fill="#2a4d69"/>
-    <path d="M98,144 V110" stroke="#888"/><text x="98" y="102" text-anchor="start">21:11 カンブリア爆発（ 5.4 億年前）</text>
-    <circle cx="280" cy="150" r="6" fill="#2a4d69"/>
-    <path d="M280,144 V70" stroke="#888"/><text x="280" y="62" text-anchor="middle">22:04 両生類（約 3.7 億年前）</text>
-    <circle cx="442" cy="150" r="6" fill="#2a4d69"/>
-    <path d="M442,156 V210" stroke="#888"/><text x="442" y="226" text-anchor="middle">22:51 哺乳類（約 2.2 億年前）</text>
-    <circle cx="608" cy="150" r="6" fill="#c0392b"/>
-    <path d="M608,144 V110" stroke="#888"/><text x="608" y="102" text-anchor="middle">23:39 恐竜絶滅（ 6600 万年前）</text>
-    <circle cx="621" cy="150" r="6" fill="#c0392b"/>
-    <path d="M621,156 V250" stroke="#c0392b" stroke-width="2"/><text x="621" y="268" text-anchor="middle" font-weight="700" fill="#c0392b">23:43 ウサギ目の仲間（約 5600 万年前）</text>
-    <circle cx="680" cy="150" r="6" fill="#2a4d69"/>
-    <path d="M680,156 V190" stroke="#888"/><text x="690" y="205" text-anchor="end">23:59:54 ヒト（約 30 万年前）</text>
-  </g>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 660" role="img" aria-label="地球の一日の最後の三時間">
+<defs><marker id="a7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<line x1="80" y1="20" x2="80" y2="568.0" stroke="#3a2e2a" stroke-width="4"/>
+<line x1="72" y1="24.0" x2="88" y2="24.0" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="66" y="31.0" font-size="20" text-anchor="end" style="fill:#6d5640">21:00</text>
+<line x1="72" y1="204.0" x2="88" y2="204.0" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="66" y="211.0" font-size="20" text-anchor="end" style="fill:#6d5640">22:00</text>
+<line x1="72" y1="384.0" x2="88" y2="384.0" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="66" y="391.0" font-size="20" text-anchor="end" style="fill:#6d5640">23:00</text>
+<line x1="72" y1="564.0" x2="88" y2="564.0" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="66" y="571.0" font-size="20" text-anchor="end" style="fill:#6d5640">24:00</text>
+<path d="M80 57.0 H98 L112 50 H122" fill="none" stroke="#6d5640" stroke-width="2"/>
+<circle cx="80" cy="57.0" r="7" fill="#5e3d50"/>
+<text class="t tb" x="130" y="44" font-size="22" text-anchor="start">21:11</text>
+<text class="t" x="130" y="72" font-size="22" text-anchor="start">カンブリア爆発</text>
+<text class="t" x="130" y="98" font-size="20" text-anchor="start" style="fill:#6d5640">（ 5.4 億年前）</text>
+<path d="M80 216.0 H98 L112 170 H122" fill="none" stroke="#6d5640" stroke-width="2"/>
+<circle cx="80" cy="216.0" r="7" fill="#5e3d50"/>
+<text class="t tb" x="130" y="164" font-size="22" text-anchor="start">22:04</text>
+<text class="t" x="130" y="192" font-size="22" text-anchor="start">両生類</text>
+<text class="t" x="130" y="218" font-size="20" text-anchor="start" style="fill:#6d5640">（約 3.7 億年前）</text>
+<path d="M80 357.0 H98 L112 300 H122" fill="none" stroke="#6d5640" stroke-width="2"/>
+<circle cx="80" cy="357.0" r="7" fill="#5e3d50"/>
+<text class="t tb" x="130" y="294" font-size="22" text-anchor="start">22:51</text>
+<text class="t" x="130" y="322" font-size="22" text-anchor="start">哺乳類</text>
+<text class="t" x="130" y="348" font-size="20" text-anchor="start" style="fill:#6d5640">（約 2.2 億年前）</text>
+<path d="M80 501.0 H98 L112 430 H122" fill="none" stroke="#6d5640" stroke-width="2"/>
+<circle cx="80" cy="501.0" r="7" fill="#b7282e"/>
+<text class="t tb" x="130" y="424" font-size="22" text-anchor="start">23:39</text>
+<text class="t" x="130" y="452" font-size="22" text-anchor="start">恐竜絶滅</text>
+<text class="t" x="130" y="478" font-size="20" text-anchor="start" style="fill:#6d5640">（ 6600 万年前）</text>
+<path d="M80 513.0 H98 L112 520 H122" fill="none" stroke="#b7282e" stroke-width="3"/>
+<circle cx="80" cy="513.0" r="7" fill="#b7282e"/>
+<text class="t tb" x="130" y="514" font-size="22" text-anchor="start" style="fill:#b7282e">23:43</text>
+<text class="t tb" x="130" y="542" font-size="22" text-anchor="start" style="fill:#b7282e">ウサギ目の仲間</text>
+<text class="t" x="130" y="568" font-size="20" text-anchor="start" style="fill:#b7282e">（約 5600 万年前）</text>
+<path d="M80 563.7 H98 L112 610 H122" fill="none" stroke="#6d5640" stroke-width="2"/>
+<circle cx="80" cy="563.7" r="7" fill="#5e3d50"/>
+<text class="t tb" x="130" y="604" font-size="22" text-anchor="start">23:59:54</text>
+<text class="t" x="130" y="632" font-size="22" text-anchor="start">ヒト</text>
+<text class="t" x="130" y="658" font-size="20" text-anchor="start" style="fill:#6d5640">（約 30 万年前）</text>
+</svg>
 <figcaption>一日に縮めると、ウサギの仲間が現れるのは夜 11 時 40 分すぎ。ホモ・サピエンスは日付が変わる約 6 秒前である。図は模式図であり、各年代の位置は概数である。</figcaption>
 </figure>
 </section>
@@ -450,31 +515,35 @@
 <p>ウサギは<span class="term">哺乳類</span>である。哺乳類は約 2 億 2000 万年前（中生代の三畳紀後期）に現れ、恐竜の時代には小型の動物として暮らしていた。現在の哺乳類の多くのグループが広がったのは、約 6600 万年前に恐竜（鳥を除く）が絶滅した後、新生代に入ってからである。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 320" role="img" aria-label="脊椎動物の進化の簡略図">
-  <g stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round">
-    <path d="M20,160 H60"/>
-    <path d="M60,160 V40 M60,160 V290"/>
-    <path d="M60,40 H430"/>
-    <path d="M60,290 H430"/>
-    <path d="M120,40 V100 M120,100 H430"/>
-    <path d="M180,100 V160 M180,160 H430"/>
-    <path d="M240,160 V220 M240,220 H430"/>
-  </g>
-  <g font-size="14">
-    <text x="440" y="45">魚類（サメ・硬骨魚など）</text>
-    <text x="440" y="105">両生類（カエル・イモリ）</text>
-    <text x="440" y="165">爬虫類・鳥類（恐竜を含む）</text>
-    <text x="440" y="225" font-weight="700" fill="#2a4d69">哺乳類 → ネズミ・ウサギの仲間ほか</text>
-    <text x="440" y="295">無脊椎動物（貝・昆虫など）</text>
-  </g>
-  <g font-size="11" fill="#555">
-    <text x="126" y="32">約 5 億年前〜 魚類</text>
-    <text x="186" y="92">約 3.7 億年前〜 陸上へ</text>
-    <text x="246" y="152">約 3.2 億年前〜 哺乳類と爬虫類の系統が分かれる</text>
-    <text x="246" y="212">約 2.2 億年前 哺乳類が現れる</text>
-  </g>
-  <text x="20" y="315" font-size="12" fill="#555">※枝分かれの順序のみを示す簡略図である。長さは時間に比例しない。</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 628" role="img" aria-label="脊椎動物の進化の簡略図">
+<defs><marker id="a8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<line x1="40" y1="50" x2="40" y2="486" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="70" y1="50" x2="70" y2="140" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="100" y1="140" x2="100" y2="244" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="130" y1="244" x2="130" y2="372" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="40" y1="50" x2="134" y2="50" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="70" y1="140" x2="134" y2="140" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="100" y1="244" x2="134" y2="244" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="130" y1="372" x2="134" y2="372" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="40" y1="486" x2="134" y2="486" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="16" y1="268.0" x2="40" y2="268.0" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="146" y="56" font-size="22" text-anchor="start">魚類（サメ・硬骨魚など）</text>
+<text class="t" x="146" y="82" font-size="20" text-anchor="start" style="fill:#6d5640">約 5 億年前〜 魚類</text>
+<text class="t" x="146" y="146" font-size="22" text-anchor="start">両生類（カエル・イモリ）</text>
+<text class="t" x="146" y="172" font-size="20" text-anchor="start" style="fill:#6d5640">約 3.7 億年前〜 陸上へ</text>
+<text class="t" x="146" y="250" font-size="22" text-anchor="start">爬虫類・鳥類（恐竜を含む）</text>
+<text class="t" x="146" y="276" font-size="20" text-anchor="start" style="fill:#6d5640">約 3.2 億年前〜</text>
+<text class="t" x="146" y="302" font-size="20" text-anchor="start" style="fill:#6d5640">哺乳類と爬虫類の</text>
+<text class="t" x="146" y="328" font-size="20" text-anchor="start" style="fill:#6d5640">系統が分かれる</text>
+<text class="t tb" x="146" y="378" font-size="22" text-anchor="start" style="fill:#5e3d50">哺乳類</text>
+<text class="t tb" x="146" y="406" font-size="20" text-anchor="start" style="fill:#5e3d50">→ ネズミ・ウサギの仲間ほか</text>
+<text class="t" x="146" y="432" font-size="20" text-anchor="start" style="fill:#6d5640">約 2.2 億年前</text>
+<text class="t" x="146" y="458" font-size="20" text-anchor="start" style="fill:#6d5640">哺乳類が現れる</text>
+<text class="t" x="146" y="492" font-size="22" text-anchor="start">無脊椎動物（貝・昆虫など）</text>
+<text class="t" x="16" y="548" font-size="20" text-anchor="start" style="fill:#6d5640">※枝分かれの順序のみを示す</text>
+<text class="t" x="16" y="574" font-size="20" text-anchor="start" style="fill:#6d5640">簡略図である。長さは時間に</text>
+<text class="t" x="16" y="600" font-size="20" text-anchor="start" style="fill:#6d5640">比例しない。</text>
+</svg>
 <figcaption>ウサギにたどり着くには、魚類→両生類→（爬虫類と共通の祖先）→哺乳類、という順に、祖先のグループが先に現れていなければならない。</figcaption>
 </figure>
 
@@ -483,35 +552,36 @@
 <p>ただし、その時期については見解が分かれている。化石の記録を重視する研究では、現在の哺乳類の目（もく）の多くは大量絶滅の後に現れたとされる。一方、分子系統（ DNA の比較）に基づく推定では、哺乳類の主要な分岐は白亜紀に始まっていたとされる。どちらが正しいかは決着していない。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
 
 <figure>
-<div class="scroll"><svg style="min-width:720px" width="100%" viewBox="0 0 720 280" role="img" aria-label="恐竜絶滅後の哺乳類の適応放散（模式図）">
-  <rect x="20" y="30" width="330" height="220" fill="#fff" stroke="#bbb"/>
-  <rect x="370" y="30" width="330" height="220" fill="#fff" stroke="#bbb"/>
-  <text x="185" y="22" text-anchor="middle" font-size="14" font-weight="700">絶滅前（中生代）</text>
-  <text x="535" y="22" text-anchor="middle" font-size="14" font-weight="700">絶滅後（新生代）</text>
-  <g stroke="#222" stroke-width="2" fill="none">
-    <path d="M185,240 V190"/>
-    <path d="M185,190 L120,140 M185,190 L185,140 M185,190 L250,140"/>
-  </g>
-  <g font-size="12" text-anchor="middle">
-    <text x="120" y="125">小型の哺乳類</text>
-    <text x="185" y="110">小型の哺乳類</text>
-    <text x="250" y="125">小型の哺乳類</text>
-    <text x="185" y="62" fill="#555">大型の陸上動物は恐竜が占めていた</text>
-  </g>
-  <g stroke="#222" stroke-width="2" fill="none">
-    <path d="M535,240 V200"/>
-    <path d="M535,200 L440,150 M535,200 L490,130 M535,200 L535,110 M535,200 L580,130 M535,200 L630,150"/>
-  </g>
-  <g font-size="12" text-anchor="middle">
-    <text x="440" y="140">ウサギ・ネズミ</text>
-    <text x="490" y="118">ウマ・ウシ</text>
-    <text x="535" y="98">霊長類</text>
-    <text x="582" y="118">コウモリ</text>
-    <text x="630" y="140">クジラ</text>
-    <text x="535" y="60" fill="#2a4d69">空いた場所へ多様化（適応放散）</text>
-  </g>
-  <line x1="352" y1="140" x2="366" y2="140" stroke="#888" stroke-width="2" marker-end="url(#a1)"/>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 580" role="img" aria-label="恐竜絶滅後の哺乳類の適応放散（模式図）">
+<defs><marker id="a9" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="8" y="8" width="424" height="210" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="220" y="42" font-size="24" text-anchor="middle">絶滅前（中生代）</text>
+<text class="t" x="220" y="72" font-size="20" text-anchor="middle" style="fill:#6d5640">大型の陸上動物は恐竜が占めていた</text>
+<line x1="40" y1="156.0" x2="150" y2="116" stroke="#3a2e2a" stroke-width="2.5"/>
+<text class="t" x="160" y="123" font-size="22" text-anchor="start">小型の哺乳類</text>
+<line x1="40" y1="156.0" x2="150" y2="156" stroke="#3a2e2a" stroke-width="2.5"/>
+<text class="t" x="160" y="163" font-size="22" text-anchor="start">小型の哺乳類</text>
+<line x1="40" y1="156.0" x2="150" y2="196" stroke="#3a2e2a" stroke-width="2.5"/>
+<text class="t" x="160" y="203" font-size="22" text-anchor="start">小型の哺乳類</text>
+<circle cx="40" cy="156" r="6" fill="#3a2e2a"/>
+<line x1="40" y1="156.0" x2="40" y2="182.0" stroke="#3a2e2a" stroke-width="2.5"/>
+<line x1="220" y1="222" x2="220" y2="262" stroke="#6d5640" stroke-width="3" marker-end="url(#a9)"/>
+<rect x="8" y="270" width="424" height="300" rx="10" fill="#f6e6b8" stroke="#d19826" stroke-width="3"/>
+<text class="t tb" x="220" y="304" font-size="24" text-anchor="middle">絶滅後（新生代）</text>
+<text class="t" x="220" y="334" font-size="20" text-anchor="middle" style="fill:#5e3d50">空いた場所へ多様化（適応放散）</text>
+<line x1="40" y1="460.0" x2="150" y2="380" stroke="#3a2e2a" stroke-width="2.5"/>
+<text class="t" x="160" y="387" font-size="22" text-anchor="start">ウサギ・ネズミ</text>
+<line x1="40" y1="460.0" x2="150" y2="420" stroke="#3a2e2a" stroke-width="2.5"/>
+<text class="t" x="160" y="427" font-size="22" text-anchor="start">ウマ・ウシ</text>
+<line x1="40" y1="460.0" x2="150" y2="460" stroke="#3a2e2a" stroke-width="2.5"/>
+<text class="t" x="160" y="467" font-size="22" text-anchor="start">霊長類</text>
+<line x1="40" y1="460.0" x2="150" y2="500" stroke="#3a2e2a" stroke-width="2.5"/>
+<text class="t" x="160" y="507" font-size="22" text-anchor="start">コウモリ</text>
+<line x1="40" y1="460.0" x2="150" y2="540" stroke="#3a2e2a" stroke-width="2.5"/>
+<text class="t" x="160" y="547" font-size="22" text-anchor="start">クジラ</text>
+<circle cx="40" cy="460" r="6" fill="#3a2e2a"/>
+<line x1="40" y1="460.0" x2="40" y2="486.0" stroke="#3a2e2a" stroke-width="2.5"/>
+</svg>
 <figcaption>模式図である。恐竜がいなくなって空いた場所に、哺乳類が多様化していった。ウサギの仲間もこの流れの中で現れたとされる。</figcaption>
 </figure>
 
@@ -520,48 +590,44 @@
 <p>違いは前歯に現れる。げっ歯目は上あごの前歯が一対だけである。ウサギ目は、大きな前歯の後ろに小さな前歯（栓歯）がもう一対あり、合計で二対である。この歯の違いは、化石でもウサギ目かどうかを見分ける手がかりになる。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 250" role="img" aria-label="ウサギの仲間の系統図">
-  <g stroke="#222" stroke-width="2.5" fill="none" stroke-linecap="round">
-    <path d="M30,125 H100"/>
-    <path d="M100,125 V55 M100,125 V195"/>
-    <path d="M100,55 H400"/>
-    <path d="M100,195 H200"/>
-    <path d="M200,195 V150 M200,195 V235"/>
-    <path d="M200,150 H400"/>
-    <path d="M200,235 H400"/>
-  </g>
-  <g font-size="14">
-    <text x="410" y="60">その他の哺乳類（ウシ・ヒト・コウモリなど）</text>
-    <text x="410" y="155">げっ歯目（ネズミ・リス・ビーバー）</text>
-    <text x="410" y="240" font-weight="700" fill="#2a4d69">ウサギ目（ウサギ・ナキウサギ）</text>
-  </g>
-  <text x="196" y="190" font-size="11" fill="#555" text-anchor="end">ここで分かれる（両者をまとめてグリレス類）</text>
-  <text x="30" y="20" font-size="12" fill="#555">ウサギとネズミは近い親戚である。ウサギ目はげっ歯目と共通の祖先をもつ。</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 504" role="img" aria-label="ウサギの仲間の系統図">
+<defs><marker id="a10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<text class="t" x="16" y="28" font-size="20" text-anchor="start" style="fill:#6d5640">ウサギとネズミは近い親戚である。</text>
+<text class="t" x="16" y="54" font-size="20" text-anchor="start" style="fill:#6d5640">ウサギ目はげっ歯目と共通の祖先を</text>
+<text class="t" x="16" y="80" font-size="20" text-anchor="start" style="fill:#6d5640">もつ。</text>
+<line x1="40" y1="130" x2="40" y2="320.0" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="40" y1="320.0" x2="100" y2="320.0" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="100" y1="260" x2="100" y2="380" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="40" y1="130" x2="150" y2="130" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="100" y1="260" x2="150" y2="260" stroke="#3a2e2a" stroke-width="3"/>
+<line x1="100" y1="380" x2="150" y2="380" stroke="#3a2e2a" stroke-width="3"/>
+<circle cx="100" cy="320" r="7" fill="#a55b3a"/>
+<text class="t" x="156" y="136" font-size="22" text-anchor="start">その他の哺乳類</text>
+<text class="t" x="156" y="164" font-size="20" text-anchor="start" style="fill:#6d5640">（ウシ・ヒト・コウモリなど）</text>
+<text class="t" x="156" y="266" font-size="22" text-anchor="start">げっ歯目</text>
+<text class="t" x="156" y="294" font-size="20" text-anchor="start" style="fill:#6d5640">（ネズミ・リス・ビーバー）</text>
+<text class="t tb" x="156" y="386" font-size="22" text-anchor="start" style="fill:#5e3d50">ウサギ目</text>
+<text class="t tb" x="156" y="414" font-size="20" text-anchor="start" style="fill:#5e3d50">（ウサギ・ナキウサギ）</text>
+<text class="t" x="20" y="460" font-size="20" text-anchor="start" style="fill:#8b4429">● げっ歯目とウサギ目は、ここで分かれる</text>
+<text class="t" x="20" y="486" font-size="20" text-anchor="start" style="fill:#8b4429">　（両者をまとめてグリレス類）</text>
+</svg>
 <figcaption>この系統図は簡略化したものである。ウサギ目とげっ歯目をまとめて「グリレス類」と呼ぶ。</figcaption>
 </figure>
 
 <figure>
-<div class="scroll"><svg style="min-width:720px" width="100%" viewBox="0 0 720 230" role="img" aria-label="ウサギ目とげっ歯目の前歯の違い（模式図）">
-  <g>
-    <text x="180" y="28" text-anchor="middle" font-size="15" font-weight="700">ウサギ目（上あごの前歯・正面）</text>
-    <path d="M60,60 Q180,40 300,60 L300,90 Q180,70 60,90 Z" fill="#e6edf3" stroke="#222" stroke-width="1.5"/>
-    <rect x="145" y="85" width="22" height="60" rx="6" fill="#fff" stroke="#222" stroke-width="2"/>
-    <rect x="193" y="85" width="22" height="60" rx="6" fill="#fff" stroke="#222" stroke-width="2"/>
-    <rect x="152" y="132" width="8" height="26" rx="3" fill="#fff" stroke="#c0392b" stroke-width="2"/>
-    <rect x="200" y="132" width="8" height="26" rx="3" fill="#fff" stroke="#c0392b" stroke-width="2"/>
-    <text x="180" y="190" text-anchor="middle" font-size="12" fill="#c0392b">大きな前歯の後ろに小さな前歯</text>
-    <text x="180" y="210" text-anchor="middle" font-size="12" fill="#555">→ 前歯は合計で二対</text>
-  </g>
-  <g>
-    <text x="540" y="28" text-anchor="middle" font-size="15" font-weight="700">げっ歯目（上あごの前歯・正面）</text>
-    <path d="M420,60 Q540,40 660,60 L660,90 Q540,70 420,90 Z" fill="#e6edf3" stroke="#222" stroke-width="1.5"/>
-    <rect x="505" y="85" width="22" height="60" rx="6" fill="#fff" stroke="#222" stroke-width="2"/>
-    <rect x="553" y="85" width="22" height="60" rx="6" fill="#fff" stroke="#222" stroke-width="2"/>
-    <text x="540" y="190" text-anchor="middle" font-size="12" fill="#2a4d69">小さな前歯はない</text>
-    <text x="540" y="210" text-anchor="middle" font-size="12" fill="#555">→ 前歯は合計で一対</text>
-  </g>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 572" role="img" aria-label="ウサギ目とげっ歯目の前歯の違い（模式図）">
+<defs><marker id="a11" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="8" y="8" width="424" height="270" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="220" y="38" font-size="22" text-anchor="middle">ウサギ目（上あごの前歯・正面）</text>
+<g transform="translate(40 38)"><path d="M60,40 Q180,20 300,40 L300,70 Q180,50 60,70 Z" fill="#e8dae0" stroke="#3a2e2a" stroke-width="2"/><rect x="145" y="65" width="22" height="60" rx="6" fill="#fff" stroke="#3a2e2a" stroke-width="2.5"/><rect x="193" y="65" width="22" height="60" rx="6" fill="#fff" stroke="#3a2e2a" stroke-width="2.5"/><rect x="152" y="112" width="8" height="26" rx="3" fill="#fff" stroke="#b7282e" stroke-width="2.5"/><rect x="200" y="112" width="8" height="26" rx="3" fill="#fff" stroke="#b7282e" stroke-width="2.5"/></g>
+<text class="t" x="220" y="218" font-size="22" text-anchor="middle" style="fill:#b7282e">大きな前歯の後ろに小さな前歯</text>
+<text class="t" x="220" y="248" font-size="22" text-anchor="middle" style="fill:#6d5640">→ 前歯は合計で二対</text>
+<rect x="8" y="294" width="424" height="270" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="220" y="324" font-size="22" text-anchor="middle">げっ歯目（上あごの前歯・正面）</text>
+<g transform="translate(40 324)"><path d="M60,40 Q180,20 300,40 L300,70 Q180,50 60,70 Z" fill="#e8dae0" stroke="#3a2e2a" stroke-width="2"/><rect x="145" y="65" width="22" height="60" rx="6" fill="#fff" stroke="#3a2e2a" stroke-width="2.5"/><rect x="193" y="65" width="22" height="60" rx="6" fill="#fff" stroke="#3a2e2a" stroke-width="2.5"/></g>
+<text class="t" x="220" y="504" font-size="22" text-anchor="middle" style="fill:#5e3d50">小さな前歯はない</text>
+<text class="t" x="220" y="534" font-size="22" text-anchor="middle" style="fill:#6d5640">→ 前歯は合計で一対</text>
+</svg>
 <figcaption>模式図であり、実際の形や位置は簡略化している。</figcaption>
 </figure>
 
@@ -571,31 +637,29 @@
 <p>一方、分子系統に基づく推定では、ウサギ目の起源は白亜紀にさかのぼるとされる。化石の記録との差は、まだ解決していない。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 210" role="img" aria-label="ウサギ目の化石記録の時代（模式図）">
-  <rect x="20" y="70" width="340" height="40" fill="#8a9a5b"/>
-  <rect x="360" y="70" width="60" height="40" fill="#d4a017"/>
-  <rect x="420" y="70" width="280" height="40" fill="#c0392b"/>
-  <text x="190" y="95" text-anchor="middle" font-size="12" fill="#fff">古生代（ 5.4 〜 2.5 億年前）</text>
-  <text x="390" y="95" text-anchor="middle" font-size="11">中生代</text>
-  <text x="560" y="95" text-anchor="middle" font-size="13" fill="#fff">新生代（ 6600 万年前〜現在）</text>
-  <g font-size="11" text-anchor="middle">
-    <rect x="420" y="118" width="60" height="24" fill="#fde8e6" stroke="#c0392b"/>
-    <text x="450" y="135">暁新世</text>
-    <rect x="480" y="118" width="70" height="24" fill="#fde8e6" stroke="#c0392b"/>
-    <text x="515" y="135">始新世</text>
-    <rect x="550" y="118" width="60" height="24" fill="#fde8e6" stroke="#c0392b"/>
-    <text x="580" y="135">漸新世</text>
-    <rect x="610" y="118" width="90" height="24" fill="#fde8e6" stroke="#c0392b"/>
-    <text x="655" y="135">中新世〜現在</text>
-  </g>
-  <path d="M450,62 L450,45" stroke="#c0392b" stroke-width="2"/>
-  <text x="450" y="38" text-anchor="middle" font-size="12" fill="#c0392b">ミモトナ（幹群）</text>
-  <path d="M500,62 L500,45" stroke="#c0392b" stroke-width="2"/>
-  <text x="505" y="38" text-anchor="start" font-size="12" fill="#c0392b">真のウサギ目（始新世前期後半）</text>
-  <text x="190" y="168" text-anchor="middle" font-size="13">確実なウサギ目の化石：なし</text>
-  <text x="560" y="168" text-anchor="middle" font-size="13" font-weight="700" fill="#c0392b">新生代に出現</text>
-  <text x="20" y="200" font-size="11" fill="#555">※長さは時間に比例しない。</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 570" role="img" aria-label="ウサギ目の化石記録の時代（模式図）">
+<defs><marker id="a12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="20" y="10" width="56" height="112" fill="#8c7f5e"/>
+<text class="t tb" x="92" y="38" font-size="22" text-anchor="start">古生代</text>
+<text class="t" x="92" y="66" font-size="20" text-anchor="start" style="fill:#6d5640">（ 5.4 〜 2.5 億年前）</text>
+<text class="t" x="92" y="94" font-size="20" text-anchor="start">確実なウサギ目の化石：なし</text>
+<rect x="20" y="126" width="56" height="40" fill="#d19826"/>
+<text class="t tb" x="92" y="154" font-size="22" text-anchor="start">中生代</text>
+<text class="t tb" x="20" y="198" font-size="22" text-anchor="start" style="fill:#b7282e">新生代（ 6600 万年前〜現在）</text>
+<rect x="20" y="212" width="56" height="68" fill="#b7282e" stroke="#fff" stroke-width="2"/>
+<text class="t" x="92" y="238" font-size="22" text-anchor="start">暁新世</text>
+<text class="t" x="92" y="264" font-size="20" text-anchor="start" style="fill:#b7282e">ミモトナ（幹群）</text>
+<rect x="20" y="280" width="56" height="94" fill="#b7282e" stroke="#fff" stroke-width="2"/>
+<text class="t" x="92" y="306" font-size="22" text-anchor="start">始新世</text>
+<text class="t" x="92" y="332" font-size="20" text-anchor="start" style="fill:#b7282e">真のウサギ目</text>
+<text class="t" x="92" y="358" font-size="20" text-anchor="start" style="fill:#b7282e">（始新世前期後半）</text>
+<rect x="20" y="374" width="56" height="56" fill="#b7282e" stroke="#fff" stroke-width="2"/>
+<text class="t" x="92" y="400" font-size="22" text-anchor="start">漸新世</text>
+<rect x="20" y="430" width="56" height="56" fill="#b7282e" stroke="#fff" stroke-width="2"/>
+<text class="t" x="92" y="456" font-size="22" text-anchor="start">中新世〜現在</text>
+<text class="t tb" x="20" y="522" font-size="22" text-anchor="start" style="fill:#b7282e">新生代に出現</text>
+<text class="t" x="20" y="554" font-size="20" text-anchor="start" style="fill:#6d5640">※長さは時間に比例しない。</text>
+</svg>
 <figcaption>ウサギ目の仲間の化石は、新生代の地層から見つかる。確実なウサギ目の化石は、暁新世の幹群の後に現れる。</figcaption>
 </figure>
 </section>
@@ -608,30 +672,33 @@
 <p>そこで、もし先カンブリア時代（微生物や単純な生物が中心だった時代）の地層から、<strong>後から混入したのではない形で</strong>本物のウサギの化石が出てきたとする。その場合、「生物は段階的に進化してきた」という見取り図の大きな部分が崩れる。ここで理論と照らし合わせるのは、地層の年代、化石の形、そして化石の所属の三つである。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:720px" width="100%" viewBox="0 0 720 200" role="img" aria-label="積み上がる進化の順序">
-  <g font-size="13" text-anchor="middle">
-    <rect x="10" y="60" width="115" height="80" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="68" y="95">単純な</text><text x="68" y="115">微生物</text>
-    <rect x="145" y="60" width="115" height="80" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="203" y="105">魚類</text>
-    <rect x="280" y="60" width="115" height="80" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="338" y="95">四足動物</text><text x="338" y="115">（陸上の仲間）</text>
-    <rect x="415" y="60" width="115" height="80" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="473" y="95">初期の</text><text x="473" y="115">哺乳類</text>
-    <rect x="550" y="60" width="150" height="80" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="3"/>
-    <text x="625" y="95" font-weight="700">ウサギの仲間</text><text x="625" y="115">（新生代）</text>
-  </g>
-  <g stroke="#888" stroke-width="2" fill="#888">
-    <path d="M127,100 H141"/><polygon points="145,100 138,95 138,105"/>
-    <path d="M262,100 H276"/><polygon points="280,100 273,95 273,105"/>
-    <path d="M397,100 H411"/><polygon points="415,100 408,95 408,105"/>
-    <path d="M532,100 H546"/><polygon points="550,100 543,95 543,105"/>
-  </g>
-  <path d="M68,50 Q330,5 625,50" stroke="#c0392b" stroke-width="2.5" fill="none" stroke-dasharray="6 5"/>
-  <polygon points="625,52 617,44 631,42" fill="#c0392b"/>
-  <text x="340" y="22" font-size="13" text-anchor="middle" fill="#c0392b">ここを飛び越える「先カンブリア時代のウサギ」は想定外</text>
-  <text x="360" y="180" font-size="12" text-anchor="middle" fill="#555">進化では、前の段階なしに、いきなり複雑な動物は現れない（という予測）。</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 702" role="img" aria-label="積み上がる進化の順序">
+<defs><marker id="a13" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker><marker id="a13r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#b7282e"/></marker></defs>
+<rect x="20" y="12" width="250" height="74" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t" x="145.0" y="44" font-size="22" text-anchor="middle">単純な</text>
+<text class="t" x="145.0" y="72" font-size="22" text-anchor="middle">微生物</text>
+<line x1="145.0" y1="89" x2="145.0" y2="119" stroke="#6d5640" stroke-width="3" marker-end="url(#a13)"/>
+<rect x="20" y="122" width="250" height="74" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t" x="145.0" y="167.0" font-size="22" text-anchor="middle">魚類</text>
+<line x1="145.0" y1="199" x2="145.0" y2="229" stroke="#6d5640" stroke-width="3" marker-end="url(#a13)"/>
+<rect x="20" y="232" width="250" height="74" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t" x="145.0" y="264" font-size="22" text-anchor="middle">四足動物</text>
+<text class="t" x="145.0" y="292" font-size="22" text-anchor="middle">（陸上の仲間）</text>
+<line x1="145.0" y1="309" x2="145.0" y2="339" stroke="#6d5640" stroke-width="3" marker-end="url(#a13)"/>
+<rect x="20" y="342" width="250" height="74" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t" x="145.0" y="374" font-size="22" text-anchor="middle">初期の</text>
+<text class="t" x="145.0" y="402" font-size="22" text-anchor="middle">哺乳類</text>
+<line x1="145.0" y1="419" x2="145.0" y2="449" stroke="#6d5640" stroke-width="3" marker-end="url(#a13)"/>
+<rect x="20" y="452" width="250" height="74" rx="10" fill="#f3d5cc" stroke="#b7282e" stroke-width="4"/>
+<text class="t tb" x="145.0" y="484" font-size="22" text-anchor="middle">ウサギの仲間</text>
+<text class="t" x="145.0" y="512" font-size="22" text-anchor="middle">（新生代）</text>
+<path d="M274 49 H330 V489 H278" fill="none" stroke="#b7282e" stroke-width="3.5" stroke-dasharray="8 6" marker-end="url(#a13r)"/>
+<text class="t" x="344" y="259.0" font-size="22" text-anchor="start" style="fill:#b7282e">飛び越え</text>
+<text class="t" x="16" y="562" font-size="22" text-anchor="start" style="fill:#b7282e">ここを飛び越える「先カンブリア</text>
+<text class="t" x="16" y="590" font-size="22" text-anchor="start" style="fill:#b7282e">時代のウサギ」は想定外</text>
+<text class="t" x="16" y="634" font-size="20" text-anchor="start" style="fill:#6d5640">進化では、前の段階なしに、いきなり</text>
+<text class="t" x="16" y="660" font-size="20" text-anchor="start" style="fill:#6d5640">複雑な動物は現れない（という予測）。</text>
+</svg>
 <figcaption>進化は段階の積み重ねである。順序を飛び越える発見は、理論に対する強い反証になりうる。</figcaption>
 </figure>
 
@@ -639,22 +706,23 @@
 <p>進化論が予測することは、もう一つある。生物の分類が<strong>入れ子（箱の中の箱）</strong>の形になることである。祖先から枝分かれして子孫が増えるなら、「すべての哺乳類」という箱の中に「ウサギ目」という箱が入る構造が生じるはずである。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:720px" width="100%" viewBox="0 0 720 280" role="img" aria-label="分類の入れ子構造">
-  <rect x="20" y="20" width="680" height="250" rx="14" fill="#fff" stroke="#222" stroke-width="2"/>
-  <text x="40" y="46" font-size="14" font-weight="700">脊椎動物</text>
-  <rect x="50" y="60" width="620" height="200" rx="12" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-  <text x="70" y="86" font-size="14" font-weight="700">四足動物（陸上に上がった仲間）</text>
-  <rect x="80" y="100" width="560" height="150" rx="10" fill="#fff" stroke="#2a4d69" stroke-width="2"/>
-  <text x="100" y="126" font-size="14" font-weight="700">哺乳類</text>
-  <rect x="110" y="140" width="320" height="100" rx="10" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
-  <text x="130" y="166" font-size="14" font-weight="700">グリレス類</text>
-  <rect x="140" y="178" width="130" height="50" rx="8" fill="#fff" stroke="#c0392b" stroke-width="2"/>
-  <text x="205" y="208" text-anchor="middle" font-size="13">ウサギ目</text>
-  <rect x="285" y="178" width="130" height="50" rx="8" fill="#fff" stroke="#c0392b" stroke-width="2"/>
-  <text x="350" y="208" text-anchor="middle" font-size="13">げっ歯目</text>
-  <text x="450" y="170" font-size="12" fill="#555">他の哺乳類</text>
-  <text x="450" y="190" font-size="12" fill="#555">（霊長類・ウシ・クジラなど）</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 366" role="img" aria-label="分類の入れ子構造">
+<defs><marker id="a14" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="8" y="8" width="424" height="350" rx="14" fill="#fbf6ea" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t tb" x="24" y="40" font-size="22" text-anchor="start">脊椎動物</text>
+<rect x="24" y="52" width="392" height="296" rx="12" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="40" y="84" font-size="22" text-anchor="start">四足動物（陸上に上がった仲間）</text>
+<rect x="40" y="96" width="360" height="240" rx="10" fill="#fbf6ea" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="56" y="128" font-size="22" text-anchor="start">哺乳類</text>
+<rect x="56" y="140" width="328" height="128" rx="10" fill="#f3d5cc" stroke="#b7282e" stroke-width="3"/>
+<text class="t tb" x="72" y="172" font-size="22" text-anchor="start">グリレス類</text>
+<rect x="72" y="186" width="142" height="60" rx="8" fill="#fff" stroke="#b7282e" stroke-width="3"/>
+<text class="t" x="143" y="226" font-size="22" text-anchor="middle">ウサギ目</text>
+<rect x="226" y="186" width="142" height="60" rx="8" fill="#fff" stroke="#b7282e" stroke-width="3"/>
+<text class="t" x="297" y="226" font-size="22" text-anchor="middle">げっ歯目</text>
+<text class="t" x="56" y="296" font-size="20" text-anchor="start" style="fill:#6d5640">他の哺乳類</text>
+<text class="t" x="56" y="322" font-size="20" text-anchor="start" style="fill:#6d5640">（霊長類・ウシ・クジラなど）</text>
+</svg>
 <figcaption>この入れ子構造は、系統をもとに分類した結果と一致している。「ウサギ目が魚類の一部になる」といった食い違いは起きない。化石の登場順も、この入れ子構造と矛盾しない。</figcaption>
 </figure>
 
@@ -662,37 +730,33 @@
 <p>大きな脊椎動物のグループが化石として現れる時期を帯で示す。各バーの左端が、そのグループの化石が最初に出てくる時期である。目盛は一億年あたり約 98 ピクセルの直線になっている。</p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 300" role="img" aria-label="各グループの化石の出現時期（時間の目盛は直線）">
-  <g stroke="#bbb">
-    <line x1="170" y1="30" x2="170" y2="250"/>
-    <line x1="347" y1="30" x2="347" y2="250"/>
-    <line x1="523" y1="30" x2="523" y2="250"/>
-    <line x1="700" y1="30" x2="700" y2="250"/>
-  </g>
-  <g font-size="11" text-anchor="middle" fill="#555">
-    <text x="170" y="270">5.4 億年前</text>
-    <text x="347" y="270">3.6 億年前</text>
-    <text x="523" y="270">1.8 億年前</text>
-    <text x="700" y="270">現在</text>
-  </g>
-  <g font-size="13">
-    <text x="10" y="60">魚類</text>
-    <text x="10" y="100">両生類</text>
-    <text x="10" y="140">爬虫類</text>
-    <text x="10" y="180">哺乳類</text>
-    <text x="10" y="220" font-weight="700" fill="#c0392b">ウサギ目</text>
-  </g>
-  <rect x="170" y="45" width="530" height="20" rx="4" fill="#4a90a4"/>
-  <rect x="337" y="85" width="363" height="20" rx="4" fill="#6a9a4a"/>
-  <rect x="384" y="125" width="316" height="20" rx="4" fill="#c58a2c"/>
-  <rect x="484" y="165" width="216" height="20" rx="4" fill="#8a5aa8"/>
-  <rect x="649" y="205" width="51" height="20" rx="4" fill="#c0392b"/>
-  <text x="180" y="40" font-size="11" fill="#555">約 5.4 億年前〜</text>
-  <text x="330" y="100" font-size="11" fill="#555" text-anchor="end">約 3.7 億年前〜</text>
-  <text x="378" y="140" font-size="11" fill="#555" text-anchor="end">約 3.2 億年前〜</text>
-  <text x="478" y="180" font-size="11" fill="#555" text-anchor="end">約 2.2 億年前〜</text>
-  <text x="643" y="220" font-size="11" fill="#c0392b" text-anchor="end">約 5600 万年前〜</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 506" role="img" aria-label="各グループの化石の出現時期（時間の目盛は直線）">
+<defs><marker id="a15" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<line x1="20.0" y1="16" x2="20.0" y2="430" stroke="#cdb98f" stroke-width="2"/>
+<line x1="153.33333333333334" y1="16" x2="153.33333333333334" y2="430" stroke="#cdb98f" stroke-width="2"/>
+<line x1="286.6666666666667" y1="16" x2="286.6666666666667" y2="430" stroke="#cdb98f" stroke-width="2"/>
+<line x1="420.0" y1="16" x2="420.0" y2="430" stroke="#cdb98f" stroke-width="2"/>
+<text class="t" x="20" y="46" font-size="22" text-anchor="start">魚類</text>
+<text class="t" x="420" y="46" font-size="20" text-anchor="end" style="fill:#6d5640">約 5.4 億年前〜</text>
+<rect x="20" y="56" width="400" height="24" rx="4" fill="#5e3d50"/>
+<text class="t" x="20" y="126" font-size="22" text-anchor="start">両生類</text>
+<text class="t" x="420" y="126" font-size="20" text-anchor="end" style="fill:#6d5640">約 3.7 億年前〜</text>
+<rect x="146" y="136" width="274" height="24" rx="4" fill="#8c7f5e"/>
+<text class="t" x="20" y="206" font-size="22" text-anchor="start">爬虫類</text>
+<text class="t" x="420" y="206" font-size="20" text-anchor="end" style="fill:#6d5640">約 3.2 億年前〜</text>
+<rect x="183" y="216" width="237" height="24" rx="4" fill="#a55b3a"/>
+<text class="t" x="20" y="286" font-size="22" text-anchor="start">哺乳類</text>
+<text class="t" x="420" y="286" font-size="20" text-anchor="end" style="fill:#6d5640">約 2.2 億年前〜</text>
+<rect x="257" y="296" width="163" height="24" rx="4" fill="#d19826"/>
+<text class="t tb" x="20" y="366" font-size="22" text-anchor="start" style="fill:#b7282e">ウサギ目</text>
+<text class="t" x="420" y="366" font-size="20" text-anchor="end" style="fill:#b7282e">約 5600 万年前〜</text>
+<rect x="379" y="376" width="41" height="24" rx="4" fill="#b7282e"/>
+<text class="t" x="20.0" y="462" font-size="20" text-anchor="start" style="fill:#6d5640">5.4</text>
+<text class="t" x="153.33333333333334" y="462" font-size="20" text-anchor="middle" style="fill:#6d5640">3.6</text>
+<text class="t" x="286.6666666666667" y="462" font-size="20" text-anchor="middle" style="fill:#6d5640">1.8</text>
+<text class="t" x="420.0" y="462" font-size="20" text-anchor="end" style="fill:#6d5640">現在</text>
+<text class="t" x="20" y="492" font-size="20" text-anchor="start" style="fill:#6d5640">（目盛りの単位：億年前）</text>
+</svg>
 <figcaption>基本的に「魚類→両生類→爬虫類→哺乳類→ウサギ目」の順に始まる。ウサギ目は、暁新世後期（幹群）の出現が最後である。</figcaption>
 </figure>
 </section>
@@ -705,35 +769,33 @@
 <p>魚類と四足動物の中間の特徴をもつ動物がいるとすれば、どの時代の地層を探すべきか。研究チームは、堆積環境から約 3 億 7500 万年前の地層を候補として調査を続けた。その結果、カナダ北極圏のエルズミア島で<span class="term">ティクターリク</span>が見つかった（ 2004 年に発見、 2006 年に記載）。ひれの中に腕に似た骨の並びをもち、首が動く、魚と四足動物の中間の動物である。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 240" role="img" aria-label="魚から四足動物への移行">
-  <g font-size="13" text-anchor="middle">
-    <rect x="10" y="50" width="160" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="90" y="80" font-weight="700">肉鰭類の魚</text>
-    <text x="90" y="104">約 3.8 億年前以前</text>
-    <text x="90" y="128">ひれに骨がある</text>
-    <text x="90" y="148" font-size="11" fill="#555">首は動かないのが一般的</text>
-    <rect x="200" y="50" width="160" height="110" rx="10" fill="#fde8e6" stroke="#c0392b" stroke-width="3"/>
-    <text x="280" y="80" font-weight="700" fill="#c0392b">ティクターリク</text>
-    <text x="280" y="104">約 3.75 億年前</text>
-    <text x="280" y="128" font-size="12">首が動く・ひれに関節</text>
-    <text x="280" y="148" font-size="11" fill="#555">浅い水辺で暮らした</text>
-    <rect x="390" y="50" width="160" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="470" y="80" font-weight="700">初期の四足動物</text>
-    <text x="470" y="104">約 3.6 億年前</text>
-    <text x="470" y="128">指をもつ四肢</text>
-    <text x="470" y="148" font-size="11" fill="#555">水辺〜陸を行き来</text>
-    <rect x="580" y="50" width="130" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="645" y="80" font-weight="700">爬虫類</text>
-    <text x="645" y="104">約 3.2 億年前</text>
-    <text x="645" y="128">陸上生活が定着</text>
-  </g>
-  <g stroke="#888" stroke-width="2" fill="#888">
-    <path d="M172,105 H190"/><polygon points="198,105 190,100 190,110"/>
-    <path d="M362,105 H380"/><polygon points="388,105 380,100 380,110"/>
-    <path d="M552,105 H570"/><polygon points="578,105 570,100 570,110"/>
-  </g>
-  <text x="360" y="205" text-anchor="middle" font-size="12" fill="#555">時代の順序と、体のつくりの変化が対応している</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 748" role="img" aria-label="魚から四足動物への移行">
+<defs><marker id="a16" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="30" y="10" width="380" height="144" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="50" font-size="24" text-anchor="middle">肉鰭類の魚</text>
+<text class="t" x="220" y="82" font-size="22" text-anchor="middle">約 3.8 億年前以前</text>
+<text class="t" x="220" y="110" font-size="22" text-anchor="middle">ひれに骨がある</text>
+<text class="t" x="220" y="138" font-size="20" text-anchor="middle" style="fill:#6d5640">首は動かないのが一般的</text>
+<line x1="220" y1="157" x2="220" y2="188" stroke="#6d5640" stroke-width="3" marker-end="url(#a16)"/>
+<rect x="30" y="192" width="380" height="144" rx="10" fill="#f3d5cc" stroke="#b7282e" stroke-width="4"/>
+<text class="t tb" x="220" y="232" font-size="24" text-anchor="middle" style="fill:#b7282e">ティクターリク</text>
+<text class="t" x="220" y="264" font-size="22" text-anchor="middle">約 3.75 億年前</text>
+<text class="t" x="220" y="292" font-size="22" text-anchor="middle">首が動く・ひれに関節</text>
+<text class="t" x="220" y="320" font-size="20" text-anchor="middle" style="fill:#6d5640">浅い水辺で暮らした</text>
+<line x1="220" y1="339" x2="220" y2="370" stroke="#6d5640" stroke-width="3" marker-end="url(#a16)"/>
+<rect x="30" y="374" width="380" height="144" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="414" font-size="24" text-anchor="middle">初期の四足動物</text>
+<text class="t" x="220" y="446" font-size="22" text-anchor="middle">約 3.6 億年前</text>
+<text class="t" x="220" y="474" font-size="22" text-anchor="middle">指をもつ四肢</text>
+<text class="t" x="220" y="502" font-size="20" text-anchor="middle" style="fill:#6d5640">水辺〜陸を行き来</text>
+<line x1="220" y1="521" x2="220" y2="552" stroke="#6d5640" stroke-width="3" marker-end="url(#a16)"/>
+<rect x="30" y="556" width="380" height="116" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="596" font-size="24" text-anchor="middle">爬虫類</text>
+<text class="t" x="220" y="628" font-size="22" text-anchor="middle">約 3.2 億年前</text>
+<text class="t" x="220" y="656" font-size="22" text-anchor="middle">陸上生活が定着</text>
+<text class="t" x="220" y="698" font-size="20" text-anchor="middle" style="fill:#6d5640">時代の順序と、体のつくりの変化が</text>
+<text class="t" x="220" y="726" font-size="20" text-anchor="middle" style="fill:#6d5640">対応している</text>
+</svg>
 <figcaption>中間的な体をもつ化石が、系統の予測と整合する時代の層から見つかった例である。ここに並べた動物は、直系の祖先ではなく、近縁の仲間を時代順に並べたものである。</figcaption>
 </figure>
 
@@ -741,36 +803,34 @@
 <p>クジラは、陸上で暮らしていた四足の哺乳類から進化した。パキスタンやインドなどで、約 5000 万年前から順に、陸と水辺を行き来する中間的な化石が見つかっている。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></p>
 
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 220" role="img" aria-label="クジラの進化（模式図）">
-  <g font-size="13" text-anchor="middle">
-    <rect x="10" y="40" width="150" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="85" y="68" font-weight="700">パキケトゥス</text>
-    <text x="85" y="92">約 5000 万年前</text>
-    <text x="85" y="114">四足で歩く</text>
-    <text x="85" y="134" font-size="11" fill="#555">水辺で暮らす</text>
-    <rect x="190" y="40" width="150" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="265" y="68" font-weight="700" font-size="12">アンブロケトゥス</text>
-    <text x="265" y="92">約 4900 万年前</text>
-    <text x="265" y="114" font-size="12">大きな足・泳ぎが得意</text>
-    <text x="265" y="134" font-size="11" fill="#555">ワニのような暮らし</text>
-    <rect x="370" y="40" width="150" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="445" y="68" font-weight="700">ロドケトゥス</text>
-    <text x="445" y="92">約 4700 万年前</text>
-    <text x="445" y="114">後ろ足が小さい</text>
-    <text x="445" y="134" font-size="11" fill="#555">水中生活が中心</text>
-    <rect x="550" y="40" width="160" height="110" rx="10" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="630" y="68" font-weight="700">バシロサウルス</text>
-    <text x="630" y="92">約 4000 万年前</text>
-    <text x="630" y="114">後ろ足は痕跡的</text>
-    <text x="630" y="134" font-size="11" fill="#555">ほぼ海の動物</text>
-  </g>
-  <g stroke="#888" stroke-width="2" fill="#888">
-    <path d="M162,95 H180"/><polygon points="188,95 180,90 180,100"/>
-    <path d="M342,95 H360"/><polygon points="368,95 360,90 360,100"/>
-    <path d="M522,95 H540"/><polygon points="548,95 540,90 540,100"/>
-  </g>
-  <text x="360" y="190" text-anchor="middle" font-size="12" fill="#555">時代が新しくなるほど、水中生活への適応が進んでいる</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 776" role="img" aria-label="クジラの進化（模式図）">
+<defs><marker id="a17" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="30" y="10" width="380" height="144" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="50" font-size="24" text-anchor="middle">パキケトゥス</text>
+<text class="t" x="220" y="82" font-size="22" text-anchor="middle">約 5000 万年前</text>
+<text class="t" x="220" y="110" font-size="22" text-anchor="middle">四足で歩く</text>
+<text class="t" x="220" y="138" font-size="20" text-anchor="middle" style="fill:#6d5640">水辺で暮らす</text>
+<line x1="220" y1="157" x2="220" y2="188" stroke="#6d5640" stroke-width="3" marker-end="url(#a17)"/>
+<rect x="30" y="192" width="380" height="144" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="232" font-size="24" text-anchor="middle">アンブロケトゥス</text>
+<text class="t" x="220" y="264" font-size="22" text-anchor="middle">約 4900 万年前</text>
+<text class="t" x="220" y="292" font-size="22" text-anchor="middle">大きな足・泳ぎが得意</text>
+<text class="t" x="220" y="320" font-size="20" text-anchor="middle" style="fill:#6d5640">ワニのような暮らし</text>
+<line x1="220" y1="339" x2="220" y2="370" stroke="#6d5640" stroke-width="3" marker-end="url(#a17)"/>
+<rect x="30" y="374" width="380" height="144" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="414" font-size="24" text-anchor="middle">ロドケトゥス</text>
+<text class="t" x="220" y="446" font-size="22" text-anchor="middle">約 4700 万年前</text>
+<text class="t" x="220" y="474" font-size="22" text-anchor="middle">後ろ足が小さい</text>
+<text class="t" x="220" y="502" font-size="20" text-anchor="middle" style="fill:#6d5640">水中生活が中心</text>
+<line x1="220" y1="521" x2="220" y2="552" stroke="#6d5640" stroke-width="3" marker-end="url(#a17)"/>
+<rect x="30" y="556" width="380" height="144" rx="10" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t tb" x="220" y="596" font-size="24" text-anchor="middle">バシロサウルス</text>
+<text class="t" x="220" y="628" font-size="22" text-anchor="middle">約 4000 万年前</text>
+<text class="t" x="220" y="656" font-size="22" text-anchor="middle">後ろ足は痕跡的</text>
+<text class="t" x="220" y="684" font-size="20" text-anchor="middle" style="fill:#6d5640">ほぼ海の動物</text>
+<text class="t" x="220" y="726" font-size="20" text-anchor="middle" style="fill:#6d5640">時代が新しくなるほど、水中生活への</text>
+<text class="t" x="220" y="754" font-size="20" text-anchor="middle" style="fill:#6d5640">適応が進んでいる</text>
+</svg>
 <figcaption>後ろ足が小さくなる順序が、地層の古さの順と並んでいる。ここに並べた動物は直系の祖先ではなく、近縁の仲間である。属ごとの年代には幅がある。</figcaption>
 </figure>
 
@@ -778,17 +838,17 @@
 <p>爬虫類と鳥類をつなぐ<span class="term">羽毛恐竜</span>や始祖鳥は、中生代の地層から見つかっている。中国の遼寧省などでは、羽毛の跡が残る小型恐竜の化石が多数見つかっている。</p>
 
 <h3 id="s7-4">7.4 化石が出る時代のまとめ</h3>
-<div class="scroll"><table>
+<table>
 <thead><tr><th>生物グループ</th><th>化石が出始める時代</th></tr></thead>
 <tbody>
-<tr><th scope="row">単細胞生物</th><td>先カンブリア時代（約 35 億年前〜）</td></tr>
-<tr><th scope="row">魚類</th><td>古生代（約 5 億年前〜）</td></tr>
-<tr><th scope="row">両生類</th><td>古生代後半（約 3.7 億年前〜）</td></tr>
-<tr><th scope="row">爬虫類</th><td>古生代後半（約 3.2 億年前〜）</td></tr>
-<tr><th scope="row">哺乳類</th><td>中生代（約 2.2 億年前〜）</td></tr>
-<tr><th scope="row">ウサギの仲間（ウサギ目）</th><td>新生代（暁新世後期の幹群、約 5600 万年前ごろ。確実なウサギ目は始新世前期後半から）</td></tr>
+<tr><th scope="row">単細胞生物</th><td data-label="化石が出始める時代">先カンブリア時代（約 35 億年前〜）</td></tr>
+<tr><th scope="row">魚類</th><td data-label="化石が出始める時代">古生代（約 5 億年前〜）</td></tr>
+<tr><th scope="row">両生類</th><td data-label="化石が出始める時代">古生代後半（約 3.7 億年前〜）</td></tr>
+<tr><th scope="row">爬虫類</th><td data-label="化石が出始める時代">古生代後半（約 3.2 億年前〜）</td></tr>
+<tr><th scope="row">哺乳類</th><td data-label="化石が出始める時代">中生代（約 2.2 億年前〜）</td></tr>
+<tr><th scope="row">ウサギの仲間（ウサギ目）</th><td data-label="化石が出始める時代">新生代（暁新世後期の幹群、約 5600 万年前ごろ。確実なウサギ目は始新世前期後半から）</td></tr>
 </tbody>
-</table></div>
+</table>
 </section>
 
 <section id="s8">
@@ -801,21 +861,20 @@
 
 <h3 id="s8-1">8.1 混入による見かけの年代</h3>
 <figure>
-<div class="scroll"><svg style="min-width:665px" width="100%" viewBox="0 0 720 240" role="img" aria-label="混入のしくみの図">
-  <rect x="40" y="20" width="400" height="55" fill="#d9c9a3"/>
-  <rect x="40" y="75" width="400" height="55" fill="#b39c72"/>
-  <rect x="40" y="130" width="400" height="70" fill="#7d6b4b"/>
-  <rect x="40" y="20" width="400" height="180" fill="none" stroke="#222" stroke-width="1.5"/>
-  <path d="M120,20 V170 Q120,180 135,180 H170" stroke="#222" stroke-width="14" fill="none" stroke-linecap="round" opacity=".35"/>
-  <circle cx="160" cy="180" r="9" fill="#fff" stroke="#c0392b" stroke-width="3"/>
-  <text x="470" y="60" font-size="13" font-weight="700" fill="#c0392b">巣穴を通じて運ばれた現代の骨</text>
-  <text x="470" y="82" font-size="13">古い層の中にあっても、</text>
-  <text x="470" y="102" font-size="13">地層と同じ年代とは限らない。</text>
-  <text x="470" y="140" font-size="13" font-weight="700" fill="#2a4d69">見分け方</text>
-  <text x="470" y="162" font-size="13">・穴の跡（周囲と土の色が違う）</text>
-  <text x="470" y="182" font-size="13">・骨の化学的な年代測定</text>
-  <text x="470" y="202" font-size="13">・骨の石化の度合い</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 470" role="img" aria-label="混入のしくみの図">
+<defs><marker id="a18" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="20" y="10" width="400" height="55" fill="#e0c38c"/><rect x="20" y="65" width="400" height="55" fill="#c4a972"/><rect x="20" y="120" width="400" height="70" fill="#917347"/>
+<rect x="20" y="10" width="400" height="180" fill="none" stroke="#3a2e2a" stroke-width="2"/>
+<path d="M80,10 V160 Q80,170 95,170 H130" stroke="#3a2e2a" stroke-width="14" fill="none" stroke-linecap="round" opacity=".45"/>
+<circle cx="120" cy="170" r="10" fill="#fff" stroke="#b7282e" stroke-width="3.5"/>
+<text class="t tb" x="20" y="236" font-size="22" text-anchor="start" style="fill:#b7282e">巣穴を通じて運ばれた現代の骨</text>
+<text class="t" x="20" y="266" font-size="22" text-anchor="start">古い層の中にあっても、</text>
+<text class="t" x="20" y="294" font-size="22" text-anchor="start">地層と同じ年代とは限らない。</text>
+<text class="t tb" x="20" y="346" font-size="22" text-anchor="start" style="fill:#5e3d50">見分け方</text>
+<text class="t" x="20" y="380" font-size="22" text-anchor="start">・穴の跡（周囲と土の色が違う）</text>
+<text class="t" x="20" y="410" font-size="22" text-anchor="start">・骨の化学的な年代測定</text>
+<text class="t" x="20" y="440" font-size="22" text-anchor="start">・骨の石化の度合い</text>
+</svg>
 <figcaption>混入の可能性を一つずつ除いたあとに、なお残る発見だけが反証の候補になる。</figcaption>
 </figure>
 
@@ -823,75 +882,68 @@
 <p>大きな地殻変動によって、古い地層が新しい地層の上に乗り上げる<span class="term">衝上断層</span>がある。北米のルイス衝上断層では、先カンブリア時代の岩石（ベルト超群）が白亜紀の地層の上に乗っている。この場合、上の層は実際には古い。ただし、時間が逆行したのではなく、できたあとの断層によって積み順が入れ替わったものである。断層という境目があることから、この状態だと判断できる。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></p>
 
 <figure>
-<div class="scroll"><svg style="min-width:720px" width="100%" viewBox="0 0 720 240" role="img" aria-label="衝上断層の図">
-  <g>
-    <text x="20" y="22" font-size="14" font-weight="700">① 通常：下が古い</text>
-    <rect x="20" y="35" width="190" height="40" fill="#d9c9a3"/>
-    <rect x="20" y="75" width="190" height="40" fill="#b39c72"/>
-    <rect x="20" y="115" width="190" height="40" fill="#7d6b4b"/>
-    <text x="30" y="60" font-size="12">新</text>
-    <text x="30" y="140" font-size="12" fill="#fff">古</text>
-  </g>
-  <g>
-    <text x="260" y="22" font-size="14" font-weight="700">② 横から押す力</text>
-    <rect x="260" y="95" width="200" height="40" fill="#d9c9a3"/>
-    <rect x="260" y="135" width="200" height="40" fill="#b39c72"/>
-    <rect x="300" y="55" width="120" height="40" fill="#7d6b4b"/>
-    <path d="M250,75 L290,75" stroke="#c0392b" stroke-width="3" marker-end="url(#a1)"/>
-    <text x="360" y="200" text-anchor="middle" font-size="12" fill="#555">古い岩盤が新しい層の上へ乗り上げる</text>
-  </g>
-  <g>
-    <text x="500" y="22" font-size="14" font-weight="700">③ 結果：順序が逆に見える</text>
-    <rect x="500" y="35" width="200" height="40" fill="#7d6b4b"/>
-    <rect x="500" y="75" width="200" height="40" fill="#d9c9a3"/>
-    <rect x="500" y="115" width="200" height="40" fill="#b39c72"/>
-    <line x1="500" y1="75" x2="700" y2="75" stroke="#c0392b" stroke-width="3" stroke-dasharray="6 4"/>
-    <text x="510" y="60" font-size="12" fill="#fff">古（乗り上げた岩盤）</text>
-    <text x="510" y="100" font-size="12">新</text>
-    <text x="600" y="185" text-anchor="middle" font-size="12" fill="#c0392b">断層面（点線）が境目</text>
-  </g>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 646" role="img" aria-label="衝上断層の図">
+<defs><marker id="a19" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker><marker id="a19r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#b7282e"/></marker></defs>
+<text class="t tb" x="20" y="28" font-size="22" text-anchor="start">① 通常：下が古い</text>
+<rect x="90" y="40" width="260" height="44" fill="#e0c38c"/>
+<rect x="90" y="84" width="260" height="44" fill="#c4a972"/>
+<rect x="90" y="128" width="260" height="44" fill="#917347"/>
+<text class="t" x="100" y="70" font-size="22" text-anchor="start">新</text>
+<text class="t" x="100" y="158" font-size="22" text-anchor="start" style="fill:#fff">古</text>
+<text class="t tb" x="20" y="228" font-size="22" text-anchor="start">② 横から押す力</text>
+<rect x="90" y="284" width="260" height="44" fill="#e0c38c"/><rect x="90" y="328" width="260" height="44" fill="#c4a972"/>
+<rect x="140" y="240" width="170" height="44" fill="#917347"/>
+<line x1="50" y1="262" x2="130" y2="262" stroke="#b7282e" stroke-width="4" marker-end="url(#a19r)"/>
+<text class="t" x="220" y="402" font-size="22" text-anchor="middle">古い岩盤が新しい層の上へ乗り上げる</text>
+<text class="t tb" x="20" y="458" font-size="22" text-anchor="start">③ 結果：順序が逆に見える</text>
+<rect x="90" y="470" width="260" height="44" fill="#917347"/><rect x="90" y="514" width="260" height="44" fill="#e0c38c"/><rect x="90" y="558" width="260" height="44" fill="#c4a972"/>
+<line x1="90" y1="514" x2="350" y2="514" stroke="#b7282e" stroke-width="4" stroke-dasharray="8 5"/>
+<text class="t" x="100" y="500" font-size="20" text-anchor="start" style="fill:#fff">古（乗り上げた岩盤）</text>
+<text class="t" x="100" y="544" font-size="22" text-anchor="start">新</text>
+<text class="t" x="220" y="632" font-size="22" text-anchor="middle" style="fill:#b7282e">断層面（点線）が境目</text>
+</svg>
 <figcaption>断層があるかどうかは、地質調査で確かめられる。上が古く見えるのは見かけの逆転であり、時間が逆行したわけではない。</figcaption>
 </figure>
 
 <h3 id="s8-3">8.3 判断の手順</h3>
 <p>古い地層から哺乳類の骨が見つかったとき、次の順に確かめる。どこかで「混入」または「地層の乱れ」と判明すれば、その発見は反証にならない。</p>
 <figure>
-<div class="scroll"><svg style="min-width:785px" width="100%" viewBox="0 0 720 300" role="img" aria-label="判断のフローチャート">
-  <g font-size="13" text-anchor="middle">
-    <rect x="240" y="10" width="240" height="40" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="2"/>
-    <text x="360" y="35" font-weight="700">古い地層から哺乳類の骨が出た</text>
-    <rect x="240" y="80" width="240" height="40" rx="8" fill="#fff" stroke="#222" stroke-width="2"/>
-    <text x="360" y="105">巣穴や割れ目からの混入では？</text>
-    <rect x="240" y="150" width="240" height="40" rx="8" fill="#fff" stroke="#222" stroke-width="2"/>
-    <text x="360" y="175">断層などで地層が乱れていない？</text>
-    <rect x="240" y="220" width="240" height="40" rx="8" fill="#fff" stroke="#222" stroke-width="2"/>
-    <text x="360" y="245">骨自体の年代は地層と一致する？</text>
-    <rect x="520" y="80" width="190" height="40" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="615" y="105" font-size="12">混入と判明 → 反証ではない</text>
-    <rect x="520" y="150" width="190" height="40" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="615" y="175" font-size="12">地層の乱れ → 反証ではない</text>
-    <rect x="520" y="220" width="190" height="40" rx="8" fill="#e6edf3" stroke="#2a4d69" stroke-width="2"/>
-    <text x="615" y="245" font-size="12">一致しない → 混入の可能性が高い</text>
-    <rect x="10" y="215" width="190" height="50" rx="8" fill="#fde8e6" stroke="#c0392b" stroke-width="3"/>
-    <text x="105" y="236" font-weight="700" fill="#c0392b">すべて除いても残る</text>
-    <text x="105" y="256" font-weight="700" fill="#c0392b">→ 反証の候補</text>
-  </g>
-  <g stroke="#888" stroke-width="2" fill="#888">
-    <path d="M360,52 V72"/><polygon points="360,80 354,72 366,72"/>
-    <path d="M360,122 V142"/><polygon points="360,150 354,142 366,142"/>
-    <path d="M360,192 V212"/><polygon points="360,220 354,212 366,212"/>
-    <path d="M482,100 H512"/><polygon points="520,100 512,95 512,105"/>
-    <path d="M482,170 H512"/><polygon points="520,170 512,165 512,175"/>
-    <path d="M482,240 H512"/><polygon points="520,240 512,235 512,245"/>
-    <path d="M238,240 H208"/><polygon points="200,240 208,235 208,245"/>
-  </g>
-  <text x="498" y="92" font-size="11" fill="#555" text-anchor="middle">はい</text>
-  <text x="498" y="162" font-size="11" fill="#555" text-anchor="middle">はい</text>
-  <text x="372" y="140" font-size="11" fill="#555">いいえ</text>
-  <text x="372" y="210" font-size="11" fill="#555">いいえ</text>
-  <text x="224" y="232" font-size="11" fill="#555" text-anchor="end">一致する</text>
-</svg></div>
+<svg class="vert" viewBox="0 0 440 676" role="img" aria-label="判断のフローチャート">
+<defs><marker id="a20" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#6d5640"/></marker></defs>
+<rect x="20" y="8" width="400" height="50" rx="8" fill="#f3d5cc" stroke="#b7282e" stroke-width="3"/>
+<text class="t tb" x="220" y="42" font-size="22" text-anchor="middle" style="fill:#b7282e">古い地層から哺乳類の骨が出た</text>
+<line x1="220" y1="61" x2="220" y2="95" stroke="#6d5640" stroke-width="3" marker-end="url(#a20)"/>
+<rect x="20" y="98" width="400" height="50" rx="8" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="220" y="132" font-size="22" text-anchor="middle">巣穴や割れ目からの混入では？</text>
+<line x1="60" y1="151" x2="60" y2="261" stroke="#6d5640" stroke-width="3" marker-end="url(#a20)"/>
+<text class="t" x="74" y="214" font-size="20" text-anchor="start" style="fill:#6d5640">いいえ</text>
+<line x1="300" y1="151" x2="300" y2="182" stroke="#6d5640" stroke-width="3" marker-end="url(#a20)"/>
+<text class="t" x="312" y="172" font-size="20" text-anchor="start" style="fill:#6d5640">はい</text>
+<rect x="162" y="184" width="258" height="66" rx="8" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t" x="291" y="210" font-size="22" text-anchor="middle">混入と判明</text>
+<text class="t" x="291" y="238" font-size="22" text-anchor="middle">→ 反証ではない</text>
+<rect x="20" y="264" width="400" height="50" rx="8" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="220" y="298" font-size="22" text-anchor="middle">断層などで地層が乱れていない？</text>
+<line x1="60" y1="317" x2="60" y2="427" stroke="#6d5640" stroke-width="3" marker-end="url(#a20)"/>
+<text class="t" x="74" y="380" font-size="20" text-anchor="start" style="fill:#6d5640">いいえ</text>
+<line x1="300" y1="317" x2="300" y2="348" stroke="#6d5640" stroke-width="3" marker-end="url(#a20)"/>
+<text class="t" x="312" y="338" font-size="20" text-anchor="start" style="fill:#6d5640">はい</text>
+<rect x="162" y="350" width="258" height="66" rx="8" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t" x="291" y="376" font-size="22" text-anchor="middle">地層の乱れ</text>
+<text class="t" x="291" y="404" font-size="22" text-anchor="middle">→ 反証ではない</text>
+<rect x="20" y="430" width="400" height="50" rx="8" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
+<text class="t" x="220" y="464" font-size="22" text-anchor="middle">骨自体の年代は地層と一致する？</text>
+<line x1="60" y1="483" x2="60" y2="593" stroke="#6d5640" stroke-width="3" marker-end="url(#a20)"/>
+<text class="t" x="74" y="546" font-size="20" text-anchor="start" style="fill:#6d5640">一致する</text>
+<line x1="300" y1="483" x2="300" y2="514" stroke="#6d5640" stroke-width="3" marker-end="url(#a20)"/>
+<text class="t" x="312" y="504" font-size="20" text-anchor="start" style="fill:#6d5640">一致しない</text>
+<rect x="162" y="516" width="258" height="66" rx="8" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
+<text class="t" x="291" y="542" font-size="22" text-anchor="middle">一致しない</text>
+<text class="t" x="291" y="570" font-size="22" text-anchor="middle">→ 混入の可能性が高い</text>
+<rect x="20" y="596" width="400" height="70" rx="8" fill="#f3d5cc" stroke="#b7282e" stroke-width="4"/>
+<text class="t tb" x="220" y="626" font-size="22" text-anchor="middle" style="fill:#b7282e">すべて除いても残る</text>
+<text class="t tb" x="220" y="654" font-size="22" text-anchor="middle" style="fill:#b7282e">→ 反証の候補</text>
+</svg>
 <figcaption>各段階の「はい」は、その発見が反証でないことを示す。骨の年代が地層と一致しない場合は、骨が後から混入した可能性が高い。</figcaption>
 </figure>
 </section>

@@ -6,120 +6,145 @@
 <title>FPV ドローンのマニューバ――操縦の仕組みと語の来歴</title>
 <style>
   :root{
-    --bg:#fffaf0; --ink:#2b2b3a; --muted:#6b6b80; --card:#ffffff; --line:#e6dcc8;
-    --red:#e5484d; --blue:#3b82f6; --yellow:#f5b800; --green:#2fa36b; --orange:#f08a24; --copper:#c77d2e;
-    --pale-red:#ffe9ea; --pale-blue:#e8f1ff; --pale-yellow:#fff5cf; --pale-green:#e4f6ec;
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"Hiragino Maru Gothic ProN","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.95;font-size:17px}
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
   .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
-  ruby rt{font-size:.55em;color:var(--muted)}
-  header.hero{background:linear-gradient(135deg,#ffe08a,#ffb36b);padding:36px 16px 28px;text-align:center}
-  .hero h1{margin:8px 0 6px;font-size:clamp(28px,6vw,44px);line-height:1.3}
-  .hero p{margin:0 auto;max-width:560px}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 20px;margin:24px 0}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px 16px 28px;text-align:center}
+  .hero h1{margin:8px 0 6px;font-size:clamp(30px,6vw,46px);line-height:1.3}
+  .hero p{margin:0 auto;max-width:600px}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0}
   nav.toc b{display:block;margin-bottom:4px}
   nav.toc ol{margin:0;padding-left:1.4em}
   nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none;border-bottom:2px dotted var(--orange)}
+  nav.toc a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px;text-underline-offset:.2em}
   @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:44px 0}
-  h2{font-size:clamp(22px,4.5vw,28px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:12px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
-  h3{font-size:20px;margin:26px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:10px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px}
+  section{margin:48px 0}
+  h2{font-size:clamp(24px,4.8vw,30px);margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:22px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
   figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:15px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:#a36b00}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:16px;padding:12px 18px;margin:18px 0}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
   .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--green)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--green)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
   .checklist .cl-title::before{content:"✅ "}
   .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:6px 0 6px 34px;border-bottom:2px dashed var(--line);font-size:15px;line-height:1.7}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
   .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:9px;width:20px;height:20px;accent-color:var(--green);cursor:pointer}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
   .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:14px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
   .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
   .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:14px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--orange)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:15px}
-  .card .e{font-size:38px;display:block}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
   .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:14px}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
   .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
   .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:14px;overflow:hidden;font-size:15px;line-height:1.7}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
   th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
   thead th{color:#fff}
   thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#efe3c8;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
-  .scroll{overflow-x:auto}
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--green)}
-  .quiz .ans{color:var(--green);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:#a36b00}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:14px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。doc-html-style から取り込み、kids の配色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:14px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:15px;line-height:1.7;margin:6px 0 12px}
+  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:16px;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
   .hero .subtitle{color:var(--ink)}
   .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:15px;line-height:1.9}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
   .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#fff1e0;border:2px solid #f6cf9d;border-radius:16px;padding:12px 18px;margin:0 0 22px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
   .box ul{margin:6px 0 0;padding-left:1.4em}
   .box strong{color:var(--ink)}
   .lede>:first-child,.box>:first-child{margin-top:0}
   .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:14px;color:var(--muted)}
+  .endnote{font-size:16px;color:var(--muted)}
   /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
   dl.summary{margin:14px 0}
   dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
   dl.summary dt{white-space:nowrap}
   dl.summary dt::after{content:"："}
   dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#ffe08a 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(doc-html-style から取り込み。マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.72em;line-height:0}
-  sup a{color:#a36b00;font-weight:bold;text-decoration:none}
-  sup a:hover{text-decoration:underline}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold}
   .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:14px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
   .refs ol{padding-left:1.8em}
   .refs .refs-note{color:var(--muted)}
-  .refs a{color:#a36b00}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold;text-decoration:none}
+  .refs li>a:first-child{font-weight:bold}
   .refs sup a{font-style:italic}
   .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
   /* SVG common */
   .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:15px} .tm{font-size:18px} .tb{font-weight:bold}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
   .white{fill:#fff}
-  /* この文書に固有の部品(旧 CSS から kids の配色で引き継いだもの) */
-  figure.diagram{margin:0 0 36px;padding:20px 18px 16px;background:#fff1e0;border:1px solid var(--line)}
-  figure.diagram svg{display:block;width:100%;height:auto;max-width:100%}
-  @media (max-width: 640px){figure.diagram{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative;padding-top:32px} figure.diagram svg{max-width:none} figure.diagram::before{content:"→ 横にスクロールできます";position:absolute;top:8px;right:14px;font-size:13px;color:var(--muted)}}
+  caption{text-align:left;font-weight:bold;font-size:20px;padding:0 0 6px}
+  @media(max-width:640px){caption{display:block;width:100%}}
 </style>
 </head>
 <body>
@@ -175,7 +200,6 @@
 </li>
 <li><a href="#s8">この記事の限界</a></li>
 <li><a href="#s9">おわりに</a></li>
-<li><a href="#s10">参考文献・資料</a></li>
 </ol>
 </nav>
 <section id="s1">
@@ -206,35 +230,25 @@
 
 <p>FPV ドローンの操縦は、ロール、ピッチ、ヨー、スロットルの四つの操作でできている。ロールは機体の前後方向の軸まわりの回転で、機体が左右に傾く。ピッチは左右方向の軸まわりの回転で、機首が上下に振れる。ヨーは上下方向の軸まわりの回転で、機首が左右を向く。四つの操作という構成と軸の呼び方は、航空機の一般的な説明に従ったもので、出典で確かめたのは次の二点にとどまる。ある解説は、ロールを「前後軸まわり」、フリップを「左右軸（ピッチ軸）まわり」の回転としている。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 別の解説は、ヨースピンを「ヨー軸まわりに機体を回す」動きとしている。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 四つ目のスロットルは、一般に推力の加減にあたるとされる。図 1 に、三つの軸と四つの操作の関係を示す。</p>
 
-<figure class="diagram">
-<svg style="min-width:591px" viewBox="0 0 640 260" role="img" aria-label="機体の三つの軸と四つの操作の模式図">
-<defs>
-<marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2a4d69"/></marker>
-</defs>
-<g stroke="#555" fill="none" stroke-width="2">
-<rect x="130" y="95" width="60" height="70" rx="6" fill="#e6edf3"/>
-<line x1="130" y1="95" x2="90" y2="55"/><line x1="190" y1="95" x2="230" y2="55"/>
-<line x1="130" y1="165" x2="90" y2="205"/><line x1="190" y1="165" x2="230" y2="205"/>
-<circle cx="85" cy="50" r="18"/><circle cx="235" cy="50" r="18"/>
-<circle cx="85" cy="210" r="18"/><circle cx="235" cy="210" r="18"/>
-</g>
-<g stroke="#2a4d69" stroke-width="2" fill="none" marker-end="url(#a1)">
-<line x1="160" y1="170" x2="160" y2="20"/>
-<line x1="60" y1="130" x2="260" y2="130"/>
-<path d="M115 130 A45 45 0 0 1 205 130"/>
-</g>
-<text x="168" y="30" font-size="14" fill="#222">ロール軸（前後）</text>
-<text x="40" y="250" font-size="14" fill="#222">上から見た機体（上が機首）</text>
-<text x="262" y="124" font-size="14" fill="#222">ピッチ軸（左右）</text>
-<text x="108" y="118" font-size="13" fill="#222">ヨー</text>
-<g stroke="#555" stroke-width="2" fill="none">
-<rect x="440" y="120" width="120" height="20" rx="6" fill="#e6edf3"/>
-</g>
-<g stroke="#2a4d69" stroke-width="2" fill="none" marker-end="url(#a1)">
-<line x1="500" y1="230" x2="500" y2="150"/>
-</g>
-<text x="440" y="110" font-size="14" fill="#222">横から見た機体</text>
-<text x="512" y="200" font-size="14" fill="#222">スロットル（推力）</text>
+<figure>
+<svg viewBox="0 0 440 560" role="img" aria-label="機体の三つの軸と四つの操作の模式図">
+<defs><marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5e3d50"/></marker></defs>
+<text class="t" x="220" y="30" font-size="22" text-anchor="middle">上から見た機体（上が機首）</text>
+<text class="t" x="220" y="64" font-size="22" text-anchor="middle" style="fill:#5e3d50">ロール軸（前後）</text>
+<g stroke="#6d5640" fill="none" stroke-width="3">
+<line x1="190" y1="175" x2="140" y2="125"/><circle cx="140" cy="125" r="26"/>
+<line x1="250" y1="175" x2="300" y2="125"/><circle cx="300" cy="125" r="26"/>
+<line x1="190" y1="245" x2="140" y2="295"/><circle cx="140" cy="295" r="26"/>
+<line x1="250" y1="245" x2="300" y2="295"/><circle cx="300" cy="295" r="26"/>
+<rect x="190" y="175" width="60" height="70" rx="8" fill="#e8dae0"/></g>
+<g stroke="#5e3d50" stroke-width="3.5" fill="none" marker-end="url(#a1)">
+<line x1="220" y1="340" x2="220" y2="84"/><line x1="40" y1="210" x2="416" y2="210"/><path d="M170 210 A50 50 0 0 1 270 210"/></g>
+<text class="t" x="432" y="242" font-size="22" text-anchor="end" style="fill:#5e3d50">ピッチ軸（左右）</text>
+<text class="t" x="156" y="194" font-size="22" text-anchor="end" style="fill:#5e3d50">ヨー</text>
+<text class="t" x="220" y="400" font-size="22" text-anchor="middle">横から見た機体</text>
+<rect x="160" y="420" width="120" height="24" rx="8" fill="#e8dae0" stroke="#6d5640" stroke-width="3"/>
+<line x1="220" y1="540" x2="220" y2="452" stroke="#5e3d50" stroke-width="3.5" marker-end="url(#a1)"/>
+<text class="t" x="240" y="506" font-size="22" text-anchor="start" style="fill:#5e3d50">スロットル（推力）</text>
 </svg>
 <figcaption>図 1 　機体の三つの軸と四つの操作（模式図）。ロールは前後軸、ピッチは左右軸、ヨーは上下軸まわりの回転。スロットルは推力の加減にあたる。ヨー軸は紙面に垂直で、弧の矢印がその回転を表す。</figcaption>
 </figure>
@@ -251,26 +265,30 @@
 
 <p>別の解説も、 Acro は Rate や Manual とも呼ばれると述べている。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup> 呼称は一つに決まっておらず、「マニュアル」は手動一般と紛れやすいが、ここでは自動で水平に戻さないモードを指す。図 2 は、同じ操作をしたときの姿勢の違いを描いたものである。</p>
 
-<figure class="diagram">
-<svg style="min-width:549px" viewBox="0 0 640 250" role="img" aria-label="Angle モードと Acro モードの姿勢の違いの模式図">
-<g stroke="#555" stroke-width="2" fill="none">
-<line x1="30" y1="125" x2="610" y2="125" stroke-dasharray="4 5" stroke="#bbb"/>
-</g>
-<g stroke="#222" stroke-width="5" stroke-linecap="round">
-<line x1="60" y1="55" x2="130" y2="55"/>
-<line x1="250" y1="42" x2="320" y2="68"/>
-<line x1="450" y1="55" x2="520" y2="55"/>
-<line x1="60" y1="195" x2="130" y2="195"/>
-<line x1="250" y1="182" x2="320" y2="208"/>
-<line x1="450" y1="182" x2="520" y2="208"/>
-</g>
-<g fill="#2a4d69" font-size="14">
-<text x="40" y="28">スティック中央</text>
-<text x="235" y="28">スティックを倒す</text>
-<text x="430" y="28">スティックを中央に戻す</text>
-<text x="40" y="108">Angle （自動で水平に戻る）</text>
-<text x="40" y="236">Acro （傾いたまま保つ）</text>
-</g>
+<figure>
+<svg viewBox="0 0 440 456" role="img" aria-label="Angle モードと Acro モードの姿勢の違いの模式図">
+<rect x="8" y="8" width="424" height="212" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="20" y="42" font-size="22" text-anchor="start" style="fill:#5e3d50">Angle （自動で水平に戻る）</text>
+<text class="t" x="20" y="90" font-size="22" text-anchor="start">スティック中央</text>
+<line x1="300" y1="82" x2="420" y2="82" stroke="#cdb98f" stroke-width="2" stroke-dasharray="4 5"/>
+<line x1="318" y1="82" x2="402" y2="82" stroke="#3a2e2a" stroke-width="6" stroke-linecap="round"/>
+<text class="t" x="20" y="142" font-size="22" text-anchor="start">スティックを倒す</text>
+<line x1="300" y1="134" x2="420" y2="134" stroke="#cdb98f" stroke-width="2" stroke-dasharray="4 5"/>
+<line x1="318" y1="120" x2="402" y2="148" stroke="#3a2e2a" stroke-width="6" stroke-linecap="round"/>
+<text class="t" x="20" y="194" font-size="22" text-anchor="start">スティックを中央に戻す</text>
+<line x1="300" y1="186" x2="420" y2="186" stroke="#cdb98f" stroke-width="2" stroke-dasharray="4 5"/>
+<line x1="318" y1="186" x2="402" y2="186" stroke="#3a2e2a" stroke-width="6" stroke-linecap="round"/>
+<rect x="8" y="236" width="424" height="212" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="20" y="270" font-size="22" text-anchor="start" style="fill:#5e3d50">Acro （傾いたまま保つ）</text>
+<text class="t" x="20" y="318" font-size="22" text-anchor="start">スティック中央</text>
+<line x1="300" y1="310" x2="420" y2="310" stroke="#cdb98f" stroke-width="2" stroke-dasharray="4 5"/>
+<line x1="318" y1="310" x2="402" y2="310" stroke="#3a2e2a" stroke-width="6" stroke-linecap="round"/>
+<text class="t" x="20" y="370" font-size="22" text-anchor="start">スティックを倒す</text>
+<line x1="300" y1="362" x2="420" y2="362" stroke="#cdb98f" stroke-width="2" stroke-dasharray="4 5"/>
+<line x1="318" y1="348" x2="402" y2="376" stroke="#3a2e2a" stroke-width="6" stroke-linecap="round"/>
+<text class="t" x="20" y="422" font-size="22" text-anchor="start">スティックを中央に戻す</text>
+<line x1="300" y1="414" x2="420" y2="414" stroke="#cdb98f" stroke-width="2" stroke-dasharray="4 5"/>
+<line x1="318" y1="400" x2="402" y2="428" stroke="#3a2e2a" stroke-width="6" stroke-linecap="round"/>
 </svg>
 <figcaption>図 2 　スティックを倒して戻したときの姿勢の違い（模式図）。上段の Angle は中央で水平に戻り、下段の Acro は傾いた姿勢を保つ。 Acro では、スティックを倒している間は回転が続く。</figcaption>
 </figure>
@@ -305,25 +323,21 @@
 
 <p>スプリット S とインメルマンターンは、有人機の曲技にもある名前である。まず有人機の側の定義を確認する。百科事典の記述では、スプリット S は、操縦者が機体を半ロール（横に半回転する動き）で逆さまにし、そこから下降しながら半ループ（縦に半円を描く動き）を描き、反対向きに、より低い高度で水平飛行に戻る機動である。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 空戦では、戦闘から離脱するときに使われるという。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 一方、インメルマンターンは、上昇しながら半ループを描いたあと半ロールで水平に戻り、反対向きに、より高い高度で飛ぶ機動で、スプリット S の対になる。 <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup><sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> スプリット S を「逆のインメルマンターン」と呼ぶこともあるという。 <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup> 図 3 に、この二つの軌跡を横から見た模式図で示す。</p>
 
-<figure class="diagram">
-<svg style="min-width:591px" viewBox="0 0 640 230" role="img" aria-label="スプリット S とインメルマンターンの軌跡の模式図">
-<defs>
-<marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2a4d69"/></marker>
-</defs>
-<g stroke="#2a4d69" stroke-width="3" fill="none" marker-end="url(#a3)">
-<path d="M30 50 H120 A40 40 0 0 1 120 130 H40"/>
-<path d="M350 130 H440 A40 40 0 0 0 440 50 H360"/>
-</g>
-<g fill="#222" font-size="14">
-<text x="30" y="30">スプリット S</text>
-<text x="350" y="22">インメルマンターン</text>
-<text x="30" y="75">半ロール</text>
-<text x="170" y="95">半ループで降下</text>
-<text x="30" y="155">反対向き・低い高度で終わる</text>
-<text x="350" y="42">半ロールで水平へ</text>
-<text x="350" y="72" font-size="13">反対向き・高い高度</text>
-<text x="350" y="155">半ループで上昇</text>
-</g>
+<figure>
+<svg viewBox="0 0 440 500" role="img" aria-label="スプリット S とインメルマンターンの軌跡の模式図">
+<defs><marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5e3d50"/></marker></defs>
+<rect x="8" y="8" width="424" height="232" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="20" y="40" font-size="24" text-anchor="start" style="fill:#5e3d50">スプリット S</text>
+<path d="M40 70 H220 A50 50 0 0 1 220 170 H80" stroke="#5e3d50" stroke-width="4" fill="none" marker-end="url(#a3)"/>
+<text class="t" x="40" y="100" font-size="22" text-anchor="start">半ロール</text>
+<text class="t" x="40" y="140" font-size="22" text-anchor="start">半ループで降下</text>
+<text class="t" x="20" y="212" font-size="22" text-anchor="start">反対向き・低い高度で終わる</text>
+<rect x="8" y="256" width="424" height="236" rx="10" fill="#fbf6ea" stroke="#cdb98f" stroke-width="2"/>
+<text class="t tb" x="20" y="290" font-size="24" text-anchor="start" style="fill:#5e3d50">インメルマンターン</text>
+<text class="t" x="40" y="324" font-size="22" text-anchor="start">半ロールで水平へ</text>
+<path d="M40 456 H220 A50 50 0 0 0 220 356 H80" stroke="#5e3d50" stroke-width="4" fill="none" marker-end="url(#a3)"/>
+<text class="t" x="40" y="398" font-size="22" text-anchor="start">反対向き・高い高度</text>
+<text class="t" x="40" y="438" font-size="22" text-anchor="start">半ループで上昇</text>
 </svg>
 <figcaption>図 3 　スプリット S とインメルマンターンの軌跡（現代の曲技の定義による模式図）。機首は矢印の向きで、左右それぞれ出発点から反対向きに抜ける。</figcaption>
 </figure>
@@ -356,18 +370,26 @@
 
 <p>最後に、出典の記述が食い違う技を表で見る。どれが正しいかは決めない。誰が、どんな性格の資料に、どう書いたかを並べる。</p>
 
-<div class="scroll"><table>
-<thead><tr><th>技</th><th>出典</th><th>記述の要旨</th><th>出典の性格</th></tr></thead>
+<table>
+<caption>マティ・フリップ</caption>
+<thead><tr><th>出典</th><th>記述の要旨</th><th>出典の性格</th></tr></thead>
 <tbody>
-<tr><td rowspan="5">マティ・フリップ</td><td>案内ページ（ 2021 年更新） <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td><td>「バックワード・スイング」と言い換える</td><td>販売元のサポート文書。説明文なし</td></tr>
-<tr><td>技の一覧 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></td><td>障害物の上を後ろ向きに回り、ループを決める</td><td>販売元の一覧。日付なし</td></tr>
-<tr><td>ブログ（著者 David 、 2026 年 6 月）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td><td>物体から離れながら始める後方ループで、その上を越えて元の方向へ抜ける。名はマティ・スタンツに由来</td><td>出典の引用なし</td></tr>
-<tr><td>販売系ブログ（ 2026 年 3 月） <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup></td><td>バックフリップとヨースピンの組み合わせ。カナダ人操縦者マット・シャーウッドに由来</td><td>販売系</td></tr>
-<tr><td>フォーラムのスレッド（ 2024 年 7 〜 8 月） <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td>半分のマティ（または逆スプリット S ）から後ろ向きの失速へ入る動き、と書く</td><td>個人の投稿</td></tr>
-<tr><td rowspan="2">リワインド</td><td>技の一覧 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></td><td>横へずれたあと、後ろへ急に戻って進路を逆転させる</td><td>販売元の一覧</td></tr>
-<tr><td>フォーラム投稿（ 2024 年 8 月） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></td><td>「巻き戻し」の技の一群があり、旋回点のまわりを回ってから急に逆へ戻る（上級）</td><td>個人の投稿</td></tr>
+<tr><th scope="row">案内ページ（ 2021 年更新） <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></th><td data-label="記述の要旨">「バックワード・スイング」と言い換える</td><td data-label="出典の性格">販売元のサポート文書。説明文なし</td></tr>
+<tr><th scope="row">技の一覧 <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></th><td data-label="記述の要旨">障害物の上を後ろ向きに回り、ループを決める</td><td data-label="出典の性格">販売元の一覧。日付なし</td></tr>
+<tr><th scope="row">ブログ（著者 David 、 2026 年 6 月）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></th><td data-label="記述の要旨">物体から離れながら始める後方ループで、その上を越えて元の方向へ抜ける。名はマティ・スタンツに由来</td><td data-label="出典の性格">出典の引用なし</td></tr>
+<tr><th scope="row">販売系ブログ（ 2026 年 3 月） <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup></th><td data-label="記述の要旨">バックフリップとヨースピンの組み合わせ。カナダ人操縦者マット・シャーウッドに由来</td><td data-label="出典の性格">販売系</td></tr>
+<tr><th scope="row">フォーラムのスレッド（ 2024 年 7 〜 8 月） <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></th><td data-label="記述の要旨">半分のマティ（または逆スプリット S ）から後ろ向きの失速へ入る動き、と書く</td><td data-label="出典の性格">個人の投稿</td></tr>
 </tbody>
-</table></div>
+</table>
+
+<table>
+<caption>リワインド</caption>
+<thead><tr><th>出典</th><th>記述の要旨</th><th>出典の性格</th></tr></thead>
+<tbody>
+<tr><th scope="row">技の一覧 <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup></th><td data-label="記述の要旨">横へずれたあと、後ろへ急に戻って進路を逆転させる</td><td data-label="出典の性格">販売元の一覧</td></tr>
+<tr><th scope="row">フォーラム投稿（ 2024 年 8 月） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></th><td data-label="記述の要旨">「巻き戻し」の技の一群があり、旋回点のまわりを回ってから急に逆へ戻る（上級）</td><td data-label="出典の性格">個人の投稿</td></tr>
+</tbody>
+</table>
 
 <p>マティ・フリップでは、「後ろ向きの動き」を含むという点は複数の出典で重なる。しかし、ループなのか、フリップとヨーの組み合わせなのか、物体を越えるのか、失速へ入るのかといった中身は割れている。由来も、マティ・スタンツ、マット・シャーウッドと人物名が食い違う。このため、人名に由来するとされるが詳細は出典によって異なる、という線を越えては書けない。</p>
 
@@ -455,16 +477,16 @@
 
 <h3 id="s7-1">7.1 航空法、登録、飛行禁止法</h3>
 
-<div class="scroll"><table>
+<table>
 <thead><tr><th>法令・制度</th><th>確認できた内容（ 2026 年 10 月時点）</th><th>重さなどによる区分</th><th>一次の出典</th></tr></thead>
 <tbody>
-<tr><th scope="row">航空法（無人航空機の定義）</th><td>飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td>機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td>国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
-<tr><th scope="row">機体登録とリモート ID</th><td>令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td>100g 以上</td><td>国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
-<tr><th scope="row">飛行禁止空域</th><td>空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td>—</td><td>国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
-<tr><th scope="row">飛行の方法</th><td>全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td>25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td>同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
-<tr><th scope="row">小型無人機等飛行禁止法</th><td>対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td>重量の制限なし</td><td>神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
+<tr><th scope="row">航空法（無人航空機の定義）</th><td data-label="確認できた内容（ 2026 年 10 月時点）">飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td data-label="重さなどによる区分">機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td data-label="一次の出典">国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
+<tr><th scope="row">機体登録とリモート ID</th><td data-label="確認できた内容（ 2026 年 10 月時点）">令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td data-label="重さなどによる区分">100g 以上</td><td data-label="一次の出典">国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
+<tr><th scope="row">飛行禁止空域</th><td data-label="確認できた内容（ 2026 年 10 月時点）">空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td data-label="重さなどによる区分">—</td><td data-label="一次の出典">国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
+<tr><th scope="row">飛行の方法</th><td data-label="確認できた内容（ 2026 年 10 月時点）">全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td data-label="重さなどによる区分">25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td data-label="一次の出典">同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
+<tr><th scope="row">小型無人機等飛行禁止法</th><td data-label="確認できた内容（ 2026 年 10 月時点）">対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td data-label="重さなどによる区分">重量の制限なし</td><td data-label="一次の出典">神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
 </tbody>
-</table></div>
+</table>
 
 <h3 id="s7-2">7.2 FPV で引っかかりやすい二つの点</h3>
 
@@ -500,7 +522,7 @@
 <p>四つの問いに、確認できた範囲で答えておく。第一に、 FPV の操縦は、四つの操作が三つの軸の回転と推力に対応する仕組みで、宙返りなどが多く Acro で行われるのは、 Acro ではスティックが回転の速さを決め、 Angle では角度を指示する仕組みが一回転に向かないと考えられるからである。第二に、技の定義は、ロールやフリップのようにそろうものと、マティ・フリップやリワインドのように割れるものがあり、名前の由来を出典で確かめられた例は少ない。第三に、「マニューバ」の語源は手仕事に行き着くが、それが FPV の用法を決めるとは言えず、語源が FPV の用法を説明すると言い切る根拠は得られなかった。第四に、日本で飛ばすには、機体の登録、飛行の方法、電波、飛行禁止の区域の各面で確かめるべき点があり、危険としては、電池の事故と、技に必要な高度の余裕が出典から読み取れる。</p>
 </section>
 <div class="refs">
-<h2 id="s10">10. 参考文献・資料</h2>
+<h2>参考文献・資料</h2>
 <p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> Rotor Riot Support 『 How do I do freestyle tricks? 』、 2021-10-26 更新。販売元のサポート文書で、技名の一覧が中心。取得日 2026-10-16 。 <a href="https://rotorriotsupport.helpscoutdocs.com/article/35-how-do-i-do-freestyle-tricks">Rotor Riot サポート文書</a></li>
