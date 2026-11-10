@@ -68,7 +68,17 @@
   thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -117,7 +127,6 @@
   .white{fill:#fff}
   /* この文書だけの追加 */
   thead th:nth-child(4){background:var(--green)}
-  .scroll table{min-width:600px}
   nav.toc>ol>li{break-inside:avoid}
   .hero h1{font-size:clamp(22px,4.2vw,34px);text-wrap:balance}
 </style>
@@ -279,14 +288,14 @@
 <p>動機としての優越への欲求は、自己高揚の研究の中に位置づけられる。セディキデスとグレッグは、自己高揚（自分を偏って肯定的に捉える現象の総称）を、観察される効果、進行中の過程、人格の特性、背後にある動機の四つの水準に整理した <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> （要旨と抜粋による。本文の詳細は未確認）。この整理に従えば、比較の場面で優越感を覚えること（効果）、比較のたびに自分を高く見ようとすること（過程）、その傾向の強さ（特性）、そして上にいようとする欲求（動機）は、別々に問える事柄になる。</p>
 <p>虚栄心は、承認の欲求の側から位置づけられる。 4.6 で見るルソーの amour propre は、他者との比較に伴って生じ、他者から優れた者として尊重されることを求める情念である。虚栄心は、この承認の欲求のうち、他者の目に映る見え方に向かう形として読める。優越感が、自分の内側で「上にいる」と確かめることに重心があるのに対し、虚栄心は、その位置を他者に見せ、認めさせることに重心がある。ただし、この対比は概念上の整理であり、両者を区別して検討した実証研究は、本稿の検索の範囲では確認できなかった。</p>
 <div class="scroll">
-<table>
+<table class="stack">
 <thead>
 <tr><th>概念</th><th>層</th><th>重心</th><th>本稿での手がかり</th></tr>
 </thead>
 <tbody>
-<tr><td><strong>優越感</strong></td><td>感情</td><td>自分の内側で「上にいる」と感じる</td><td>誇りの二つの側面（ 3.4 ）</td></tr>
-<tr><td><strong>優越への欲求</strong></td><td>動機</td><td>上にいようとする</td><td>自己高揚の四つの水準（ 3.4 ）、 4.1 〜 4.5</td></tr>
-<tr><td><strong>虚栄心</strong></td><td>提示</td><td>他者の目に映る見え方を飾り、示す</td><td>承認の比較的な構造（ 4.6 ）</td></tr>
+<tr><td data-label="概念"><strong>優越感</strong></td><td data-label="層">感情</td><td data-label="重心">自分の内側で「上にいる」と感じる</td><td data-label="本稿での手がかり">誇りの二つの側面（ 3.4 ）</td></tr>
+<tr><td data-label="概念"><strong>優越への欲求</strong></td><td data-label="層">動機</td><td data-label="重心">上にいようとする</td><td data-label="本稿での手がかり">自己高揚の四つの水準（ 3.4 ）、 4.1 〜 4.5</td></tr>
+<tr><td data-label="概念"><strong>虚栄心</strong></td><td data-label="層">提示</td><td data-label="重心">他者の目に映る見え方を飾り、示す</td><td data-label="本稿での手がかり">承認の比較的な構造（ 4.6 ）</td></tr>
 </tbody>
 </table>
 </div>
@@ -347,17 +356,17 @@
 <h3 id="s4-7">4.7 諸説の整理と、この類型への当てはめ</h3>
 <p>ここまでの各説を、主張の要点、この類型への当てはめ、根拠の状態の順に整理する。「根拠の状態」は、確認できた範囲での見立てであり、この類型に対する妥当性を保証するものではない。</p>
 <div class="scroll">
-<table>
+<table class="stack">
 <thead>
 <tr><th>説（領域）</th><th>主張の要点</th><th>この類型への当てはめ（可能性）</th><th>根拠の状態</th></tr>
 </thead>
 <tbody>
-<tr><td><mark>自己価値の随伴性</mark>：自己評価の維持と、自己価値の随伴性（心理学）<sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></td><td>自己価値が「他者より優れていること」などの条件に懸かると、比較が常に作動し、感情面が脆くなる。</td><td>「その場の優位」が自己価値の条件になっていると読める。</td><td>理論と実証研究がある。この類型への適用は仮説。</td></tr>
-<tr><td><mark>社会的ランクの感受性</mark>：社会的ランクとソシオメーター（心理学・進化的視点）<sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup><sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup><sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup><sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup></td><td>自尊心は排除のおそれを知らせる装置であり、低いランクは恥・不安・抑うつと結びつく。地位は他者の評価によって与えられ、敗北感は抑うつと関連する。</td><td>優位でいることが、恥や不安を避ける手段になっている可能性がある。</td><td>理論と調査がある。ギルバートの研究は二次要約による。地位の総説は要旨の原文が未確認。この類型への適用は仮説。</td></tr>
-<tr><td><mark>条件付きの関心を受けた経験</mark>：幼少期の経験：条件付きの関心（発達心理学）<sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup><sup id="fnref-21-2"><a href="#ref-21">[21]</a></sup></td><td>親の関心が行動に懸かる経験は、自尊心の変動や憤りと関連する。肯定的な形の条件付きの関心にも、自律性の支援に比べて代償がある。</td><td>「子供のころから」という時間の指定と整合しうるが、想定する人物の幼少期については何も想定していない。</td><td>調査研究がある。比較の習性を直接扱ってはいない。この類型への適用は仮説。</td></tr>
-<tr><td><mark>劣等感の補償</mark>：劣等感と優越性への努力（アドラー心理学）<sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup><sup id="fnref-24-2"><a href="#ref-24">[24]</a></sup><sup id="fnref-25-2"><a href="#ref-25">[25]</a></sup></td><td>劣等感を補う過程として、優越への努力が強まる。劣位を避ける努力としても読める。</td><td>優位への執着の背後に、劣っているという感覚があると読める。</td><td>二次資料による。実証的な裏づけは本稿では確認していない。尺度研究はあるが、補償の過程そのものを示したものではない。解釈の一つ。</td></tr>
-<tr><td><mark>脆弱な自己愛の自己調整</mark>：自己愛の二つの型と自己調整（精神医学・臨床心理学）<sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup></td><td>優位の追求は、否定的な自己像と苦痛を抱えた形でも現れ、その努力は逆効果になりうる。</td><td>苦痛の自覚と、「自分で自分を不幸にしている」という構造が似ている。診断ではない。</td><td>要旨による。非臨床の集団の研究と理論。診断には用いない。</td></tr>
-<tr><td><mark>承認の比較的な構造</mark>：承認と「まなざし」（哲学）<sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup><sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup><sup id="fnref-20-2"><a href="#ref-20">[20]</a></sup></td><td>承認の欲求は比較を含み、他者の目の中で自分を確かめることは人間に避けがたい。承認は愛・尊重・評価に分けられ、誤承認は自己との関係を損なう。</td><td>習性の普遍的な背景を示す。個人差は説明しない。評価の領域への依存として読める。</td><td>百科事典の記述による。実証研究ではなく、理解の枠組み。</td></tr>
+<tr><td data-label="説（領域）"><mark>自己価値の随伴性</mark>：自己評価の維持と、自己価値の随伴性（心理学）<sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></td><td data-label="主張の要点">自己価値が「他者より優れていること」などの条件に懸かると、比較が常に作動し、感情面が脆くなる。</td><td data-label="この類型への当てはめ（可能性）">「その場の優位」が自己価値の条件になっていると読める。</td><td data-label="根拠の状態">理論と実証研究がある。この類型への適用は仮説。</td></tr>
+<tr><td data-label="説（領域）"><mark>社会的ランクの感受性</mark>：社会的ランクとソシオメーター（心理学・進化的視点）<sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup><sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup><sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup><sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup></td><td data-label="主張の要点">自尊心は排除のおそれを知らせる装置であり、低いランクは恥・不安・抑うつと結びつく。地位は他者の評価によって与えられ、敗北感は抑うつと関連する。</td><td data-label="この類型への当てはめ（可能性）">優位でいることが、恥や不安を避ける手段になっている可能性がある。</td><td data-label="根拠の状態">理論と調査がある。ギルバートの研究は二次要約による。地位の総説は要旨の原文が未確認。この類型への適用は仮説。</td></tr>
+<tr><td data-label="説（領域）"><mark>条件付きの関心を受けた経験</mark>：幼少期の経験：条件付きの関心（発達心理学）<sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup><sup id="fnref-21-2"><a href="#ref-21">[21]</a></sup></td><td data-label="主張の要点">親の関心が行動に懸かる経験は、自尊心の変動や憤りと関連する。肯定的な形の条件付きの関心にも、自律性の支援に比べて代償がある。</td><td data-label="この類型への当てはめ（可能性）">「子供のころから」という時間の指定と整合しうるが、想定する人物の幼少期については何も想定していない。</td><td data-label="根拠の状態">調査研究がある。比較の習性を直接扱ってはいない。この類型への適用は仮説。</td></tr>
+<tr><td data-label="説（領域）"><mark>劣等感の補償</mark>：劣等感と優越性への努力（アドラー心理学）<sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup><sup id="fnref-24-2"><a href="#ref-24">[24]</a></sup><sup id="fnref-25-2"><a href="#ref-25">[25]</a></sup></td><td data-label="主張の要点">劣等感を補う過程として、優越への努力が強まる。劣位を避ける努力としても読める。</td><td data-label="この類型への当てはめ（可能性）">優位への執着の背後に、劣っているという感覚があると読める。</td><td data-label="根拠の状態">二次資料による。実証的な裏づけは本稿では確認していない。尺度研究はあるが、補償の過程そのものを示したものではない。解釈の一つ。</td></tr>
+<tr><td data-label="説（領域）"><mark>脆弱な自己愛の自己調整</mark>：自己愛の二つの型と自己調整（精神医学・臨床心理学）<sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup></td><td data-label="主張の要点">優位の追求は、否定的な自己像と苦痛を抱えた形でも現れ、その努力は逆効果になりうる。</td><td data-label="この類型への当てはめ（可能性）">苦痛の自覚と、「自分で自分を不幸にしている」という構造が似ている。診断ではない。</td><td data-label="根拠の状態">要旨による。非臨床の集団の研究と理論。診断には用いない。</td></tr>
+<tr><td data-label="説（領域）"><mark>承認の比較的な構造</mark>：承認と「まなざし」（哲学）<sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup><sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup><sup id="fnref-20-2"><a href="#ref-20">[20]</a></sup></td><td data-label="主張の要点">承認の欲求は比較を含み、他者の目の中で自分を確かめることは人間に避けがたい。承認は愛・尊重・評価に分けられ、誤承認は自己との関係を損なう。</td><td data-label="この類型への当てはめ（可能性）">習性の普遍的な背景を示す。個人差は説明しない。評価の領域への依存として読める。</td><td data-label="根拠の状態">百科事典の記述による。実証研究ではなく、理解の枠組み。</td></tr>
 </tbody>
 </table>
 </div>

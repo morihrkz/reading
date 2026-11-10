@@ -67,9 +67,19 @@
   thead th:first-child{background:var(--ink)}
   thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#faf3e2}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -214,50 +224,50 @@
 <p>以下の表は、十の表現について、意味、文法・語彙・語用論上の説明、起源の確かさの区分を示す。日本語訳は、原語の砕けた調子を反映して筆者が付けた一例である。例文のうち「作例」と記したものは筆者が作った短い文であり、その用法が成立することは、挙げた辞書・解説の記述で裏付けている。話者集団の全員がこれらを使うとは限らず、場面や個人によって使い分けられる点にも留意する必要がある。</p>
 
 <h3 id="s4-1">4.1 AAVE の五つの表現</h3>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>表現</th><th>意味</th><th>説明</th><th>起源と区分</th><th>例文と訳</th></tr></thead>
 <tbody>
-<tr><th scope="row"><code>ain't</code></th><td><code>have not</code> の否定。 AAVE では過去の否定（ <code>didn't</code> 相当）にも現れる。素材は <code>am not</code> から <code>have not</code> までの万能な否定語とするが、 <code>am not</code> や <code>is not</code> の用法は、本稿の出典では確認できていない。</td><td>文法。助動詞の否定形。過去の否定として使われる点が、他の多くの非標準変種と異なるとされる <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。 <code>ain't</code> の後の動詞は、原形のほか過去形も取りうる <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</td><td><strong>未確定</strong><br> 過去の <code>ain't</code> は、現在完了の <code>ain't</code> からの再分析とする提案がある一方、高年層が <code>ain't</code> と過去形の組み合わせを好むことから古い構成の可能性も指摘されている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</td><td><em>"I ain't see nothing."</em> <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。「何も見なかった」。素材の例文 <em>"He ain't listening to me."</em>（「彼は私の話を聞いていない」）の用法は、出典では確認できていない。</td></tr>
-<tr><th scope="row"><code>y'all</code></th><td>二人称の複数形。「あなたたち」。</td><td>語彙・文法。 you の複数形。辞書は、南部米語または AAVE に伝統的に結びつく複数形と説明する <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> 。丁寧さの度合いは中立的で、くだけた「お前ら」とは限らない。</td><td><strong>未確定</strong><br> スコッツ・アイリッシュ(<code>ye aw</code>)に由来する説と、初期のアフリカ系の変種に由来する説があり、初出年の記述も出典で食い違う（ 6.2 節）。</td><td>作例 <em>"Y'all coming tonight?"</em> 「皆さん、今夜来る ? 」</td></tr>
-<tr><th scope="row"><code>finna</code></th><td>「〜しようとしている」。</td><td>Language Log のコメントは、 <code>gonna</code> に近い助動詞的な語と見る <sup id="fnref-29-1"><a href="#ref-29">[29]</a></sup> が、一個人の見解であり根拠は弱い。 Merriam-Webster は、 <code>fixing to</code> を表す語と記す <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。語彙か相（動作の局面）の標識かという分類は、本稿では決めない。</td><td><strong>未確定</strong><br> <code>fixing to</code> の縮約という説明は、確認できた主要辞書の一点に基づく。音韻変化の過程と、縮約が AAVE に限られるかは確認していない <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。</td><td>作例 <em>"I'm finna head out."</em> 「そろそろ出るところだ」</td></tr>
-<tr><th scope="row"><code>cap</code> / <code>no cap</code></th><td><code>cap</code> は誇張や嘘。 <code>no cap</code> は「嘘ではない」。</td><td>語彙・語用論。 <code>no cap</code> は、発言の真実性を強調する標識として働く。 Merriam-Webster は、 <code>no cap</code> が真実性を伝えるものであり、それが修飾する発言自体は意図的に誇張されていることも多いと記す <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。</td><td><strong>未確定</strong><br> 黒人の語彙集 <em>Black Talk</em>(1994) を著した Smitherman は <code>cap</code> を「からかう、貶める」の意で定義するという。現在の意味とは同じでないが、意味上のつながりがありうる <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup> 。 Dictionary.com は、嘘・誇張の意味が 1900 年代初頭にさかのぼるとする <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。</td><td>作例 <em>"No cap, that was the best show."</em> 「嘘じゃなく、あれは最高の公演だった」</td></tr>
-<tr><th scope="row">habitual <code>be</code></th><td>習慣や反復を表す。</td><td>文法。屈折しない <code>be</code> が、習慣的・反復的な事態を表す。標準英語は、この区別を明示的に示さない <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> 。</td><td><strong>未確定</strong><br> 起源は、アイルランド英語からの拡散説などがあるが、カリブのクレオールには習慣の <code>be</code> の証拠がないという批判もある <sup id="fnref-27-2"><a href="#ref-27">[27]</a></sup> 。</td><td><em>"She be working all the time."</em> <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。「彼女はしょっちゅう働いている」</td></tr>
+<tr><th scope="row"><code>ain't</code></th><td data-label="意味"><code>have not</code> の否定。 AAVE では過去の否定（ <code>didn't</code> 相当）にも現れる。素材は <code>am not</code> から <code>have not</code> までの万能な否定語とするが、 <code>am not</code> や <code>is not</code> の用法は、本稿の出典では確認できていない。</td><td data-label="説明">文法。助動詞の否定形。過去の否定として使われる点が、他の多くの非標準変種と異なるとされる <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。 <code>ain't</code> の後の動詞は、原形のほか過去形も取りうる <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</td><td data-label="起源と区分"><strong>未確定</strong><br> 過去の <code>ain't</code> は、現在完了の <code>ain't</code> からの再分析とする提案がある一方、高年層が <code>ain't</code> と過去形の組み合わせを好むことから古い構成の可能性も指摘されている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</td><td data-label="例文と訳"><em>"I ain't see nothing."</em> <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。「何も見なかった」。素材の例文 <em>"He ain't listening to me."</em>（「彼は私の話を聞いていない」）の用法は、出典では確認できていない。</td></tr>
+<tr><th scope="row"><code>y'all</code></th><td data-label="意味">二人称の複数形。「あなたたち」。</td><td data-label="説明">語彙・文法。 you の複数形。辞書は、南部米語または AAVE に伝統的に結びつく複数形と説明する <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> 。丁寧さの度合いは中立的で、くだけた「お前ら」とは限らない。</td><td data-label="起源と区分"><strong>未確定</strong><br> スコッツ・アイリッシュ(<code>ye aw</code>)に由来する説と、初期のアフリカ系の変種に由来する説があり、初出年の記述も出典で食い違う（ 6.2 節）。</td><td data-label="例文と訳">作例 <em>"Y'all coming tonight?"</em> 「皆さん、今夜来る ? 」</td></tr>
+<tr><th scope="row"><code>finna</code></th><td data-label="意味">「〜しようとしている」。</td><td data-label="説明">Language Log のコメントは、 <code>gonna</code> に近い助動詞的な語と見る <sup id="fnref-29-1"><a href="#ref-29">[29]</a></sup> が、一個人の見解であり根拠は弱い。 Merriam-Webster は、 <code>fixing to</code> を表す語と記す <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。語彙か相（動作の局面）の標識かという分類は、本稿では決めない。</td><td data-label="起源と区分"><strong>未確定</strong><br> <code>fixing to</code> の縮約という説明は、確認できた主要辞書の一点に基づく。音韻変化の過程と、縮約が AAVE に限られるかは確認していない <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。</td><td data-label="例文と訳">作例 <em>"I'm finna head out."</em> 「そろそろ出るところだ」</td></tr>
+<tr><th scope="row"><code>cap</code> / <code>no cap</code></th><td data-label="意味"><code>cap</code> は誇張や嘘。 <code>no cap</code> は「嘘ではない」。</td><td data-label="説明">語彙・語用論。 <code>no cap</code> は、発言の真実性を強調する標識として働く。 Merriam-Webster は、 <code>no cap</code> が真実性を伝えるものであり、それが修飾する発言自体は意図的に誇張されていることも多いと記す <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。</td><td data-label="起源と区分"><strong>未確定</strong><br> 黒人の語彙集 <em>Black Talk</em>(1994) を著した Smitherman は <code>cap</code> を「からかう、貶める」の意で定義するという。現在の意味とは同じでないが、意味上のつながりがありうる <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup> 。 Dictionary.com は、嘘・誇張の意味が 1900 年代初頭にさかのぼるとする <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。</td><td data-label="例文と訳">作例 <em>"No cap, that was the best show."</em> 「嘘じゃなく、あれは最高の公演だった」</td></tr>
+<tr><th scope="row">habitual <code>be</code></th><td data-label="意味">習慣や反復を表す。</td><td data-label="説明">文法。屈折しない <code>be</code> が、習慣的・反復的な事態を表す。標準英語は、この区別を明示的に示さない <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> 。</td><td data-label="起源と区分"><strong>未確定</strong><br> 起源は、アイルランド英語からの拡散説などがあるが、カリブのクレオールには習慣の <code>be</code> の証拠がないという批判もある <sup id="fnref-27-2"><a href="#ref-27">[27]</a></sup> 。</td><td data-label="例文と訳"><em>"She be working all the time."</em> <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。「彼女はしょっちゅう働いている」</td></tr>
 </tbody>
 </table></div>
 <p>habitual <code>be</code> の意味は、素材の「恒常的な状態」ではなく、習慣・反復と記す方が出典に近い <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。状態を表す述語との共起の制約については、確認できていない。</p>
 
 <h3 id="s4-2">4.2 MLE の五つの表現</h3>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>表現</th><th>意味</th><th>説明</th><th>起源と区分</th><th>例文と訳</th></tr></thead>
 <tbody>
-<tr><th scope="row"><code>bruv</code> / <code>blud</code></th><td>友人や仲間への呼びかけ。「おい」「兄弟」に近い。</td><td>語彙・語用論。呼びかけ語 (vocative) 。 MLE の特徴として、一群の呼びかけ語が多用される点が挙げられている <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。ただし、 <code>bruv</code> 自体の語義の出典は確認できていない。</td><td><strong>投機的</strong><br> <code>blud</code> の語源を <code>blood</code> や <code>bredren</code> とする説明は、辞書的な裏付けを確認できていない。素材の「ジャマイカ英語の blood brother 」は、そのような表現の実在を確認できず、削除した。</td><td>作例 <em>"Alright, bruv?"</em> 「調子はどう ? 」</td></tr>
-<tr><th scope="row"><code>innit</code></th><td>付加疑問の標識。「〜だよね」。</td><td>語用論。 <code>isn't it</code> の縮約から生じ、形の変わらない (invariant) 付加疑問として使われる <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。</td><td><strong>未確定</strong><br> 文法化（頻度による音声の縮約と再分析）を主とする説明が提案され、言語接触の影響は補助的で暫定的とされる（ 6.3 節）。</td><td><em>"Potato is good for you, innit."</em> <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 。「ジャガイモは体にいい、でしょ」</td></tr>
-<tr><th scope="row"><code>mandem</code></th><td>男性の仲間の集団。「連中」。</td><td>語彙・形態論。 <code>man</code> に <code>dem</code> が付く。 <code>dem</code> の文法的な働きは、分析が割れている（ 6.3 節）。</td><td><strong>未確定</strong><br> オンライン辞書はジャマイカ・クレオールの <code>man dem</code> からの借用と記すが、研究文献では確認しておらず、補助的な根拠にとどまる。女性形 <code>gyaldem</code> は、実在を確認できず削除した。</td><td>作例 <em>"The mandem are outside."</em> 「仲間たちは外にいる」</td></tr>
-<tr><th scope="row"><code>ting</code></th><td>「物」。複合語の <code>peng ting</code> は「非常に魅力的な女性」。</td><td>語彙。 Green's Dictionary of Slang は、 <code>peng ting</code> を英国の黒人スラングとして「非常に魅力的な女性」と定義する <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。素材の「気になっている相手」という語義は、裏付けが取れず訂正した。</td><td><strong>未確定</strong><br> 単独の <code>ting</code> がジャマイカの <code>thing</code> に由来するという説明は、辞書的な裏付けを十分に確認できていない。</td><td>見出し語形 <em>peng ting</em> 。「魅力的な女性」。引用文は、女性を品定めする文脈にあるため、代表例として採らない。</td></tr>
-<tr><th scope="row"><code>allow it</code></th><td>「やめろ」。会話や口論を終わらせる命令。</td><td>語用論。 Green's Dictionary of Slang は、「会話や口論を止める」の意で、英国の黒人・若者のスラングと記す <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。素材の「勘弁してくれ」という哀願の語感は、裏付けが取れなかった。</td><td><strong>未確定</strong><br> 1997 年以降の引用があるが <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 、語源の説明は確認できていない。</td><td><em>"'Low it, man, I don't have to tell you, it's nothing to do with this business."</em>（翻訳小説からの引用）<sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> 。「やめろよ。お前に言う必要はない。この件とは関係ない」</td></tr>
+<tr><th scope="row"><code>bruv</code> / <code>blud</code></th><td data-label="意味">友人や仲間への呼びかけ。「おい」「兄弟」に近い。</td><td data-label="説明">語彙・語用論。呼びかけ語 (vocative) 。 MLE の特徴として、一群の呼びかけ語が多用される点が挙げられている <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。ただし、 <code>bruv</code> 自体の語義の出典は確認できていない。</td><td data-label="起源と区分"><strong>投機的</strong><br> <code>blud</code> の語源を <code>blood</code> や <code>bredren</code> とする説明は、辞書的な裏付けを確認できていない。素材の「ジャマイカ英語の blood brother 」は、そのような表現の実在を確認できず、削除した。</td><td data-label="例文と訳">作例 <em>"Alright, bruv?"</em> 「調子はどう ? 」</td></tr>
+<tr><th scope="row"><code>innit</code></th><td data-label="意味">付加疑問の標識。「〜だよね」。</td><td data-label="説明">語用論。 <code>isn't it</code> の縮約から生じ、形の変わらない (invariant) 付加疑問として使われる <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。</td><td data-label="起源と区分"><strong>未確定</strong><br> 文法化（頻度による音声の縮約と再分析）を主とする説明が提案され、言語接触の影響は補助的で暫定的とされる（ 6.3 節）。</td><td data-label="例文と訳"><em>"Potato is good for you, innit."</em> <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 。「ジャガイモは体にいい、でしょ」</td></tr>
+<tr><th scope="row"><code>mandem</code></th><td data-label="意味">男性の仲間の集団。「連中」。</td><td data-label="説明">語彙・形態論。 <code>man</code> に <code>dem</code> が付く。 <code>dem</code> の文法的な働きは、分析が割れている（ 6.3 節）。</td><td data-label="起源と区分"><strong>未確定</strong><br> オンライン辞書はジャマイカ・クレオールの <code>man dem</code> からの借用と記すが、研究文献では確認しておらず、補助的な根拠にとどまる。女性形 <code>gyaldem</code> は、実在を確認できず削除した。</td><td data-label="例文と訳">作例 <em>"The mandem are outside."</em> 「仲間たちは外にいる」</td></tr>
+<tr><th scope="row"><code>ting</code></th><td data-label="意味">「物」。複合語の <code>peng ting</code> は「非常に魅力的な女性」。</td><td data-label="説明">語彙。 Green's Dictionary of Slang は、 <code>peng ting</code> を英国の黒人スラングとして「非常に魅力的な女性」と定義する <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。素材の「気になっている相手」という語義は、裏付けが取れず訂正した。</td><td data-label="起源と区分"><strong>未確定</strong><br> 単独の <code>ting</code> がジャマイカの <code>thing</code> に由来するという説明は、辞書的な裏付けを十分に確認できていない。</td><td data-label="例文と訳">見出し語形 <em>peng ting</em> 。「魅力的な女性」。引用文は、女性を品定めする文脈にあるため、代表例として採らない。</td></tr>
+<tr><th scope="row"><code>allow it</code></th><td data-label="意味">「やめろ」。会話や口論を終わらせる命令。</td><td data-label="説明">語用論。 Green's Dictionary of Slang は、「会話や口論を止める」の意で、英国の黒人・若者のスラングと記す <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。素材の「勘弁してくれ」という哀願の語感は、裏付けが取れなかった。</td><td data-label="起源と区分"><strong>未確定</strong><br> 1997 年以降の引用があるが <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 、語源の説明は確認できていない。</td><td data-label="例文と訳"><em>"'Low it, man, I don't have to tell you, it's nothing to do with this business."</em>（翻訳小説からの引用）<sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup> 。「やめろよ。お前に言う必要はない。この件とは関係ない」</td></tr>
 </tbody>
 </table></div>
 
 <h3 id="s4-3">4.3 追加の用例 (AAVE)</h3>
 <p>次の四つは、 Hawaii LangNet が AAVE の特徴として挙げる例文である <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 。同ページは、これらの特徴が体系的であり、かつ変異を伴う、すなわち標準形と交替して現れると述べる。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>用例</th><th>意味</th><th>説明</th><th>出典</th></tr></thead>
 <tbody>
-<tr><th scope="row"><em>"He been married."</em><br>「彼は（ずっと前から）結婚している」</th><td>遠い過去から続く状態。</td><td>文法。この文は現在も既婚であることを示す。</td><td><sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><th scope="row"><em>"He done eat his dinner."</em><br>「彼は夕食を食べ終えた」</th><td>完了。</td><td>文法。 <code>done</code> が完了を表す標識として動詞の前に置かれ、動詞自体は屈折しない。</td><td><sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><th scope="row"><em>"I ain't see nothing."</em><br>「何も見なかった」</th><td>否定の一致（複数の否定語が一つの否定を表す）と、過去の <code>ain't</code> の併用。</td><td>文法。標準英語では二重否定が肯定に読まれうるが、この構文では否定が文中の複数の位置に現れても、意味は否定一つである。</td><td><sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><th scope="row"><em>"Can't nobody beat 'em."</em><br>「誰も彼らには勝てない」</th><td>否定倒置。</td><td>文法。否定の助動詞が主語の前に移る。標準英語の疑問文の語順と見かけは似るが、平叙文として使われる。</td><td><sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row"><em>"He been married."</em><br>「彼は（ずっと前から）結婚している」</th><td data-label="意味">遠い過去から続く状態。</td><td data-label="説明">文法。この文は現在も既婚であることを示す。</td><td data-label="出典"><sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row"><em>"He done eat his dinner."</em><br>「彼は夕食を食べ終えた」</th><td data-label="意味">完了。</td><td data-label="説明">文法。 <code>done</code> が完了を表す標識として動詞の前に置かれ、動詞自体は屈折しない。</td><td data-label="出典"><sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row"><em>"I ain't see nothing."</em><br>「何も見なかった」</th><td data-label="意味">否定の一致（複数の否定語が一つの否定を表す）と、過去の <code>ain't</code> の併用。</td><td data-label="説明">文法。標準英語では二重否定が肯定に読まれうるが、この構文では否定が文中の複数の位置に現れても、意味は否定一つである。</td><td data-label="出典"><sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row"><em>"Can't nobody beat 'em."</em><br>「誰も彼らには勝てない」</th><td data-label="意味">否定倒置。</td><td data-label="説明">文法。否定の助動詞が主語の前に移る。標準英語の疑問文の語順と見かけは似るが、平叙文として使われる。</td><td data-label="出典"><sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup></td></tr>
 </tbody>
 </table></div>
 
 <h3 id="s4-4">4.4 追加の用例 (MLE)</h3>
 <p>次の三つは、 Green's Dictionary of Slang の見出しと引用に基づく。同辞書の引用には小説・映画の脚本が含まれる。これらは実際の話し言葉の記録ではなく、作者が話し言葉を写したものである。したがって、使用の実態を示す証拠としては限界がある。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>用例</th><th>意味</th><th>説明</th><th>出典</th></tr></thead>
 <tbody>
-<tr><th scope="row"><em>"What-a-gwarn? How comes you reach home so early?"</em> （ 1999 年の小説より）<br>「どうした。なんでこんなに早く帰ってきたんだ」</th><td><code>wagwan</code> 。「調子はどう」「何が起きている」。</td><td>語用論。挨拶として働く。 <code>what's going on</code> の縮約で、西インド諸島と英国の黒人の若者のスラングと記される。</td><td><sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
-<tr><th scope="row"><em>"He was 1 peng boi I had been chatin 2 4 tym."</em> （ 2005 年の小説より、原文の綴りのまま）<br>「ずっと話していた、いい感じの男子だった」</th><td>非特定の肯定的な意味で「良い」。</td><td>語彙。英国の黒人のスラング。語源は <code>pong</code>（強い匂いの大麻）で、そこから一般的な優良の意味に広がったと記される。</td><td><sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td></tr>
-<tr><th scope="row"><em>"we'd have bare dough, we'd have bare money in our pocket."</em> （ 2005 年の新聞より）<br>「金がたっぷりあって、ポケットにはいくらでも入っていた」</th><td><code>bare</code> 。「たくさんの」。</td><td>語彙・形態。数量を表す形容詞。バルバドス英語の <code>bare</code>（「〜だけ」「過剰な」）に由来すると記される。 2016 年の新聞は、 <code>bare</code> を最も広まった語の一つに挙げる。</td><td><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th scope="row"><em>"What-a-gwarn? How comes you reach home so early?"</em> （ 1999 年の小説より）<br>「どうした。なんでこんなに早く帰ってきたんだ」</th><td data-label="意味"><code>wagwan</code> 。「調子はどう」「何が起きている」。</td><td data-label="説明">語用論。挨拶として働く。 <code>what's going on</code> の縮約で、西インド諸島と英国の黒人の若者のスラングと記される。</td><td data-label="出典"><sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><th scope="row"><em>"He was 1 peng boi I had been chatin 2 4 tym."</em> （ 2005 年の小説より、原文の綴りのまま）<br>「ずっと話していた、いい感じの男子だった」</th><td data-label="意味">非特定の肯定的な意味で「良い」。</td><td data-label="説明">語彙。英国の黒人のスラング。語源は <code>pong</code>（強い匂いの大麻）で、そこから一般的な優良の意味に広がったと記される。</td><td data-label="出典"><sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><th scope="row"><em>"we'd have bare dough, we'd have bare money in our pocket."</em> （ 2005 年の新聞より）<br>「金がたっぷりあって、ポケットにはいくらでも入っていた」</th><td data-label="意味"><code>bare</code> 。「たくさんの」。</td><td data-label="説明">語彙・形態。数量を表す形容詞。バルバドス英語の <code>bare</code>（「〜だけ」「過剰な」）に由来すると記される。 2016 年の新聞は、 <code>bare</code> を最も広まった語の一つに挙げる。</td><td data-label="出典"><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
 </tbody>
 </table></div>
 <p>MLE の文法面では、引用辞（発言を引く導入の語）の <code>this is</code> に代名詞が続く形（ <em>this is me</em> など）と、 <code>man</code> の代名詞的な用法が、特徴として挙げられている <sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup><sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup> 。これらの具体的な例文は、本稿では確認できなかった。 MLE を語彙（スラング）の面でのみ語ることは、 AAVE が文法で語られる傾向と非対称であり、誤った対比を生むおそれがある。本稿は、この偏りを資料の限界として記す。</p>

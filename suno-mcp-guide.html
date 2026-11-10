@@ -67,9 +67,19 @@
   thead th:first-child{background:var(--ink)}
   thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#faf3e2}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -325,12 +335,12 @@
 <h2><span class="no">4</span>経路の選び方</h2>
 <h3 id="s4-1">4.1 三つの経路の比較</h3>
 <p>Claude に Suno をつなぐ経路は、本書では三つに分ける。経路 A-1 と A-2 は、画面の操作でつなぐ。経路 B は、ターミナルのコマンドでつなぐ。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>経路</th><th>操作の場所</th><th>必要なもの</th><th>注意点</th></tr></thead>
 <tbody>
-<tr><th scope="row">A-1 : Claude アプリのカスタムコネクタ</th><td>Claude アプリの Customize > Connectors</td><td>Claude のアカウント(Free でも一つまで可)。 <sup id="fnref-7-4"><a href="#ref-7">[7]</a></sup></td><td>Team と Enterprise は、所有者が先に追加する。 <sup id="fnref-7-5"><a href="#ref-7">[7]</a></sup></td></tr>
-<tr><th scope="row">A-2 : Claude アプリの Code タブ</th><td>Code タブの入力欄の横の「 + 」</td><td>Code タブを使える Claude のアカウント。必要なプランは、資料で確認できなかった。</td><td>コネクタの項目は WSL のセッションでは使えない。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td></tr>
-<tr><th scope="row">B : ターミナルの Claude Code</th><td>ターミナル</td><td>Claude Code のインストールとログイン。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td><td>コマンドを自分で打つ。追加した場所(スコープ)の考え方がある。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><th scope="row">A-1 : Claude アプリのカスタムコネクタ</th><td data-label="操作の場所">Claude アプリの Customize > Connectors</td><td data-label="必要なもの">Claude のアカウント(Free でも一つまで可)。 <sup id="fnref-7-4"><a href="#ref-7">[7]</a></sup></td><td data-label="注意点">Team と Enterprise は、所有者が先に追加する。 <sup id="fnref-7-5"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><th scope="row">A-2 : Claude アプリの Code タブ</th><td data-label="操作の場所">Code タブの入力欄の横の「 + 」</td><td data-label="必要なもの">Code タブを使える Claude のアカウント。必要なプランは、資料で確認できなかった。</td><td data-label="注意点">コネクタの項目は WSL のセッションでは使えない。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th scope="row">B : ターミナルの Claude Code</th><td data-label="操作の場所">ターミナル</td><td data-label="必要なもの">Claude Code のインストールとログイン。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td><td data-label="注意点">コマンドを自分で打つ。追加した場所(スコープ)の考え方がある。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
 </tbody>
 </table></div>
 
@@ -507,17 +517,17 @@ claude</code></pre>
 <section id="s8">
 <h2><span class="no">8</span>困ったとき</h2>
 <p>次の表は、症状から引ける対処である。根拠のあるものだけを載せた。ここにない症状は、 Suno の FAQ と、 Claude の公式ヘルプを確認してほしい。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>症状</th><th>考えられる原因</th><th>確かめること</th><th>対処</th></tr></thead>
 <tbody>
-<tr><th scope="row">AI アシスタントの一覧に Suno が出てこない</th><td>Suno は自動では一覧に出ないことがある。 <sup id="fnref-3-11"><a href="#ref-3">[3]</a></sup></td><td>使っているアシスタントが、カスタムコネクタに対応しているか。</td><td>カスタムコネクタとして追加する(ステップ A1-2 )。 <sup id="fnref-3-12"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><th scope="row">Suno がつながらない</th><td>URL の入力の誤り。サインインや承認が終わっていない。 <sup id="fnref-3-13"><a href="#ref-3">[3]</a></sup></td><td>URL が <code>https://api.suno.com/mcp</code> と一字一句同じか。</td><td>URL を直し、サインインと承認をやり直す。 <sup id="fnref-3-14"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><th scope="row"><code class="term">claude</code> が見つからない</th><td>インストール先が PATH に入っていない。 <sup id="fnref-8-18"><a href="#ref-8">[8]</a></sup></td><td>ターミナルを開き直したか。</td><td>Anthropic の Quickstart の PATH に関する案内に従う。 <sup id="fnref-8-19"><a href="#ref-8">[8]</a></sup></td></tr>
-<tr><th scope="row">インストールのコマンドがエラーになる</th><td>打った場所(PowerShell か CMD か)と、コマンドの種類が合っていない可能性がある(作成者の推測)。</td><td>行頭に <code>PS</code> が付いているか。 <sup id="fnref-8-20"><a href="#ref-8">[8]</a></sup></td><td>自分の場所に合うコマンドを使う(ステップ B2 )。それでも失敗するときは、 Anthropic のインストールの案内を確認する。 <sup id="fnref-8-21"><a href="#ref-8">[8]</a></sup></td></tr>
-<tr><th scope="row">サインインのブラウザが開かない</th><td>自動でブラウザが開かないことがある。 <sup id="fnref-6-12"><a href="#ref-6">[6]</a></sup></td><td>画面に URL が表示されているか。</td><td>表示された URL をコピーして、手でブラウザで開く。 <sup id="fnref-6-13"><a href="#ref-6">[6]</a></sup></td></tr>
-<tr><th scope="row">別のフォルダで <code class="term">claude</code> を起動すると suno が出ない</th><td>既定の追加先は、追加したフォルダの中だけで有効である。 <sup id="fnref-6-14"><a href="#ref-6">[6]</a></sup></td><td>追加したときと同じフォルダか。</td><td>追加したフォルダで起動する。全プロジェクトで使う設定は、公式の資料で確認する。 <sup id="fnref-6-15"><a href="#ref-6">[6]</a></sup></td></tr>
-<tr><th scope="row">Code タブのコネクタの項目が選べない</th><td>WSL のセッションでは、グレーになる。 <sup id="fnref-9-13"><a href="#ref-9">[9]</a></sup></td><td>セッションが WSL か。</td><td>WSL でないセッションで開いてみる(作成者の推奨。資料に対処の記載はない)。 <sup id="fnref-9-14"><a href="#ref-9">[9]</a></sup></td></tr>
-<tr><th scope="row">カスタムコネクタを追加できない</th><td>Free は一つまで。 Team と Enterprise は所有者のみ追加できる。 <sup id="fnref-7-17"><a href="#ref-7">[7]</a></sup></td><td>プランと、すでに追加した数。</td><td>不要なコネクタを外すか、所有者に頼む。 <sup id="fnref-7-18"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><th scope="row">AI アシスタントの一覧に Suno が出てこない</th><td data-label="考えられる原因">Suno は自動では一覧に出ないことがある。 <sup id="fnref-3-11"><a href="#ref-3">[3]</a></sup></td><td data-label="確かめること">使っているアシスタントが、カスタムコネクタに対応しているか。</td><td data-label="対処">カスタムコネクタとして追加する(ステップ A1-2 )。 <sup id="fnref-3-12"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">Suno がつながらない</th><td data-label="考えられる原因">URL の入力の誤り。サインインや承認が終わっていない。 <sup id="fnref-3-13"><a href="#ref-3">[3]</a></sup></td><td data-label="確かめること">URL が <code>https://api.suno.com/mcp</code> と一字一句同じか。</td><td data-label="対処">URL を直し、サインインと承認をやり直す。 <sup id="fnref-3-14"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row"><code class="term">claude</code> が見つからない</th><td data-label="考えられる原因">インストール先が PATH に入っていない。 <sup id="fnref-8-18"><a href="#ref-8">[8]</a></sup></td><td data-label="確かめること">ターミナルを開き直したか。</td><td data-label="対処">Anthropic の Quickstart の PATH に関する案内に従う。 <sup id="fnref-8-19"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><th scope="row">インストールのコマンドがエラーになる</th><td data-label="考えられる原因">打った場所(PowerShell か CMD か)と、コマンドの種類が合っていない可能性がある(作成者の推測)。</td><td data-label="確かめること">行頭に <code>PS</code> が付いているか。 <sup id="fnref-8-20"><a href="#ref-8">[8]</a></sup></td><td data-label="対処">自分の場所に合うコマンドを使う(ステップ B2 )。それでも失敗するときは、 Anthropic のインストールの案内を確認する。 <sup id="fnref-8-21"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><th scope="row">サインインのブラウザが開かない</th><td data-label="考えられる原因">自動でブラウザが開かないことがある。 <sup id="fnref-6-12"><a href="#ref-6">[6]</a></sup></td><td data-label="確かめること">画面に URL が表示されているか。</td><td data-label="対処">表示された URL をコピーして、手でブラウザで開く。 <sup id="fnref-6-13"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><th scope="row">別のフォルダで <code class="term">claude</code> を起動すると suno が出ない</th><td data-label="考えられる原因">既定の追加先は、追加したフォルダの中だけで有効である。 <sup id="fnref-6-14"><a href="#ref-6">[6]</a></sup></td><td data-label="確かめること">追加したときと同じフォルダか。</td><td data-label="対処">追加したフォルダで起動する。全プロジェクトで使う設定は、公式の資料で確認する。 <sup id="fnref-6-15"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><th scope="row">Code タブのコネクタの項目が選べない</th><td data-label="考えられる原因">WSL のセッションでは、グレーになる。 <sup id="fnref-9-13"><a href="#ref-9">[9]</a></sup></td><td data-label="確かめること">セッションが WSL か。</td><td data-label="対処">WSL でないセッションで開いてみる(作成者の推奨。資料に対処の記載はない)。 <sup id="fnref-9-14"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th scope="row">カスタムコネクタを追加できない</th><td data-label="考えられる原因">Free は一つまで。 Team と Enterprise は所有者のみ追加できる。 <sup id="fnref-7-17"><a href="#ref-7">[7]</a></sup></td><td data-label="確かめること">プランと、すでに追加した数。</td><td data-label="対処">不要なコネクタを外すか、所有者に頼む。 <sup id="fnref-7-18"><a href="#ref-7">[7]</a></sup></td></tr>
 </tbody>
 </table></div>
 </section>

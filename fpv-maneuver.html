@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -455,14 +465,14 @@
 
 <h3 id="s7-1">7.1 航空法、登録、飛行禁止法</h3>
 
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>法令・制度</th><th>確認できた内容（ 2026 年 10 月時点）</th><th>重さなどによる区分</th><th>一次の出典</th></tr></thead>
 <tbody>
-<tr><th scope="row">航空法（無人航空機の定義）</th><td>飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td>機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td>国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
-<tr><th scope="row">機体登録とリモート ID</th><td>令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td>100g 以上</td><td>国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
-<tr><th scope="row">飛行禁止空域</th><td>空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td>—</td><td>国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
-<tr><th scope="row">飛行の方法</th><td>全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td>25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td>同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
-<tr><th scope="row">小型無人機等飛行禁止法</th><td>対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td>重量の制限なし</td><td>神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
+<tr><th scope="row">航空法（無人航空機の定義）</th><td data-label="確認できた内容（ 2026 年 10 月時点）">飛行機・回転翼航空機・滑空機・飛行船のうち、遠隔操作または自動操縦で飛行でき、構造上人が乗れないものが対象。令和 4 年 6 月 20 日から 100g 以上のものが対象</td><td data-label="重さなどによる区分">機体本体とバッテリーの合計が 100g 未満のものは除外。ただし航空法 134 条の 3 の規制を受ける場合がある</td><td data-label="一次の出典">国土交通省「飛行ルール」の対象機体のページ <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></td></tr>
+<tr><th scope="row">機体登録とリモート ID</th><td data-label="確認できた内容（ 2026 年 10 月時点）">令和 4 年 6 月 20 日以降、 100g 以上の無人航空機の登録が義務。登録後は登録記号の表示と、リモート ID （機体の識別情報を発信する機能）の搭載が必要。登録の有効期間は 3 年</td><td data-label="重さなどによる区分">100g 以上</td><td data-label="一次の出典">国土交通省航空局の登録制度の資料 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></td></tr>
+<tr><th scope="row">飛行禁止空域</th><td data-label="確認できた内容（ 2026 年 10 月時点）">空港等の周辺、緊急用務空域（許可があっても飛行不可）、地表または水面から 150m 以上、人口集中地区（人や家屋が密集する地域）の上空</td><td data-label="重さなどによる区分">—</td><td data-label="一次の出典">国土交通省「飛行ルール」の禁止空域のページ <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></td></tr>
+<tr><th scope="row">飛行の方法</th><td data-label="確認できた内容（ 2026 年 10 月時点）">全飛行に共通して、飲酒・薬物の影響下で飛ばさない、飛行前確認、衝突の予防、他人に迷惑を及ぼす方法で飛ばさない。夜間、目視外、人や物件との距離が取れない飛行などには承認が要る</td><td data-label="重さなどによる区分">25kg 未満で、条件を満たせば許可・承認が不要となる場合がある</td><td data-label="一次の出典">同上 <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 、許可・承認のページ <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup></td></tr>
+<tr><th scope="row">小型無人機等飛行禁止法</th><td data-label="確認できた内容（ 2026 年 10 月時点）">対象施設の周辺地域の上空は原則飛行禁止。重量の制限はない。令和 8 年 7 月の改正で、周辺地域（イエローゾーン）が「おおむね 300m 」から「 1000m 」に拡大し、イエローゾーンでの違反の罰則が新設された。施行日は出典のページに明記がない</td><td data-label="重さなどによる区分">重量の制限なし</td><td data-label="一次の出典">神奈川県警察のページ（ 2026 年 7 月 27 日更新） <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup></td></tr>
 </tbody>
 </table></div>
 

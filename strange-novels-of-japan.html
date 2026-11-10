@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -170,16 +180,16 @@
 
 <section id="s2">
 <h2><span class="no">2</span>三作品の概要</h2>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>項目</th><th>『黒死館殺人事件』</th><th>『虚無への供物』</th><th>『ドグラ・マグラ』</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">作者</th><td>小栗虫太郎（ 1901 〜 1946 ）</td><td>中井英夫（ 1922 〜 1993 ）</td><td>夢野久作（ 1889 〜 1936 ）</td></tr>
-<tr><th scope="row">発表</th><td>1934 年、雑誌『新青年』に連載。 1935 年に単行本化</td><td>1964 年、書き下ろしの長編として刊行（初刊は「塔晶夫」名義）</td><td>1935 年 1 月、松柏館書店から書き下ろしで刊行 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><th scope="row">主な人物</th><td>探偵・法水麟太郎（のりみず りんたろう）</td><td>素人の探偵たち（奈々村久生、光田亜利夫ら）</td><td>記憶を失った「わたし」、法医学者・若林鏡太郎、精神医学者・正木敬之、呉一郎ら</td></tr>
-<tr><th scope="row">舞台</th><td>降矢木（ふるやぎ）家の洋館、通称「黒死館」</td><td>氷沼（ひぬま）家とその周辺。 1950 年代の東京</td><td>九州帝国大学医学部の精神病棟（福岡）</td></tr>
-<tr><th scope="row">奇書たるゆえん</th><td>衒学（ペダントリー）の過剰。難読の語彙と文体</td><td>推理小説への自己批評。反推理小説（アンチ・ミステリ）</td><td>入れ子の構造と、宙づりの真相。読者を迷宮に誘う</td></tr>
+<tr><th scope="row">作者</th><td data-label="『黒死館殺人事件』">小栗虫太郎（ 1901 〜 1946 ）</td><td data-label="『虚無への供物』">中井英夫（ 1922 〜 1993 ）</td><td data-label="『ドグラ・マグラ』">夢野久作（ 1889 〜 1936 ）</td></tr>
+<tr><th scope="row">発表</th><td data-label="『黒死館殺人事件』">1934 年、雑誌『新青年』に連載。 1935 年に単行本化</td><td data-label="『虚無への供物』">1964 年、書き下ろしの長編として刊行（初刊は「塔晶夫」名義）</td><td data-label="『ドグラ・マグラ』">1935 年 1 月、松柏館書店から書き下ろしで刊行 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">主な人物</th><td data-label="『黒死館殺人事件』">探偵・法水麟太郎（のりみず りんたろう）</td><td data-label="『虚無への供物』">素人の探偵たち（奈々村久生、光田亜利夫ら）</td><td data-label="『ドグラ・マグラ』">記憶を失った「わたし」、法医学者・若林鏡太郎、精神医学者・正木敬之、呉一郎ら</td></tr>
+<tr><th scope="row">舞台</th><td data-label="『黒死館殺人事件』">降矢木（ふるやぎ）家の洋館、通称「黒死館」</td><td data-label="『虚無への供物』">氷沼（ひぬま）家とその周辺。 1950 年代の東京</td><td data-label="『ドグラ・マグラ』">九州帝国大学医学部の精神病棟（福岡）</td></tr>
+<tr><th scope="row">奇書たるゆえん</th><td data-label="『黒死館殺人事件』">衒学（ペダントリー）の過剰。難読の語彙と文体</td><td data-label="『虚無への供物』">推理小説への自己批評。反推理小説（アンチ・ミステリ）</td><td data-label="『ドグラ・マグラ』">入れ子の構造と、宙づりの真相。読者を迷宮に誘う</td></tr>
 </tbody>
 </table></div>
 </section>
@@ -243,16 +253,16 @@
 
 <section id="s6">
 <h2><span class="no">6</span>三作品の比較</h2>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>観点</th><th>『黒死館殺人事件』</th><th>『虚無への供物』</th><th>『ドグラ・マグラ』</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">奇書の方向</th><td>過剰な知識と文体による「読みの困難」</td><td>形式への自己批評による「問いの転倒」</td><td>入れ子の構造と宙づりの真相による「迷宮」</td></tr>
-<tr><th scope="row">探偵の姿</th><td>博識で超人的な名探偵</td><td>遊戯に熱中する素人たち</td><td>記憶を失った語り手自身が、自らの正体をたどる</td></tr>
-<tr><th scope="row">推理の位置づけ</th><td>知識の連想による大きな飛躍</td><td>推理そのものが、作品の批評の対象</td><td>真相が明言されず、解決の枠そのものが揺らぐ</td></tr>
-<tr><th scope="row">読後感</th><td>圧倒される。あるいは挫折する</td><td>問いを突きつけられ、考えこむ</td><td>再読を迫られ、足元が揺らぐ</td></tr>
-<tr><th scope="row">向く読者</th><td>文体や衒学そのものを楽しめる人</td><td>推理小説の約束事に親しんだうえで、それを問い直したい人</td><td>解決のない迷宮を、繰り返し読んで味わえる人</td></tr>
+<tr><th scope="row">奇書の方向</th><td data-label="『黒死館殺人事件』">過剰な知識と文体による「読みの困難」</td><td data-label="『虚無への供物』">形式への自己批評による「問いの転倒」</td><td data-label="『ドグラ・マグラ』">入れ子の構造と宙づりの真相による「迷宮」</td></tr>
+<tr><th scope="row">探偵の姿</th><td data-label="『黒死館殺人事件』">博識で超人的な名探偵</td><td data-label="『虚無への供物』">遊戯に熱中する素人たち</td><td data-label="『ドグラ・マグラ』">記憶を失った語り手自身が、自らの正体をたどる</td></tr>
+<tr><th scope="row">推理の位置づけ</th><td data-label="『黒死館殺人事件』">知識の連想による大きな飛躍</td><td data-label="『虚無への供物』">推理そのものが、作品の批評の対象</td><td data-label="『ドグラ・マグラ』">真相が明言されず、解決の枠そのものが揺らぐ</td></tr>
+<tr><th scope="row">読後感</th><td data-label="『黒死館殺人事件』">圧倒される。あるいは挫折する</td><td data-label="『虚無への供物』">問いを突きつけられ、考えこむ</td><td data-label="『ドグラ・マグラ』">再読を迫られ、足元が揺らぐ</td></tr>
+<tr><th scope="row">向く読者</th><td data-label="『黒死館殺人事件』">文体や衒学そのものを楽しめる人</td><td data-label="『虚無への供物』">推理小説の約束事に親しんだうえで、それを問い直したい人</td><td data-label="『ドグラ・マグラ』">解決のない迷宮を、繰り返し読んで味わえる人</td></tr>
 </tbody>
 </table></div>
 </section>

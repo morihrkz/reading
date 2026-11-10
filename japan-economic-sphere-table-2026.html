@@ -67,9 +67,19 @@
   thead th:first-child{background:var(--ink)}
   thead th:nth-child(2){background:var(--orange)} thead th:nth-child(3){background:var(--blue)}
   thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#faf3e2;white-space:nowrap}
+  tbody th{background:#faf3e2}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -128,7 +138,12 @@
 <nav class="toc" aria-label="目次">
 <b>📖 目次</b>
 <ol>
-<li><a href="#s1">経済圏ごとの構成</a></li>
+<li><a href="#s1">経済圏ごとの構成</a>
+<ol>
+<li><a href="#s1-1">通信・コード決済・カード・ポイント</a></li>
+<li><a href="#s1-2">銀行・証券・保険</a></li>
+</ol>
+</li>
 <li><a href="#s2">凡例と注</a>
 <ol>
 <li><a href="#s2-1">表記の凡例</a></li>
@@ -143,147 +158,188 @@
 <section id="s1">
 <h2><span class="no">1</span>経済圏ごとの構成</h2>
 
-<div class="scroll"><table>
+<h3 id="s1-1">1.1 通信・コード決済・カード・ポイント</h3>
+<div class="scroll"><table class="stack">
  <thead>
-  <tr>
-   <th scope="col">グループ</th>
-   <th scope="col">通信</th><th scope="col">コード決済</th>
-   <th scope="col">クレジットカード</th>
-   <th scope="col">ポイント</th>
-   <th scope="col">銀行</th>
-   <th scope="col">証券</th><th scope="col">保険</th>
-  </tr>
+  <tr><th scope="col">グループ</th><th scope="col">通信</th><th scope="col">コード決済</th><th scope="col">クレジットカード</th><th scope="col">ポイント</th></tr>
  </thead>
  <tbody>
   <tr>
    <th scope="row">au （注 1 ）</th>
-   <td>au<br>UQ mobile<br>povo</td>
-   <td>au PAY</td>
-   <td>au PAY カード</td>
-   <td>Ponta ポイント〔提携〕</td>
-   <td>au じぶん銀行〔共同〕〔完了未確認〕</td>
-   <td>三菱 UFJ e スマート証券〔提携〕</td>
-   <td>au フィナンシャルサービス（損害保険代理業）</td>
+   <td data-label="通信">au<br>UQ mobile<br>povo</td>
+   <td data-label="コード決済">au PAY</td>
+   <td data-label="クレジットカード">au PAY カード</td>
+   <td data-label="ポイント">Ponta ポイント〔提携〕</td>
   </tr>
   <tr>
    <th scope="row">ソフトバンク／ PayPay （注 2 ）</th>
-   <td>ソフトバンク<br>Y!mobile （ワイモバイル）</td>
-   <td>PayPay</td>
-   <td>PayPay カード〔資本関係未確認〕</td>
-   <td>PayPay ポイント</td>
-   <td>PayPay 銀行〔出資〕〔完了未確認〕</td>
-   <td>PayPay 証券〔共同〕</td>
-   <td>PayPay 保険サービス〔資本関係未確認〕</td>
+   <td data-label="通信">ソフトバンク<br>Y!mobile （ワイモバイル）</td>
+   <td data-label="コード決済">PayPay</td>
+   <td data-label="クレジットカード">PayPay カード〔資本関係未確認〕</td>
+   <td data-label="ポイント">PayPay ポイント</td>
   </tr>
   <tr>
    <th scope="row">ドコモ（注 3 ）</th>
-   <td>ドコモ<br>ahamo</td>
-   <td>d 払い</td>
-   <td>d カード</td>
-   <td>d ポイント</td>
-   <td>ドコモ SMTB ネット銀行〔共同〕</td>
-   <td>マネックス証券〔共同〕</td>
-   <td>ドコモ・インシュアランス〔資本関係未確認〕<br>日新火災海上保険（火災保険）〔提携〕</td>
+   <td data-label="通信">ドコモ<br>ahamo</td>
+   <td data-label="コード決済">d 払い</td>
+   <td data-label="クレジットカード">d カード</td>
+   <td data-label="ポイント">d ポイント</td>
   </tr>
   <tr>
    <th scope="row">三井住友（注 4 ）</th>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>三井住友カード</td>
-   <td>V ポイント</td>
-   <td>三井住友銀行</td>
-   <td>SMBC 日興証券<br>SBI 証券〔提携〕</td>
-   <td>ライフネット生命〔出資〕</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">三井住友カード</td>
+   <td data-label="ポイント">V ポイント</td>
   </tr>
   <tr>
    <th scope="row">楽天（注 5 ）</th>
-   <td>楽天モバイル</td>
-   <td>楽天ペイ</td>
-   <td>楽天カード〔共同〕〔完了未確認〕</td>
-   <td>楽天ポイント</td>
-   <td>楽天銀行〔出資〕〔完了未確認〕</td>
-   <td>楽天証券〔共同〕〔完了未確認〕</td>
-   <td>楽天生命保険<br>楽天損害保険<br>楽天少額短期保険</td>
+   <td data-label="通信">楽天モバイル</td>
+   <td data-label="コード決済">楽天ペイ</td>
+   <td data-label="クレジットカード">楽天カード〔共同〕〔完了未確認〕</td>
+   <td data-label="ポイント">楽天ポイント</td>
   </tr>
   <tr>
    <th scope="row">セブン＆アイ（注 6 ）</th>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>セブン・カードサービス（セブンカード・プラス）〔出資〕〔完了未確認〕</td>
-   <td>nanaco ポイント〔出資〕〔完了未確認〕</td>
-   <td>セブン銀行〔出資〕</td>
-   <td>未確認</td>
-   <td>セブン・フィナンシャルサービス（保険サービス事業）</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">セブン・カードサービス（セブンカード・プラス）〔出資〕〔完了未確認〕</td>
+   <td data-label="ポイント">nanaco ポイント〔出資〕〔完了未確認〕</td>
   </tr>
   <tr>
    <th scope="row">三菱 UFJ （注 7 ）</th>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>三菱 UFJ ニコス</td>
-   <td>未確認</td>
-   <td>三菱 UFJ 銀行</td>
-   <td>三菱 UFJ e スマート証券</td>
-   <td>未確認</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">三菱 UFJ ニコス</td>
+   <td data-label="ポイント">未確認</td>
   </tr>
   <tr>
    <th scope="row">みずほ（注 8 ）</th>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>みずほ楽天カード〔提携〕</td>
-   <td>未確認</td>
-   <td>みずほ銀行</td>
-   <td>みずほ証券</td>
-   <td>未確認</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">みずほ楽天カード〔提携〕</td>
+   <td data-label="ポイント">未確認</td>
   </tr>
   <tr>
    <th scope="row">りそな（注 9 ）</th>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>りそなカード<br>みなとカード</td>
-   <td>未確認</td>
-   <td>りそな銀行<br>埼玉りそな銀行<br>関西みらい銀行<br>みなと銀行</td>
-   <td>未確認</td>
-   <td>未確認</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">りそなカード<br>みなとカード</td>
+   <td data-label="ポイント">未確認</td>
   </tr>
   <tr>
    <th scope="row">三井住友トラスト（注 10 ）</th>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>三井住友信託銀行<br>ドコモ SMTB ネット銀行〔出資〕</td>
-   <td>未確認</td>
-   <td>三井住友トラスト・ライフパートナーズ（保険代理店）</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">未確認</td>
+   <td data-label="ポイント">未確認</td>
   </tr>
   <tr>
    <th scope="row">トヨタ（注 11 ）</th>
-   <td>未確認</td>
-   <td>TOYOTA Wallet 〔資本関係未確認〕</td>
-   <td>TS CUBIC CARD 〔資本関係未確認〕</td>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>あいおいニッセイ同和損保〔提携〕</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">TOYOTA Wallet 〔資本関係未確認〕</td>
+   <td data-label="クレジットカード">TS CUBIC CARD 〔資本関係未確認〕</td>
+   <td data-label="ポイント">未確認</td>
   </tr>
   <tr>
    <th scope="row">イオン（注 12 ）</th>
-   <td>未確認</td>
-   <td>AEON Pay 〔資本関係未確認〕</td>
-   <td>イオンカード〔資本関係未確認〕</td>
-   <td>未確認</td>
-   <td>イオン銀行</td>
-   <td>未確認</td>
-   <td>イオン・アリアンツ生命保険〔共同〕<br>イオン保険サービス</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">AEON Pay 〔資本関係未確認〕</td>
+   <td data-label="クレジットカード">イオンカード〔資本関係未確認〕</td>
+   <td data-label="ポイント">未確認</td>
   </tr>
   <tr>
    <th scope="row">ソニー（注 13 ）</th>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>未確認</td>
-   <td>ソニー銀行</td>
-   <td>未確認</td>
-   <td>ソニー生命保険<br>ソニー損害保険</td>
+   <td data-label="通信">未確認</td>
+   <td data-label="コード決済">未確認</td>
+   <td data-label="クレジットカード">未確認</td>
+   <td data-label="ポイント">未確認</td>
+  </tr>
+ </tbody>
+</table></div>
+<h3 id="s1-2">1.2 銀行・証券・保険</h3>
+<div class="scroll"><table class="stack">
+ <thead>
+  <tr><th scope="col">グループ</th><th scope="col">銀行</th><th scope="col">証券</th><th scope="col">保険</th></tr>
+ </thead>
+ <tbody>
+  <tr>
+   <th scope="row">au （注 1 ）</th>
+   <td data-label="銀行">au じぶん銀行〔共同〕〔完了未確認〕</td>
+   <td data-label="証券">三菱 UFJ e スマート証券〔提携〕</td>
+   <td data-label="保険">au フィナンシャルサービス（損害保険代理業）</td>
+  </tr>
+  <tr>
+   <th scope="row">ソフトバンク／ PayPay （注 2 ）</th>
+   <td data-label="銀行">PayPay 銀行〔出資〕〔完了未確認〕</td>
+   <td data-label="証券">PayPay 証券〔共同〕</td>
+   <td data-label="保険">PayPay 保険サービス〔資本関係未確認〕</td>
+  </tr>
+  <tr>
+   <th scope="row">ドコモ（注 3 ）</th>
+   <td data-label="銀行">ドコモ SMTB ネット銀行〔共同〕</td>
+   <td data-label="証券">マネックス証券〔共同〕</td>
+   <td data-label="保険">ドコモ・インシュアランス〔資本関係未確認〕<br>日新火災海上保険（火災保険）〔提携〕</td>
+  </tr>
+  <tr>
+   <th scope="row">三井住友（注 4 ）</th>
+   <td data-label="銀行">三井住友銀行</td>
+   <td data-label="証券">SMBC 日興証券<br>SBI 証券〔提携〕</td>
+   <td data-label="保険">ライフネット生命〔出資〕</td>
+  </tr>
+  <tr>
+   <th scope="row">楽天（注 5 ）</th>
+   <td data-label="銀行">楽天銀行〔出資〕〔完了未確認〕</td>
+   <td data-label="証券">楽天証券〔共同〕〔完了未確認〕</td>
+   <td data-label="保険">楽天生命保険<br>楽天損害保険<br>楽天少額短期保険</td>
+  </tr>
+  <tr>
+   <th scope="row">セブン＆アイ（注 6 ）</th>
+   <td data-label="銀行">セブン銀行〔出資〕</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">セブン・フィナンシャルサービス（保険サービス事業）</td>
+  </tr>
+  <tr>
+   <th scope="row">三菱 UFJ （注 7 ）</th>
+   <td data-label="銀行">三菱 UFJ 銀行</td>
+   <td data-label="証券">三菱 UFJ e スマート証券</td>
+   <td data-label="保険">未確認</td>
+  </tr>
+  <tr>
+   <th scope="row">みずほ（注 8 ）</th>
+   <td data-label="銀行">みずほ銀行</td>
+   <td data-label="証券">みずほ証券</td>
+   <td data-label="保険">未確認</td>
+  </tr>
+  <tr>
+   <th scope="row">りそな（注 9 ）</th>
+   <td data-label="銀行">りそな銀行<br>埼玉りそな銀行<br>関西みらい銀行<br>みなと銀行</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">未確認</td>
+  </tr>
+  <tr>
+   <th scope="row">三井住友トラスト（注 10 ）</th>
+   <td data-label="銀行">三井住友信託銀行<br>ドコモ SMTB ネット銀行〔出資〕</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">三井住友トラスト・ライフパートナーズ（保険代理店）</td>
+  </tr>
+  <tr>
+   <th scope="row">トヨタ（注 11 ）</th>
+   <td data-label="銀行">未確認</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">あいおいニッセイ同和損保〔提携〕</td>
+  </tr>
+  <tr>
+   <th scope="row">イオン（注 12 ）</th>
+   <td data-label="銀行">イオン銀行</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">イオン・アリアンツ生命保険〔共同〕<br>イオン保険サービス</td>
+  </tr>
+  <tr>
+   <th scope="row">ソニー（注 13 ）</th>
+   <td data-label="銀行">ソニー銀行</td>
+   <td data-label="証券">未確認</td>
+   <td data-label="保険">ソニー生命保険<br>ソニー損害保険</td>
   </tr>
  </tbody>
 </table></div>
@@ -324,304 +380,304 @@
 <h2><span class="no">3</span>出典</h2>
 <p>出典（種別の「一次」は企業の公式サイトや公式資料、「二次」は報道や解説を指す。）</p>
 
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
  <thead>
   <tr><th scope="col">対象</th><th scope="col">出典</th><th scope="col">種別</th><th scope="col">取得日</th></tr>
  </thead>
  <tbody>
   <tr>
-   <td>楽天モバイル</td>
-   <td>楽天モバイル (https://network.mobile.rakuten.co.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">楽天モバイル</td>
+   <td data-label="出典"><a href="https://network.mobile.rakuten.co.jp/">楽天モバイル</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>楽天ペイ</td>
-   <td>楽天ペイ (https://pay.rakuten.co.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">楽天ペイ</td>
+   <td data-label="出典"><a href="https://pay.rakuten.co.jp/">楽天ペイ</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>楽天カード、楽天ポイント、楽天ペイメント</td>
-   <td>楽天グループ 決算ハイライト、 2026 年 5 月 14 日(https://corp.rakuten.co.jp/news/press/2026/0514_01.html)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">楽天カード、楽天ポイント、楽天ペイメント</td>
+   <td data-label="出典"><a href="https://corp.rakuten.co.jp/news/press/2026/0514_01.html">楽天グループ 決算ハイライト、 2026 年 5 月 14 日</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>楽天銀行、楽天証券、再編、出資比率</td>
-   <td>楽天銀行 (https://www.rakuten-bank.co.jp/)／ 楽天グループ フィンテック事業再編、 2026 年 5 月 20 日(https://corp.rakuten.co.jp/news/press/2026/0520_11.html)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">楽天銀行、楽天証券、再編、出資比率</td>
+   <td data-label="出典"><a href="https://www.rakuten-bank.co.jp/">楽天銀行</a>／<a href="https://corp.rakuten.co.jp/news/press/2026/0520_11.html">楽天グループ フィンテック事業再編、 2026 年 5 月 20 日</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>ソフトバンク</td>
-   <td>ソフトバンク (https://www.softbank.jp/mobile/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">ソフトバンク</td>
+   <td data-label="出典"><a href="https://www.softbank.jp/mobile/">ソフトバンク</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>Y!mobile （ワイモバイル）、 PayPay ポイント</td>
-   <td>Y!mobile (https://www.ymobile.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">Y!mobile （ワイモバイル）、 PayPay ポイント</td>
+   <td data-label="出典"><a href="https://www.ymobile.jp/">Y!mobile</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>PayPay 、 PayPay カード、 PayPay 銀行、 PayPay 証券</td>
-   <td>PayPay (https://about.paypay.ne.jp/)／ PayPay 銀行 (https://www.paypay-bank.co.jp/company/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">PayPay 、 PayPay カード、 PayPay 銀行、 PayPay 証券</td>
+   <td data-label="出典"><a href="https://about.paypay.ne.jp/">PayPay</a>／<a href="https://www.paypay-bank.co.jp/company/">PayPay 銀行</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>PayPay の沿革、設立の経緯</td>
-   <td>edinetdb.jp (https://edinetdb.jp/company/E41128/history)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">PayPay の沿革、設立の経緯</td>
+   <td data-label="出典"><a href="https://edinetdb.jp/company/E41128/history">edinetdb.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>三井住友カード、三井住友銀行（ Olive 特典の提供元として記載）、 SBI 証券との連携</td>
-   <td>三井住友カード (https://www.smbc-card.com/mem/for_sbi/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">三井住友カード、三井住友銀行（ Olive 特典の提供元として記載）、 SBI 証券との連携</td>
+   <td data-label="出典"><a href="https://www.smbc-card.com/mem/for_sbi/">三井住友カード</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>V ポイント</td>
-   <td>三井住友銀行 (https://www.smbc.co.jp/kojin/olive-account/guide/vpoint-up/)。ページの一部が文字化けしており、全文は読めていない</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">V ポイント</td>
+   <td data-label="出典"><a href="https://www.smbc.co.jp/kojin/olive-account/guide/vpoint-up/">三井住友銀行</a>。ページの一部が文字化けしており、全文は読めていない</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>三井住友とソフトバンクの提携、ポイントの相互交換</td>
-   <td>bcnretail.com (https://www.bcnretail.com/market/detail/20250516_517813.html)／ watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/2129717.html)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">三井住友とソフトバンクの提携、ポイントの相互交換</td>
+   <td data-label="出典"><a href="https://www.bcnretail.com/market/detail/20250516_517813.html">bcnretail.com</a>／<a href="https://www.watch.impress.co.jp/docs/news/2129717.html">watch.impress.co.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>ドコモ、 d ポイント、 d 払い、 d カード</td>
-   <td>ドコモ (https://www.docomo.ne.jp/corporate/ir/)／ d ポイント(https://dpoint.docomo.ne.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">ドコモ、 d ポイント、 d 払い、 d カード</td>
+   <td data-label="出典"><a href="https://www.docomo.ne.jp/corporate/ir/">ドコモ</a>／<a href="https://dpoint.docomo.ne.jp/">d ポイント</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>ahamo</td>
-   <td>ahamo (https://ahamo.com/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">ahamo</td>
+   <td data-label="出典"><a href="https://ahamo.com/">ahamo</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>ドコモ SMTB ネット銀行</td>
-   <td>住信 SBI ネット銀行（現・ドコモ SMTB ネット銀行） (https://www.netbk.co.jp/contents/company/press/2025/1219_004783.html)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">ドコモ SMTB ネット銀行</td>
+   <td data-label="出典"><a href="https://www.netbk.co.jp/contents/company/press/2025/1219_004783.html">住信 SBI ネット銀行（現・ドコモ SMTB ネット銀行）</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>マネックス証券（グループ会社としての掲載）</td>
-   <td>ドコモ グループ各社 (https://www.docomo.ne.jp/corporate/about/group/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">マネックス証券（グループ会社としての掲載）</td>
+   <td data-label="出典"><a href="https://www.docomo.ne.jp/corporate/about/group/">ドコモ グループ各社</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>マネックス証券（出資比率）</td>
-   <td>watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/1558823.html)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">マネックス証券（出資比率）</td>
+   <td data-label="出典"><a href="https://www.watch.impress.co.jp/docs/news/1558823.html">watch.impress.co.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au 、 UQ mobile 、 povo</td>
-   <td>KDDI (https://www.kddi.com/corporate/kddi/public/)／ au (https://www.au.com/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au 、 UQ mobile 、 povo</td>
+   <td data-label="出典"><a href="https://www.kddi.com/corporate/kddi/public/">KDDI</a>／<a href="https://www.au.com/">au</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au PAY 、 Ponta ポイント</td>
-   <td>au 案内、 2025 年 11 月 28 日 (https://www.au.com/information/topic/auwallet/2025-048/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au PAY 、 Ponta ポイント</td>
+   <td data-label="出典"><a href="https://www.au.com/information/topic/auwallet/2025-048/">au 案内、 2025 年 11 月 28 日</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au PAY カード</td>
-   <td>au (https://www.au.com/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au PAY カード</td>
+   <td data-label="出典"><a href="https://www.au.com/">au</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au じぶん銀行</td>
-   <td>au じぶん銀行(https://www.jibunbank.co.jp/)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au じぶん銀行</td>
+   <td data-label="出典"><a href="https://www.jibunbank.co.jp/">au じぶん銀行</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>三菱 UFJ e スマート証券の商号変更</td>
-   <td>三菱 UFJ e スマート証券（旧・ au カブコム証券）お知らせ、 2024 年 12 月 24 日 (https://kabu.com/company/pressrelease/20241224_1.html)</td>
-   <td>一次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">三菱 UFJ e スマート証券の商号変更</td>
+   <td data-label="出典"><a href="https://kabu.com/company/pressrelease/20241224_1.html">三菱 UFJ e スマート証券（旧・ au カブコム証券）お知らせ、 2024 年 12 月 24 日</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>au じぶん銀行と三菱 UFJ e スマート証券の再編</td>
-   <td>watch.impress.co.jp 、 2024 年 11 月 14 日 (https://www.watch.impress.co.jp/docs/news/1639554.html)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">au じぶん銀行と三菱 UFJ e スマート証券の再編</td>
+   <td data-label="出典"><a href="https://www.watch.impress.co.jp/docs/news/1639554.html">watch.impress.co.jp 、 2024 年 11 月 14 日</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>Ponta ポイントの運営会社と KDDI の提携（ 2020 年）</td>
-   <td>ロイヤリティ マーケティング (https://www.loyalty.co.jp/wp/wp-content/uploads/2020/05/200521.pdf)</td>
-   <td>二次</td>
-   <td>2026-10-14</td>
+   <td data-label="対象">Ponta ポイントの運営会社と KDDI の提携（ 2020 年）</td>
+   <td data-label="出典"><a href="https://www.loyalty.co.jp/wp/wp-content/uploads/2020/05/200521.pdf">ロイヤリティ マーケティング</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-14</td>
   </tr>
   <tr>
-   <td>セブン銀行の保有割合（ 39.9% ）、セブン・カードサービスの株式譲渡契約</td>
-   <td>セブン＆アイ・ホールディングス 適時開示、 2025 年 6 月 (https://www2.jpx.co.jp/disc/33820/140120250619593295.pdf)／同、 2023 年 4 月 (https://www2.jpx.co.jp/disc/33820/140120230405543375.pdf)。いずれも検索結果の要約のみで、本文は読んでいない</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">セブン銀行の保有割合（ 39.9% ）、セブン・カードサービスの株式譲渡契約</td>
+   <td data-label="出典"><a href="https://www2.jpx.co.jp/disc/33820/140120250619593295.pdf">セブン＆アイ・ホールディングス 適時開示、 2025 年 6 月</a>／<a href="https://www2.jpx.co.jp/disc/33820/140120230405543375.pdf">同、 2023 年 4 月</a>。いずれも検索結果の要約のみで、本文は読んでいない</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>nanaco のセブン銀行傘下への集約</td>
-   <td>watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/1491920.html)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">nanaco のセブン銀行傘下への集約</td>
+   <td data-label="出典"><a href="https://www.watch.impress.co.jp/docs/news/1491920.html">watch.impress.co.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>三菱 UFJ ニコス</td>
-   <td>nihon-ma.co.jp (https://www.nihon-ma.co.jp/news/20171013_8306-4/)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">三菱 UFJ ニコス</td>
+   <td data-label="出典"><a href="https://www.nihon-ma.co.jp/news/20171013_8306-4/">nihon-ma.co.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>みずほ銀行、みずほ証券、楽天との提携</td>
-   <td>みずほフィナンシャルグループ 適時開示、 2026 年 5 月 20 日 (https://www2.jpx.co.jp/disc/58380/140120260520541703.pdf。本文は読んでいない)／ watch.impress.co.jp (https://www.watch.impress.co.jp/docs/news/2110362.html)</td>
-   <td>一次・二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">みずほ銀行、みずほ証券、楽天との提携</td>
+   <td data-label="出典"><a href="https://www2.jpx.co.jp/disc/58380/140120260520541703.pdf。本文は読んでいない">みずほフィナンシャルグループ 適時開示、 2026 年 5 月 20 日</a>／<a href="https://www.watch.impress.co.jp/docs/news/2110362.html">watch.impress.co.jp</a></td>
+   <td data-label="種別">一次・二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>りそなグループの銀行、カード</td>
-   <td>りそなホールディングス グループ会社 (http://www.resona-gr.co.jp/holdings/about/outline/group/index.html)</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">りそなグループの銀行、カード</td>
+   <td data-label="出典"><a href="http://www.resona-gr.co.jp/holdings/about/outline/group/index.html">りそなホールディングス グループ会社</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>三井住友信託銀行</td>
-   <td>edinetdb.jp (https://edinetdb.jp/company/E03611/text?fy=2022)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">三井住友信託銀行</td>
+   <td data-label="出典"><a href="https://edinetdb.jp/company/E03611/text?fy=2022">edinetdb.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>TOYOTA Wallet 、 TS CUBIC CARD</td>
-   <td>paymentnavi.com (https://paymentnavi.com/en/?p=101703)／三井住友銀行 ニュースリリース、 2021 年 7 月 (https://www.smbc.co.jp/news/pdf/j20210712_01.pdf)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">TOYOTA Wallet 、 TS CUBIC CARD</td>
+   <td data-label="出典"><a href="https://paymentnavi.com/en/?p=101703">paymentnavi.com</a>／<a href="https://www.smbc.co.jp/news/pdf/j20210712_01.pdf">三井住友銀行 ニュースリリース、 2021 年 7 月</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>イオン銀行、イオンフィナンシャルサービス</td>
-   <td>イオン 総合金融事業 (https://www.aeon.info/company/group/)</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">イオン銀行、イオンフィナンシャルサービス</td>
+   <td data-label="出典"><a href="https://www.aeon.info/company/group/">イオン 総合金融事業</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>イオンの持株比率、 AFS コーポレーションの合併、 WAON の承継、イオンカード、 AEON Pay</td>
-   <td>kabutore.biz (https://www.kabutore.biz/genzaikabuka/okabunushi8570.html)／ finboard.jp (https://finboard.jp/companies/JP:8570/history)／ paymentnavi.com (https://paymentnavi.com/en/?p=152292)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">イオンの持株比率、 AFS コーポレーションの合併、 WAON の承継、イオンカード、 AEON Pay</td>
+   <td data-label="出典"><a href="https://www.kabutore.biz/genzaikabuka/okabunushi8570.html">kabutore.biz</a>／<a href="https://finboard.jp/companies/JP:8570/history">finboard.jp</a>／<a href="https://paymentnavi.com/en/?p=152292">paymentnavi.com</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>三菱 UFJ e スマート証券の 100% 子会社化の完了</td>
-   <td>三菱 UFJ e スマート証券 お知らせ、 2025 年 1 月 31 日 (https://kabu.com/company/pressrelease/20250131_1.html)</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">三菱 UFJ e スマート証券の 100% 子会社化の完了</td>
+   <td data-label="出典"><a href="https://kabu.com/company/pressrelease/20250131_1.html">三菱 UFJ e スマート証券 お知らせ、 2025 年 1 月 31 日</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>au フィナンシャルサービス、 au フィナンシャルホールディングス</td>
-   <td>KDDI 適時開示、 2026 年 5 月 (https://newsroom.kddi.com/ir-news/assets/2026/kddi_ir-1149_4470/kddi_ir-1149_4470_pdf_01.pdf)。検索結果の要約のみ</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">au フィナンシャルサービス、 au フィナンシャルホールディングス</td>
+   <td data-label="出典"><a href="https://newsroom.kddi.com/ir-news/assets/2026/kddi_ir-1149_4470/kddi_ir-1149_4470_pdf_01.pdf">KDDI 適時開示、 2026 年 5 月</a>。検索結果の要約のみ</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>ソフトバンクの PayPay 子会社の開示</td>
-   <td>ソフトバンク 適時開示、 2026 年 3 月 12 日 (https://www2.infomart.co.jp/web/jp/images/upload/3621/140120260312579398_22508309.pdf)。検索結果の要約のみ</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">ソフトバンクの PayPay 子会社の開示</td>
+   <td data-label="出典"><a href="https://www2.infomart.co.jp/web/jp/images/upload/3621/140120260312579398_22508309.pdf">ソフトバンク 適時開示、 2026 年 3 月 12 日</a>。検索結果の要約のみ</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>PayPay 銀行の議決権比率</td>
-   <td>PayPay 銀行 お知らせ、 2025 年 4 月 (https://www.paypay-bank.co.jp/company/press/2025/0414.html)。検索結果の要約のみ</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">PayPay 銀行の議決権比率</td>
+   <td data-label="出典"><a href="https://www.paypay-bank.co.jp/company/press/2025/0414.html">PayPay 銀行 お知らせ、 2025 年 4 月</a>。検索結果の要約のみ</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>PayPay 証券の出資比率</td>
-   <td>nihon-ma.co.jp (https://www.nihon-ma.co.jp/news/20250210_9434-13/)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">PayPay 証券の出資比率</td>
+   <td data-label="出典"><a href="https://www.nihon-ma.co.jp/news/20250210_9434-13/">nihon-ma.co.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>PayPay の T&amp;D フィナンシャル生命保険の取得方針</td>
-   <td>ソフトバンクグループ (https://group.softbank/news/press/20260604)</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">PayPay の T&amp;D フィナンシャル生命保険の取得方針</td>
+   <td data-label="出典"><a href="https://group.softbank/news/press/20260604">ソフトバンクグループ</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>PayPay 保険サービス</td>
-   <td>techno-edge.net (https://www.techno-edge.net/release/prtimes2/20251215/22371.html)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">PayPay 保険サービス</td>
+   <td data-label="出典"><a href="https://www.techno-edge.net/release/prtimes2/20251215/22371.html">techno-edge.net</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>ドコモの火災保険（日新火災海上保険）</td>
-   <td>ドコモ お知らせ、 2026 年 3 月 25 日 (https://www.docomo.ne.jp/info/news_release/2026/03/25_00.html)</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">ドコモの火災保険（日新火災海上保険）</td>
+   <td data-label="出典"><a href="https://www.docomo.ne.jp/info/news_release/2026/03/25_00.html">ドコモ お知らせ、 2026 年 3 月 25 日</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>三井住友カード、 SMBC 日興証券の 100% 保有</td>
-   <td>三井住友フィナンシャルグループ グループ会社 (https://www.smfg.co.jp/company/groupcompanies.html)／ SMBC 日興証券 お知らせ、 2026 年 9 月 29 日 (https://www.smbcnikko.co.jp/news/release/2026/pdf/260929_01.pdf)。いずれも検索結果の要約のみ</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">三井住友カード、 SMBC 日興証券の 100% 保有</td>
+   <td data-label="出典"><a href="https://www.smfg.co.jp/company/groupcompanies.html">三井住友フィナンシャルグループ グループ会社</a>／<a href="https://www.smbcnikko.co.jp/news/release/2026/pdf/260929_01.pdf">SMBC 日興証券 お知らせ、 2026 年 9 月 29 日</a>。いずれも検索結果の要約のみ</td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>ライフネット生命への出資</td>
-   <td>nihon-ma.co.jp (https://www.nihon-ma.co.jp/news/20230830_7157/)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">ライフネット生命への出資</td>
+   <td data-label="出典"><a href="https://www.nihon-ma.co.jp/news/20230830_7157/">nihon-ma.co.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>楽天インシュアランスホールディングスと傘下の保険会社</td>
-   <td>paymentnavi.com (https://paymentnavi.com/?p=173160)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">楽天インシュアランスホールディングスと傘下の保険会社</td>
+   <td data-label="出典"><a href="https://paymentnavi.com/?p=173160">paymentnavi.com</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>セブン・フィナンシャルサービスの保険サービス事業</td>
-   <td>求人情報 (https://careerconnection.jp/job/A0223015300058-detail)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">セブン・フィナンシャルサービスの保険サービス事業</td>
+   <td data-label="出典"><a href="https://careerconnection.jp/job/A0223015300058-detail">求人情報</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>三井住友トラスト・ライフパートナーズ、三井住友トラストグループの商号変更</td>
-   <td>edinetdb.jp (https://edinetdb.jp/company/E03611/text?fy=2022)／ kitaishihon.com (https://kitaishihon.com/company/8309/story)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">三井住友トラスト・ライフパートナーズ、三井住友トラストグループの商号変更</td>
+   <td data-label="出典"><a href="https://edinetdb.jp/company/E03611/text?fy=2022">edinetdb.jp</a>／<a href="https://kitaishihon.com/company/8309/story">kitaishihon.com</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>あいおいニッセイ同和損保と TFS の連携</td>
-   <td>あいおいニッセイ同和損保 お知らせ、 2021 年 12 月 (https://www.Aioinissaydowa.co.jp/corporate/about/news/pdf/2021/news_2021122300930.pdf)</td>
-   <td>一次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">あいおいニッセイ同和損保と TFS の連携</td>
+   <td data-label="出典"><a href="https://www.Aioinissaydowa.co.jp/corporate/about/news/pdf/2021/news_2021122300930.pdf">あいおいニッセイ同和損保 お知らせ、 2021 年 12 月</a></td>
+   <td data-label="種別">一次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>イオン・アリアンツ生命保険、イオン保険サービス</td>
-   <td>nihon-ma.co.jp (https://www.nihon-ma.co.jp/news/20200204_8570-2/)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">イオン・アリアンツ生命保険、イオン保険サービス</td>
+   <td data-label="出典"><a href="https://www.nihon-ma.co.jp/news/20200204_8570-2/">nihon-ma.co.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>ソニーフィナンシャルグループの構成、ソニーグループの持株比率</td>
-   <td>edinetdb.jp (https://edinetdb.jp/company/E05714/text?fy=2026)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">ソニーフィナンシャルグループの構成、ソニーグループの持株比率</td>
+   <td data-label="出典"><a href="https://edinetdb.jp/company/E05714/text?fy=2026">edinetdb.jp</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
   <tr>
-   <td>ロイヤリティ マーケティングへの KDDI の出資（ 2019 年）</td>
-   <td>newsweekjapan.jp (https://www.newsweekjapan.jp/articles/-/147556)／ bcnretail.com (https://www.bcnretail.com/market/detail/20191216_150102.html)</td>
-   <td>二次</td>
-   <td>2026-10-16</td>
+   <td data-label="対象">ロイヤリティ マーケティングへの KDDI の出資（ 2019 年）</td>
+   <td data-label="出典"><a href="https://www.newsweekjapan.jp/articles/-/147556">newsweekjapan.jp</a>／<a href="https://www.bcnretail.com/market/detail/20191216_150102.html">bcnretail.com</a></td>
+   <td data-label="種別">二次</td>
+   <td data-label="取得日">2026-10-16</td>
   </tr>
  </tbody>
 </table></div>

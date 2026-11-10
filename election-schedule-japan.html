@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -226,18 +236,18 @@
 
 <section id="s2">
 <h2><span class="no">2</span>一覧表</h2>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>選挙</th><th>時期</th><th>状態</th><th>備考</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">秋冬の知事選</th><td>2026 年 10 月 25 日〜 12 月 27 日</td><td><strong>予定</strong><br></td><td>福島 10/25 、愛媛 11/15 、佐賀 12/20 、宮崎 12/27</td></tr>
-<tr><th scope="row">統一地方選挙</th><td>2027 年 4 月 11 日・ 25 日</td><td><strong>法案</strong><br></td><td>2026 年 10 月 16 日に臨時特例法案を閣議決定。成立を目指す段階</td></tr>
-<tr><th scope="row">自民党総裁選挙</th><td>2027 年 9 月ごろ</td><td><strong>任期満了ベース</strong><br></td><td>高市総裁の任期は前任の残りで 2027 年 9 月まで。日程は未定</td></tr>
-<tr><th scope="row">参議院議員選挙</th><td>2028 年 7 月</td><td><strong>任期満了ベース</strong><br></td><td>任期満了日は 2028 年 7 月 25 日。次は 2031 年 7 月 28 日</td></tr>
-<tr><th scope="row">東京都知事選挙</th><td>2028 年 7 月</td><td><strong>任期満了ベース</strong><br></td><td>任期満了日は 2028 年 7 月 30 日</td></tr>
-<tr><th scope="row">東京都議会議員選挙</th><td>2029 年 6 〜 7 月</td><td><strong>任期満了ベース</strong><br></td><td>任期満了日は 2029 年 7 月 22 日。前回は 2025 年 6 月 22 日</td></tr>
-<tr><th scope="row">衆議院議員選挙</th><td>遅くとも 2030 年 2 月</td><td><strong>解散次第</strong><br></td><td>任期満了日は 2030 年 2 月 7 日。解散すればいつでも</td></tr>
+<tr><th scope="row">秋冬の知事選</th><td data-label="時期">2026 年 10 月 25 日〜 12 月 27 日</td><td data-label="状態"><strong>予定</strong><br></td><td data-label="備考">福島 10/25 、愛媛 11/15 、佐賀 12/20 、宮崎 12/27</td></tr>
+<tr><th scope="row">統一地方選挙</th><td data-label="時期">2027 年 4 月 11 日・ 25 日</td><td data-label="状態"><strong>法案</strong><br></td><td data-label="備考">2026 年 10 月 16 日に臨時特例法案を閣議決定。成立を目指す段階</td></tr>
+<tr><th scope="row">自民党総裁選挙</th><td data-label="時期">2027 年 9 月ごろ</td><td data-label="状態"><strong>任期満了ベース</strong><br></td><td data-label="備考">高市総裁の任期は前任の残りで 2027 年 9 月まで。日程は未定</td></tr>
+<tr><th scope="row">参議院議員選挙</th><td data-label="時期">2028 年 7 月</td><td data-label="状態"><strong>任期満了ベース</strong><br></td><td data-label="備考">任期満了日は 2028 年 7 月 25 日。次は 2031 年 7 月 28 日</td></tr>
+<tr><th scope="row">東京都知事選挙</th><td data-label="時期">2028 年 7 月</td><td data-label="状態"><strong>任期満了ベース</strong><br></td><td data-label="備考">任期満了日は 2028 年 7 月 30 日</td></tr>
+<tr><th scope="row">東京都議会議員選挙</th><td data-label="時期">2029 年 6 〜 7 月</td><td data-label="状態"><strong>任期満了ベース</strong><br></td><td data-label="備考">任期満了日は 2029 年 7 月 22 日。前回は 2025 年 6 月 22 日</td></tr>
+<tr><th scope="row">衆議院議員選挙</th><td data-label="時期">遅くとも 2030 年 2 月</td><td data-label="状態"><strong>解散次第</strong><br></td><td data-label="備考">任期満了日は 2030 年 2 月 7 日。解散すればいつでも</td></tr>
 </tbody>
 </table></div>
 </section>

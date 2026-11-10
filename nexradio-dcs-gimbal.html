@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -228,17 +238,17 @@
 <h3 id="s3-1">3.1 三方式の比較</h3>
 <p>工学・製造の分野では、「 Digital Capacitive Sensing 」は一般に「静電容量方式」または「デジタル静電容量方式」と呼ばれる。プロポのスティックで使われる三方式を比べる。</p>
 
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>項目</th><th>① ポテンショメータ（抵抗式）</th><th>② ホールエフェクト（磁気式）</th><th>③ デジタル静電容量（ DCS 方式）</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">仕組み</th><td>ブラシが炭素皮膜の上を擦り、抵抗値の変化で位置を検出する。</td><td>磁石とセンサーの位置関係による磁束密度の変化を検出する。</td><td>電極間の静電容量（電荷の蓄えやすさ）の変化を検出し、デジタル信号として出力する。</td></tr>
-<tr><th scope="row">接触の有無</th><td>接触あり。経年で摩耗する。</td><td>非接触。検出部は摩耗しない。</td><td>非接触。検出部は摩耗しない。</td></tr>
-<tr><th scope="row">耐久性・寿命</th><td>ゴミや摩擦に弱く、ガリ（チャタリング）が出やすい。</td><td>検出部は長寿命。機械部品の摩耗は別に残る。</td><td>メーカーは「実質無制限」とする。独立した検証はない。</td></tr>
-<tr><th scope="row">磁気干渉</th><td>受けない。</td><td>外部の磁石、金属、モーターなどの影響を受けうる。</td><td>磁気は使わないため、磁気由来のずれは原理的に生じない。</td></tr>
-<tr><th scope="row">出力の形</th><td>アナログ電圧を ADC で読む。</td><td>アナログ電圧を ADC で読む方式が多い。</td><td>センサー側でデジタル化し、通信で本体へ送る。</td></tr>
-<tr><th scope="row">分解能・精度</th><td>経年劣化で低下する。</td><td>高いが、アナログのノイズ対策が要る。</td><td>13 ビット（ 8,192 段階）と報告されている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><th scope="row">仕組み</th><td data-label="① ポテンショメータ（抵抗式）">ブラシが炭素皮膜の上を擦り、抵抗値の変化で位置を検出する。</td><td data-label="② ホールエフェクト（磁気式）">磁石とセンサーの位置関係による磁束密度の変化を検出する。</td><td data-label="③ デジタル静電容量（ DCS 方式）">電極間の静電容量（電荷の蓄えやすさ）の変化を検出し、デジタル信号として出力する。</td></tr>
+<tr><th scope="row">接触の有無</th><td data-label="① ポテンショメータ（抵抗式）">接触あり。経年で摩耗する。</td><td data-label="② ホールエフェクト（磁気式）">非接触。検出部は摩耗しない。</td><td data-label="③ デジタル静電容量（ DCS 方式）">非接触。検出部は摩耗しない。</td></tr>
+<tr><th scope="row">耐久性・寿命</th><td data-label="① ポテンショメータ（抵抗式）">ゴミや摩擦に弱く、ガリ（チャタリング）が出やすい。</td><td data-label="② ホールエフェクト（磁気式）">検出部は長寿命。機械部品の摩耗は別に残る。</td><td data-label="③ デジタル静電容量（ DCS 方式）">メーカーは「実質無制限」とする。独立した検証はない。</td></tr>
+<tr><th scope="row">磁気干渉</th><td data-label="① ポテンショメータ（抵抗式）">受けない。</td><td data-label="② ホールエフェクト（磁気式）">外部の磁石、金属、モーターなどの影響を受けうる。</td><td data-label="③ デジタル静電容量（ DCS 方式）">磁気は使わないため、磁気由来のずれは原理的に生じない。</td></tr>
+<tr><th scope="row">出力の形</th><td data-label="① ポテンショメータ（抵抗式）">アナログ電圧を ADC で読む。</td><td data-label="② ホールエフェクト（磁気式）">アナログ電圧を ADC で読む方式が多い。</td><td data-label="③ デジタル静電容量（ DCS 方式）">センサー側でデジタル化し、通信で本体へ送る。</td></tr>
+<tr><th scope="row">分解能・精度</th><td data-label="① ポテンショメータ（抵抗式）">経年劣化で低下する。</td><td data-label="② ホールエフェクト（磁気式）">高いが、アナログのノイズ対策が要る。</td><td data-label="③ デジタル静電容量（ DCS 方式）">13 ビット（ 8,192 段階）と報告されている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</td></tr>
 </tbody>
 </table></div>
 
@@ -315,14 +325,14 @@
 <section id="s5">
 <h2><span class="no">5</span>コスト比較</h2>
 <p>RadioMaster 純正の CNC ジンバル（ AG01 など）は、元資料に約 2 万〜 2.5 万円とある。ただし、本書では店頭価格を確かめておらず、左右 2 個の組の価格かどうかも分からない。これに対して、 DCS ジンバルは約 32 米ドルである <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。この価格も 1 個分か 2 個分かが未確認なので、下の表は左右 2 個分に換算して比べる必要がある。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>選択肢</th><th>費用の目安</th><th>検出方式</th><th>特徴</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">TX16S MK II 標準のジンバルのまま</th><td>0 円</td><td>ホール式</td><td>追加作業なし。</td></tr>
-<tr><th scope="row">RadioMaster 純正の CNC ジンバル</th><td>約 2 万〜 2.5 万円（未確認）</td><td>ホール式</td><td>金属加工による剛性と質感。実績がある。</td></tr>
-<tr><th scope="row">NexRadio DCS Gimbal</th><td>約 5,000 円前後（1 個分の場合）+ 送料・税</td><td>デジタル静電容量</td><td>低価格。実績はこれから。</td></tr>
+<tr><th scope="row">TX16S MK II 標準のジンバルのまま</th><td data-label="費用の目安">0 円</td><td data-label="検出方式">ホール式</td><td data-label="特徴">追加作業なし。</td></tr>
+<tr><th scope="row">RadioMaster 純正の CNC ジンバル</th><td data-label="費用の目安">約 2 万〜 2.5 万円（未確認）</td><td data-label="検出方式">ホール式</td><td data-label="特徴">金属加工による剛性と質感。実績がある。</td></tr>
+<tr><th scope="row">NexRadio DCS Gimbal</th><td data-label="費用の目安">約 5,000 円前後（1 個分の場合）+ 送料・税</td><td data-label="検出方式">デジタル静電容量</td><td data-label="特徴">低価格。実績はこれから。</td></tr>
 </tbody>
 </table></div>
 <p>価格差は大きいが、比べているのは検出方式だけではない。純正 CNC ジンバルは、筐体の剛性、スティックの感触、調整機構も含めた商品である。 DCS ジンバルの機械的な作りの品質は、実物のレビューを待って判断したい。また、 TX16S MK II の標準ジンバルはすでに非接触のホール式である。換装で得られる差は、接触式から非接触式への改善ではなく、磁気式から静電容量式への違いに限られる。この差に費用をかける価値があるかが、判断の中心になる。</p>

@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -164,14 +174,14 @@
 
 <h3 id="s1-2">1.2 三つの集会での発言</h3>
 <p>捜索の後、トランプ氏は 11 日間に三つの集会でオマル氏に触れた。報道で確認できた内容は次のとおりである。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>日付</th><th>場所</th><th>主な発言</th><th>聴衆の反応</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">10 月 12 日（月）</th><td>オハイオ州ヤングスタウン</td><td>オマル氏を「災厄」と呼び、ソマリアを「世界最悪の国の一つ」と評した。ミシガン州上院選の民主党候補エルサイード氏を「聖戦主義者」と呼び、ソマリア系などの人々はオハイオに「属さない」と述べた。</td><td>「 deport 」の連呼が、繰り返し起きた。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><th scope="row">10 月 22 日（木）</th><td>アイオワ州スーシティ</td><td>移民関連の不正疑惑を理由に、議員の辞職を求めた。オマル氏の二人目の夫は実は兄弟だ、という主張を繰り返した。</td><td>「 lock her up 」の連呼が起きた。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><th scope="row">10 月 23 日（金）</th><td>フロリダ州フォートマイヤーズ</td><td>「 Ilhan Omar 」は本名ではないと主張し、偽名で宣誓したのだから直ちに辞職すべきだと述べた。下院議長に、民主党はこの議席を失ったと伝えるよう求めた。</td><td>確認した記事には記載がない。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">10 月 12 日（月）</th><td data-label="場所">オハイオ州ヤングスタウン</td><td data-label="主な発言">オマル氏を「災厄」と呼び、ソマリアを「世界最悪の国の一つ」と評した。ミシガン州上院選の民主党候補エルサイード氏を「聖戦主義者」と呼び、ソマリア系などの人々はオハイオに「属さない」と述べた。</td><td data-label="聴衆の反応">「 deport 」の連呼が、繰り返し起きた。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row">10 月 22 日（木）</th><td data-label="場所">アイオワ州スーシティ</td><td data-label="主な発言">移民関連の不正疑惑を理由に、議員の辞職を求めた。オマル氏の二人目の夫は実は兄弟だ、という主張を繰り返した。</td><td data-label="聴衆の反応">「 lock her up 」の連呼が起きた。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">10 月 23 日（金）</th><td data-label="場所">フロリダ州フォートマイヤーズ</td><td data-label="主な発言">「 Ilhan Omar 」は本名ではないと主張し、偽名で宣誓したのだから直ちに辞職すべきだと述べた。下院議長に、民主党はこの議席を失ったと伝えるよう求めた。</td><td data-label="聴衆の反応">確認した記事には記載がない。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
 </tbody>
 </table></div>
 <p>このうち、結婚についての主張は、オマル氏が 10 月 21 日のインタビューで「 insane 」と退け、オンラインのゴシップブログが出どころだと述べている。確認した報道には、この主張を裏付ける証拠は示されていない。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 名前についての主張に対するオマル氏本人の反応は、確認した記事には出ていない。</p>
@@ -220,14 +230,14 @@
 
 <h3 id="s3-3">3.3 オマル氏をめぐる反応と 2019 年の前例</h3>
 <p>筆者が調べた範囲では、今回のオマル氏への攻撃を直接たずねた全国調査は見つからなかった。代わりに、似た構図の前例を見る。 2019 年 7 月、トランプ氏が、オマル氏を含む 4 人の民主党の女性議員に、出身国へ「帰れ」という趣旨の投稿をした。同じ頃、集会では、オマル氏に向けた「 Send her back 」の連呼も起きた。 CBS News/YouGov が 7 月 17 日から 19 日に行った調査の結果は、次のとおりである。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>回答者</th><th>投稿への賛成</th><th>反対</th><th>人種差別的だと答えた割合</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">全体</th><td>40%</td><td>59%</td><td>48%</td></tr>
-<tr><th scope="row">共和党員</th><td>82%</td><td>—</td><td>「人種差別的ではない」が 70%</td></tr>
-<tr><th scope="row">民主党員</th><td>—</td><td>88%</td><td>84%</td></tr>
+<tr><th scope="row">全体</th><td data-label="投稿への賛成">40%</td><td data-label="反対">59%</td><td data-label="人種差別的だと答えた割合">48%</td></tr>
+<tr><th scope="row">共和党員</th><td data-label="投稿への賛成">82%</td><td data-label="反対">—</td><td data-label="人種差別的だと答えた割合">「人種差別的ではない」が 70%</td></tr>
+<tr><th scope="row">民主党員</th><td data-label="投稿への賛成">—</td><td data-label="反対">88%</td><td data-label="人種差別的だと答えた割合">84%</td></tr>
 </tbody>
 </table></div>
 <p>表の「—」は、確認した記事に数値がなかった項目である。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 全体では反対が多数でも、共和党支持者は大半が支持した。これを今回に当てはめれば、支持層は固まるが、全体の評価は上がらない、という構図が考えられる。ただし、これは 7 年前の別の事例からの推定であり、今回の実測ではない。</p>

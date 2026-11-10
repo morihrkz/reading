@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -202,16 +212,16 @@
 <h3 id="s1-1">1.1 完成物と所要時間</h3>
 <p>完成物は、東京・渋谷のように実在する街の構造を保った、 8 〜 16 秒ほどの FPV ドローン風の映像です。 FPV とは、機体のカメラ視点で飛ぶ、低空・高速・急旋回を特徴とする撮影様式を指します。</p>
 <p>所要時間の目安は次のとおりです。初回は、準備とつまずきの解消に時間を取られます。 2 回目以降は、同じ街なら工程 3 から繰り返せます。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>工程</th><th>内容</th><th>初回の目安</th><th>2 回目以降</th></tr></thead>
 <tbody>
-<tr><th scope="row">準備</th><td>ソフトの導入、フォルダ作成</td><td>1 〜 2 時間</td><td>なし</td></tr>
-<tr><th scope="row">工程 1</th><td>PLATEAU データの入手</td><td>30 分</td><td>なし</td></tr>
-<tr><th scope="row">工程 2</th><td>Blender で街を組む</td><td>1 時間</td><td>なし</td></tr>
-<tr><th scope="row">工程 3</th><td>カメラ経路の設計</td><td>1 〜 2 時間</td><td>30 分</td></tr>
-<tr><th scope="row">工程 4</th><td>レンダリング</td><td>30 分〜数時間</td><td>同左</td></tr>
-<tr><th scope="row">工程 5</th><td>動画生成 AI で変換</td><td>1 〜 3 時間</td><td>同左</td></tr>
-<tr><th scope="row">工程 6</th><td>連結・仕上げ</td><td>30 分</td><td>同左</td></tr>
+<tr><th scope="row">準備</th><td data-label="内容">ソフトの導入、フォルダ作成</td><td data-label="初回の目安">1 〜 2 時間</td><td data-label="2 回目以降">なし</td></tr>
+<tr><th scope="row">工程 1</th><td data-label="内容">PLATEAU データの入手</td><td data-label="初回の目安">30 分</td><td data-label="2 回目以降">なし</td></tr>
+<tr><th scope="row">工程 2</th><td data-label="内容">Blender で街を組む</td><td data-label="初回の目安">1 時間</td><td data-label="2 回目以降">なし</td></tr>
+<tr><th scope="row">工程 3</th><td data-label="内容">カメラ経路の設計</td><td data-label="初回の目安">1 〜 2 時間</td><td data-label="2 回目以降">30 分</td></tr>
+<tr><th scope="row">工程 4</th><td data-label="内容">レンダリング</td><td data-label="初回の目安">30 分〜数時間</td><td data-label="2 回目以降">同左</td></tr>
+<tr><th scope="row">工程 5</th><td data-label="内容">動画生成 AI で変換</td><td data-label="初回の目安">1 〜 3 時間</td><td data-label="2 回目以降">同左</td></tr>
+<tr><th scope="row">工程 6</th><td data-label="内容">連結・仕上げ</td><td data-label="初回の目安">30 分</td><td data-label="2 回目以降">同左</td></tr>
 </tbody>
 </table></div>
 

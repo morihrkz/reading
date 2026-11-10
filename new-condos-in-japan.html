@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -167,15 +177,15 @@
 <h3 id="s1-1">1.1 数字の推移</h3>
 <p>「平均価格 1 億円超え」の出どころは、不動産経済研究所が毎年公表する新築分譲マンションの市場動向である。東京 23 区の 1 戸当たりの平均価格は、次のように推移している。</p>
 
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>区分</th><th>平均価格</th><th>前年（度）比</th><th>補足</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">2023 年</th><td>1 億 1,483 万円</td><td>39.4% 上昇</td><td>調査開始以来、初めて 1 億円を超えた <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><th scope="row">2024 年</th><td>1 億 1,181 万円</td><td>2.6% 下落</td><td>発売戸数は 8,275 戸（30.5% 減）<sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><th scope="row">2025 年</th><td>1 億 3,613 万円</td><td>21.8% 上昇</td><td>発売戸数は 8,064 戸（2.5% 減）。都心 6 区の平均は 1 億 9,503 万円 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td></tr>
-<tr><th scope="row">2025 年度（2025 年 4 月〜 2026 年 3 月）</th><td>1 億 3,784 万円</td><td>18.5% 上昇</td><td>発売戸数は 7,708 戸（6.8% 減）。暦年の数字とは別の集計期間 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">2023 年</th><td data-label="平均価格">1 億 1,483 万円</td><td data-label="前年（度）比">39.4% 上昇</td><td data-label="補足">調査開始以来、初めて 1 億円を超えた <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row">2024 年</th><td data-label="平均価格">1 億 1,181 万円</td><td data-label="前年（度）比">2.6% 下落</td><td data-label="補足">発売戸数は 8,275 戸（30.5% 減）<sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><th scope="row">2025 年</th><td data-label="平均価格">1 億 3,613 万円</td><td data-label="前年（度）比">21.8% 上昇</td><td data-label="補足">発売戸数は 8,064 戸（2.5% 減）。都心 6 区の平均は 1 億 9,503 万円 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">2025 年度（2025 年 4 月〜 2026 年 3 月）</th><td data-label="平均価格">1 億 3,784 万円</td><td data-label="前年（度）比">18.5% 上昇</td><td data-label="補足">発売戸数は 7,708 戸（6.8% 減）。暦年の数字とは別の集計期間 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
 </tbody>
 </table></div>
 

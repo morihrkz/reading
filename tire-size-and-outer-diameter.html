@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -152,15 +162,15 @@
 <h2><span class="no">1</span>まず、タイヤの側面を見る</h2>
 <p>乗用車のタイヤの側面には、たとえば「 205/55R16 91V 」と刻まれている。これがタイヤの「サイズ表記」である。暗号のように見えるが、中身は寸法と性能の目安を決まった順に並べただけで、読み方は一度覚えれば足りる。</p>
 <p>この文字列は、前から順に次のように分けられる。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>刻印</th><th>呼び名</th><th>意味</th><th>単位</th></tr></thead>
 <tbody>
-<tr><th scope="row">205</th><td>断面幅</td><td>タイヤの側面の、最も幅が広い所の幅</td><td>mm</td></tr>
-<tr><th scope="row">55</th><td>偏平比</td><td>断面の高さが、断面幅の何 % にあたるか</td><td>%</td></tr>
-<tr><th scope="row">R</th><td>構造記号</td><td>ラジアル構造であること</td><td>（文字）</td></tr>
-<tr><th scope="row">16</th><td>リム径</td><td>タイヤをはめるホイール（リム）の直径</td><td>インチ</td></tr>
-<tr><th scope="row">91</th><td>荷重指数</td><td>一本が支えられる重さの目安を示す番号</td><td>（番号）</td></tr>
-<tr><th scope="row">V</th><td>速度記号</td><td>走れる最高速度の目安を示す文字</td><td>（文字）</td></tr>
+<tr><th scope="row">205</th><td data-label="呼び名">断面幅</td><td data-label="意味">タイヤの側面の、最も幅が広い所の幅</td><td data-label="単位">mm</td></tr>
+<tr><th scope="row">55</th><td data-label="呼び名">偏平比</td><td data-label="意味">断面の高さが、断面幅の何 % にあたるか</td><td data-label="単位">%</td></tr>
+<tr><th scope="row">R</th><td data-label="呼び名">構造記号</td><td data-label="意味">ラジアル構造であること</td><td data-label="単位">（文字）</td></tr>
+<tr><th scope="row">16</th><td data-label="呼び名">リム径</td><td data-label="意味">タイヤをはめるホイール（リム）の直径</td><td data-label="単位">インチ</td></tr>
+<tr><th scope="row">91</th><td data-label="呼び名">荷重指数</td><td data-label="意味">一本が支えられる重さの目安を示す番号</td><td data-label="単位">（番号）</td></tr>
+<tr><th scope="row">V</th><td data-label="呼び名">速度記号</td><td data-label="意味">走れる最高速度の目安を示す文字</td><td data-label="単位">（文字）</td></tr>
 </tbody>
 </table></div>
 <p>初めて読む人が戸惑うのは、単位が混ざっている点だろう。幅はミリメートル、リム径はインチである。しかも、刻印のどこにも、タイヤ全体の直径（外径）は書かれていない。外径は書かれていないだけで、他の数字から計算できる。この計算は 5 章で扱う。</p>
@@ -187,17 +197,17 @@
 <section id="s4">
 <h2><span class="no">4</span>タイヤの種類と区分けの軸</h2>
 <p>タイヤの区分けは、一つの軸では済まない。国の規格を読むと、用途、構造、目的の三つの軸が並行して使われている。下の表は、規格の定義と、タイヤに刻む表示を軸ごとに並べたものである。 <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>軸</th><th>区分</th><th>規格の定義（要旨）</th><th>刻む表示</th></tr></thead>
 <tbody>
-<tr><th scope="row">用途</th><td>一般道路用</td><td>通常の走行条件で、道路上で使うことを目的としたもの</td><td>規定なし</td></tr>
-<tr><th scope="row">用途</th><td>スノー</td><td>雪路での運転に関し、一般道路用より優れた性能を優先して設計されたもの</td><td>M+S など</td></tr>
-<tr><th scope="row">用途</th><td>特殊用途</td><td>不整地その他の特殊な走行条件（雪路を除く）で使うことを目的としたもの</td><td>ET または POR</td></tr>
-<tr><th scope="row">構造</th><td>バイアスプライ</td><td>コードがトレッド中心線に対して 90 度未満の角度で並ぶもの</td><td>リム径の前は無表示または D</td></tr>
-<tr><th scope="row">構造</th><td>バイアスベルテッド</td><td>バイアスの骨格を、伸びにくい二層以上のベルトで締めたもの</td><td>リム径の前に B</td></tr>
-<tr><th scope="row">構造</th><td>ラジアルプライ</td><td>コードがほぼ 90 度で並び、周方向のベルトで固定されたもの</td><td>リム径の前に R (300 km/h 超は ZR)</td></tr>
-<tr><th scope="row">目的</th><td>ランフラット</td><td>パンク状態でも、 80 km/h で 80 km まで基本的な機能を保つ特徴を持つもの</td><td>リム径の前に F など</td></tr>
-<tr><th scope="row">目的</th><td>応急用スペア</td><td>限られた走行条件の下で、応急的に使うことを目的としたもの</td><td>TEMPORARY USE ONLY</td></tr>
+<tr><th scope="row">用途</th><td data-label="区分">一般道路用</td><td data-label="規格の定義（要旨）">通常の走行条件で、道路上で使うことを目的としたもの</td><td data-label="刻む表示">規定なし</td></tr>
+<tr><th scope="row">用途</th><td data-label="区分">スノー</td><td data-label="規格の定義（要旨）">雪路での運転に関し、一般道路用より優れた性能を優先して設計されたもの</td><td data-label="刻む表示">M+S など</td></tr>
+<tr><th scope="row">用途</th><td data-label="区分">特殊用途</td><td data-label="規格の定義（要旨）">不整地その他の特殊な走行条件（雪路を除く）で使うことを目的としたもの</td><td data-label="刻む表示">ET または POR</td></tr>
+<tr><th scope="row">構造</th><td data-label="区分">バイアスプライ</td><td data-label="規格の定義（要旨）">コードがトレッド中心線に対して 90 度未満の角度で並ぶもの</td><td data-label="刻む表示">リム径の前は無表示または D</td></tr>
+<tr><th scope="row">構造</th><td data-label="区分">バイアスベルテッド</td><td data-label="規格の定義（要旨）">バイアスの骨格を、伸びにくい二層以上のベルトで締めたもの</td><td data-label="刻む表示">リム径の前に B</td></tr>
+<tr><th scope="row">構造</th><td data-label="区分">ラジアルプライ</td><td data-label="規格の定義（要旨）">コードがほぼ 90 度で並び、周方向のベルトで固定されたもの</td><td data-label="刻む表示">リム径の前に R (300 km/h 超は ZR)</td></tr>
+<tr><th scope="row">目的</th><td data-label="区分">ランフラット</td><td data-label="規格の定義（要旨）">パンク状態でも、 80 km/h で 80 km まで基本的な機能を保つ特徴を持つもの</td><td data-label="刻む表示">リム径の前に F など</td></tr>
+<tr><th scope="row">目的</th><td data-label="区分">応急用スペア</td><td data-label="規格の定義（要旨）">限られた走行条件の下で、応急的に使うことを目的としたもの</td><td data-label="刻む表示">TEMPORARY USE ONLY</td></tr>
 </tbody>
 </table></div>
 <p>世間でよく聞く「夏タイヤ」や「オールシーズン」という語は、この規格には出てこない。規格にあるのは、雪路での性能を優先して設計されたかどうかという線引きで、スノータイヤには M+S などの表示が求められる。 <sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup> 俗称と規格上の区分は一致しない、ということである。</p>
@@ -234,12 +244,12 @@
 <h2><span class="no">7</span>外径をほぼ保ったまま、サイズを変える――インチアップ</h2>
 <p>ホイールを大きくして、その分、タイヤを薄くする方法を、インチアップ、またはプラスサイジングという。百科事典は、これを「より大きな直径のホイールに、より低い偏平比のタイヤを組み合わせる行為」と説明し、目的を、元のタイヤに近い直径と円周を保つことだとしている。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 速度計の精度や、駆動力を制御する装置への影響を小さくするためである。リム径を一インチ上げることを「プラス 1 」という。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></p>
 <p>数字で見ると、仕組みが分かる（筆者の計算）。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>サイズ</th><th>リム径</th><th>断面高さ</th><th>外径</th><th>基準との差</th></tr></thead>
 <tbody>
-<tr><th scope="row">205/55R16 ・基準</th><td>406.4 mm</td><td>112.75 mm</td><td>631.9 mm</td><td>―</td></tr>
-<tr><th scope="row">225/45R17 ・プラス 1</th><td>431.8 mm</td><td>101.25 mm</td><td>634.3 mm</td><td>＋ 0.4%</td></tr>
-<tr><th scope="row">225/40R18 ・プラス 2</th><td>457.2 mm</td><td>90.0 mm</td><td>637.2 mm</td><td>＋ 0.8%</td></tr>
+<tr><th scope="row">205/55R16 ・基準</th><td data-label="リム径">406.4 mm</td><td data-label="断面高さ">112.75 mm</td><td data-label="外径">631.9 mm</td><td data-label="基準との差">―</td></tr>
+<tr><th scope="row">225/45R17 ・プラス 1</th><td data-label="リム径">431.8 mm</td><td data-label="断面高さ">101.25 mm</td><td data-label="外径">634.3 mm</td><td data-label="基準との差">＋ 0.4%</td></tr>
+<tr><th scope="row">225/40R18 ・プラス 2</th><td data-label="リム径">457.2 mm</td><td data-label="断面高さ">90.0 mm</td><td data-label="外径">637.2 mm</td><td data-label="基準との差">＋ 0.8%</td></tr>
 </tbody>
 </table></div>
 <p>リム径が 16 から 18 インチへと 50.8 mm 大きくなっても、壁が 22.75 mm ずつ低くなって、外径は 1% 未満しか動かない。幅は 205 から 225 mm へ広がっている。この「径を上げ、壁を低くし、幅を広げる」という組み合わせが、現代の乗用車のグレード展開の基本形である。壁が低いほどタイヤのたわみが減り、曲がりやすくなる、というのが一般的な説明だが、乗り心地は硬くなりやすい。 <sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup></p>
@@ -249,16 +259,16 @@
 <section id="s8">
 <h2><span class="no">8</span>国産車で採用されるタイヤの傾向</h2>
 <p>ここからは、実際の車にどんなサイズが付いているかを見る。国産車の純正サイズは、国内のタイヤ販売サイトなどの一覧を使った。サイズは車種ごとに、年式やグレードで違うため、二つの一覧が一致したものを中心に拾い、外径は先の式で計算した（筆者の計算）。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>区分</th><th>車種の例</th><th>純正サイズの例</th><th>外径の計算値</th></tr></thead>
 <tbody>
-<tr><th scope="row">軽自動車（ハイトワゴン）</th><td>ホンダ N-BOX</td><td>155/65R14</td><td>557.1 mm</td></tr>
-<tr><th scope="row">軽自動車（上位・ SUV 風）</th><td>スズキ ハスラー</td><td>165/60R15</td><td>579.0 mm</td></tr>
-<tr><th scope="row">コンパクトカー</th><td>ホンダ フィット</td><td>185/60R15</td><td>603.0 mm</td></tr>
-<tr><th scope="row">セダン・ハッチバック</th><td>トヨタ カローラ</td><td>195/65R15</td><td>634.5 mm</td></tr>
-<tr><th scope="row">ミニバン</th><td>トヨタ ノア・ヴォクシー</td><td>205/60R16</td><td>652.4 mm</td></tr>
-<tr><th scope="row">SUV</th><td>トヨタ RAV4 、マツダ CX-5</td><td>225/65R17</td><td>724.3 mm</td></tr>
-<tr><th scope="row">スポーツ志向</th><td>ホンダ シビック</td><td>235/40R18</td><td>645.2 mm</td></tr>
+<tr><th scope="row">軽自動車（ハイトワゴン）</th><td data-label="車種の例">ホンダ N-BOX</td><td data-label="純正サイズの例">155/65R14</td><td data-label="外径の計算値">557.1 mm</td></tr>
+<tr><th scope="row">軽自動車（上位・ SUV 風）</th><td data-label="車種の例">スズキ ハスラー</td><td data-label="純正サイズの例">165/60R15</td><td data-label="外径の計算値">579.0 mm</td></tr>
+<tr><th scope="row">コンパクトカー</th><td data-label="車種の例">ホンダ フィット</td><td data-label="純正サイズの例">185/60R15</td><td data-label="外径の計算値">603.0 mm</td></tr>
+<tr><th scope="row">セダン・ハッチバック</th><td data-label="車種の例">トヨタ カローラ</td><td data-label="純正サイズの例">195/65R15</td><td data-label="外径の計算値">634.5 mm</td></tr>
+<tr><th scope="row">ミニバン</th><td data-label="車種の例">トヨタ ノア・ヴォクシー</td><td data-label="純正サイズの例">205/60R16</td><td data-label="外径の計算値">652.4 mm</td></tr>
+<tr><th scope="row">SUV</th><td data-label="車種の例">トヨタ RAV4 、マツダ CX-5</td><td data-label="純正サイズの例">225/65R17</td><td data-label="外径の計算値">724.3 mm</td></tr>
+<tr><th scope="row">スポーツ志向</th><td data-label="車種の例">ホンダ シビック</td><td data-label="純正サイズの例">235/40R18</td><td data-label="外径の計算値">645.2 mm</td></tr>
 </tbody>
 </table></div>
 <p>この表と周辺の資料から、国産車の傾向として、次の点が読み取れる。</p>
@@ -271,12 +281,12 @@
 <section id="s9">
 <h2><span class="no">9</span>欧州メーカーのタイヤの傾向</h2>
 <p>欧州車については、国産車ほど多くの資料に当たれなかった。確認できたのは、タイヤメーカー（コンチネンタル）の欧州向け一覧に載る、欧州で Clio の名で売られるルノー・ルーテシアの装着サイズと、それと共通するとされる車種である。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> また、フォルクスワーゲン・ゴルフの装着一覧も参考にしたが、こちらは米国市場向けの車種名やグレードを含んでおり、欧州の仕様そのものではない。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>サイズ</th><th>外径の計算値</th><th>ルーテシアでの装着例</th><th>共通するとされる車種</th></tr></thead>
 <tbody>
-<tr><th scope="row">185/65R15</th><td>621.5 mm</td><td>2018 から 2020 年の Zen ・ Intens</td><td>フォルクスワーゲン・ポロ、セアト・イビサ、シトロエン・ C3 （多くの場合）</td></tr>
-<tr><th scope="row">195/55R16</th><td>620.9 mm</td><td>2015 から 2017 年の Limited ・ GT Line 、 2021 から 2026 年の Evolution ・ Techno</td><td>ポロ、アウディ・ A1 、イビサ、プジョー・ 208</td></tr>
-<tr><th scope="row">205/45R17</th><td>616.3 mm</td><td>2021 から 2026 年の Esprit Alpine</td><td>アウディ・ A1</td></tr>
+<tr><th scope="row">185/65R15</th><td data-label="外径の計算値">621.5 mm</td><td data-label="ルーテシアでの装着例">2018 から 2020 年の Zen ・ Intens</td><td data-label="共通するとされる車種">フォルクスワーゲン・ポロ、セアト・イビサ、シトロエン・ C3 （多くの場合）</td></tr>
+<tr><th scope="row">195/55R16</th><td data-label="外径の計算値">620.9 mm</td><td data-label="ルーテシアでの装着例">2015 から 2017 年の Limited ・ GT Line 、 2021 から 2026 年の Evolution ・ Techno</td><td data-label="共通するとされる車種">ポロ、アウディ・ A1 、イビサ、プジョー・ 208</td></tr>
+<tr><th scope="row">205/45R17</th><td data-label="外径の計算値">616.3 mm</td><td data-label="ルーテシアでの装着例">2021 から 2026 年の Esprit Alpine</td><td data-label="共通するとされる車種">アウディ・ A1</td></tr>
 </tbody>
 </table></div>
 <p>出典は、タイヤメーカーの適合一覧である。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 外径は、先の式による筆者の計算である。この表から、次の点が読み取れる。</p>

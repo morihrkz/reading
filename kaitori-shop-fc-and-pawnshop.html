@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -242,13 +252,13 @@
 <div class="caution"><p>店舗数には、海外・催事・出店待機を含む数え方がある。売上高は、会社単体の値か、加盟店を含む全店売上かが、出典から読み取れないものがある。たとえば「おたからや」の売上は、 989 億円（ 2025 年 6 月期） <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> と 2,112 億円（ 27 期） <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> で 2 倍を超えて開く。この差の理由は確認できていない。順位や規模の比較には使わず、各社の公式資料で確かめてから使うこと。</p></div>
 
 <h3>大手 2 ブランドと、上場する関連企業</h3>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>ブランド（運営会社）</th><th>店舗数（時点）</th><th>売上高</th><th>備考</th></tr></thead>
 <tbody>
-<tr><th>買取大吉<br>（エンパワー）</th><td>直営 187 + FC 1,436 = 1,623 店（ 2025 年 12 月 2 日） <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。 2026 年秋には 2,200 店前後とする比較記事がある <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> が、数字は一定しない。</td><td>464.7 億円（ 2023 年 9 月期）→ 810.1 億円（ 2024 年 9 月期）→ 977.6 億円（ 2025 年 9 月期） <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></td><td>店舗の約 88% が FC 。売上は会社の値で、加盟店の売上を含むかは確認できていない。</td></tr>
-<tr><th>おたからや<br>（いーふらん）</th><td>直営 410 （催事・海外含む） + 加盟約 1,220 = 約 1,630 店（ 2025 年 12 月） <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup> 。会社は 2026 年 7 月に「世界 1,930 店舗突破」と発表 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</td><td>989 億円（ 2025 年 6 月期） <sup id="fnref-12-4"><a href="#ref-12">[12]</a></sup> 。会社概要は 2,112 億円（ 27 期） <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 、プレスリリースは 2,030 億円（取材時点）<sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。</td><td>『リユース経済新聞』の 2026 年のランキングで 3 位（前年は 4 位）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup> 。売上の定義は上の注意を参照。</td></tr>
-<tr><th>大黒屋<br>（大黒屋ホールディングス）</th><td>285 店（ 2026 年 8 月） <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td><td>連結 114.7 億円（ 2026 年 3 月期）。営業損失 6.5 億円 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td>直営と FC の内訳は確認できていない。</td></tr>
-<tr><th>買取王国<br>（買取王国）</th><td>87 店、うち FC 7 店（ 2026 年 4 月 10 日） <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup></td><td>約 93 億円（ 2026 年 2 月期） <sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup></td><td>上場企業。 FC は少数で、直営が中心。</td></tr>
+<tr><th>買取大吉<br>（エンパワー）</th><td data-label="店舗数（時点）">直営 187 + FC 1,436 = 1,623 店（ 2025 年 12 月 2 日） <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。 2026 年秋には 2,200 店前後とする比較記事がある <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> が、数字は一定しない。</td><td data-label="売上高">464.7 億円（ 2023 年 9 月期）→ 810.1 億円（ 2024 年 9 月期）→ 977.6 億円（ 2025 年 9 月期） <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></td><td data-label="備考">店舗の約 88% が FC 。売上は会社の値で、加盟店の売上を含むかは確認できていない。</td></tr>
+<tr><th>おたからや<br>（いーふらん）</th><td data-label="店舗数（時点）">直営 410 （催事・海外含む） + 加盟約 1,220 = 約 1,630 店（ 2025 年 12 月） <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup> 。会社は 2026 年 7 月に「世界 1,930 店舗突破」と発表 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</td><td data-label="売上高">989 億円（ 2025 年 6 月期） <sup id="fnref-12-4"><a href="#ref-12">[12]</a></sup> 。会社概要は 2,112 億円（ 27 期） <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 、プレスリリースは 2,030 億円（取材時点）<sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。</td><td data-label="備考">『リユース経済新聞』の 2026 年のランキングで 3 位（前年は 4 位）<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup> 。売上の定義は上の注意を参照。</td></tr>
+<tr><th>大黒屋<br>（大黒屋ホールディングス）</th><td data-label="店舗数（時点）">285 店（ 2026 年 8 月） <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td><td data-label="売上高">連結 114.7 億円（ 2026 年 3 月期）。営業損失 6.5 億円 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td data-label="備考">直営と FC の内訳は確認できていない。</td></tr>
+<tr><th>買取王国<br>（買取王国）</th><td data-label="店舗数（時点）">87 店、うち FC 7 店（ 2026 年 4 月 10 日） <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup></td><td data-label="売上高">約 93 億円（ 2026 年 2 月期） <sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup></td><td data-label="備考">上場企業。 FC は少数で、直営が中心。</td></tr>
 </tbody>
 </table></div>
 

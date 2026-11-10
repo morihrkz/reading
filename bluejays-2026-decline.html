@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -194,15 +204,15 @@
 <h2><span class="no">3</span>2025 年と 2026 年の事実の対比</h2>
 <h3 id="s3-1">3.1 成績の対比</h3>
 <p>2025 年のブルージェイズは 94 勝 68 敗（勝率 .580 ）で、ヤンキースと同じ勝敗で並んだが、直接対決の成績が 8 勝 5 敗で上回り、ア・リーグ東地区の優勝を決めた <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。<br>2025 年を「ア・リーグ最高勝率」とする記述もあるが、リーグ最高の勝率だったかどうかは確認できなかった。<strong>未確認</strong><br><br>ポストシーズンでは地区シリーズ（プレーオフの最初の段階）でヤンキースを 3 勝 1 敗、リーグ優勝決定戦（ワールドシリーズ進出をかけた段階）でマリナーズを 4 勝 3 敗で下し、ワールドシリーズでドジャースに 3 勝 4 敗で敗れた <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> 。<br> 2026 年は 79 勝 83 敗（勝率 .488 ）で、首位のレイズから 19 ゲーム差（首位との勝ち数と負け数の差から算出した差）の 5 位だった <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup><sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> 。<br></p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>指標</th><th>2025 年</th><th>2026 年</th><th>変化</th></tr></thead>
 <tbody>
-<tr><th scope="row">勝利数</th><td>94</td><td>79</td><td>−15</td></tr>
-<tr><th scope="row">勝率</th><td>.580</td><td>.488</td><td>−.092</td></tr>
-<tr><th scope="row">得点</th><td>798</td><td>648</td><td>−150</td></tr>
-<tr><th scope="row">失点</th><td>721</td><td>694</td><td>−27</td></tr>
-<tr><th scope="row">得失点差</th><td>+77</td><td>−46</td><td>−123</td></tr>
-<tr><th scope="row">本塁打</th><td>191</td><td>152</td><td>−39</td></tr>
+<tr><th scope="row">勝利数</th><td data-label="2025 年">94</td><td data-label="2026 年">79</td><td data-label="変化">−15</td></tr>
+<tr><th scope="row">勝率</th><td data-label="2025 年">.580</td><td data-label="2026 年">.488</td><td data-label="変化">−.092</td></tr>
+<tr><th scope="row">得点</th><td data-label="2025 年">798</td><td data-label="2026 年">648</td><td data-label="変化">−150</td></tr>
+<tr><th scope="row">失点</th><td data-label="2025 年">721</td><td data-label="2026 年">694</td><td data-label="変化">−27</td></tr>
+<tr><th scope="row">得失点差</th><td data-label="2025 年">+77</td><td data-label="2026 年">−46</td><td data-label="変化">−123</td></tr>
+<tr><th scope="row">本塁打</th><td data-label="2025 年">191</td><td data-label="2026 年">152</td><td data-label="変化">−39</td></tr>
 </tbody>
 </table></div>
 <p>出典は、 2025 年の各値が <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 、 2026 年の勝敗・得点・失点が <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup><sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 、本塁打が <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup><sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> である。<br>すなわち、失点は 27 点減り、得点は 150 点減り、勝ち星は 15 減った。<br>失点が減ったのに得点が大きく落ちたことが、 15 勝の後退の主因と考えられる。<br>後述する期待勝率で見ても、 2025 年の .546 から 2026 年の .469 への低下は、得点側の減少に由来する（筆者の計算）。<br> 2026 年の得点 648 はメジャー全体で 30 位、すなわち最下位であり <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup> 、本塁打 152 も最下位だった <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup><sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup> 。<br>出塁率（打者が塁に出る割合）は .310 （ 25 位）、長打率（打数あたりの塁打数で、長打の多さを示す）は .381 （ 26 位）で、いずれも下位ではあるが最下位ではない <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 。<br>報道も、長打率と OPS （出塁率と長打率の和）が下位にとどまったと伝える <sup id="fnref-8-4"><a href="#ref-8">[8]</a></sup> 。<br>出塁率は前年から 23 ポイント下がったとする記述もあるが、 2025 年の出塁率は確認できなかった。<strong>未確認</strong><br><br>長打率は 2025 年の .427 から 2026 年の .381 へ下がったとする記述もあるが、 2025 年の長打率は確認できなかった。<strong>未確認</strong><br><br></p>
@@ -288,20 +298,20 @@
 <h2><span class="no">7</span>要因の区分</h2>
 <p>次の表は、これまでの論点を三つの基準で区分したものである。<br>「確立した事実」は記録や一次情報で直接確認できて解釈の余地が小さいもの、「未確定の仮説」は一部のデータや報道が支持するが反証や代替説明が残るもの、「投機的な理論」は直接のデータによる裏づけがなく一般論や推測に依存するものである。<br>本稿は各要因の寄与を数量化していない。<br>区分は筆者の判断であり、根拠を併記する。<br></p>
 <p>第 2 章の副問への回答を、確認できた範囲で述べる。<br>第一に、 15 勝の後退は、失点の減少（ 27 点減）よりも、得点の減少（ 150 点減）に対応している。<br>第二に、得点の減少は、長打力の低下、主力打者の不振、流出、故障のいずれかまたは複数に由来すると考えられるが、寄与の配分は確定していない。<br>第三に、 2025 年の 94 勝は、得失点差から見ると約 5 勝上振れしていたが、 94 勝が実力を上回っていたとまでは断定できない。<br>第四に、地区環境と編成は順位と評価の説明として成立しうるが、疲労は直接のデータを欠く。<br></p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead><tr><th>論点</th><th>区分</th><th>判断の根拠</th><th>出典</th></tr></thead>
 <tbody>
-<tr><th scope="row">得点力の低下（ 648 点、メジャー最下位）</th><td>確立した事実</td><td>得点・本塁打とも最下位の記録が確認できる</td><td><sup id="fnref-1-18"><a href="#ref-1">[1]</a></sup><sup id="fnref-6-9"><a href="#ref-6">[6]</a></sup><sup id="fnref-8-12"><a href="#ref-8">[8]</a></sup><sup id="fnref-22-3"><a href="#ref-22">[22]</a></sup></td></tr>
-<tr><th scope="row">失点の改善 (721 から 694)</th><td>確立した事実</td><td>失点の記録で確認できる。<br>被本塁打・ fWAR は未確認</td><td><sup id="fnref-1-19"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-10"><a href="#ref-2">[2]</a></sup></td></tr>
-<tr><th scope="row">ゲレーロ Jr. の長打力の低下</th><td>確立した事実</td><td>23 本塁打から 9 本塁打、 wRC+ 95 〜 96 。<br>最終の OPS と本拠地の本数は未確認</td><td><sup id="fnref-1-20"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-11"><a href="#ref-2">[2]</a></sup><sup id="fnref-21-2"><a href="#ref-21">[21]</a></sup></td></tr>
-<tr><th scope="row">先発陣の負傷の連鎖</th><td>確立した事実</td><td>故障者リストの記録がある。<br>負傷が順位に与えた影響の大きさは別</td><td><sup id="fnref-1-21"><a href="#ref-1">[1]</a></sup><sup id="fnref-8-13"><a href="#ref-8">[8]</a></sup><sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup></td></tr>
-<tr><th scope="row">主力の流出・不振・負傷の寄与の配分</th><td>未確定の仮説</td><td>各要因の個別の寄与を分ける統計を確認していない</td><td><sup id="fnref-1-22"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-12"><a href="#ref-2">[2]</a></sup><sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup></td></tr>
-<tr><th scope="row">2025 年の上振れ</th><td>未確定の仮説</td><td>期待勝率との差は計算で確認できるが、接戦の成績と開幕前の予測が未確認。<br> 2026 年も期待を上回って勝っている（筆者の計算）</td><td><sup id="fnref-2-13"><a href="#ref-2">[2]</a></sup><sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup></td></tr>
-<tr><th scope="row">地区環境が最下位を招いた</th><td>未確定の仮説</td><td>順位の説明としては成立するが、 15 勝の後退の原因とは言いにくい</td><td><sup id="fnref-1-23"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><th scope="row">補強・フロントの消極性</th><td>未確定の仮説</td><td>批判と反証の両方がある。<br>評価は意見を含む</td><td><sup id="fnref-4-5"><a href="#ref-4">[4]</a></sup><sup id="fnref-8-14"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup><sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup></td></tr>
-<tr><th scope="row">ロースターの高齢化・層の薄さ</th><td>投機的な理論</td><td>年齢構成の記録を確認できていない。<br>「可能性が指摘される」にとどまる</td><td>なし</td></tr>
-<tr><th scope="row">疲労・燃え尽き</th><td>投機的な理論</td><td>直接のデータがなく、因果を示す根拠がない</td><td><sup id="fnref-3-11"><a href="#ref-3">[3]</a></sup><sup id="fnref-15-3"><a href="#ref-15">[15]</a></sup></td></tr>
-<tr><th scope="row">第 7 戦の敗北の心理的反動</th><td>投機的な理論</td><td>因果関係を示す根拠がない</td><td><sup id="fnref-3-12"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th scope="row">得点力の低下（ 648 点、メジャー最下位）</th><td data-label="区分">確立した事実</td><td data-label="判断の根拠">得点・本塁打とも最下位の記録が確認できる</td><td data-label="出典"><sup id="fnref-1-18"><a href="#ref-1">[1]</a></sup><sup id="fnref-6-9"><a href="#ref-6">[6]</a></sup><sup id="fnref-8-12"><a href="#ref-8">[8]</a></sup><sup id="fnref-22-3"><a href="#ref-22">[22]</a></sup></td></tr>
+<tr><th scope="row">失点の改善 (721 から 694)</th><td data-label="区分">確立した事実</td><td data-label="判断の根拠">失点の記録で確認できる。<br>被本塁打・ fWAR は未確認</td><td data-label="出典"><sup id="fnref-1-19"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-10"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><th scope="row">ゲレーロ Jr. の長打力の低下</th><td data-label="区分">確立した事実</td><td data-label="判断の根拠">23 本塁打から 9 本塁打、 wRC+ 95 〜 96 。<br>最終の OPS と本拠地の本数は未確認</td><td data-label="出典"><sup id="fnref-1-20"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-11"><a href="#ref-2">[2]</a></sup><sup id="fnref-21-2"><a href="#ref-21">[21]</a></sup></td></tr>
+<tr><th scope="row">先発陣の負傷の連鎖</th><td data-label="区分">確立した事実</td><td data-label="判断の根拠">故障者リストの記録がある。<br>負傷が順位に与えた影響の大きさは別</td><td data-label="出典"><sup id="fnref-1-21"><a href="#ref-1">[1]</a></sup><sup id="fnref-8-13"><a href="#ref-8">[8]</a></sup><sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup></td></tr>
+<tr><th scope="row">主力の流出・不振・負傷の寄与の配分</th><td data-label="区分">未確定の仮説</td><td data-label="判断の根拠">各要因の個別の寄与を分ける統計を確認していない</td><td data-label="出典"><sup id="fnref-1-22"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-12"><a href="#ref-2">[2]</a></sup><sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup></td></tr>
+<tr><th scope="row">2025 年の上振れ</th><td data-label="区分">未確定の仮説</td><td data-label="判断の根拠">期待勝率との差は計算で確認できるが、接戦の成績と開幕前の予測が未確認。<br> 2026 年も期待を上回って勝っている（筆者の計算）</td><td data-label="出典"><sup id="fnref-2-13"><a href="#ref-2">[2]</a></sup><sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup></td></tr>
+<tr><th scope="row">地区環境が最下位を招いた</th><td data-label="区分">未確定の仮説</td><td data-label="判断の根拠">順位の説明としては成立するが、 15 勝の後退の原因とは言いにくい</td><td data-label="出典"><sup id="fnref-1-23"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><th scope="row">補強・フロントの消極性</th><td data-label="区分">未確定の仮説</td><td data-label="判断の根拠">批判と反証の両方がある。<br>評価は意見を含む</td><td data-label="出典"><sup id="fnref-4-5"><a href="#ref-4">[4]</a></sup><sup id="fnref-8-14"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup><sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup></td></tr>
+<tr><th scope="row">ロースターの高齢化・層の薄さ</th><td data-label="区分">投機的な理論</td><td data-label="判断の根拠">年齢構成の記録を確認できていない。<br>「可能性が指摘される」にとどまる</td><td data-label="出典">なし</td></tr>
+<tr><th scope="row">疲労・燃え尽き</th><td data-label="区分">投機的な理論</td><td data-label="判断の根拠">直接のデータがなく、因果を示す根拠がない</td><td data-label="出典"><sup id="fnref-3-11"><a href="#ref-3">[3]</a></sup><sup id="fnref-15-3"><a href="#ref-15">[15]</a></sup></td></tr>
+<tr><th scope="row">第 7 戦の敗北の心理的反動</th><td data-label="区分">投機的な理論</td><td data-label="判断の根拠">因果関係を示す根拠がない</td><td data-label="出典"><sup id="fnref-3-12"><a href="#ref-3">[3]</a></sup></td></tr>
 </tbody>
 </table></div>
 </section>

@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -189,7 +199,7 @@
 <h3 id="s2-3">2.3 各社の直近決算（クラウド部門）</h3>
 <p>各社の会計区分の違いに注意が必要である。 AWS は Amazon の独立事業セグメント、 Azure は Microsoft の「 Intelligent Cloud 」というより大きなセグメントの一部として開示、 Google Cloud は Alphabet の独立セグメントである。
 単純な実額の横並び比較には限界がある。</p>
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr>
 <th>企業（セグメント）</th>
@@ -201,25 +211,25 @@
 </thead>
 <tbody>
 <tr>
-<td>AWS (Amazon)</td>
-<td>2026 年 Q2 （ 4 〜 6 月）</td>
-<td>422 億ドル</td>
-<td>+37% （ Jassy CEO は過去 18 四半期で最速と発言）</td>
-<td>166 億ドル（営業利益率約 39.3% ）</td>
+<td data-label="企業（セグメント）">AWS (Amazon)</td>
+<td data-label="対象四半期">2026 年 Q2 （ 4 〜 6 月）</td>
+<td data-label="売上高">422 億ドル</td>
+<td data-label="前年同期比成長率">+37% （ Jassy CEO は過去 18 四半期で最速と発言）</td>
+<td data-label="営業利益（率）">166 億ドル（営業利益率約 39.3% ）</td>
 </tr>
 <tr>
-<td>Azure (Microsoft Intelligent Cloud)</td>
-<td>FY2026 Q4 （暦年 4 〜 6 月）</td>
-<td>Intelligent Cloud 全体 393 億ドル</td>
-<td>Azure 単体 +43% 、 Intelligent Cloud 全体 +32%</td>
-<td>Intelligent Cloud 全体で約 160 億ドル</td>
+<td data-label="企業（セグメント）">Azure (Microsoft Intelligent Cloud)</td>
+<td data-label="対象四半期">FY2026 Q4 （暦年 4 〜 6 月）</td>
+<td data-label="売上高">Intelligent Cloud 全体 393 億ドル</td>
+<td data-label="前年同期比成長率">Azure 単体 +43% 、 Intelligent Cloud 全体 +32%</td>
+<td data-label="営業利益（率）">Intelligent Cloud 全体で約 160 億ドル</td>
 </tr>
 <tr>
-<td>Google Cloud (Alphabet)</td>
-<td>2026 年 Q2 （ 4 〜 6 月）</td>
-<td>248 億ドル</td>
-<td>+82%</td>
-<td>88 億ドル（前年同期 28 億ドルから大幅増）</td>
+<td data-label="企業（セグメント）">Google Cloud (Alphabet)</td>
+<td data-label="対象四半期">2026 年 Q2 （ 4 〜 6 月）</td>
+<td data-label="売上高">248 億ドル</td>
+<td data-label="前年同期比成長率">+82%</td>
+<td data-label="営業利益（率）">88 億ドル（前年同期 28 億ドルから大幅増）</td>
 </tr>
 </tbody>
 </table></div>

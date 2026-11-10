@@ -69,7 +69,17 @@
   thead th:nth-child(n+4){background:var(--copper)}
   tbody th{background:#faf3e2;white-space:nowrap}
   tr:last-child th,tr:last-child td{border-bottom:0}
-  @media(max-width:560px){th,td{padding:8px 7px}tbody th{white-space:normal}}
+  @media(max-width:560px){th,td{padding:8px 7px;overflow-wrap:anywhere}}
+  /* 4 列以上の表（ table.stack ）は、幅 560px 以下で、行ごとの縦積みにする。各 td の data-label が列名になる */
+  @media(max-width:560px){
+   table.stack,table.stack tbody,table.stack tr,table.stack th,table.stack td{display:block}
+   table.stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+   table.stack tr{border-bottom:2px solid var(--line)}
+   table.stack tr:last-child{border-bottom:0}
+   table.stack th,table.stack td{border-bottom:0;padding:4px 12px}
+   table.stack tbody th{padding-top:10px}
+   table.stack td::before{content:attr(data-label);display:block;font-size:13px;font-weight:bold;color:var(--muted)}
+  }
   .scroll{overflow-x:auto}
   .quiz details{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 16px;margin:10px 0}
   .quiz summary{cursor:pointer;font-weight:bold}
@@ -240,19 +250,19 @@
 <p>人口比はおよそ 12 倍である。指示書は英国の人口を約 6,700 万人としているが、最新の公式推計は約 6,930 万人であり、指示書の数字は古い。</p>
 <p><strong>判定</strong><br>正確。</p>
 
-<div class="scroll"><table>
+<div class="scroll"><table class="stack">
 <thead>
 <tr><th>#</th><th>主張</th><th>判定</th><th>確認の度合い</th></tr>
 </thead>
 <tbody>
-<tr><th scope="row">1</th><td>発見時期がほぼ同じ</td><td>おおむね正確</td><td>一次資料は未確認</td></tr>
-<tr><th scope="row">2</th><td>基金は約 21.3 兆 NOK</td><td>正確</td><td>NBIM 年次報告書で確認</td></tr>
-<tr><th scope="row">3</th><td>英国に国家石油基金がない</td><td>正確</td><td>OBR で収入の推移を確認</td></tr>
-<tr><th scope="row">4</th><td>水力発電の免許制度が起源</td><td>おおむね妥当</td><td>法令原文は未確認</td></tr>
-<tr><th scope="row">5</th><td>Statoil 、 SDFI 、高い課税</td><td>正確</td><td>SDFI と税率を確認</td></tr>
-<tr><th scope="row">6</th><td>BNOC と Britoil</td><td>正確</td><td>二次資料で確認</td></tr>
-<tr><th scope="row">7</th><td>石油基金 1990 年、拠出 1996 年</td><td>正確</td><td>NBIM の沿革で確認</td></tr>
-<tr><th scope="row">8</th><td>人口は英国の一部</td><td>正確</td><td>ONS と OECD で確認</td></tr>
+<tr><th scope="row">1</th><td data-label="主張">発見時期がほぼ同じ</td><td data-label="判定">おおむね正確</td><td data-label="確認の度合い">一次資料は未確認</td></tr>
+<tr><th scope="row">2</th><td data-label="主張">基金は約 21.3 兆 NOK</td><td data-label="判定">正確</td><td data-label="確認の度合い">NBIM 年次報告書で確認</td></tr>
+<tr><th scope="row">3</th><td data-label="主張">英国に国家石油基金がない</td><td data-label="判定">正確</td><td data-label="確認の度合い">OBR で収入の推移を確認</td></tr>
+<tr><th scope="row">4</th><td data-label="主張">水力発電の免許制度が起源</td><td data-label="判定">おおむね妥当</td><td data-label="確認の度合い">法令原文は未確認</td></tr>
+<tr><th scope="row">5</th><td data-label="主張">Statoil 、 SDFI 、高い課税</td><td data-label="判定">正確</td><td data-label="確認の度合い">SDFI と税率を確認</td></tr>
+<tr><th scope="row">6</th><td data-label="主張">BNOC と Britoil</td><td data-label="判定">正確</td><td data-label="確認の度合い">二次資料で確認</td></tr>
+<tr><th scope="row">7</th><td data-label="主張">石油基金 1990 年、拠出 1996 年</td><td data-label="判定">正確</td><td data-label="確認の度合い">NBIM の沿革で確認</td></tr>
+<tr><th scope="row">8</th><td data-label="主張">人口は英国の一部</td><td data-label="判定">正確</td><td data-label="確認の度合い">ONS と OECD で確認</td></tr>
 </tbody>
 </table></div>
 </section>
