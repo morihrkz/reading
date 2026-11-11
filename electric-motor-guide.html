@@ -107,7 +107,7 @@
   .quiz .ans{color:var(--moss-ink);font-weight:bold}
   dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
+  /* 記事向けの部品 */
   .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
   .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
   .hero .subtitle{color:var(--ink);font-size:1.05rem}
@@ -120,14 +120,14 @@
   .lede>:first-child,.box>:first-child{margin-top:0}
   .lede>:last-child,.box>:last-child{margin-bottom:0}
   .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。 */
   dl.summary{margin:14px 0}
   dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
   dl.summary dt{white-space:nowrap}
   dl.summary dt::after{content:"："}
   dl.summary dd{margin:0;flex:1 1 12em}
   mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  /* 脚注の参照番号と参考文献欄 */
   sup{font-size:.9em;line-height:0}
   sup a{font-weight:bold;text-decoration:none}
   sup a:hover{text-decoration:underline}
@@ -230,7 +230,7 @@
     </g>
     <circle r="8" fill="#3a2e2a"/>
   </svg>
-  <h1>電動機と発電機の<br>原理</h1>
+  <h1>電動機と発電機の原理</h1>
   <p>扇風機から電車、電気自動車に至るまで、電気エネルギーを回転運動に変換する装置が電動機（モーター）である。本書では、電磁力と電磁誘導の二つの現象を軸に、直流機・交流機の動作原理と、電動機が発電機としても動作する理由を、図を用いて解説する。</p>
 </header>
 
@@ -689,7 +689,7 @@
   <h2><span class="no">9</span> 電気自動車と回生ブレーキ</h2>
   <p>電気自動車 (EV) やハイブリッド車の駆動用電動機は、<b>一台で二つの役割</b>を果たす。</p>
   <ul>
-    <li><b><ruby>力行<rt>りきこう</rt></ruby>（加速）時</b>：バッテリーの電気エネルギーで電動機を回転させ、車輪を駆動する（力行とは、電動機が電力を使って動力を出している状態をいう）。</li>
+    <li><b><ruby>力行<rt>リキコウ</rt></ruby>（加速）時</b>：バッテリーの電気エネルギーで電動機を回転させ、車輪を駆動する（<ruby>力行<rt>リキコウ</rt></ruby>とは、電動機が電力を使って動力を出している状態をいう）。</li>
     <li><b>制動（減速）時</b>：車両の運動エネルギーによって車輪が電動機を回転させる。電動機は<b>発電機</b>として動作し、発生した電力をバッテリーに戻す。この方式を<b>回生ブレーキ</b>（回生制動）という。</li>
   </ul>
   <figure>
@@ -725,7 +725,7 @@
 <text x="160" y="348" text-anchor="middle" class="t ts tb">タイヤ</text>
 </g>
 </svg>
-    <figcaption>力行時：電力は上から下へ流れ、車輪を駆動する。制動時：車輪の運動エネルギーが、電力として下から上へ戻る。</figcaption>
+    <figcaption><ruby>力行<rt>リキコウ</rt></ruby>時：電力は上から下へ流れ、車輪を駆動する。制動時：車輪の運動エネルギーが、電力として下から上へ戻る。</figcaption>
   </figure>
   <p>バッテリーは直流、駆動用電動機は交流を用いることが多いため、両者の間に置かれる<b>インバーター</b>が、直流と交流の相互変換を行う。従来のブレーキが運動エネルギーを熱として捨てていたのに対し、回生ブレーキはそれを電気エネルギーとして回収できるため、エネルギー効率の向上に寄与する。</p>
 </section>
