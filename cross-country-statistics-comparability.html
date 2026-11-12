@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>国別の統計はなぜそのまま比べられないのか</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 記事向けの部品(SKILL.md の「記事向けの部品」。和色に寄せた) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* 指示書・報告書向けの部品(SKILL.md の「指示書・報告書向けの部品」)。コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* SVG common */
+  .t{font-family:inherit;fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">犯罪統計の読み方</p>
+<h1>国別の統計はなぜそのまま比べられないのか</h1>
+<p class="subtitle">Definitions, Recording Practices, and Prosecution Filters as Limits on Cross-National Crime Statistics</p>
+<p>同じ名前の数字でも、国によって、数えている中身が違う。カナダの誘拐件数を手がかりに、比較が成り立たない理由を整理する。</p>
+</header>
+<div class="wrap">
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">問題の所在</a></li>
+<li><a href="#sec2">統計は、どの段階で数えたかで意味が変わる</a>
+<ol>
+<li><a href="#sec2-1">実態から統計までの五つの段階</a></li>
+<li><a href="#sec2-2">段階ごとに違いうるもの</a></li>
+</ol>
+</li>
+<li><a href="#sec3">例 : カナダの「誘拐」</a>
+<ol>
+<li><a href="#sec3-1">何を誘拐と呼ぶか</a></li>
+<li><a href="#sec3-2">実態は身近な人の間の事件</a></li>
+<li><a href="#sec3-3">ほかの罪に付随して数えられる</a></li>
+<li><a href="#sec3-4">入口は広く、出口は狭い</a></li>
+</ol>
+</li>
+<li><a href="#sec4">ほかの国・ほかの分野でも起きること</a>
+<ol>
+<li><a href="#sec4-1">数える単位の違い</a></li>
+<li><a href="#sec4-2">記録を厳しくすると、件数が増える</a></li>
+<li><a href="#sec4-3">起訴の基準の違い</a></li>
+<li><a href="#sec4-4">比較に比較的耐える指標</a></li>
+</ol>
+</li>
+<li><a href="#sec5">比べる前に確かめること</a></li>
+<li><a href="#sec6">まとめ</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 問題の所在</h2>
+<div class="lede">
+<p>国別の統計を並べて「この国は多い」「この国は少ない」と言うとき、並べた数字が同じものを数えているとは限らない。数えている範囲、数え方の単位、記録される条件、起訴までの過程が違えば、大小の差は、実態の差よりも制度の差を映す。</p>
+</div>
+<div class="meta band"><strong>【方法と限界】</strong>カナダの数値は、統計局の分析（ 2007 年の監禁に関する Juristat ）にもとづく。近年の数値と国際比較の数値は、検索結果の要約から読み取ったもので、原表では確かめていない。スウェーデンとイングランド・ウェールズの例は、公的機関の報告の要約にもとづく。日本の起訴制度への言及は、一般に知られる制度の説明であり、出典を付けていない。本稿は考え方の整理であり、個々の国の順位を示すものではない。</div>
+<div class="point">
+<p>統計の比較が危うくなる場所は、おおよそ<mark>定義</mark>、<mark>数え方</mark>、<mark>記録の条件</mark>、<mark>起訴・有罪への絞り込み</mark>の四つに分けられる。数字を比べる前に、この四つがそろっているかを確かめる必要がある。</p>
+</div>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 統計は、どの段階で数えたかで意味が変わる</h2>
+
+<h3 id="sec2-1">2.1 実態から統計までの五つの段階</h3>
+<p>犯罪の統計は、現実に起きたことをそのまま写したものではない。実際の被害のうち、一部が警察に届けられ、その一部が警察に記録され、さらに一部が起訴され、一部が有罪になる。どの段階で数えた数字かによって、読み方が変わる。</p>
+<figure>
+<svg viewBox="0 0 480 312" role="img" aria-label="実際の被害から有罪までの五つの段階を、だんだん短くなる帯で示した模式図。警察の記録の右に警察統計、起訴と有罪の右に裁判統計と注記した">
+<rect x="10" y="10" width="460" height="44" rx="8" fill="#3a2e2a"/>
+<text class="t tb" x="26" y="41" font-size="24" style="fill:#fff">実際の被害</text>
+<polygon points="22,57 38,57 30,69" fill="#6d5640"/>
+<rect x="10" y="72" width="380" height="44" rx="8" fill="#a9461f"/>
+<text class="t tb" x="26" y="103" font-size="24" style="fill:#fff">警察への届出</text>
+<polygon points="22,119 38,119 30,131" fill="#6d5640"/>
+<rect x="10" y="134" width="300" height="44" rx="8" fill="#5e3d50"/>
+<text class="t tb" x="26" y="165" font-size="24" style="fill:#fff">警察の記録</text>
+<text class="t tb" x="326" y="165" font-size="22">警察統計</text>
+<polygon points="22,181 38,181 30,193" fill="#6d5640"/>
+<rect x="10" y="196" width="220" height="44" rx="8" fill="#a55b3a"/>
+<text class="t tb" x="26" y="227" font-size="24" style="fill:#fff">起訴</text>
+<polygon points="22,243 38,243 30,255" fill="#6d5640"/>
+<rect x="10" y="258" width="140" height="44" rx="8" fill="#6d5640"/>
+<text class="t tb" x="26" y="289" font-size="24" style="fill:#fff">有罪</text>
+<path d="M246 200 h10 v98 h-10" fill="none" stroke="#6d5640" stroke-width="3"/>
+<text class="t tb" x="270" y="256" font-size="22">裁判統計</text>
+</svg>
+<figcaption>実態から有罪までの絞り込みの模式図。帯の長さは概念を示すもので、実際の比率ではない。警察統計は三段目、裁判統計は四段目と五段目に当たる。</figcaption>
+</figure>
+<p>警察統計は、上から三つ目の「警察の記録」に当たる。裁判統計は、四つ目か五つ目である。国が違えば、各段階の絞り込みの強さが違う。したがって、ある段階の数字だけを並べても、それ以前の段階の差は見えない。</p>
+
+<h3 id="sec2-2">2.2 段階ごとに違いうるもの</h3>
+<table>
+<thead><tr><th>段階</th><th>国ごとに違いうるもの</th><th>比較への影響</th></tr></thead>
+<tbody>
+<tr><th>届出</th><td data-label="国ごとに違いうるもの">警察への信頼、届け出やすさ、保険請求のための届出の習慣</td><td data-label="比較への影響">届出が多い国ほど、同じ実態でも件数が多く出る</td></tr>
+<tr><th>定義</th><td data-label="国ごとに違いうるもの">どの行為をその罪名に含めるか（未遂、親族間、同意の有無など）</td><td data-label="比較への影響">定義が広い国ほど、件数が多く出る</td></tr>
+<tr><th>数え方</th><td data-label="国ごとに違いうるもの">事件、被害者、行為のどれを一件とするか。最も重い罪だけを数えるか、すべての罪を数えるか</td><td data-label="比較への影響">単位が細かい国ほど、件数が多く出る</td></tr>
+<tr><th>記録の条件</th><td data-label="国ごとに違いうるもの">届出の時点で記録するか、捜査で確かめてから記録するか</td><td data-label="比較への影響">届出時に記録する国は、件数が多く、検挙率が低く出る</td></tr>
+<tr><th>起訴・有罪</th><td data-label="国ごとに違いうるもの">誰が、どの程度の確実さで起訴を決めるか</td><td data-label="比較への影響">絞り込みが強い国ほど、有罪率が高く出る</td></tr>
+</tbody>
+</table>
+<p>国際機関も、この問題に対処しようとしている。国連薬物犯罪事務所は、犯罪統計の国際分類 (ICCS) を作り、各国の法律上の罪名ではなく、行為そのものの記述で分類する方式を示した。各国の統計を比べやすくするためである。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 逆に言えば、この分類に合わせる前の各国の数字は、そのままでは比べにくいということだ。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 例 : カナダの「誘拐」</h2>
+<p>カナダの警察統計では、誘拐と監禁を合わせた件数が、近年も年に 4,000 件台、人口 10 万人あたり 10 前後と、目立つ数字になる。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 2007 年には約 4,600 件、人口 10 万人あたり約 14 で、暴力犯罪全体の 1% あまりにあたった。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> しかし、その中身を見ると、「誘拐」という言葉から思い浮かべる事件とはかなり違う。</p>
+<div class="caution">
+<p>近年の数値は、検索結果の要約から読み取ったもので、原表は直接確認していない。引用する前に、出典の表で確かめること。</p>
+</div>
+
+<h3 id="sec3-1">3.1 何を誘拐と呼ぶか</h3>
+<p>カナダの刑法では、監禁は、人の移動の自由を奪うことである。誘拐は、これに被害者の移送が加わったものだ。警察の統計は、両者を分けずに数える。成人の裁判データでは、 94% が監禁だった。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></p>
+<p>さらに、統計の分類には、 14 歳未満の者の連れ去りが、親・保護者によるものと、それ以外とに分けて載っている。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 親権をめぐる連れ去りは、子どもが関わる事件の中で大きな部分を占めるという分析もある。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 親権をめぐる連れ去りを誘拐に含めるかどうかは、国によっても違う。国連の統計にもとづく第三者のデータベースでは、カナダの 2015 年の誘拐率が 10 万人あたり 9.9 とされるが、その定義は親権争いによる連れ去りを除くとされている。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 同じ「誘拐率」でも、出典ごとに範囲が違いうるわけだ。</p>
+
+<h3 id="sec3-2">3.2 実態は身近な人の間の事件</h3>
+<p>2007 年の監禁事件では、被害者の 48% が加害者の配偶者か恋人で、そのうち 71% は現在の関係にあった。友人や知人は約 2 割である。配偶者間の事件では、被害者の 98% が女性で、 15 歳から 24 歳が 40% を占めた。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></p>
+<table>
+<thead><tr><th>観点</th><th>一般の「誘拐」のイメージ</th><th>統計に入っている事件</th></tr></thead>
+<tbody>
+<tr><th>加害者</th><td data-label="一般の「誘拐」のイメージ">見知らぬ第三者</td><td data-label="統計に入っている事件">配偶者・恋人が約半数</td></tr>
+<tr><th>目的</th><td data-label="一般の「誘拐」のイメージ">身代金、人身売買</td><td data-label="統計に入っている事件">支配、脅し、逃走の阻止など</td></tr>
+<tr><th>期間と場所</th><td data-label="一般の「誘拐」のイメージ">遠隔地への長期の拘束</td><td data-label="統計に入っている事件">自宅や車内での短時間の拘束も含む</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec3-3">3.3 ほかの罪に付随して数えられる</h3>
+<p>監禁の事件の 78% は、ほかの犯罪を伴っていた。ほかの暴力事件では 25% である。伴う犯罪は、暴行が 53% 、脅迫が 23% 、性的暴行が 12% 、強盗が 10% だった。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> 暴行の最中に相手を逃がさなかったという事実が、独立した罪名として記録される。国によっては、この行為は暴行に吸収され、別の件として数えられない。</p>
+<div class="caution">
+<p>ここで言う「国によっては」は、可能性の指摘である。他国の記録の実務は、本稿では確かめていない。</p>
+</div>
+
+<h3 id="sec3-4">3.4 入口は広く、出口は狭い</h3>
+<p>監禁の罪で起訴された件のうち、有罪になったのは 17% で、暴力犯罪全体の 37% を下回った。手続きが止まった割合は 74% で、全体の 54% より高い。 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup> 警察が広めに罪名を付け、裁判までの間に絞られていると読める。有罪になった者への処罰は重く、 6 割が拘禁刑だった。ほかの暴力犯罪の約二倍である。</p>
+<p>この例から、次のことが言える。警察統計の件数が多いことと、重い犯罪が多いことは別である。さらに、有罪になった件数だけを国際比較すると、入口の広さが消えて、別の姿に見える。</p>
+<div class="point">
+<p>カナダの「誘拐」の数字は、国際比較の材料というより、<mark>その国の定義と記録の慣行を映した数字</mark>として読むのが適切である。</p>
+</div>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> ほかの国・ほかの分野でも起きること</h2>
+<p>カナダの例は、特殊ではない。ほかの罪名でも、同じ種類のずれが知られている。</p>
+
+<h3 id="sec4-1">4.1 数える単位の違い</h3>
+<p>スウェーデンの犯罪予防評議会 Brå は、ヨーロッパ各国の強姦の統計を比べて、法律上の定義の違いと、統計の記録の違いのために、各国の数字は比べられないと結論づけた。同評議会の試算では、ドイツと同じ法的・統計上の条件で数えれば、スウェーデンの強姦の届出件数は、約 4 分の 3 減るという。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
+<p>記録の方法も違う。スウェーデンは、被害を訴える届出があれば、捜査で確かめる前の時点で記録する。届出時に記録する国では、検挙された割合が低く出ることにも、同評議会は触れている。 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 検挙率の国際比較も、同じ問題を抱える。</p>
+
+<h3 id="sec4-2">4.2 記録を厳しくすると、件数が増える</h3>
+<p>イングランドとウェールズでは、 2014 年の警察監察の報告が、本来は犯罪として記録すべき事件の約 19% が記録されていないと推計した。暴力犯罪では 33% 、性犯罪では 26% である。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 記録の規律を正せば、実態が変わらなくても、統計の件数は増える。</p>
+<p>この点は、カナダの監禁の件数を読むうえでも参考になる。人口 10 万人あたりの率は、 1987 年の約 2 から 2007 年の約 14 へ、約七倍になった。ほかの暴力犯罪が 1990 年代前半を頂点に減ったのとは対照的である。 <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup> 実際に事件が七倍に増えたとは考えにくく、家庭内暴力への警察の対応が厳しくなって、罪名を付けて記録する範囲が広がったことが、有力な説明になる。ただし、この点は本稿では検証していない。件数の増加を、直ちに実態の悪化と読むことはできない。</p>
+
+<h3 id="sec4-3">4.3 起訴の基準の違い</h3>
+<p>起訴までの過程が違えば、有罪率の意味も違う。日本のように、検察官が起訴するかどうかを広い裁量で決め、立証に確信が持てる事件に絞る国では、起訴された事件の有罪率が極めて高く出る。一方、カナダの監禁のように、広めに罪名を付けて手続きに乗せる運用では、有罪率は低く出る。</p>
+<p>両者の有罪率を並べて、「どちらの国の司法が確実か」と論じるのは、絞り込みの位置が違うものを比べることになる。有罪率の差は、司法の質の差ではなく、<mark>どこで事件を絞るか</mark>の差である可能性が高い。</p>
+
+<h3 id="sec4-4">4.4 比較に比較的耐える指標</h3>
+<p>すべての統計が比べられないわけではない。殺人は、遺体という物証が残りやすく、隠しにくい。定義も比較的単純なので、各国の殺人率は、国際比較によく使われる。一般に、被害が重大で、届出をためらう理由が少ない罪ほど、比較に耐える。</p>
+<p>もう一つの方法は、警察統計ではなく、被害者への調査を使うことである。届出の有無や警察の記録の条件に左右されない。ただし、調査ごとに質問の仕方が違うので、調査の設計を確かめる必要がある。</p>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 比べる前に確かめること</h2>
+<p>国別の統計を並べる前に、次の点を確かめるとよい。</p>
+<div class="checklist"><span class="cl-title">統計を比べる前の確認</span>
+<ul>
+<li><input type="checkbox" id="c1"><label for="c1">定義 : 同じ行為を指しているか（未遂、親族間、付随する罪の扱い）</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">単位 : 事件、被害者、行為のどれを一件としているか</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">段階 : 届出、警察の記録、起訴、有罪のどの段階の数字か</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">記録の条件 : 届出の時点で記録するのか、捜査の後に記録するのか</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">時点 : 法改正や記録の厳格化で、時系列が途中で切れていないか</label></li>
+<li><input type="checkbox" id="c6"><label for="c6">裏づけ : 被害者調査や死亡統計など、別の資料で確かめられるか</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されない。印刷や手書きメモと併用すること。</p>
+</div>
+</section>
+
+<section id="sec6"><h2><span class="no">6</span> まとめ</h2>
+<p>国別の統計の比較が適さないのは、数字が間違っているからではない。数字は、それぞれの国の定義、数え方、記録の慣行、起訴の基準の下で、正しく集計されている。問題は、条件の異なる数字を、同じ物差しとして並べることにある。</p>
+<p>カナダの誘拐の件数は、その分かりやすい例である。数字が大きいことは、危険な国であることを意味しない。数字を見たら、まず何を数えた数字かを問う。その習慣が、統計を使う側の最低限の備えになる。</p>
+<dl class="words">
+<dt>認知件数</dt>
+<dd>警察が犯罪の発生を把握して、記録した件数。被害の実数ではない。</dd>
+<dt>検挙率</dt>
+<dd>記録された事件のうち、犯人が特定された割合。記録の条件が違えば、比べられない。</dd>
+<dt>ICCS</dt>
+<dd>国連が作った、犯罪統計の国際分類。法律上の罪名ではなく、行為の記述で分類する。</dd>
+</dl>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1"><a href="#fnref-1-1">^</a> UNODC, <em>International Classification of Crime for Statistical Purposes (ICCS)</em>, 2015 年（国連統計委員会が 2015 年に承認）。 <a href="https://www.unodc.org/unodc/en/data-and-analysis/iccs.html">UNODC の ICCS のページ</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> Statistics Canada, <em>The Daily</em> の警察把握犯罪の速報表。 <a href="https://www150.statcan.gc.ca/n1/daily-quotidien/250722/t005a-eng.htm">カナダ統計局の速報表</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <sup><a href="#fnref-3-5">e</a></sup> <sup><a href="#fnref-3-6">f</a></sup> Statistics Canada, <em>Forcible confinement in Canada, 2007</em>, Juristat, 2009 年。 <a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2009001/article/10781-eng.htm">カナダ統計局</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> Statistics Canada, 統一犯罪報告の分類と記録の構造、 2025 年版。 <a href="https://www.statcan.gc.ca/en/statistical-programs/document/3302_D15_V14">カナダ統計局の分類表</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> Statistics Canada, <em>Family violence against children and youth</em>, 2013 年。 <a href="https://www150.statcan.gc.ca/n1/pub/85-002-x/2013001/article/11805/11805-4-eng.htm">カナダ統計局</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> 国連犯罪統計にもとづく誘拐率の第三者データベース。 <a href="https://highfives.opendataforafrica.org/atlas/embed/Canada/Kidnapping-rate">Open Data for Africa</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> スウェーデン犯罪予防評議会 Brå による、ヨーロッパ各国の強姦の届出・解決件数の比較、 2020 年。 <a href="https://bra.se/english/publications/archive/2020-09-30-reported-and-cleared-rapes-in-europe">Brå の報告</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> HMIC, <em>Crime-recording: making the victim count</em>, 2014 年。 <a href="https://hmicfrs.justiceinspectorates.gov.uk/news/news-feed/victims-let-down-by-poor-crime-recording/">HMICFRS の発表</a></li>
+</ol>
+<p class="endnote">本稿は、公開資料の要約にもとづく。国際比較の数値を引用するときは、原典の定義と注記を確かめること。</p>
+</div>
+</div>
+</body>
+</html>
