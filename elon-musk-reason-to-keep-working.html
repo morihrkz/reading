@@ -13,17 +13,11 @@
     --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
     --line:#cdb98f;        /* 枯色を濃くした罫線 */
     --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
     --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
     --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
     --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
     /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+    --pale-red:#f3d5cc; --pale-yellow:#f6e6b8;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -33,7 +27,7 @@
     line-height:1.9;font-size:20px}
   .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
   a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  a:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
   header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
   .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
   .hero p{margin:0}
@@ -50,62 +44,10 @@
   h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
   h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
   p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
   .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
   .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
   .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
   .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8;white-space:nowrap}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
-  }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
   dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
   dl.words dd{margin:0 0 0 1em}
   /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
@@ -116,7 +58,6 @@
   .meta{color:var(--muted);font-size:17px;line-height:1.9}
   .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
   .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
   .box strong{color:var(--ink)}
   .lede>:first-child,.box>:first-child{margin-top:0}
   .lede>:last-child,.box>:last-child{margin-bottom:0}
@@ -137,14 +78,9 @@
   .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
   .refs ol{padding-left:1.8em}
   .refs .refs-note{color:var(--muted)}
-  .refs em{font-style:italic}
   .refs li>a:first-child{font-weight:bold}
   .refs sup a{font-style:italic}
   .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
 </style>
 </head>
 <body>
@@ -156,84 +92,85 @@
 <div class="wrap">
 
 <div class="lede">
-<p>「そんなにお金があるのに、どうしてまだ働くの？」と聞かれたマスク氏の答えをまとめた。お金や名声の話ではなく、<mark>「宇宙について、正しい問いを見つけたい」</mark>という答えだった。</p>
+<p>巨額の資産を築いたあとも、なぜ働き続けるのか。この問いに対するマスク氏の答えを、公開されている切り抜き映像から整理した。語られたのは報酬や名声ではなく、<mark>「宇宙について、正しい問いを見つけたい」</mark>という動機である。</p>
 </div>
 
-<p class="meta band"><strong>【方法と限界】</strong> YouTube で広まっている切り抜き映像 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> を手がかりに探した。ただし、元の動画の投稿者・日付・インタビュアーは確かめられていない。内容は、書き起こしを載せた要約サイト <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> で読んだものに基づく。本人の発言を一語ずつ確かめたものではないので、引用は短い語句にとどめた。</p>
+<p class="meta band"><strong>【方法と限界】</strong> YouTube で広まっている切り抜き映像 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> を手がかりに調べた。ただし、元の動画の投稿者・日付・インタビュアーは確かめられていない。内容は、書き起こしを載せた要約サイト <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> で読んだものに基づく。本人の発言を一語ずつ確かめたものではないので、引用は短い語句にとどめた。</p>
 
 <nav class="toc"><b>目次</b>
 <ol>
 <li><a href="#sec1">どんな映像か</a></li>
 <li><a href="#sec2">マスク氏の答え</a>
 <ol>
-<li><a href="#sec2-1">十代の「人生の意味」の悩み</a></li>
+<li><a href="#sec2-1">10 代で直面した「人生の意味」の問い</a></li>
 <li><a href="#sec2-2">『銀河ヒッチハイク・ガイド』との出会い</a></li>
 <li><a href="#sec2-3">「宇宙が答えで、問いを探している」</a></li>
-<li><a href="#sec2-4">だから、意識を広げる</a></li>
+<li><a href="#sec2-4">帰結としての「意識の拡大」</a></li>
 </ol>
 </li>
-<li><a href="#sec3">答えを四つの段に分けると</a></li>
+<li><a href="#sec3">論理の流れを整理する</a></li>
 <li><a href="#sec4">読むときの注意</a></li>
-<li><a href="#sec5">ことば集</a></li>
+<li><a href="#sec5">用語注</a></li>
 </ol>
 </nav>
 
 <section id="sec1">
 <h2><span class="no">1</span> どんな映像か</h2>
-<p>よく見かけるのは、「 Elon Musk, why are you still working? 」という題の切り抜きである。「純資産が 1,840 億ドルもあるのに、なぜまだ働くのか」という意味だ <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。</p>
-<p>同じ内容の映像は、題に入る金額が違う形でも出回っている。 5,000 億ドル <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 、 8,000 億ドルと、投稿の時期によって数字が変わる。これは、同じ質問と答えの切り抜きが、何度も作り直されて広まっていることを示す。</p>
-<div class="point"><p>題の金額は目安にすぎない。この文書では、金額ではなく「何と答えたか」だけを扱う。</p></div>
+<p>流通している切り抜きの代表的な題は、「 Elon Musk, why are you still working? 」である。「純資産が 1,840 億ドルに達するのに、なぜ働き続けるのか」という趣旨の質問だ <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。</p>
+<p>同じ内容の映像は、題に入る金額を変えて出回っている。 5,000 億ドル <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 、 8,000 億ドルなど、投稿の時期によって数字が異なる。同じ質問と答えの切り抜きが、繰り返し作り直されて拡散していることがうかがえる。</p>
+<div class="point"><p>題の金額は一定しない。この文書では金額には立ち入らず、何と答えたかに絞って整理する。</p></div>
 </section>
 
 <section id="sec2">
 <h2><span class="no">2</span> マスク氏の答え</h2>
-<p>質問の中身は、「なぜ、政治にも、人類が複数の惑星に住むことにも力を入れるのか」というものだった。マスク氏は、お金の話をせずに、 10 代のころの悩みから答え始める。</p>
+<p>質問は、なぜ政治にも、人類が複数の惑星に住むことにも力を注ぐのか、というものだった。マスク氏は金銭には触れず、 10 代のころの問いから語り始める。</p>
 
-<h3 id="sec2-1">2.1 十代の「人生の意味」の悩み</h3>
-<p>若いころ、人生の意味が分からなくなって深く悩んだ。宗教の本を読んだが、納得できなかった。そこで哲学者の本に進み、ショーペンハウアーやニーチェを読んだ。若い人には重い読書だった、と振り返る。</p>
+<h3 id="sec2-1">2.1 10 代で直面した「人生の意味」の問い</h3>
+<p>10 代のころ、人生の意味が分からなくなり、深く思い悩んだという。宗教書を読んだが納得できず、哲学に進んでショーペンハウアーやニーチェを読んだ。若者には重い読書だった、と本人は振り返る。</p>
 
 <h3 id="sec2-2">2.2 『銀河ヒッチハイク・ガイド』との出会い</h3>
-<p>救いになったのは、 SF 小説の『銀河ヒッチハイク・ガイド』だった。この物語では、巨大なコンピューターが「答えは 42 」と告げる。しかし、本当に難しいのは<mark>答えを見つけることより、何を問うべきかを知ること</mark>だ。マスク氏は、この考えに強く引かれたと語る。</p>
+<p>転機になったのは、 SF 小説『銀河ヒッチハイク・ガイド』である。作中では、巨大コンピューターが「答えは 42 」と告げる。だが、本当に難しいのは<mark>答えを出すことよりも、何を問うべきかを知ること</mark>だ。マスク氏は、この発想に強く共感したと語る。</p>
 
 <h3 id="sec2-3">2.3 「宇宙が答えで、問いを探している」</h3>
-<p>そこから出てきたのが、短いこの言葉である。</p>
+<p>ここから生まれたのが、次の一文である。</p>
 <div class="box"><p>“the universe is the answer. What is the question?”<sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup><br>（宇宙が答えだ。では、問いは何か。）</p></div>
-<p>宇宙そのものが答えなら、私たちの仕事は「正しい問い」を見つけることになる。</p>
+<p>宇宙そのものが答えであるなら、人間に課された仕事は「正しい問い」を見つけることになる。</p>
 
-<h3 id="sec2-4">2.4 だから、意識を広げる</h3>
-<p>正しい問いを立てるには、考える力そのものを大きくするしかない。マスク氏は、人間の意識と、コンピューターなど電子の意識の両方を、数も範囲も増やすべきだと考える。そうすれば、宇宙の仕組みを理解できるかもしれない。</p>
-<p>その手段が、人類を複数の惑星に、やがては複数の恒星にも広げることだ。目的は、はっきり言えば「宇宙の性質を理解すること」である。</p>
+<h3 id="sec2-4">2.4 帰結としての「意識の拡大」</h3>
+<p>正しい問いを立てるには、考える力そのものを拡大するほかない。マスク氏は、人間の意識と、コンピューターなど電子的な意識の双方を、量と範囲の両面で増やすべきだと考える。それによって宇宙の仕組みの理解が進む、という見立てである。</p>
+<p>その手段が、人類の生活圏を複数の惑星、さらには複数の恒星へ広げることだ。目的は、要するに「宇宙の性質を理解すること」にある。</p>
 </section>
 
 <section id="sec3">
-<h2><span class="no">3</span> 答えを四つの段に分けると</h2>
-<div class="cards">
-<div class="card"><span class="e">😟</span>人生の意味が分からない（ 10 代）</div>
-<div class="card"><span class="e">📚</span>本で「問いが大事」と知る</div>
-<div class="card"><span class="e">🧠</span>意識を増やし、広げる</div>
-<div class="card"><span class="e">🚀</span>複数の惑星・恒星へ進む</div>
-</div>
-<div class="point"><p>お金のために働いているのではない。「知りたい」という思いが、働き続ける理由になっている、というのが筋道である。</p></div>
-<div class="try"><p>あなたなら、「お金がいくらあっても続けたいこと」は何だろう？　紙に一つ書いて、その理由も一行で添えてみよう。</p></div>
+<h2><span class="no">3</span> 論理の流れを整理する</h2>
+<p>マスク氏の答えは、四つの段階に分けられる。</p>
+<dl class="summary">
+<div><dt>出発点</dt><dd>10 代で、人生の意味が分からなくなる。</dd></div>
+<div><dt>転機</dt><dd>小説を通じて、答えよりも問いが重要だと気づく。</dd></div>
+<div><dt>方針</dt><dd>正しい問いを立てる力として、意識を増やし、拡大する。</dd></div>
+<div><dt>手段</dt><dd>人類の生活圏を、複数の惑星・恒星へ広げる。</dd></div>
+</dl>
+<div class="point"><p>働き続ける動機の中心は、報酬ではなく知的な探究にある。「知りたい」という欲求が、理由として語られている。</p></div>
+<p>経営者の動機を、報酬や地位ではなく「未解決の問い」を軸に語る型は、ほかの創業者の発言と並べて読む価値がある。ただし、この語りが実際の意思決定をどこまで説明するかは、別に検証が必要である。</p>
 </section>
 
 <section id="sec4">
 <h2><span class="no">4</span> 読むときの注意</h2>
-<div class="caution"><p>この要約は、元の動画を直接見て確かめたものではない。投稿者・日付・インタビュアーが分からない切り抜きなので、引用や数字を別の場で使うときは、元の映像で言葉を確かめてほしい。</p></div>
+<div class="caution"><p>この要約は、元の動画を直接見て確かめたものではない。投稿者・日付・インタビュアーが不明の切り抜きなので、引用や数字を別の場で使う際は、元の映像で発言を確認すること。</p></div>
 <ul>
-<li>要約サイトの文面は、題の金額と書き起こしの内容が合っていない。書き起こしには、資産の話は出てこない。「資産があるのに」という前置きは、題をつけた人の演出と考えられる。</li>
-<li>これは本人の主張であり、事実の証明ではない。「意識を広げる」「複数の惑星に住む」ことへの賛否は、別に考える必要がある。</li>
-<li>探したかぎり、「働き続ける理由」を直接たずねた一次資料（元の放送・全編）は見つからなかった。</li>
+<li>要約サイトでは、題の金額と書き起こしの内容が一致しない。書き起こしに資産の話は出てこない。「資産があるのに」という前置きは、題をつけた側の演出とみられる。</li>
+<li>これは本人の主張であり、事実の証明ではない。「意識を拡大する」「複数の惑星に住む」ことの是非は、別に検討する必要がある。</li>
+<li>調べた範囲では、「働き続ける理由」を直接たずねた一次資料（元の放送・全編）は見つからなかった。</li>
 </ul>
 </section>
 
 <section id="sec5">
-<h2><span class="no">5</span> ことば集</h2>
+<h2><span class="no">5</span> 用語注</h2>
 <dl class="words">
-<dt>銀河ヒッチハイク・ガイド（ぎんがヒッチハイク・ガイド）</dt>
-<dd>ダグラス・アダムスの SF 小説。答えの「 42 」は有名だが、「問いが分からない」という皮肉が物語の核にある。</dd>
-<dt>意識（いしき）</dt>
-<dd>ものごとを感じ、考える働き。マスク氏は、人間だけでなく電子の意識も増やすべきだと言う。</dd>
+<dt>銀河ヒッチハイク・ガイド</dt>
+<dd>ダグラス・アダムスの SF 小説。答えの「 42 」で知られるが、物語の核は、問いが分からないままでは答えに意味がない、という皮肉にある。</dd>
+<dt>意識</dt>
+<dd>ここでは、物事を感じ取り、思考する働きを指す。マスク氏は、人間に加えて電子的な意識も増やすべきだと主張する。</dd>
 </dl>
 </section>
 
