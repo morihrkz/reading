@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中国とロシアに親和的な国の数え方</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">国際情勢の整理</p>
+<h1>中国とロシアに親和的な国は何か国か<br>――数え方で答えが変わる</h1>
+<p class="subtitle">Counting States Aligned with China and Russia: How the Definition Determines the Number</p>
+</header>
+<div class="wrap">
+<div class="lede">
+<p>ベラルーシや北朝鮮のように、西側の民主主義国と対立する立場に立つ国は、いくつあるのか。単一の答えはない。軍事条約で結ばれた国なら四か国、国連での反対票なら 10 か国あまり、中国支持の共同声明なら約 80 か国と、物差しごとに桁が変わる。本稿は、公開資料で確かめた数字を物差しごとに並べ、どの数字が何を測っているかを整理する。</p>
+</div>
+<p class="meta band"><strong>【方法と限界】</strong> 2026 年 11 月 14 日時点で公開されていた、 Wikipedia の関連項目、軍備管理協会、外交問題評議会 (CFR) 、 CSIS 、 Castellum.AI 、 Democracy Without Borders などの資料を読んだ。国連の公式記録と条約の本文は、直接には確かめていない。投票の内訳は、 Wikipedia と UN Project の記述による。一部の資料は、検索結果の要約で内容を確かめただけで、本文を通読していない（参考文献欄に注記した）。中国を支持する共同声明の数には、中国側の報道が含まれる。「筆者の整理」「筆者の見立て」と記した箇所は、筆者の解釈であり、検証済みの事実ではない。</p>
+
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">結論――答えは四か国から約 80 か国まで動く</a></li>
+<li><a href="#sec2">同盟といえるのは、数か国にとどまる</a>
+<ol>
+<li><a href="#sec2-1">ロシアと結ぶ国</a></li>
+<li><a href="#sec2-2">中国と結ぶ国</a></li>
+</ol>
+</li>
+<li><a href="#sec3">国連の投票が描く輪郭</a>
+<ol>
+<li><a href="#sec3-1">2022 年 3 月――反対は五か国</a></li>
+<li><a href="#sec3-2">2025 年 2 月――反対は 18 か国</a></li>
+</ol>
+</li>
+<li><a href="#sec4">中国を支持する声は、約 80 か国に及ぶ</a>
+<ol>
+<li><a href="#sec4-1">人権理事会の共同声明</a></li>
+<li><a href="#sec4-2">上海協力機構</a></li>
+</ol>
+</li>
+<li><a href="#sec5">反対説――体制や制裁は、親和性の指標にならない</a>
+<ol>
+<li><a href="#sec5-1">権威主義体制の数</a></li>
+<li><a href="#sec5-2">制裁に加わらない国</a></li>
+<li><a href="#sec5-3">一覧の緩さ</a></li>
+</ol>
+</li>
+<li><a href="#sec6">結論と限界――数は、物差しを選んだ時点で決まる</a>
+<ol>
+<li><a href="#sec6-1">数は動く</a></li>
+<li><a href="#sec6-2">この整理の限界</a></li>
+</ol>
+</li>
+</ol>
+</nav>
+
+<section id="sec1">
+<h2><span class="no">1</span> 結論――答えは四か国から約 80 か国まで動く</h2>
+<p>筆者の整理では、答えは次の三点である。</p>
+<dl class="summary">
+<div><dt>同盟</dt><dd>相互防衛の条約で結ばれた関係は、中国・ロシア・ベラルーシ・北朝鮮の四か国に限られる。ロシアはベラルーシと北朝鮮に、中国は北朝鮮に、軍事支援の義務を負う。中国とロシアの間に、同盟条約はない。</dd></div>
+<div><dt>投票</dt><dd>国連総会でロシアに明確に反対票を投じた国は、 2022 年 3 月が五か国、 2025 年 2 月が 18 か国だった。後者から米国に近い国を除くと、ロシアを含めて 12 か国になる。</dd></div>
+<div><dt>声明</dt><dd>中国を支持する共同声明の名義国は、 2024 年 9 月に約 80 か国と伝えられた。ただし、声明に名を連ねることは、対外的な立場の一致を示すとは限らない。</dd></div>
+</dl>
+<p>数字を物差しごとに並べると、次の表になる。</p>
+<table>
+<thead><tr><th>物差し</th><th>数</th><th>該当する国</th><th>測っているもの</th></tr></thead>
+<tbody>
+<tr><th>相互防衛の条約</th><td data-label="数">4 か国（中国・ロシアを含む）</td><td data-label="該当する国">中国、ロシア、ベラルーシ、北朝鮮</td><td data-label="測っているもの">軍事支援の義務</td></tr>
+<tr><th>2022 年 3 月の国連総会で、ロシアの侵攻を非難する決議に反対</th><td data-label="数">5 か国（ロシアを含む）</td><td data-label="該当する国">ロシア、ベラルーシ、北朝鮮、エリトリア、シリア</td><td data-label="測っているもの">投票での明確な対立</td></tr>
+<tr><th>上海協力機構の正加盟国</th><td data-label="数">10 か国（中国・ロシアを含む）</td><td data-label="該当する国">中国、ロシア、カザフスタン、キルギス、タジキスタン、ウズベキスタン、インド、パキスタン、イラン、ベラルーシ</td><td data-label="測っているもの">安全保障・経済の枠組みへの参加</td></tr>
+<tr><th>2025 年 2 月の国連総会で、決議に反対（米国に近い国を除く。筆者の整理）</th><td data-label="数">12 か国（ロシアを含む）</td><td data-label="該当する国">ロシア、ベラルーシ、北朝鮮、エリトリア、ニカラグア、スーダン、マリ、ニジェール、ブルキナファソ、ブルンジ、中央アフリカ、赤道ギニア</td><td data-label="測っているもの">投票での対立。決議の性格に左右される</td></tr>
+<tr><th>2022 年 3 月の国連総会で棄権</th><td data-label="数">35 か国</td><td data-label="該当する国">中国、インド、イラン、アルメニア、カザフスタン、ベトナム、キューバなど</td><td data-label="測っているもの">立場の保留</td></tr>
+<tr><th>2024 年 9 月の人権理事会で、中国を支持する共同声明</th><td data-label="数">約 80 か国</td><td data-label="該当する国">名義国の一覧は未確認</td><td data-label="測っているもの">「内政への干渉に反対」という主張への同調</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">各行は別々の集合である。足し合わせたり、入れ子の関係とみなしたりしてはならない。</p>
+<div class="point">
+<p>「何か国か」という問いは、「何をもって親和的とみなすか」を決めて初めて、答えが出る。以下、行ごとに根拠を示す。</p>
+</div>
+</section>
+
+<section id="sec2">
+<h2><span class="no">2</span> 同盟といえるのは、数か国にとどまる</h2>
+<p>最も狭い物差しは、相互防衛の義務を定めた条約である。軍事支援を約束する国は、誰が見ても親和的である。では、その国は何か国あるのか。</p>
+
+<h3 id="sec2-1">2.1 ロシアと結ぶ国</h3>
+<p>ベラルーシとは、 1999 年に連邦国家の条約を結んだ。 2024 年 12 月 6 日には、安全保障の保証に関する条約に署名し、 2025 年 3 月 13 日に発効した。ロシアの軍事ドクトリンは、どちらかへの武力攻撃を、連邦国家への侵略とみなす。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup></p>
+<p>北朝鮮とは、 2024 年 6 月 19 日に包括的戦略パートナーシップ条約を結んだ。第 4 条は、どちらかが攻撃されて戦争状態に入れば、相手が遅滞なく軍事的・その他の援助を提供すると定める。根拠には、国連憲章 51 条（自衛権）が挙げられている。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
+<p>一方、イランとの条約には、相互防衛の条項がない。ロイターの解説は、北朝鮮・ベラルーシとの条約との違いを、そう整理している。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></p>
+<p>集団安全保障条約機構 (CSTO) は、六か国の枠組みである。アルメニア、ベラルーシ、カザフスタン、キルギス、ロシア、タジキスタンが加盟し、第 4 条は、一国への攻撃を全体への攻撃とみなす。ただし、アルメニアは 2024 年 2 月から参加を凍結している。ウズベキスタンとアゼルバイジャンは脱退した。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 加盟していても、ロシアと同じ立場に立つとは限らない。その実例は、 3 節で見る。</p>
+
+<h3 id="sec2-2">2.2 中国と結ぶ国</h3>
+<p>中国の相手は、北朝鮮だけである。 1961 年 7 月 11 日に北京で署名した中朝友好協力相互援助条約は、第 2 条で、一方が攻撃されたとき、他方が「直ちに軍事的その他の援助」を与えると定める。中国が結ぶ唯一の防衛条約と説明される。 2021 年の 60 周年には、中国外務省が、条約は有効だと述べた。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
+<p>中国とロシアの間には、同盟条約がない。 CFR は、両国を正式な条約上の同盟国ではなく、相手の防衛に義務を負わない関係と整理する。 2022 年に「上限のない」と称した関係も、条約上の義務ではない。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></p>
+<div class="point">
+<p>相互防衛の条約でつながるのは、ロシアとベラルーシ、ロシアと北朝鮮、中国と北朝鮮の三組である。国としては、中国・ロシア・ベラルーシ・北朝鮮の四か国になる。これが、最も狭い意味での「グループ」である。</p>
+</div>
+</section>
+
+<section id="sec3">
+<h2><span class="no">3</span> 国連の投票が描く輪郭</h2>
+<p>条約の外側に、どれだけの国が同じ側に立つのか。手がかりになるのは、ロシアのウクライナ侵攻をめぐる、国連総会の記名投票である。賛否は国が自ら選ぶので、条約よりは広く、声明よりは絞られた輪郭が見える。</p>
+
+<h3 id="sec3-1">3.1 2022 年 3 月――反対は五か国</h3>
+<p>2022 年 3 月 2 日の決議 ES-11/1 は、ロシアの侵攻を非難し、撤退を求めた。結果は、賛成 141 、反対 5 、棄権 35 、欠席 12 である。反対したのは、ロシア、ベラルーシ、北朝鮮、エリトリア、シリアだった。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
+<p>注目すべきは、棄権した 35 か国の顔ぶれである。中国、インド、イラン、キューバ、ニカラグア、ベトナム、パキスタン、南アフリカなどが含まれる。 CSTO の加盟国も、アルメニア、カザフスタン、キルギス、タジキスタンの四か国が棄権し、反対に回ったのはベラルーシだけだった。 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> つまり、軍事同盟の枠組みの内側にいても、ロシアを明確に支持する国は少なかったと考えられる。</p>
+
+<h3 id="sec3-2">3.2 2025 年 2 月――反対は 18 か国</h3>
+<p>2025 年 2 月 24 日の決議 ES-11/7 は、ウクライナでの包括的で公正かつ永続的な平和を求めた。結果は、賛成 93 、反対 18 、棄権 65 、欠席 17 である。反対 18 か国は、ベラルーシ、ブルキナファソ、ブルンジ、中央アフリカ、赤道ギニア、エリトリア、ハイチ、ハンガリー、イスラエル、マリ、マーシャル諸島、ニカラグア、ニジェール、北朝鮮、パラオ、ロシア、スーダン、米国である。中国、インド、イランは棄権した。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></p>
+<p>この決議では、米国が反対に回った。そのため、反対票の顔ぶれは、 2022 年と性格が変わった。筆者の整理では、米国、イスラエル、ハンガリー、マーシャル諸島、パラオ、ハイチの六か国を除くと、ロシアを含めて 12 か国が残る。そのうち、ブルンジ、中央アフリカ、赤道ギニア、マリ、ニカラグア、スーダンの六か国は、 2022 年には棄権していた。 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 一方、シリアは、 2022 年に反対した 5 か国の一つだったが、 2025 年の反対票の一覧に名がない。</p>
+<div class="caution">
+<p>除外した六か国は、筆者の判断で選んだ。米国と立場をそろえた可能性が高い国を外したにすぎず、反対の理由は国ごとに異なる。ハイチは、理由を確かめていない。投票の数は、決議の文面と、その時点の大国の立場に左右される粗い指標である。</p>
+</div>
+</section>
+
+<section id="sec4">
+<h2><span class="no">4</span> 中国を支持する声は、約 80 か国に及ぶ</h2>
+<p>ここまでは、ロシアを軸にした数字だった。中国については、反対票ではなく、支持を表明する声明が、数を示す。</p>
+
+<h3 id="sec4-1">4.1 人権理事会の共同声明</h3>
+<p>新疆ウイグル自治区や香港をめぐる人権理事会の議論では、中国を支持する共同声明が繰り返し出ている。 2022 年 6 月には、キューバが 69 か国を代表して、これらは中国の内政だと述べた。同年 9 月の声明は、 68 か国の支持と報じられた。 2024 年 9 月には、キューバが約 80 か国を代表して声明を読んだ。これに対し、西側の側は、 2022 年 6 月に、オランダがデンマークなど 47 か国を代表して、新疆への懸念を述べている。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></p>
+<p>中国の国営メディアは、個別の発言を合わせて 100 か国を超える支持があると主張する。ただし、これらの数は、主に中国側の報道に依拠する。年と会期によっても、数字は揺れる。</p>
+<p>筆者の見立てでは、この声明に名を連ねる動機は、中国との一体性だけではない。「他国から内政に干渉されたくない」という主張は、中国と同盟していない国にとっても、受け入れやすい。</p>
+
+<h3 id="sec4-2">4.2 上海協力機構</h3>
+<p>上海協力機構 (SCO) の正加盟国は、 10 か国である。中国、ロシア、カザフスタン、キルギス、タジキスタン、ウズベキスタン、インド、パキスタン、イラン、ベラルーシが並ぶ。ベラルーシの加盟は、 2024 年 7 月 4 日である。この下に、オブザーバー二か国と、対話パートナー 15 か国がある。 2025 年には、両者を一つの「 SCO パートナー」に統合する手続きが始まった。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></p>
+<p>この枠組みには、インドやパキスタンも入っている。インドは、 2022 年にも 2025 年にも、国連でロシア非難の決議を棄権した。枠組みへの加盟は、西側との対立という意味での「親和性」とは、別の軸である。</p>
+</section>
+
+<section id="sec5">
+<h2><span class="no">5</span> 反対説――体制や制裁は、親和性の指標にならない</h2>
+<p>数をもっと広げる考え方がある。権威主義体制の国は、すべて西側と対立する、あるいはロシアと中国に親和的だとみなす見方である。また、制裁に加わらない国を、ロシア寄りと数える見方もある。この二つを検討する。</p>
+
+<h3 id="sec5-1">5.1 権威主義体制の数</h3>
+<p>エコノミスト・インテリジェンス・ユニット (EIU) の民主主義指数は、 2024 年版で 60 か国を「権威主義体制」に分類した。 2025 年版では、アンゴラが加わったと伝えられる。世界の人口の 39.2% が、この体制の下にある。 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup></p>
+<p>この 60 という数は、本稿の 12 か国や四か国をはるかに上回る。両者の差は、指標が測るものの違いから生まれる。 EIU の指数が測るのは、国内の政治体制である。ロシアや中国との外交的な距離は、測っていない。筆者の見立てでは、体制の型と外交の立場は、別の軸である。権威主義体制の数を、親和的な国の数と読み替えると、数を大きく水増しする。</p>
+
+<h3 id="sec5-2">5.2 制裁に加わらない国</h3>
+<p>Castellum.AI は、ロシアに制裁を科した、または同調を表明した国を、 45 か国と数えた。これは 2022 年の集計である。中国、インド、イスラエル、トルコ、セルビアなどは、独自の制裁を科していない。 <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup></p>
+<p>ここで、 2022 年 3 月の国連投票を思い出したい。侵攻の非難に賛成したのは、 141 か国である。非難には加わるが、制裁には加わらない国が、多数を占める。制裁に加わらない国は、ロシアの味方ではなく、自国の利害を優先する国を多く含むと考えられる。これも、親和性の指標にはならない。</p>
+
+<h3 id="sec5-3">5.3 一覧の緩さ</h3>
+<p>Wikipedia の「ロシアの対外関係」の項目は、ロシアの「主要な同盟国またはパートナー」として、 20 か国を挙げる。ベラルーシ、中国、北朝鮮、イランに加え、インド、ブラジル、ベトナム、モンゴル、ミャンマーなどが入る。別に「友好的」な国として、エジプト、シリア、セルビア、トルコなども並ぶ。 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></p>
+<p>この一覧は、相互防衛の条約を持つ国と、貿易や外交で親しい国を、同じ列に並べる。一覧の長さは、書き手が引いた閾値を映しているにすぎない。</p>
+<div class="point">
+<p>体制の型、制裁への態度、一覧への掲載は、いずれも、ロシアや中国と同じ側に立つ行動を直接には測らない。数が大きく出る物差しほど、「親和的」の中身が薄まる。</p>
+</div>
+</section>
+
+<section id="sec6">
+<h2><span class="no">6</span> 結論と限界――数は、物差しを選んだ時点で決まる</h2>
+<p>冒頭の問いに戻る。同盟は数か国、投票は 10 か国あまり、声明は 80 か国近い。三つの数字は矛盾しない。測っているものが違うだけである。</p>
+<p>筆者の見立てでは、最も根拠が固いのは、同盟の四か国と、 2022 年と 2025 年の二つの投票に現れた、ロシアに近い少数の国である。中国については、条約の相手が北朝鮮だけである以上、 80 か国は「同盟」ではなく「主張への同調」の広がりと読むのが妥当である。そして、西側に与しない国の大半は、どちらの側にも立たず、棄権と不参加で距離を保っている。</p>
+
+<h3 id="sec6-1">6.1 数は動く</h3>
+<p>この数は、固定されていない。本稿の資料からだけでも、動きが見える。</p>
+<ul>
+<li><strong>シリア</strong><br>2022 年は反対票を投じた 5 か国の一つだったが、 2025 年の反対票の一覧に名がない。その背景に政権の交代があると筆者は理解しているが、本稿の資料では確かめていない。</li>
+<li><strong>アルメニア</strong><br>CSTO への参加を 2024 年 2 月から凍結している。条約上は加盟国のままである。 Wikipedia の項目には、 2026 年 11 月 11 日に他の加盟国が議決権を停止したとあるが、一次資料は未確認である。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></li>
+<li><strong>ベネズエラ</strong><br>米軍が 2026 年 1 月 3 日にマドゥロ大統領を拘束した。ロシアと中国は行動を非難した。ただし、ある分析は、拘束の前にマドゥロ氏が求めていた軍事支援が、実現しなかったと指摘する。「親和的」な国への支援には、限りがある。 <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup></li>
+</ul>
+
+<h3 id="sec6-2">6.2 この整理の限界</h3>
+<ul>
+<li><strong>一次資料</strong><br>国連の公式の投票記録と条約の本文は、直接には読んでいない。投票の内訳は Wikipedia と UN Project に、条約の内容は二次資料に頼っている。</li>
+<li><strong>数の出どころ</strong><br>中国支持の声明の数は、中国側の報道を含む。国ごとの名義国の一覧は、確かめていない。</li>
+<li><strong>時点</strong><br>制裁の 45 か国は 2022 年の集計である。投票は 2022 年と 2025 年の二回だけで、その後の動きは含まれない。</li>
+<li><strong>定義と視点</strong><br>「親和的」の定義は筆者が置いた。資料は、英語のものが中心で、ロシア・中国・各国政府の説明は、直接には読んでいない。</li>
+</ul>
+<div class="point">
+<p>次に「親和的な国は何か国」という数字に出会ったら、三つを問うとよい。何の行動を数えたのか、誰が数えたのか、いつの時点なのか。この三つがそろわない数字は、比べられない。</p>
+</div>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1"><a href="#fnref-1-1">^</a> ロシアとベラルーシの連邦国家に関する Wikipedia の項目（ 2024 年 12 月の安全保障条約の署名と、 2025 年 3 月の発効を含む）。ページの要約で確認した。 <a href="https://en.wikipedia.org/wiki/Union_State">Wikipedia</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> 軍備管理協会 (Arms Control Association) の記事「 North Korea, Russia Strengthen Military Ties 」、 2024 年 7 月。本文は未通読で、検索結果の要約で確認した。 <a href="https://www.armscontrol.org/act/2024-07/news/north-korea-russia-strengthen-military-ties">Arms Control Association</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> ロイターの解説「 Factbox: What are Russia's strategic treaties with Iran, North Korea and China? 」（ Yahoo ニュースの転載）。本文は未通読で、検索結果の要約で確認した。 <a href="https://www.yahoo.com/news/factbox-russias-strategic-treaties-iran-165306032.html">Yahoo ニュース（ロイター）</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> 集団安全保障条約機構 (CSTO) に関する Wikipedia の項目と、アルメニアの参加凍結を伝える <em>Kyiv Independent</em> の記事。アルメニアの議決権停止（ 2026 年 11 月 11 日）は、前者の記述だけで、一次資料は未確認。 <a href="https://en.wikipedia.org/wiki/Collective_Security_Treaty_Organization">Wikipedia</a> <a href="https://kyivindependent.com/armenia-has-suspended-its-participation-in-russian-led-csto-at-all-levels-armenian-pm-says">Kyiv Independent</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 中朝友好協力相互援助条約に関する Wikipedia の項目。ページの要約で確認した。 <a href="https://en.wikipedia.org/wiki/Sino-North_Korean_Mutual_Aid_and_Cooperation_Friendship_Treaty">Wikipedia</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> 外交問題評議会 (CFR) による、中ロ関係の解説。本文は未通読で、検索結果の要約で確認した。 <a href="https://www.cfr.org/backgrounders/china-russia-relationship-xi-putin-taiwan-ukraine">Council on Foreign Relations</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> <sup><a href="#fnref-7-3">c</a></sup> 国連総会決議 ES-11/1 （ 2022 年 3 月 2 日）に関する Wikipedia の項目と、 UN Project の投票記録。国連の公式記録は未確認。 <a href="https://en.wikipedia.org/wiki/United_Nations_General_Assembly_Resolution_ES-11/1">Wikipedia</a> <a href="https://un-project.org/votes/resolution/A-RES-ES-11-1/">UN Project</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> 国連総会決議 ES-11/7 （ 2025 年 2 月 24 日）に関する Wikipedia の項目と、棄権国に触れた <em>Arab News</em> の報道。国連の公式記録は未確認。 <a href="https://en.wikipedia.org/wiki/United_Nations_General_Assembly_Resolution_ES-11/7">Wikipedia</a> <a href="https://www.arabnews.com/node/2591467/amp">Arab News</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> 人権理事会での共同声明に関する報道と公表文。 <em>China Daily</em> 香港版（ 2022 年 6 月）、 Capital FM （ 2022 年 9 月）、 <em>Global Times</em> （ 2024 年 9 月）、デンマーク代表部（ 2022 年 6 月）。本文は未通読で、検索結果の要約で確認した。 <a href="https://www.chinadailyhk.com/article/276052">China Daily HK</a> <a href="https://www.capitalfm.co.ke/news/2022/09/68-countries-reject-meddling-in-chinas-internal-affairs-at-un-session/">Capital FM</a> <a href="https://globaltimes.cn/page/202409/1320344.shtml">Global Times</a> <a href="https://fngeneve.um.dk/en/News/HRC50-Denmark-and-xx-other-countries-express-grave-concern">デンマーク代表部</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> 上海協力機構に関する Wikipedia の項目。ページの要約で確認した。 <a href="https://en.wikipedia.org/wiki/Shanghai_Cooperation_Organisation">Wikipedia</a></li>
+<li id="ref-11"><a href="#fnref-11-1">^</a> エコノミスト・インテリジェンス・ユニットの民主主義指数を伝える Democracy Without Borders の記事。 2025 年版と 2024 年版。本文は未通読で、検索結果の要約で確認した。 <a href="https://www.democracywithoutborders.org/42392/democracy-stabilizes-globally-after-eight-years-of-decline-eiu-says/">Democracy Without Borders （ 2025 年版）</a> <a href="https://www.democracywithoutborders.org/35822/authoritarian-suppression-further-on-the-rise-eiu-2024-democracy-report/">Democracy Without Borders （ 2024 年版）</a></li>
+<li id="ref-12"><a href="#fnref-12-1">^</a> Castellum.AI の集計「 What Are Countries Doing to Counter Russia's War? 」。 2022 年の時点の数。本文は未通読で、検索結果の要約で確認した。 <a href="https://www.castellum.ai/insights/which-countries-are-taking-action-on-ukraine">Castellum.AI</a></li>
+<li id="ref-13"><a href="#fnref-13-1">^</a> ロシアの対外関係に関する Wikipedia の項目。長大なため、前半のみを確認した。 <a href="https://en.wikipedia.org/wiki/Foreign_relations_of_Russia">Wikipedia</a></li>
+<li id="ref-14"><a href="#fnref-14-1">^</a> マドゥロ大統領の拘束を論じた CSIS の分析と、 <em>Washington Times</em> の報道（ 2026 年 1 月 4 日）。本文は未通読で、検索結果の要約で確認した。 <a href="https://www.csis.org/analysis/geopolitics-maduros-capture-what-does-operation-absolute-resolve-mean-russia">CSIS</a> <a href="https://m.washingtontimes.com/news/2026/jan/4/russia-china-condemn-us-capture-nicolas-maduro-say-support-regime/">Washington Times</a></li>
+</ol>
+<p class="endnote">本稿の事実関係は、各出典の記述に基づく。出典どうしで食い違う点と、筆者の見立てや整理は、本文で断った。</p>
+</div>
+</div>
+</body>
+</html>
