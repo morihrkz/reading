@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工業デザイナーの人物像と、建築との二刀流</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+  /* この文書だけの追加 : 幅 641 〜 800px で、列数の多い表が横にあふれないよう、語句の途中でも折り返せるようにする */
+  th,td{overflow-wrap:anywhere}
+  tbody th,td[data-label="生没年"],td[data-label="人物"]{overflow-wrap:normal}
+
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">調査まとめ</p>
+<h1>工業デザイナーの人物像と、建築との二刀流</h1>
+<p class="subtitle">Profiles of Industrial Designers in Japan and Abroad and Their Crossings into Architecture</p>
+<p>駅舎を手がける工業デザイナーがいて、椅子をつくる建築家がいる。二つの職能の境目は、思われているより曖昧である。水戸岡鋭治、榮久庵憲司、奥山清行の三人を軸に、日本と海外のおもな人物を一本にまとめた。</p>
+</header>
+<div class="wrap">
+<div class="lede">
+<p>結論から言う。建築と工業デザインの両方を手がける人は、実在する。ただし「二刀流」の中身は、人によってまるで違う。数えかたしだいで、日本の十人のうち、二刀流は 2 人にも 7 人にもなる。</p>
+<p>海外では、この系譜が 20 世紀の初めから続く。ホテルを設計した建築家が、ロビーの椅子とナイフ・フォークまで描いた例が、その典型である。では、日本の三人はどこに立っているのか。建築家と対等に組んだ榮久庵憲司、駅舎の意匠に踏み込んだ水戸岡鋭治、建築から離れて乗り物と家具に徹した奥山清行。三人の距離は、きれいに三つに分かれた。</p>
+</div>
+<dl class="summary">
+<div><dt>問い</dt><dd>建築と工業デザインの両方を手がける人は、いるのか</dd></div>
+<div><dt>答え</dt><dd>いる。海外には 100 年を超える系譜があり、日本には少数だが確かに存在する</dd></div>
+<div><dt>三つの型</dt><dd>建築家から製品へ。デザイナーから空間へ。一つの事務所が両方を持つ</dd></div>
+<div><dt>関門</dt><dd>建築の側にだけ、建築士の資格がある。 15 歳からの三つの経路を、第 6 章で試算した</dd></div>
+</dl>
+<p class="meta band"><strong>【方法と限界】</strong>日本の人物の経歴と代表作は、 Wikipedia 日本語版の各項目で確かめた（出典の不足が注記された項目を含む）。海外の人物は一般に知られた事実に拠り、個別の出典を付けていない。「建築」の範囲は、設計資格の有無ではなく、建物・駅舎・空間の設計への関与で緩く捉えた。調べた日は 2026 年 11 月 14 日である。</p>
+
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">十人を一枚で見る――出発点は、ちょうど 5 対 5 に割れる</a></li>
+<li><a href="#sec2">水戸岡・榮久庵・奥山――同じ肩書きの、三つの出発点</a>
+<ol>
+<li><a href="#sec2-1">水戸岡鋭治</a></li>
+<li><a href="#sec2-2">榮久庵憲司</a></li>
+<li><a href="#sec2-3">奥山清行</a></li>
+</ol>
+</li>
+<li><a href="#sec3">ほかの七人――製品から近づいた人、建築から踏み出した人</a>
+<ol>
+<li><a href="#sec3-1">柳宗理</a></li>
+<li><a href="#sec3-2">深澤直人</a></li>
+<li><a href="#sec3-3">黒川雅之</a></li>
+<li><a href="#sec3-4">佐藤オオキ</a></li>
+<li><a href="#sec3-5">隈研吾</a></li>
+<li><a href="#sec3-6">坂茂</a></li>
+<li><a href="#sec3-7">磯崎新</a></li>
+</ol>
+</li>
+<li><a href="#sec4">二刀流は本当にいるか――日本の少数派と、海外の 100 年</a>
+<ol>
+<li><a href="#sec4-1">日本の場合</a></li>
+<li><a href="#sec4-2">海外の系譜</a></li>
+<li><a href="#sec4-3">二刀流の三つの型</a></li>
+<li><a href="#sec4-4">反対の見方</a></li>
+</ol>
+</li>
+<li><a href="#sec5">結論――物の「形」から、物のある「場面」へ</a></li>
+<li><a href="#sec6">15 歳が二刀流をめざすには</a>
+<ol>
+<li><a href="#sec6-1">試算の前提</a></li>
+<li><a href="#sec6-2">経路 A 　建築から入る</a></li>
+<li><a href="#sec6-3">経路 B 　デザインから入る</a></li>
+<li><a href="#sec6-4">経路 C 　事務所・留学で跨ぐ</a></li>
+<li><a href="#sec6-5">三つの経路の比較</a></li>
+<li><a href="#sec6-6">15 歳が、いまのうちにすること</a></li>
+</ol>
+</li>
+<li><a href="#sec7">ことば集</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 十人を一枚で見る――出発点は、ちょうど 5 対 5 に割れる</h2>
+<p>まず、取り上げる十人を一枚の表にする。生まれの早い順に並べた。「学んだ場所」の列を縦に読むと、一つの偏りが見える。</p>
+<table>
+<thead><tr><th>人物</th><th>生没年</th><th>学んだ場所</th><th>軸足</th><th>代表作</th></tr></thead>
+<tbody>
+<tr><th>柳宗理</th><td data-label="生没年">1915 〜 2011 年</td><td data-label="学んだ場所">東京美術学校（現・東京藝術大学）の洋画科。卒業後、坂倉準三の建築研究所で修業</td><td data-label="軸足">暮らしの道具と家具</td><td data-label="代表作">バタフライスツール、早く沸くヤカン</td></tr>
+<tr><th>榮久庵憲司</th><td data-label="生没年">1929 〜 2015 年</td><td data-label="学んだ場所">東京藝術大学の美術学部図案科</td><td data-label="軸足">工業デザインと、都市・環境の構想</td><td data-label="代表作">キッコーマン卓上醤油びん、ヤマハ VMAX</td></tr>
+<tr><th>磯崎新</th><td data-label="生没年">1931 〜 2022 年</td><td data-label="学んだ場所">東京大学で建築を学ぶ。丹下健三の研究室を経る</td><td data-label="軸足">建築（家具にも手を伸ばした）</td><td data-label="代表作">つくばセンタービル、群馬県立近代美術館</td></tr>
+<tr><th>黒川雅之</th><td data-label="生没年">1937 年生まれ</td><td data-label="学んだ場所">名古屋工業大学の建築学科。のち早稲田大学の大学院</td><td data-label="軸足">建築と製品の両方</td><td data-label="代表作">銀座くのや、灰皿「 GOM 」</td></tr>
+<tr><th>水戸岡鋭治</th><td data-label="生没年">1947 年生まれ</td><td data-label="学んだ場所">岡山県立岡山工業高校のインテリア科（大学には進まず、のちミラノの事務所で働いた）</td><td data-label="軸足">鉄道車両と、駅・列車の空間</td><td data-label="代表作">「ななつ星 in 九州」、 787 系「つばめ」</td></tr>
+<tr><th>隈研吾</th><td data-label="生没年">1954 年生まれ</td><td data-label="学んだ場所">東京大学の大学院で建築を学ぶ</td><td data-label="軸足">建築。のち製品・乗り物へ</td><td data-label="代表作">国立競技場、根津美術館</td></tr>
+<tr><th>深澤直人</th><td data-label="生没年">1956 年生まれ</td><td data-label="学んだ場所">多摩美術大学のプロダクトデザイン科</td><td data-label="軸足">家電・携帯電話・生活雑貨</td><td data-label="代表作">au 「 INFOBAR 」、 ±0 の製品</td></tr>
+<tr><th>坂茂</th><td data-label="生没年">1957 年生まれ</td><td data-label="学んだ場所">米国のクーパー・ユニオンで建築を学ぶ。磯崎新のアトリエに在籍</td><td data-label="軸足">建築。紙管を構造材にした</td><td data-label="代表作">紙の家、大分県立美術館</td></tr>
+<tr><th>奥山清行</th><td data-label="生没年">1959 年生まれ</td><td data-label="学んだ場所">武蔵野美術大学の視覚伝達デザイン学科。のち米国のアートセンター・カレッジ・オブ・デザイン</td><td data-label="軸足">自動車と鉄道車両</td><td data-label="代表作">エンツォ・フェラーリ、 E7 系新幹線</td></tr>
+<tr><th>佐藤オオキ</th><td data-label="生没年">1977 年生まれ</td><td data-label="学んだ場所">早稲田大学の建築学科と、同大学院の建築学専攻</td><td data-label="軸足">製品・空間・建築を横断</td><td data-label="代表作">東京 2020 の聖火台、 Siam Discovery</td></tr>
+</tbody>
+</table>
+<p>建築学科（または建築の大学院）から出発したのは、磯崎新・黒川雅之・隈研吾・坂茂・佐藤オオキの 5 人である。残る 5 人、柳宗理・榮久庵憲司・水戸岡鋭治・深澤直人・奥山清行は、美術・図案・インテリア・デザインの側から出発した。ちょうど 5 対 5 である。</p>
+<p>さらに意外なのは、後者の 5 人のうち、プロダクトデザイン科を出たのが深澤直人 1 人だけという点である。柳は洋画科、榮久庵は図案科、奥山は視覚伝達デザイン学科、水戸岡は工業高校のインテリア科から出発した。「工業デザイナー」になるための一本道は、ここには見当たらない。</p>
+<p>では、出発点の違いは、のちの建築との距離にどう響いたのか。次の章から、人物ごとに見ていく。</p>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 水戸岡・榮久庵・奥山――同じ肩書きの、三つの出発点</h2>
+<p>三人は、同じ「工業デザイナー」と呼ばれても、出発点がまるで違う。出発点の違いが、のちの仕事の広がり方を決めている。</p>
+
+<h3 id="sec2-1">2.1 水戸岡鋭治――列車を「旅」ごと設計する人</h3>
+<p>1947 年に岡山で生まれた。最終学歴は、岡山県立岡山工業高校のインテリア科である。高校を出て大阪のデザイン会社に約 3 年勤め、 24 歳のとき、勧められてミラノのデザイン事務所へ移った。ところが、そこは 4 か月で辞めている。 1972 年、東京でドーンデザイン研究所を設立した。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup></p>
+<p>転機は、 1987 年 4 月に偶然訪れた。 JR 九州の「ホテル海の中道」のお披露目の午餐会で、石井幸孝社長（当時）と同席したのである。以後、同社の列車・駅・広告を一手に手がけるようになった。</p>
+<p>代表作は、 787 系「つばめ」（ 1992 年）、 883 系「ソニック」、 800 系新幹線、観光寝台列車「ななつ星 in 九州」（ 2013 年）である。九州の外でも、岡山電気軌道の「 MOMO 」、和歌山電鐵の「たま電車」、富士急行の「富士登山電車」がある。受賞は、 2011 年の菊池寛賞と毎日デザイン賞、鉄道の分野のブルーリボン賞とブルネル賞など、多い。</p>
+<p>人物像を一言でいえば、車両一台ではなく、旅の全体を設計する人である。車両・駅・駅の周りの空間まで一続きに扱う点に、その特徴があると考えられる。</p>
+<div class="box">
+<p><strong>建築との関係</strong><br>熊本駅（ 1991 年、旧駅舎の改装）、直方駅・阿蘇駅（ともに 2011 年）、大分駅（ 2012 年、新駅舎）など、駅舎の意匠に関わっている。ただし、建築家との協働の例が多いとみられ、どこまでが水戸岡の設計かは、個別の案件ごとに確かめる必要がある。出自がインテリアである点も、空間へ広がる理由として見逃せない。</p>
+</div>
+
+<h3 id="sec2-2">2.2 榮久庵憲司――醤油びんから、都市と世界のデザインまで</h3>
+<p>1929 年に東京で生まれ、幼いころをハワイと広島で過ごした。東京藝術大学在学中の 1952 年、仲間とデザイン集団 GK を結成した。 1957 年に GK インダストリアルデザイン研究所をつくり、所長になった。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
+<p>代表作は、キッコーマン卓上醤油びん（ 1961 年ごろ）、ヤマハ発動機の VMAX （ 1985 年）、東京都のシンボルマーク（ 1989 年）である。 JR 東日本の電車や、広島電鉄 5000 形、アストラムラインにも関わった。食卓の上の小さなびんと、都市の顔であるマークが、同じ人の手から出ている。</p>
+<p>この人の特異さは、製品の外へ出たことにある。 1959 年ごろ、建築家の黒川紀章や菊竹清訓らの運動「メタボリズム」に、唯一の工業デザイナーとして加わった。 1970 年の大阪万博など、博覧会の場のデザインも担った。</p>
+<p>国際的な役職も多い。国際インダストリアルデザイン団体協議会 (ICSID) の会長を務め、 1998 年には世界デザイン機構をつくって初代会長になった。製品をつくる人から、デザインという仕事の枠そのものをつくる人へ進んだ人物といえる。 2015 年に 85 歳で亡くなった。</p>
+<div class="box">
+<p><strong>建築との関係</strong><br>自ら建築物を設計した人ではない。建築家と同じ席に着き、都市や環境の構想を語ったところに、建築との接点がある。二刀流というより、「対等な協働者」と呼ぶほうが実態に近い。</p>
+</div>
+
+<h3 id="sec2-3">2.3 奥山清行――スーパーカーから、トラクターへ</h3>
+<p>1959 年に山形市で生まれた。ゼネラルモーターズでチーフデザイナー、ポルシェでシニアデザイナーを務めたのち、 1995 年にイタリアのピニンファリーナへ入った。 1998 年に日本人で初めてチーフデザイナーとなり、 2004 年にデザインディレクターへ進んだ。 2006 年に独立し、 KEN OKUYAMA DESIGN を率いている。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></p>
+<p>自動車の代表作は、エンツォ・フェラーリ、フェラーリ 612 スカリエッティ、マセラティ・クアトロポルテである。独立後は、新幹線の E6 系と E7 系・ W7 系、観光列車「 TRAIN SUITE 四季島」、ヤンマーのトラクター、天童木工の家具へと広がった。 2016 年には、ヤンマーのトラクター YT3 シリーズがグッドデザイン賞の金賞を取った。</p>
+<p>人物像は、「スーパーカーの人」から「地方のものづくりの人」への転身で語れる。故郷の山形の企業と組み、乗り物から農機、家具まで、同じ美意識で通している。</p>
+<div class="box">
+<p><strong>建築との関係</strong><br>今回確かめた範囲では、建築作品は見当たらない。ただし鉄道では、車両の内装を、走る空間として設計している。建築との二刀流というより、「乗り物から家具へ」の横断の人である。</p>
+</div>
+<div class="point">
+<p>三人を並べると、軸が見えてくる。水戸岡は「空間から車両へ」、榮久庵は「製品から都市へ」、奥山は「自動車から地方の産業へ」と進んだ。建築との距離は、この順に、近い・協働・遠いである。</p>
+</div>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> ほかの七人――製品から近づいた人、建築から踏み出した人</h2>
+<p>例は三人だけではない。建築との二刀流という視点で、ほかの七人を見る。 3.1 と 3.2 の二人は、製品の側から建築に近づいた。 3.3 〜 3.7 の五人は、建築を学んで出発し、のちに製品や乗り物へ手を伸ばした。</p>
+
+<h3 id="sec3-1">3.1 柳宗理――建築の現場で鍛えた、暮らしの道具の人</h3>
+<p>1915 年に東京で生まれた。民藝運動を起こした柳宗悦の長男である。東京美術学校の洋画科で学んだが、のちの歩みを決めたのは建築の側との出会いだった。輸出工芸の指導官として来日したフランスのデザイナー、シャルロット・ペリアンの日本視察に同行し、各地の伝統工芸に触れた。 1942 年には建築家・坂倉準三の建築研究所の研究員となり、 1950 年に柳インダストリアルデザイン研究所を開いた。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
+<p>代表作は、バタフライスツール（ 1956 年）と、早く沸くヤカン（ 1953 年）である。バタフライスツールと白磁の土瓶は、 1957 年のミラノ・トリエンナーレで金賞を取った。 1977 年からは日本民藝館の館長も務めた。建築の現場で修業を積んだのちに工業デザインへ進んだ、「建築から来た」人である。</p>
+
+<h3 id="sec3-2">3.2 深澤直人――建築の内側に入る道具の人</h3>
+<p>1956 年に甲府で生まれた。セイコーエプソンの前身の企業を経て、 1989 年に渡米して IDEO に移り、 1996 年に IDEO Japan をつくった。 2003 年に独立している。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
+<p>代表作は、 au の携帯電話「 INFOBAR 」、 ±0 の家電、無印良品の壁掛け式 CD プレイヤーである。住宅設備の製品も多く、建築の内側に入る道具をつくる人だ。 2012 年からは日本民藝館の館長でもある。柳宗理と同じ館長の席に、のちに座った人である。</p>
+
+<h3 id="sec3-3">3.3 黒川雅之――建築と製品を、同じ手でこなす人</h3>
+<p>1937 年に名古屋で生まれた。 1967 年に黒川雅之建築設計事務所を設立した。建築家の黒川紀章の弟である。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></p>
+<p>建築では銀座くのや、製品では灰皿「 GOM 」シリーズや腕時計「ラバト」がある。作品はニューヨーク近代美術館などに収蔵されている。日本では、建築と製品を同じ手で両方こなす、数少ない人の一人といえる。</p>
+
+<h3 id="sec3-4">3.4 佐藤オオキ――事務所ごと、横断する人</h3>
+<p>1977 年にカナダのトロントで生まれた。早稲田大学の建築学科を出て、大学院の修了と同時の 2002 年に、デザインオフィス nendo を設立した。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
+<p>製品では、ルイ・ヴィトンの照明「 surface 」やロッテの「 ACUO 」を手がけた。空間では、バンコクの商業施設 Siam Discovery がある。 2021 年には、東京 2020 オリンピックの聖火台をデザインした。ミラノ万博（ 2015 年）の日本館の作品にも名が挙がるが、担当の範囲は参照先に書かれていない。建築の学びを土台に、製品と空間を行き来する、世代の新しい二刀流である。</p>
+
+<h3 id="sec3-5">3.5 隈研吾――建築家が「動く建築」に踏み込むとき</h3>
+<p>1954 年に横浜で生まれた。東京大学の大学院で建築を学び、日本設計と戸田建設の設計部を経て、 1990 年に隈研吾建築都市設計事務所を設立した。のちにパリにも拠点を置いた。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></p>
+<p>建築の代表作は、那珂川町馬頭広重美術館（ 2000 年）、根津美術館（ 2009 年）、 GINZA KABUKIZA （ 2013 年）、国立競技場（ 2019 年竣工）である。そのあとに、仕事が建物の外へ広がった。無印良品の商品化住宅「窓の家」（ 2007 年）、西武鉄道の観光電車「 52 席の至福」（ 2016 年）の内外装の監修、スノーピークと組んだ移動式の小屋「住箱」（ 2017 年）、 ANA のボーイング 777-300ER の機内デザインの監修（ 2019 年）などである。</p>
+<p>建築家が、電車や機内という「動く建築」に踏み込んだ例といえる。家具や靴のデザインも手がけたと、同じ項目に書かれている。</p>
+<div class="box">
+<p><strong>確かめていないこと</strong><br>建築士の資格の有無は、確かめていない。ここでは、建築の設計で名を成した人という意味で「建築家」と書く。以下の二人も同じである。</p>
+</div>
+
+<h3 id="sec3-6">3.6 坂茂――紙の筒で、建築を支えた人</h3>
+<p>1957 年に東京で生まれた。米国のクーパー・ユニオンで建築を学び、 1982 〜 1983 年に磯崎新のアトリエに在籍した。 1985 年に坂茂建築設計を設立している。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></p>
+<p>名を知られたのは、紙管（紙の筒）を構造材にした建築である。 1986 年の「アルヴァ・アアルト展」の会場構成に始まり、 1995 年の「紙の家」「紙の教会」に至る。紙管を建築基準法の評定に通して実現した点が、特色とされる。</p>
+<p>のちには、無印良品との協働で「家具の家 No.1 」（ 2000 年）を手がけた。ポンピドゥー・センター・メス（ 2010 年）、大分県立美術館（ 2014 年）などの大きな建築も多く、 2014 年にはプリツカー賞を受けた。建築の発想を、家具や住宅の商品へ持ち込んだ人である。紙管の家具かどうかは、参照した項目からは確かめられなかった。</p>
+
+<h3 id="sec3-7">3.7 磯崎新――建築の側から、椅子へ</h3>
+<p>1931 年に大分で生まれ、 2022 年に亡くなった。東京大学で建築を学び、丹下健三の研究室を経て、 1963 年に磯崎新アトリエを設立した。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></p>
+<p>代表作は、群馬県立近代美術館（ 1974 年）、つくばセンタービル（ 1983 年）、ロサンゼルス現代美術館（ 1986 年）である。 2019 年にプリツカー賞を受けた。</p>
+<p>製品の側では、「モンローチェアー」が項目に挙がっている。ただし、メーカーと制作年は参照先に記載がなく、この資料では確かめていない。建築を軸にしながら、家具へ手を伸ばした例として、名だけ挙げておく。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 二刀流は本当にいるか――日本の少数派と、海外の 100 年</h2>
+
+<h3 id="sec4-1">4.1 日本の場合</h3>
+<p>いる。ただし数は少なく、線の引きかたで人数が変わる。十人を、建築との距離で四つに分けた。</p>
+<table>
+<thead><tr><th>建築との関わり</th><th>人物</th><th>内容</th></tr></thead>
+<tbody>
+<tr><th>建築と製品を、自分の名で両方手がける</th><td data-label="人物">黒川雅之、佐藤オオキ</td><td data-label="内容">建築を学び、建物も製品も設計している。佐藤は、事務所 nendo として横断する</td></tr>
+<tr><th>建築家が、製品・乗り物へ踏み出す</th><td data-label="人物">隈研吾、坂茂、磯崎新</td><td data-label="内容">建築で名を成したのち、商品化住宅・電車・機内・家具へ広げた</td></tr>
+<tr><th>デザイナーが、空間・建築へ近づく</th><td data-label="人物">榮久庵憲司、水戸岡鋭治</td><td data-label="内容">榮久庵は建築家と協働し、水戸岡は駅舎の意匠に関わった。どちらも、建築の設計者とは言いにくい</td></tr>
+<tr><th>建築の近くにいるが、二刀流とは言いにくい</th><td data-label="人物">柳宗理、深澤直人、奥山清行</td><td data-label="内容">柳は建築の研究所で修業し、深澤は住宅設備の製品を多くつくり、奥山は車両の内装を設計した。建築作品は、確かめられていない</td></tr>
+</tbody>
+</table>
+<p>上の段ほど、建築との距離が近い。分け方は筆者の整理である。</p>
+<p>最も厳しく数えれば、二刀流は 2 人である。建築家から製品への越境まで含めれば 5 人、デザイナー側からの接近も含めれば 7 人になる。冒頭の「 2 人にも 7 人にも」は、この数え方の幅である。</p>
+<p>この表で、いちばん判定が難しいのは水戸岡鋭治である。駅舎や空間を手がけるが、出自はインテリアで、鉄道の事業者と一体で動く。建築家と呼ぶのが適切かは、筆者には判断がつかない。</p>
+
+<h3 id="sec4-2">4.2 海外の系譜</h3>
+<p>海外の例は、ヤコブセンが分かりやすい。ホテルを設計したとき、ロビーの椅子やカトラリーまで自ら描いた。エッグチェアは、その部屋のために生まれた椅子である。建物と道具が、同じ手で一続きにつくられた例といえる。</p>
+<p>海外では、二刀流のほうが歴史が長い。工業デザインという職業が生まれたころ、その担い手の多くは建築家だったためである。ベーレンスは 1907 年ごろから AEG に関わり、工場の建物から電気製品、広告まで、企業の外観を一人で束ねた。</p>
+<table>
+<thead><tr><th>人物</th><th>生没年</th><th>建築の仕事</th><th>工業デザインの仕事</th></tr></thead>
+<tbody>
+<tr><th>ペーター・ベーレンス（独）</th><td data-label="生没年">1868 〜 1940 年</td><td data-label="建築の仕事"> AEG タービン工場（ 1909 年）</td><td data-label="工業デザインの仕事"> AEG の電気製品から広告まで、企業の外観を統括した</td></tr>
+<tr><th>ジオ・ポンティ（伊）</th><td data-label="生没年">1891 〜 1979 年</td><td data-label="建築の仕事">ミラノのピレリ高層ビル</td><td data-label="工業デザインの仕事">椅子「スーパーレッジェーラ」、エスプレッソマシン</td></tr>
+<tr><th>アルヴァ・アアルト（芬）</th><td data-label="生没年">1898 〜 1976 年</td><td data-label="建築の仕事">パイミオのサナトリウム</td><td data-label="工業デザインの仕事">曲げ木の家具、家具会社アルテックの設立（ 1935 年）</td></tr>
+<tr><th>アルネ・ヤコブセン（丁）</th><td data-label="生没年">1902 〜 1971 年</td><td data-label="建築の仕事">コペンハーゲンの SAS ロイヤルホテル（ 1960 年）</td><td data-label="工業デザインの仕事">エッグチェア、セブンチェア、食器</td></tr>
+<tr><th>エーロ・サーリネン（米）</th><td data-label="生没年">1910 〜 1961 年</td><td data-label="建築の仕事">ゲートウェイ・アーチ、 TWA フライトセンター</td><td data-label="工業デザインの仕事">チューリップチェア</td></tr>
+<tr><th>ディーター・ラムス（独）</th><td data-label="生没年">1932 年生まれ</td><td data-label="建築の仕事">建築を学んだのち、デザイナーへ</td><td data-label="工業デザインの仕事">ブラウンの家電と、「良いデザインの 10 か条」</td></tr>
+<tr><th>ザハ・ハディド（英）</th><td data-label="生没年">1950 〜 2016 年</td><td data-label="建築の仕事">広州オペラハウスなど</td><td data-label="工業デザインの仕事">家具や靴など、製品への越境</td></tr>
+</tbody>
+</table>
+<p>表の国は、活動の拠点の目安である（独はドイツ、伊はイタリア、芬はフィンランド、丁はデンマーク）。</p>
+
+<h3 id="sec4-3">4.3 二刀流の三つの型</h3>
+<p>以上の例から、二刀流は三つの型に分けられる。</p>
+<div class="point">
+<p><strong>建築家から製品へ</strong><br>建物の延長として、椅子・食器・照明をつくる。ポンティ、アアルト、ヤコブセン、黒川雅之が当たる。日本で「建築家になったあとで製品も」という流れを見るなら、隈研吾、坂茂、磯崎新である。</p>
+<p><strong>工業デザイナーから空間へ</strong><br>製品や車両の経験を、駅・展示・都市へ広げる。榮久庵憲司、水戸岡鋭治が当たる。</p>
+<p><strong>一つの事務所が両方を持つ</strong><br>個人の資格より、組織の幅で横断する。佐藤オオキの nendo が当たる。</p>
+</div>
+
+<h3 id="sec4-4">4.4 反対の見方</h3>
+<p>ここで反対の見方も検討しておく。「建築も手がける」と言っても、資格を持つ建築家として設計した場合と、意匠や内装で関わった場合とでは、重みが違う。この資料の分類は、そこを緩く扱っている。水戸岡や榮久庵を二刀流に数えるかは、定義しだいで変わる。</p>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 結論――物の「形」から、物のある「場面」へ</h2>
+<p>調べの結果をまとめる。工業デザイナーの人物像は、軸足の置き場で整理できる。製品に置く人、乗り物に置く人、空間に置く人である。建築との二刀流は、海外では古い伝統、日本では少数だが確かに存在する。</p>
+<p>日本の三人は、どれも「製品の外へ」向かう動きの中にいる。工業デザインの仕事は、物の形を決めることから、物が置かれる場面を決めることへ広がっている、と筆者は考える。</p>
+<div class="try">
+<p>実物で確かめる手がある。 JR 九州の列車に乗り、水戸岡の内装を見る。新幹線 E7 系や「四季島」で、奥山の内装を見る。民藝館や美術館で、柳宗理のスツールに座る。物の形より先に、「その物がどんな場面の中にあるか」を見ると、三人の違いが体で分かる。</p>
+</div>
+<p>では、この道を、これから歩き始める人は、何から手をつければよいのか。次の章で、 15 歳を想定して試算する。</p>
+</section>
+
+<section id="sec6"><h2><span class="no">6</span> 15 歳が二刀流をめざすには――三つの経路の試算</h2>
+<p>現在 15 歳の学生が、将来、建築デザインと工業デザインを兼ねて仕事にしたいと考えたら、何をすべきか。結論から言う。道はある。ただし近道はなく、この資料の人物の多くは、一方を軸に据えてから、他方へ越境している。</p>
+
+<h3 id="sec6-1">6.1 試算の前提</h3>
+<p>想定は、 2026 年に中学 3 年生の 15 歳、日本在住である。この資料で調べた人物の経歴を、入り口の違いで三つの型に分け、年齢の目安を当てはめた。年齢は筆者の試算であり、事実ではない。</p>
+<p>試算を左右する制度が一つある。建築士の資格である。工業デザイナーに国家資格はないが、一定の規模・用途の建築物の設計は、建築士の独占業務である。建築士法の改正（ 2020 年施行）で、一級建築士は、大学で指定科目を修めて卒業すれば、実務経験がなくても受験できるようになった。実務経験は、免許の登録の要件に移った。</p>
+<div class="point">
+<p>建築の側には、資格という関門がある。工業デザインの側には、ない。二刀流の計画は、「いつ、どの学科で、建築士の道を確保するか」で形が決まる。</p>
+</div>
+
+<h3 id="sec6-2">6.2 経路 A 　建築から入り、製品へ広げる</h3>
+<p>佐藤オオキ、黒川雅之、隈研吾に近い型である。佐藤は、早稲田大学の建築学科と大学院を経て、修了と同時に nendo を設立した。</p>
+<ul class="tl">
+<li><span class="yr">15 歳</span><b>高校を選ぶ</b><br>普通科の理系、または建築科のある工業高校。数学・物理と、美術の両方を手放さない。</li>
+<li><span class="yr">18 歳</span><b>大学の建築学科へ</b><br>一級建築士の指定科目を修められる学科を選ぶ。在学中に、家具・照明など小さな物の課題やコンペへ、自分から出る。</li>
+<li><span class="yr">22 歳</span><b>大学院か、設計事務所か</b><br>佐藤は、大学院の修了と同時に事務所を立ち上げた。設計事務所に入る道も同じ重みで考える。</li>
+<li><span class="yr">24 〜 26 歳</span><b>実務と資格</b><br>免許の登録に要る実務経験を積み、一級建築士の試験に挑む。最短で 26 歳前後と見込む。</li>
+<li><span class="yr">27 〜 30 歳</span><b>製品へ越境する</b><br>家具メーカーとの協働や、コンペ、自分の事務所での製品開発から、製品の仕事を始める。</li>
+</ul>
+<p>強みは、建築士の資格を確実に得られることである。弱みは、道が長いことと、製品を学ぶ機会を自分でつくらねばならないことである。</p>
+
+<h3 id="sec6-3">6.3 経路 B 　デザインから入り、空間へ広げる</h3>
+<p>深澤直人、榮久庵憲司、水戸岡鋭治に近い型である。深澤は多摩美術大学のプロダクトデザイン科を出て、メーカーの設計・デザイン部門から IDEO へ進んだ。水戸岡は、工業高校のインテリア科から出発している。</p>
+<ul class="tl">
+<li><span class="yr">15 歳</span><b>高校を選ぶ</b><br>普通科に通いつつ、美術予備校でデッサンと立体構成を学ぶ。または、インテリア科などのある工業高校。</li>
+<li><span class="yr">18 歳</span><b>デザイン系の大学へ</b><br>プロダクト、インテリア、空間などの学科。入試は実技が中心になる。</li>
+<li><span class="yr">22 歳</span><b>メーカーか、デザイン事務所へ</b><br>深澤の例では、まずメーカーで製品を量産する現場を知り、のちに海外の事務所へ移った。</li>
+<li><span class="yr">30 歳前後</span><b>空間へ越境する</b><br>車両の内装、駅、店舗、展示など、物が置かれる場面の設計へ広げる。水戸岡の歩みは、この型に近い。</li>
+</ul>
+<div class="caution">
+<p>デザイン系の学科では、一級建築士の指定科目を満たさないことがある（学科ごとに異なる）。建築物の設計をそのまま仕事にするなら、資格が壁になる。建築士を取るのか、空間のデザインにとどめて建築家と協働するのかを、早めに決める必要がある。</p>
+</div>
+
+<h3 id="sec6-4">6.4 経路 C 　事務所・大学院・留学で跨ぐ</h3>
+<p>坂茂と柳宗理に近い型である。坂は、米国の建築大学で学び、磯崎新のアトリエでも働き、 1985 年に自分の事務所を設立した。柳は、美術学校の洋画科を出たあと、建築家・坂倉準三の研究所で修業し、 1950 年に自分の事務所を開いた。</p>
+<p>共通するのは、すでに建築の最前線にいる人の下で、手を動かしながら学んだことである。学校の枠の外で、二つの分野の間をつなぐ人に出会える。ただし、受け入れ先を自力で探す力と、作品集（ポートフォリオ）が要る。英語も要る。</p>
+
+<h3 id="sec6-5">6.5 三つの経路の比較</h3>
+<table>
+<thead><tr><th>項目</th><th>経路 A</th><th>経路 B</th><th>経路 C</th></tr></thead>
+<tbody>
+<tr><th>入り口の学び</th><td data-label="経路 A">建築学科（数学・物理と、美術）</td><td data-label="経路 B">デザイン系の学科（実技が中心）</td><td data-label="経路 C">学部は A か B 。大学院・留学・事務所で補う</td></tr>
+<tr><th>建築士の資格</th><td data-label="経路 A">取りやすい</td><td data-label="経路 B">学部だけでは難しいことがある</td><td data-label="経路 C">学部の選び方しだい</td></tr>
+<tr><th>越境の時期（試算）</th><td data-label="経路 A">27 〜 30 歳ごろに製品へ</td><td data-label="経路 B">30 歳前後に空間へ</td><td data-label="経路 C">事務所に入った時点から</td></tr>
+<tr><th>最大の弱み</th><td data-label="経路 A">道が長く、製品を学ぶ機会が少ない</td><td data-label="経路 B">建築の設計に、資格の壁がある</td><td data-label="経路 C">受け入れ先を自力で探す必要がある</td></tr>
+</tbody>
+</table>
+<p>三つの経路に、優劣はない。どの経路でも、二刀流の仕事が本格化するのは、 20 代後半から 30 歳前後と見込まれる。</p>
+
+<h3 id="sec6-6">6.6 15 歳が、いまのうちにすること</h3>
+<p>経路が決まっていなくても、どの経路にも効く備えがある。次の項目は、高校に入るまでに始められる。</p>
+<div class="checklist"><span class="cl-title">15 歳の備え</span>
+<ul>
+<li><input type="checkbox" id="c1"><label for="c1">数学と物理を手放さない（建築の構造や環境で要る）</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">身の回りの物を一つ選び、正面・横・上から手で描く</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">紙や木で、小さな模型を作る</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">駅・列車・美術館・民藝館など、実物を見に行く</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">高校を選ぶとき、建築科・インテリア科のある工業高校も候補に入れる</label></li>
+<li><input type="checkbox" id="c6"><label for="c6">高校 1 〜 2 年で、建築学科とデザイン系学科の両方を訪ね、授業の内容と資格の扱いを比べる</label></li>
+<li><input type="checkbox" id="c7"><label for="c7">作品をまとめるポートフォリオを、早めに作り始める</label></li>
+<li><input type="checkbox" id="c8"><label for="c8">英語を続ける（大学院・留学・海外の事務所の選択肢を残す）</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されない。印刷や手書きメモと併用すること。</p>
+</div>
+<div class="caution">
+<p>この章の年齢と経路は、筆者の試算である。建築士の制度や大学の学科の内容は、変わることがある。進路を決める前に、国土交通省・建築技術教育普及センターの公式情報と、志望校の募集要項で、必ず確かめること。</p>
+</div>
+</section>
+
+<section id="sec7"><h2><span class="no">7</span> ことば集</h2>
+<dl class="words">
+<dt>工業デザイン</dt><dd>工場で量産する製品の形・使い勝手・見た目を設計する仕事。担う人を、工業デザイナー、またはインダストリアルデザイナーという。</dd>
+<dt>メタボリズム</dt><dd>1960 年前後に、日本の建築家が始めた運動。建築や都市を、生き物のように入れ替わり育つものと捉えた。</dd>
+<dt>民藝運動</dt><dd>柳宗悦らが、 1920 年代に始めた運動。名もない職人の日用の品に、美を見いだした。</dd>
+<dt>ICSID</dt><dd>国際インダストリアルデザイン団体協議会。各国のデザイン団体の国際組織で、のちに名称を改めた。</dd>
+<dt>ピニンファリーナ</dt><dd>イタリアの自動車デザイン会社。フェラーリなどの車体を手がけてきた。</dd>
+<dt>ブルーリボン賞・ブルネル賞</dt><dd>鉄道車両などの優れたデザインに贈られる賞。前者は日本の鉄道愛好団体、後者は国際的な鉄道デザインの賞である。</dd>
+<dt>グッドデザイン賞</dt><dd>日本の総合的なデザイン評価の制度。製品・建築・サービスなど、広く審査する。</dd>
+<dt>プリツカー賞</dt><dd>建築界で最も権威のある賞の一つ。存命の建築家に贈られる。</dd>
+<dt>一級建築士</dt><dd>建築士法に基づく国家資格。大規模な建築物の設計・工事監理は、この資格を持つ人でなければできない。</dd>
+<dt>指定科目</dt><dd>建築士の受験資格に必要な、大学などで修める科目。学科によって、満たすかどうかが違う。</dd>
+</dl>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。</p>
+<ol>
+<li id="ref-1"><a href="#fnref-1-1">^</a> 水戸岡鋭治の項目。 <a href="https://ja.wikipedia.org/wiki/水戸岡鋭治">Wikipedia 日本語版</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> 榮久庵憲司の項目。 <a href="https://ja.wikipedia.org/wiki/榮久庵憲司">Wikipedia 日本語版</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> 奥山清行の項目。 <a href="https://ja.wikipedia.org/wiki/奥山清行">Wikipedia 日本語版</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> 柳宗理の項目。 <a href="https://ja.wikipedia.org/wiki/柳宗理">Wikipedia 日本語版</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 深澤直人の項目。 <a href="https://ja.wikipedia.org/wiki/深澤直人">Wikipedia 日本語版</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> 黒川雅之の項目。 <a href="https://ja.wikipedia.org/wiki/黒川雅之">Wikipedia 日本語版</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> 佐藤オオキの項目。 <a href="https://ja.wikipedia.org/wiki/佐藤オオキ">Wikipedia 日本語版</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> 隈研吾の項目。 <a href="https://ja.wikipedia.org/wiki/隈研吾">Wikipedia 日本語版</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> 坂茂の項目。 <a href="https://ja.wikipedia.org/wiki/坂茂">Wikipedia 日本語版</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> 磯崎新の項目。 <a href="https://ja.wikipedia.org/wiki/磯崎新">Wikipedia 日本語版</a></li>
+</ol>
+<p class="endnote">黒川雅之・佐藤オオキの項目には、出典の不足を示す注記がある。数字や受賞歴は、引用の前に一次の資料で確かめてほしい。海外の人物の記述は、個別の出典を付けていない。</p>
+</div>
+</div>
+</body>
+</html>
