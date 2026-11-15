@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ガメラ映画の全作品一覧</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">調査報告</p>
+<h1>ガメラ映画の全作品一覧</h1>
+<p class="subtitle">A Chronological Catalogue of Gamera Films and Related Works from 1965 to 2023</p>
+<p>1965 年の第 1 作から 2023 年配信の『 GAMERA -Rebirth- 』まで、劇場作品 12 本に、米国版・短編・配信の 8 件を加えた計 20 件を、公開順に並べ、それぞれにあらすじを添える。</p>
+</header>
+<div class="wrap">
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">この文書の範囲と数え方</a></li>
+<li><a href="#sec2">公開順の一覧</a></li>
+<li><a href="#sec3">系統と種別ごとの本数</a></li>
+<li><a href="#sec4">『 GAMERA -Rebirth- 』の位置づけと今後</a></li>
+</ol>
+</nav>
+
+<div class="lede">
+<p>ガメラ映画は、 1965 年に大映が作った第 1 作から、 60 年近く続いている。大映の時代の昭和 8 作に、徳間書店が再起動した平成 3 部作、角川の『小さき勇者たち〜ガメラ〜』が続き、近年は Netflix のアニメにも姿を見せた。本書は、劇場作品に加え、米国向けの再編集版、短編映像、配信作品も含めて、公開年月の順に一覧にし、物語の核を 1 〜 2 文で示す。</p>
+</div>
+
+<section id="sec1"><h2><span class="no">1</span> この文書の範囲と数え方</h2>
+<div class="box">
+<strong>数え方</strong><br>
+劇場公開された長編映画（劇場作品）は、昭和が 8 作、平成が 3 作、角川の新作が 1 作で、合計 12 作である。これに、米国版 6 件、短編 1 件、配信 1 件を加え、一覧は計 20 件になる。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup>
+</div>
+<div class="box">
+<strong>種別について</strong><br>
+種別の欄は、劇場作品・米国版・短編・配信に分けた。米国版は、日本の作品を米国向けに吹き替え、題名を改めた版（再編集を伴うものを含む）で、公開年は米国での公開に合わせた。多くはテレビ向けで、米国の劇場では公開されていない。題名を変えず、編集の内容も確かめられなかった『ガメラ対深海怪獣ジグラ』と『宇宙怪獣ガメラ』の米国放送・映像商品は、一覧に入れていない。画質を高めただけの 4K 版や、 2025 年から行われた平成 3 部作の復活上映は含めない。数え方は資料によって異なる。
+</div>
+<div class="box">
+<strong>公開年月について</strong><br>
+劇場作品は、日本での公開年月を示す。米国版は米国での公開年（月が分かるものは月まで）、短編は初公開の年月、配信は配信が始まった年月を示す。同じ年のうち、月が不明な作品は、月が分かる作品のあとに置いた。
+</div>
+<div class="box">
+<strong>英題について</strong><br>
+題名の下に、通用している英題を添えた。昭和の作品の多くは、米国で別の題名で公開された。米国版は、それ自体が別の行として載っているので、日本版の行には、原題に近い英題を示した。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup>
+</div>
+<div class="box">
+<strong>ガメラの立場について</strong><br>
+ガメラが、人間の敵として描かれるか、味方として描かれるかを、筆者の判断で分類した。「敵」は、人間を襲い、人間が倒すべき対象として扱われるもの。「味方」は、人間、とりわけ子どもを守って、ほかの怪獣や宇宙人と戦うもの。途中で変わるものは「場面で変わる」とした。物語のない映像は「判定せず」とした。昭和の作品は、第 1 作を除き、子どもの味方として描かれることが多い。
+</div>
+<div class="box">
+<strong>監督・主演・製作・配給について</strong><br>
+監督は、本編の監督を示す（特技監督は含めない）。主演は、資料の出演者欄の先頭にある俳優を挙げた。アニメは声の出演者である。人名は、日本人は漢字、外国人はカタカナで示し、漢字の表記を確かめられなかったものだけ、英語の綴りのままにした。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup>
+</div>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 公開順の一覧</h2>
+<p>昭和・平成・角川の三つの時期にまたがるので、系統の欄を設けた。劇場作品の系統の区分は、第 3 章で説明する。短編と配信は「その他」とした。作品の公開日は、日本語版の解説記事と照合した。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
+<table>
+<thead><tr><th>公開</th><th>題名（英題）</th><th>種別</th><th>系統</th><th>ガメラの立場</th><th>監督・主演・製作・配給</th><th>あらすじ</th></tr></thead>
+<tbody>
+<tr><th>1965 年 11 月</th><td data-label="題名（英題）"><b>『大怪獣ガメラ』</b><br>Gamera, the Giant Monster (original: Daikaijū Gamera)</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">敵（人間を襲う脅威として扱われる）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明<br><b>主演</b> 船越英二・霧立はるみ・山下洵一郎<br><b>製作・配給</b> 大映</td><td data-label="あらすじ">北極で、原爆を積んだ飛行機が撃墜され、その爆発で太古の巨大な亀が目覚める。日本に現れたガメラに、少年トシオだけは心を寄せる。</td></tr>
+<tr><th>1966 年 4 月</th><td data-label="題名（英題）"><b>『大怪獣決闘 ガメラ対バルゴン』</b><br>Gamera vs. Barugon</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">場面で変わる（日本を襲うが、バルゴンと戦う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 田中重雄<br><b>主演</b> 本郷功次郎・江波杏子・夏木章<br><b>製作・配給</b> 大映</td><td data-label="あらすじ">ニューギニアから持ち帰られたオパールが孵り、怪獣バルゴンが現れる。ガメラは、虹色の光線を放つバルゴンと、琵琶湖で決着をつける。</td></tr>
+<tr><th>1966 年 12 月</th><td data-label="題名（英題）"><b>『大怪獣ガメラ』米国版</b><br>Gammera the Invincible</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">敵（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> サンディ・ハワード（米国版）、湯浅憲明（原版）<br><b>主演</b> アルバート・デッカー・ブライアン・ドンレヴィ（新撮）、船越英二（原版）<br><b>製作</b> 大映（原版）<br><b>配給</b> ハリス・アソシエイツ・ワールド・エンタープライゼス</td><td data-label="あらすじ">第 1 作を再編集した米国向けの版。ニューヨークで撮った新撮の場面を足し、米国人の俳優が、軍人や科学者を演じた。</td></tr>
+<tr><th>1967 年 3 月</th><td data-label="題名（英題）"><b>『大怪獣空中戦 ガメラ対ギャオス』</b><br>Gamera vs. Gyaos</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">味方（ギャオスと戦う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明<br><b>主演</b> 本郷功次郎・上田吉二郎・笠原玲子<br><b>製作・配給</b> 大映</td><td data-label="あらすじ">火山の噴火で、人を食う怪鳥ギャオスが目覚め、超音波の光線を放つ。ガメラは、ギャオスを富士山の火口へ誘い込む。</td></tr>
+<tr><th>1967 年</th><td data-label="題名（英題）"><b>『大怪獣空中戦 ガメラ対ギャオス』米国版</b><br>Return of the Giant Monsters</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">味方（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明（原版）<br><b>主演</b> 本郷功次郎・上田吉二郎（原版）<br><b>製作</b> 大映（原版）<br><b>配給</b> アメリカン・インターナショナル・テレビジョン</td><td data-label="あらすじ">米国のテレビ向けの版。ほぼ全編を残し、看板などの日本語を英語に差し替える 2 か所の短い場面を足した。主題歌は省かれた。</td></tr>
+<tr><th>1968 年 3 月</th><td data-label="題名（英題）"><b>『ガメラ対宇宙怪獣バイラス』</b><br>Gamera vs. Viras</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">場面で変わる（宇宙人に操られるが、最後は味方）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明<br><b>主演</b> 本郷功次郎・高塚徹・カール・クレイグ・ジュニア<br><b>製作・配給</b> 大映</td><td data-label="あらすじ">地球の窒素を奪いに来た宇宙人が、ボーイスカウトの少年 2 人をさらい、ガメラを操る。少年たちの助けで正気に戻ったガメラが、宇宙怪獣バイラスを倒す。</td></tr>
+<tr><th>1968 年</th><td data-label="題名（英題）"><b>『大怪獣決闘 ガメラ対バルゴン』米国版</b><br>War of the Monsters</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">場面で変わる（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 田中重雄（原版）<br><b>主演</b> 本郷功次郎・江波杏子（原版）<br><b>製作</b> 大映（原版）<br><b>配給</b> アメリカン・インターナショナル・テレビジョン</td><td data-label="あらすじ">米国のテレビで、 1968 年の初めに放送された版。 CM を入れて 2 時間の枠に収めるため、 12 分を削り、吹き替えも新しくした。</td></tr>
+<tr><th>1969 年 3 月</th><td data-label="題名（英題）"><b>『ガメラ対大悪獣ギロン』</b><br>Gamera vs. Guiron</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">味方（少年を追って、ギロンと戦う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明<br><b>主演</b> 加島信博・クリストファ・マーフィー・秋山みゆき<br><b>製作・配給</b> 大映</td><td data-label="あらすじ">空飛ぶ円盤に乗った 2 人の少年が、未知の星へ運ばれる。追ってきたガメラが、刃物の頭を持つ怪獣ギロンと戦う。</td></tr>
+<tr><th>1969 年</th><td data-label="題名（英題）"><b>『ガメラ対宇宙怪獣バイラス』米国版</b><br>Destroy All Planets</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">場面で変わる（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明（原版）<br><b>主演</b> 本郷功次郎・高塚徹（原版）<br><b>製作</b> 大映（原版）<br><b>配給</b> アメリカン・インターナショナル・テレビジョン</td><td data-label="あらすじ">米国の劇場では公開されず、テレビへ直接渡った版。編集の内容は、確かめられなかった。</td></tr>
+<tr><th>1969 年</th><td data-label="題名（英題）"><b>『ガメラ対大悪獣ギロン』米国版</b><br>Attack of the Monsters</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">味方（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明（原版）<br><b>主演</b> 加島信博・クリストファ・マーフィー（原版）<br><b>製作</b> 大映（原版）<br><b>配給</b> アメリカン・インターナショナル・テレビジョン</td><td data-label="あらすじ">米国の劇場では公開されず、テレビへ直接渡った版。編集の内容は、確かめられなかった。</td></tr>
+<tr><th>1970 年 3 月</th><td data-label="題名（英題）"><b>『ガメラ対大魔獣ジャイガー』</b><br>Gamera vs. Jiger</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">味方</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明<br><b>主演</b> 高桑勉・ケリー・バリス・キャサリン・マーフィ<br><b>製作・配給</b> 大映</td><td data-label="あらすじ">島の呪われた石像を動かすと、大魔獣ジャイガーが目覚める。ガメラは敗れて卵を産みつけられるが、子どもたちの助けで反撃し、大阪万博の会場で決着をつける。</td></tr>
+<tr><th>1970 年</th><td data-label="題名（英題）"><b>『ガメラ対大魔獣ジャイガー』米国版</b><br>Gamera vs. Monster X</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">味方（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明（原版）<br><b>主演</b> 高桑勉・ケリー・バリス（原版）<br><b>製作</b> 大映（原版）<br><b>配給</b> アメリカン・インターナショナル・テレビジョン</td><td data-label="あらすじ">米国のテレビ向けの版。資料によれば、『ガメラ対大悪獣ギロン』と『ガメラ対バルゴン』の映像を流用した場面が加わる。</td></tr>
+<tr><th>1971 年 7 月</th><td data-label="題名（英題）"><b>『ガメラ対深海怪獣ジグラ』</b><br>Gamera vs. Zigra</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">味方</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明<br><b>主演</b> 八並映子・佐伯勇・坪内ミキ子<br><b>製作</b> 大映<br><b>配給</b> ダイニチ映配</td><td data-label="あらすじ">宇宙人ジグラ星人が、日本を襲って人質を取る。ガメラが、海の怪獣ジグラに立ち向かう。大映は、この作品の直後に倒産した。</td></tr>
+<tr><th>1980 年 3 月</th><td data-label="題名（英題）"><b>『宇宙怪獣ガメラ』</b><br>Gamera: Super Monster</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ガメラの立場">味方</td><td data-label="監督・主演・製作・配給"><b>監督</b> 湯浅憲明<br><b>主演</b> マッハ文朱・小島八重子・小松蓉子<br><b>製作</b> 大葉博一<br><b>配給</b> 大映</td><td data-label="あらすじ">宇宙人ザノンが、地球の征服をたくらむ。ガメラを慕う少年と宇宙の女戦士たちが、過去の作品の映像をまじえて、戦いを見守る。昭和シリーズの最終作である。</td></tr>
+<tr><th>1995 年 3 月</th><td data-label="題名（英題）"><b>『ガメラ 大怪獣空中決戦』</b><br>Gamera: Guardian of the Universe</td><td data-label="種別">劇場作品</td><td data-label="系統">平成</td><td data-label="ガメラの立場">味方（地球を守る守護者）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 金子修介<br><b>主演</b> 伊原剛志・中山忍・藤谷文子<br><b>製作</b> 大映・日本テレビ放送網・博報堂<br><b>配給</b> 東宝</td><td data-label="あらすじ">プルトニウムを積んだ船が、漂う環礁と衝突し、古代の遺物と巨大な亀ガメラが見つかる。同じころ、人を食う怪鳥ギャオスが現れる。</td></tr>
+<tr><th>1996 年 7 月</th><td data-label="題名（英題）"><b>『ガメラ 2 レギオン襲来』</b><br>Gamera 2: Attack of Legion</td><td data-label="種別">劇場作品</td><td data-label="系統">平成</td><td data-label="ガメラの立場">味方（地球を守る守護者）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 金子修介<br><b>主演</b> 永島敏行・水野美紀・石橋保<br><b>製作</b> 大映・日本テレビ放送網・博報堂ほか<br><b>配給</b> 東宝</td><td data-label="あらすじ">北海道に隕石が落ち、昆虫に似た宇宙生物が、各地の都市に巣を作り始める。ガメラが、日本を守るために立ち上がる。</td></tr>
+<tr><th>1999 年 3 月</th><td data-label="題名（英題）"><b>『ガメラ 3 邪神〈イリス〉覚醒』</b><br>Gamera 3: Revenge of Iris</td><td data-label="種別">劇場作品</td><td data-label="系統">平成</td><td data-label="ガメラの立場">味方（ただし、被害を生む存在として憎まれる）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 金子修介<br><b>主演</b> 前田愛・中山忍・藤谷文子<br><b>製作</b> 大映ほか<br><b>配給</b> 東宝</td><td data-label="あらすじ">3 年後、新たなギャオスが日本を脅かし、政府は、ガメラの駆除を命じる。一方、少女の綾奈は、卵から孵した怪獣イリスを育て、ガメラへの復讐に使おうとする。</td></tr>
+<tr><th>2006 年 4 月</th><td data-label="題名（英題）"><b>『小さき勇者たち〜ガメラ〜』</b><br>Gamera the Brave</td><td data-label="種別">劇場作品</td><td data-label="系統">新生（角川）</td><td data-label="ガメラの立場">味方（少年に育てられ、街を守る）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 田﨑竜太<br><b>主演</b> 富岡涼・夏帆・津田寛治<br><b>製作</b> 角川大映スタジオ<br><b>配給</b> 松竹</td><td data-label="あらすじ">少年の透が、かつてガメラが自爆した場所で、卵を見つける。孵った子ガメラは「トト」と名づけられ、街を狙う怪獣に立ち向かう。</td></tr>
+<tr><th>2015 年 10 月</th><td data-label="題名（英題）"><b>『 GAMERA 』（生誕 50 周年の記念映像）</b><br>GAMERA (2015 short)</td><td data-label="種別">短編</td><td data-label="系統">その他（日本）</td><td data-label="ガメラの立場">判定せず（物語のない試作映像）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 石井克人<br><b>主演</b>（怪獣の映像のみ）<br><b>製作・配給</b>（確かめられなかった）</td><td data-label="あらすじ">約 4 分の短編。ニューヨーク・コミコンで公開され、新しい長編の可能性を探る試作映像と位置づけられた。長編は、作られていない。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></td></tr>
+<tr><th>2023 年 9 月</th><td data-label="題名（英題）"><b>『 GAMERA -Rebirth- 』</b><br>Gamera Rebirth (stylized: GAMERA -Rebirth-)</td><td data-label="種別">配信</td><td data-label="系統">その他（日本）</td><td data-label="ガメラの立場">味方（少年と心を通わせる）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 瀬下寛之<br><b>主演</b> 金本寿子・松岡禎丞・宮野真守・早見沙織（声）<br><b>製作</b> KADOKAWA ・アニメーション制作 ENGI<br><b>配信</b> Netflix</td><td data-label="あらすじ">全 6 話のアニメ。 1989 年の夏、東京をめざして怪獣が集まる。少年たちが、ガメラと心を通わせる子どもを助け、怪獣を操るウイルスの陰謀に立ち向かう。 2025 年には、 NHK が 12 話に再編集して放送した。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">米国版の公開年と編集内容は、英語版の解説に拠る。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 配信作品の情報は、英語版の解説と、配信元の紹介に拠る。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></p>
+<p style="font-size:17px;color:var(--muted)">あらすじは、公開当時の公式の紹介と、解説記事を基に短くまとめた。『 GAMERA -Rebirth- 』の話数は、資料によって異なる（配信元は全 6 話）。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 系統と種別ごとの本数</h2>
+<p>ガメラ映画は、製作の時期と体制で、いくつかの系統に分けられる。昭和は、元号ではなく、 1965 年から 1980 年までの連作を指す。次の表は、劇場作品 12 本の系統別である。</p>
+<table>
+<thead><tr><th>系統</th><th>本数</th><th>期間</th><th>特徴</th></tr></thead>
+<tbody>
+<tr><th>昭和</th><td data-label="本数">8</td><td data-label="期間">1965 〜 1980 年</td><td data-label="特徴">大映が、ほぼ毎年、子ども向けの怪獣映画を作った。第 1 作の脅威から、子どもの味方へと変わった。</td></tr>
+<tr><th>平成</th><td data-label="本数">3</td><td data-label="期間">1995 〜 1999 年</td><td data-label="特徴">金子修介が全作を監督した 3 部作。ガメラを、地球の守護者として描き直し、物語が続く。</td></tr>
+<tr><th>新生（角川）</th><td data-label="本数">1</td><td data-label="期間">2006 年</td><td data-label="特徴">『小さき勇者たち〜ガメラ〜』。少年と子ガメラの交流を描く、単発の作品である。</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">劇場作品の合計は 12 本である。</p>
+<p>劇場作品以外を含めた、種別ごとの件数は、次のとおりである。</p>
+<table>
+<thead><tr><th>種別</th><th>件数</th><th>内容</th></tr></thead>
+<tbody>
+<tr><th>劇場作品</th><td data-label="件数">12</td><td data-label="内容">劇場で公開された長編映画。第 2 章の一覧の骨格である。</td></tr>
+<tr><th>米国版</th><td data-label="件数">6</td><td data-label="内容">『大怪獣ガメラ』『ガメラ対バルゴン』『ガメラ対ギャオス』『ガメラ対バイラス』『ガメラ対ギロン』『ガメラ対ジャイガー』の、米国向けの版。</td></tr>
+<tr><th>短編</th><td data-label="件数">1</td><td data-label="内容">生誕 50 周年の記念映像『 GAMERA 』（ 2015 年）。</td></tr>
+<tr><th>配信</th><td data-label="件数">1</td><td data-label="内容">Netflix のアニメ『 GAMERA -Rebirth- 』（ 2023 年）。</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">合計は 20 件である。再上映版（映像や構成を作り替えた版）に当たる作品は、見つからなかった。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 『 GAMERA -Rebirth- 』の位置づけと今後</h2>
+<h3 id="sec4-1">4.1 『 GAMERA -Rebirth- 』の位置づけ</h3>
+<p>『 GAMERA -Rebirth- 』は、 2023 年 9 月 7 日に Netflix で世界に配信された。監督は瀬下寛之、アニメーション制作は ENGI である。劇場公開された映画ではないので、本書は、劇場作品 12 本には数えていない。ただし、ガメラ映画の 13 作目と数える資料もある。 <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup></p>
+<div class="point">
+<p>舞台は 1989 年の夏で、過去の作品の続きではなく、新しい出発である。ガメラのデザインには、 2015 年の短編の原案が生かされている。</p>
+</div>
+<h3 id="sec4-2">4.2 今後の予定</h3>
+<p>本書の執筆時点（ 2026 年 11 月 15 日）で、新しいガメラ映画の製作は、確かめられなかった。シリーズは、 2025 年 11 月に生誕 60 周年を迎え、展示イベントや、平成 3 部作の 4K 映像での復活上映が行われた。続編が作られるかどうかは、資料からは分からない。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></p>
+<div class="caution">
+<p>数え方と公開時期は、資料によって異なる。正確な数が必要なときは、 KADOKAWA の公式資料で確かめること。</p>
+</div>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> ガメラ映画の公開日の一覧（昭和・平成・新生版）。日本語版の解説記事。 <a href="https://ja.wikipedia.org/wiki/ガメラ">Wikipedia （日本語版）</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> ガメラ映画の全体像と、系統の概説。英語版の解説記事。 <a href="https://en.wikipedia.org/wiki/Gamera">Wikipedia （英語版）</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> 米国版の題名・公開年・配給・編集内容。各作品の英語版の解説記事。 <a href="https://en.wikipedia.org/wiki/Gamera,_the_Giant_Monster">Gamera, the Giant Monster</a> ・ <a href="https://en.wikipedia.org/wiki/Gamera_vs._Barugon">Gamera vs. Barugon</a> ・ <a href="https://en.wikipedia.org/wiki/Gamera_vs._Gyaos">Gamera vs. Gyaos</a> ・ <a href="https://en.wikipedia.org/wiki/Gamera_vs._Viras">Gamera vs. Viras</a> ・ <a href="https://en.wikipedia.org/wiki/Gamera_vs._Guiron">Gamera vs. Guiron</a> ・ <a href="https://en.wikipedia.org/wiki/Gamera_vs._Jiger">Gamera vs. Jiger</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> <sup><a href="#fnref-4-3">c</a></sup> 『 GAMERA -Rebirth- 』の配信日、スタッフ、声の出演、あらすじ、 NHK での再編集放送。英語版の解説記事と、配信元の作品紹介。 <a href="https://en.wikipedia.org/wiki/Gamera_Rebirth">Wikipedia （英語版）</a> ・ <a href="https://www.netflix.com/title/81087387">Netflix</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 2015 年の短編『 GAMERA 』の概要。英語の公開データベース。 <a href="https://wikizilla.org/wiki/GAMERA_(2015)">Wikizilla</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> 生誕 60 周年の企画と、復活上映の報道。 <a href="https://virtualgorillaplus.com/movie/gamera-anniversary-60th-2026/">VG+ （バゴプラ）</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> 監督・主演・製作・配給の確認に使った、各作品の日本語版・英語版の解説記事（情報ボックス）。 <a href="https://ja.wikipedia.org/wiki/大怪獣ガメラ">Wikipedia （日本語版）</a> ・ <a href="https://en.wikipedia.org/wiki/Gamera:_Guardian_of_the_Universe">Wikipedia （英語版）</a></li>
+</ol>
+<p class="endnote">本書は、検索で得た二次資料を基にしている。公開月とあらすじの細部は、 KADOKAWA などの公式資料で確かめていない。米国版の公開年と編集内容は、英語の解説記事に拠る。</p>
+</div>
+</div>
+</body>
+</html>

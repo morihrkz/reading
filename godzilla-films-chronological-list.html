@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ゴジラ映画の全作品一覧</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">調査報告</p>
+<h1>ゴジラ映画の全作品一覧</h1>
+<p class="subtitle">A Chronological Catalogue of Godzilla Films from 1954 to 2026</p>
+<p>1954 年の第 1 作から 2026 年 11 月公開の『ゴジラ -0.0 』まで、劇場作品 39 本に、米国版・テレビ・配信・再上映版の 16 件を加えた計 55 件を、公開順に並べ、それぞれにあらすじを添える。</p>
+</header>
+<div class="wrap">
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">この文書の範囲と数え方</a></li>
+<li><a href="#sec2">公開順の一覧</a></li>
+<li><a href="#sec3">系統と種別ごとの本数</a></li>
+<li><a href="#sec4">『ゴジラ -0.0 』の位置づけと今後</a></li>
+</ol>
+</nav>
+
+<div class="lede">
+<p>ゴジラ映画は、 1954 年の第 1 作から 70 年以上にわたって作り続けられている。東宝が製作した実写とアニメに加え、アメリカで製作された作品もある。本書は、劇場作品に加え、米国向けの再編集版、テレビ・配信作品、編集を加えた再上映版も含めて、公開年月の順に一覧にし、物語の核を 1 〜 2 文で示す。</p>
+</div>
+
+<section id="sec1"><h2><span class="no">1</span> この文書の範囲と数え方</h2>
+<div class="box">
+<strong>数え方</strong><br>
+劇場公開された長編映画（劇場作品）は、東宝製の実写が 31 作、アニメが 3 作、ハリウッド製が 5 作で、合計 39 作である。これに、米国版 5 件、テレビ・配信 9 件、再上映版 2 件を加え、一覧は計 55 件になる。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup>
+</div>
+<div class="box">
+<strong>種別について</strong><br>
+種別の欄は、劇場作品・米国版・テレビ・配信・再上映版に分けた。米国版は、日本の作品を米国向けに再編集した版で、公開日は米国での公開に合わせた。再上映版は、映像や構成を作り替えた版に限り、画質を高めただけの 4K 版は含めない。数え方は資料によって異なる。
+</div>
+<div class="box">
+<strong>公開年月について</strong><br>
+劇場作品は、日本での公開年月を示す。米国版は米国での公開年月、テレビ・配信は放送・配信が始まった年月（年だけのものもある）を示す。同じ年のうち、月が不明な作品は、月が分かる作品のあとに置いた。
+</div>
+<div class="box">
+<strong>英題について</strong><br>
+題名の下に、米国で通用している英題を添えた。旧作には、米国での公開時に改題された例が多い。その場合は、米国の題名を先に示し、括弧内に原題または別題を示した。米国版は、それ自体が別の行として載っているので、日本版の行には、原題に近い英題を示した。
+</div>
+<div class="box">
+<strong>ゴジラの立場について</strong><br>
+ゴジラが、人間の敵として描かれるか、味方として描かれるかを、筆者の判断で分類した。「敵」は、人間を襲い、人間が倒すべき対象として描かれるもの。「味方」は、人間のために、ほかの怪獣や宇宙人と戦うもの。「中立」は、人間に関心を持たず、結果として人間を助けるもの。途中で変わるものは「場面で変わる」とした。短編・人形劇のように、一貫した描写がないものは「判定せず」とした。
+</div>
+<div class="box">
+<strong>監督・主演・製作・配給について</strong><br>
+総監督がいる作品は、総監督と監督の両方を示した。特技監督は含めない。主演は、資料の出演者欄の先頭にある俳優を挙げた。アニメは声の出演者である。人名は、日本人は漢字、外国人はカタカナで示し、漢字の表記を確かめられなかったものだけ、英語の綴りのままにした。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup>
+</div>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 公開順の一覧</h2>
+<p>昭和・平成・令和の三つの時代にまたがるので、系統の欄を設けた。劇場作品の系統の区分は、第 3 章で説明する。テレビ・配信は「その他」とし、製作の国を添えた。作品の並びと公開時期は、公開データベースの一覧と照合した。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
+<table>
+<thead><tr><th>公開</th><th>題名（英題）</th><th>種別</th><th>系統</th><th>ゴジラの立場</th><th>監督・主演・製作・配給</th><th>あらすじ</th></tr></thead>
+<tbody>
+<tr><th>1954 年 11 月</th><td data-label="題名（英題）"><b>『ゴジラ』</b><br>Godzilla (original title: Gojira)</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">敵（人間を襲う脅威）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎<br><b>主演</b> 宝田明・河内桃子・平田昭彦<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">水爆実験で目覚めた太古の怪獣が、東京を襲う。芹沢博士は、自ら発見した兵器オキシジェン・デストロイヤーを使う決意をする。</td></tr>
+<tr><th>1956 年 4 月</th><td data-label="題名（英題）"><b>『ゴジラ』米国版</b><br>Godzilla, King of the Monsters!</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">敵（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> テリー・ O ・モース（米国版）、本多猪四郎（原版）<br><b>主演</b> レイモンド・バー（新撮）、宝田明（原版）<br><b>製作</b> 東宝・ジュエル・エンタープライゼス<br><b>配給</b> トランス・ワールド・リリージング</td><td data-label="あらすじ">1954 年作を再編集した米国向けの版。米国人記者を演じるレイモンド・バーが登場する新撮の場面を足し、物語を記者の視点で組み替えた。</td></tr>
+<tr><th>1955 年 4 月</th><td data-label="題名（英題）"><b>『ゴジラの逆襲』</b><br>Godzilla Raids Again</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 小田基義<br><b>主演</b> 小泉博・若山セツ子<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">二頭目のゴジラが、怪獣アンギラスと大阪で激突する。ゴジラは、北の島の氷山に封じ込められる。</td></tr>
+<tr><th>1959 年</th><td data-label="題名（英題）"><b>『ゴジラの逆襲』米国版</b><br>Gigantis, the Fire Monster</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">敵（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> ヒューゴ・グリマルディ（米国版）、小田基義（原版）<br><b>主演</b> 小泉博・若山セツ子（原版）<br><b>製作</b> 東宝（原版）<br><b>配給</b> ワーナー・ブラザース</td><td data-label="あらすじ">ワーナー・ブラザースが配給した米国向けの版。題名を改め、怪獣の呼び名も「ギガンティス」に変えた。</td></tr>
+<tr><th>1962 年 8 月</th><td data-label="題名（英題）"><b>『キングコング対ゴジラ』</b><br>King Kong vs. Godzilla</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎<br><b>主演</b> 高島忠夫・藤木悠・有島一郎・浜美枝<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">製薬会社が、宣伝のために南海の島からキングコングを連れ出す。目覚めたゴジラと、日本で対決する。</td></tr>
+<tr><th>1963 年 6 月</th><td data-label="題名（英題）"><b>『キングコング対ゴジラ』米国版</b><br>King Kong vs. Godzilla</td><td data-label="種別">米国版</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">敵（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> トーマス・モンゴメリー（米国版）、本多猪四郎（原版）<br><b>主演</b> 高島忠夫・浜美枝（原版）、マイケル・キース（新撮）<br><b>製作</b> 東宝（原版）・ジョン・ベック（米国版）<br><b>配給</b> ユニバーサル・インターナショナル</td><td data-label="あらすじ">ユニバーサル・インターナショナルが公開した米国向けの版。脚本を書き直し、報道番組の体裁の新撮の場面を足した。音楽の多くは、既成曲に差し替えられた。</td></tr>
+<tr><th>1964 年 4 月</th><td data-label="題名（英題）"><b>『モスラ対ゴジラ』</b><br>Godzilla vs. Mothra (original: Mothra vs. Godzilla)</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎<br><b>主演</b> 宝田明・星由里子・小泉博<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">高波で流れ着いた巨大な卵をめぐり、ゴジラと、モスラの幼虫が戦う。</td></tr>
+<tr><th>1964 年 12 月</th><td data-label="題名（英題）"><b>『三大怪獣 地球最大の決戦』</b><br>Ghidorah, the Three-Headed Monster</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">中立（モスラの説得で、結果として人類を救う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎<br><b>主演</b> 夏木陽介・小泉博・星由里子<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">宇宙怪獣キングギドラが地球を襲う。ゴジラ・ラドン・モスラが、手を組んで迎え撃つ。</td></tr>
+<tr><th>1965 年 12 月</th><td data-label="題名（英題）"><b>『怪獣大戦争』</b><br>Invasion of Astro-Monster</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">場面で変わる（宇宙人に操られて敵になるが、最後は味方）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎<br><b>主演</b> 宝田明・ニック・アダムス・水野久美<br><b>製作</b> 東宝・ UPA （米国）<br><b>配給</b> 東宝</td><td data-label="あらすじ">X 星人が、ゴジラとラドンの貸与を求める。その真の狙いは、怪獣を操って地球を征服することだった。</td></tr>
+<tr><th>1966 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ・エビラ・モスラ 南海の大決闘』</b><br>Ebirah, Horror of the Deep (U.S. TV title: Godzilla versus the Sea Monster)</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">中立（人間を襲わず、結果として人間を助ける）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 福田純<br><b>主演</b> 宝田明・水野久美<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">南海の孤島で、巨大なエビの怪獣エビラと、秘密組織「赤イ竹」が待ち受ける。眠っていたゴジラが目覚めて戦う。</td></tr>
+<tr><th>1967 年 12 月</th><td data-label="題名（英題）"><b>『怪獣島の決戦 ゴジラの息子』</b><br>Son of Godzilla</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">中立（息子を守って戦う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 福田純<br><b>主演</b> 久保明・高島忠夫・平田昭彦<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">気象実験の失敗で、怪獣島に巨大な生物が生まれる。ゴジラは、息子ミニラを守って戦う。</td></tr>
+<tr><th>1968 年 8 月</th><td data-label="題名（英題）"><b>『怪獣総進撃』</b><br>Destroy All Monsters</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">場面で変わる（宇宙人に操られるが、最後は人類の側）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎<br><b>主演</b> 久保明・田崎潤・土屋嘉男<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">怪獣が島で管理される未来。宇宙人キラアク星人が怪獣を操り、世界の都市を襲わせる。</td></tr>
+<tr><th>1969 年 12 月</th><td data-label="題名（英題）"><b>『オール怪獣大進撃』</b><br>All Monsters Attack (U.S. title: Godzilla's Revenge)</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">味方（ミニラの父として登場）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎<br><b>主演</b> 矢崎知紀・佐原健二<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">孤独な少年が、夢の中で怪獣島を訪れ、ミニラと友達になる。現実で、悪党に立ち向かう勇気を得る。</td></tr>
+<tr><th>1971 年 7 月</th><td data-label="題名（英題）"><b>『ゴジラ対ヘドラ』</b><br>Godzilla vs. the Smog Monster (original: Godzilla vs. Hedorah)</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">味方（公害の怪獣と戦う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 坂野義光<br><b>主演</b> 山内明・柴俊夫<br><b>製作</b> 東宝<br><b>配給</b> 東宝</td><td data-label="あらすじ">公害のヘドロから生まれた怪獣ヘドラが、街を汚染する。ゴジラが、公害の化身に挑む。</td></tr>
+<tr><th>1972 年 3 月</th><td data-label="題名（英題）"><b>『地球攻撃命令 ゴジラ対ガイガン』</b><br>Godzilla on Monster Island (original: Godzilla vs. Gigan)</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">味方</td><td data-label="監督・主演・製作・配給"><b>監督</b> 福田純<br><b>主演</b> 石川博・梅田智子・菱見百合子<br><b>製作</b> 東宝（東宝映像）<br><b>配給</b> 東宝</td><td data-label="あらすじ">宇宙ゴキブリ人間が、遊園地を拠点に地球征服をたくらむ。ガイガンとキングギドラに、ゴジラとアンギラスが立ち向かう。</td></tr>
+<tr><th>1973 年 3 月</th><td data-label="題名（英題）"><b>『ゴジラ対メガロ』</b><br>Godzilla vs. Megalon</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">味方</td><td data-label="監督・主演・製作・配給"><b>監督</b> 福田純<br><b>主演</b> 佐々木勝彦・川瀬裕之・林ゆたか<br><b>製作</b> 東宝（東宝映像）<br><b>配給</b> 東宝</td><td data-label="あらすじ">核実験に怒った海底王国が、怪獣メガロを地上に放つ。ロボットのジェットジャガーが、ゴジラに助太刀する。</td></tr>
+<tr><th>1973 年</th><td data-label="題名（英題）"><b>『ゾーンファイター』</b><br>Zone Fighter</td><td data-label="種別">テレビ</td><td data-label="系統">その他（東宝）</td><td data-label="ゴジラの立場">味方（主人公の仲間として、 5 話に登場）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎・福田純ほか、計 6 名<br><b>主演</b> 青山一也<br><b>製作</b> 東宝<br><b>放送</b> 日本テレビ</td><td data-label="あらすじ">怪獣と戦う特撮ヒーロー番組。ゴジラが、 5 話に味方として登場する。</td></tr>
+<tr><th>1974 年 3 月</th><td data-label="題名（英題）"><b>『ゴジラ対メカゴジラ』</b><br>Godzilla vs. Mechagodzilla (U.S. title: Godzilla vs. the Cosmic Monster)</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">味方</td><td data-label="監督・主演・製作・配給"><b>監督</b> 福田純<br><b>主演</b> 大門正明・青山一也<br><b>製作</b> 東宝（東宝映像）<br><b>配給</b> 東宝</td><td data-label="あらすじ">ゴジラに化けた怪獣が現れ、その正体はロボット怪獣メカゴジラだった。沖縄の守護神キングシーサーが、ゴジラに力を貸す。</td></tr>
+<tr><th>1975 年 3 月</th><td data-label="題名（英題）"><b>『メカゴジラの逆襲』</b><br>Terror of Mechagodzilla</td><td data-label="種別">劇場作品</td><td data-label="系統">昭和</td><td data-label="ゴジラの立場">味方</td><td data-label="監督・主演・製作・配給"><b>監督</b> 本多猪四郎<br><b>主演</b> 佐々木勝彦・藍とも子・平田昭彦<br><b>製作</b> 東宝（東宝映像）・ヘンリー・ G ・サパースタイン<br><b>配給</b> 東宝</td><td data-label="あらすじ">宇宙人が、破壊されたメカゴジラを再生する。ゴジラが、改造された怪獣チタノザウルスとともに現れた機械と戦う。昭和シリーズの最終作である。</td></tr>
+<tr><th>1978 年</th><td data-label="題名（英題）"><b>『ゴジラ』（米国製テレビアニメ）</b><br>Godzilla (1978 animated series)</td><td data-label="種別">テレビ</td><td data-label="系統">その他（米国）</td><td data-label="ゴジラの立場">味方（調査船の乗組員を助ける）</td><td data-label="監督・主演・製作・配給"><b>監督</b> レイ・パターソン、カール・アーバノ<br><b>主演</b> ジェフ・デイヴィッド（声）<br><b>製作</b> ハンナ・バーベラ・プロダクションズ<br><b>放送</b> NBC</td><td data-label="あらすじ">ハンナ・バーベラ社が製作し、米国の NBC が放送したアニメ。ゴジラが、調査船の乗組員を助ける。</td></tr>
+<tr><th>1984 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ』</b><br>The Return of Godzilla</td><td data-label="種別">劇場作品</td><td data-label="系統">平成 VS</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 橋本幸治<br><b>主演</b> 田中健・沢口靖子・夏木陽介<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">第 1 作の 30 年後を描く再出発の作品。新たなゴジラが日本を襲い、核の脅威が、米ソの対立を呼ぶ。</td></tr>
+<tr><th>1985 年 8 月</th><td data-label="題名（英題）"><b>『ゴジラ』米国版</b><br>Godzilla 1985</td><td data-label="種別">米国版</td><td data-label="系統">平成 VS</td><td data-label="ゴジラの立場">敵（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> R ・ J ・カイザー（新撮）、橋本幸治（原版）<br><b>主演</b> レイモンド・バー（新撮）、田中健（原版）<br><b>製作</b> ニュー・ワールド・ピクチャーズ・東宝<br><b>配給</b> ニュー・ワールド・ピクチャーズ</td><td data-label="あらすじ">1984 年作の米国向けの版。約 10 分の新撮の場面を足し、 87 分に再編集した。レイモンド・バーが、 1956 年版と同じ記者の役で再登場する。</td></tr>
+<tr><th>1989 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ vs ビオランテ』</b><br>Godzilla vs. Biollante</td><td data-label="種別">劇場作品</td><td data-label="系統">平成 VS</td><td data-label="ゴジラの立場">敵（ビオランテとも争う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 大森一樹<br><b>主演</b> 三田村邦彦・田中好子・高嶋政伸<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">ゴジラの細胞を使った遺伝子操作で、巨大な植物怪獣ビオランテが生まれ、ゴジラと戦う。</td></tr>
+<tr><th>1991 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ vs キングギドラ』</b><br>Godzilla vs. King Ghidorah</td><td data-label="種別">劇場作品</td><td data-label="系統">平成 VS</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 大森一樹<br><b>主演</b> 豊原功補・中川安奈<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">未来人が、ゴジラが生まれた歴史を消そうと過去へ来る。その企みが、キングギドラとの対決を招く。</td></tr>
+<tr><th>1992 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ vs モスラ』</b><br>Godzilla and Mothra: The Battle for Earth</td><td data-label="種別">劇場作品</td><td data-label="系統">平成 VS</td><td data-label="ゴジラの立場">敵（モスラ、バトラとも争う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 大河原孝夫<br><b>主演</b> 別所哲也・小林聡美・村田雄浩<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">隕石の衝突で、古代の守護神モスラと、悪の怪獣バトラが目覚める。ゴジラを交えた三つ巴の戦いとなる。</td></tr>
+<tr><th>1993 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ vs メカゴジラ』</b><br>Godzilla vs. Mechagodzilla II</td><td data-label="種別">劇場作品</td><td data-label="系統">平成 VS</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 大河原孝夫<br><b>主演</b> 高嶋政宏・佐野量子<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">人類が、対ゴジラ兵器メカゴジラを完成させる。ラドンと、ゴジラの子の卵が、物語に絡む。</td></tr>
+<tr><th>1994 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ vs スペースゴジラ』</b><br>Godzilla vs. SpaceGodzilla</td><td data-label="種別">劇場作品</td><td data-label="系統">平成 VS</td><td data-label="ゴジラの立場">敵（スペースゴジラとも戦う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 山下賢章<br><b>主演</b> 小高恵美・橋爪淳<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">宇宙に流れたゴジラの細胞から、結晶怪獣スペースゴジラが生まれる。ゴジラは、息子リトルゴジラを守って戦う。</td></tr>
+<tr><th>1995 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ vs デストロイア』</b><br>Godzilla vs. Destoroyah</td><td data-label="種別">劇場作品</td><td data-label="系統">平成 VS</td><td data-label="ゴジラの立場">敵（悲劇的な最期を迎える）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 大河原孝夫<br><b>主演</b> 辰巳琢郎・石野陽子<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">体内の核エネルギーが暴走し、ゴジラが臨界に近づく。人類は、新怪獣デストロイアとの戦いの中で、ゴジラの最期を迎える。</td></tr>
+<tr><th>1997 年</th><td data-label="題名（英題）"><b>『ゴジラ アイランド』</b><br>Godzilla Island</td><td data-label="種別">テレビ</td><td data-label="系統">その他（東宝）</td><td data-label="ゴジラの立場">判定せず（怪獣島の住人として登場）</td><td data-label="監督・主演・製作・配給"><b>監督</b> Shun Mizutani<br><b>主演</b>（怪獣の人形劇）<br><b>製作</b> 東宝<br><b>放送</b> テレビ東京</td><td data-label="あらすじ">東宝が製作した、怪獣の人形を使うテレビ番組。 2022 年に、東宝の動画サイトでも公開された。</td></tr>
+<tr><th>1998 年 7 月</th><td data-label="題名（英題）"><b>『 GODZILLA 』</b><br>Godzilla (1998)</td><td data-label="種別">劇場作品</td><td data-label="系統">ハリウッド</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> ローランド・エメリッヒ<br><b>主演</b> マシュー・ブロデリック・ジャン・レノ・マリア・ピティロ<br><b>製作</b> セントロポリス・エンターテインメントほか<br><b>配給</b> トライスター ピクチャーズ</td><td data-label="あらすじ">核実験の影響で巨大化した生物が、ニューヨークを襲う。初のハリウッド製作で、機動力に優れた姿が特徴である。</td></tr>
+<tr><th>1998 年</th><td data-label="題名（英題）"><b>『ゴジラ・ザ・シリーズ』（米国製テレビアニメ）</b><br>Godzilla: The Series</td><td data-label="種別">テレビ</td><td data-label="系統">その他（米国）</td><td data-label="ゴジラの立場">味方（人類の組織と共に戦う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> オーデュ・パデンほか<br><b>主演</b> イアン・ジーリング（声）<br><b>製作</b> セントロポリス・テレビジョン・東宝ほか<br><b>放送</b> Fox Kids</td><td data-label="あらすじ">1998 年のハリウッド版の続編にあたるアニメ。米国の Fox Kids が放送し、 2 期続いた。</td></tr>
+<tr><th>1999 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ 2000 ミレニアム』</b><br>Godzilla 2000: Millennium</td><td data-label="種別">劇場作品</td><td data-label="系統">ミレニアム</td><td data-label="ゴジラの立場">敵（結果として UFO を退ける）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 大河原孝夫<br><b>主演</b> 村田雄浩・阿部寛・西田尚美<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">新しい連作の第 1 作。上陸するゴジラと、地底から現れた謎の巨大 UFO が対決する。</td></tr>
+<tr><th>2000 年 8 月</th><td data-label="題名（英題）"><b>『ゴジラ 2000 ミレニアム』米国版</b><br>Godzilla 2000</td><td data-label="種別">米国版</td><td data-label="系統">ミレニアム</td><td data-label="ゴジラの立場">敵（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 大河原孝夫（原版）、マイク・シュレジンジャー（米国版の吹き替え演出）<br><b>主演</b> 村田雄浩・阿部寛（原版）<br><b>製作</b> 東宝（原版）<br><b>配給</b> トライスター ピクチャーズ（ソニー）</td><td data-label="あらすじ">トライスター（ソニー）が公開した米国向けの版。日本版より 8 分短い 99 分で、全編を吹き替え直し、音楽を足した。</td></tr>
+<tr><th>2000 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ × メガギラス G 消滅作戦』</b><br>Godzilla vs. Megaguirus</td><td data-label="種別">劇場作品</td><td data-label="系統">ミレニアム</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 手塚昌明<br><b>主演</b> 田中美里・谷原章介<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">ゴジラを消す兵器の実験が、巨大トンボの怪獣メガギラスを呼び覚ます。</td></tr>
+<tr><th>2001 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ・モスラ・キングギドラ 大怪獣総攻撃』</b><br>Godzilla, Mothra and King Ghidorah: Giant Monsters All-Out Attack</td><td data-label="種別">劇場作品</td><td data-label="系統">ミレニアム</td><td data-label="ゴジラの立場">敵（戦争の死者の怨念を宿す）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 金子修介<br><b>主演</b> 新山千春・宇崎竜童<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">戦争の死者の怨念を宿したゴジラに、守護獣のバラゴン・モスラ・キングギドラが挑む。</td></tr>
+<tr><th>2002 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ × メカゴジラ』</b><br>Godzilla Against Mechagodzilla</td><td data-label="種別">劇場作品</td><td data-label="系統">ミレニアム</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 手塚昌明<br><b>主演</b> 釈由美子・宅麻伸<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">初代ゴジラの骨を使い、対ゴジラ兵器の機龍（メカゴジラ）が造られ、ゴジラと戦う。</td></tr>
+<tr><th>2003 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ × モスラ × メカゴジラ 東京 SOS 』</b><br>Godzilla: Tokyo S.O.S.</td><td data-label="種別">劇場作品</td><td data-label="系統">ミレニアム</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 手塚昌明<br><b>主演</b> 金子昇・吉岡美穂<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">前作の続編。機龍の修復と、モスラの使者が求める骨の返還が、ゴジラの再来と重なる。</td></tr>
+<tr><th>2004 年 12 月</th><td data-label="題名（英題）"><b>『ゴジラ FINAL WARS 』</b><br>Godzilla: Final Wars</td><td data-label="種別">劇場作品</td><td data-label="系統">ミレニアム</td><td data-label="ゴジラの立場">味方（人類が呼び覚まし、ほかの怪獣を倒す）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 北村龍平<br><b>主演</b> 松岡昌宏・菊川怜<br><b>製作・配給</b> 東宝</td><td data-label="あらすじ">世界各地に怪獣が出現する。特殊部隊の戦士たちが、宇宙人の陰謀と戦う。東宝製作のゴジラ映画は、ここで長い休止に入った。</td></tr>
+<tr><th>2014 年 7 月</th><td data-label="題名（英題）"><b>『 GODZILLA ゴジラ』</b><br>Godzilla (2014)</td><td data-label="種別">劇場作品</td><td data-label="系統">ハリウッド</td><td data-label="ゴジラの立場">中立（自然の均衡を保つ存在）</td><td data-label="監督・主演・製作・配給"><b>監督</b> ギャレス・エドワーズ<br><b>主演</b> アーロン・テイラー＝ジョンソン・渡辺謙・エリザベス・オルセン<br><b>製作</b> レジェンダリー・ピクチャーズ<br><b>配給</b> ワーナー・ブラザース（日本は東宝）</td><td data-label="あらすじ">原発事故の謎を追う家族。古代の怪獣ムートーが現れ、ゴジラが、サンフランシスコで戦う。</td></tr>
+<tr><th>2016 年 7 月</th><td data-label="題名（英題）"><b>『シン・ゴジラ』</b><br>Shin Godzilla</td><td data-label="種別">劇場作品</td><td data-label="系統">令和（実写）</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 総監督 庵野秀明、監督 樋口真嗣<br><b>主演</b> 長谷川博己・竹野内豊・石原さとみ<br><b>製作</b> 東宝・シネバザール<br><b>配給</b> 東宝</td><td data-label="あらすじ">東京湾に現れた正体不明の巨大生物が、姿を変えながら上陸する。政府と官僚が、対応に追われる。</td></tr>
+<tr><th>2017 年 11 月</th><td data-label="題名（英題）"><b>『 GODZILLA 怪獣惑星』</b><br>Godzilla: Planet of the Monsters</td><td data-label="種別">劇場作品</td><td data-label="系統">アニメ</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 静野孔文・瀬下寛之<br><b>主演</b> 宮野真守・櫻井孝宏・花澤香菜（声）<br><b>製作</b> ポリゴン・ピクチュアズ・東宝<br><b>配給</b> 東宝（日本国外は Netflix ）</td><td data-label="あらすじ">怪獣に追われて地球を去った人類が、長い年月を経て、怪獣に支配された故郷へ戻る。</td></tr>
+<tr><th>2018 年 5 月</th><td data-label="題名（英題）"><b>『 GODZILLA 決戦機動増殖都市』</b><br>Godzilla: City on the Edge of Battle</td><td data-label="種別">劇場作品</td><td data-label="系統">アニメ</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 静野孔文・瀬下寛之<br><b>主演</b> 宮野真守・櫻井孝宏・杉田智和（声）<br><b>製作</b> ポリゴン・ピクチュアズ・東宝<br><b>配給</b> 東宝（日本国外は Netflix ）</td><td data-label="あらすじ">人類は、ゴジラに対抗する機械の都市の力を借りる。その選択が、新たな危機を生む。</td></tr>
+<tr><th>2018 年 11 月</th><td data-label="題名（英題）"><b>『 GODZILLA 星を喰う者』</b><br>Godzilla: The Planet Eater</td><td data-label="種別">劇場作品</td><td data-label="系統">アニメ</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 静野孔文・瀬下寛之<br><b>主演</b> 宮野真守・櫻井孝宏・杉田智和（声）<br><b>製作</b> ポリゴン・ピクチュアズ・東宝<br><b>配給</b> 東宝（日本国外は Netflix ）</td><td data-label="あらすじ">三部作の完結編。ゴジラの前に、金色の怪獣ギドラが現れる。</td></tr>
+<tr><th>2019 年 5 月</th><td data-label="題名（英題）"><b>『ゴジラ キング・オブ・モンスターズ』</b><br>Godzilla: King of the Monsters</td><td data-label="種別">劇場作品</td><td data-label="系統">ハリウッド</td><td data-label="ゴジラの立場">味方（人類と共に、怪獣と戦う）</td><td data-label="監督・主演・製作・配給"><b>監督</b> マイケル・ドハティ<br><b>主演</b> カイル・チャンドラー・ヴェラ・ファーミガ・ミリー・ボビー・ブラウン<br><b>製作</b> レジェンダリー・ピクチャーズ<br><b>配給</b> ワーナー・ブラザース（日本は東宝）</td><td data-label="あらすじ">秘密機関モナークが、世界各地に眠る怪獣を管理する。ゴジラ・モスラ・ラドン・キングギドラが、地球の覇権をかけて争う。</td></tr>
+<tr><th>2019 年 8 月</th><td data-label="題名（英題）"><b>『ゴジばん』</b><br>Godziban</td><td data-label="種別">配信</td><td data-label="系統">その他（東宝）</td><td data-label="ゴジラの立場">判定せず（ゴジラ三兄弟の日常を描く）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 島崎淳（試作版）<br><b>主演</b>（怪獣の人形劇）<br><b>製作</b> 東宝<br><b>制作</b> アトリエこがねむし<br><b>配信</b> 東宝特撮チャンネル</td><td data-label="あらすじ">怪獣人形劇のウェブシリーズ。東宝特撮チャンネルで配信が始まり、 2024 年には、国内の配信サービスにも載った。ゴジラ・ミニラ・リトルの三兄弟の日常を描く。</td></tr>
+<tr><th>2021 年 4 月</th><td data-label="題名（英題）"><b>『ゴジラ S.P ＜シンギュラポイント＞』</b><br>Godzilla Singular Point</td><td data-label="種別">テレビ・配信</td><td data-label="系統">その他（東宝）</td><td data-label="ゴジラの立場">敵（終末をもたらす獣として語られる）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 高橋敦史<br><b>主演</b> 石毛翔弥・宮本侑芽（声）<br><b>製作</b> 東宝・ボンズ・オレンジ<br><b>配信</b> Netflix</td><td data-label="あらすじ">全 13 話のアニメ。 4 月からテレビで放送され、 6 月に Netflix で世界配信された。 2030 年、技術者と大学院生が、廃屋と謎の信号を手がかりに、前代未聞の脅威に立ち向かう。</td></tr>
+<tr><th>2021 年 7 月</th><td data-label="題名（英題）"><b>『ゴジラ vs コング』</b><br>Godzilla vs. Kong</td><td data-label="種別">劇場作品</td><td data-label="系統">ハリウッド</td><td data-label="ゴジラの立場">場面で変わる（人間を襲うが、最後は味方）</td><td data-label="監督・主演・製作・配給"><b>監督</b> アダム・ウィンガード<br><b>主演</b> アレクサンダー・スカルスガルド・ミリー・ボビー・ブラウン・レベッカ・ホール<br><b>製作</b> レジェンダリー・ピクチャーズ<br><b>配給</b> ワーナー・ブラザース（日本は東宝）</td><td data-label="あらすじ">ゴジラとコングが、人類の運命をかけて激突する。背後には、人類の技術が生んだ脅威がある。</td></tr>
+<tr><th>2023 年 10 月</th><td data-label="題名（英題）"><b>『シン・ゴジラ : オルソ』</b><br>Shin Godzilla: ORTHOchromatic</td><td data-label="種別">再上映版</td><td data-label="系統">令和（実写）</td><td data-label="ゴジラの立場">敵（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 総監督 庵野秀明、監督 樋口真嗣（原版）<br><b>主演</b> 長谷川博己・竹野内豊・石原さとみ（原版）<br><b>製作</b> 東宝・シネバザール<br><b>配給</b> 東宝</td><td data-label="あらすじ">『シン・ゴジラ』を、白黒の映像に作り替えた版。ゴジラ生誕 70 周年に向けて、上映イベントで初披露された。</td></tr>
+<tr><th>2023 年 11 月</th><td data-label="題名（英題）"><b>『ゴジラ -1.0 』</b><br>Godzilla Minus One</td><td data-label="種別">劇場作品</td><td data-label="系統">令和（実写）</td><td data-label="ゴジラの立場">敵</td><td data-label="監督・主演・製作・配給"><b>監督</b> 山崎貴<br><b>主演</b> 神木隆之介・浜辺美波<br><b>製作</b> 東宝・ ROBOT<br><b>配給</b> 東宝</td><td data-label="あらすじ">戦後の焼け野原に、ゴジラが現れる。特攻から逃れた元パイロットの敷島が、生き残った者として戦う。アカデミー賞の視覚効果賞を受けた。</td></tr>
+<tr><th>2023 年 11 月</th><td data-label="題名（英題）"><b>『モナーク：レガシー・オブ・モンスターズ』</b><br>Monarch: Legacy of Monsters</td><td data-label="種別">配信</td><td data-label="系統">その他（米国）</td><td data-label="ゴジラの立場">中立（脅威でもあり、秩序を保つ存在でもある）</td><td data-label="監督・主演・製作・配給"><b>監督</b> マット・シャックマン（第 1 ・ 2 話）ほか<br><b>主演</b> アンナ・サワイ・カート・ラッセル・ウィアット・ラッセル<br><b>製作</b> レジェンダリー・テレビジョン・東宝ほか<br><b>配信</b> Apple TV+</td><td data-label="あらすじ">Apple TV+ の連続ドラマ。 2023 年 11 月に第 1 期、 2026 年 2 月に第 2 期が始まった。ゴジラの出現後、秘密機関モナークの謎を追う兄妹と、数十年前の創設期が交互に描かれる。</td></tr>
+<tr><th>2023 年</th><td data-label="題名（英題）"><b>『ちびゴジラの逆襲』</b><br>Chibi Godzilla Raids Again</td><td data-label="種別">テレビ</td><td data-label="系統">その他（東宝）</td><td data-label="ゴジラの立場">判定せず（愛らしい姿で描かれる）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 新海岳人<br><b>主演</b> 福山潤（声）<br><b>製作</b> 東宝（アニメーション制作 Pie in the sky ）<br><b>放送</b> テレビ東京</td><td data-label="あらすじ">愛らしい姿のゴジラたちが登場するテレビアニメ。 2023 年にテレビ東京で放送が始まった。</td></tr>
+<tr><th>2024 年 1 月</th><td data-label="題名（英題）"><b>『ゴジラ -1.0/C （マイナスカラー）』</b><br>Godzilla Minus One/Minus Color</td><td data-label="種別">再上映版</td><td data-label="系統">令和（実写）</td><td data-label="ゴジラの立場">敵（原版と同じ）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 山崎貴（原版）<br><b>主演</b> 神木隆之介・浜辺美波（原版）<br><b>製作</b> 東宝・ ROBOT<br><b>配給</b> 東宝</td><td data-label="あらすじ">『ゴジラ -1.0 』を、カット単位で調整した白黒の映像に作り替えた版。 2024 年 1 月 12 日から上映された。</td></tr>
+<tr><th>2024 年 4 月</th><td data-label="題名（英題）"><b>『ゴジラ x コング 新たなる帝国』</b><br>Godzilla x Kong: The New Empire</td><td data-label="種別">劇場作品</td><td data-label="系統">ハリウッド</td><td data-label="ゴジラの立場">味方（コングと共闘する）</td><td data-label="監督・主演・製作・配給"><b>監督</b> アダム・ウィンガード<br><b>主演</b> レベッカ・ホール・ブライアン・タイリー・ヘンリー・ダン・スティーヴンス<br><b>製作</b> レジェンダリー・ピクチャーズ<br><b>配給</b> ワーナー・ブラザース（日本は東宝）</td><td data-label="あらすじ">地球空洞世界から新たな脅威が現れる。ゴジラとコングが、共闘して立ち向かう。</td></tr>
+<tr><th>2025 年 8 月</th><td data-label="題名（英題）"><b>『 Godziburst 』</b><br>Godziburst</td><td data-label="種別">配信</td><td data-label="系統">その他（東宝）</td><td data-label="ゴジラの立場">判定せず（内容を確かめられなかった）</td><td data-label="監督・主演・製作・配給"><b>監督</b> Masami Fujita<br><b>主演</b>（確かめられなかった）<br><b>配信</b> バンダイ公式動画サイト（製作会社は確かめられなかった）</td><td data-label="あらすじ">2025 年 8 月に、バンダイの公式動画サイトで始まったウェブシリーズ。内容は、確かめられなかった。</td></tr>
+<tr><th>2026 年 11 月</th><td data-label="題名（英題）"><b>『ゴジラ -0.0 』</b><br>Godzilla Minus Zero</td><td data-label="種別">劇場作品</td><td data-label="系統">令和（実写）</td><td data-label="ゴジラの立場">中立（人類が仕向けて、キングギドラと戦わせる）</td><td data-label="監督・主演・製作・配給"><b>監督</b> 山崎貴<br><b>主演</b> 神木隆之介・浜辺美波<br><b>製作</b> 東宝・ ROBOT<br><b>配給</b> 東宝</td><td data-label="あらすじ">『ゴジラ -1.0 』の 2 年後の 1949 年が舞台。長野に現れた怪獣ギドラが、三つ首のキングギドラへ進化する。敷島の妻・典子の体に宿るゴジラの細胞が、事態の鍵を握る。</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">米国版の編集内容は、英語版の解説に拠る。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> テレビ・配信の一覧は、英語版の解説に拠る。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup><sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 再上映版は、報道に拠る。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup><sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
+<p style="font-size:17px;color:var(--muted)">あらすじは、公開当時の公式の紹介を基に短くまとめた。『ゴジラ -0.0 』を除く作品の結末には触れていない。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 系統と種別ごとの本数</h2>
+<p>ゴジラ映画は、製作の時期と体制で、いくつかの系統に分けられる。昭和は、元号ではなく、 1954 年から 1975 年までの連作を指す。次の表は、劇場作品 39 本の系統別である。</p>
+<table>
+<thead><tr><th>系統</th><th>本数</th><th>期間</th><th>特徴</th></tr></thead>
+<tbody>
+<tr><th>昭和</th><td data-label="本数">15</td><td data-label="期間">1954 〜 1975 年</td><td data-label="特徴">第 1 作の恐怖から、怪獣同士の対決、子ども向けの路線へと変わった。</td></tr>
+<tr><th>平成 VS</th><td data-label="本数">7</td><td data-label="期間">1984 〜 1995 年</td><td data-label="特徴">1984 年作を起点に、 1954 年作だけを前作とする。作品間の物語が続く。</td></tr>
+<tr><th>ミレニアム</th><td data-label="本数">6</td><td data-label="期間">1999 〜 2004 年</td><td data-label="特徴">各作品が、原則として独立した設定を持つ。</td></tr>
+<tr><th>令和（実写）</th><td data-label="本数">3</td><td data-label="期間">2016 〜 2026 年</td><td data-label="特徴">『シン・ゴジラ』『ゴジラ -1.0 』『ゴジラ -0.0 』。設定は作品ごとに新しい。</td></tr>
+<tr><th>アニメ</th><td data-label="本数">3</td><td data-label="期間">2017 〜 2018 年</td><td data-label="特徴">三部作。長い時を隔てた、地球の未来を描く。</td></tr>
+<tr><th>ハリウッド</th><td data-label="本数">5</td><td data-label="期間">1998 〜 2024 年</td><td data-label="特徴">1998 年に単発で製作された。 2014 年からは、複数の怪獣が共存する連作になった。</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">劇場作品の合計は 39 本である。</p>
+<p>劇場作品以外を含めた、種別ごとの件数は、次のとおりである。</p>
+<table>
+<thead><tr><th>種別</th><th>件数</th><th>内容</th></tr></thead>
+<tbody>
+<tr><th>劇場作品</th><td data-label="件数">39</td><td data-label="内容">劇場で公開された長編映画。第 2 章の一覧の骨格である。</td></tr>
+<tr><th>米国版</th><td data-label="件数">5</td><td data-label="内容">『ゴジラ』『ゴジラの逆襲』『キングコング対ゴジラ』『ゴジラ』（ 1984 年作）『ゴジラ 2000 ミレニアム』の、米国向けの再編集版。</td></tr>
+<tr><th>テレビ・配信</th><td data-label="件数">9</td><td data-label="内容">テレビ番組 5 件、ウェブ配信 3 件、テレビと配信の両方 1 件。東宝製と米国製が混じる。</td></tr>
+<tr><th>再上映版</th><td data-label="件数">2</td><td data-label="内容">『シン・ゴジラ : オルソ』と『ゴジラ -1.0/C 』。映像を白黒に作り替えた版である。</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">合計は 55 件である。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 『ゴジラ -0.0 』の位置づけと今後</h2>
+<h3 id="sec4-1">4.1 『ゴジラ -0.0 』の位置づけ</h3>
+<p>『ゴジラ -0.0 』は、 2026 年 11 月 3 日に公開された。監督・脚本・視覚効果は、前作と同じ山崎貴が務める。上映時間は 135 分である。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></p>
+<div class="point">
+<p>舞台は『ゴジラ -1.0 』の 2 年後の 1949 年で、敷島一家が続投する。前作の「マイナス」が、戦後の「ゼロ」へ進んだ続編である。</p>
+</div>
+<h3 id="sec4-2">4.2 今後の予定</h3>
+<p>資料には、 2027 年 3 月公開予定のハリウッド作品『ゴジラ x コング Supernova 』が載っている。本書は、 2026 年 11 月 15 日現在で公開済みの作品だけを数えたので、これは一覧に入れていない。</p>
+<div class="caution">
+<p>数え方と公開時期は、資料によって異なる。正確な数が必要なときは、東宝の公式資料で確かめること。</p>
+</div>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> ゴジラ映画の一覧（公開日・系統の区分）。英語の公開データベース。 <a href="https://wikizilla.org/wiki/List_of_Godzilla_movies">Wikizilla</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> ゴジラ映画の全作品を紹介する一覧記事。作品数と系統の概説。 <a href="https://ciatr.jp/topics/163146">ciatr</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> ゴジラ関連作品の概説（米国版、テレビ・配信作品の一覧）。英語版の解説記事。 <a href="https://en.wikipedia.org/wiki/Godzilla_(franchise)">Wikipedia</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> 米国版の公開日と、日本版からの編集内容。『 Godzilla 1985 』『 Godzilla 2000 』『 King Kong vs. Godzilla 』の各解説記事。 <a href="https://en.wikipedia.org/wiki/Godzilla_1985">Godzilla 1985</a> ・ <a href="https://en.wikipedia.org/wiki/Godzilla_2000">Godzilla 2000</a> ・ <a href="https://en.wikipedia.org/wiki/King_Kong_vs._Godzilla">King Kong vs. Godzilla</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 配信作品の放送・配信時期と概要。『 Monarch: Legacy of Monsters 』『 Godzilla Singular Point 』の各解説記事。 <a href="https://en.wikipedia.org/wiki/Monarch:_Legacy_of_Monsters">Monarch</a> ・ <a href="https://en.wikipedia.org/wiki/Godzilla_Singular_Point">Singular Point</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> 『ゴジラ -1.0/C 』の上映開始日と、制作の意図を伝える記事。 <a href="https://natalie.mu/eiga/news/553900">映画ナタリー</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> 『シン・ゴジラ : オルソ』の公開の経緯を伝える記事。英語。 <a href="https://www.scifijapan.com/news/gkids-to-release-shin-godzilla-orthochromatic-to-cinemas">SciFi Japan</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> 『ゴジラ -0.0 』の公開日、スタッフ、キャスト、あらすじを紹介する記事。 <a href="https://ciatr.jp/topics/330447">ciatr</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> 監督・主演・製作・配給の確認に使った、各作品の英語版の解説記事（情報ボックス）と、日本語版の作品一覧。 <a href="https://en.wikipedia.org/wiki/List_of_Godzilla_films">Wikipedia （英語版）</a> ・ <a href="https://ja.wikipedia.org/wiki/ゴジラ映画作品の一覧">Wikipedia （日本語版）</a></li>
+</ol>
+<p class="endnote">本書は、検索で得た二次資料を基にしている。公開月とあらすじの細部は、東宝などの公式資料で確かめていない。米国版の公開日と編集内容は、英語の解説記事に拠る。</p>
+</div>
+</div>
+</body>
+</html>
