@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>the Ryukyus と the Philippines――複数形の地名になぜ the が付くのか</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">英語の名称の解説</p>
+<h1>the Ryukyus と the Philippines――複数形の地名になぜ the が付くのか</h1>
+<p class="subtitle">The Definite Article before Plural Place Names in English: The Ryukyus, the Philippines and Related Names</p>
+<p>琉球大学の英語名と、フィリピン共和国の英語名には、同じ形の the が入っている。</p>
+</header>
+<div class="wrap">
+<div class="lede"><p>結論から述べる。複数形の地名に付く the は、その名が「特定のひとまとまりの土地」を指すことを示す印である。多くの場合、もとの名が the Philippine Islands のように Islands などの語を伴っており、その語を省いたあとにも the と複数の -s が残った。だから the Philippines は、「フィリピン諸島」の短縮形として読むのが分かりやすい。</p></div>
+<p class="meta band"><strong>【方法と限界】</strong> 琉球大学の経歴と英語名は、大学の英語のページを引く資料 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> で確かめた。各国の正式名称は、英語版 Wikipedia の国の一覧 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> で確かめ、国連や各国政府の一次資料は直接には確かめていない。冠詞の働きの説明は、筆者の整理である。文法書や辞書の記述とは照合していない。</p>
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">二つの名称に共通する the</a></li>
+<li><a href="#sec2">the が付く地名の型</a></li>
+<li><a href="#sec3">the が付く理由</a>
+<ol>
+<li><a href="#sec3-1">省かれた語の名残</a></li>
+<li><a href="#sec3-2">特定を示す印</a></li>
+</ol>
+</li>
+<li><a href="#sec4">例外と揺れ</a></li>
+<li><a href="#sec5">琉球大学の名に戻る</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 二つの名称に共通する the</h2>
+<p>琉球大学の英語名は、 University of the Ryukyus である。大学は、英語のページでこの名称を用いている <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。ここで目を引くのは、 of のあとに the が挟まる点だ。 University of Tokyo のように、地名がそのまま続く名称は多い。</p>
+<p>フィリピン共和国の英語名 Republic of the Philippines も、同じ形をしている。同じ「共和国」でも、 Republic of Korea には the が入らない。</p>
+<table>
+<thead><tr><th>名称</th><th>the の有無</th><th>地名の形</th></tr></thead>
+<tbody>
+<tr><th>University of Tokyo</th><td data-label="the の有無">なし</td><td data-label="地名の形">単数形 (Tokyo)</td></tr>
+<tr><th>Republic of Korea</th><td data-label="the の有無">なし</td><td data-label="地名の形">単数形 (Korea)</td></tr>
+<tr><th>University of the Ryukyus</th><td data-label="the の有無">あり</td><td data-label="地名の形">複数形 (Ryukyus)</td></tr>
+<tr><th>Republic of the Philippines</th><td data-label="the の有無">あり</td><td data-label="地名の形">複数形 (Philippines)</td></tr>
+</tbody>
+</table>
+<p>四つの名称を並べると、 the の有無は、地名が複数形かどうかと重なる。では、複数形であることと the は、どう結びつくのか。まず、 the が付く地名にどんな型があるかを整理する。</p>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> the が付く地名の型</h2>
+<p>国や地域の名は、 the を付けるものと付けないものに分かれる。次の表は、代表的な型をまとめたものである。</p>
+<table>
+<thead><tr><th>型</th><th>例</th><th>the の扱い</th></tr></thead>
+<tbody>
+<tr><th>単数形の国名</th><td data-label="例">Japan 、 Korea 、 Fiji</td><td data-label="the の扱い">付けない。 Fiji は多くの島からなる国だが、名が単数形なので付けない。</td></tr>
+<tr><th>複数形の国名</th><td data-label="例">the Philippines 、 the Netherlands 、 the Comoros</td><td data-label="the の扱い">付ける。</td></tr>
+<tr><th>諸島・山脈の名</th><td data-label="例">the Ryukyus 、 the Bahamas 、 the Alps 、 the Andes</td><td data-label="the の扱い">付ける。</td></tr>
+<tr><th>国家の形を表す語を含む名</th><td data-label="例">the United States 、 the United Arab Emirates</td><td data-label="the の扱い">付ける。複数形の語 (States 、 Emirates) を含む。</td></tr>
+<tr><th>川や地域の名に由来する国名</th><td data-label="例">the Gambia 、 the Congo</td><td data-label="the の扱い">付けるものがある。単数形だが、もとの名が川や地域を指す。</td></tr>
+</tbody>
+</table>
+<p>正式名称では、 Republic of the Philippines のほかに、 Kingdom of the Netherlands 、 Union of the Comoros 、 Republic of the Marshall Islands のように、 the を含む例が見える <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</p>
+<div class="point"><p>国名に the が付くかどうかは、「国か島か」では決まらない。名が複数形であるか、もとの名に普通名詞（ Islands 、 States など）が含まれていたかで、かなりの部分が説明できる。</p></div>
+<p>この型の整理は、「何に付くか」を示すだけで、「なぜ付くか」には答えていない。次の章で、理由を二つの面から考える。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> the が付く理由</h2>
+<h3 id="sec3-1">3.1 省かれた語の名残</h3>
+<p>フィリピンの名は、 16 世紀のスペイン王フェリペ 2 世にちなむ。英語の Philippines は、 Philippine Islands の短縮形である <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。完全な名は the Philippine Islands であり、そこから Islands を落としたとき、 the と複数の -s が残った。</p>
+<p>この見方は、ほかの名にも当てはまる。 the Ryukyu Islands を縮めれば the Ryukyus になる。 the Bahama Islands なら the Bahamas である。 the Netherlands は、字義どおりには「低い土地」を表す複数形の名である。 the Alps や the Andes のような山脈の名も、複数の峰を束ねて一つの名にしている。</p>
+<p>つまり、 the は、省かれた語の名残とみなせる。大学名の the Ryukyus は、「琉球諸島」という呼び名の省略形と読める（ただし、大学が Ryukyu Islands を縮めて採った名かどうかは、確かめていない）。では、省略の説明だけで足りるのか。省略が起きたあとも the が消えないのは、なぜか。</p>
+<h3 id="sec3-2">3.2 特定を示す印</h3>
+<p>英語の普通名詞は、複数形で単独に置くと、不特定の集まりを指す。 islands は「島々一般」であり、 the islands は「話し手と聞き手が了解している、あの島々」である。 the は、複数の集まりを、特定の一つの集まりに絞る働きをする。</p>
+<p>地名はまさに、「あの特定の島々」を指す名である。だから、複数形の地名では、 the が名の一部として固定する。一方、 Japan のような単数の固有名は、名そのものが一つの対象に決まるので、 the を必要としない。固有名が、 the の担う「特定」の働きを、すでに自分で引き受けているからである。</p>
+<p>これは、筆者の整理であり、上の 3.1 の省略説と矛盾しない。省略説は「どこから来たか」を、特定の説明は「なぜ残るか」を受け持つ。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 例外と揺れ</h2>
+<p>「複数形なら the 」という規則には、例外と揺れがある。複数形の名は、次のような場面で、規則から外れて見える。</p>
+<table>
+<thead><tr><th>現象</th><th>例</th><th>説明</th></tr></thead>
+<tbody>
+<tr><th>正式名に the がない</th><td data-label="例">Republic of Maldives 、 Republic of Seychelles</td><td data-label="説明">どちらも複数形の名だが、一覧に載る正式名称には the が入らない <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。通称では the Maldives と書かれることがある。</td></tr>
+<tr><th>The を大文字で書く</th><td data-label="例">Commonwealth of The Bahamas 、 Republic of The Gambia</td><td data-label="説明">一覧では、 The が正式名の一部として大文字で示されている <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><th>複数形でも単数で受ける</th><td data-label="例">The Philippines is …</td><td data-label="説明">名は複数形でも、指すのは一つの国なので、動詞は単数で受けるのが一般的である。</td></tr>
+<tr><th>形容詞形には the が付かない</th><td data-label="例">the Philippine economy</td><td data-label="説明">形容詞の Philippine は単数形で、国名の the は付かない。 the が付くとすれば、あとの名詞 (economy) に対する冠詞である。</td></tr>
+</tbody>
+</table>
+<div class="caution"><p>以前の英語で the Ukraine と書かれた名は、現在は the を付けない形が推奨されている <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。 the Gambia や the Congo のように、 the が残る名は、慣用であり、規則から導けない面がある。</p></div>
+<p>これらの揺れから、一つ読み取れることがある。 the の有無は、文法の規則だけでなく、国の側の選択や歴史的な慣用にも左右される。では、琉球大学の the は、どちらの側に属するのか。</p>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 琉球大学の名に戻る</h2>
+<p>琉球大学は、 1950 年 5 月 22 日に、首里城の跡地に創立された。当時の沖縄は米国の統治下にあり、大学は米国民政府 (United States Civil Administration of the Ryukyu Islands) のもとで設けられた <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。この統治機関の名にも、 the Ryukyu Islands が入っている。</p>
+<p>つまり、「琉球」が英語で指す範囲は、単独の島でも一つの県でもなく、 Ryukyu Islands という島々の集まりだった。その集まりの名前を縮めれば、 the Ryukyus になる。大学名の University of the Ryukyus は、「琉球の島々の大学」という意味の、自然な形である。</p>
+<p>日本語の「琉球大学」は、「琉球」という一語しか示さない。英語の名は、その一語の背後にある、島々の集まりという実体を、 the と -s で表している。日英の名の差は、翻訳の差というより、名が何を指すかの捉え方の差である（筆者の整理）。</p>
+<div class="point"><p>英文で地名を書くときは、三つを確かめる。 (1) 名が複数形か。 (2) もとの名に Islands など、省かれた語がないか。 (3) 正式名称が、一次資料でどう書かれているか。</p></div>
+<div class="quiz">
+<details><summary>Q1 ．ハワイ州は Hawaii と書く。ハワイ諸島に the は要るか。</summary><p><span class="ans">答え：</span>要る。 the Hawaiian Islands と書く。州の名は単数の固有名なので the は付かない。島々の集まりを指す名には the が付く。</p></details>
+<details><summary>Q2 ． Fiji は多くの島からなる国だが、 the は付くか。</summary><p><span class="ans">答え：</span>付かない。 Republic of Fiji のように、名が単数形だからである。島の数ではなく、名の形で決まる <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。</p></details>
+<details><summary>Q3 ．「フィリピンの経済」は、 the Philippines economy と書けるか。</summary><p><span class="ans">答え：</span>普通は書かない。形容詞形の the Philippine economy か、 the Philippines' economy を使う。</p></details>
+</div>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> 琉球大学の英語名、創立（ 1950 年 5 月 22 日、首里城の跡地、米国民政府のもと）の経緯。 <em>University of the Ryukyus</em> の項。 <a href="https://en.wikipedia.org/wiki/University_of_the_Ryukyus">英語版 Wikipedia</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> 各国の正式名称の一覧。 <em>List of sovereign states</em> の項。 <a href="https://en.wikipedia.org/wiki/List_of_sovereign_states">英語版 Wikipedia</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> フィリピンの名の由来と、 Philippine Islands の短縮形であること。 <em>Names of the Philippines</em> の項。 <a href="https://en.wikipedia.org/wiki/Names_of_the_Philippines">英語版 Wikipedia</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> 国名 Ukraine に定冠詞を付けない用法についての解説。 <em>Definitely no definite article for Ukraine</em> 。 <a href="https://www.rosettatranslation.com/definitely-no-definite-article-for-ukraine/">Rosetta Translation</a></li>
+</ol>
+<p class="endnote">この文書の「 the の働き」の説明は、筆者の整理であり、辞書・文法書での確認は済んでいない。正式名称や用法は、参照した版の時点のものである。</p>
+</div>
+</div>
+</body>
+</html>
