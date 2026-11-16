@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>正式名称が一語の国は何か国か――Japan と Canada の仲間と、最も多い名称の型</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">国名の整理</p>
+<h1>正式名称が一語の国は何か国か<br>――Japan と Canada の仲間と、最も多い名称の型</h1>
+<p class="subtitle">Sovereign States with One-Word Formal English Names and the Most Common Name Patterns</p>
+</header>
+<div class="wrap">
+<div class="lede">
+<p>Japan や Canada は、英語の正式名称が一語である。 Republic of ... や Kingdom of ... のように、国家の形を示す語を添えない。国連加盟 193 か国のうち、そのような国はいくつあるのか。また、正式名称に最も多い型は何か。本稿は、一覧と集計を示す。</p>
+</div>
+<p class="meta band"><strong>【方法と限界】</strong> 2026 年 11 月 16 日時点の英語版 Wikipedia の表 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> を、唯一の出典にした。表の「正式名称」欄に独自の名称がない国は、通称をそのまま正式名称とみなした。国連の名簿や各国政府の公式表記は、直接には確かめていない。正式名称の定義は資料ごとに違うので、数は出典を替えると動く。集計は、筆者が書いたスクリプトで行った。「筆者の整理」と記した箇所は、筆者の解釈である。</p>
+
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">結論――一語の国は 18 か国、最多の型は Republic of</a></li>
+<li><a href="#sec2">正式名称が一語の国の一覧</a>
+<ol>
+<li><a href="#sec2-1">資料の間で食い違わない 17 か国</a></li>
+<li><a href="#sec2-2">一語に数えるか迷う国</a></li>
+<li><a href="#sec2-3">一語ではないが、似た国</a></li>
+</ol>
+</li>
+<li><a href="#sec3">最も多い名称の型</a>
+<ol>
+<li><a href="#sec3-1">型ごとの国数</a></li>
+<li><a href="#sec3-2">読み方の注意</a></li>
+</ol>
+</li>
+<li><a href="#sec4">この整理の限界</a></li>
+</ol>
+</nav>
+
+<section id="sec1">
+<h2><span class="no">1</span> 結論――一語の国は 18 か国、最多の型は Republic of</h2>
+<p>国連加盟 193 か国を対象にした、筆者の整理は次の三点である。</p>
+<dl class="summary">
+<div><dt>一語の国</dt><dd>出典の表で、正式名称が一語の国は 18 か国である（全体の約 9% ）。うち 17 か国は、名称の揺れが少ない。残る 1 か国 (Nepal) は、資料によって扱いが分かれる。</dd></div>
+<div><dt>最多の型</dt><dd>正式名称が Republic of ... で始まる国は 88 か国で、全体の約 46% を占める。 Republic の語を含む国まで広げると、 125 か国で約 65% になる。</dd></div>
+<div><dt>次点</dt><dd>二番手は Kingdom で、 17 か国（約 9% ）が含む。 State または States を含む国は 11 か国である。</dd></div>
+</dl>
+<div class="point">
+<p>「一語」の国は、欧州とカリブ海に偏る。 17 か国のうち、欧州が 6 か国、カリブ海が 3 か国である（筆者の整理）。</p>
+</div>
+</section>
+
+<section id="sec2">
+<h2><span class="no">2</span> 正式名称が一語の国の一覧</h2>
+<p>ここでいう「一語」は、正式名称が国名そのものだけで成り立つことをいう。 New Zealand のように国名が二語でも、国家の形を示す語を添えない国は、 2.3 で別に扱う。</p>
+
+<h3 id="sec2-1">2.1 資料の間で食い違わない 17 か国</h3>
+<table>
+<thead><tr><th>国名</th><th>英文正式名称</th><th>地域</th><th>補足</th></tr></thead>
+<tbody>
+<tr><th>日本</th><td data-label="英文正式名称">Japan</td><td data-label="地域">東アジア</td><td data-label="補足">―</td></tr>
+<tr><th>カナダ</th><td data-label="英文正式名称">Canada</td><td data-label="地域">北米</td><td data-label="補足">―</td></tr>
+<tr><th>アイスランド</th><td data-label="英文正式名称">Iceland</td><td data-label="地域">北欧</td><td data-label="補足">―</td></tr>
+<tr><th>アイルランド</th><td data-label="英文正式名称">Ireland</td><td data-label="地域">西欧</td><td data-label="補足">通称の Republic of Ireland は、法律上の「国家の記述」である。名称そのものは Ireland である。</td></tr>
+<tr><th>ウクライナ</th><td data-label="英文正式名称">Ukraine</td><td data-label="地域">東欧</td><td data-label="補足">―</td></tr>
+<tr><th>ハンガリー</th><td data-label="英文正式名称">Hungary</td><td data-label="地域">中欧</td><td data-label="補足">2012 年施行の基本法で、 Republic of Hungary から Hungary に改めた。</td></tr>
+<tr><th>ルーマニア</th><td data-label="英文正式名称">Romania</td><td data-label="地域">南東欧</td><td data-label="補足">―</td></tr>
+<tr><th>モンテネグロ</th><td data-label="英文正式名称">Montenegro</td><td data-label="地域">南東欧</td><td data-label="補足">―</td></tr>
+<tr><th>ジョージア</th><td data-label="英文正式名称">Georgia</td><td data-label="地域">コーカサス</td><td data-label="補足">―</td></tr>
+<tr><th>モンゴル</th><td data-label="英文正式名称">Mongolia</td><td data-label="地域">東アジア</td><td data-label="補足">―</td></tr>
+<tr><th>マレーシア</th><td data-label="英文正式名称">Malaysia</td><td data-label="地域">東南アジア</td><td data-label="補足">―</td></tr>
+<tr><th>トルクメニスタン</th><td data-label="英文正式名称">Turkmenistan</td><td data-label="地域">中央アジア</td><td data-label="補足">―</td></tr>
+<tr><th>ジャマイカ</th><td data-label="英文正式名称">Jamaica</td><td data-label="地域">カリブ海</td><td data-label="補足">―</td></tr>
+<tr><th>バルバドス</th><td data-label="英文正式名称">Barbados</td><td data-label="地域">カリブ海</td><td data-label="補足">―</td></tr>
+<tr><th>グレナダ</th><td data-label="英文正式名称">Grenada</td><td data-label="地域">カリブ海</td><td data-label="補足">―</td></tr>
+<tr><th>ベリーズ</th><td data-label="英文正式名称">Belize</td><td data-label="地域">中米</td><td data-label="補足">―</td></tr>
+<tr><th>ツバル</th><td data-label="英文正式名称">Tuvalu</td><td data-label="地域">オセアニア</td><td data-label="補足">―</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">並びは、地域のまとまりを優先した。補足の「―」は、特記する事項がないことを示す。</p>
+
+<h3 id="sec2-2">2.2 一語に数えるか迷う国</h3>
+<p>次の二か国は、資料によって答えが変わる。</p>
+<dl class="summary">
+<div><dt>Nepal</dt><dd>出典の表は、独自の正式名称を挙げていない。そのため、本稿の 18 か国には数えた。ただし、国連の名簿や、ネパール政府の表記は、直接には確かめていない。</dd></div>
+<div><dt>Australia</dt><dd>通称は一語だが、出典の表の正式名称は Commonwealth of Australia である。そのため、本稿では数えない。</dd></div>
+</dl>
+<div class="caution">
+<p>この二か国の扱いを変えると、一語の国は 17 か国から 19 か国までの間で動く。数を引用するときは、「出典によって 17 〜 19 か国」と添えるのが安全である。</p>
+</div>
+
+<h3 id="sec2-3">2.3 一語ではないが、似た国</h3>
+<p>正式名称が二語以上で、 Republic や Kingdom のような、国家の形を示す語を添えない国がある。出典の表では、次の 8 か国である。</p>
+<ul>
+<li>Antigua and Barbuda</li>
+<li>Bosnia and Herzegovina</li>
+<li>Burkina Faso</li>
+<li>New Zealand</li>
+<li>Saint Lucia</li>
+<li>Saint Vincent and the Grenadines</li>
+<li>Solomon Islands</li>
+<li>United Arab Emirates</li>
+</ul>
+<p>これらを加えると、「国家の形を示す語を持たない国」は 26 か国になる（筆者の整理）。</p>
+</section>
+
+<section id="sec3">
+<h2><span class="no">3</span> 最も多い名称の型</h2>
+
+<h3 id="sec3-1">3.1 型ごとの国数</h3>
+<p>正式名称が、どの型を含むかを数えた。型は排他的ではない。たとえば、 Federal Republic of Germany は、「 Republic を含む」と「 Federal を含む」の両方に入る。</p>
+<table>
+<thead><tr><th>型</th><th>国数</th><th>割合</th><th>例</th></tr></thead>
+<tbody>
+<tr><th>Republic を含む</th><td data-label="国数">125</td><td data-label="割合">約 65%</td><td data-label="例">Republic of India 、 French Republic 、 Czech Republic</td></tr>
+<tr><th>うち Republic of ... で始まる</th><td data-label="国数">88</td><td data-label="割合">約 46%</td><td data-label="例">Republic of Chile 、 Republic of Korea 、 Republic of Poland</td></tr>
+<tr><th>一語のみ</th><td data-label="国数">18</td><td data-label="割合">約 9%</td><td data-label="例">Japan 、 Canada 、 Ukraine</td></tr>
+<tr><th>Kingdom を含む</th><td data-label="国数">17</td><td data-label="割合">約 9%</td><td data-label="例">Kingdom of Spain 、 Hashemite Kingdom of Jordan 、 United Kingdom of Great Britain and Northern Ireland</td></tr>
+<tr><th>State または States を含む</th><td data-label="国数">11</td><td data-label="割合">約 6%</td><td data-label="例">State of Israel 、 United Mexican States 、 United States of America</td></tr>
+<tr><th>Democratic を含む</th><td data-label="国数">8</td><td data-label="割合">約 4%</td><td data-label="例">Democratic Republic of the Congo 、 Democratic Socialist Republic of Sri Lanka</td></tr>
+<tr><th>People's を含む</th><td data-label="国数">5</td><td data-label="割合">約 3%</td><td data-label="例">People's Republic of China 、 People's Republic of Bangladesh</td></tr>
+<tr><th>Federal または Federative を含む</th><td data-label="国数">5</td><td data-label="割合">約 3%</td><td data-label="例">Federal Republic of Germany 、 Federative Republic of Brazil</td></tr>
+<tr><th>Islamic Republic of ...</th><td data-label="国数">3</td><td data-label="割合">約 2%</td><td data-label="例">Islamic Republic of Iran 、 Islamic Republic of Pakistan</td></tr>
+<tr><th>Principality of ...</th><td data-label="国数">3</td><td data-label="割合">約 2%</td><td data-label="例">Principality of Monaco 、 Principality of Andorra 、 Principality of Liechtenstein</td></tr>
+<tr><th>Commonwealth of ...</th><td data-label="国数">3</td><td data-label="割合">約 2%</td><td data-label="例">Commonwealth of Australia 、 Commonwealth of The Bahamas 、 Commonwealth of Dominica</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">割合は、 193 か国に対する値を、整数に丸めた。</p>
+<div class="point">
+<p>最も多い名称は、 Republic of ... である。単独で約 46% を占め、二番手の Kingdom （ 17 か国）の 5 倍にあたる。</p>
+</div>
+
+<h3 id="sec3-2">3.2 読み方の注意</h3>
+<ul>
+<li><strong>The の扱い</strong><br>Republic of ... で始まる 88 か国のうち、 7 か国は Republic of the ... である (Congo 、 Gambia 、 Marshall Islands 、 Niger 、 Philippines 、 Sudan 、 Union of Myanmar) 。</li>
+<li><strong>形容詞の型</strong><br>French Republic 、 Italian Republic 、 Hellenic Republic のように、国名を形容詞にして Republic の前に置く型もある。これらは「 Republic of ... で始まる」には入らず、「 Republic を含む」にだけ数えた。</li>
+<li><strong>Afghanistan の表記</strong><br>出典の表は Islamic Emirate of Afghanistan としている。ほかの資料が Islamic Republic of Afghanistan とするなら、 Islamic Republic の国数は 4 か国になる。</li>
+</ul>
+</section>
+
+<section id="sec4">
+<h2><span class="no">4</span> この整理の限界</h2>
+<ul>
+<li><strong>出典が一つ</strong><br>英語版 Wikipedia の表 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> だけを使った。国連の名簿、各国の憲法、各国政府の公式表記は、直接には確かめていない。</li>
+<li><strong>正式名称の定義</strong><br>憲法の文言、外交上の表記、国連の登録名は、一致するとは限らない。数は、どれを基準にするかで動く。</li>
+<li><strong>対象は国連加盟国</strong><br>オブザーバー国家の Holy See (Vatican City State) と Palestine 、国連に未加盟の Taiwan と Kosovo は含めていない。</li>
+<li><strong>名称は変わる</strong><br>国名の変更や、表記の改定で、数は変わる。ハンガリーのように、共和国の語を外した例もある。</li>
+</ul>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <em>List of sovereign states</em> 、英語版 Wikipedia 。国連加盟国の正式名称の欄を読んだ（ 2026 年 11 月 16 日に参照）。 <a href="https://en.wikipedia.org/wiki/List_of_sovereign_states">Wikipedia</a></li>
+</ol>
+<p class="endnote">Wikipedia は、利用者が編集する資料である。国連や各国政府の一次資料との照合は、本稿では行っていない。</p>
+</div>
+</div>
+</body>
+</html>
