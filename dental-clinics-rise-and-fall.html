@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>歯科医院は本当に余っているのか――統計で検証する開院・閉院の 50 年</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">分析</p>
+<h1>歯科医院は本当に余っているのか――統計で検証する開院・閉院の 50 年</h1>
+<p class="subtitle">Rise, Saturation and Turnover of Dental Clinics in Japan: A Statistical Review, 1975–2025</p>
+<p>隆盛、供給過剰、そして再びの開院ラッシュ。この見方が正しいかを、公的統計で確かめる。</p>
+</header>
+<div class="wrap">
+<div class="lede"><p>1970 年ごろから隆盛を極めた歯科医院が、 2000 年ごろから供給過剰になって閉院を重ね、 2020 年以降は街中でまた新規開院が相次いでいる。この見方の前半は統計と合い、後半は合わない。あわせて、「小学生への虫歯予防教育で歯科患者が減った」という説の当否と、今後の見通し、開業の初期投資を検討する。</p></div>
+<p class="meta band"><strong>【方法と限界】</strong>厚生労働省・文部科学省などの公的統計と、省の公開資料の数値を使った。開設・廃止の件数には、施設の移転に伴うものが含まれる。原因の切り分けは統計だけではできないので、推論は「考えられる」と書いて、事実と分けた。初期投資の目安は、開業支援事業者の公開記事によるもので、公的統計ではない。</p>
+
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">結論を先に――六つの答え</a></li>
+<li><a href="#sec2">隆盛の起点――「むし歯の洪水」と国の増員目標</a>
+<ol>
+<li><a href="#sec2-1">歯科医師が足りないと言われた時代</a></li>
+<li><a href="#sec2-2">増員から削減へ、転換は 1980 年代にあった</a></li>
+</ol>
+</li>
+<li><a href="#sec3">「供給過剰」と「開院ラッシュ」を数字で確かめる</a>
+<ol>
+<li><a href="#sec3-1">診療所も歯科医師も、 2020 年前後まで増え続けた</a></li>
+<li><a href="#sec3-2">閉院はいつも多かった</a></li>
+<li><a href="#sec3-3">「開院ラッシュ」は数字に現れない</a></li>
+</ol>
+</li>
+<li><a href="#sec4">「予防教育で患者が減った」説を検証する</a>
+<ol>
+<li><a href="#sec4-1">子どものむし歯は、確かに激減した</a></li>
+<li><a href="#sec4-2">それでも患者の総数は減っていない</a></li>
+<li><a href="#sec4-3">何が子どものむし歯を減らしたのか</a></li>
+</ol>
+</li>
+<li><a href="#sec5">開業の初期投資は一千万円を優に超える</a></li>
+<li><a href="#sec6">今後の見通し</a>
+<ol>
+<li><a href="#sec6-1">需要は減らないが、中身が変わる</a></li>
+<li><a href="#sec6-2">診療所の数は、ゆるやかに減る</a></li>
+<li><a href="#sec6-3">競争の軸は、診療の中身に移る</a></li>
+</ol>
+</li>
+<li><a href="#sec7">まとめ――余ったのは、むし歯を詰める仕事である</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 結論を先に――六つの答え</h2>
+<p>問うのは、感覚の当否、予防教育説、今後の見通し、そして開業の初期投資である。先に答えを並べる。根拠は 2 章以降に置く。</p>
+<dl class="summary">
+<div><dt>隆盛</dt><dd>正しい。歯科診療所は 1975 年の 32,565 施設から 2017 年の 68,609 施設まで約 2.1 倍に、歯科医師は 1975 年の 41,951 人から 2020 年の 104,118 人まで約 2.5 倍になった。</dd></div>
+<div><dt>供給過剰</dt><dd>ほぼ正しい。ただし、国が過剰を懸念したのは 1982 年で、 2000 年ごろより 20 年早い。診療所が減り始めたのは 2017 年以降である。</dd></div>
+<div><dt>閉院</dt><dd>閉院は一貫して多かった。しかし開院がほぼ釣り合っていたので、診療所数は 2017 年まで増え続けた。倒産は、閉院全体のごく一部である。</dd></div>
+<div><dt>2020 年以降の開院</dt><dd>統計では支持されない。開設は年 1,300 件前後で、 2012 〜 2017 年の平均（ 1,713 件）より約 2 割少ない。診療所は 2025 年までに 2,985 施設減った。</dd></div>
+<div><dt>予防教育説</dt><dd>子どものむし歯が激減した点は正しい。しかし、患者の総数が減った説明にはならない。 0 〜 14 歳の患者は 1999 年から 2023 年までほぼ横ばいで、減ったのは 15 〜 44 歳である。</dd></div>
+<div><dt>見通しと初期投資</dt><dd>全国の合計では、需要と供給が近い水準で推移する見込みである。診療所はゆるやかに減る。開業の初期投資は、機器だけで 2,000 万〜 4,700 万円とする目安があり、一千万円を優に超える。</dd></div>
+</dl>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 隆盛の起点――「むし歯の洪水」と国の増員目標</h2>
+<p>歯科医院が増えたのは、市場が自然に膨らんだからではない。国が歯科医師を増やす政策を取ったからである。その出発点は、足りないという切実な声だった。</p>
+
+<h3 id="sec2-1">2.1 歯科医師が足りないと言われた時代</h3>
+<p>1960 年代半ば、生活環境と食生活の変化によって、「むし歯の洪水」と呼ばれる状況が起きた。歯科医療の需要が急増し、歯科医師不足が社会問題になった。国は 1967 年までに国立大学歯学部を 5 校設け、既存校の定員も増やしたが、効果は十分でなかった。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup></p>
+<p>1969 〜 70 年に、国は人口 10 万人当たりの歯科医師数を、 36.5 人から 1985 年までに 50 人へ増やす目標を掲げた。目標の根拠となる決定を 1969 年の閣議決定とする資料と、 1970 年の厚生省の目標とする資料がある。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
+<p>これを受けて、 1961 〜 1979 年の 18 年間に歯科大学・歯学部が 22 校増えた。 1980 年には 29 校、入学定員は 3,360 人になった。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></p>
+
+<h3 id="sec2-2">2.2 増員から削減へ、転換は 1980 年代にあった</h3>
+<p>目標は予定より早く達成された。 1984 年の歯科医師総数は 63,145 人で、人口 10 万人当たり 52.5 人である。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></p>
+<p>国は、すぐに舵を切った。 1982 年には、歯科医師の過剰を懸念して削減を進める閣議決定がなされている。 1986 年には、厚生省の検討委員会が、以後 10 年で入学定員を 20% 減らす目標を示し、これは達成された。 <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 供給過剰の自覚は、 2000 年ごろではなく、 1980 年代に始まっていたことになる。</p>
+<p>それでも診療所は増え続けた。診療所数は 1984 年の 43,926 施設から 2002 年の 65,073 施設へ、医療施設で働く歯科医師は同じ期間に 61,283 人から 90,499 人へ増えた。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 定員を減らした後も、増員期に入学した世代が卒業して開業していくので、数の増加は続いたと考えられる。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 「供給過剰」と「開院ラッシュ」を数字で確かめる</h2>
+<p>では、その後の 40 年は、統計にどう現れたか。診療所と歯科医師の数、開設と廃止の件数、開設者の内訳の三つの角度から確かめる。</p>
+
+<h3 id="sec3-1">3.1 診療所も歯科医師も、 2020 年前後まで増え続けた</h3>
+<table>
+<thead><tr><th>年</th><th>歯科診療所（施設）</th><th>歯科医師（人）</th><th>人口 10 万対（人）</th></tr></thead>
+<tbody>
+<tr><th>1975 年</th><td data-label="歯科診療所（施設）">32,565</td><td data-label="歯科医師（人）">41,951</td><td data-label="人口 10 万対（人）">37.5</td></tr>
+<tr><th>1984 年</th><td data-label="歯科診療所（施設）">43,926</td><td data-label="歯科医師（人）">61,283</td><td data-label="人口 10 万対（人）">51.0</td></tr>
+<tr><th>1990 年</th><td data-label="歯科診療所（施設）">52,216</td><td data-label="歯科医師（人）">72,087</td><td data-label="人口 10 万対（人）">58.3</td></tr>
+<tr><th>2002 年</th><td data-label="歯科診療所（施設）">65,073</td><td data-label="歯科医師（人）">90,499</td><td data-label="人口 10 万対（人）">71.0</td></tr>
+<tr><th>2008 年</th><td data-label="歯科診療所（施設）">67,779</td><td data-label="歯科医師（人）">96,674</td><td data-label="人口 10 万対（人）">75.7</td></tr>
+<tr><th>2014 年</th><td data-label="歯科診療所（施設）">68,592</td><td data-label="歯科医師（人）">100,965</td><td data-label="人口 10 万対（人）">79.4</td></tr>
+<tr><th>2020 年</th><td data-label="歯科診療所（施設）">67,874</td><td data-label="歯科医師（人）">104,118</td><td data-label="人口 10 万対（人）">82.5</td></tr>
+<tr><th>2022 年</th><td data-label="歯科診療所（施設）">67,755</td><td data-label="歯科医師（人）">101,919</td><td data-label="人口 10 万対（人）">81.6</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">歯科医師は、医療施設で働く者の数。診療所数は各年 10 月 1 日現在（ 1975 年のみ 12 月 31 日現在）。出典は <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。</p>
+<p>診療所は 2017 年の 68,609 施設まで増え、歯科医師は 2020 年の 104,118 人まで増えた。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 人口 10 万人当たりの歯科医師は、 1975 年の 37.5 人から 2022 年の 81.6 人へ、 2 倍以上になった。診療所の密度（人口 10 万人当たり）は、 2002 年の 51.1 施設から 54.3 施設まで上がり、 2023 年は 53.7 施設である。 <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup></p>
+<p>患者の側は、どうか。診療所で受診する患者の数（調査日 1 日当たりの推計）は、 2014 年に 1,359 千人でピークを迎え、 2023 年には 1,263 千人まで減った。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 三つのピークは、時期がずれている。</p>
+<table>
+<thead><tr><th>指標</th><th>ピークの年</th><th>ピークの値</th><th>直近の値</th><th>ピークからの変化</th></tr></thead>
+<tbody>
+<tr><th>診療所の推計患者数（ 1 日、千人）</th><td data-label="ピークの年">2014 年</td><td data-label="ピークの値">1,359</td><td data-label="直近の値">1,263 （ 2023 年）</td><td data-label="ピークからの変化">−7.1%</td></tr>
+<tr><th>歯科診療所数（施設）</th><td data-label="ピークの年">2017 年</td><td data-label="ピークの値">68,609</td><td data-label="直近の値">65,624 （ 2025 年）</td><td data-label="ピークからの変化">−4.4%</td></tr>
+<tr><th>歯科医師数（従事者、人）</th><td data-label="ピークの年">2020 年</td><td data-label="ピークの値">104,118</td><td data-label="直近の値">101,919 （ 2022 年）</td><td data-label="ピークからの変化">−2.1%</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">出典は <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。</p>
+<p>需要が先に頭打ちになり、診療所が 3 年、歯科医師が 6 年遅れて折れ曲がった。供給過剰の典型的な姿である。ただし、下げ幅は小さい。診療所は 4.4% 、歯科医師は 2.1% しか減っていない。</p>
+
+<h3 id="sec3-2">3.2 閉院はいつも多かった</h3>
+<p>診療所の数が横ばいなら、閉院も開院もないように見える。実際は逆である。厚生労働省の医療施設調査は、毎年、開設と廃止の件数を数えている。</p>
+<table>
+<thead><tr><th>年</th><th>開設（件）</th><th>廃止（件）</th><th>開設−廃止（件）</th></tr></thead>
+<tbody>
+<tr><th>2012 年</th><td data-label="開設（件）">1,633</td><td data-label="廃止（件）">1,243</td><td data-label="開設−廃止（件）">+390</td></tr>
+<tr><th>2013 年</th><td data-label="開設（件）">1,707</td><td data-label="廃止（件）">1,405</td><td data-label="開設−廃止（件）">+302</td></tr>
+<tr><th>2014 年</th><td data-label="開設（件）">1,912</td><td data-label="廃止（件）">1,746</td><td data-label="開設−廃止（件）">+166</td></tr>
+<tr><th>2015 年</th><td data-label="開設（件）">1,604</td><td data-label="廃止（件）">1,344</td><td data-label="開設−廃止（件）">+260</td></tr>
+<tr><th>2016 年</th><td data-label="開設（件）">1,702</td><td data-label="廃止（件）">1,411</td><td data-label="開設−廃止（件）">+291</td></tr>
+<tr><th>2017 年</th><td data-label="開設（件）">1,720</td><td data-label="廃止（件）">1,739</td><td data-label="開設−廃止（件）">−19</td></tr>
+<tr><th>2018 年</th><td data-label="開設（件）">1,485</td><td data-label="廃止（件）">1,370</td><td data-label="開設−廃止（件）">+115</td></tr>
+<tr><th>2019 年</th><td data-label="開設（件）">1,451</td><td data-label="廃止（件）">1,478</td><td data-label="開設−廃止（件）">−27</td></tr>
+<tr><th>2020 年</th><td data-label="開設（件）">1,393</td><td data-label="廃止（件）">1,714</td><td data-label="開設−廃止（件）">−321</td></tr>
+<tr><th>2021 年</th><td data-label="開設（件）">1,352</td><td data-label="廃止（件）">1,252</td><td data-label="開設−廃止（件）">+100</td></tr>
+<tr><th>2022 年</th><td data-label="開設（件）">1,333</td><td data-label="廃止（件）">1,410</td><td data-label="開設−廃止（件）">−77</td></tr>
+<tr><th>2023 年</th><td data-label="開設（件）">1,454</td><td data-label="廃止（件）">2,037</td><td data-label="開設−廃止（件）">−583</td></tr>
+<tr><th>2024 年</th><td data-label="開設（件）">1,363</td><td data-label="廃止（件）">1,748</td><td data-label="開設−廃止（件）">−385</td></tr>
+<tr><th>2025 年</th><td data-label="開設（件）">1,282</td><td data-label="廃止（件）">1,915</td><td data-label="開設−廃止（件）">−633</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">各年は、前年 10 月から当年 9 月までの 1 年間。開設・廃止には、施設の移転に伴う旧施設の廃止と新施設の開設を含む。休止と再開は含まない。出典は <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。</p>
+<p>廃止は、 2012 年以降の 14 年間で、一度も年 1,200 件を下回っていない。最多は 2023 年の 2,037 件である。診療所の数が増え続けたのは、閉院が少なかったからではない。開設が廃止を上回っていたからである。 2012 〜 2016 年は、その差が毎年 166 〜 390 件あった。</p>
+<p>均衡が崩れたのは、 2017 年である。この年に初めて廃止が開設を上回り、 2017 〜 2025 年の 9 年間では、 7 年で廃止が多かった。 2012 〜 2017 年の平均は、開設が 1,713 件、廃止が 1,481 件だった。 2020 〜 2025 年の平均は、開設が 1,363 件、廃止が 1,679 件である。開設は約 2 割減り、廃止は約 1 割増えた。</p>
+<p>「閉院を余儀なくされる」という言い方が連想させるような、経営破綻による閉院は、ごく一部である。東京商工リサーチによれば、 2024 年の歯科医院の倒産は 25 件、休廃業・解散は 138 件で、合計 163 件だった。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 同じ年の廃止 1,748 件の約 9% にあたる。ただし、調査の対象が負債 1,000 万円以上の事業者などに限られるので、単純には比べられない。</p>
+<p>閉院の大半は、負債を残さずに静かに店じまいする形だと考えられる。背景として、歯科医師は 60 〜 69 歳が最も多く、次が 50 〜 59 歳であること、診療所の 7 割以上が個人立の小規模な施設で、厚生労働省が事業の継続性を課題に挙げていることが目につく。 <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup></p>
+
+<h3 id="sec3-3">3.3 「開院ラッシュ」は数字に現れない</h3>
+<p>2020 年以降の開設は、 1,393 件、 1,352 件、 1,333 件、 1,454 件、 1,363 件、 1,282 件と推移している。増えたのは 2023 年だけで、前年より 121 件（約 9% ）多い。それでも 2012 〜 2017 年の平均を大きく下回る。街中で新しい歯科医院の看板を見かける感覚が、全国の件数の増加を意味しているとは言えない。</p>
+<p>それでも「相次いでいる」と感じる理由は、統計から三つ考えられる。いずれも筆者の推論である。</p>
+<ul>
+<li>開設には移転が含まれる。同じ医院が近所に移れば、廃止と開設が 1 件ずつ数えられる。</li>
+<li>個人立から医療法人への切り替えが進んでいる。医療法人の歯科診療所は、 2002 年の 7,499 施設から 2025 年の 17,395 施設へ増え、個人立は 56,934 施設から 47,539 施設へ減った。 <sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup></li>
+<li>閉院は静かに起きるが、開院には看板が立つ。目に入るのは開院の側である。</li>
+</ul>
+<table>
+<thead><tr><th>年</th><th>総数（施設）</th><th>医療法人（施設）</th><th>個人（施設）</th><th>個人の割合</th></tr></thead>
+<tbody>
+<tr><th>2002 年</th><td data-label="総数（施設）">65,073</td><td data-label="医療法人（施設）">7,499</td><td data-label="個人（施設）">56,934</td><td data-label="個人の割合">87.5%</td></tr>
+<tr><th>2008 年</th><td data-label="総数（施設）">67,779</td><td data-label="医療法人（施設）">10,197</td><td data-label="個人（施設）">56,955</td><td data-label="個人の割合">84.0%</td></tr>
+<tr><th>2014 年</th><td data-label="総数（施設）">68,592</td><td data-label="医療法人（施設）">12,393</td><td data-label="個人（施設）">55,588</td><td data-label="個人の割合">81.0%</td></tr>
+<tr><th>2020 年</th><td data-label="総数（施設）">67,874</td><td data-label="医療法人（施設）">15,161</td><td data-label="個人（施設）">52,103</td><td data-label="個人の割合">76.8%</td></tr>
+<tr><th>2025 年</th><td data-label="総数（施設）">65,624</td><td data-label="医療法人（施設）">17,395</td><td data-label="個人（施設）">47,539</td><td data-label="個人の割合">72.4%</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">各年 10 月 1 日現在。「その他の法人」などは省いたので、内訳の合計は総数と一致しない。出典は <sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup> 。</p>
+<p>医療法人が増えた分の多くは、新しい医院ではない。 2021 年の調査では、開設者を変更した歯科診療所が 464 施設あり、そのうち 412 施設が、個人から医療法人への変更だった。この年、医療法人の歯科診療所は 474 施設増えている。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup></p>
+<div class="caution">
+<p>この文書は、都道府県別・市区町村別の開設件数を確認していない。「街中」という局所の感覚が、全国の平均と別に正しい可能性は残る。歯科医師は都市部に偏っており、人口 10 万人当たりの数は、東京都が 116.1 人、青森県が 55.9 人である（ 2022 年）。 <sup id="fnref-3-7"><a href="#ref-3">[3]</a></sup></p>
+</div>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 「予防教育で患者が減った」説を検証する</h2>
+<p>この説は冗談めいて聞こえるが、前提の半分は事実である。事実の部分と、そうでない部分を分けて確かめる。</p>
+
+<h3 id="sec4-1">4.1 子どものむし歯は、確かに激減した</h3>
+<table>
+<thead><tr><th>年度</th><th>むし歯等の合計（本）</th><th>処置歯（本）</th><th>未処置歯（本）</th></tr></thead>
+<tbody>
+<tr><th>1984 年度</th><td data-label="むし歯等の合計（本）">4.75</td><td data-label="処置歯（本）">3.35</td><td data-label="未処置歯（本）">1.35</td></tr>
+<tr><th>1995 年度</th><td data-label="むし歯等の合計（本）">3.72</td><td data-label="処置歯（本）">2.69</td><td data-label="未処置歯（本）">0.98</td></tr>
+<tr><th>2000 年度</th><td data-label="むし歯等の合計（本）">2.65</td><td data-label="処置歯（本）">1.88</td><td data-label="未処置歯（本）">0.73</td></tr>
+<tr><th>2005 年度</th><td data-label="むし歯等の合計（本）">1.82</td><td data-label="処置歯（本）">1.19</td><td data-label="未処置歯（本）">0.60</td></tr>
+<tr><th>2010 年度</th><td data-label="むし歯等の合計（本）">1.29</td><td data-label="処置歯（本）">0.81</td><td data-label="未処置歯（本）">0.46</td></tr>
+<tr><th>2015 年度</th><td data-label="むし歯等の合計（本）">0.90</td><td data-label="処置歯（本）">0.55</td><td data-label="未処置歯（本）">0.34</td></tr>
+<tr><th>2021 年度</th><td data-label="むし歯等の合計（本）">0.63</td><td data-label="処置歯（本）">0.39</td><td data-label="未処置歯（本）">0.23</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">12 歳（中学 1 年）の永久歯の 1 人平均。合計には、抜けた歯（喪失歯）を含む。出典は <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。</p>
+<p>12 歳の永久歯の、むし歯等の 1 人平均は、 1984 年度の 4.75 本から 2021 年度の 0.63 本へ、約 87% 減った。処置歯は、歯科で治療を受けた歯である。 3.35 本から 0.39 本への減少は、子どもに詰め物やかぶせ物をする仕事が、それだけ減ったことを示す。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> 累積の本数ではあるが、治療需要の縮小を強く示す数字である。</p>
+
+<h3 id="sec4-2">4.2 それでも患者の総数は減っていない</h3>
+<p>子どものむし歯が減ったなら、子どもの患者も減るはずである。ところが、診療所で受診する患者の年齢別の推計は、そうなっていない。</p>
+<table>
+<thead><tr><th>年齢</th><th>1999 年</th><th>2014 年</th><th>2023 年</th><th>1999 → 2023 年</th></tr></thead>
+<tbody>
+<tr><th>0 〜 14 歳</th><td data-label="1999 年">104</td><td data-label="2014 年">101</td><td data-label="2023 年">101</td><td data-label="1999 → 2023 年">−3%</td></tr>
+<tr><th>15 〜 44 歳</th><td data-label="1999 年">359</td><td data-label="2014 年">303</td><td data-label="2023 年">241</td><td data-label="1999 → 2023 年">−33%</td></tr>
+<tr><th>45 〜 64 歳</th><td data-label="1999 年">409</td><td data-label="2014 年">397</td><td data-label="2023 年">340</td><td data-label="1999 → 2023 年">−17%</td></tr>
+<tr><th>65 〜 74 歳</th><td data-label="1999 年">191</td><td data-label="2014 年">317</td><td data-label="2023 年">237</td><td data-label="1999 → 2023 年">+24%</td></tr>
+<tr><th>75 歳以上</th><td data-label="1999 年">84</td><td data-label="2014 年">241</td><td data-label="2023 年">344</td><td data-label="1999 → 2023 年">+310%</td></tr>
+<tr><th>総数</th><td data-label="1999 年">1,147</td><td data-label="2014 年">1,359</td><td data-label="2023 年">1,263</td><td data-label="1999 → 2023 年">+10%</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">調査日 1 日当たりの、歯科診療所の推計患者数（千人）。年齢不詳は除く。出典は <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup> 。</p>
+<p>0 〜 14 歳の患者は、 1999 年の 104 千人から 2023 年の 101 千人へ、ほぼ横ばいである。総数に占める割合は、 9.1% から 8.0% に下がっただけだ。減ったのは 15 〜 44 歳（ 33% 減）と 45 〜 64 歳（ 17% 減）で、増えたのは 65 歳以上である。 65 歳以上の割合は、 24.0% から 46.0% に上がった。 <sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup></p>
+<p>数字は実数であって受療率ではないので、人口の減少も含まれる。 0 〜 14 歳が横ばいなのは、子どもの人口が減る中で、 1 人当たりの受診が増えたことを意味するのかもしれない。予防や矯正、定期的な管理で通う子どもが増えた可能性があるが、この文書では確かめていない。</p>
+
+<h3 id="sec4-3">4.3 何が子どものむし歯を減らしたのか</h3>
+<p>むし歯の減少に、予防教育がどれだけ効いたかを示す数字は、確認した資料の中になかった。一方で、有力な候補の数字はある。フッ化物配合歯磨剤の市場占有率である。日本では、 1980 年代中期に 10% まで低迷していたが、後半に 30% を超え、 2010 年には 90% に上がり、 2015 年は 91% になった。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></p>
+<p>12 歳のむし歯が最も大きく減ったのは、 1995 年度の 3.72 本から 2010 年度の 1.29 本までの 15 年間である。 <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup> 歯磨剤の普及と時期が重なる。欧米でも、フッ化物配合歯磨剤は 1970 〜 80 年代に急速に普及し、小児のむし歯の急激な減少をもたらしたと評価されている。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 小学校での集団フッ化物洗口には、 6 年間で 40 〜 50% 程度のむし歯予防効果があるとされる。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 時期が重なることは、原因であることの証明ではない。しかし「教育」だけを主因に置く根拠は、見当たらない。</p>
+<div class="point">
+<p>説の当否は、次のように分けられる。</p>
+<p>子どものむし歯が減った点は、正しい。患者の総数が減った原因だという点は、誤りである。 0 〜 14 歳の患者が減っていないからである。予防教育が主因だという点は、確認できない。</p>
+<p>ただし、半分だけ真実が残る。最も減った 15 〜 44 歳の患者は、むし歯の少ない世代が成人した影響と整合する。人口の減少と分離できないので、これは推論にとどまる。</p>
+</div>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 開業の初期投資は一千万円を優に超える</h2>
+<p>開院の数を考えるとき、開業の費用を外せない。結論から言えば、機器類の購入だけで一千万円を優に超える。デジタル X 線装置 1 台が、すでに 1,000 万〜 2,000 万円とされる。</p>
+<table>
+<thead><tr><th>項目</th><th>目安</th><th>備考</th></tr></thead>
+<tbody>
+<tr><th>歯科用ユニット（診療台）</th><td data-label="目安">1 台 300 万〜 500 万円</td><td data-label="備考">記事 A <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><th>デジタル X 線装置</th><td data-label="目安">1,000 万〜 2,000 万円</td><td data-label="備考">記事 A <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><th>医療機器の合計（記事 A ）</th><td data-label="目安">2,000 万〜 3,000 万円</td><td data-label="備考">ユニット、コンプレッサー、バキューム、滅菌器などを含む。 <sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><th>医療機器・什器備品・医薬品の合計（記事 B ）</th><td data-label="目安">2,800 万〜 4,700 万円</td><td data-label="備考">歯科用 CT を含む想定。 2026 年 4 月公開。 <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup></td></tr>
+<tr><th>内装工事</th><td data-label="目安">2,000 万〜 3,000 万円</td><td data-label="備考">記事 A <sup id="fnref-11-4"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><th>運転資金</th><td data-label="目安">約 1,000 万円（記事 A ）、 1,500 万〜 2,500 万円（記事 B ）</td><td data-label="備考"><sup id="fnref-11-5"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></td></tr>
+<tr><th>開業の総額</th><td data-label="目安">最低 5,000 万円（記事 A ）、テナント開業で 7,000 万〜 8,000 万円（記事 B ）</td><td data-label="備考">記事 B のテナント開業は、敷金・礼金、内外装工事を含む。戸建て新築は土地を含めて 1 億円以上。 <sup id="fnref-11-6"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup></td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">記事 A は <sup id="fnref-11-7"><a href="#ref-11">[11]</a></sup> 、記事 B は <sup id="fnref-12-4"><a href="#ref-12">[12]</a></sup> 。いずれも開業支援事業者の記事である。</p>
+<p>機器だけなら、 2 本の記事の目安は 2,000 万〜 4,700 万円で、一千万円の約 2 〜 5 倍である。仮に診療台を 4 台置くなら、ユニットだけで 1,200 万〜 2,000 万円になる。この台数は筆者の仮定である。</p>
+<p>この重さは、本文の議論に二つの含意を持つ。第一に、参入は大きな借入を前提にするので、開業は慎重になる。第二に、個人立の院長にとっては、投資の回収が済まないまま、需要の縮小や自らの高齢化を迎えるおそれがある。厚生労働省が個人立の小規模な診療所の事業継続性を課題に挙げている事実と、整合する。 <sup id="fnref-3-8"><a href="#ref-3">[3]</a></sup> これは筆者の推論である。</p>
+<div class="caution">
+<p>表の数字は、開業支援事業者の公開記事の目安で、公的統計ではない。記事の公開日が分からないものもある。機器の価格や、診療台の台数、 CT などを置くかどうかで、総額は大きく変わる。実際の見積もりは、複数の業者から取る必要がある。</p>
+</div>
+</section>
+
+<section id="sec6"><h2><span class="no">6</span> 今後の見通し</h2>
+<p>将来の予測は、確実には言えない。ここでは、厚生労働省が 2026 年に示した需給推計を軸に、筆者の読み取りと推論を分けて示す。</p>
+
+<h3 id="sec6-1">6.1 需要は減らないが、中身が変わる</h3>
+<p>日本の人口は、 2020 年の 12,615 万人から 2040 年の 11,284 万人へ、約 1 割減ると推計されている。 <sup id="fnref-3-9"><a href="#ref-3">[3]</a></sup> 人口が減れば歯科医療の需要も減りそうだが、需要推計はそうなっていない。診療所で働く歯科医師の必要数は、業務の効率化を見込まなければ、 2025 年の 102,005 人から 2040 年の 103,929 人へ、ほぼ横ばいである。高齢の患者の増加が、人口の減少を相殺するためと考えられる。資料は、 2035 年と 2040 年の 85 歳以上の患者数が、推計の方法によっては、いっそう大きくなることを示している。 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></p>
+<p>効率化を見込むと、数字は変わる。歯科医師の仕事を 2025 年に比べて 7 〜 20% 効率化できると仮定した場合、 2040 年の必要数は 85,870 〜 97,608 人である。供給は、国家試験の合格者を毎年 2,000 人と仮定すると、 2026 年以降ゆるやかに減る。グラフから読み取ると、約 11 万人から約 10 万人弱へ減る。 <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup> 筆者の読み取りでは、効率化が進めば供給がやや上回り、進まなければ需要とほぼ釣り合う。資料自身も、医療 DX による効率化など、今後の変化の影響を考慮する必要があると注記している。 <sup id="fnref-13-3"><a href="#ref-13">[13]</a></sup></p>
+
+<h3 id="sec6-2">6.2 診療所の数は、ゆるやかに減る</h3>
+<p>診療所数は、 2017 年から 2025 年までの 8 年間で 2,985 施設減った。年平均で約 370 施設である。最近の 3 年間は、 2023 年が 937 施設、 2024 年が 440 施設、 2025 年が 754 施設の減少だった。 <sup id="fnref-3-10"><a href="#ref-3">[3]</a></sup><sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup></p>
+<p>廃止が年 1,700 〜 1,900 件台で、開設が年 1,300 件前後という現在の構図は、当面続くと考えられる。個人立が 72.4% を占め、院長の年齢が高いからである。 2012 〜 2017 年のように開設が廃止を上回る状況へ戻る材料は、確認した資料の中に見当たらない。以上は筆者の推論である。</p>
+
+<h3 id="sec6-3">6.3 競争の軸は、診療の中身に移る</h3>
+<p>需要の重心は、子どものむし歯の治療から、高齢者の口の管理に移っている。 80 歳で 20 本以上の歯を持つ人の割合は、約 61.5% と推計されている。 <sup id="fnref-3-11"><a href="#ref-3">[3]</a></sup> 自分の歯を長く保つ人が増えるほど、歯周病の治療と定期的な管理の需要が増える。さらに、要介護の高齢者に対する歯科訪問診療は、供給が推定需要の約 5 割にとどまる（ 2023 年）。 <sup id="fnref-3-12"><a href="#ref-3">[3]</a></sup></p>
+<p>数の面では、全国の合計で大きな過剰も、大きな不足も起きない見込みである。問題は、地域と診療の内容の偏りに移る。人口 10 万人当たりの歯科医師数は、二次医療圏（都道府県より小さい地域の区分）の間で、最小の 33 人から最大の 133 人まで開く（東京都の中央部を除く）。 <sup id="fnref-3-13"><a href="#ref-3">[3]</a></sup> 新規開業の成否は、立地と、高齢者の需要をどう取り込むかで決まると考えられる。これも筆者の推論である。</p>
+</section>
+
+<section id="sec7"><h2><span class="no">7</span> まとめ――余ったのは、むし歯を詰める仕事である</h2>
+<p>冒頭の見方に、最終的に答える。隆盛は、国の増員政策が作った。供給過剰は、国が 1982 年に認めた。閉院は、一貫して多かった。しかし 2020 年以降に開院が相次いでいるという統計はなく、開院は 2010 年代前半より少ない。</p>
+<p>「閉院が続く」と「街中で開院を見かける」は、両立する。年に 1,700 件前後が閉じ、 1,300 件前後が開くからである。見える側と、見えない側がある。</p>
+<p>余ったのは、歯科医院そのものではなく、子どものむし歯を詰める仕事だった、と筆者は考える。足りないのは、通えない高齢者のところへ行く歯科である。数の議論は、診療の中身の議論に置き換わりつつある。</p>
+<div class="box">
+<p><strong>この文書の限界</strong></p>
+<ul>
+<li>都道府県別・市区町村別の開設件数を確認していない。</li>
+<li>むし歯の減少の原因を、統計だけでは切り分けられない。</li>
+<li>診療報酬や医院の収益といった経営指標は、検討していない。</li>
+<li>需給推計は、厚生労働省のワーキンググループで検討中の資料である。最終の報告は別に確認する必要がある。</li>
+</ul>
+</div>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> 歯科大学・国立大学歯学部の増設の歴史を解説したウェブページ（二次資料）。 <a href="https://koyu-ndu.gr.jp/home/?page_id=4354">解説ページ</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> 日本歯科医師会「歯科医師需給問題に関する日本歯科医師会の意見」、厚生労働省の歯科医師の需給問題に関するワーキンググループ提出資料、 2015 年 6 月 3 日。 <a href="https://www.mhlw.go.jp/file/05-Shingikai-10801000-Iseikyoku-Soumuka/0000120883.pdf">厚生労働省 (PDF)</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <sup><a href="#fnref-3-5">e</a></sup> <sup><a href="#fnref-3-6">f</a></sup> <sup><a href="#fnref-3-7">g</a></sup> <sup><a href="#fnref-3-8">h</a></sup> <sup><a href="#fnref-3-9">i</a></sup> <sup><a href="#fnref-3-10">j</a></sup> <sup><a href="#fnref-3-11">k</a></sup> <sup><a href="#fnref-3-12">l</a></sup> <sup><a href="#fnref-3-13">m</a></sup> 厚生労働省医政局歯科保健課<em>歯科医療提供体制・歯科医師の現状について</em>、第 1 回歯科医師の適切な配置等に関するワーキンググループ資料 2 、 2025 年 7 月 1 日。医療施設調査、医師・歯科医師・薬剤師統計、歯科疾患実態調査などの数値を含む。 <a href="https://www.mhlw.go.jp/content/10804000/001533278.pdf">厚生労働省 (PDF)</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> <sup><a href="#fnref-4-3">c</a></sup> <sup><a href="#fnref-4-4">d</a></sup> 厚生労働省医政局歯科保健課<em>歯科医療提供体制の現状について</em>、第 10 回歯科医療提供体制等に関する検討会資料 1 、 2024 年 12 月 25 日。患者調査の年齢階級別の推計患者数は、 9 ページ。 <a href="https://www.mhlw.go.jp/content/10804000/001511601.pdf">厚生労働省 (PDF)</a></li>
+<li id="ref-5">^ <sup><a href="#fnref-5-1">a</a></sup> <sup><a href="#fnref-5-2">b</a></sup> <sup><a href="#fnref-5-3">c</a></sup> <sup><a href="#fnref-5-4">d</a></sup> <sup><a href="#fnref-5-5">e</a></sup> 厚生労働省<em>令和 7 (2025) 年医療施設（動態）調査・病院報告の概況</em>。 <a href="https://www.mhlw.go.jp/toukei/saikin/hw/iryosd/25/dl/11gaikyou07.pdf">厚生労働省 (PDF)</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> 厚生労働省<em>令和 3 (2021) 年医療施設（動態）調査・病院報告の概況</em>。 2012 〜 2015 年の開設・廃止の件数と、開設者を変更した施設の数を使った。 <a href="https://www.mhlw.go.jp/toukei/saikin/hw/iryosd/21/dl/11gaikyou03.pdf">厚生労働省 (PDF)</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> 東京商工リサーチによる、 2024 年の医療機関の倒産と休廃業・解散の調査。歯科医院の件数を含む。 2025 年 2 月 25 日発表。 <a href="https://www.tsr-net.co.jp/data/detail/1200991_1527.html">東京商工リサーチ</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> <sup><a href="#fnref-8-3">c</a></sup> 公益財団法人ライオン歯科衛生研究所、 12 歳の永久歯の一人あたり平均むし歯（う歯）等数（ 12 歳 DMFT 指数）の年次推移。元データは、文部科学省<em>学校保健統計調査</em>。 <a href="https://www.lion-dent-health.or.jp/statistics/12_mushiba/">ライオン歯科衛生研究所</a></li>
+<li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> 日本口腔衛生学会フッ化物応用委員会<em>フッ化物配合歯磨剤に関する日本口腔衛生学会の考え方</em>、 2018 年。 <a href="https://www.kokuhoken.or.jp/jsdh/statement/file/statement_20180301.pdf">日本口腔衛生学会 (PDF)</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> 厚生労働省<em>フッ化物洗口マニュアル（ 2022 年版）</em>。 <a href="https://www.mhlw.go.jp/content/001037973.pdf">厚生労働省 (PDF)</a></li>
+<li id="ref-11">^ <sup><a href="#fnref-11-1">a</a></sup> <sup><a href="#fnref-11-2">b</a></sup> <sup><a href="#fnref-11-3">c</a></sup> <sup><a href="#fnref-11-4">d</a></sup> <sup><a href="#fnref-11-5">e</a></sup> <sup><a href="#fnref-11-6">f</a></sup> <sup><a href="#fnref-11-7">g</a></sup> オクスアイ医療事業開発による、歯科医院の開業資金の解説記事（公開日の記載なし）。 <a href="https://www.okusuai.co.jp/basic/b03/">解説記事 A</a></li>
+<li id="ref-12">^ <sup><a href="#fnref-12-1">a</a></sup> <sup><a href="#fnref-12-2">b</a></sup> <sup><a href="#fnref-12-3">c</a></sup> <sup><a href="#fnref-12-4">d</a></sup> 歯科医院の開業資金を解説した記事（開業支援事業者の運営。 2026 年 4 月 27 日公開）。 <a href="https://emdi.co.jp/blog/dental-clinic-opening-cost/">解説記事 B</a></li>
+<li id="ref-13">^ <sup><a href="#fnref-13-1">a</a></sup> <sup><a href="#fnref-13-2">b</a></sup> <sup><a href="#fnref-13-3">c</a></sup> 厚生労働省医政局歯科保健課<em>歯科医師の需給推計・地域差について</em>、第 13 回歯科医療提供体制等に関する検討会資料 1 、 2026 年 7 月 15 日。第 6 回歯科医師の適切な配置等に関するワーキンググループ（ 2026 年 2 月 27 日）の資料を含む。 <a href="https://www.mhlw.go.jp/content/10804000/001724074.pdf">厚生労働省 (PDF)</a></li>
+</ol>
+<p class="endnote">数値は、各資料の公表時点のものである。確認日は 2026 年 11 月 16 日。初期投資の目安は、公的統計ではなく、事業者の記事による。</p>
+</div>
+</div>
+</body>
+</html>
