@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>一夫多妻制は解禁すべきか――「自然」と「過去の実態」を根拠とする主張の賛否</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">法学・進化生物学・文化人類学からの検討</p>
+<h1>一夫多妻制は解禁すべきか<br>――「自然」と「過去の実態」を根拠とする主張の賛否</h1>
+<p class="subtitle">Legalizing Polygyny: A Two-Sided Examination of the Arguments from Nature and Historical Precedent</p>
+<p>「哺乳類では自然だ」「人間も近代以前は多かった」という二つの根拠は、解禁の理由として、どこまで通用するのか。</p>
+</header>
+<div class="wrap">
+
+<div class="lede">
+<p><strong>要旨</strong><br>一夫多妻制の解禁を求める主張は、哺乳類での普通さと、人間社会での歴史的な広がりを根拠にする。本稿は、この主張を五つの命題に分け、賛成と反対の双方について、最も強い形の論拠を並べて検討した。結論は三点である。</p>
+<p>第一に、「自然」も「歴史」も、事実としては部分的にしか成り立たず、成り立つ部分も、解禁の理由にはならない。第二に、賛成論の核心は、成人の合意にもとづく関係を、国家が禁じる理由はどこにあるのか、という自由主義の問いである。第三に、反対論の核心は、男性余り、平等、子どもへの影響、制度の設計費用であり、日本でそれがどの大きさになるかは、実証されていない。</p>
+<p>筆者の判断では、「一夫のみ」を認め、自然と歴史を根拠とする、主張の形のままでの解禁は、支持しにくい。一方で、合意と平等を満たす制度の設計を問う議論は、検討に値する。</p>
+<p><strong>キーワード</strong>：一夫多妻制、重婚、婚姻法、公序良俗、自然主義的誤謬</p>
+</div>
+
+<div class="meta band"><strong>【方法と限界】</strong>文献は、書誌情報と要旨で確認できた範囲で扱い、全文を読んでいないものが多い。法令は、条文の現行版を確認していない。国数や比率の概数は、集計の方法で変わる。解禁の是非は価値判断を含むため、事実の記述と、賛否の論拠と、筆者の判断を、章で分けて記す。</div>
+
+<nav class="toc" aria-label="目次">
+<b>目次</b>
+<ol>
+<li><a href="#sec1">序論</a>
+<ol>
+<li><a href="#sec1-1">問題の所在</a></li>
+<li><a href="#sec1-2">本稿の構成と立場</a></li>
+</ol>
+</li>
+<li><a href="#sec2">検討の対象と用語</a>
+<ol>
+<li><a href="#sec2-1">主張を五つの命題に分ける</a></li>
+<li><a href="#sec2-2">用語</a></li>
+</ol>
+</li>
+<li><a href="#sec3">前提の事実は成り立つか</a>
+<ol>
+<li><a href="#sec3-1">哺乳類では「ふつう」なのか</a></li>
+<li><a href="#sec3-2">人間は、どれほど一夫多妻だったのか</a></li>
+<li><a href="#sec3-3">現代は「ほぼすべての国」が一対一か</a></li>
+</ol>
+</li>
+<li><a href="#sec4">賛成論：最も強い形</a>
+<ol>
+<li><a href="#sec4-1">成人の合意と、国家が禁じる理由</a></li>
+<li><a href="#sec4-2">公序良俗は動く</a></li>
+<li><a href="#sec4-3">すでにある関係に、法の保護を与える</a></li>
+<li><a href="#sec4-4">少子化と経済</a></li>
+<li><a href="#sec4-5">信教の自由</a></li>
+</ol>
+</li>
+<li><a href="#sec5">反対論：最も強い形</a>
+<ol>
+<li><a href="#sec5-1">「自然」は、規範の根拠にならない</a></li>
+<li><a href="#sec5-2">男性余りの算術</a></li>
+<li><a href="#sec5-3">平等と女性の地位</a></li>
+<li><a href="#sec5-4">子どもへの影響</a></li>
+<li><a href="#sec5-5">制度の設計費用</a></li>
+<li><a href="#sec5-6">財産が決める制度</a></li>
+</ol>
+</li>
+<li><a href="#sec6">考察：争点はどこにあるか</a>
+<ol>
+<li><a href="#sec6-1">争点の整理</a></li>
+<li><a href="#sec6-2">主張の形が抱える問題</a></li>
+<li><a href="#sec6-3">双方に共通する弱点</a></li>
+</ol>
+</li>
+<li><a href="#sec7">結論</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 序論</h2>
+<h3 id="sec1-1">1.1 問題の所在</h3>
+<p>一夫多妻制の解禁を求める主張には、説得力のある部分と、そうでない部分が混ざっている。主張はこう組み立てられている。一夫多妻は、多くの哺乳類で見られる、自然な生態である。人間でも、近代以前には多かった。人間以外では、雄どうしの戦いの勝者が複数の雌と交尾するのに対し、人間では、財産の多さがその役を果たす。現代の国は、ほぼすべてが一対一の婚姻を基本にするが、これは公序良俗に反するという認識の産物で、前の二点を考えれば、解禁すべきである。</p>
+<p>この論法は、直観に訴える力が強い。動物の例も、歴史の例も、具体的だからである。だが、「自然であること」や「昔は多かったこと」から、「今、法で認めるべきこと」へ、どう橋を架けるのか。この橋が、主張の最も弱い箇所である。同時に、橋を外しても、別の足場から解禁を論じられるのかどうかが、本稿の問いである。</p>
+<h3 id="sec1-2">1.2 本稿の構成と立場</h3>
+<p>第 2 章で主張を命題に分け、第 3 章で、前提とされる事実を確かめる。第 4 章と第 5 章で、賛成と反対の論拠を、それぞれ最も強い形で示す。弱い形に反論して勝つことは、検討にならないからである。第 6 章で争点を整理し、第 7 章で、筆者の判断を、他の章と区別して記す。</p>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 検討の対象と用語</h2>
+<h3 id="sec2-1">2.1 主張を五つの命題に分ける</h3>
+<p>主張は、事実の命題と、価値判断の命題が、一続きに書かれている。分けて扱わないと、事実が誤りなら結論も崩れる、という誤った印象が生まれる。逆に、事実が正しければ結論も正しい、という印象も生まれる。</p>
+<table>
+<thead><tr><th>命題</th><th>内容</th><th>性格</th><th>検討する章</th></tr></thead>
+<tbody>
+<tr><th>P1</th><td data-label="内容">一夫多妻は、多くの哺乳類で見られる自然な生態である。</td><td data-label="性格">事実</td><td data-label="検討する章">3.1</td></tr>
+<tr><th>P2</th><td data-label="内容">人間でも、近代以前には多く存在した。</td><td data-label="性格">事実</td><td data-label="検討する章">3.2</td></tr>
+<tr><th>P3</th><td data-label="内容">人間では、戦いの勝敗ではなく、財産の多さが、複数の配偶者をもつ条件になる。</td><td data-label="性格">事実と解釈</td><td data-label="検討する章">3.2 、 5.6</td></tr>
+<tr><th>P4</th><td data-label="内容">現代は、ほぼすべての国で、一対一の婚姻が基本である。</td><td data-label="性格">事実</td><td data-label="検討する章">3.3</td></tr>
+<tr><th>P5</th><td data-label="内容">一夫多妻を公序良俗に反するとみなすのは誤りで、解禁すべきである。</td><td data-label="性格">価値判断</td><td data-label="検討する章">4 、 5 、 6</td></tr>
+</tbody>
+</table>
+<h3 id="sec2-2">2.2 用語</h3>
+<dl class="words">
+<dt>一夫多妻制 (polygyny)</dt>
+<dd>一人の男性が、同時に複数の妻をもつ婚姻の形。</dd>
+<dt>重婚・複婚 (polygamy)</dt>
+<dd>一人が同時に複数の配偶者をもつ婚姻の総称。男女のどちらにも使う。一人の女性が複数の夫をもつ形は、一妻多夫 (polyandry) という。</dd>
+<dt>社会的一夫一婦</dt>
+<dd>動物学で、番い（つがい）で生活し、子を育てる形。ほかの個体との交尾がないことは、意味しない。</dd>
+<dt>公序良俗</dt>
+<dd>社会の一般的な秩序と、善良な風俗。民法 90 条は、これに反する法律行為を無効とする。</dd>
+</dl>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 前提の事実は成り立つか</h2>
+<h3 id="sec3-1">3.1 哺乳類では「ふつう」なのか</h3>
+<p>雄が戦って雌を独占する例は、確かにある。ゾウアザラシやゴリラでは、体の大きな少数の雄が、群れの雌の多くと交尾する。この点で、 P1 の骨格は正しい。</p>
+<p>ただし、「一夫多妻」と「一夫一婦」の二択で、哺乳類の婚姻の形は描けない。 2,500 種を超える哺乳類を比べた研究は、祖先の形が単独生活で、社会的一夫一婦が、少なくとも 61 回、独立に生じたことを示した。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 一夫一婦の種は、哺乳類の全体では少数派であるが、「例外」と片づけられる数でもない。また、「自然」の中には、雄が新しい群れを得たとき、前の雄の子を殺す例も含まれる。ライオンなどで知られる行動である。</p>
+<h3 id="sec3-2">3.2 人間は、どれほど一夫多妻だったのか</h3>
+<p>人類学の古典的な集計では、 1,231 の社会のうち、一夫多妻を認める社会が、およそ 85% を占める。一夫一婦だけの社会は、 186 にとどまる。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> この数字は、 P2 を支える。</p>
+<p>ここで、「認められていること」と「実際に行われていること」を分ける必要がある。一夫多妻を認める社会でも、複数の妻をもつ男性は、少数にとどまる傾向があるとされる。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 資源をもつ男性にしか、複数の妻を養えないからである。これは、主張の P3 と同じ見立てである。ただし、この見立ては、あとの 5.6 で、反対論の論拠にも転じる。</p>
+<p>日本の事情は、さらに複雑である。法の上で妻が一人に限られたのは、明治 31 年（ 1898 年）施行の民法からと説明される。ただし、妾（めかけ）の存在が、その後も、社会的に容認されていた時期が続いたとされる。「二十世紀前半までは珍しくなかった」という主張は、法制上の一夫多妻ではなく、事実上の複数の関係を指す場合に、よく当てはまる。</p>
+<h3 id="sec3-3">3.3 現代は「ほぼすべての国」が一対一か</h3>
+<p>P4 は、誇張を含む。イスラム法を婚姻法に反映する国と、サハラ以南アフリカの一部の国では、一夫多妻が、法的に認められている。国数は集計で変わるが、数十か国にのぼる。一方、トルコ（ 1926 年）やチュニジア（ 1956 年）のように、イスラム教徒が多数の国でも、禁止した国がある。モロッコは、 2004 年に、裁判官の許可などの条件を課して、事実上の制約を強めた。</p>
+<p>日本では、民法 732 条が、配偶者のある者の重ねての婚姻を禁じ、刑法 184 条が、重婚を罰する。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 解禁は、この二つの条文の改正から始まる。</p>
+<div class="point">
+<p>事実の検討の結果は、次のとおりである。 P1 は部分的に正しい。 P2 は、「容認」としては正しいが、「実態」としては限定的である。 P4 は、「ほぼすべて」が過大である。いずれも、解禁の理由には、そのままでは、ならない。</p>
+</div>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 賛成論：最も強い形</h2>
+<p>賛成論が最も強くなるのは、「自然だから」という論拠を、いったん外したときである。残る足場は、五つある。</p>
+<h3 id="sec4-1">4.1 成人の合意と、国家が禁じる理由</h3>
+<p>自由主義の原則では、他者に危害を与えない成人の行為を、国家は禁じるべきでない。 J. S. ミルの他者危害原則である。成人が自由な意思で、複数の人との婚姻に合意するなら、国家が禁じるには、具体的な害を示す責任がある。「公序良俗に反する」という認識だけでは、その責任を果たしたことにならない。</p>
+<h3 id="sec4-2">4.2 公序良俗は動く</h3>
+<p>公序良俗の中身は、時代で変わってきた。日本でも、婚外子の相続分を嫡出子の半分とする規定は、長く合憲とされたが、 2013 年に、最高裁判所の大法廷が違憲と判断した。同性婚をめぐる議論も、同じ構図をもつ。「多くの人がそう感じること」と「禁じてよい理由があること」は、別である。</p>
+<h3 id="sec4-3">4.3 すでにある関係に、法の保護を与える</h3>
+<p>愛人関係や事実婚の形で、事実上、複数の関係を続けている人は、すでにいる。その関係では、第二の配偶者とその子が、扶養や相続や社会保障の保護を受けにくい。禁止は、その関係をなくす力をもたないまま、弱い立場の人から、法の保護を奪っている。解禁は、この人たちを、法の内側に入れる手段になる。</p>
+<h3 id="sec4-4">4.4 少子化と経済</h3>
+<p>サハラ以南アフリカを題材にした経済モデルは、一夫一婦の強制が、出生率を下げ、貯蓄を増やすと予測した。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 賛成論は、この種の研究を手がかりに、少子化への効果を主張できる。ただし、モデルの前提は、婚資の慣行や農村経済で、日本には直接当てはまらない。この論拠は、五つのうち、最も弱い。</p>
+<h3 id="sec4-5">4.5 信教の自由</h3>
+<p>一夫多妻を教義の一部とする宗教の信者にとって、禁止は、信教の自由（憲法 20 条）への制約になる。ただし、米国の連邦最高裁判所は、 1878 年に、宗教上の理由でも重婚の処罰は許されると判断した。日本でも、信教の自由は、他者の権利との調整に服する。この論拠は、単独では決め手にならない。</p>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 反対論：最も強い形</h2>
+<p>反対論が最も強くなるのは、「伝統だから」という論拠を、外したときである。残る足場は、六つある。</p>
+<h3 id="sec5-1">5.1 「自然」は、規範の根拠にならない</h3>
+<p>「ある」ことから、「あるべきだ」は導けない。自然に見られる行動は、子殺しも含め、善悪の基準としては、役に立たない。人間は、自然に見られることを、そのまま制度にしてきたわけではない。医療も、法も、自然の摂理に逆らう営みである。</p>
+<p>しかも、主張自身が、人間と動物の違いを認めている。動物では戦いの勝敗が、人間では財産が、複数の配偶者をもつ条件になる。この違いを認めた時点で、動物の例は、人間の制度を決める根拠として、使えなくなる。</p>
+<h3 id="sec5-2">5.2 男性余りの算術</h3>
+<p>男女の人口が、ほぼ等しいとする。一人の男性が 3 人の妻をもてば、 2 人の男性が、配偶者を得られない。一夫多妻は、数の上で、結婚できない男性を生む。日本では、 2020 年に、 50 歳の時点で一度も結婚していない人の割合が、男性で約 28% 、女性で約 18% だった。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 男性の側に、すでに大きな偏りがある。</p>
+<p>この偏りの結果として、一夫多妻の社会では、男性どうしの競争が激しくなり、犯罪が増え、女性の初婚の年齢が下がる、という議論がある。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 一対一の婚姻の規範が、男性間の競争を弱め、社会の安定に寄与した、という仮説である。ただし、これは仮説の段階で、交絡する要因も多い。</p>
+<h3 id="sec5-3">5.3 平等と女性の地位</h3>
+<p>国連の自由権規約委員会は、一般的意見 28 号で、一夫多妻が女性の尊厳と相いれないとする立場をとっている。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 日本は、自由権規約と女子差別撤廃条約の、どちらの締約国でもある。また、日本国憲法 24 条は、婚姻を両性の合意にもとづくものとし、夫婦の同等の権利を定める。一夫多妻の解禁は、これらとの関係を、整理しなければならない。</p>
+<p>カナダでは、 2011 年に、ブリティッシュコロンビア州の最高裁判所が、重婚を禁じる刑法の規定を、合憲と判断した。判断は、一夫多妻が、女性と子どもに害をもたらすという、立証された事実に依拠した。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> ただし、この審理が扱ったのは、閉じた宗教共同体の例が中心で、一般の家庭にそのまま広げられるかは、別の問題である。</p>
+<h3 id="sec5-4">5.4 子どもへの影響</h3>
+<p>一夫多妻の家庭では、父親の資源と関心が、複数の妻子に分かれる。若い女性が、年長の男性の妻になる例も多く、児童婚との関連も指摘される。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> ただし、これらの害は、貧困や教育の欠如と絡み合っており、一夫多妻そのものの効果を、取り出すのは難しい。反対論は、この点で、証拠の限界を認める必要がある。</p>
+<h3 id="sec5-5">5.5 制度の設計費用</h3>
+<p>日本の婚姻の制度は、配偶者が一人であることを前提に作られている。相続分、扶養、年金や健康保険の扱い、税の控除、戸籍の記載、離婚の際の財産分与が、すべて、そうである。解禁するには、これらを、全面的に作り直さなければならない。第二の妻の相続分は、どう決めるのか。妻どうしの間で、扶養の順位をどうつけるのか。制度の費用は、利用者が少ない場合でも、減らない。</p>
+<h3 id="sec5-6">5.6 財産が決める制度</h3>
+<p>主張は、人間では、財産の多さが、複数の妻をもつ条件になるとする。この見立てが正しければ、解禁は、経済力のある男性に、配偶者を集中させる制度になる。男性間の格差は、婚姻の格差へ、さらに子の世代の格差へと、受け継がれる。また、経済力の差が大きい相手との婚姻では、女性が実質的に断れるのか、離れられるのか、という「合意の質」の問題が残る。</p>
+</section>
+
+<section id="sec6"><h2><span class="no">6</span> 考察：争点はどこにあるか</h2>
+<h3 id="sec6-1">6.1 争点の整理</h3>
+<p>賛否の論拠は、五つの争点に整理できる。どの争点も、結論を決めるのは、日本での規模の見積もりである。</p>
+<table>
+<thead><tr><th>争点</th><th>賛成側の見立て</th><th>反対側の見立て</th><th>決め手になる証拠</th></tr></thead>
+<tbody>
+<tr><th>自由と合意</th><td data-label="賛成側の見立て">合意した成人の関係を禁じるには、害の立証が要る。</td><td data-label="反対側の見立て">経済力の差と社会の圧力で、合意の質は損なわれる。</td><td data-label="決め手になる証拠">合意と離脱の実態調査</td></tr>
+<tr><th>男性余りと競争</th><td data-label="賛成側の見立て">利用者は少数で、社会への影響は小さい。</td><td data-label="反対側の見立て">結婚できない男性が増え、競争が激しくなる。</td><td data-label="決め手になる証拠">利用者の割合の見積もり</td></tr>
+<tr><th>平等と女性の地位</th><td data-label="賛成側の見立て">男女とも対象にすれば、平等は保てる。</td><td data-label="反対側の見立て">実際には、男性の一夫多妻に偏り、女性の地位が下がる。</td><td data-label="決め手になる証拠">解禁した国の女性の地位の比較</td></tr>
+<tr><th>子どもの福祉</th><td data-label="賛成側の見立て">法の保護が、事実上の複数の関係の子を守る。</td><td data-label="反対側の見立て">資源の分散と児童婚で、子の福祉が下がる。</td><td data-label="決め手になる証拠">貧困の影響を除いた比較研究</td></tr>
+<tr><th>制度の費用</th><td data-label="賛成側の見立て">制度は、時間をかければ設計できる。</td><td data-label="反対側の見立て">全面改修の費用は、利用者の少なさに見合わない。</td><td data-label="決め手になる証拠">法制の改修範囲の試算</td></tr>
+</tbody>
+</table>
+<h3 id="sec6-2">6.2 主張の形が抱える問題</h3>
+<p>主張は、「一夫」多妻を、解禁の対象とする。だが、 4.1 の自由主義の論拠は、性別にかかわらず成り立つ。合意した成人の関係を認めるなら、一妻多夫も、三人以上の関係も、同じ扱いになるはずである。男性にだけ複数の配偶者を認める制度は、憲法 14 条と 24 条の平等の原則と、衝突する。</p>
+<p>主張は、男性の側から見た、財産と配偶者の関係に、根拠を置いている。この根拠で、男女に平等な制度を支えることはできない。主張の根拠と、擁護できる制度の形が、ずれている。</p>
+<h3 id="sec6-3">6.3 双方に共通する弱点</h3>
+<p>賛成論は、「利用者は少数だから影響は小さい」と言うとき、同時に、「利益も小さい」ことを認めることになる。反対論は、害を強調するとき、害の証拠の多くが、日本と異なる社会の研究である点を、認めなければならない。規模の議論は、双方の論拠を、同じだけ弱める。</p>
+</section>
+
+<section id="sec7"><h2><span class="no">7</span> 結論</h2>
+<p>本稿は、一夫多妻制の解禁を求める主張を、五つの命題に分けて検討した。</p>
+<p>事実の面では、「自然」は部分的に正しく、「歴史」は容認の面で正しく、「現代はほぼすべて一対一」は、誤りを含む。価値の面では、「自然だから」「昔は多かったから」という論拠は、どちらも、解禁の理由にならない。解禁を論じるなら、足場は、成人の合意と、国家が禁じる理由にある。</p>
+<p>以下は、筆者の判断である。第一に、「一夫のみ」の解禁は、平等の原則と、主張自身の根拠の両方から、支持しにくい。第二に、性別にかかわらない形の婚姻制度については、 5.2 から 5.6 の害が、日本でどの大きさになるかを、まず確かめるべきである。第三に、確かめる前の解禁も、確かめないままの禁止の維持も、証拠が足りない点で、同じ程度に弱い。</p>
+<div class="point">
+<p>判断を分ける問いは、三つである。合意は、本当に自由か。結婚できない人が、どれだけ増えるか。子の福祉は、貧困を除いても、下がるか。三つの答えが出るまで、結論は、暫定のままである。</p>
+</div>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1"><a href="#fnref-1-1">^</a> Lukas, D. & Clutton-Brock, T. H. (2013) . The evolution of social monogamy in mammals. <em>Science</em> 341 (6145) : 526–530. <a href="https://agris.fao.org/search/en/records/676586cfc0e94e3bc291a468">AGRIS 書誌記録</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> Murdock, G. P. (1967) . <em>Ethnographic Atlas</em>. University of Pittsburgh Press. 民族誌の集計の古典。 <a href="https://d-place.org/">D-PLACE 民族誌データベース</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> Henrich, J., Boyd, R. & Richerson, P. J. (2012) . The puzzle of monogamous marriage. <em>Philosophical Transactions of the Royal Society B</em> 367 (1589) : 657–669. <a href="https://doi.org/10.1098/rstb.2011.0290">論文の DOI</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> 民法 732 条（重婚の禁止）と刑法 184 条（重婚の罪）。 <a href="https://laws.e-gov.go.jp/">e-Gov 法令検索</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> Tertilt, M. (2005) . Polygyny, fertility, and savings. <em>Journal of Political Economy</em> 113 (6) : 1341–1371. <a href="https://www.journals.uchicago.edu/doi/10.1086/498049">論文の掲載ページ</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> 総務省統計局『令和 2 年国勢調査』の、 50 歳時の未婚割合。 <a href="https://www.stat.go.jp/data/kokusei/2020/kekka.html">総務省統計局</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> 国連自由権規約委員会、一般的意見 28 号（ 2000 年、男女の権利の平等）。 <a href="https://nina.wiki.huji.ac.il/images/d/dc/Iccprgc28-en.pdf">一般的意見 28 号の写し</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> <em>Reference re: Section 293 of the Criminal Code of Canada</em>, 2011 BCSC 1588. <a href="https://canlii.ca/en/bc/bcsc/doc/2011/2011bcsc1588/2011bcsc1588.html">CanLII</a></li>
+</ol>
+<p class="endnote">書誌情報は検索で確認したが、全文を読んでいない文献が多い。 1,231 の社会の内訳、明治期の法制、 2013 年の最高裁決定、 1878 年の米国の判決、国数の概数は、周知の事項として書いたもので、個別の出典を確かめていない。一般的意見 28 号の文言と、各国の現行法は、未確認である。</p>
+</div>
+</div>
+</body>
