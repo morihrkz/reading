@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「行き過ぎ」はどこからか――女子競技における性自認の自己申告を考える</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">論考</p>
+<h1>「行き過ぎ」はどこからか――女子競技における性自認の自己申告を考える</h1>
+<p class="subtitle">Where Inclusion Overreaches: Self-Declared Gender Identity and Eligibility for the Female Category in Sport</p>
+<p>男子選手が「自分の心は女性だ」と申告するだけで、女子競技に出られるのか。この問いを、制度と実証研究から検討する。</p>
+</header>
+<div class="wrap">
+<div class="lede"><p><strong>要旨</strong><br>結論から述べる。性自認の自己申告のみを女子競技の資格とすることは、エリート競技と対人接触のある競技では、女子カテゴリーの存在理由と整合しない。この点で「行き過ぎ」と評価できる。ただし、これは出生時の性別が男性の人々を競技から締め出してよい、という結論ではない。排除の側にも「行き過ぎ」がありうる。両者を分ける基準は、目的との整合、代替手段の有無、不利益の偏りの三つである。</p></div>
+<p class="meta">2026-11-17 作成 ・ 2026 年 11 月までの公開情報に基づく</p>
+<div class="meta band"><strong>【方法と限界】</strong>国際機関・競技団体の公表資料と、査読誌の論文・総説を参照した。年表の一部の項目（ 2004 年、 2015 年、 2020 年、 2022 年の規程と、 2021 年・ 2022 年・ 2024 年の個別の事例）は、筆者の既存の知識に基づき、本稿では個別の出典を確かめていない。日本の競技団体の規程は未確認である。実証研究は標本が小さく、エリート選手を直接測ったものがほとんどない。どの程度の有利なら許容するかは、科学では決まらない価値判断であり、その部分は筆者の判断として書き分ける。</div>
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">問題の所在</a></li>
+<li><a href="#sec2">用語と、問いの限定</a></li>
+<li><a href="#sec3">女子カテゴリーは何のためにあるのか</a></li>
+<li><a href="#sec4">実証研究は何を示しているか</a>
+<ol>
+<li><a href="#sec4-1">4.1 思春期が作る差</a></li>
+<li><a href="#sec4-2">4.2 ホルモン療法のあとに残るもの</a></li>
+<li><a href="#sec4-3">4.3 データが答えられないこと</a></li>
+</ol>
+</li>
+<li><a href="#sec5">制度は、どう振れてきたか</a></li>
+<li><a href="#sec6">反対説の検討</a>
+<ol>
+<li><a href="#sec6-1">6.1 排除は、参加の権利の侵害ではないか</a></li>
+<li><a href="#sec6-2">6.2 トップ選手は、みな遺伝的に特異ではないか</a></li>
+<li><a href="#sec6-3">6.3 事例は少数で、問題は誇張されていないか</a></li>
+</ol>
+</li>
+<li><a href="#sec7">線引きの試案</a></li>
+<li><a href="#sec8">結論と、残る課題</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 問題の所在</h2>
+<p>2022 年 3 月、米国大学体育協会 (NCAA) の全米選手権で、トランスジェンダー女性の選手が女子 500 ヤード自由形を制した。この選手は、数年前まで男子チームで泳いでいた。ホルモン療法を経て女子の枠に移り、女子の頂点に立ったのである。称賛と反発が同時に起きた。そして、一つの問いが残った。女子の競技は、誰のためにあるのか。</p>
+<p>その後の数年で、制度は大きく振れた。 NCAA は 2025 年に、女子競技への参加を出生時の性別が女性の選手に限った。 IOC （国際オリンピック委員会）も、 2026 年 3 月に、女子カテゴリーを生物学的な女性に限る方針を決めた。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 主要な組織の側では、「自己申告で足りるか」という問いは、すでに「足りない」という方向で決着しつつある。</p>
+<p>では、問いは終わったのか。そうではない。本稿が立てる問いは二つある。第一に、自己申告のみを資格とすることを、どう評価するか。第二に、それを退けた側に、新たな「行き過ぎ」が生じていないか。「行き過ぎ」とは、一方向にだけ向く言葉ではない。どこまでが妥当で、どこからが過剰かを、目的に照らして測る作業が要る。</p>
+<p>測るためには、まず、言葉の意味をそろえなければならない。</p>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 用語と、問いの限定</h2>
+<dl class="words">
+<dt>性別 (sex)</dt><dd>ここでは、身体の性を指す。染色体、性腺、性ホルモン、体格などの総体である。</dd>
+<dt>性自認 (gender identity)</dt><dd>自分がどの性であるかという、本人の内面の感覚である。</dd>
+<dt>トランスジェンダー女性</dt><dd>出生時に男性と判定され、性自認が女性である人。</dd>
+<dt>性分化疾患 (DSD)</dt><dd>染色体や性腺などの発達が、典型的な男女の型と異なる状態の総称。トランスジェンダーとは別の概念である。</dd>
+</dl>
+<p>本稿は、性自認の自己申告のみを資格とする制度を主な対象とし、 DSD の選手の扱いには深入りしない。 DSD をめぐる論争は、検査の方法や人権の観点で別の論点を含むので、別稿に譲る。</p>
+<p>もう一つ、範囲を限る。本稿が論じるのは、競技の「女子カテゴリー」の資格であり、生活や雇用における性自認の尊重の是非ではない。後者を認めることと、前者に別の基準を置くことは、矛盾しない。この区別を欠くと、議論は「全面的に認めるか、全面的に否定するか」の二択に痩せてしまう。</p>
+<p>残る問いは、女子カテゴリーが、そもそも何のために作られたのかである。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 女子カテゴリーは何のためにあるのか</h2>
+<p>競技が男女で分かれているのは、慣習のためではない。思春期以降の身体の差が、成績に直結するからである。内分泌学者らの総説によれば、思春期のあとの男性の循環テストステロン濃度は、女性の約 15 〜 20 倍に達する。その結果、筋量、筋力、ヘモグロビン濃度、骨格に差が生じ、成績の差は、走や水泳でおよそ 10% 前後、跳躍で約 20% 、パワー系の種目ではさらに大きいと整理されている。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 思春期の前には、この差はほとんどない。</p>
+<p>ここから、カテゴリーの設計について、一つの原則が引ける。競技の区分は、区分の目的と関連する特性で決めるべきだ。体重別の階級は体重で、年齢別のクラスは年齢で、障害のクラスは機能の程度で分ける。いずれも、競技の成績に効く特性を基準にしている。女子カテゴリーの目的が「成績に効く身体の差から、女性が閉め出されるのを防ぐこと」なら、基準も、その身体の差と関連していなければならない。</p>
+<div class="point"><p>性自認は、内面の感覚である。筋量・ヘモグロビン・骨格に、直接は作用しない。したがって、性自認のみを基準にすると、区分の基準と、区分の目的とが切れてしまう。これは筆者の推論であり、基準が目的と関連するべきだという原則に立っている。</p></div>
+<p>この原則に立つかぎり、自己申告のみの資格は、構造的な弱点を持つ。申告が誠実であっても、誠実でなくても、女子カテゴリーに入る身体の条件は変わらないからである。</p>
+<p>もっとも、女子カテゴリーの意味は、公平だけではない。女性の選手に、記録、表彰台、奨学金、ロールモデルという機会を保障する役割もある。この二つの目的を、実証研究は、どこまで支えるのか。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 実証研究は何を示しているか</h2>
+<h3 id="sec4-1">4.1 思春期が作る差</h3>
+<p>前節で見たとおり、成績の差は思春期に生じる。そのため、この差の大部分は、男性としての思春期を経たかどうかで決まる。出生時の性別が男性でも、思春期の前にホルモン療法を始めた場合は、事情が異なる。ただし、競技の第一線にいる成人のトランスジェンダー女性の多くは、男性としての思春期を経ている。</p>
+<h3 id="sec4-2">4.2 ホルモン療法のあとに残るもの</h3>
+<p>では、テストステロンを抑えれば、差は消えるのか。三つの研究が、同じ方向を示している。</p>
+<ul>
+<li>ある総説は、 12 か月のテストステロン抑制で、除脂肪量・筋面積・筋力の減少は約 5% にとどまると報告した。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></li>
+<li>24 件の研究を調べた系統的レビューは、 12 か月で筋力などは有意に減るが、 36 か月後でも、女性の値を上回ると結論した。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></li>
+<li>米国空軍の隊員（トランスジェンダー女性 46 人）の研究では、ホルモン療法 1 年後でも、 1.5 マイル走の速度が女性より平均で約 9% 速かった。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></li>
+</ul>
+<p>つまり、ホルモン療法で差は縮むが、消えない。男性の思春期が残した骨格や筋の土台は、あとからは戻らない、と考えられる。</p>
+<div class="caution"><p>これらの研究にも限界がある。標本が小さく、対象は一般人や軍人で、エリート選手ではない。 36 か月を超える追跡も乏しい。 2026 年には、トランスジェンダー女性と女性の間に、体組成・筋力・有酸素能力の有意な差は見られないとする系統的レビューとメタ分析も報じられた。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 結論は、研究によって割れている。本稿は、この新しい報告の内容を検討していない。</p></div>
+<h3 id="sec4-3">4.3 データが答えられないこと</h3>
+<p>平均的な有利が残るという知見は、次の三つを、直接には教えない。ある競技での有利の大きさ。個々の選手の勝敗への影響。そして、その有利を許容すべきかどうか。最後の問いは、科学の問いではない。何をどこまで「公平」と呼ぶかという、価値の問いである。制度が揺れ続けてきた理由は、ここにある。</p>
+<p>制度は、その価値の問いに、どう答えてきたのか。</p>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 制度は、どう振れてきたか</h2>
+<p>基準は、手術から、ホルモン値へ、そして出生時の性別へと動いた。主な節目を並べる。</p>
+<ul class="tl">
+<li><span class="yr">2004 年</span> <b>IOC ストックホルム合意</b><br>性別適合手術と、 2 年以上のホルモン療法を条件に、女子への参加を認めた。</li>
+<li><span class="yr">2015 年</span> <b>IOC の新合意</b><br>手術の要件を外し、血中テストステロンを 10 nmol/L 未満に 12 か月保つ条件とした。</li>
+<li><span class="yr">2020 年</span><b>ワールドラグビー</b><br>安全性を主な理由に、トランスジェンダー女性を女子の試合から外す方針を示した。</li>
+<li><span class="yr">2021 年</span> <b>IOC の枠組み</b><br>「有利と決めつけない」ことを原則とし、基準づくりを各競技団体に委ねた。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 同年の東京大会には、重量挙げのトランスジェンダー女性の選手が出場した。</li>
+<li><span class="yr">2022 年</span><b>国際水泳連盟（現ワールドアクアティクス）</b><br>男性としての思春期を経た選手を、女子のエリート競技から外す方針を決めた。</li>
+<li><span class="yr">2023 年</span><b>ワールドアスレティックス</b><br>男性としての思春期を経たトランスジェンダー女性を、国際大会の女子から除いた。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></li>
+<li><span class="yr">2025 年</span> <b>NCAA と英国最高裁</b><br>NCAA は、女子競技を出生時に女性とされた選手に限った。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 英国最高裁は、平等法の「女性」を生物学的な性だと判断した。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></li>
+<li><span class="yr">2026 年</span> <b>IOC の新方針</b><br>女子カテゴリーを生物学的な女性に限り、 SRY 遺伝子の検査を導入する。 2028 年のロサンゼルス大会から適用される。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></li>
+</ul>
+<p>この流れで見落とせない点がある。筆者の確認した範囲では、国際競技団体のエリート大会で、自己申告のみを資格とする規程は見つからなかった。 2021 年の IOC の枠組みも、「有利と決めつけるな」と述べたにすぎず、申告のみで足りるとは述べていない。自己申告を基準にした運用は、むしろ学校スポーツなど、より下の層で議論されてきた。たとえば、米国の一部の州の高校競技は、性自認に基づく参加を認めてきた（筆者の既存の知識で、未検証）。</p>
+<p>つまり、エリート競技では、問いはほぼ決着した。争点は、その決着の「作り方」と、決着の外側へ移っている。</p>
+</section>
+
+<section id="sec6"><h2><span class="no">6</span> 反対説の検討</h2>
+<p>結論に傾く前に、反対の側の最も強い主張を取り上げ、検討する。</p>
+<h3 id="sec6-1">6.1 排除は、参加の権利の侵害ではないか</h3>
+<p>この主張には、重みがある。スポーツは、健康と社会参加の手段であり、トランスジェンダーの人々が競技から遠ざけられる害は、現実にある。</p>
+<p>しかし、この主張は、「どの枠で参加するか」を問わない。 IOC の 2026 年の方針も、出生時の性別が男性の選手を、男子カテゴリーと、性別で分けない種目には、引き続き認めている。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 問題は、参加の可否ではなく、受け皿の質である。草の根の競技には、男女のどちらにも居場所を見つけにくい人々が、実際にいる。ここが、排除の側の「行き過ぎ」が生じうる急所である。</p>
+<h3 id="sec6-2">6.2 トップ選手は、みな遺伝的に特異ではないか</h3>
+<p>水泳の金メダリストの体格のように、遺伝的な有利を持つ選手は、女子にも男子にもいる。それなのに、なぜ性別だけを問題にするのか、という反論である。</p>
+<p>答えは、差の性質にある。個人差は、連続的で、ばらつく。一方、性差は、思春期を境に生じる系統的な差で、集団の分布が二つの山に分かれる。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 個人差を理由にカテゴリーを分けることは、現実的でない。しかし、系統的な差が大きい二つの集団を、分けないままにすることもまた、合理的でない。性別でカテゴリーを分ける理由は、この点にある。</p>
+<h3 id="sec6-3">6.3 事例は少数で、問題は誇張されていないか</h3>
+<p>事例が少ないのは、事実である。トランスジェンダー女性の選手が女子の大会を席巻した例は、多くない。</p>
+<p>しかし、制度の設計は、頻度だけで決まらない。一人の勝者の後ろには、同じ枠を争った別の選手がいる。対人接触のある競技では、安全の問題が加わる。同時に、「少数だから問題ない」という論理は、逆向きにも働く。少数なら、別の受け皿を整える費用も小さいはずである。さらに、検査の導入には、副作用がある。トランスジェンダーではない女性が、性別を疑われて検査を迫られる例が、 2024 年のパリ大会の女子ボクシングをめぐる論争のように、すでに起きている。</p>
+<p>排除を論じるなら、その副作用まで、測らなければならない。では、線はどこに引けるのか。</p>
+</section>
+
+<section id="sec7"><h2><span class="no">7</span> 線引きの試案</h2>
+<p>「行き過ぎ」の判定には、三つの問いを使う。</p>
+<ul>
+<li>目的との整合：その基準は、カテゴリーの目的（公平・安全・機会の保障）と関連しているか。</li>
+<li>代替手段の有無：その基準で外れる人に、別の参加の道があるか。</li>
+<li>不利益の偏り：不利益が、特定の集団だけに偏っていないか。</li>
+</ul>
+<p>この三つで、資格の基準の候補を比べる。評価は、筆者の判断である。</p>
+<table>
+<thead><tr><th>基準</th><th>公平性</th><th>当事者への配慮</th><th>運用の現実性</th></tr></thead>
+<tbody>
+<tr><th>性自認の自己申告のみ</th><td data-label="公平性">低い。身体の条件と切れている。</td><td data-label="当事者への配慮">高い。</td><td data-label="運用の現実性">容易。ただし、悪用の実例は未確認。</td></tr>
+<tr><th>テストステロン値の抑制</th><td data-label="公平性">中程度。筋力や体格の差が残る。</td><td data-label="当事者への配慮">中程度。医療介入が条件になる。</td><td data-label="運用の現実性">中程度。継続的な測定が要る。</td></tr>
+<tr><th>思春期歴</th><td data-label="公平性">高い。差の源に対応する。</td><td data-label="当事者への配慮">低い。</td><td data-label="運用の現実性">中程度。記録の確認が要る。</td></tr>
+<tr><th>遺伝子検査 (SRY)</th><td data-label="公平性">高い。</td><td data-label="当事者への配慮">低い。 DSD の選手も外れ、私的な情報に触れる。</td><td data-label="運用の現実性">容易。原則 1 回で済む。</td></tr>
+<tr><th>別枠のオープン部門</th><td data-label="公平性">高い。他の基準と併せて使う。</td><td data-label="当事者への配慮">中程度。</td><td data-label="運用の現実性">難しい。参加者が少なく、成立しにくい。</td></tr>
+</tbody>
+</table>
+<p>この比較から、二つの判断が引ける。第一に、自己申告のみは、目的との整合の問いで落ちる。エリート競技と対人接触のある競技では、「行き過ぎ」といえる。第二に、思春期歴や遺伝子検査のような厳格な基準は、公平性は高いが、代替手段がなければ、不利益が特定の人々に偏る。ここでは、排除の側が「行き過ぎ」に転ぶ。</p>
+<div class="point"><p>したがって、筆者の試案は、組み合わせである。エリート競技と対人接触のある競技では、女子カテゴリーを、身体の条件（思春期歴など）に基づいて保護する。そのうえで、オープン部門や混合の種目を整え、参加の道を別に保障する。学校体育や草の根の競技では、競技の特性と安全に応じて、柔軟に運用する。これは筆者の判断であり、効果は検証されていない。</p></div>
+</section>
+
+<section id="sec8"><h2><span class="no">8</span> 結論と、残る課題</h2>
+<p>冒頭の問いに答える。男子選手が「自分の心は女性だ」と申告するだけで女子競技に出られる制度は、エリート競技と対人接触のある競技では、行き過ぎである。女子カテゴリーは、身体の差から女性を守るための区分であり、その基準は、身体の条件と関連していなければならない。</p>
+<p>だが、同じ物差しは、反対側にも当てはまる。受け皿を用意しないまま、出生時の性別だけで人々を競技の外へ押し出すなら、それも行き過ぎである。基準は、目的に合っていなければならない。外れる人には、道がなければならない。不利益は、一部の人に偏ってはならない。</p>
+<p>課題は三つ残る。エリート選手を直接測るデータを増やすこと。受け皿となるオープン部門の設計を試すこと。検査の運用が、トランスジェンダーではない女性の尊厳を損なわないようにすること。論争の熱は、最初の問いから、これらの地道な作業へ、移されるべきである。</p>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> 国際オリンピック委員会 (IOC) 。 <em>International Olympic Committee announces new Policy on the Protection of the Female (Women's) Category in Olympic Sport</em> 。 2026 年 3 月。 <a href="https://www.olympics.com/ioc/news/international-olympic-committee-announces-new-policy-on-the-protection-of-the-female-women-s-category-in-olympic-sport">IOC 公式発表</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> Handelsman DJ, Hirschberg AL, Bermon S. Circulating testosterone as the hormonal basis of sex differences in athletic performance. <em>Endocrine Reviews</em> 39 (5) , 803–829, 2018. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6391653">PubMed Central</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> Hilton EN, Lundberg TR. Transgender women in the female category of sport: perspectives on testosterone suppression and performance advantage. <em>Sports Medicine</em> 51, 199–214, 2021. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7846503">PubMed Central</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> Harper J, O'Donnell E, Sorouri Khorashad B, McDermott H, Witcomb GL. How does hormone transition in transgender women change body composition, muscle strength and haemoglobin? Systematic review with a focus on the implications for sport participation. <em>British Journal of Sports Medicine</em> 55, 865–872, 2021. <a href="https://doi.org/10.1136/bjsports-2020-103106">DOI</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> Roberts TA, Smalley J, Ahrendt D. Effect of gender affirming hormones on athletic performance in transwomen and transmen: implications for sporting organisations and legislators. <em>British Journal of Sports Medicine</em> 55, 577–583, 2021. <a href="https://doi.org/10.1136/bjsports-2020-102329">DOI</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> News-Medical. New meta-analysis challenges claims of athletic advantage for transgender women. 2026 年 2 月 6 日。（元の論文ではなく、報道記事である。）<a href="https://www.news-medical.net/news/20260206/New-meta-analysis-challenges-claims-of-athletic-advantage-for-transgender-women.aspx">News-Medical</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> 国際オリンピック委員会 (IOC) 。 <em>Framework on Fairness, Inclusion and Non-discrimination on the basis of gender identity and sex variations</em> 。 2021 年 11 月。 <a href="https://olympics.com/ioc/human-rights/fairness-inclusion-nondiscrimination">IOC 公式ページ</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> World Athletics による、トランスジェンダー女性の国際大会からの除外（ 2023 年 3 月）を伝える報道。 <a href="https://letsrun.com/news/2023/03/world-athletics-bans-transgender-women-extends-dsd-restrictions-to-all-events">LetsRun.com</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> NCAA による、女子競技を出生時に女性とされた選手に限る方針変更（ 2025 年 2 月 6 日）を伝える報道。 <a href="https://www.ajc.com/sports/ncaa-will-limit-womens-competition-to-athletes-assigned-female-at-birth/FUIGKRJXLVDINDK7PTEIBSZLBY/">AP 配信記事 (ajc.com)</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> 英国最高裁判所。 <em>For Women Scotland Ltd v The Scottish Ministers</em> [2025] UKSC 16 の判決要旨。 2025 年 4 月 16 日。 <a href="https://supremecourt.uk/cases/press-summary/uksc-2024-0042">英国最高裁</a></li>
+</ol>
+<p class="endnote">本稿は、公開された資料の範囲での検討であり、特定の個人・団体を評価するものではない。制度は変わり続けているため、引用した規程は、最新の公式発表で確かめてほしい。</p>
+</div>
+</div>
+</body>
+</html>
