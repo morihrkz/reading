@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「相手のレベルが低い」と思うとき――対立のなかの見下しと、怒りを鎮める言葉、心を軽くする観察</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">社会心理学と哲学からの検討</p>
+<h1>「相手のレベルが低い」と思うとき<br>――対立のなかの見下しと、怒りを鎮める言葉、心を軽くする観察</h1>
+<p class="subtitle">When Disagreement Breeds Contempt: Social Psychology and Philosophy of Devaluing Opponents, and Ways to Observe Conflict with a Lighter Mind</p>
+<p>話が噛み合わないとき、人はなぜ、相手を「下」に置くのか。「たいした人間ではない」という第三者の一言で、怒りが引くのは、なぜか。</p>
+</header>
+<div class="wrap">
+
+<div class="lede">
+<p><strong>要旨</strong><br>意見が食い違ったとき、人が「相手のレベルが低い」と考えるのは、性格の悪さではなく、仕組みの帰結である。自分は物事をありのままに見ているという感覚、反論が自己像への脅威になること、怒りが責任を人柄に帰属させること、立場が「こちら」と「あちら」に分かれること。この四つが重なると、「相手が下だ」という説明が、最も安く、最も気分を損なわない説明として選ばれる。</p>
+<p>第三者の「あの人は、たいした人間ではない」という一言が怒りを鎮めるのは、怒りが「重んじるべき相手から軽んじられた」という感覚に支えられているからである。相手の重みを下げれば、怒りの燃料が減る。ただし、この手当ては、怒りを鎮める代わりに、相手の言い分から学ぶ機会と、関係の回復を手放させる。</p>
+<p>見下しを使わずに観察し、負担を減らす道はある。見下しの考えを禁じるのではなく、浮かんだことに気づき、事実と解釈と感情を分け、自分の価値を勝敗から切り離す。本稿は、その方策を、根拠の確かさとともに整理する。</p>
+</div>
+
+<div class="meta band"><strong>【方法と限界】</strong>文献は、検索で書誌情報と要旨を確認した範囲で扱い、全文を読んでいないものが多い。実験の多くは、欧米の大学生を対象にしており、日本の職場や家庭にそのまま当てはまるかは未確認である。「第三者の一言が怒りを鎮める」過程を直接検証した研究は、筆者の調べた範囲では見つからなかった。第 3 章は、関連する理論を組み合わせた筆者の解釈である。古典の引用は、版や訳で表現が異なる。</div>
+
+<nav class="toc" aria-label="目次">
+<b>目次</b>
+<ol>
+<li><a href="#sec1">序論</a>
+<ol>
+<li><a href="#sec1-1">噛み合わない場面</a></li>
+<li><a href="#sec1-2">三つの問いと、本稿の立場</a></li>
+</ol>
+</li>
+<li><a href="#sec2">なぜ、相手を「下」に置くのか</a>
+<ol>
+<li><a href="#sec2-1">いちばん安い説明</a></li>
+<li><a href="#sec2-2">伝わらなかったのは、誰のせいか</a></li>
+<li><a href="#sec2-3">反論は、自己像への脅威になる</a></li>
+<li><a href="#sec2-4">「こちら」と「あちら」</a></li>
+<li><a href="#sec2-5">四つの層の整理</a></li>
+</ol>
+</li>
+<li><a href="#sec3">第三者の一言は、なぜ怒りを鎮めるのか</a>
+<ol>
+<li><a href="#sec3-1">怒りの燃料は「軽んじられた」という感覚</a></li>
+<li><a href="#sec3-2">心理学の解釈：四つの働きと代償</a></li>
+<li><a href="#sec3-3">哲学の解釈：承認、判断、尊厳</a></li>
+<li><a href="#sec3-4">小結</a></li>
+</ol>
+</li>
+<li><a href="#sec4">反対説の検討</a>
+<ol>
+<li><a href="#sec4-1">実際に、相手が誤っているとき</a></li>
+<li><a href="#sec4-2">怒りには、役割がある</a></li>
+<li><a href="#sec4-3">相手が不誠実なとき</a></li>
+</ol>
+</li>
+<li><a href="#sec5">見下さずに観察し、心の負担を減らす</a>
+<ol>
+<li><a href="#sec5-1">禁じずに、気づく</a></li>
+<li><a href="#sec5-2">八つの方策と、根拠の確かさ</a></li>
+<li><a href="#sec5-3">食い違いを、種類で分ける</a></li>
+<li><a href="#sec5-4">点検表</a></li>
+<li><a href="#sec5-5">負担が減る理由</a></li>
+</ol>
+</li>
+<li><a href="#sec6">結論</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 序論</h2>
+<h3 id="sec1-1">1.1 噛み合わない場面</h3>
+<p>会議で、同僚が反対意見を述べる。聞きながら、「この人は、前提がわかっていない」と思う。インターネットの掲示板で、反論を読む。「読解力がない」と思う。家族との口論で、同じ説明を三度目に繰り返す。「何度言えば、わかるのか」と思う。</p>
+<p>三つの場面に共通するのは、食い違いの原因を、相手の側の欠落に置いている点である。しかも、この考えは、考えた末の結論というより、気づいたときには、すでに頭にある。</p>
+<p>世間の知恵も、この見立てに加勢する。「喧嘩は、同じレベルの者同士でしか成り立たない」という言い回しがある（出典は確かめていない）。争いから身を引く教えとして語られるが、同時に、「自分は上のレベルにいる」という宣言でもある。身を引くという善意の行為の中に、見下しが入り込んでいる。</p>
+<h3 id="sec1-2">1.2 三つの問いと、本稿の立場</h3>
+<p>本稿は、三つの問いを順に扱う。第一に、対立したとき、人はなぜ相手を「下」に置くのか（第 2 章）。第二に、第三者が「相手はたいした人間ではない」と伝えると、怒りがおさまるのは、なぜか。それは、心理学と哲学で、どう解釈できるのか（第 3 章）。第三に、そのような考えを持たずに観察し、心の負担を減らす方策はあるか（第 5 章）。第 4 章では、これらの見方への反対説を検討する。</p>
+<p>事実として確かめられたことは「である」、解釈や仮説は「と考えられる」と書き分ける。優越感そのものの成因については、別稿『<a href="superiority-social-comparison.html">「上か下か」を考える心</a>』が詳しい。本稿は、その中でも、「対立の場面」に絞る。</p>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> なぜ、相手を「下」に置くのか</h2>
+<p>先に答えを言えば、見下しは、食い違いの説明としての「安さ」で選ばれる。以下、その安さを生む四つの層を、順に見る。</p>
+<h3 id="sec2-1">2.1 いちばん安い説明</h3>
+<p>食い違いには、説明が要る。「自分が間違っている」「双方が、別の前提に立っている」「相手が劣っている」。三つのうち、最も手間がかからず、最も気分を損なわないのは、三つ目である。</p>
+<p>社会心理学者のロスとウォードは、この傾向を「素朴実在論」と呼んで整理した。人は、自分が物事をありのままに見ていると感じる。理性的な人は、同じ情報を得れば、同じ見方に至るはずだと感じる。この二つから、第三の見積もりが導かれる。自分と違う見方をする人は、情報が足りないか、理屈が通らないか、偏っているかのどれかだ、という見積もりである。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 「レベルが低い」は、この三つの総称だと考えられる。</p>
+<p>これに、よく知られた偏りが加わる。他人の行動を、状況よりも、その人の性格で説明しやすい傾向である（基本的帰属の誤り）。食い違いの原因を「その人の頭」に求めるのは、この傾向とも合う。</p>
+<h3 id="sec2-2">2.2 伝わらなかったのは、誰のせいか</h3>
+<p>説明を尽くしたのに、伝わらない。このとき、人は、自分の説明の側を疑いにくい。</p>
+<p>報告によれば、 1990 年にスタンフォード大学の大学院生ニュートンが行った実験では、一人が有名な曲の拍子を机で叩き、もう一人が曲名を当てた。叩く側は、聞き手の半数が当てると見積もった。実際の正答は、 120 曲のうち 3 曲、約 2.5% だった。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 叩く側の頭の中では、曲が鳴っている。聞く側には、ただの打音しか届かない。</p>
+<p>議論でも、同じことが起きる。話し手の頭の中には、前提も、背景も、結論の筋道も揃っている。聞き手に届くのは、その一部である。届かなかったとき、人は、「伝え方が悪かった」より先に、「聞く側の理解力が低い」と考えやすい。偏りは、自分のものとしては見えず、他人のものとして見える。この「偏りの盲点」も、周知の事項である。</p>
+<h3 id="sec2-3">2.3 反論は、自己像への脅威になる</h3>
+<p>認知の偏りだけでは、見下しに混ざる「熱」は説明できない。熱の出どころは、自己像である。</p>
+<p>フェインとスペンサーの実験では、テストの成績について悪い評価を受けた参加者が、その後、固定観念の対象となる人物を、より低く評価した。そして、その人物を低く評価することで、自尊心が回復した。自己肯定の機会を先に与えると、この傾向は弱まったとされる。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 傷ついた自己像を、他者を下げることで繕う働きが、うかがえる。</p>
+<p>なぜ、自己像は他者の評価に揺れるのか。リアリらの「ソシオメーター理論」は、自尊心を、他者から受け入れられているかどうかを測る計器だと考える。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> この見方では、自分の主張への反論は、「受け入れられていない」という警報になりうる。</p>
+<p>警報は、怒りに変わる。ケルトナーらの研究は、怒りの状態の人が、悲しみの状態の人より、出来事の責任を、他者の側に見出しやすいことを示した。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 反論という脅威が、怒りを呼び、怒りが責任を相手の人柄に帰属させ、「あの人は、そういう人だ」という見下しが、自己像を守る。この連鎖が、「熱のある見下し」の正体だと考えられる。</p>
+<h3 id="sec2-4">2.4 「こちら」と「あちら」</h3>
+<p>対立が、個人どうしから、立場どうしになると、四つ目の層が加わる。タジフェルとターナーの社会的アイデンティティ理論によれば、人は、自分が属する集団を、他の集団より好意的に見る。相手を「あちら側」の人と見たとき、その人の個別の事情は見えにくくなり、相手の人間らしさそのものを割り引く、という研究もある。いずれも周知の事項で、個別の出典は確かめていない。</p>
+<h3 id="sec2-5">2.5 四つの層の整理</h3>
+<p>四つの層は、別々に働くのではなく、重なって働く。</p>
+<table>
+<thead><tr><th>層</th><th>起きること</th><th>「レベルが低い」への変換</th></tr></thead>
+<tbody>
+<tr><th>認知</th><td data-label="起きること">自分の見方を、「ありのまま」と感じる</td><td data-label="「レベルが低い」への変換">食い違う人は、情報不足か、非合理か、偏りだと結論する</td></tr>
+<tr><th>動機</th><td data-label="起きること">反論が自己像の脅威になり、回復の手段を求める</td><td data-label="「レベルが低い」への変換">相手を下げて、自分の位置を戻す</td></tr>
+<tr><th>感情</th><td data-label="起きること">怒りが、責任の帰属先を人に絞る</td><td data-label="「レベルが低い」への変換">状況ではなく、人柄の問題と見る</td></tr>
+<tr><th>集団</th><td data-label="起きること">立場が、「こちら」と「あちら」に分かれる</td><td data-label="「レベルが低い」への変換">相手の人間らしさを割り引く</td></tr>
+</tbody>
+</table>
+<div class="point">
+<p>見下しは、相手を正確に評価した結果ではなく、自分の側の事情が作る説明である。「相手のレベルが低い」と感じたとき、まず疑う対象は、相手の頭ではなく、その感じ自体になる。</p>
+</div>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 第三者の一言は、なぜ怒りを鎮めるのか</h2>
+<p>対立する二人の一方に、第三者が、「あの人は、たいした人間ではない」と伝える。怒りは、しばしば、すっと引く。内容は、証明されていない。それでも効く。</p>
+<h3 id="sec3-1">3.1 怒りの燃料は「軽んじられた」という感覚</h3>
+<p>アリストテレスは、『弁論術』で、怒りを、自分や身内に向けられた不当な軽視に対する、報復の欲求と定義した。軽視には、三つの型がある。軽蔑、意地悪な妨害、侮辱である。このうち軽蔑は、相手を「取るに足りない」と見なす意見だとされる。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></p>
+<p>この定義に従えば、怒りの燃料は、「自分は、軽んじられてよい者ではない。あの人には、そうする資格がない」という感覚である。燃料の半分は、「軽んじた側」への、無意識の評価にある。ここで第三者が、「あの人は、人を評価できるほどの人ではない」と告げれば、燃料の半分が、取り除かれる。</p>
+<h3 id="sec3-2">3.2 心理学の解釈：四つの働きと代償</h3>
+<p>第三者の一言が、怒りを鎮める働きは、少なくとも四つに分けて考えられる。以下は、関連する理論を組み合わせた、筆者の解釈である。</p>
+<table>
+<thead><tr><th>働き</th><th>仕組み</th><th>代償</th></tr></thead>
+<tbody>
+<tr><th>重みの引き下げ</th><td data-label="仕組み">自尊心は、評価する側の「関係上の価値」に応じて揺れる。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup> 相手の価値が下がれば、その評価で揺れる幅も縮む。</td><td data-label="代償">相手の指摘に含まれる、正しい部分も、一緒に捨てることになる。</td></tr>
+<tr><th>味方の表明</th><td data-label="仕組み">言葉の内容より、「あなたの側に立つ」という信号が、孤立の感覚を和らげる。</td><td data-label="代償">対立が、二対一の構図に固まり、相手は、さらに「あちら側」へ押しやられる。</td></tr>
+<tr><th>下方比較</th><td data-label="仕組み">相手を下に置くと、自分の位置が、相対的に上がる。傷ついた自己像が、回復する。</td><td data-label="代償">「レベル」という物差しが強まる。次の対立で、自分が下に置かれる側に回る可能性も、同じ物差しが決める。</td></tr>
+<tr><th>冷静さの獲得</th><td data-label="仕組み">軽蔑は、怒りより「冷えた」感情で、相手を下げながら、自分は落ち着いていられる、と論じられている。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td><td data-label="代償">冷えた感情は、相手と再び話す動機を消す。問題は、解決されないまま残る。</td></tr>
+</tbody>
+</table>
+<p>怒りを鎮める力は、確かにある。ただし、四つのどれも、代償の側に、「相手から学ぶ機会の喪失」と「関係の硬直」が並ぶ。怒りは、鎮まる。理解は、止まる。</p>
+<h3 id="sec3-3">3.3 哲学の解釈：承認、判断、尊厳</h3>
+<p>哲学の側からは、三つの視座が、この現象を照らす。</p>
+<p><strong>ヘーゲル：承認の逆説</strong><br>ヘーゲルの「主と奴」の議論には、標準的な解釈がある。主人は、奴隷から承認を得る。だが、奴隷を人として扱わない以上、その承認には、価値がない。この構図を、第三者の一言に当てはめると、示唆がある。相手が本当に取るに足りないなら、その一言に傷つく理由も、消えるはずだ。傷ついているという事実は、その相手の評価に、重みを置いていた証拠である。ならば、「たいした人間ではない」という言葉は、怒りを鎮めるが、同時に、自分が相手の承認を求めていたことを、見えなくする。</p>
+<p><strong>エピクテトス：傷を作るのは、判断である</strong><br>ストア派のエピクテトスは、人を侮辱するのは、罵る人や殴る人ではなく、それを侮辱だと考える、自分の判断だと説いた。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> この見方に立つと、第三者の一言は、別の読み方もできる。鎮めるのは、「相手が下だから」ではなく、「その言葉を、重く扱う必要はない」と、判断を改めさせるからだ、という読み方である。そうであれば、相手の価値を下げなくても、判断を改めることで、同じ地点に至れる。</p>
+<p><strong>カント：価格と尊厳</strong><br>カントは、あらゆるものは、価格をもつか、尊厳をもつか、のどちらかだと述べ、人格には尊厳があるとした。この区別に立てば、「たいした人間ではない」という言葉は、人を価格の秤で測る、範疇の誤りになる。測れるのは、相手の主張や行為の出来であって、人の値打ちではない。第三者の一言は、「行為の評価」を、「人の評価」にすり替えている。</p>
+<h3 id="sec3-4">3.4 小結</h3>
+<div class="point">
+<p>第三者の「たいした人間ではない」が効くのは、怒りの燃料である「重んじるべき相手に軽んじられた」という感覚を、相手の重みを下げることで、取り除くからである。味方の表明、下方比較、冷静さの獲得も、同時に働くと考えられる。ただし、その手当ては、見下しという、対立の出発点と同じ道具を使っている。</p>
+</div>
+<p>怒りが鎮まるのは、事実である。問題は、鎮め方である。同じ結果を、見下しを使わずに得る道は、ないのか。第 5 章で扱う前に、まず、見下しを使う方が正しい場合を、検討しておく。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 反対説の検討</h2>
+<p>ここまでの議論には、三つの反論が考えられる。</p>
+<h3 id="sec4-1">4.1 実際に、相手が誤っているとき</h3>
+<p>相手が、事実を知らず、論理が通らず、誤った主張をしている場合は、実際にある。「どちらにも言い分がある」とは、限らない。</p>
+<p>この反論は、正しい。ただし、「主張が誤っている」ことと、「その人が下である」ことは、別の判断である。「レベル」という言葉は、この二つを一つに束ねる。誤りを指摘するには、前者だけで足りる。後者を足すと、指摘は、議論から、序列の争いに変わる。誤りの指摘を、人の序列に変えない言葉づかいは、可能である。</p>
+<h3 id="sec4-2">4.2 怒りには、役割がある</h3>
+<p>怒りは、境界を侵されたことを知らせる信号でもある。鎮めることを、目的にしてよいのか。</p>
+<p>この反論も、正しい。不当な扱いを受けたときの怒りは、行動を促す働きをもつ。本稿が問題にするのは、怒りそのものではなく、怒りを鎮めるために、相手の人としての価値を引き下げる手段である。怒りが示した「不当な扱い」は、相手の価値を下げなくても、具体的な言動の問題として、伝えられる。</p>
+<h3 id="sec4-3">4.3 相手が不誠実なとき</h3>
+<p>相手が、わざと話をねじ曲げ、嘘をつく場合は、離れる判断が正当になる。</p>
+<p>その通りである。ただし、離れる理由は、「相手が低い」ではなく、「この場では、実のある話ができない」と、場の条件に置くことができる。理由を、行為と場の水準に置いておくと、状況が変わったとき、関係を戻す余地が残る。</p>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 見下さずに観察し、心の負担を減らす</h2>
+<p>目標は二つある。観察の精度を上げることと、心の負担を下げることである。両者は、独立ではない。負担の大半は、「自分の価値が試されている」という感覚と、「この場で決着をつけねばならない」という感覚から来る。この二つが弱まると、観察の精度も上がる。</p>
+<h3 id="sec5-1">5.1 禁じずに、気づく</h3>
+<p>「相手のレベルが低い」という考えが浮かぶのを、止める必要はない。第 2 章で見たとおり、この考えは、仕組みが自動で作る。止めようとすれば、止められなかった自分への苛立ちが、負担に加わる。</p>
+<p>代わりに、浮かんだことを、出来事として記録する。「いま、自分は、相手を下に置く考えを持った」と、心の中で言う。考えの内容を、真偽の判断から、観察の対象に移す手順である。マインドフルネスや、受容とコミットメント・セラピー (ACT) にも、似た考え方があるが、怒りへの効果は、研究により幅がある。ここでは、個別の出典を確かめていない。</p>
+<h3 id="sec5-2">5.2 八つの方策と、根拠の確かさ</h3>
+<p>観察と負担軽減の方策は、根拠の確かさが、それぞれ異なる。実験で確かめられたもの、実務の技法として知られるもの、古典の知恵に分けて示す。</p>
+<table>
+<thead><tr><th>方策</th><th>やり方</th><th>根拠の確かさ</th></tr></thead>
+<tbody>
+<tr><th>1 反対側を考える</th><td data-label="やり方">「自分が間違っているなら、どこか」「相手の筋が正しいなら、何が前提か」を、書き出す。</td><td data-label="根拠の確かさ">実験で確認。反対の可能性を考えるよう求める指示は、偏った判断を弱めた。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th>2 相手の主張を言い直す</th><td data-label="やり方">相手が、「その言い方は、うまい」と言う水準まで、言い直す。一致点と、学んだ点を先に述べ、反論は、そのあとに回す。 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></td><td data-label="根拠の確かさ">実務の技法。哲学者デネットの紹介で知られる。効果を測った実験は、確認していない。</td></tr>
+<tr><th>3 感情に名前をつける</th><td data-label="やり方">「いま、馬鹿にされたと感じて、腹が立っている」と、言葉にする。 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup></td><td data-label="根拠の確かさ">実験で確認。感情の言語化で、脳の情動反応が弱まったとする研究がある。</td></tr>
+<tr><th>4 自分を、第三者として見る</th><td data-label="やり方">自分の名前や「あなた」を主語にして、状況を考える。友人の相談として、考え直す。 <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup></td><td data-label="根拠の確かさ">実験で確認。自分の対立では、他人の対立より賢明さが落ちる傾向が、この距離のとり方で縮んだ。</td></tr>
+<tr><th>5 発散で、怒りを抜こうとしない</th><td data-label="やり方">相手を思い浮かべて、愚痴を重ねるより、別のことに注意を移す。 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></td><td data-label="根拠の確かさ">実験で確認。相手を思い浮かべながら発散した群が、最も怒りと攻撃が強かった。</td></tr>
+<tr><th>6 自己価値を、勝敗から離す</th><td data-label="やり方">勝ち負けと無関係な、自分の大切な価値（家族、仕事、好きなこと）を、先に思い出す。 <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></td><td data-label="根拠の確かさ">実験で確認。防衛的な反応を弱めるとされるが、効果の大きさは、状況で幅がある。</td></tr>
+<tr><th>7 自分の管轄を分ける</th><td data-label="やり方">自分が決められるのは、自分の判断と言動で、相手の考えや評価は、管轄外だと整理する。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td><td data-label="根拠の確かさ">古典の知恵。ストア派の考え方で、効果の検証は別の問題である。</td></tr>
+<tr><th>8 勝負を降りる・保留する</th><td data-label="やり方">「この場では、結論を出さない」と決める。理由は、相手の低さではなく、場の条件に置く。</td><td data-label="根拠の確かさ">実務の判断。根拠となる研究は、確認していない。</td></tr>
+</tbody>
+</table>
+<p>八つのうち、実験の裏づけが比較的そろうのは、方策 1 、 3 、 4 、 5 、 6 である。ただし、いずれも、実験室での結果であり、実際の口論で同じ大きさの効果が出るとは、限らない。</p>
+<h3 id="sec5-3">5.3 食い違いを、種類で分ける</h3>
+<p>「噛み合わない」という感覚は、複数の食い違いが、一つに絡まった結果であることが多い。分けると、見下す理由が、減る。</p>
+<p>分け方の骨格は、交渉学の古典から借りられる。フィッシャーとユーリーは、「人と問題を分ける」ことを説いた。ストーン、パットン、ヒーンは、難しい会話が、実は三つの会話の重なりだと論じた。何が起きたかをめぐる会話、感情をめぐる会話、「自分は、どういう人間か」をめぐる会話である。三つ目の会話は、口に出されないまま、他の二つの下で動いている。「相手のレベルが低い」という感覚は、この三つ目の会話の、最も目立つ現れだと考えられる。書名は、周知の事項で、個別の出典を確かめていない。</p>
+<p>実用の分け方は、四つで足りる。事実の食い違い（何が起きたか）、解釈の食い違い（それが何を意味するか）、価値の食い違い（何を優先するか）、感情の食い違い（傷ついたか、軽んじられたか）である。事実なら、確かめれば決着がつく。解釈と価値は、決着がつかなくてよい。感情は、聞かれるだけで、扱いが変わる。</p>
+<h3 id="sec5-4">5.4 点検表</h3>
+<p>口論になりかけたとき、あるいは、終わったあとに、使える点検の項目を、次に示す。</p>
+<div class="checklist"><span class="cl-title">対立の場面の点検</span>
+<ul>
+<li><input type="checkbox" id="c1"><label for="c1">「レベルが低い」「話にならない」という言葉が頭に浮かんだことに、気づいた</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">食い違いを、事実・解釈・価値・感情のどれかに分けた</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">相手の主張を、相手が納得する形で、一度言い直した</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">自分が間違っている可能性を、一つ書き出した</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">「いま、腹が立っている」と、感情に名前をつけた</label></li>
+<li><input type="checkbox" id="c6"><label for="c6">結論を急がず、後日に回してよいと、確認した</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されない。印刷や手書きメモと併用すること。</p>
+</div>
+<div class="try">
+<p>最近の、話が噛み合わなかった場面を、一つ選ぶ。次の三つの問いに、書いて答える。第一に、そのとき自分は、何を守ろうとしていたか。第二に、相手は、何を守ろうとしていたと考えられるか。第三に、事実と解釈を分けると、残った食い違いは、何か。書き終えたとき、「レベル」という語を使わずに、場面を説明できるかを、確かめる。</p>
+</div>
+<h3 id="sec5-5">5.5 負担が減る理由</h3>
+<p>八つの方策は、見かけは別々でも、負担を減らす経路は、二つに集約される。</p>
+<p>一つ目は、賭け金を下げることである。自分の価値が、この議論の勝敗で決まると感じるとき、負担は最大になる。自己価値を勝敗から離し（方策 6 ）、決められる範囲を自分の言動に限り（方策 7 ）、決着を急がない（方策 8 ）。三つは、いずれも、賭け金を下げる。</p>
+<p>二つ目は、情報を増やすことである。相手の筋を言い直し（方策 2 ）、反対側を考え（方策 1 ）、自分を外から見る（方策 4 ）と、見える範囲が広がる。広がるほど、「あの人は、そういう人だ」という、一行の説明では、足りなくなる。一行の説明が足りなくなると、見下しは、使われなくなる。</p>
+</section>
+
+<section id="sec6"><h2><span class="no">6</span> 結論</h2>
+<p>本稿は、対立のなかで人が相手を「下」に置く理由、第三者の一言が怒りを鎮める理由、そして、見下しに頼らずに観察する方策を、検討した。</p>
+<p>第一の問いへの答えは、見下しが、相手の評価ではなく、自分の側の仕組みが作る説明だという点にある。ありのままに見ているという感覚、脅威を受けた自己像、人柄に向かう怒り、立場の分断が、「相手が劣っている」という、最も安い説明を選ばせる。</p>
+<p>第二の問いへの答えは、怒りが「重んじるべき相手に軽んじられた」という感覚に支えられている点にある。「たいした人間ではない」という言葉は、相手の重みを下げて、この感覚を取り除く。これは、承認の逆説（ヘーゲル）、判断の改め（エピクテトス）、尊厳の秤（カント）という、三つの哲学の視座から、異なる評価を受ける。</p>
+<p>以下は、筆者の判断である。見下しを使って怒りを鎮めることは、短期には、効く。しかし、効くのは、相手を下げた分だけ、自分が学ぶ機会を手放したからである。相手を下に置くと、怒りは鎮まるが、理解は止まる。相手を同じ高さに置くと、怒りは残るが、食い違いの正体が見える。後者の高さに留まるための、足場が、第 5 章の方策である。</p>
+<div class="point">
+<p>気づく、分ける、離す。浮かんだ見下しに気づき、食い違いを事実・解釈・価値・感情に分け、自分の価値を勝敗から離す。次に「レベルが低い」と思ったときは、相手の頭を確かめる前に、その思いが、どの層から来たのかを、一度だけ確かめる。</p>
+</div>
+<p>本稿には、限界がある。第 3 章の「第三者の一言」の解釈は、直接の検証を欠く。第 5 章の方策は、実験室の結果が多く、日本の職場や家庭での効果は、確かめられていない。方策のうち、どれが、読者自身の対立に合うかは、小さく試して、確かめるほかない。</p>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1"><a href="#fnref-1-1">^</a> Ross, L. &amp; Ward, A. (1996) . Naive realism in everyday life: Implications for social conflict and misunderstanding. In Brown, E. S., Reed, E. &amp; Turiel, E. (eds.) , <em>Values and Knowledge</em>. Lawrence Erlbaum. 解説記事で、三つの見積もりを確認した。 <a href="https://en.wikipedia.org/wiki/Na%C3%AFve_realism_(psychology)">Wikipedia の解説</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> Newton, E. (1990) . Stanford University の博士論文（題名は確かめていない）。数値は、二次的な紹介記事による。 <a href="https://law.temple.edu/aer/2021/03/02/brain-lessons-tappers-and-the-curse-of-knowledge/">テンプル大学ロースクールの解説</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> Fein, S. &amp; Spencer, S. J. (1997) . Prejudice as self-image maintenance: Affirming the self through derogating others. <em>Journal of Personality and Social Psychology</em> 73 (1) : 31–44. <a href="https://doi.org/10.1037/0022-3514.73.1.31">論文の DOI</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> Leary, M. R., Tambor, E. S., Terdal, S. K. &amp; Downs, D. L. (1995) . Self-esteem as an interpersonal monitor: The sociometer hypothesis. <em>Journal of Personality and Social Psychology</em> 68 (3) : 518–530. <a href="https://doi.org/10.1037/0022-3514.68.3.518">論文の DOI</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> Keltner, D., Ellsworth, P. C. &amp; Edwards, K. (1993) . Beyond simple pessimism: Effects of sadness and anger on social perception. <em>Journal of Personality and Social Psychology</em> 64 (5) : 740–752. <a href="https://doi.org/10.1037/0022-3514.64.5.740">論文の DOI</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> Aristotle. <em>Rhetoric</em>, Book II, chap. 2 （ Roberts 訳） . <a href="https://classics.mit.edu/Aristotle/rhetoric.2.ii.html">MIT Classics</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> Fischer, A. H. &amp; Giner-Sorolla, R. (2016) . Contempt: Derogating others while keeping calm. <em>Emotion Review</em> 8 (4) : 346–357. 検索で、軽蔑と怒りの評価の違いを論じていることを確認した。 <a href="https://doi.org/10.1177/1754073915610439">論文の DOI</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> Epictetus. <em>Enchiridion</em>, 1, 5, 20 （ Higginson 訳） . <a href="https://classics.mit.edu/Epictetus/epicench.html">MIT Classics</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> Lord, C. G., Lepper, M. R. &amp; Preston, E. (1984) . Considering the opposite: A corrective strategy for social judgment. <em>Journal of Personality and Social Psychology</em> 47 (6) : 1231–1243. <a href="https://doi.org/10.1037/0022-3514.47.6.1231">論文の DOI</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> Dennett, D. C. (2013) . <em>Intuition Pumps and Other Tools for Thinking</em>. W. W. Norton, pp. 33–35. ラポポートの規則の紹介。 <a href="https://www.themarginalian.org/2014/03/28/daniel-dennett-rapoport-rules-criticism/">The Marginalian の解説</a></li>
+<li id="ref-11"><a href="#fnref-11-1">^</a> Lieberman, M. D. et al. (2007) . Putting feelings into words: Affect labeling disrupts amygdala activity in response to affective stimuli. <em>Psychological Science</em> 18 (5) : 421–428. <a href="https://doi.org/10.1111/j.1467-9280.2007.01916.x">論文の DOI</a></li>
+<li id="ref-12"><a href="#fnref-12-1">^</a> Grossmann, I. &amp; Kross, E. (2014) . Exploring Solomon's paradox: Self-distancing eliminates the self-other asymmetry in wise reasoning about close relationships in younger and older adults. <em>Psychological Science</em> 25 (8) : 1571–1580. <a href="https://wisdomcenter.uchicago.edu/publications/exploring-solomons-paradox-self-distancing-eliminates-self-other-asymmetry-wise">シカゴ大学の知恵研究センター</a></li>
+<li id="ref-13"><a href="#fnref-13-1">^</a> Bushman, B. J. (2002) . Does venting anger feed or extinguish the flame? Catharsis, rumination, distraction, anger, and aggressive responding. <em>Personality and Social Psychology Bulletin</em> 28 (6) : 724–731. <a href="https://doi.org/10.1177/0146167202289002">論文の DOI</a></li>
+<li id="ref-14"><a href="#fnref-14-1">^</a> Cohen, G. L. &amp; Sherman, D. K. (2014) . The psychology of change: Self-affirmation and social psychological intervention. <em>Annual Review of Psychology</em> 65 : 333–371. <a href="https://doi.org/10.1146/annurev-psych-010213-115137">論文の DOI</a></li>
+</ol>
+<p class="endnote">検索で書誌情報や要旨を確認したのは、文献 1 〜 4 、 6 、 7 、 10 、 12 、 13 である。全文は読んでいない。文献 5 、 8 、 9 、 11 、 14 の書誌情報は、検索で確かめていない。基本的帰属の誤り、偏りの盲点、社会的アイデンティティ理論、他者の人間らしさを割り引く研究、下方比較、フィッシャーとユーリー、ストーンらの書名、ヘーゲルとカントの議論は、周知の事項として書いたもので、個別の出典を確かめていない。第三者の一言が怒りを鎮める過程を、直接検証した研究は、確認できていない。</p>
+</div>
+</div>
+</body>
+</html>
