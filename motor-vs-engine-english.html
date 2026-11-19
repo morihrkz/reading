@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>「モーター」と「エンジン」の違い――英語の motor はなぜ内燃機関も指すのか</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">英語の語義の解説</p>
+<h1>「モーター」と「エンジン」の違い――英語の motor はなぜ内燃機関も指すのか</h1>
+<p class="subtitle">Motor and Engine in English: Etymology, Engineering Usage and Everyday Idiom</p>
+<p>日本語の「モーター」は電動の装置を思わせるが、英語の motor は、燃料を燃やす機関も指しうる。</p>
+</header>
+<div class="wrap">
+<div class="lede"><p>結論から述べる。英語の motor と engine は、標準的な英語では入れ替えて使える。二語を分けるのは一部の工学の用語法だけで、そこでは、燃料を消費するものを engine 、電気・空気・油圧で動くものを motor と呼ぶ。日本語の「モーターは電動」という語感は、この工学の区別に近い。語源から見ると、 engine は「巧みな仕掛け」、 motor は「動かすもの」を指す語である。内燃機関に motor の名が付き得たのは、後者が機能の名だからだと考えられる。</p></div>
+<p class="meta band"><strong>【方法と限界】</strong> 語の定義と語源は、英語版 Wikipedia の Engine の項目 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> と Rocket engine の項目 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 、英語版 Wiktionary の engine <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> と motor <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> の項目で確かめた。いずれも二次資料である。 OED などの辞書の原典、英米の語法の差、各語の初出の年代は、確かめていない。語源から読み取る「名づけの視点」と、内燃機関が motor と呼ばれた理由は、筆者の解釈である。</p>
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">「モーターは電動」という語感と、そのほころび</a></li>
+<li><a href="#sec2">工学の用語は、燃料を消費するかで分ける</a></li>
+<li><a href="#sec3">語源は、名づけの視点の違いを示す</a>
+<ol>
+<li><a href="#sec3-1">3.1 engine――巧みな仕掛け</a></li>
+<li><a href="#sec3-2">3.2 motor――動かすもの</a></li>
+</ol>
+</li>
+<li><a href="#sec4">内燃機関に motor の名が付いた経緯</a></li>
+<li><a href="#sec5">場面ごとの使い分け</a></li>
+<li><a href="#sec6">冒頭の問いへの答え</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 「モーターは電動」という語感と、そのほころび</h2>
+<p>日本語の「モーター」は、電気で回る装置を思い浮かべさせる語である。扇風機の中にも、電気自動車の床下にも、モーターがある。ガソリンで動く装置は「エンジン」と呼び、両者を取り違えることはまずない。</p>
+<p>ところが、日本語に入った外来語は、 motor を別の顔でも借りている。モーターショー、モータースポーツ、モーターボート、モーターサイクル、モータリゼーションは、いずれも内燃機関で走る乗り物を含む。「セルモーター」は電動だが、始動させる相手はエンジンである。</p>
+<p>英語の側にも、同じ痕跡がある。 Toyota Motor Corporation 、 Honda Motor Co., Ltd. 、 Ford Motor Company 、 General Motors という社名には、いずれも motor が入っている。これらの会社が長く主力にしてきたのは、エンジンを積んだ車である。</p>
+<p>英語の motor は、電動に限らないらしい。では、 motor と engine は、英語でどこが違うのか。まず、辞書と百科事典の答えを見る。</p>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 工学の用語は、燃料を消費するかで分ける</h2>
+<p>英語版 Wikipedia は、 motor と engine は標準的な英語では入れ替えられる (interchangeable) と述べる <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。日常の英語では、どちらを使っても誤りではない。</p>
+<p>一方、工学の用語法の一部では、二語が区別される。同じ項目によれば、 engine は燃料を燃やすなどして消費し、その化学組成を変える装置である。 motor は電気・空気・油圧で動き、エネルギー源の化学組成を変えない装置である <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。</p>
+<table>
+<thead><tr><th>観点</th><th>engine</th><th>motor</th></tr></thead>
+<tbody>
+<tr><th>エネルギー源</th><td data-label="engine">燃料（燃やす、または消費する）</td><td data-label="motor">電気、圧縮空気、油圧</td></tr>
+<tr><th>燃料の化学組成</th><td data-label="engine">変わる</td><td data-label="motor">変わらない</td></tr>
+<tr><th>例</th><td data-label="engine">ガソリンエンジン、ジェットエンジン、蒸気機関</td><td data-label="motor">電動機、空気圧モーター、ステッピングモーター</td></tr>
+</tbody>
+</table>
+<p>例外もある。同じ項目は、ロケットの分野では、燃料を消費するのに rocket motor という語を使うと断っている <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。別の項目の比較表では、スペースシャトルの液体燃料の機関が liquid engines 、固体燃料のものが solid motors と書き分けられている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。この書き分けが決まりなのか慣行なのかは、確かめていない。</p>
+<div class="point"><p>工学の区別は、「燃料を消費するか」という一本の線である。ただし、ロケットの rocket motor がすでにその線をはみ出しており、絶対の規則ではない。</p></div>
+<p>区別が専門の一部にとどまるなら、日常の英語は、二語を何で使い分けているのか。手がかりは、語源にある。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 語源は、名づけの視点の違いを示す</h2>
+<p>辞書の定義でも、二語は近い。 Wiktionary は、 motor の類義語に drive と engine を挙げ <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup> 、 engine の類義語にも motor を挙げる <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。それでも二語の出自は違う。出自の違いが、語感の違いを生んでいると考えられる。</p>
+<h3 id="sec3-1">3.1 engine――巧みな仕掛け</h3>
+<p>engine は、古フランス語の engin から来た。 engin は「技、賢さ、戦争の機械」を意味し、語源はラテン語の ingenium である <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 。 ingenium は、 ingenious （巧みな）や engineer （技師）と同じ語の根である <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> 。</p>
+<p>中世の英語の engine には、才覚や策略の意味があった（今は廃れた用法）。 14 世紀からは、破城槌や投石機のような大型の兵器も engine と呼ばれた <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup> 。「巧みに作られた仕掛け」が、語の核にある。その名残は、消防車 (fire engine) 、検索エンジン (search engine) 、ゲームの物理エンジン (physics engine) のように、仕掛けとしての装置や仕組みに見える <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup> 。</p>
+<h3 id="sec3-2">3.2 motor――動かすもの</h3>
+<p>motor は、ラテン語の mōtor （動かす者）に由来する。 mōtor は、動かすことを表す動詞 mōtō から来た。中世の英語の motour は、支配者や原動者を指し、さらに神を指した <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup> 。「動かすもの」という機能が、語の核にある。</p>
+<p>この意味は、装置の外にも広がる。辞書は、動力や原動力という比喩の用法を挙げ、同義語に engine を添えている <sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup> 。生物学では、化学エネルギーを機械的な仕事に変えるタンパク質も motor と呼ばれる <sup id="fnref-4-5"><a href="#ref-4">[4]</a></sup> 。これは、化学エネルギーを消費して動くので、先の工学の区別には収まらない。</p>
+<table>
+<thead><tr><th>語</th><th>語源</th><th>名づけの視点</th><th>古い意味</th></tr></thead>
+<tbody>
+<tr><th>engine</th><td data-label="語源">ラテン語 ingenium → 古フランス語 engin</td><td data-label="名づけの視点">巧みに作られた仕掛け</td><td data-label="古い意味">才覚、策略、破城槌や投石機</td></tr>
+<tr><th>motor</th><td data-label="語源">ラテン語 mōtor ← mōtō（動かす）</td><td data-label="名づけの視点">動かすもの（機能）</td><td data-label="古い意味">支配者、原動者、神</td></tr>
+</tbody>
+</table>
+<div class="point"><p>engine は「何でできた仕掛けか」、 motor は「何をするものか」で名づけた語と読める。これは、語源から読み取った筆者の解釈である。</p></div>
+<p>機能の名なら、動かしさえすれば、電気でも燃料でも当てはまる。では、機能の語である motor は、いつ、どうして内燃機関に当てられたのか。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 内燃機関に motor の名が付いた経緯</h2>
+<p>Wikipedia は、内燃機関が発明された当初、 motor という語は、蒸気機関と区別するために使われたと述べる <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 。蒸気機関が engine の代表だった時代に、新しい動力源が別の名を必要とした、と読める。</p>
+<p>その痕跡は、乗り物の複合語に濃く残る。 motor car 、 motor vehicle 、 motorcycle 、 motor boat 、 motor oil 、 motor racing などである <sup id="fnref-4-6"><a href="#ref-4">[4]</a></sup> 。英国では、 motor が car を指す口語にもなっている。ただし、辞書によれば、この用法は今は口語で、 motor insurance のような修飾の形を除く <sup id="fnref-4-7"><a href="#ref-4">[4]</a></sup> 。</p>
+<p>船外機 (outboard motor) も、同じ流れにある。辞書は、これを「船尾の外側に取り付ける可搬式の engine 」と説明する <sup id="fnref-4-8"><a href="#ref-4">[4]</a></sup> 。説明では engine と言いながら、名には motor を使っている。</p>
+<p>筆者は、 motor が「自力で動く」ことの目印として、新しい乗り物に付いたのだと考える。 motor が付く語は、車、自転車、船、競技のように、動くことが主題である。動くものの名であれば、動力が燃料か電気かは、問われない。</p>
+<p>一方、車の動力部そのものを指す語としては、 engine が定着した。辞書は、 engine の語義に、自動車の動力部、特に内燃機関の装置を挙げる <sup id="fnref-3-7"><a href="#ref-3">[3]</a></sup> 。 motor car の中に engine がある、という形である。</p>
+<div class="point"><p>一台の車に、二語が同居する例がある。 starter motor は、エンジンを始動する電動機である <sup id="fnref-4-9"><a href="#ref-4">[4]</a></sup> 。ハイブリッド車は、 engine と electric motor の両方を積む。同じ車の中で、燃やすものが engine 、電気で動くものが motor と呼び分けられている。</p></div>
+<p>では、英文でどちらの語に出会ったとき、どう読めばよいのか。場面ごとに整理する。</p>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 場面ごとの使い分け</h2>
+<p>次の表は、これまでの確認を、場面ごとにまとめたものである。「英語」の列は、辞書や項目に例が載っている語である。</p>
+<table>
+<thead><tr><th>場面</th><th>英語</th><th>理由</th></tr></thead>
+<tbody>
+<tr><th>扇風機、洗濯機、電気自動車の駆動</th><td data-label="英語">electric motor 、 motor</td><td data-label="理由">電気で動く。工学の区別でも motor である <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup> 。</td></tr>
+<tr><th>ガソリン車、ディーゼル車の動力部</th><td data-label="英語">engine</td><td data-label="理由">燃料を燃やす。辞書の語義にも、自動車の動力部が挙がる <sup id="fnref-3-8"><a href="#ref-3">[3]</a></sup> 。</td></tr>
+<tr><th>蒸気機関、ジェット</th><td data-label="英語">steam engine 、 jet engine</td><td data-label="理由">engine の下位語として辞書に載る <sup id="fnref-3-9"><a href="#ref-3">[3]</a></sup> 。</td></tr>
+<tr><th>船外機</th><td data-label="英語">outboard motor</td><td data-label="理由">辞書は「可搬式の engine 」と説明するが、名は motor である <sup id="fnref-4-10"><a href="#ref-4">[4]</a></sup> 。</td></tr>
+<tr><th>エンジンを始動する部品</th><td data-label="英語">starter motor</td><td data-label="理由">電動機である。始動される側が engine である <sup id="fnref-4-11"><a href="#ref-4">[4]</a></sup> 。</td></tr>
+<tr><th>ロケット</th><td data-label="英語">rocket engine 、 rocket motor</td><td data-label="理由">呼び方が揺れる。比較表では、液体は engine 、固体は motor と書かれる <sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup> <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。</td></tr>
+<tr><th>検索や、ゲームの仕組み</th><td data-label="英語">search engine 、 physics engine</td><td data-label="理由">仕組みを表す語義は、 engine の項に載り、 motor の項には見当たらない <sup id="fnref-3-10"><a href="#ref-3">[3]</a></sup> <sup id="fnref-4-12"><a href="#ref-4">[4]</a></sup> 。</td></tr>
+<tr><th>経済などの原動力</th><td data-label="英語">engine 、 motor</td><td data-label="理由">比喩では、辞書が二語を互いの同義語として挙げる <sup id="fnref-3-11"><a href="#ref-3">[3]</a></sup> <sup id="fnref-4-13"><a href="#ref-4">[4]</a></sup> 。</td></tr>
+</tbody>
+</table>
+<div class="point"><p>迷ったときは、動力源を見る。燃料を燃やすなら engine 、電気や圧力で動くなら motor と読めば、多くの場面で外れない。乗り物の複合語（ motor car など）と比喩は、 motor でも内燃機関を含みうる。</p></div>
+<p>電動機そのものの仕組みは、別の文書 <a href="electric-motor-guide.html">電動機と発電機の原理</a> に詳しい。最後に、冒頭の問いに戻る。</p>
+</section>
+
+<section id="sec6"><h2><span class="no">6</span> 冒頭の問いへの答え</h2>
+<p>「モーターは電動」という日本語の語感は、英語の motor の一部を切り出したものである。英語の motor は、本来「動かすもの」という広い語であり、内燃機関も含みうる。 engine は「巧みな仕掛け」を原義とし、自動車の動力部から、兵器、検索の仕組みまで広がった。</p>
+<p>二語の関係は、三つの層で見ると整理できる。語源は、仕掛けと機能という、名づけの視点を分ける。工学の用語は、燃料を消費するかという一本の線で分ける。日常の英語は、二語を混ぜて使う。</p>
+<p>日本語は、二つ目の層、つまり工学の区別を、日常語にまで引き上げた。だから、英語の motor が内燃機関を指す場面に出会うと、意外に感じる。その意外さは、日本語と英語の違いというより、専門の線を日常へ持ち込んだかどうかの違いだと考えられる。</p>
+<div class="point"><p>英文で motor に出会ったら、まず、動力が電気かどうかを見る。内燃機関の話であっても、 motor car や outboard motor のような複合語なら、誤りとは限らない。</p></div>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> 英語版 Wikipedia の項目 <em>Engine</em> 。語源と、 engine と motor の関係に関する記述を参照した。 <a href="https://en.wikipedia.org/wiki/Engine">英語版 Wikipedia</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> 英語版 Wikipedia の項目 <em>Rocket engine</em> 。比較表の表記 (liquid engines と solid motors) を参照した。 <a href="https://en.wikipedia.org/wiki/Rocket_engine">英語版 Wikipedia</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <sup><a href="#fnref-3-5">e</a></sup> <sup><a href="#fnref-3-6">f</a></sup> <sup><a href="#fnref-3-7">g</a></sup> <sup><a href="#fnref-3-8">h</a></sup> <sup><a href="#fnref-3-9">i</a></sup> <sup><a href="#fnref-3-10">j</a></sup> <sup><a href="#fnref-3-11">k</a></sup> 英語版 Wiktionary の項目 <em>engine</em> 。語源と語義を参照した。 <a href="https://en.wiktionary.org/wiki/engine">英語版 Wiktionary</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> <sup><a href="#fnref-4-3">c</a></sup> <sup><a href="#fnref-4-4">d</a></sup> <sup><a href="#fnref-4-5">e</a></sup> <sup><a href="#fnref-4-6">f</a></sup> <sup><a href="#fnref-4-7">g</a></sup> <sup><a href="#fnref-4-8">h</a></sup> <sup><a href="#fnref-4-9">i</a></sup> <sup><a href="#fnref-4-10">j</a></sup> <sup><a href="#fnref-4-11">k</a></sup> <sup><a href="#fnref-4-12">l</a></sup> <sup><a href="#fnref-4-13">m</a></sup> 英語版 Wiktionary の項目 <em>motor</em> 。語源、語義、複合語を参照した。 <a href="https://en.wiktionary.org/wiki/motor">英語版 Wiktionary</a></li>
+</ol>
+<p class="endnote">参照した記述は、いずれも 2026 年 11 月 19 日に確認した。二次資料であり、辞書の原典は確かめていない。</p>
+</div>
+</div>
+</body>
+</html>
