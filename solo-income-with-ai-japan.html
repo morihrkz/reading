@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI を借りて、一人で月 30 万円を稼ぐ</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<header class="hero">
+<p class="kicker">分析</p>
+<h1>AI を借りて、一人で月 30 万円を稼ぐ――動画ビジネス記事の査読と、顧客 10 社の設計</h1>
+<p class="subtitle">Building a 300,000-Yen Monthly Income as a Solo Operator with AI in Japan: A Critical Reading and a Design Proposal</p>
+<p>動画ビジネスの紹介記事を査読し、日本で現実に届く収入の設計へ組み替える。</p>
+</header>
+<div class="wrap">
+<div class="lede">
+<p>元記事は「制作費ほぼゼロで月 1 万ドル」を掲げる。筆者は、その主張を、日本で月 30 万円を一人で得るという、より控えめな目標に置き直して検討した。結論は、 AI が安くしたのは「作る」工程であり、収入を決めるのは「買ってくれる相手を持つ」ことだ、というものである。</p>
+</div>
+<p class="meta">作成： 2026-11-22 ／ 種別：分析 ／ 元記事： <a href="https://x.com/elg_oleksandr/status/2120846908117623220">X の投稿（英語）</a></p>
+<div class="meta band"><strong>【方法と限界】</strong>元記事の査読、公開情報による制度の確認、筆者の構想から成る。収益の数字はすべて試算で、実績ではない。元記事が述べる個々の機能（ Seedance 2.5 や Picsart の仕様）は、筆者が実際に操作して確かめたものではない。</div>
+
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">結論――月 30 万円は、顧客 10 社で届く</a></li>
+<li><a href="#sec2">元記事を査読する</a>
+<ol>
+<li><a href="#sec2-1">2.1 評価できる点</a></li>
+<li><a href="#sec2-2">2.2 割り引いて読むべき点</a></li>
+<li><a href="#sec2-3">2.3 収益の内訳を読み直す</a></li>
+</ol>
+</li>
+<li><a href="#sec3">AI が下げたのは制作費で、売る難しさではない</a></li>
+<li><a href="#sec4">30 万円を分解する</a></li>
+<li><a href="#sec5">筆者の推す案――小さな事業者の「毎月の面倒」を定額で引き受ける</a>
+<ol>
+<li><a href="#sec5-1">5.1 なぜこの案か</a></li>
+<li><a href="#sec5-2">5.2 商品の設計</a></li>
+<li><a href="#sec5-3">5.3 売り方――AI 動画は商品ではなく名刺</a></li>
+<li><a href="#sec5-4">5.4 品質をどう保つか</a></li>
+</ol>
+</li>
+<li><a href="#sec6">反対説を検討する</a>
+<ol>
+<li><a href="#sec6-1">6.1 「誰でもできる」</a></li>
+<li><a href="#sec6-2">6.2 「顧客が自分で AI を使い始める」</a></li>
+<li><a href="#sec6-3">6.3 「一人では限界がある」</a></li>
+<li><a href="#sec6-4">6.4 制度の線</a></li>
+</ol>
+</li>
+<li><a href="#sec7">最初の 90 日</a></li>
+<li><a href="#sec8">結論と限界</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 結論――月 30 万円は、顧客 10 社で届く</h2>
+<p>結論を先に述べる。日本で、 AI の力を借りて一人で月 30 万円（売上）に届くための最も堅い道は、動画をバズらせることではない。小さな事業者 10 社ほどと、月額の契約を結ぶことである。</p>
+<p>動画の再生数に頼る収入は、自分で制御できない数字に従う。月額契約の収入は、顧客数という、営業の努力で増やせる数字に従う。前者は投稿のたびに引く抽選であり、後者は毎月自動で積み上がる収入である。</p>
+<p>この見方は、筆者の思いつきではない。元記事 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> の収益シナリオを分解すると、収入の骨格は動画の投稿ではなく、法人向けの受託だからである（ 2.3 で示す）。本稿は、その骨格を取り出し、日本の事情に合わせて組み直す。</p>
+<p>では、元記事のどこまでを信じてよいか。まず査読から始める。</p>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 元記事を査読する</h2>
+<h3 id="sec2-1">2.1 評価できる点</h3>
+<p>運用の姿勢として妥当な主張が四つある。</p>
+<ul>
+<li><strong>型を作る。</strong>手当たり次第に生成せず、繰り返し使える型を二つ三つ作る。</li>
+<li><strong>一本で判断しない。</strong>複数の変種を試し、視聴時間や完了率といった指標で、型の良し悪しを見る。</li>
+<li><strong>収益源を分ける。</strong>プラットフォームの支払いだけに頼らず、受託・提携・アフィリエイトを組み合わせる。</li>
+<li><strong>何百万人ものフォロワーは要らない。</strong>企業に価値あるサービスを売るなら、大きな観客は前提にならない。本稿の出発点はこの一文である。</li>
+</ul>
+<p>AI 生成であることを開示し、架空の出来事を本物の報道のように見せない、という注意も妥当である。</p>
+
+<h3 id="sec2-2">2.2 割り引いて読むべき点</h3>
+<table>
+<thead><tr><th>論点</th><th>元記事の記述</th><th>筆者が確認できたこと</th><th>筆者の評価</th></tr></thead>
+<tbody>
+<tr><th>発信者の立場</th><td data-label="元記事の記述">投稿に Picsart のタグが付く。</td><td data-label="筆者が確認できたこと">投稿の末尾に @picsart と #picsart があり、製品の宣伝を兼ねている。</td><td data-label="筆者の評価">製品の推奨は、割り引いて読む。</td></tr>
+<tr><th>「制作費ほぼゼロ」</th><td data-label="元記事の記述">俳優・ロケ地・機材が要らない。</td><td data-label="筆者が確認できたこと">元記事自身が、クレジット・サブスク・編集・自分の時間の費用を認めている。</td><td data-label="筆者の評価">現金の支出は小さいが、時間の支出は小さくない。</td></tr>
+<tr><th>勧める型の新規性</th><td data-label="元記事の記述">防犯カメラ風、危険なスタント、高級商品など五つの型を勧める。</td><td data-label="筆者が確認できたこと">第 1 節が「いま流れている」動画として同じ型を挙げており、同型が既に多いことを示唆する。</td><td data-label="筆者の評価">型は真似される。後発は差別化が難しい。</td></tr>
+<tr><th>TikTok の収益化</th><td data-label="元記事の記述">利用できる地域では、条件を満たせば対象になる。</td><td data-label="筆者が確認できたこと">日本は、このプログラムの対象国である <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。ただし、筆者は最新の条件を公式ページで確認できなかった。</td><td data-label="筆者の評価">日本でも可能性はあるが、条件を満たすまでに時間がかかる。</td></tr>
+<tr><th>ツールの機能</th><td data-label="元記事の記述">最長 30 秒の生成、音声付き、参照素材の利用に対応する。</td><td data-label="筆者が確認できたこと">未検証。</td><td data-label="筆者の評価">契約や課金の前に、自分で試す。</td></tr>
+</tbody>
+</table>
+
+<h3 id="sec2-3">2.3 収益の内訳を読み直す</h3>
+<p>元記事が示す「月 1 万ドル」の内訳は、クライアント 4 社で 6,000 ドル、ブランドとの提携で 2,500 ドル、アフィリエイトで 1,500 ドルである <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。割合にすると、クライアントが 60% 、提携が 25% 、アフィリエイトが 15% を占める。</p>
+<p>前二者は、相手と交渉して受注する収入であり、再生数が直接払う収入ではない。再生数が果たすのは、営業先に見せる実績という役目である。元記事の収益の骨格は、動画の投稿ではなく、法人向けの受託だといえる。</p>
+<p>元記事自身も、この数字は説明用のシナリオで、結果を保証しないと断っている <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。目標値としては使えるが、実績の証拠にはならない。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> AI が下げたのは制作費で、売る難しさではない</h2>
+<p>制作が安くなると、供給が増え、同じ品質の物の価格が下がる。元記事は「ハリウッド級の制作体制は要りません」と述べる。しかし、要らなくなったのは誰にとっても同じである。</p>
+<p>そのとき希少になるのは、三つの力である。顧客に見つけてもらうこと。信用されること。毎月払い続けてもらうこと。いずれも、生成ツールの性能とは別の問題だ。</p>
+<p>たとえば、町の美容室の店主は、動画生成ツールの名前を知らなくても困っていない。困っているのは、毎週の投稿が負担であること、口コミへの返信が溜まること、新しい求人の文面が書けないことである。売れるのは道具の操作ではなく、困りごとの解消だと考えられる。</p>
+<p>では、どの困りごとなら、月額で払ってもらえるのか。次節で、 30 万円の中身を分けて考える。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 30 万円を分解する</h2>
+<p>売上は、顧客数と単価の積で決まる。単価を上げれば必要な顧客数は減るが、高い単価ほど売る難度は上がる。一人で扱える顧客数にも上限がある。この三つの制約のもとで、筆者が考えた五案を並べる。</p>
+<table>
+<thead><tr><th>案</th><th>売上の式（試算）</th><th>AI の役割</th><th>主な弱点</th></tr></thead>
+<tbody>
+<tr><th>案 A ：小規模事業者の運用代行</th><td data-label="売上の式（試算）">月 3 万円 × 10 社</td><td data-label="AI の役割">投稿案・返信文・配信文の下書き</td><td data-label="主な弱点">解約されやすい。品質確認の手間がかかる。</td></tr>
+<tr><th>案 B ： AI 活用の伴走・研修</th><td data-label="売上の式（試算）">1 回 2 万円 × 15 回</td><td data-label="AI の役割">資料や事例の作成</td><td data-label="主な弱点">時間売りで、稼働が上限になる。</td></tr>
+<tr><th>案 C ：業界特化の小さなツール</th><td data-label="売上の式（試算）">月 3,000 円 × 100 人</td><td data-label="AI の役割">開発と保守の補助</td><td data-label="主な弱点">作った後も、集客が要る。</td></tr>
+<tr><th>案 D ：週刊の業界調査レポート</th><td data-label="売上の式（試算）">月 1 万円 × 30 契約</td><td data-label="AI の役割">収集・要約・下書き</td><td data-label="主な弱点">信用の蓄積に年単位かかる。</td></tr>
+<tr><th>案 E ： AI 動画の受託制作（元記事の案）</th><td data-label="売上の式（試算）">月 5 万円 × 6 社</td><td data-label="AI の役割">映像の生成と編集</td><td data-label="主な弱点">単発で終わりやすい。</td></tr>
+</tbody>
+</table>
+<p style="font-size:17px;color:var(--muted)">単価は、筆者の仮定である。市場価格を調べたものではない。</p>
+<p>案 A で稼働を見積もる。 1 社あたり月 8 時間を上限とすると、 10 社で 80 時間である。 30 万円を 80 時間で割ると、時給は 3,750 円になる。一人で無理なく回る水準かどうかを、売上の式とは別に確かめる必要がある。</p>
+<div class="point">
+<p>売上と手取りは別である。たとえば国民年金保険料だけで、令和 8 年度は月 17,920 円、年 215,040 円になる <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。これに健康保険、税、経費が加わる。手取りで 30 万円を得たいなら、売上はさらに高く見積もる。</p>
+</div>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 筆者の推す案――小さな事業者の「毎月の面倒」を定額で引き受ける</h2>
+<h3 id="sec5-1">5.1 なぜこの案か</h3>
+<p>筆者は案 A を推す。次の三つの条件を満たすからである。</p>
+<ul>
+<li><strong>需要が毎月繰り返す。</strong>投稿、返信、配信は、一度やれば終わる仕事ではない。</li>
+<li><strong>作業の大半を、 AI の下書きで賄える。</strong>一人で回せる。</li>
+<li><strong>成果が目に見える。</strong>顧客が、価値を自分で判断できる。</li>
+</ul>
+<p>ほかの案は、役割を変えて組み合わせられる。案 B は、最初の収入と顧客の声を得る入口に向く。案 A は、その上に積み上げる本線である。案 D と案 C は、信用と実績がたまってから育てる資産にあたる。</p>
+
+<h3 id="sec5-2">5.2 商品の設計</h3>
+<dl class="summary">
+<div><dt>対象</dt><dd>業種を一つに絞る。美容室、整骨院、工務店、飲食店のうち、筆者が現場の言葉を知っている業種がよい。</dd></div>
+<div><dt>内容</dt><dd>毎月決まった成果物を納める。たとえば、投稿 12 本、口コミ返信の下書き、メッセージ配信文 4 通、投稿用の画像や短い動画。</dd></div>
+<div><dt>価格</dt><dd>月 3 万円を出発点とし、実際の作業時間を見て調整する。</dd></div>
+<div><dt>上限</dt><dd>10 社まで。 1 社あたり月 8 時間以内に収める。 11 社目は、断るか値上げする。</dd></div>
+<div><dt>契約</dt><dd>3 か月ごとの更新とする。公開前の承認は、必ず依頼主が行う。</dd></div>
+</dl>
+<p>業種を絞る理由は、 AI の出力が一般的な文面に寄るからである。差が出るのは、その業界の言葉遣いと事例であり、これは一つの業種に通い続けるほど蓄積する。同じ業種の紹介も、広がりやすくなる。</p>
+
+<h3 id="sec5-3">5.3 売り方――AI 動画は商品ではなく名刺</h3>
+<p>元記事の動画生成は、この案では主商品ではなく、営業の道具になる。見込み客の店について、屋号と公開されている情報から 15 秒の紹介動画を先に作り、見てもらう。反応があれば、毎月の運用を提案する。</p>
+<p>最初の 3 社は、割引と引き換えに、事例の掲載と推薦の言葉をもらう。実績のない時期の最大の弱点は、見せる物がないことだ。それを、最初の 3 社で埋める。</p>
+
+<h3 id="sec5-4">5.4 品質をどう保つか</h3>
+<p>流れは、 AI が下書きし、筆者が確認し、依頼主が承認する、の三段にする。事実の誤り、店の方針とのずれ、不適切な表現は、必ず人が止める。</p>
+<p>売るのは、 AI が書いた文面ではない。 AI が書いた文面を、人が引き受けることである。顧客が月額を払う理由は、そこにあると考えられる。</p>
+</section>
+
+<section id="sec6"><h2><span class="no">6</span> 反対説を検討する</h2>
+<h3 id="sec6-1">6.1 「誰でもできる」</h3>
+<p>そのとおりである。参入の障壁は低い。防御になるのは、業種の特化、地域での対面の信用、顧客ごとに蓄積する文体と事例の記録の三つである。いずれも AI の性能ではなく、人間関係と継続から生まれる。それでも、安価な既製ツールや大手に押される可能性は残る。</p>
+<h3 id="sec6-2">6.2 「顧客が自分で AI を使い始める」</h3>
+<p>その可能性は高い。そのとき、価値は「作成」から「継続と判断」に移る。自分でやりたい顧客には、案 B の伴走へ切り替える。同じ顧客に、形を変えて売り続けられるかが問われる。</p>
+<h3 id="sec6-3">6.3 「一人では限界がある」</h3>
+<p>病気や休暇で止まる危険がある。対策は、顧客数の上限（ 10 社）、作業手順の文書化、契約への停止条件の明記である。上限を設けること自体が、品質と長期の継続を守る。</p>
+<h3 id="sec6-4">6.4 制度の線</h3>
+<div class="caution">
+<p><strong>広告の表示</strong><br>2023 年 10 月 1 日から、広告であることを隠した表示は、景品表示法違反の対象になる <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。規制の対象は、商品やサービスを提供する事業者である。代行者が直接の対象でなくても、依頼主を違反へ導く作業は引き受けない。口コミの自作自演は、行わない。</p>
+<p><strong>著作権</strong><br>文化庁の整理では、 AI を使った場合も、既存の著作物との類似性と依拠性があれば、侵害になり得る <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。この整理は法的拘束力を持たない。特定の作品やキャラクターに寄せた指示は出さず、実在の人物に似せた顔や声は使わない。</p>
+<p><strong>士業の独占業務</strong><br>弁護士・税理士・行政書士などには、報酬を得て行える業務が法律で限られている。契約書の作成、税務相談、官公庁へ出す申請書の代行は、その線に触れ得ると筆者は理解している。この点は一次資料を確認していない。手を出す前に、必ず確認する。</p>
+<p><strong>顧客の情報</strong><br>顧客の顧客の個人情報は、 AI に入力しない。入力してよい範囲は、契約の前に依頼主と取り決める。</p>
+</div>
+</section>
+
+<section id="sec7"><h2><span class="no">7</span> 最初の 90 日</h2>
+<p>目標は、 90 日で顧客 3 社、月 9 万円である。 10 社に届くのは、半年から 1 年後と見込む。これは筆者の見積りであり、実績ではない。</p>
+<div class="checklist"><span class="cl-title">90 日の作業</span>
+<ul>
+<li><input type="checkbox" id="c1"><label for="c1">業種を一つ決め、その業種の経営者 20 人に「毎月の困りごと」を聞く。</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">その業種の月次の成果物の型を作り、 AI を使う作業手順を文書にする。</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">見込み客 10 軒に、先に作った紹介動画か投稿案を見せる。</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">最初の 3 社に、割引と引き換えに、事例と推薦の言葉をもらう。</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">開業の届け出、帳簿、請求書の形式を整える。インボイスの登録の要否は、取引先と専門家に確認する。</label></li>
+<li><input type="checkbox" id="c6"><label for="c6">毎月の作業時間を記録し、 1 社 8 時間を超えたら、手順か価格を直す。</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されない。印刷や手書きメモと併用すること。</p>
+</div>
+</section>
+
+<section id="sec8"><h2><span class="no">8</span> 結論と限界</h2>
+<p>元記事が示した収益の骨格は、動画の投稿ではなく、法人向けの受託だった。 AI が安くしたのは作る工程であり、月 30 万円を決めるのは、買ってくれる相手の数である。作るのは AI 、売るのは人、続けるのは契約――本稿の設計は、この三つの分担に尽きる。</p>
+<p>限界は明確である。金額はすべて試算で、単価は市場で確かめていない。地域や業種で需要は大きく違う。筆者自身が試行して得た結果でもない。</p>
+<p>次の一歩は、売ることではなく聞くことである。経営者 20 人に毎月の困りごとを聞けば、案 A が成り立つか、別の案に移るべきかが、数字より早くわかる。</p>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> ELG (@elg_oleksandr) 「制作費ほぼゼロで月 1 万ドルの AI 動画ビジネスを作る方法」、 X の投稿、 2026 年 11 月 12 日。 <a href="https://x.com/elg_oleksandr/status/2120846908117623220">X の投稿（英語）</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> TikTok Japan 「 Creator Rewards Program を開始」、公式ニュースルーム。 <a href="https://newsroom.tiktok.com/ja-jp/tiktok-creator-rewards-program">TikTok ニュースルーム</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> 日本年金機構「国民年金保険料」、令和 8 年度の月額。 <a href="https://www.nenkin.go.jp/service/kokunen/hokenryo/hokenryo.html">日本年金機構</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> 消費者庁「ステルスマーケティング」、景品表示法の告示指定（ 2023 年 10 月 1 日施行）。 <a href="https://www.caa.go.jp/policies/policy/representation/fair_labeling/stealth_marketing/">消費者庁</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 文化庁「 AI と著作権に関する考え方について」、令和 6 年 3 月 15 日。 <a href="https://www.bunka.go.jp/seisaku/chosakuken/aiandcopyright.html">文化庁</a></li>
+</ol>
+<p class="endnote">本稿の制度の記述のうち、 TikTok の条件、インボイス制度の経過措置、士業の独占業務は、一次資料で最新の内容を確認していない。実行の前に、公式の情報で確かめること。収益の数字は、すべて筆者の試算である。</p>
+</div>
+</div>
+</body>
+</html>
