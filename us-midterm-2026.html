@@ -5,177 +5,170 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
 <title>2026 U.S. Midterms: Democrats Win Congress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap">
 <style>
+  /* ===== Design tokens: an ivory-paper journal palette ===== */
   :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+    --paper:#fbf8f1;      /* page */
+    --paper-2:#f2eddf;    /* tinted panels, code */
+    --panel:#fffdf8;      /* figure panels */
+    --ink:#1a1d24;        /* body text (about 16:1 on paper) */
+    --muted:#555b6b;      /* secondary text (about 6:1 on paper) */
+    --rule:#d8d0bc;       /* hairlines */
+    --navy:#17325c;       /* headings, links, labels */
+    --crimson:#8f2a2f;    /* section numbers, kicker, link hover */
+    --gold:#a9822f;       /* ornament only, never text */
+    --dem:#1f4e8c;        /* Democratic blue (charts) */
+    --rep:#b3302f;        /* Republican crimson (charts) */
+    --ind:#5f6b7a;        /* independents, uncalled outlines (charts) */
+    --serif:"Source Serif 4","Source Serif Pro",Charter,"Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --sans:Inter,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"Cascadia Mono",Consolas,Menlo,monospace;
+    --measure:54rem;
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
+  body{margin:0;background:var(--paper);color:var(--ink);border-top:6px solid var(--navy);
+    font:400 1.1875rem/1.72 var(--serif);font-variant-numeric:lining-nums;
+    text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+  .wrap,header.hero{max-width:var(--measure);margin:0 auto;padding-left:clamp(1.1rem,5vw,2rem);padding-right:clamp(1.1rem,5vw,2rem)}
+  .wrap{padding-bottom:4.5rem}
+
+  /* ===== Links ===== */
+  a{color:var(--navy);text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.18em;text-decoration-color:rgba(23,50,92,.4)}
+  a:hover{color:var(--crimson);text-decoration-color:currentColor}
+  a:focus-visible,summary:focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:2px}
+
+  /* ===== Title block ===== */
+  header.hero{text-align:center;padding-top:4rem;padding-bottom:.5rem}
+  .kicker{display:block;font:600 .74rem/1.4 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--crimson);margin:0 0 1.1rem}
+  .hero h1{font:700 clamp(1.85rem,4.6vw,2.7rem)/1.18 var(--serif);letter-spacing:-.012em;color:var(--ink);margin:0;text-wrap:balance}
+  .hero::after{content:"";display:block;width:88px;height:2px;background:var(--gold);margin:1.7rem auto 0}
+
+  /* byline strip directly under the title block */
+  .wrap>.meta:first-child{text-align:center;padding:.95rem 0;margin:1.6rem 0 2rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .meta{font:400 .8rem/1.7 var(--sans);color:var(--muted);letter-spacing:.01em}
+  .refs+.meta{text-align:center;margin:2.6rem 0 0;padding-top:1.1rem;border-top:1px solid var(--rule)}
+
+  /* ===== Abstract-style notice ===== */
+  .box{background:var(--paper-2);border:1px solid var(--rule);border-left:4px solid var(--navy);
+    padding:1.05rem 1.3rem 1.1rem;margin:0 0 2rem;font-size:.97rem;line-height:1.66}
+  .box>strong:first-child{display:block;font:600 .72rem/1.5 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:.4rem}
+  .box ul{margin:.7rem 0 0;padding-left:1.25rem}
+  .box li{margin:.45rem 0}
+  .box li>strong{color:var(--navy);font-weight:600}
+
+  /* ===== Contents ===== */
+  nav.toc{margin:2.2rem 0 2.8rem;padding:1.1rem 0 1.2rem;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);font:400 .93rem/1.5 var(--sans)}
+  nav.toc>b{display:block;font:600 .72rem/1.4 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem}
+  nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+  nav.toc li{counter-increment:t;position:relative;padding:.2rem 0 .2rem 2.1rem}
+  nav.toc li li{padding-left:2.7rem;break-inside:avoid}
+  nav.toc li::before{content:counters(t,".");position:absolute;left:0;top:.2rem;font-weight:600;color:var(--crimson);font-variant-numeric:tabular-nums}
+  nav.toc li li::before{left:0}
+  nav.toc ol ol{margin:.15rem 0 .25rem -2.1rem}
+  nav.toc>ol{columns:2;column-gap:2.4rem}
   nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  nav.toc a:hover{color:var(--navy);text-decoration:underline}
+  @media(max-width:600px){nav.toc>ol{columns:1}}
+
+  /* ===== Sections and headings ===== */
+  section{margin:3.4rem 0}
+  h2{display:flex;align-items:baseline;gap:.75rem;margin:0 0 1.15rem;padding-bottom:.5rem;border-bottom:1px solid var(--rule);
+    font:600 1.55rem/1.25 var(--serif);letter-spacing:-.005em;color:var(--navy);scroll-margin-top:1rem}
+  h2 .no{flex:none;min-width:1.5rem;font:600 .95rem/1 var(--sans);letter-spacing:.06em;color:var(--crimson)}
+  h3{margin:2.2rem 0 .55rem;font:600 1.16rem/1.35 var(--serif);color:var(--ink);scroll-margin-top:1rem}
+  h3::before{content:"";display:inline-block;width:.55rem;height:.55rem;background:var(--gold);transform:rotate(45deg);margin-right:.7rem;vertical-align:.12em}
+  p{margin:0 0 1.05rem;orphans:2;widows:2}
+  @media(min-width:700px){.wrap p{text-align:justify;hyphens:auto;-webkit-hyphens:auto}}
+  #s1 h2+p::first-letter{float:left;font:700 4.4rem/.78 var(--serif);color:var(--navy);padding:.35rem .6rem 0 0}
+  strong{font-weight:600}
+  mark{background:linear-gradient(transparent 60%,rgba(169,130,47,.3) 60%);color:inherit;font-weight:600;padding:0 .1em}
+
+  /* ===== Tables: booktabs style (rules at top, under header, at bottom) ===== */
+  table{width:100%;border-collapse:collapse;margin:1.5rem 0 2rem;font:400 .9rem/1.55 var(--sans);font-variant-numeric:tabular-nums;
+    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+  th,td{padding:.65rem .8rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule);overflow-wrap:break-word}
+  thead th{font:600 .7rem/1.4 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--navy);border-bottom:1px solid var(--ink);padding-bottom:.6rem}
+  tbody th{font:600 .98rem/1.45 var(--serif);color:var(--ink);min-width:9rem}
+  tbody tr:nth-child(even){background:rgba(23,50,92,.035)}
+  tbody tr:last-child>*{border-bottom:0}
+  /* Narrow screens: each row becomes a small card; column names come from data-label */
   @media(max-width:640px){
     table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
+    table{border:0;margin:1.3rem 0 1.6rem}
     thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody tr,tbody tr:nth-child(even){background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--navy);margin:0 0 1rem}
+    tbody th{padding:.7rem .9rem .5rem;border-bottom:1px solid var(--rule)}
+    tbody td{padding:.6rem .9rem;border-bottom:1px solid var(--rule)}
     tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+    tbody td::before{content:attr(data-label);display:block;font:600 .68rem/1.5 var(--sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
-  sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
-  .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
-  .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
-  .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
+
+  /* ===== Figures ===== */
+  figure{margin:1.9rem 0;padding:1.15rem 1rem .95rem;background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--navy)}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{margin-top:.8rem;font:400 .86rem/1.6 var(--sans);color:var(--muted);text-align:left}
+  .fig-label{margin-right:.5em;font-weight:600;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+  .fig-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,352px),1fr));gap:1rem;margin:1.9rem 0}
+  .fig-pair figure{margin:0}
+  .legend{list-style:none;margin:.9rem 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem 1.2rem}
+  .legend li{margin:0;font:400 .85rem/1.5 var(--sans);color:var(--ink)}
+  .sw{display:inline-block;width:.8em;height:.8em;border-radius:50%;margin-right:.4em;vertical-align:-.06em}
+  .sw-d{background:var(--dem)}
+  .sw-r{background:var(--rep)}
+  .sw-i{background:var(--ind)}
+  .sw-vac{background:#e8e3d4;border:3px solid var(--ind)}
+  .sw-dhold{background:#e8e3d4;border:3px solid var(--dem)}
+  .sw-rhold{background:#e8e3d4;border:3px solid var(--rep)}
+  .sw-flip{background:var(--dem);border:3px solid var(--rep)}
+  .t{font-family:var(--sans);fill:var(--ink)}
   .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
   .white{fill:#fff}
-  /* この文書に固有の部品(和色に合わせたもの) */
-  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#efe3c8;padding:12px 16px;border-radius:12px;margin:0 0 20px;font-size:16px;line-height:1.6}
-  pre code{background:none;padding:0;font-size:inherit}
-  .fig-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,352px),1fr));gap:16px;margin:24px 0}
-  .fig-pair figure{margin:0}
-  .fig-label{color:var(--link);font-weight:bold;margin-right:.3em}
-  .legend{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:4px 16px}
-  .legend li{font-size:17px;margin:0;color:var(--ink)}
-  .sw{display:inline-block;width:.85em;height:.85em;border-radius:50%;margin-right:.35em;vertical-align:-.08em;box-sizing:border-box}
-  .sw-d{background:#5e3d50}
-  .sw-r{background:#b7282e}
-  .sw-i{background:#6d5640}
-  .sw-vac{background:#efe3c8;border:3px solid #6d5640}
-  .sw-dhold{background:#efe3c8;border:3px solid #5e3d50}
-  .sw-rhold{background:#efe3c8;border:3px solid #b7282e}
-  .sw-flip{background:#5e3d50;border:3px solid #b7282e}
+
+  /* ===== Footnote marks and references ===== */
+  sup{font-size:.68em;line-height:0;margin-left:.08em}
+  sup a{font-family:var(--sans);font-weight:500;color:var(--crimson);text-decoration:none;letter-spacing:.01em}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:4px double var(--ink);margin-top:3.6rem;padding-top:1.5rem}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:.88rem;line-height:1.62;overflow-wrap:anywhere;hyphens:none}
+  .refs p{text-align:left}
+  .refs ol{padding-left:1.7rem}
+  .refs li{margin:.4rem 0;padding-left:.2rem}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child,.refs li>sup a{font-weight:600}
+  .refs li:target,sup:target{background:rgba(169,130,47,.22);border-radius:3px}
+
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--paper-2);border:1px solid var(--rule);padding:.9rem 1rem;margin:0 0 1.3rem;font:400 .85rem/1.6 var(--mono)}
+  pre code{background:none;padding:0;font:inherit}
+
+  @media print{
+    body{border-top:0;background:#fff;font-size:11pt}
+    .wrap,header.hero{max-width:none;padding-left:0;padding-right:0}
+    a{color:inherit;text-decoration:none}
+    figure,table,.box,tr{break-inside:avoid}
+    section{margin:1.8rem 0}
+  }
 </style>
 </head>
 <body>
 <header class="hero">
+<p class="kicker">Election Analysis &middot; Decision Desk Edition</p>
 <h1>2026 U.S. Midterms: Democrats Win Congress &mdash; Balance of Power and Race Calls</h1>
 </header>
 <div class="wrap">
-<p class="meta">U.S. Midterm Elections &middot; Election Night and Morning-After Coverage &middot; Updated: Nov. 21, 2026 (latest figures: Nov. 20 evening, per Yahoo News; House count cross-checked against NBC News and the New York Times via WRAL, Nov. 18; election-night figures: Nov. 5, 9:29 AM EST)</p>
+<p class="meta">U.S. Midterm Elections &middot; Election Night and Morning-After Coverage &middot; Updated: Nov. 23, 2026 (latest figures: Nov. 20 evening, per Yahoo News, with the status of four House races refreshed on Nov. 23; House count cross-checked against NBC News and the New York Times via WRAL, Nov. 18; election-night figures: Nov. 5, 9:29 AM EST)</p>
 <p>Democrats have won control of both the House of Representatives and the Senate in the 2026 midterm elections, which major U.S. outlets describe as a rebuke of President Donald Trump. This page synthesizes race calls, partial returns, and voter poll findings from NBC News, CBS News, CNBC, CNN, and Yahoo News, updated with later tallies that trace to the Associated Press. The AP called the Mississippi Senate race for Democrat Scott Colom on Nov. 11 and the Alaska Senate race for Democrat Mary Peltola on Nov. 17&ndash;18, which completes the Senate count at 56 Democrats and 44 Republicans. In the House, Democrats hold 257 seats with five races still unresolved.</p>
-<div class="box"><strong>Decision Desk Notice (Nov. 21, 2026):</strong> This is not a final edition. Both chambers remain called for Democrats, but not every seat is settled: the Senate is fully called, while five House races are still open (two Louisiana runoffs on Dec. 12 and three races decided by roughly 300 votes, with recounts requested or under way). Nothing is certified yet. Each figure below comes from the most recent source found for it, and the sources were retrieved at different times.
+<div class="box"><strong>Decision Desk Notice (Nov. 23, 2026):</strong> This is not a final edition. Both chambers remain called for Democrats, but not every seat is settled: the Senate is fully called, while the House count still shows five uncalled races in the Yahoo News tally of Nov. 20 (two Louisiana runoffs on Dec. 12 and three races decided by roughly 300 votes). Since then, Rep. Scott DesJarlais has conceded in Tennessee&#39;s 4th, and recounts are under way or scheduled in Minnesota&#39;s 1st and North Carolina&#39;s 5th. I could not confirm whether the Yahoo count has been updated for the Tennessee concession, so the totals below are unchanged. Each figure below comes from the most recent source found for it, and the sources were retrieved at different times.
 <ul>
 <li><strong>House:</strong> Democrats 257 called, 5 uncalled (Yahoo News, updated Nov. 20; NBC News and the New York Times via WRAL show the same 257 on Nov. 18); Republicans 173 by subtraction (NBC&#39;s own count is 173). Earlier counts: 255 Democratic and 15 uncalled on Nov. 10 (AP-based), 254, 162, and 19 on Nov. 8 (AP), and 249, 158, and 28 on Nov. 5 (NBC). Yahoo says the Democratic total could top out at 260.</li>
 <li><strong>Senate:</strong> 56 Democrats (counting the two independents who caucus with them) and 44 Republicans, with no race left uncalled, after the Alaska call on Nov. 17&ndash;18; the count had been 55, 44, and 1 uncalled since Mississippi was called on Nov. 11. Democrats flipped nine Republican-held seats (North Carolina, South Carolina, Ohio, Iowa, Kansas, Texas, and Maine on election night, Mississippi on Nov. 11, and Alaska) and held Michigan, Georgia, Minnesota, New Hampshire, and Virginia. Republicans held Florida and Nebraska.</li>
-<li><strong>House races still open (as of Nov. 20):</strong> Louisiana&#39;s 5th and 6th go to a Dec. 12 runoff. In Tennessee&#39;s 4th, Democrat Victoria Broderick leads Rep. Scott DesJarlais by about 270 votes; in Minnesota&#39;s 1st, Democrat Jake Johnson leads Rep. Brad Finstad by about 320, and Finstad has requested a recount; in North Carolina&#39;s 5th, Democrat Chuck Hubbard leads Rep. Virginia Foxx by about 330, and Foxx has requested a recount.</li>
+<li><strong>House races still open (as of Nov. 23):</strong> Louisiana&#39;s 5th and 6th go to a Dec. 12 runoff: in the 5th, Democrat Pat Moore faces Republican Gabe Firment, and in the 6th, Democrat Chauna Banks faces Republican Blake Miguez (<a href="https://www.wwno.org/2026-11-03/state-reps-pat-moore-gabe-firment-advance-to-5th-district-runoff" target="_blank" rel="noopener">WWNO</a>, <a href="https://www.wafb.com/2026/11/04/chauna-banks-blake-miguez-advance-runoff-louisianas-6th-congressional-district/" target="_blank" rel="noopener">WAFB</a>). In Tennessee&#39;s 4th, Rep. Scott DesJarlais conceded on Nov. 16 after provisional ballots were counted; Democrat Victoria Broderick won by 280 votes, or 0.14% (<a href="https://tennesseelookout.com/2026/11/16/desjarlais-concedes-tennessee-4th-congressional-district-to-democrat-victoria-broderick/" target="_blank" rel="noopener">Tennessee Lookout</a>). In Minnesota&#39;s 1st, results were certified on Nov. 19 with Democrat Jake Johnson ahead of Rep. Brad Finstad by 324 votes; Finstad requested a publicly funded recount, which the counties run from Nov. 30 to Dec. 3, with state certification on Dec. 8 (<a href="https://www.mprnews.org/story/2026/11/19/brad-finstad-requests-recount-in-1st-congressional-district-after-loss-to-jake-johnson" target="_blank" rel="noopener">MPR News</a>). In North Carolina&#39;s 5th, Democrat Chuck Hubbard leads Rep. Virginia Foxx by 331 votes after the county canvasses; Foxx requested a recount, a machine recount that was expected to finish by Nov. 23, and I found no result yet (<a href="https://www.wbtv.com/2026/11/17/republican-rep-requests-recount-tight-us-house-race-north-carolina/?outputType=amp" target="_blank" rel="noopener">WBTV</a>). The margins come from local outlets, not an AP or official tally.</li>
 <li><strong>Alaska (called for Democrats, Nov. 17&ndash;18):</strong> Democrat Mary Peltola defeated Sen. Dan Sullivan with just over 50% of the vote, enough to avoid ranked-choice tabulation (Yahoo News). Alaska Public Media dates the call Nov. 17 and PBS (AP) Nov. 18. Search summaries say Sullivan will not concede before certification; I did not retrieve those pages.</li>
 <li><strong>Mississippi (called for Democrats, Nov. 11):</strong> Democrat Scott Colom defeated Sen. Cindy Hyde-Smith, 49.2% to 48.7% by the AP&#39;s count, a margin of about 4,650 votes. Hyde-Smith conceded the same evening. The call rests on uncertified results.</li>
 <li><strong>Governors:</strong> Democrats now hold 30 governorships (Yahoo News), after six flips (Iowa, Texas, Ohio, Nevada, Alaska, and Georgia) and a hold in Kansas.</li>
@@ -235,13 +228,13 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 <tr><th scope="row">House: 218 needed</th><td data-label="Status">Democrats win control</td><td data-label="Detail">Called by CBS News (10:15 PM EST), NBC News, and CNN (about 10:19 PM EST). Yahoo News (updated Nov. 20): 257 D called, 5 uncalled (173 R by subtraction; NBC shows 257 D / 173 R on its own count). Nov. 10 (AP-based): 255 D / 165 R / 15 uncalled. Nov. 8 (AP): 254 D / 162 R / 19 uncalled. NBC (Nov. 5): 249 D / 158 R / 28 uncalled; estimate about 259 D / 176 R.</td></tr>
 <tr><th scope="row">Senate: 51 needed</th><td data-label="Status">Democrats win control</td><td data-label="Detail">56 D (Yahoo News counts 56 to 44; NBC&#39;s projection also shows 56 D / 44 R), with no race left uncalled, after the AP called Alaska for Democrats on Nov. 17&ndash;18. The count was 55 D / 44 R / 1 uncalled after the Mississippi call on Nov. 11, and 54 D / 44 R / 2 uncalled through Nov. 10, the same as NBC&#39;s Nov. 5 tally. CBS News projected control shortly after 11:30 PM EST on election night; CNBC said at least 54 D / 42 R.</td></tr>
 <tr><th scope="row">Senate flips (9)</th><td data-label="Status">NC, SC, TX, OH, KS, IA, ME, MS, AK</td><td data-label="Detail">Call times (EST, per CBS News): North Carolina 8:30 PM; South Carolina 10:00 PM; Texas 10:55 PM; Ohio 11:11 PM; Kansas 11:26 PM; Iowa 11:34 PM; Maine 12:52 AM, after Susan Collins conceded. Mississippi was called by the AP on the evening of Nov. 11, eight days after Election Day, after Cindy Hyde-Smith conceded. Alaska was called for Peltola on Nov. 17&ndash;18 (sources differ on the day).</td></tr>
-<tr><th scope="row">House races still open (5)</th><td data-label="Status">LA-5, LA-6, TN-4, MN-1, NC-5</td><td data-label="Detail">As of Nov. 20 (Yahoo News): Louisiana&#39;s 5th and 6th go to a Dec. 12 runoff. Democrats lead by about 270 votes in Tennessee&#39;s 4th (Broderick over Rep. DesJarlais), about 320 in Minnesota&#39;s 1st (Johnson over Rep. Finstad, who has requested a recount), and about 330 in North Carolina&#39;s 5th (Hubbard over Rep. Foxx, who has requested a recount). In NC-10, Democrat Ashley Bell requested a recount but later conceded to Rep. Pat Harrigan (R).</td></tr>
+<tr><th scope="row">House races still open (5)</th><td data-label="Status">LA-5, LA-6, TN-4, MN-1, NC-5</td><td data-label="Detail">Count as of Nov. 20 (Yahoo News); race status as of Nov. 23: Louisiana&#39;s 5th and 6th go to a Dec. 12 runoff. Democrats won Tennessee&#39;s 4th by 280 votes (Broderick over Rep. DesJarlais, who conceded Nov. 16) and lead by 324 in Minnesota&#39;s 1st (Johnson over Rep. Finstad, who requested a recount that runs Nov. 30 to Dec. 3) and by 331 in North Carolina&#39;s 5th (Hubbard over Rep. Foxx, who requested a recount). In NC-10, Democrat Ashley Bell requested a recount but later conceded to Rep. Pat Harrigan (R).</td></tr>
 </tbody>
 </table>
 <div class="fig-pair">
 <figure>
 <svg viewBox="0 -28 600 358" role="img" aria-label="House composition after the midterms (435 seats), as of Nov. 20 (Yahoo News): 257 Democrats called, 5 uncalled, 173 Republicans (by subtraction). Democrats are past the 218-seat majority.">
-  <g fill="#5e3d50"><title>Democrats called 257</title>
+  <g fill="#1f4e8c"><title>Democrats called 257</title>
     <circle cx="197.4" cy="315.0" r="6.6"/>
     <circle cx="180.8" cy="315.0" r="6.6"/>
     <circle cx="164.2" cy="315.0" r="6.6"/>
@@ -500,14 +493,14 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="350.8" cy="136.6" r="6.6"/>
     <circle cx="376.4" cy="57.7" r="6.6"/>
   </g>
-  <g fill="#efe3c8" stroke="#6d5640" stroke-width="2.5"><title>Uncalled 5</title>
+  <g fill="#e8e3d4" stroke="#5f6b7a" stroke-width="2.5"><title>Uncalled 5</title>
     <circle cx="343.7" cy="169.1" r="6.6"/>
     <circle cx="359.2" cy="121.8" r="6.6"/>
     <circle cx="367.6" cy="107.0" r="6.6"/>
     <circle cx="391.3" cy="45.0" r="6.6"/>
     <circle cx="376.0" cy="92.3" r="6.6"/>
   </g>
-  <g fill="#b7282e"><title>Republicans 173 (by subtraction)</title>
+  <g fill="#b3302f"><title>Republicans 173 (by subtraction)</title>
     <circle cx="384.3" cy="77.7" r="6.6"/>
     <circle cx="335.1" cy="218.6" r="6.6"/>
     <circle cx="392.7" cy="63.1" r="6.6"/>
@@ -682,7 +675,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="568.4" cy="315.0" r="6.6"/>
     <circle cx="585.0" cy="315.0" r="6.6"/>
   </g>
-  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#3a2e2a" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#1a1d24" stroke-width="1.5" stroke-dasharray="4 3"/>
   <text class="t" x="300" y="-4" text-anchor="middle" font-size="28">Majority: 218</text>
 </svg>
 <ul class="legend">
@@ -694,11 +687,11 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 </figure>
 <figure>
 <svg viewBox="0 -28 600 358" role="img" aria-label="Senate composition after the midterms (100 seats), as of Nov. 20 after the AP called Alaska: 56 Democrats including 2 independents, 44 Republicans, none uncalled. Democrats flipped 9 Republican-held seats.">
-  <g fill="#6d5640"><title>Independents 2 (caucus with Democrats; not up)</title>
+  <g fill="#5f6b7a"><title>Independents 2 (caucus with Democrats; not up)</title>
     <circle cx="197.4" cy="315.0" r="14.6"/>
     <circle cx="160.9" cy="315.0" r="14.6"/>
   </g>
-  <g fill="#5e3d50"><title>Democrats, seat not up 32</title>
+  <g fill="#1f4e8c"><title>Democrats, seat not up 32</title>
     <circle cx="124.4" cy="315.0" r="14.6"/>
     <circle cx="88.0" cy="315.0" r="14.6"/>
     <circle cx="51.5" cy="315.0" r="14.6"/>
@@ -732,7 +725,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="153.9" cy="113.9" r="14.6"/>
     <circle cx="157.5" cy="68.2" r="14.6"/>
   </g>
-  <g fill="#efe3c8" stroke="#5e3d50" stroke-width="5.5"><title>Democratic holds 13 (on the ballot)</title>
+  <g fill="#e8e3d4" stroke="#1f4e8c" stroke-width="5.5"><title>Democratic holds 13 (on the ballot)</title>
     <circle cx="187.2" cy="93.6" r="11.8"/>
     <circle cx="205.5" cy="125.2" r="11.8"/>
     <circle cx="223.8" cy="156.8" r="11.8"/>
@@ -747,7 +740,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="280.2" cy="177.3" r="11.8"/>
     <circle cx="262.8" cy="32.4" r="11.8"/>
   </g>
-  <g fill="#5e3d50" stroke="#b7282e" stroke-width="5.5"><title>Democratic flips 9: NC, SC, TX, OH, KS, IA, ME, MS, AK</title>
+  <g fill="#1f4e8c" stroke="#b3302f" stroke-width="5.5"><title>Democratic flips 9: NC, SC, TX, OH, KS, IA, ME, MS, AK</title>
     <circle cx="280.4" cy="103.9" r="11.8"/>
     <circle cx="300.0" cy="212.4" r="11.8"/>
     <circle cx="300.0" cy="139.4" r="11.8"/>
@@ -758,7 +751,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="338.9" cy="69.5" r="11.8"/>
     <circle cx="319.8" cy="177.3" r="11.8"/>
   </g>
-  <g fill="#efe3c8" stroke="#b7282e" stroke-width="5.5"><title>Republican holds 13 (on the ballot)</title>
+  <g fill="#e8e3d4" stroke="#b3302f" stroke-width="5.5"><title>Republican holds 13 (on the ballot)</title>
     <circle cx="339.1" cy="143.8" r="11.8"/>
     <circle cx="373.8" cy="39.7" r="11.8"/>
     <circle cx="358.0" cy="111.1" r="11.8"/>
@@ -773,7 +766,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="446.1" cy="113.9" r="11.8"/>
     <circle cx="427.8" cy="145.8" r="11.8"/>
   </g>
-  <g fill="#b7282e"><title>Republicans, seat not up 31</title>
+  <g fill="#b3302f"><title>Republicans, seat not up 31</title>
     <circle cx="473.5" cy="88.9" r="14.6"/>
     <circle cx="409.5" cy="177.7" r="14.6"/>
     <circle cx="391.1" cy="209.9" r="14.6"/>
@@ -806,7 +799,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="548.5" cy="315.0" r="14.6"/>
     <circle cx="585.0" cy="315.0" r="14.6"/>
   </g>
-  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#3a2e2a" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#1a1d24" stroke-width="1.5" stroke-dasharray="4 3"/>
   <text class="t" x="300" y="-4" text-anchor="middle" font-size="28">Majority: 51</text>
 </svg>
 <ul class="legend">
@@ -821,7 +814,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 </figure>
 </div>
 <p>The House picture is shaped by mid-decade redistricting, and Democrats won in several districts redrawn to favor Republicans. NBC News has called Democratic pickups including NC-11 (Jamie Ager), PA-1 (Harvie), PA-7 (Bob Brooks), PA-8 (Paige Cognetti), PA-10 (Janelle Stelson), NJ-7 (Rebecca Bennett, over Tom Kean Jr.), and CO-8 (Manny Rutinel, over Gabe Evans). CBS News adds that Republicans lost seats including OH-7 (Rep. Max Miller), PA-1 (Rep. Brian Fitzpatrick), and three of Iowa&#39;s four GOP-held districts, and that Democrat Bobby Pulido flipped TX-15. Democrats also held FL-25 (Jared Moskowitz), TX-28 (Henry Cuellar), and TX-34 (Vicente Gonzalez); CNBC earlier reported Democratic wins in Florida&#39;s 14th and 22nd districts, both redrawn to favor Republicans. NBC News now also lists NY-17 as a Democratic win, with Conley over Rep. Mike Lawler (Conley had led 52.2% to 47.7% with 60.9% of the vote in at the earlier 7:30 AM EST check).<sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup><sup id="fnref-7-5"><a href="#ref-7">[7]</a></sup><sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup></p>
-<p>Of the 15 House races still uncalled on Nov. 10, ten have since been decided and five remain open as of Nov. 20. Louisiana&#39;s 5th and 6th go to a Dec. 12 runoff. Democrats lead by about 270 votes in Tennessee&#39;s 4th (Victoria Broderick over Rep. Scott DesJarlais), about 320 in Minnesota&#39;s 1st (Jake Johnson over Rep. Brad Finstad, who has requested a recount), and about 330 in North Carolina&#39;s 5th (Chuck Hubbard over Rep. Virginia Foxx, who has requested a recount). Races settled since Nov. 10 include North Carolina&#39;s 3rd, where the AP called Democrat Raymond Smith the winner over Rep. Greg Murphy, who conceded, and North Carolina&#39;s 10th, where Democrat Ashley Bell requested a recount but then conceded to Rep. Pat Harrigan (R), who had led by more than 2,500 votes. I did not retrieve the outcomes of the other Nov. 10 uncalled races (such as Colorado&#39;s 4th, Maine&#39;s 2nd, and Alaska&#39;s at-large seat; NBC&#39;s headline has Republican Nick Begich re-elected in Alaska) from a source that lists them; they are counted among the 257 Democratic and 173 Republican seats only through the totals reported by Yahoo News and NBC.<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup><sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup><sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup><sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></p>
+<p>Of the 15 House races still uncalled on Nov. 10, ten have since been decided and five remained open in the Nov. 20 count. Louisiana&#39;s 5th and 6th go to a Dec. 12 runoff. As of Nov. 23, Democrats have won Tennessee&#39;s 4th by 280 votes (Victoria Broderick over Rep. Scott DesJarlais, who conceded on Nov. 16) and lead by 324 in Minnesota&#39;s 1st (Jake Johnson over Rep. Brad Finstad, who requested a recount that runs Nov. 30 to Dec. 3) and by 331 in North Carolina&#39;s 5th (Chuck Hubbard over Rep. Virginia Foxx, who requested a recount). Races settled since Nov. 10 include North Carolina&#39;s 3rd, where the AP called Democrat Raymond Smith the winner over Rep. Greg Murphy, who conceded, and North Carolina&#39;s 10th, where Democrat Ashley Bell requested a recount but then conceded to Rep. Pat Harrigan (R), who had led by more than 2,500 votes. I did not retrieve the outcomes of the other Nov. 10 uncalled races (such as Colorado&#39;s 4th, Maine&#39;s 2nd, and Alaska&#39;s at-large seat; NBC&#39;s headline has Republican Nick Begich re-elected in Alaska) from a source that lists them; they are counted among the 257 Democratic and 173 Republican seats only through the totals reported by Yahoo News and NBC.<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup><sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup><sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup><sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></p>
 <p>The governors&#39; races mirrored the national mood. Democrats won Ohio (Amy Acton, over Vivek Ramaswamy), Texas (Gina Hinojosa, who unseated Gov. Greg Abbott), Georgia (Keisha Lance Bottoms), and Iowa (Rob Sand), and CNBC also projects Jocelyn Benson in Michigan (over John James) and David Crowley in Wisconsin. Republican Byron Donalds won Florida.<sup id="fnref-7-6"><a href="#ref-7">[7]</a></sup><sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> The AP&#39;s table as of Nov. 8 listed five Democratic flips (Georgia, Iowa, Nevada, Ohio, and Texas) and a 28-to-20 Democratic edge in governorships, with Alaska and Kansas uncalled. Yahoo News&#39;s Nov. 20 update brings Democrats to 30 governorships: Democrat Jonathan Kreiss-Tomkins was called in Alaska early on Saturday, Nov. 14, with a majority of first-choice votes (he takes office Dec. 7), making Alaska the sixth flip, and Democrat Cindy Holscher held Kansas.<sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup></p>
 <p>Before the vote, Reuters framed the question as whether either party would win unified control or Washington would fracture into divided government in 2027. The answer is divided government: Republicans keep the White House, and Democrats hold both chambers.<sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></p>
 </section>
@@ -873,7 +866,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 <h2><span class="no">7</span>Coffee Break: Why Doesn&#39;t an American Party Have a &ldquo;Leader&rdquo;?</h2>
 <p class="meta">A side note from the election-night desk. Not part of the race calls.</p>
 <h3 id="s7-1">7.1 Who spoke for the parties on election night?</h3>
-<p>Scroll back through the night&#39;s coverage and a pattern appears. Donald Trump wrote that he &ldquo;wasn&#39;t on the Ballot,&rdquo; and a senior Republican strategist blamed him for the result. On the Democratic side, Hakeem Jeffries, Chuck Schumer, Nancy Pelosi, and Barack Obama each weighed in on the result, yet none of them is &ldquo;the leader of the Democratic Party.&rdquo; A reader used to Japanese or British politics keeps looking for one: the party president (the LDP&#39;s <i>s&#333;sai</i>) or party leader who becomes prime minister when the party wins.<sup id="fnref-7-19"><a href="#ref-7">[7]</a></sup></p>
+<p>Scroll back through the night&#39;s coverage and a pattern appears. Donald Trump wrote that he &ldquo;wasn&#39;t on the Ballot,&rdquo; and a senior Republican strategist blamed him for the result. On the Democratic side, Hakeem Jeffries, Chuck Schumer, Nancy Pelosi, and Barack Obama each weighed in on the result, yet none of them is &ldquo;the leader of the Democratic Party.&rdquo; A reader used to Japanese or British politics keeps looking for one: the party president (the LDP&#39;s <i>s&#1a1d24;sai</i>) or party leader who becomes prime minister when the party wins.<sup id="fnref-7-19"><a href="#ref-7">[7]</a></sup></p>
 <p>The short answer is that American parties do have officials, but no single office that combines what a parliamentary leader holds at once: head of the party organization, chooser of candidates, head of the legislative caucus, and head of government. The closest candidates are these.</p>
 <table>
 <thead><tr><th>Position</th><th>Who (as of this report)</th><th>What they actually control</th></tr></thead>
@@ -898,7 +891,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 </section>
 <div class="refs">
 <h2>Sources and Editorial Notes</h2>
-<p>This report synthesizes coverage from major U.S. news organizations and was last updated on Nov. 21, 2026. The election-night figures draw on NBC News&#39;s Senate and House results pages (both updated 9:29 AM EST on Nov. 5), CNBC&#39;s Election Desk (page updated 5:23 PM EST), and CBS News&#39;s live updates. The Nov. 11 update adds a Yahoo News tracker of uncalled races (updated 6:41 PM EST on Nov. 10), California Today&#39;s master guide (Associated Press tallies as of 9:00 PM EST on Nov. 8), CBS News&#39;s Senate live updates (7:23 PM EST on Nov. 7), KTUU&#39;s Alaska report (Nov. 5), and a KCRA report (Nov. 7). The Nov. 12 update adds the Mississippi call, taken from MS NOW and Yahoo News; NPR and Mississippi Today headlines returned by search confirm the AP call, but those pages could not be retrieved. The Nov. 21 update adds a Yahoo News final-results article (updated Nov. 20) for the Senate total, the five open House races, and the governorships, plus NBC News&#39;s House results page and a New York Times article carried by WRAL (Nov. 18) for the House count and the North Carolina and Minnesota recounts. The Alaska call date comes from search results naming the AP, PBS, and Alaska Public Media; those pages were not retrieved, and NBC&#39;s page was read through a partly summarized fetch. The Washington Post&#39;s Nov. 18 article was blocked. The AP figures reach this page through those secondary sites, not from the AP directly, and NBC&#39;s and CNBC&#39;s own pages were not retrieved again. Because the pages were retrieved at different times, figures may not be mutually consistent; for example, the uncalled-House-race count was seven (New York Times, Nov. 17) and five (NBC and Yahoo) in sources a few days apart, and the Alaska percentages and vote margins come from different snapshots. CNN&#39;s pages could not be fetched directly, so CNN&#39;s position is taken from its published headline and summaries as returned by search. Vote shares are partial tallies, and the NBC Senate table does not label every candidate&#39;s party, so labels here follow the battleground cards and the other outlets. The background in the Coffee Break column comes from encyclopedia entries and is a general account, not a legal analysis. Final seat counts and certified winners should be tracked via official state election authorities and ongoing live decision desk updates.</p>
+<p>This report synthesizes coverage from major U.S. news organizations and was last updated on Nov. 23, 2026. The election-night figures draw on NBC News&#39;s Senate and House results pages (both updated 9:29 AM EST on Nov. 5), CNBC&#39;s Election Desk (page updated 5:23 PM EST), and CBS News&#39;s live updates. The Nov. 11 update adds a Yahoo News tracker of uncalled races (updated 6:41 PM EST on Nov. 10), California Today&#39;s master guide (Associated Press tallies as of 9:00 PM EST on Nov. 8), CBS News&#39;s Senate live updates (7:23 PM EST on Nov. 7), KTUU&#39;s Alaska report (Nov. 5), and a KCRA report (Nov. 7). The Nov. 12 update adds the Mississippi call, taken from MS NOW and Yahoo News; NPR and Mississippi Today headlines returned by search confirm the AP call, but those pages could not be retrieved. The Nov. 21 update adds a Yahoo News final-results article (updated Nov. 20) for the Senate total, the five open House races, and the governorships, plus NBC News&#39;s House results page and a New York Times article carried by WRAL (Nov. 18) for the House count and the North Carolina and Minnesota recounts. The Nov. 23 update refreshes only the four open or closed House races listed under &ldquo;House races still open,&rdquo; using the linked WWNO, WAFB, Tennessee Lookout, MPR News, and WBTV reports (read as search summaries, not as full pages); it does not change the House or Senate totals, which still rest on the Nov. 20 Yahoo News figures. The Alaska call date comes from search results naming the AP, PBS, and Alaska Public Media; those pages were not retrieved, and NBC&#39;s page was read through a partly summarized fetch. The Washington Post&#39;s Nov. 18 article was blocked. The AP figures reach this page through those secondary sites, not from the AP directly, and NBC&#39;s and CNBC&#39;s own pages were not retrieved again. Because the pages were retrieved at different times, figures may not be mutually consistent; for example, the uncalled-House-race count was seven (New York Times, Nov. 17) and five (NBC and Yahoo) in sources a few days apart, and the Alaska percentages and vote margins come from different snapshots. CNN&#39;s pages could not be fetched directly, so CNN&#39;s position is taken from its published headline and summaries as returned by search. Vote shares are partial tallies, and the NBC Senate table does not label every candidate&#39;s party, so labels here follow the battleground cards and the other outlets. The background in the Coffee Break column comes from encyclopedia entries and is a general account, not a legal analysis. Final seat counts and certified winners should be tracked via official state election authorities and ongoing live decision desk updates.</p>
 <p class="refs-note">Click ^ beside each item to return to the passage that cites it. Where a source is cited in several places, the letters a, b, c after ^ link to each citation in turn.</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> <sup><a href="#fnref-1-10">j</a></sup> <sup><a href="#fnref-1-11">k</a></sup> <sup><a href="#fnref-1-12">l</a></sup> CNBC, &quot;Midterm elections 2026 live updates.&quot; House and Senate projections, Election Desk ratings, governors, and CNBC Voter Poll findings. <a href="https://www.cnbc.com/2026/11/03/midterm-elections-2026-live-updates.html" target="_blank" rel="noopener">CNBC</a></li>
@@ -923,7 +916,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 <li id="ref-20"><a href="#fnref-20-1">^</a> The New York Times, via WRAL, &quot;With House Democratic majority still growing, recounts are starting in close NC races.&quot; Posted Nov. 18, 2026; 257 Democratic seats, seven races uncalled by the AP, and the North Carolina and Minnesota recounts. <a href="https://www.wral.com/news/nccapitol/elections-recounts-house-races-north-carolina-minnesota-november-2026/" target="_blank" rel="noopener">WRAL</a></li>
 </ol>
 </div>
-<p class="meta">Data as of Nov. 21, 2026 (latest figures: Nov. 20 evening; this is not a final edition, because five House races remain open and no result is certified). Real-time race calls and vote tabulations are continuously updating; verify final congressional composition and certified winners through official state election authorities and ongoing news coverage.</p>
+<p class="meta">Data as of Nov. 23, 2026 (latest totals: Nov. 20 evening; four House races refreshed Nov. 23; this is not a final edition, because House races in Louisiana, Minnesota, and North Carolina remain open and the totals may lag recent concessions). Real-time race calls and vote tabulations are continuously updating; verify final congressional composition and certified winners through official state election authorities and ongoing news coverage.</p>
 </div>
 </body>
 </html>
