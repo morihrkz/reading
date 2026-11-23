@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>国連の北朝鮮人権決議で、イランは何をしてきたのか</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">解説</p>
+<h1>国連の北朝鮮人権決議で、イランは何をしてきたのか</h1>
+<p class="subtitle">Iran's Voting Record on the UN Resolution on Human Rights in North Korea, 2014–2026</p>
+<p>票が記録される年に、イランは毎回反対してきた。 2026 年も同じである。一方、日本の拉致問題をめぐるイランの発言は、確認できた記録に一つもない。</p>
+</header>
+<div class="wrap">
+<div class="lede">
+<p>2026 年 11 月 18 日、国連総会第三委員会が北朝鮮人権決議を採択した。この決議に、イランはどう投じたのか。過去の投票と比べて、立場は変わったのか。日本の拉致問題について、イランは何かを述べたのか。公開資料で、この三つを確かめた。</p>
+</div>
+<p class="meta">作成 : 2026 年 11 月 23 日 ・ 情報基準日 : 2026 年 11 月 23 日</p>
+<div class="meta band"><strong>【方法と限界】</strong> 2026 年 11 月 23 日時点で読めた、国連の報道発表と報道機関の記事に基づく。確認できなかった事項は、そのように明記した。過去の年の国連報道発表のページは開けなかった（アクセス遮断）。そのため、 2014 年と 2015 年の投票は、報道とアドボカシー団体の一覧に拠っており、国連の投票記録そのものではない。数字の一部は、検索結果の要約に拠る。 2014 年より前は調べていない。なお、本稿は当初、イランが日本の拉致問題の提案を「内政干渉」と非難したという情報の検証として始めた。その情報の出どころは確認できず、そのような発言も記録にない。そこで、イランの投票の記録を整理する文書として組み直した。</div>
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">三つの問いへの答え</a></li>
+<li><a href="#sec2">2026 年の採決で、記録が示すこと</a></li>
+<li><a href="#sec3">2014 年から 2026 年まで――票を投じた年は、毎回反対</a></li>
+<li><a href="#sec4">日本とイランの関係――協力と摩擦</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 三つの問いへの答え</h2>
+<table>
+<thead><tr><th>問い</th><th>答え</th><th>理由</th></tr></thead>
+<tbody>
+<tr><th>Q1 2026 年に、イランはどう投じたのか</th><td data-label="答え"><strong>反対票を投じた。</strong></td><td data-label="理由">第三委員会は賛成 95 、反対 14 、棄権 58 で採択した。報道は、中国、ロシア、キューバとともにイランが反対したと伝えている。</td></tr>
+<tr><th>Q2 立場は変わったのか</th><td data-label="答え"><strong>変化は示されない。ただし、記録に空白がある。</strong></td><td data-label="理由">票が記録された年（ 2014 年、 2015 年、 2026 年）は、いずれもイランが反対した。 2016–2025 年は、決議が投票なしの合意で採択されたと報じられており、比較できる投票がない。この期間のイランの立場は不明である。</td></tr>
+<tr><th>Q3 拉致問題について、イランは何かを述べたのか</th><td data-label="答え"><strong>確認できた記録に、発言はない。</strong></td><td data-label="理由">国連の報道発表は、この決議案に関するイランの発言を記録していない。イランが投票を日本の拉致問題への姿勢と結びつけて語ったことを示す資料も、見つかっていない。</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 2026 年の採決で、記録が示すこと</h2>
+<p>まず、記録が示す事実を並べる。</p>
+<ul>
+<li>11 月 18 日、第三委員会は北朝鮮人権決議 (A/C.3/81/L.38) を、賛成 95 、反対 14 、棄権 58 で採択した <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。決議は 12 月に総会本会議へ送られる。</li>
+<li>イランは反対票を投じた。聯合ニュース配信の『コリア・タイムズ』の記事が、「中国、ロシア、キューバ、イランが反対した」と伝えている <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。国連の報道発表は、反対した 14 か国の名を挙げていない。</li>
+<li>日本の代表は「未解決の拉致問題」を強調し、被害者と家族が「年を重ね続けている」と述べた <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。報道発表に、イランがこれに応じた記述はない。</li>
+<li>報道発表は、この決議案に関するイランの発言を一つも記録していない。当日のイランの発言は、自国を対象とする決議（ A/C.3/81/L.39 、賛成 76 ・反対 27 ・棄権 64 で採択）に関するもので、代表はこれを政治的動機によるものだと述べた <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。</li>
+</ul>
+<p>次に、記録にないものを挙げる。</p>
+<ul>
+<li><strong>拉致問題をめぐるイランの発言</strong><br>「内政干渉」という語を含め、この主題についてのイランの発言は、確認できたどの資料にもない。</li>
+<li><strong>日本が単独で出した提案という位置づけ</strong><br>決議案は、日本が単独で出したものではない。毎年の決議は、日本を含む多数の国が共同で提案する。 2025 年の決議 80/220 の共同提案国は 61 か国で、日本もその一つだった <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。 2026 年の共同提案国の一覧は確認できていない。</li>
+<li><strong>日本人拉致に特化した文言</strong><br>報道によれば、決議は「国際的な拉致と強制失踪」に触れ、韓国の提案で「北朝鮮に拉致された人々」にも言及している。</li>
+</ul>
+<div class="point">
+<p>イランは、自国を含む国別決議を政治化されたものだと述べてきた。国連報道発表 GA/SHC/4437 には、内政への干渉と、人権を圧力の道具にすることへの拒否に触れた記述がある <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。ただし、検索結果の断片で確認しただけで、発言者と対象は特定できていない。この記述を、拉致問題や今回の決議と結びつける資料は、見つかっていない。</p>
+</div>
+<p>要するに、イランの 2026 年の反対票は確かである。その理由を拉致問題に求める根拠は、今のところない。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span> 2014 年から 2026 年まで――票を投じた年は、毎回反対</h2>
+<table>
+<thead><tr><th>年</th><th>確認できた内容</th><th>根拠</th></tr></thead>
+<tbody>
+<tr><th>2014 年</th><td data-label="確認できた内容">反対票。第三委員会 (111–19–55) の反対 19 か国の中にイランが含まれる。本会議の票数は 116–20–53 。</td><td data-label="根拠"><a href="https://unwatch.org/china-russia-venezuela-shield-north-korea-criticism-un-general-assembly/">UN Watch</a><sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> ・ <a href="https://www.aljazeera.com/amp/news/2014/12/19/un-assembly-votes-to-refer-north-korea-to-icc">Al Jazeera</a><sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><th>2015 年</th><td data-label="確認できた内容">反対票。反対国の中にイランが含まれる。第三委員会は 112–19–50 、本会議は 119–19–48 。</td><td data-label="根拠"><a href="https://www.hrw.org/news/2015/12/17/north-korea-un-condemns-systemic-rights-abuses">Human Rights Watch</a><sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><th>2016–2025 年</th><td data-label="確認できた内容">報道によれば、投票なしの合意で採択された。投票がないので、イランの立場は<strong>不明</strong>である。発言や、合意からの距離の表明（ディスアソシエート）があったかどうかは、確かめられていない。</td><td data-label="根拠"><a href="https://www.koreajoongangdaily.com/korea/us-forces-first-vote-in-a-decade-on-north-korea-human-rights-resolution-at-un-then-abstains/12981331">Korea JoongAng Daily</a><sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><th>2026 年</th><td data-label="確認できた内容">中国、ロシア、キューバとともに反対票。米国が投票を要求して採決になった（米国自身は棄権）。理由は、国際刑事裁判所 (ICC) に触れた文言だと報じられている。国連の報道発表は、反対した 14 か国の名を挙げていない。</td><td data-label="根拠"><a href="https://www.koreatimes.co.kr/foreignaffairs/others/20261119/un-committee-adopts-n-korean-human-rights-resolution-for-22nd-year">The Korea Times</a>（聯合ニュース）<sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup></td></tr>
+<tr><th>イランの一般的な立場</th><td data-label="確認できた内容">イランは、自国を対象とするものを含め、国別決議を政治化されたものだと述べてきた。 2026 年には、代表が「この決議への反対票は、人権の政治化への反対票である」と述べたとされる(<strong>この引用は出典を確認できていない</strong>)。</td><td data-label="根拠">出典の記載なし。</td></tr>
+</tbody>
+</table>
+<p>票を投じた年は、毎回イランが反対している。したがって 2026 年の反対は、 2014 年・ 2015 年と一貫しており、新たな強硬化の証拠にはならない。一方で、決議は 10 年間、合意で採択された。「イランは姿勢を変えた」とも「イランは一貫して反対してきた」とも、記録からは言えない。しかも、票の記録がある年は 3 回しかない。「変化なし」は、弱い結論である。</p>
+<p>どの年についても、イランが投票を日本の拉致問題への姿勢と結びつけて語った記録は、見つかっていない。投票の態度は、国別決議そのものへのイランの一般的な反対と整合する。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> 日本とイランの関係――協力と摩擦</h2>
+<p>反対票の背景として、日本とイランの関係を確かめておく。証拠は、両方向にある。</p>
+<ul>
+<li><strong>協力の兆し</strong><br>日本の外相とイランの外相は、 2026 年の 2 月から 6 月中旬までに、少なくとも 7 回電話で話した。 7 月には、領事関連のフォローアップが報じられている <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。日本は、米国とイランの合意と、ホルムズ海峡での船舶の安全な航行を促してきた。</li>
+<li><strong>摩擦</strong><br>日本は 2026 年 3 月、イランで拘束された日本人 2 人の早期解放を求めた <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。イランは、日本が他の国々とともに支持した決議案にも反対票を投じた。</li>
+</ul>
+<p>両国の関係は機能しており、礼儀も保たれている。多くの分析者は、これを長年の実利的な関係と呼ぶ。だが 2026 年の投票は、この問題でイランが日本と歩調を合わせなかったことを示す。関係を一つのラベルで括らず、個別の事実を見るのが適切である。</p>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> UN press release GA/SHC/4460, 18 Nov 2026. <a href="https://press.un.org/en/2026/gashc4460.doc.htm">UN Press</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <em>The Korea Times</em>(Yonhap) , 19 Nov 2026. <a href="https://www.koreatimes.co.kr/foreignaffairs/others/20261119/un-committee-adopts-n-korean-human-rights-resolution-for-22nd-year">The Korea Times</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> <em>Adnkronos</em>, 19 Dec 2025 （総会本会議による決議 80/220 の採択。共同提案国の数は検索結果の要約で確認し、全文は未読）。 <a href="https://english.adnkronos.com/2025/12/19/u-n-general-assembly-condemns-n-koreas-human-rights-abuses/">Adnkronos</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> UN press release GA/SHC/4437, Eighty-first session （検索結果の断片のみ確認し、全文は未読）。 <a href="https://press.un.org/en/2026/gashc4437.doc.htm">UN Press</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> UN Watch, on the 2014 vote. <a href="https://unwatch.org/china-russia-venezuela-shield-north-korea-criticism-un-general-assembly/">UN Watch</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> <em>Al Jazeera</em>, 19 Dec 2014. <a href="https://www.aljazeera.com/amp/news/2014/12/19/un-assembly-votes-to-refer-north-korea-to-icc">Al Jazeera</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> Human Rights Watch, 17 Dec 2015. <a href="https://www.hrw.org/news/2015/12/17/north-korea-un-condemns-systemic-rights-abuses">Human Rights Watch</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> <em>Korea JoongAng Daily</em>, on the first recorded vote in a decade. <a href="https://www.koreajoongangdaily.com/korea/us-forces-first-vote-in-a-decade-on-north-korea-human-rights-resolution-at-un-then-abstains/12981331">Korea JoongAng Daily</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> <em>Adnkronos</em>, 15 Jun 2026. <a href="https://english.adnkronos.com/2026/06/15/japan-iran-to-maintain-close-contact-on-u-s-iran-peace-deal/">Adnkronos</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> Ministry of Foreign Affairs of Japan, Iran page and press releases （一般ページであり、個別の事実の根拠としては単独で不十分である）。 <a href="https://www.mofa.go.jp/region/middle_e/iran/">MOFA Japan</a></li>
+</ol>
+<p class="endnote">限界 : 過去の年の国連報道発表のページは開けなかった。 2014 年と 2015 年の投票は、報道とアドボカシー団体の一覧に拠る。数字の一部は検索結果の要約に拠る。本稿は、イランの投票の全史ではない。</p>
+</div>
+</div>
+</body>
+</html>
