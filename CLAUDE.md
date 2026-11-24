@@ -3,12 +3,14 @@
 「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 72 本。うち 69 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
 
 ## HTML 文書の意匠
-HTML 文書の新規作成、既存文書の意匠修正・検証には、必ずローカルスキル `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。
+HTML 文書の新規作成、既存文書の意匠修正・検証には、必ずローカルスキル `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。例外は、下の `megumino.html` と `color-palette.html` である。
 
 - 文書の意匠の正はこのスキルである。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
 - 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。 4 つの意匠は排他的で、同じ文書に重ねて適用しない。
 - `color-palette.html` には、 wafu を適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
-- `megumino.html` には、 wafu を適用済みである(経路案内。スキルの CSS の後ろに、出発地の選択・ `dl.route` ・地図の図といった固有の部品を足している)。意匠の正はスキルで、他の文書と同じ扱いにする。
+- `megumino.html` （経路案内）は、 wafu の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 wafu に戻さず、 wafu 用の検査を当てて直さない。
+  - 色は意味で使い分ける。白地に黒の文字を基本に、紺 `#00205b` が見出し、黄 `#ffd400` が系統番号と地図の番号、赤 `#b3001b` が降車・目的地、青 `#0022a8` がリンク。文字と地のコントラスト比は 7 以上を保つ。
+  - 地図（ `route_1_web.png` 〜 `route_4_web.png` ）は、 OpenStreetMap のデータから描いた横 1080px の PNG である。図の中と説明文の両方に、出典（ © OpenStreetMap contributors ）を入れる。地図の番号は、図の下の `ol.steps` の番号と一致させる。描画スクリプトは残していない。
 - スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は文書と別の意匠で、仕様は後述の「 portal.html の構造」にある。文書用の検査を `portal.html` にそのまま当てて、誤検出を直さない。
 - 文書の冒頭部（ `.kicker` ・ `.subtitle` ・ `.lede` ・ `.meta` ）の有無は、文書ごとに揺れている。揃っていない文書を見つけても、頼まれていないのに揃えない。新しい文書は、スキルの定めに従う。
 
