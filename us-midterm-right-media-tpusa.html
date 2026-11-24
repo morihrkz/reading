@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中間選挙後の右派メディアと Turning Point USA</title>
+<style>
+  :root{
+    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
+    --bg:#f3ead7;          /* 生成り */
+    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
+    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
+    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
+    --line:#cdb98f;        /* 枯色を濃くした罫線 */
+    --red:#b7282e;         /* 茜色 */
+    --blue:#5e3d50;        /* 葡萄鼠 */
+    --yellow:#d19826;      /* 黄朽葉 */
+    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
+    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
+    --copper:#a55b3a;      /* 代赭 */
+    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
+    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
+    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
+    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
+    /* 淡色（囲みの地） */
+    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.9;font-size:20px}
+  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
+  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
+  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
+  .hero p{margin:0}
+  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
+  nav.toc b{display:block;margin-bottom:4px}
+  nav.toc ol{margin:0;padding-left:1.4em}
+  nav.toc>ol{columns:2;column-gap:28px}
+  nav.toc a{color:var(--ink);text-decoration:none}
+  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
+  nav.toc>ol>li{break-inside:avoid}
+  @media(max-width:560px){nav.toc>ol{columns:1}}
+  section{margin:48px 0}
+  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
+  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
+  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
+  p{margin:12px 0}
+  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
+  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
+  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
+  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
+  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
+  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
+  .checklist .cl-title::before{content:"✅ "}
+  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
+  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
+  .checklist li:last-child{border-bottom:0}
+  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
+  .checklist label{cursor:pointer}
+  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
+  .grid4 figure{margin:0;padding:8px}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--link)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
+  .card .e{font-size:40px;display:block}
+  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
+  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
+  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
+  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
+  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
+  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
+  thead th{color:#fff}
+  thead th:first-child{background:var(--ink)}
+  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
+  thead th:nth-child(n+4){background:var(--copper)}
+  tbody th{background:#efe3c8}
+  tr:last-child th,tr:last-child td{border-bottom:0}
+  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
+     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
+  @media(max-width:640px){
+    table,tbody,tr,th,td{display:block}
+    table{background:none;border:0;border-radius:0;overflow:visible}
+    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
+    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
+    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
+    tbody td:nth-of-type(2){border-left-color:var(--blue)}
+    tbody td:last-child{border-bottom:0}
+    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  }
+  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
+  .quiz summary{cursor:pointer;font-weight:bold}
+  .quiz details[open]{border-color:var(--moss-ink)}
+  .quiz .ans{color:var(--moss-ink);font-weight:bold}
+  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
+  dl.words dd{margin:0 0 0 1em}
+  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
+  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
+  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
+  .hero .subtitle{color:var(--ink);font-size:1.05rem}
+  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
+  .meta{color:var(--muted);font-size:17px;line-height:1.9}
+  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
+  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
+  .box ul{margin:6px 0 0;padding-left:1.4em}
+  .box strong{color:var(--ink)}
+  .lede>:first-child,.box>:first-child{margin-top:0}
+  .lede>:last-child,.box>:last-child{margin-bottom:0}
+  .endnote{font-size:16px;color:var(--muted)}
+  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
+  dl.summary{margin:14px 0}
+  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
+  dl.summary dt{white-space:nowrap}
+  dl.summary dt::after{content:"："}
+  dl.summary dd{margin:0;flex:1 1 12em}
+  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
+  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:.9em;line-height:0}
+  sup a{font-weight:bold;text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  .refs h2{margin-top:0}
+  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
+  .refs ol{padding-left:1.8em}
+  .refs .refs-note{color:var(--muted)}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:bold}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
+  /* コード、必須、印、結合セルのある表 */
+  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
+  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
+  pre code{background:none;padding:0;font-size:inherit}
+  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
+  pre.term{background:#000;color:#fff;border-color:#000}
+  pre.term code{color:#fff}
+  code.term{background:#000;color:#fff}
+  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
+  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
+  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
+  .must pre.term code{color:#fff}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
+  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
+  @media(max-width:640px){
+    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
+    table.cardspan tbody td[rowspan]{display:none}
+    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  }
+  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
+  .t{fill:var(--ink)}
+  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
+  .white{fill:#fff}
+</style>
+</head>
+<body>
+<header class="hero">
+<p class="kicker">米国政治・メディア</p>
+<h1>中間選挙の後、右派メディアは論調を変えたか。 Turning Point USA は何を語ったか</h1>
+<p class="subtitle">Right-Wing Media and Turning Point USA after the 2026 Midterm Elections</p>
+<p>2026 年 11 月の中間選挙の結果を受けた、右派メディアの論調と、故チャーリー・カークが創設した保守団体の声明を確かめる。</p>
+</header>
+<div class="wrap">
+<p class="meta band"><strong>【方法と限界】</strong> 調査は 2026 年 11 月 24 日時点の検索結果に基づく。記事の多くは検索結果の要約から読み取り、原文を開いていない。引用は、報道や Media Matters などの批判的立場の団体の書き起こしを経由している。原文の確認を経ていない箇所は、末尾の表で示す。</p>
+
+<nav class="toc"><b>目次</b>
+<ol>
+<li><a href="#sec1">結論を先に</a></li>
+<li><a href="#sec2">右派メディアは論調を変えたか</a>
+<ol>
+<li><a href="#sec2-1">ニューズマックス</a></li>
+<li><a href="#sec2-2">One America News (OAN)</a></li>
+<li><a href="#sec2-3">この変化をどう読むか</a></li>
+</ol>
+</li>
+<li><a href="#sec3">Turning Point USA は声明を出しているか</a>
+<ol>
+<li><a href="#sec3-1">エリカ・カークの声明</a></li>
+<li><a href="#sec3-2">組織の姿勢と内部の反応</a></li>
+<li><a href="#sec3-3">声明の読み方</a></li>
+</ol>
+</li>
+<li><a href="#sec4">ファクトチェック</a></li>
+<li><a href="#sec5">次に確かめること</a></li>
+</ol>
+</nav>
+
+<section id="sec1"><h2><span class="no">1</span> 結論を先に</h2>
+<div class="point">
+<p>問いへの答えは二つである。第一に、右派メディアは論調を変えた。ただし、方向を転換したというより、敗北の責任を向ける先を変えた。ニューズマックスの司会者は、 Fox News や共和党の選挙担当者を批判しつつ、トランプへの支持は部分的に保っている。 OAN については、選挙後の報道を確認できなかったため、判断を保留する。</p>
+<p>第二に、 Turning Point USA は声明を出している。 CEO のエリカ・カークが、投票日の翌日（ 11 月 4 日）に X で長文の声明を出し、党内の対立を避けるよう呼びかけた。</p>
+</div>
+<p>民主党が下院と上院の両方を制したことは、 CNN と Al Jazeera の報道が一致して伝えている <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup> 。この二つの答えは、いずれも報道と集計に依存する。ニューズマックスの論調は、批判的な団体が書き起こした番組の抜粋で判断している。 Turning Point の声明は、本人の投稿が複数の報道で引用されているため、内容の確度は高い。</p>
+</section>
+
+<section id="sec2"><h2><span class="no">2</span> 右派メディアは論調を変えたか</h2>
+
+<h3 id="sec2-1">2.1 ニューズマックス</h3>
+<p>投票日の夜、ニューズマックスは「 Vote for America 」と題する特別番組を組んでいた。 8 時（東部時間）から深夜まで続く予定で、事前の編成は、選挙を権威ある報道として扱う意図を示していた <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。ニューズマックスの 2026 年選挙のページには、選挙後の記事の見出しが並ぶ <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。</p>
+<p>その後の論調は、それとは異なる方向へ動いた。 11 月 4 日の番組『 Greg Kelly Reports 』で、司会のグレッグ・ケリーは、トランプ大統領の見方に同意するとして、「保守系メディア、とりわけ Fox News には、途方もなく大きな責任がある」と述べた <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。ケリーが Fox を名指しで批判したことは、同局を支持してきた視聴者にとって、目に見える変化である。</p>
+<p>同じ週、寄稿者のケイ・スメイスが Fox を「ただの偽ニュース」と呼んだと、 Media Matters は伝えている <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。一方で、ヘリテージ財団のケヴィン・ロバーツらは、敗北の原因をトランプではなく、共和党の選挙コンサルタントや Fox などに求めた <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。番組の一つでは、ゲストがトランプの関心事（舞踏会場や池など）が問題を増幅させたと語り、司会者もトランプの責任に触れたと、二次的な報告が伝えている <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。この点は原録画を確認していない。</p>
+<p>視聴者の反応も変化の背景にある。調査会社ニールセンのデータを引いた分析では、ニューズマックスの総視聴時間が、 10 月に前年同月比で 26% 減った <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。同じ分析は、ニューズマックスがトランプを守る姿勢を強め、批判の矛先を Fox に向けたと論じる。 Fox も、選挙報道を巡ってトランプとの距離を問われていた <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 。</p>
+
+<h3 id="sec2-2">2.2 One America News (OAN)</h3>
+<p>OAN については、選挙後の報道も、論評も、オーナーのロバート・ヘリングの発言も確認できなかった。検索で見つかったのは、 2022 年の中間選挙前に OAN を「極右の意見の拠点」と批判した Media Matters の記事などで、今回の判断材料にはならない。したがって、 OAN の論調が変わったかどうかは判定できない。確認には、 OAN の公式サイトと放送の記録を直接当たる必要がある。</p>
+
+<h3 id="sec2-3">2.3 この変化をどう読むか</h3>
+<div class="caution"><p>ニューズマックスの論調に関する資料は、批判的立場の団体 (Media Matters) や、視聴率を批判的に分析する媒体 (Status) の集計が中心である。番組の全体や、ほかの司会者の発言は見ていない。</p></div>
+<p>資料の範囲で言えば、変化は「支持の撤回」ではなく「責任の移動」である。司会者は、敗北の原因を Fox やコンサルタントに求めながら、トランプを主役から外していない。この読み方は筆者の解釈であり、番組の全体を見た結果ではない。</p>
+</section>
+
+<section id="sec3"><h2><span class="no">3</span>Turning Point USA は声明を出しているか</h2>
+
+<h3 id="sec3-1">3.1 エリカ・カークの声明</h3>
+<p>はい。エリカ・カークは、 11 月 4 日に X へ長文の声明を投稿した <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。声明は、党内の対立や自己保身に走らないよう呼びかけた。投票者の懸念については、経済とイランでの戦争を挙げ、それが組織が学生から聞いてきた声と重なると述べた <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。</p>
+<p>結びの一文は、「 Stay positive, keep our faith, and get back to work 」（前向きでいよう、信仰を保とう、仕事に戻ろう）である。この一文は、複数の報道が同じ文言で引用している <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。</p>
+
+<h3 id="sec3-2">3.2 組織の姿勢と内部の反応</h3>
+<p>組織は、結果を検討し、今後二年間にわたって保守と自由市場の政策を訴える方針を示した。焦点は 2028 年の選挙に置かれている <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 。</p>
+<p>内部では、評価が割れている。アリゾナ州の教育長トム・ホーンは、 Turning Point が推した候補に予備選で敗れ、「勝つには Turning Point から離れ、伝統的な共和党候補を指名すべきだ」と批判したと伝えられる <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。広報のアンドリュー・コルヴェットは、 MAGA の支持者に「 2024 年に三冠をもたらしたものへ戻れ」と呼びかけたとされる。これは単独の要約からの引用で、原文は未確認である。</p>
+<p>組織の政治活動委員会 (Turning Point Action) は、アリゾナ州のアンディ・ビッグス陣営を支援するため、 1,800 万ドル以上を支出したと伝えられる。ただし、この数字も要約からの引用で、原文を確認していない。報道の多くは、同組織の推した候補が多く敗れたことを、支持者の敗北の論拠として扱っている <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</p>
+
+<h3 id="sec3-3">3.3 声明の読み方</h3>
+<p>声明は、敗北を認めるより、党を一つにまとめることに重心を置く。経済とイランの戦争という懸念には触れたが、組織の候補選びや戦略の誤りは書かれていない。この読みは筆者の推論であり、声明の文言そのものからは断定できない。</p>
+</section>
+
+<section id="sec4"><h2><span class="no">4</span> ファクトチェック</h2>
+<p>本文の主張を、確認の度合いで分けた。判定は、報道の数と原文の確認状況による。</p>
+<table>
+<thead><tr><th>主張</th><th>判定</th><th>根拠</th><th>注</th></tr></thead>
+<tbody>
+<tr><th scope="row">民主党が下院と上院の両方を制した</th><td data-label="判定">確認済み</td><td data-label="根拠">CNN 、 Al Jazeera</td><td data-label="注">複数の報道が一致する。議席の内訳は、当該文書で詳述する。</td></tr>
+<tr><th scope="row">グレッグ・ケリーが Fox の責任を語った</th><td data-label="判定">一部確認</td><td data-label="根拠">Media Matters の書き起こし</td><td data-label="注">批判的立場の団体による書き起こしである。原録画は未確認。</td></tr>
+<tr><th scope="row">ニューズマックスの 10 月の視聴時間が前年比 26% 減</th><td data-label="判定">未確認</td><td data-label="根拠">Status （ニールセンのデータを引用）</td><td data-label="注">原データを確認していない。</td></tr>
+<tr><th scope="row">OAN の選挙後の論調</th><td data-label="判定">確認できず</td><td data-label="根拠">該当する報道なし</td><td data-label="注">判断を保留する。</td></tr>
+<tr><th scope="row">エリカ・カークが 11 月 4 日に X で声明を出した</th><td data-label="判定">確認済み</td><td data-label="根拠">Fox News 、 nextnewsnetwork 、 The Tribune</td><td data-label="注">日付と要旨が、複数の報道で一致する。</td></tr>
+<tr><th scope="row">結びの一文「 Stay positive, keep our faith, and get back to work 」</th><td data-label="判定">確認済み</td><td data-label="根拠">nextnewsnetwork 、 The Tribune</td><td data-label="注">引用文言が一致する。</td></tr>
+<tr><th scope="row">広報コルヴェットの「三冠」発言</th><td data-label="判定">未確認</td><td data-label="根拠">単独の要約</td><td data-label="注">原文を確認していない。</td></tr>
+<tr><th scope="row">政治活動委員会による 1,800 万ドル超の支出</th><td data-label="判定">未確認</td><td data-label="根拠">要約（ NYT の報道として伝えられる）</td><td data-label="注">NYT の原文と、連邦選挙委員会 (FEC) の申告を確認していない。</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="sec5"><h2><span class="no">5</span> 次に確かめること</h2>
+<div class="try">
+<p>次の四点を確かめれば、残る判定を確定できる。</p>
+<ul>
+<li>OAN の公式サイトと、選挙後一週間の放送記録。</li>
+<li>ニューズマックスの番組の原録画と、ほかの司会者の発言。</li>
+<li>Turning Point USA の X 投稿の原文と、 FEC に申告された支出の記録。</li>
+<li>Status が引くニールセンの視聴データの原表。</li>
+</ul>
+</div>
+<p class="endnote">本文の評価は、検索結果の要約と報道の引用に基づく。原文の確認を経ていない箇所は、表の判定で示した。</p>
+</section>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。</p>
+<ol>
+<li id="ref-1"><a href="#fnref-1-1">^</a> Media Matters が書き起こした、ニューズマックスの『 Greg Kelly Reports 』（ 11 月 4 日）での発言。 <a href="https://www.mediamatters.org/newsmax/newsmaxs-greg-kelly-midterms-i-agree-president-trump-conservative-media-especially-fox-news">Media Matters</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> 右派メディアが選挙の責任を互いに押し付け合う様子を集めた記事。寄稿者の発言とロバーツの発言を含む。 <a href="https://www.mediamatters.org/donald-trump/clown-show-right-wing-media-blame-game-over-midterms-full-steam-ahead">Media Matters</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> ニールセンのデータを引き、ニューズマックスの視聴の減少を論じた分析。 <a href="https://www.status.news/p/newsmax-ratings-trump-maga-midterms">Status</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> ニューズマックスの番組での議論を伝える二次的な報告。原録画は確認していない。 <a href="https://www.alternet.org/trump-tuesday-rout-midterms/">Alternet</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 選挙当日の特別番組の編成を伝える、事前の紹介記事。 <a href="https://variety.com/2026/shopping/news/newsmax-midterm-elections-show-watch-live-online-free-stream-1236938036/">Variety</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> ニューズマックスの 2026 年選挙のページ。本文では、選挙後の記事の見出しを参照した。 <a href="https://www.newsmax.com/hottopics/topic/2026-elections/499/">Newsmax</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> エリカ・カークの 11 月 4 日の声明を伝える記事。 <a href="https://www.foxnews.com/politics/erika-kirk-channels-charlie-blunt-message-conservatives-after-gop-midterm-losses.amp">Fox News</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> 声明の要旨と結びの一文を伝える記事。 <a href="https://nextnewsnetwork.com/2026/11/05/erika-kirk-breaks-silence-after-gop-midterm-bloodbath-stay-positive-keep-our-fai-mw32zszi">Next News Network</a></li>
+<li id="ref-9"><a href="#fnref-9-1">^</a> 声明の要旨と今後の方針を伝える記事。 <a href="https://www.tribuneindia.com/news/usa-news/charlie-kirks-widow-invokes-his-advice-as-she-rallies-conservatives-after-midterm-setbacks/">The Tribune</a></li>
+<li id="ref-10"><a href="#fnref-10-1">^</a> 選挙後の Turning Point の今後を論じた記事。内部の批判を含む。 <a href="https://azcapitoltimes.com/news/2026/11/06/whats-next-for-turning-point-after-republican-losses-in-the-midterms/">Arizona Capitol Times</a></li>
+<li id="ref-11"><a href="#fnref-11-1">^</a> 組織の政治活動と選挙結果を論じた記事。 <a href="https://politicalwire.com/2026/11/08/turning-point-usa-bet-on-the-midterms-and-lost/">Political Wire</a></li>
+<li id="ref-12"><a href="#fnref-12-1">^</a> 中間選挙の結果と、民主党の両院制覇を伝えるライブ記事。 <a href="https://edition.cnn.com/2026/11/04/politics/live-news/midterm-election-congress">CNN</a></li>
+<li id="ref-13"><a href="#fnref-13-1">^</a> 世界の反応を含む、選挙結果の報道。 <a href="https://www.aljazeera.com/news/2026/11/4/seismic-shift-world-reacts-to-us-midterm-election-results">Al Jazeera</a></li>
+<li id="ref-14"><a href="#fnref-14-1">^</a> 選挙報道を巡る Fox News の方針と、トランプとの距離を論じた記事（投票の前の報道）。 <a href="https://www.cnn.com/2026/10/29/media/fox-news-trump-midterms-ratings-election">CNN</a></li>
+</ol>
+</div>
+</div>
+</body>
+</html>
