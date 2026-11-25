@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>二台のテレビを、板橋区舟渡へ運ぶ――払込みから、 NHK の解約まで</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
+<style>
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
+  }
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+  }
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">家電処分 ・ 実行計画</p>
+<h1>二台のテレビを、板橋区舟渡へ運ぶ<br>――払込みから、 NHK の解約まで</h1>
+<p class="subtitle">A Plan for Delivering Two Televisions to a Designated Collection Site in Funado, Itabashi</p>
+<div class="lede">
+<p>支払うのは、リサイクル料金の 5,940 円と、郵便局の払込手数料である。窓口で二台分を払うと、合計は 6,346 円になる計算である。手順は三つある。郵便局で券を二枚仕上げ、テレビを車で運び、引き渡して控えを受け取る。ただし、持ち込み先は土曜に開いているとは限らず、午後の受付は 16 時 30 分で締まる。そして最後に手元に残る「排出者控」が、 NHK の解約で廃棄を示す一枚になる。</p>
+</div>
+<div class="meta"><strong>【方法と限界】</strong> 2026 年 11 月 26 日に、家電リサイクル券センター、家電製品協会、板橋区、メーカー、ゆうちょ銀行、 NHK などの公開ページと資料を読んで確かめた。電話や現地での確認はしていない。料金、手数料、営業日は変わりうるので、出発の前に見直す必要がある。処分する二台の型番と製造年は、本体の銘板の記載による。確認できなかった事項は、本文でそう断った。</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">支払う額は、料金と手数料の合計である</a>
+<ol>
+<li><a href="#sec1-1">二台とも「大」の区分に入る</a></li>
+<li><a href="#sec1-2">料金は同額で、手数料が上乗せになる</a></li>
+</ol>
+</li>
+<li><a href="#sec2">郵便局で、券を二枚仕上げる</a>
+<ol>
+<li><a href="#sec2-1">払込みまでの手順</a></li>
+<li><a href="#sec2-2">五枚綴りの行き先</a></li>
+</ol>
+</li>
+<li><a href="#sec3">持ち込み日は、カレンダーで決める</a>
+<ol>
+<li><a href="#sec3-1">受付は 11 時 30 分と 16 時 30 分で締まる</a></li>
+<li><a href="#sec3-2">年末年始の前後は、休みが入り組む</a></li>
+</ol>
+</li>
+<li><a href="#sec4">家で支度して、車に積む</a>
+<ol>
+<li><a href="#sec4-1">テレビに残る情報とカードを取り出す</a></li>
+<li><a href="#sec4-2">券は背面の左上に貼る</a></li>
+<li><a href="#sec4-3">画面を守り、動かないように固定する</a></li>
+</ol>
+</li>
+<li><a href="#sec5">当日は、一台ごとに揃っているかを確かめる</a></li>
+<li><a href="#sec6">引き渡したら、 NHK に届け出る</a>
+<ol>
+<li><a href="#sec6-1">解約できるのは、受信の手段がすべてなくなる場合である</a></li>
+<li><a href="#sec6-2">解約の日は、届け出た日になる</a></li>
+<li><a href="#sec6-3">控えは、解約と精算が済むまで残す</a></li>
+</ol>
+</li>
+<li><a href="#sec7">順番に進めれば、手戻りは起きにくい</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 支払う額は、料金と手数料の合計である</h2>
+<p>リサイクル料金は、メーカーと画面サイズの区分で決まる。最初に、二台の素性を押さえる。</p>
+
+<h3 id="sec1-1">1.1 二台とも「大」の区分に入る</h3>
+<table class="cardrow">
+<caption>処分する液晶テレビ二台（型番と製造年は銘板の記載）</caption>
+<thead>
+<tr><th>項目</th><th>テレビ A</th><th>テレビ B</th></tr>
+</thead>
+<tbody>
+<tr><th>メーカー</th><td data-label="テレビ A">ソニー</td><td data-label="テレビ B">シャープ</td></tr>
+<tr><th>型番</th><td data-label="テレビ A">KDL-32W600A</td><td data-label="テレビ B">LC-20D50</td></tr>
+<tr><th>画面サイズ</th><td data-label="テレビ A">32V 型</td><td data-label="テレビ B">20V 型</td></tr>
+<tr><th>製造年</th><td data-label="テレビ A">2013 年</td><td data-label="テレビ B">2010 年</td></tr>
+<tr><th>大小区分</th><td data-label="テレビ A">大（ 16V 型以上）</td><td data-label="テレビ B">大（ 16V 型以上）</td></tr>
+<tr><th>製造業者等名コード</th><td data-label="テレビ A">340</td><td data-label="テレビ B">310</td></tr>
+<tr><th>品目・料金区分コード</th><td data-label="テレビ A">52</td><td data-label="テレビ B">52</td></tr>
+<tr><th>リサイクル料金（税込）</th><td data-label="テレビ A">2,970 円</td><td data-label="テレビ B">2,970 円</td></tr>
+</tbody>
+</table>
+<p>意外なのは、 20V 型のシャープも「大」になることである。区分の境は 16V 型にあり、「小」は 15V 型以下に限られる。 20 型は小さく見えても、二台とも料金の高いほうの区分に属する。コードは、家電リサイクル券センターの料金情報で確かめた。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
+<p>銘板の製造年は、機種の発売時期とも食い違わない。 LC-20D50 は 2009 年 2 月に発売された機種で、本体の質量は約 6.9 kg である。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> KDL-32W600A は 32V 型で、質量はスタンドを含めて 7.7 kg 、含めずに 6.7 kg である。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
+
+<h3 id="sec1-2">1.2 料金は同額で、手数料が上乗せになる</h3>
+<p>ソニーの 16V 型以上のリサイクル料金は、 2,970 円（税込）である。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup><sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> シャープも、公式ページと家電リサイクル券センターのページの両方で、 2,970 円（税込）と確認できた。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup><sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 同額なので、料金の合計は 5,940 円になる。</p>
+<p>これに、払込手数料が加わる。ゆうちょ銀行の通常払込みは、 5 万円未満なら 1 件につき窓口で 203 円、 ATM で 152 円である。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 券は一台ごとに別の払込みになるため、手数料も二件分になると考えられる。</p>
+<table class="cards">
+<caption>二台分の支払額（筆者の計算）</caption>
+<thead>
+<tr><th>払い方</th><th>払込手数料（二件）</th><th>支払いの合計</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="払い方">窓口</td><td data-label="払込手数料（二件）">406 円</td><td data-label="支払いの合計">6,346 円</td></tr>
+<tr><td data-label="払い方">ATM</td><td data-label="払込手数料（二件）">304 円</td><td data-label="支払いの合計">6,244 円</td></tr>
+</tbody>
+</table>
+<p>家電リサイクル券センターは、手数料の額を貯金の窓口で確認するよう案内している。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 上の合計は、窓口で確かめるまでの目安である。</p>
+<p>シャープの公式ページには、料金とは別に、販売店や市町村の収集・運搬料金がかかるとの記載がある。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> これは回収を頼む場合の費用で、自分で指定引取場所へ運ぶ今回はかからない。 <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup><sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> なお、メーカー二社の料金ページに、適用開始日の表示は見当たらなかった。券センターは料金一覧表の 2026 年 4 月版を公開しているが、額は郵便局で最終的に確かめる。 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup></p>
+
+<h2 id="sec2">2. 郵便局で、券を二枚仕上げる</h2>
+<p>自分で持ち込むときに使うのは、郵便局に備え付けの「料金郵便局振込方式」の家電リサイクル券である。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 公式の案内が入手先として示すのは郵便局で、コンビニで扱うという記載は見当たらない。販売店に回収を頼む場合は、店が別の券を用意するので、この手順は要らない。</p>
+<div class="must"><p>券は、テレビ一台につき一枚である。二台なら二枚が必要になる。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></p></div>
+<p>一枚だけ仕上げて二台を運ぶ失敗は、この段階で防げる。必要な物は次のとおりである。</p>
+<dl class="spec">
+<div><dt>用意する物</dt><dd>二台のメーカー名・型番・区分（ 1 章の表）、現金または振込できる口座、自分の住所・氏名・電話番号</dd></div>
+<div><dt>金額</dt><dd>料金 5,940 円（一台 2,970 円）と払込手数料。窓口で最終の額を確かめる</dd></div>
+<div class="hot"><dt>注意</dt><dd>ATM で払う場合、口座振替で振り込んだときの「ご利用明細票」は使えない <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup></dd></div>
+</dl>
+
+<h3 id="sec2-1">2.1 払込みまでの手順</h3>
+<ol class="steps">
+<li><strong>窓口で券を頼む</strong>「家電リサイクル券がほしい」と伝え、備え付けの用紙を二台分もらう。郵便局は払込先で、リサイクルの業務には関わらない。記入の方法がわからなければ、家電リサイクル券センター（ 0120-319640 、日曜・祝日を除く 9 時から 18 時）に尋ねる。 <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup><sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup></li>
+<li><strong>テレビごとに払込書を書く</strong>券から切り離して使う払込書に、製造業者等名コード（ 3 桁）、品目・料金区分コード（ 2 桁）、リサイクル料金、住所・氏名・電話番号を書く。料金は 3 か所に書き、書き損じても訂正できない。コードは郵便局備え付けの料金一覧表にもある。事前に控えておくと、記入が早い。 <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></li>
+<li><strong>二台分を払い込む</strong>貯金の窓口か ATM で、料金と手数料を払う。窓口では、日附印のある「振替払込請求書兼受領証」と「振替払込受付証明書」を受け取る。 <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup></li>
+<li><strong>証明書を「①指定引取場所控」に貼る</strong>貼るのは本人である。受付証明書を、それぞれの券の 1 枚目に貼り、受領証は手元に残す。 ATM で払った場合は、証明書に窓口で日附印をもらって貼る。自分で運ぶ場合に限り、「ご利用明細票」の写しを貼る方法も使える（原本は手元に残す）。 <sup id="fnref-9-5"><a href="#ref-9">[9]</a></sup></li>
+<li class="goal"><strong>完了</strong>証明書か明細票の写しを貼った券が二枚揃えば、郵便局の用は済む。貼っていないと、引き渡しができないことや、返金を受けられないことがある。 <sup id="fnref-8-4"><a href="#ref-8">[8]</a></sup></li>
+</ol>
+<p>券の有効期限は、払込日の翌日から 10 年である。 <sup id="fnref-8-5"><a href="#ref-8">[8]</a></sup> 急いで使い切る必要はない。</p>
+
+<h3 id="sec2-2">2.2 五枚綴りの行き先</h3>
+<p>郵便局で仕上げた券は、五枚綴りになっている。どれが手元に残るのかを知っておくと、当日に迷わない。 <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup></p>
+<table class="cardrow">
+<caption>郵便局方式の家電リサイクル券（五枚綴り）</caption>
+<thead>
+<tr><th>券の片</th><th>役割</th></tr>
+</thead>
+<tbody>
+<tr><th>①指定引取場所控</th><td>証明書を貼る片。引取場所の日付印が押され、引取場所が保管する</td></tr>
+<tr><th>②小売業者等控兼受領書</th><td>券を発行した自治体や小売業者などの控え</td></tr>
+<tr><th>③小売業者等回付</th><td>引き渡しのときに日付印が押され、持ち込んだ自治体や小売業者などに回る</td></tr>
+<tr><th>④排出者控</th><td>引き渡すときに、出した本人へ交付される</td></tr>
+<tr><th>⑤現品貼付用</th><td>裏がシールになっていて、テレビ本体に貼る</td></tr>
+</tbody>
+</table>
+<div class="point"><p>手元に残る証拠は「④排出者控」である。受け取る場所は郵便局ではなく、引き渡しの場だ。</p></div>
+
+<h2 id="sec3">3. 持ち込み日は、カレンダーで決める</h2>
+<p>持ち込み先は、東亜物流株式会社の板橋営業所（板橋区舟渡 1-17-2 ）である。板橋区は予約不要と案内し、営業所のページも事前の連絡は要らないとしている。 <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup><sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup></p>
+
+<h3 id="sec3-1">3.1 受付は 11 時 30 分と 16 時 30 分で締まる</h3>
+<dl class="spec">
+<div class="hot"><dt>受付時間</dt><dd>9 時から 11 時 30 分と、 13 時から 16 時 30 分 <sup id="fnref-15-2"><a href="#ref-15">[15]</a></sup></dd></div>
+<div><dt>営業時間</dt><dd>9 時から 12 時と、 13 時から 17 時（昼休憩は 12 時から 13 時）</dd></div>
+<div><dt>休業日</dt><dd>日曜のほか、祝日の多く、一部の土曜、お盆、年末年始。土曜には午前だけ休む日もある <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup></dd></div>
+<div><dt>構内図</dt><dd>出入口と荷降ろし場所は、周辺図・構内図で出発前に確かめる <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup></dd></div>
+</dl>
+<p>営業時間の終わりは 17 時だが、受付はその 30 分前に締まる。「月曜から土曜、 9 時から 17 時」と覚えて向かうと、受付を逃すおそれがある。たとえば 2026 年度のカレンダーでは、 10 月の土曜 5 日のうち、 17 日が休み、 3 日、 24 日、 31 日が午前休みだった。 <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 混雑すると、待たされることもある。</p>
+<p>構内図（ 2023 年 7 月 11 日付）では、一方通行の道から出入口に入り、建物の中央にある荷降ろし場所（共有スペース）に着ける形になっている。営業所は鉄道の高架沿いにある。 <sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup></p>
+
+<h3 id="sec3-2">3.2 年末年始の前後は、休みが入り組む</h3>
+<p>板橋区は、区内の指定引取場所をもう一つ挙げている。（株）ロジネットジャパン東日本の引取場所（板橋区高島平 6-1-1 板橋トラックターミナル新一号棟）である。 <sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup> 受付時間は東亜物流と同じで、持ち込みの事前連絡も要らない。 <sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup> 指定引取場所については、 2009 年 10 月にメーカーのグループ別の引き取りを改め、共有化することが発表されている。 <sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup></p>
+<table class="cards">
+<caption>2026 年 11 月 27 日から 2027 年 1 月末までの休み（日曜は両方とも休み）</caption>
+<thead>
+<tr><th>日付</th><th>東亜物流</th><th>ロジネットジャパン</th></tr>
+</thead>
+<tbody>
+<tr><td data-label="日付">12 月 5 日（土）</td><td data-label="東亜物流">休み</td><td data-label="ロジネットジャパン">営業</td></tr>
+<tr><td data-label="日付">12 月 19 日（土）</td><td data-label="東亜物流">休み</td><td data-label="ロジネットジャパン">営業</td></tr>
+<tr><td data-label="日付">12 月 29 日（火）</td><td data-label="東亜物流">午後休み</td><td data-label="ロジネットジャパン">営業</td></tr>
+<tr><td data-label="日付">12 月 30 日（水）・ 31 日（木）</td><td data-label="東亜物流">休み</td><td data-label="ロジネットジャパン">休み</td></tr>
+<tr><td data-label="日付">1 月 1 日（金）・ 2 日（土）</td><td data-label="東亜物流">休み</td><td data-label="ロジネットジャパン">休み</td></tr>
+<tr><td data-label="日付">1 月 11 日（月・祝）</td><td data-label="東亜物流">休み</td><td data-label="ロジネットジャパン">営業</td></tr>
+<tr><td data-label="日付">1 月 16 日（土）</td><td data-label="東亜物流">休み</td><td data-label="ロジネットジャパン">営業</td></tr>
+<tr><td data-label="日付">1 月 23 日（土）・ 30 日（土）</td><td data-label="東亜物流">午前休み</td><td data-label="ロジネットジャパン">営業</td></tr>
+</tbody>
+</table>
+<p>表にない月曜から土曜は、両方とも営業日になっている。 11 月 28 日、 12 月 12 日、 12 月 26 日の土曜は、東亜物流も開く。いずれも 2026 年 4 月 1 日版のカレンダーによるので、直前に最新版を見る。 <sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup><sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup> 年内に済ませる場合、東亜物流で丸一日開く最後の日は 12 月 28 日（月）で、 29 日は午前だけになる。日取りは早めに決めたい。二台は、共有化のおかげで、メーカーのグループを気にせず、どちらの場所にも持ち込めると考えられる。</p>
+
+<h2 id="sec4">4. 家で支度して、車に積む</h2>
+<p>日取りが決まれば、残る仕事は家の中にある。テレビは、情報を抱えたまま家を出ていく。</p>
+
+<h3 id="sec4-1">4.1 テレビに残る情報とカードを取り出す</h3>
+<p>ソニーは、デジタル放送を受信できる機種は利用者自身で初期化するよう求め、ネット動画などのアプリはログアウトするよう案内している。 <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 2013 年モデルの W600A シリーズに向けた手順は、次の順である。 <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup></p>
+<ol class="steps">
+<li><strong>アプリからログアウトする</strong> YouTube などのアカウント情報は、初期化しても消えない。</li>
+<li><strong>初期化の画面を開く</strong>リモコンの「ホーム」から、［設定］、［機能設定］、［本体設定］の順に進み、［個人情報初期化］を選ぶ。</li>
+<li><strong>消去を実行する</strong>注意事項を読み、［消去する］を選び、確認には［はい］と答える。</li>
+</ol>
+<p>シャープの LC-20D50 の初期化手順は、今回確認していない。取扱説明書で確かめる。</p>
+<p>B-CAS カードが入っていれば、抜き取る。カードの所有権は発行元の会社にあり、受信機を捨てるときは、同社に返却するか自分で破棄する。有料放送を契約しているカードなら、先に放送局へ連絡する。 <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup></p>
+
+<h3 id="sec4-2">4.2 券は背面の左上に貼る</h3>
+<p>券の「⑤現品貼付用」を切り取り、それぞれのテレビに貼る。液晶、有機 EL 、プラズマ式のテレビは「背面左上部」が定位置で、今回の二台はどちらも液晶である。 <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup> 二枚を取り違えないよう、メーカー名と本体を照らし合わせる。</p>
+<figure>
+<svg viewBox="0 0 480 320" role="img" aria-label="テレビを背面から見た図。左上に現品貼付用を貼り、下寄りの銘板は避ける">
+<text class="t" x="240" y="34" text-anchor="middle">背面から見たテレビ</text>
+<rect class="f-gray s-ink" x="40" y="52" width="400" height="210" rx="12"/>
+<rect class="f-yellow s-ink" x="58" y="70" width="180" height="70" rx="8"/>
+<text class="t" x="148" y="114" text-anchor="middle">⑤を貼る</text>
+<rect class="f-white s-ink" x="180" y="176" width="220" height="62" rx="8"/>
+<text class="t" x="290" y="216" text-anchor="middle">銘板は避ける</text>
+<rect class="f-navy s-ink" x="205" y="264" width="70" height="26"/>
+<rect class="f-navy s-ink" x="140" y="290" width="200" height="16" rx="6"/>
+</svg>
+<figcaption><span class="cap">図 1 : 現品貼付用を貼る位置</span>背面から見て左上に貼る。正面から見た向きでは右側にあたる。画面、銘板（型名ラベル）、製品の角には貼らない。銘板の位置は機種で異なる。</figcaption>
+</figure>
+<p>画面に貼ると分別の処理に支障が出て、銘板を覆うと型名が読めず、角に貼るとバーコードを読み取れない。貼らずに持ち込むと、その場で貼るよう求められることがある。 <sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup></p>
+
+<h3 id="sec4-3">4.3 画面を守り、動かないように固定する</h3>
+<p>液晶パネルは、衝撃にも圧迫にも弱い。積み方の要点は、画面を守ることと、動かないよう固定することの二点である。以下は公式の指定ではなく、筆者の勧めである。</p>
+<ul>
+<li>二台を重ねたり立てかけたりするときは、画面を毛布やタオルで包む。</li>
+<li>荷崩れしないよう、ロープなどで固定する。</li>
+<li>可能なら横倒しにせず、購入時に近い向き（縦置き）を保つ。</li>
+<li>リサイクル券は、それぞれのテレビに貼り付けた状態にしておく。</li>
+</ul>
+<p>スタンドを付けたソニー機は、幅 72.1 cm 、高さ 46.3 cm 、奥行 19.7 cm ある。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup> 積む場所を、先に測っておくと安心である。</p>
+
+<h2 id="sec5">5. 当日は、一台ごとに揃っているかを確かめる</h2>
+<p>券と証明書は、一台ごとに必要になる。出発の前に、二台分が揃っているかを、次の五つで確かめる。</p>
+<div class="checklist">
+<span class="cl-title">出発前チェックリスト</span>
+<ul>
+<li><input type="checkbox" id="c1"><label for="c1">テレビ二台（それぞれに家電リサイクル券の「⑤現品貼付用」を貼ってある）</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">家電リサイクル券（排出者控を含む一式）の二枚分</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">日附印のある振替払込受付証明書（または明細票の写し）の二枚分。「①指定引取場所控」に貼ってある</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">身分証明書（公式の案内にはないが、念のため携行）</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">毛布、タオル、固定用のロープなど（車内の保護用）</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されない。印刷や手書きメモと併用すること。</p>
+</div>
+<p>引取場所では、受付時間内に、券を貼ったテレビを一式の券とともに引き渡す。そこで「④排出者控」を二台分受け取る。 <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup> 受け取りは忘れず、記入の内容はその場で確かめたい。 手元の控えに引き取り済みの押印をもらう形になる場合があるかどうかは、今回読んだ資料では確認できなかった。排出者控には二次元コードがあり、引渡日と処理の状況を後から確認できる。 <sup id="fnref-12-4"><a href="#ref-12">[12]</a></sup></p>
+
+<h2 id="sec6">6. 引き渡したら、 NHK に届け出る</h2>
+<p>排出者控を受け取っても、受信契約は自動では終わらない。こちらから届け出て、はじめて動き出す。</p>
+
+<h3 id="sec6-1">6.1 解約できるのは、受信の手段がすべてなくなる場合である</h3>
+<p>世帯の受信契約は、テレビの台数ごとではなく、世帯ごとに結ぶ。 <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup> 二台を処分しても、ほかに受信機が一つでも残れば、廃棄を理由にした解約はできない。受信規約の「受信機」には、家庭用のほか、携帯用や自動車用も含まれる。 <sup id="fnref-24-2"><a href="#ref-24">[24]</a></sup> テレビを運ぶその車に、テレビを受信できるカーナビがあるかどうかは、先に確かめておきたい。</p>
+<p>2025 年 10 月からは、 NHK の配信も契約の対象になった。スマートフォンやパソコンを持つだけでは対象にならず、 NHK のアプリやサイトで配信の受信を始めた場合が対象である。 <sup id="fnref-25-1"><a href="#ref-25">[25]</a></sup> 解約の際、 NHK は、受信機がないことに加え、同じ世帯の人も含めて配信を視聴していないことを確認する。 <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup></p>
+
+<h3 id="sec6-2">6.2 解約の日は、届け出た日になる</h3>
+<dl class="spec">
+<div><dt>連絡先</dt><dd>NHK ふれあいセンター（営業）。解約の電話は 0120-222000 、 9 時から 18 時（土日祝日も受付）<sup id="fnref-26-2"><a href="#ref-26">[26]</a></sup><sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup></dd></div>
+<div><dt>流れ</dt><dd>電話で申し出る。届いた解約届に記入して返送する。 NHK が事実を確認して受理する <sup id="fnref-25-2"><a href="#ref-25">[25]</a></sup></dd></div>
+<div><dt>確認の資料</dt><dd>テレビ廃棄などの証明書。 NHK の説明資料は、例に「リサイクル券等」を挙げる <sup id="fnref-25-3"><a href="#ref-25">[25]</a></sup></dd></div>
+</dl>
+<p>排出者控は、この「リサイクル券等」にあたる一枚と考えられる。電話では「テレビを廃棄して、家電リサイクル券の控えがある」と伝えると、話が早いと考えられる。控えの出し方は、電話の際に聞いておく。</p>
+<p>急ぐ理由は、日付にある。受信規約では、事実が確認できれば、契約は届け出のあった日に解約されたものとされる。 <sup id="fnref-24-3"><a href="#ref-24">[24]</a></sup> 廃棄した日にさかのぼる規定ではない（非常災害の場合の例外がある）。受信料は解約となった月の前月分まで支払い、月額は地上契約で 1,100 円、衛星契約で 1,950 円である。 <sup id="fnref-24-4"><a href="#ref-24">[24]</a></sup> 月をまたいで届け出ると、ひと月分の負担が増える計算になる。どの時点が「届け出のあった日」になるかは、電話で確かめる。</p>
+<p>すでに払った分のうち、解約を受理した月以降の分は返金される。 <sup id="fnref-26-3"><a href="#ref-26">[26]</a></sup> 前払いの場合は、経過した期間の受信料を差し引いて精算される。 <sup id="fnref-24-5"><a href="#ref-24">[24]</a></sup></p>
+
+<h3 id="sec6-3">6.3 控えは、解約と精算が済むまで残す</h3>
+<p>排出者控は、二台分をそろえて、少なくとも NHK の解約が受理されて精算を確認するまで保管する。返送する書類に原本が必要かどうかを確かめ、手元には写真か写しを残しておく。</p>
+<div class="caution"><p>解約を目的にテレビを廃棄しても、その直後にチューナー付きの新しいテレビを置けば、受信契約の義務は再び生じる。 <sup id="fnref-24-6"><a href="#ref-24">[24]</a></sup> 買い替えの予定があるなら、時期に注意する。</p></div>
+
+<h2 id="sec7">7. 順番に進めれば、手戻りは起きにくい</h2>
+<p>二台の処分は、紙の流れとして見ると単純である。払い込んで証明書を貼り、本体に券を貼り、引き換えに控えを受け取り、控えを手に届け出る。次に取る行動は、この順になる。</p>
+<ol class="steps">
+<li><strong>持ち込み日を選ぶ</strong>カレンダーで営業日と午前・午後の休みを確かめる。</li>
+<li><strong>郵便局で券を二枚仕上げる</strong>料金 5,940 円と手数料を払い、証明書を「①指定引取場所控」に貼る。</li>
+<li><strong>家で支度する</strong>ログアウトと初期化を済ませ、カードを抜き、背面の左上に券を貼る。</li>
+<li><strong>受付時間内に引き渡す</strong>二台分の「④排出者控」を受け取る。</li>
+<li class="goal"><strong>NHK に届け出る</strong>ほかに受信の手段がないことを確かめ、その月のうちに電話する。</li>
+</ol>
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> 家電リサイクル券センター「料金情報（ソニー株式会社）」。製造業者等名コード 340 、液晶式テレビの大は品目コード 52 、 2,970 円（税込）。 <a href="https://www.rkc.aeha.or.jp/recycle_price/4959.php">家電リサイクル券センター</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> 家電リサイクル券センター「料金情報（シャープ株式会社）」。製造業者等名コード 310 、液晶式テレビの大は品目コード 52 、 2,970 円（税込）。 <a href="https://www.rkc.aeha.or.jp/recycle_price/67.php">家電リサイクル券センター</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> シャープ株式会社「 LC-20D50 」製品サポートページ（発売時期と本体質量）。 <a href="https://jp.sharp/support/aquos/product/lc20d50.html">シャープ公式サイト</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> ソニー株式会社「 KDL-32W600A 主な仕様」。 <a href="https://www.sony.jp/bravia/products/archive/KDL-32W600A/spec.html">ソニー公式サイト</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> ソニーストア「テレビのリサイクル料金」。 16 型以上は 2,970 円（税込）。 <a href="https://www.sony.jp/store/service/recycle/at-tv-purchace.html">ソニーストア</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> シャープ株式会社「再商品化等料金（リサイクル料金）」。液晶式テレビの大は 2,970 円（税込）で、販売店・市町村の収集・運搬料金は別。 <a href="https://corporate.jp.sharp/eco/recycle/price.html">シャープ公式サイト</a></li>
+<li id="ref-7"><a href="#fnref-7-1">^</a> ゆうちょ銀行「通常払込み」（料金の表）。 <a href="https://www.jp-bank.japanpost.jp/kojin/sokin/koza/kj_sk_kz_tujo.html">ゆうちょ銀行</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> <sup><a href="#fnref-8-3">c</a></sup> <sup><a href="#fnref-8-4">d</a></sup> <sup><a href="#fnref-8-5">e</a></sup> 家電リサイクル券センター「料金郵便局振込方式」。 <a href="https://www.rkc.aeha.or.jp/recycleticket/post_office_transfer/">家電リサイクル券センター</a></li>
+<li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> <sup><a href="#fnref-9-3">c</a></sup> <sup><a href="#fnref-9-4">d</a></sup> <sup><a href="#fnref-9-5">e</a></sup> 家電リサイクル券センター「家電リサイクル（郵便局振込方式）の進め方」。 <a href="https://www.rkc.aeha.or.jp/document/flow_post_office.pdf">手続きの流れ (PDF)</a></li>
+<li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> ソニー株式会社「ソニー製テレビのリサイクル（廃棄）」（ 2026 年 4 月 17 日更新）。 <a href="https://support.sony.jp/electronics/support/articles/S1110278031798">ソニーのサポートページ</a></li>
+<li id="ref-11"><a href="#fnref-11-1">^</a> 家電リサイクル券センター「家電リサイクル料金一覧表 2026 年 4 月版」。 <a href="https://www.rkc.aeha.or.jp/ryokinhyo_book_202604/pageindices/index13.html">料金一覧表（電子版）</a></li>
+<li id="ref-12">^ <sup><a href="#fnref-12-1">a</a></sup> <sup><a href="#fnref-12-2">b</a></sup> <sup><a href="#fnref-12-3">c</a></sup> <sup><a href="#fnref-12-4">d</a></sup> 一般財団法人家電製品協会「郵便局券の全片紹介」。 <a href="https://aeha-kadenrecycle.com/select/tidbits/pdf/postofficeticket.pdf">券の構成 (PDF)</a></li>
+<li id="ref-13"><a href="#fnref-13-1">^</a> 家電リサイクル券センター「料金郵便局振込方式」の記入方法。 <a href="https://www.rkc.aeha.or.jp/recycleticket/post_office_transfer/fillout.html">記入方法のページ</a></li>
+<li id="ref-14">^ <sup><a href="#fnref-14-1">a</a></sup> <sup><a href="#fnref-14-2">b</a></sup> 板橋区「家電リサイクル法対象品目（ 4 品目）について」（ 2026 年 5 月 19 日更新）。 <a href="https://www.city.itabashi.tokyo.jp/tetsuduki/gomi/kaden/1001875.html">板橋区の公式ページ</a></li>
+<li id="ref-15">^ <sup><a href="#fnref-15-1">a</a></sup> <sup><a href="#fnref-15-2">b</a></sup> 一般財団法人家電製品協会「指定引取場所 東亜物流（株）板橋営業所」。 <a href="https://www.aeha-kadenrecycle.com/rkcmap/detail/613000010015">指定引取場所の情報</a></li>
+<li id="ref-16">^ <sup><a href="#fnref-16-1">a</a></sup> <sup><a href="#fnref-16-2">b</a></sup> <sup><a href="#fnref-16-3">c</a></sup> 一般財団法人家電製品協会「 2026 年度 指定引取場所 年間営業日（ 2026 年 4 月 1 日版）東亜物流（株）板橋営業所」。 <a href="https://www.aeha-kadenrecycle.com/files/closed_days_pdfs/112/2026/calendar.pdf">営業日カレンダー (PDF)</a></li>
+<li id="ref-17">^ <sup><a href="#fnref-17-1">a</a></sup> <sup><a href="#fnref-17-2">b</a></sup> 家電リサイクル券センター「『東亜物流（株）板橋営業所』周辺図・構内図」（ 2023 年 7 月 11 日付）。 <a href="https://www.rkc.aeha.or.jp/document/stock_yard_floor_map/K613000010015.pdf">構内図 (PDF)</a></li>
+<li id="ref-18"><a href="#fnref-18-1">^</a> 一般財団法人家電製品協会「指定引取場所（株）ロジネットジャパン東日本 板橋区指定引取場所」。 <a href="https://www.aeha-kadenrecycle.com/rkcmap/detail/613000020021">指定引取場所の情報</a></li>
+<li id="ref-19"><a href="#fnref-19-1">^</a> 一般社団法人日本鉄リサイクル工業会「家電指定引取場所の運用変更に関して」（ 2009 年 9 月 16 日）。 <a href="https://www.jisri.or.jp/topics/topics200909161517.html">日本鉄リサイクル工業会</a></li>
+<li id="ref-20"><a href="#fnref-20-1">^</a> 一般財団法人家電製品協会「 2026 年度 指定引取場所 年間営業日（ 2026 年 4 月 1 日版）（株）ロジネットジャパン東日本 板橋区指定引取場所」。 <a href="https://www.aeha-kadenrecycle.com/files/closed_days_pdfs/119/2026/calendar.pdf">営業日カレンダー (PDF)</a></li>
+<li id="ref-21"><a href="#fnref-21-1">^</a> ソニー株式会社「テレビをお買い上げ時の状態に初期化する方法（ Android TV ／ Google TV 非搭載モデル）」（ 2025 年 12 月 4 日更新）。 <a href="https://support.sony.jp/electronics/support/articles/00293823">ソニーのサポートページ</a></li>
+<li id="ref-22"><a href="#fnref-22-1">^</a> 株式会社ビーエス・コンディショナルアクセスシステムズ「デジタル放送受信機を廃棄する場合、 B-CAS カードはどうすればよいですか？」。 <a href="https://www.b-cas.co.jp/support/faq/category04/faq016.html">B-CAS 社の FAQ</a></li>
+<li id="ref-23">^ <sup><a href="#fnref-23-1">a</a></sup> <sup><a href="#fnref-23-2">b</a></sup> 家電リサイクル券センター「指定引取場所への持ち込み時のお願い 家電リサイクル券は正しく貼り付けてお持込ください。」。 <a href="https://www.rkc.aeha.or.jp/files/info_label.pdf">貼付位置の案内 (PDF)</a></li>
+<li id="ref-24">^ <sup><a href="#fnref-24-1">a</a></sup> <sup><a href="#fnref-24-2">b</a></sup> <sup><a href="#fnref-24-3">c</a></sup> <sup><a href="#fnref-24-4">d</a></sup> <sup><a href="#fnref-24-5">e</a></sup> <sup><a href="#fnref-24-6">f</a></sup> 日本放送協会「日本放送協会受信規約」（ 2025 年 10 月 1 日施行）。第 1 条、第 2 条、第 5 条、第 9 条、第 11 条。 <a href="https://www.nhk-cs.jp/regulations/jushin-kiyaku/">NHK の受信規約</a></li>
+<li id="ref-25">^ <sup><a href="#fnref-25-1">a</a></sup> <sup><a href="#fnref-25-2">b</a></sup> <sup><a href="#fnref-25-3">c</a></sup> 日本放送協会「日本放送協会放送受信規約の一部変更について」（説明資料）。 <a href="https://www.nhk-cs.jp/regulations/kiyakusetsumei250717.pdf">NHK の説明資料 (PDF)</a></li>
+<li id="ref-26">^ <sup><a href="#fnref-26-1">a</a></sup> <sup><a href="#fnref-26-2">b</a></sup> <sup><a href="#fnref-26-3">c</a></sup> 日本放送協会「受信契約の解約」。 <a href="https://www.nhk-cs.jp/contract-change/kaiyaku/">NHK の解約案内</a></li>
+<li id="ref-27"><a href="#fnref-27-1">^</a> 日本放送協会「受信料に関するお問い合わせ」（電話番号と受付時間）。 <a href="https://www.nhk-cs.jp/support/tel/">NHK の問い合わせ先</a></li>
+</ol>
+<p class="endnote">本稿は、公開資料をもとに処分の段取りを整理したものである。料金、手数料、営業日、手続きは変わりうるので、実行の前に各機関の最新の案内で確かめる必要がある。</p>
+</div>
+</main>
+</body>
+</html>

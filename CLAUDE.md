@@ -1,6 +1,6 @@
 # reading リポジトリの作業指示
 
-「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 72 本。うち 70 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）のほかには、 `ahamo-migration-guide.html` （チェック状態を保存）と `plateau-ai-workflow-guide.html` （コード欄のコピーボタン）の 2 本だけが使う。ほかの文書には使わない。
+「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 73 本。うち 71 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）のほかには、 `ahamo-migration-guide.html` （チェック状態を保存）と `plateau-ai-workflow-guide.html` （コード欄のコピーボタン）の 2 本だけが使う。ほかの文書には使わない。
 
 ## HTML 文書の意匠
 HTML 文書の新規作成にも、既存の文書の意匠の修正・検証にも、ローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。同日、除外した文書（ `megumino.html` ・ `color-palette.html` ・ `autumn-colors.html` と、すでに contrast だった `elder-housing.html` ・ `us-parties-china-russia-trilateral-summit.html` ）を除く、すべての文書を、 wafu から contrast へ変換した（ユーザーの指示）。 wafu 意匠の文書は、もう無い。そこで、スキル `wafu-html-style` を廃止し（役割は `contrast-html-style` が引き継いだ）、 wafu の元になった `autumn-colors.html` も削除した（いずれも、ユーザーの指示。 2026-11-25 ）。例外は、下の `megumino.html` と `color-palette.html` である。
