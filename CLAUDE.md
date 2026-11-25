@@ -12,8 +12,8 @@ HTML 文書の新規作成には、必ずローカルスキル `contrast-html-st
 - `megumino.html` （経路案内）は、 wafu の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 wafu に戻さず、 wafu 用の検査を当てて直さない。
   - 色は意味で使い分ける。白地に黒の文字を基本に、紺 `#00205b` が見出し、黄 `#ffd400` が系統番号と地図の番号、赤 `#b3001b` が降車・目的地、青 `#0022a8` がリンク。文字と地のコントラスト比は 7 以上を保つ。
   - 地図（ `route_1_web.png` 〜 `route_4_web.png` ）は、 OpenStreetMap のデータから描いた横 1080px の PNG である。図の中と説明文の両方に、出典（ © OpenStreetMap contributors ）を入れる。地図の番号は、図の下の `ol.steps` の番号と一致させる。描画スクリプトは残していない。
-- `portal.html` は、当面 wafu の CSS を内包したままにする。 `wafu-html-style` を廃止する前に、 `portal.html` の CSS の正の置き場（ portal 自身に持たせるか、 contrast に合わせるか）を、ユーザーと決める。
-- スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は文書と別の意匠で、仕様は後述の「 portal.html の構造」にある。文書用の検査を `portal.html` にそのまま当てて、誤検出を直さない。
+- `portal.html` は、 2026-11-25 に contrast の CSS へ切り替えた（ユーザーの指示）。 `contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、その後ろに portal 固有の部品（カード・検索・新着・「↑ 目次へ」）を足す。
+- スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は一覧ページで、仕様は後述の「 portal.html の構造」にある。 `check_contrast_html.py` を当てると、固有 CSS を足したことによる C02 の WARN が必ず 1 件出る（意図したもの）。ほかの検出は、 NG なら直す。
 - 文書の冒頭部（ `.kicker` ・ `.subtitle` ・ `.lede` ・ `.meta` ）の有無は、文書ごとに揺れている。揃っていない文書を見つけても、頼まれていないのに揃えない。新しい文書は、スキルの定めに従う。
 
 ## portal.html の掲載対象外（ 4 件）
@@ -124,16 +124,15 @@ HTML 文書の新規作成には、必ずローカルスキル `contrast-html-st
 
 ### 階層とマークアップ
 ```
-header.hero              # 画面幅いっぱいのヒーロー帯（ main の外）
+main                     # 検索スクリプトが `main > h2` を使うので、 main は残す。余白は contrast の `main` が持つ（ `.wrap` ・ヒーロー帯は無い）
   p.kicker               # 「ポータル」
   h1                     # 作成文書インデックス
   p.subtitle             # A Reading Room
-main.wrap                # 幅 860px ・中央寄せ。検索スクリプトが `main > h2` を使うので、 main は残す
   div.lede > p           # Created: / Updated: / 収録 N 点
-  nav.toc#toc            # 8 節へのページ内リンク（ b「目次」+ ol。 a href="#secN" + span に件数）
+  nav.toc#toc            # 8 節へのページ内リンク（ p.toc-title「目次」+ ol。 a href="#secN" + span に件数。番号は ol の自動連番）
   form.search            # label + input#q + p#qstatus.search-status
-  nav.recent             # 新着 5 件（ b「新着」+ ul 。 li に time と a 。手書き。 li.card にしない）
-  h2#secN                # 節の見出し（ span.no に番号、続けて名前。節を section で包まない）
+  nav.recent             # 新着 5 件（ p.toc-title「新着」+ ul 。 li に time と a 。手書き。 li.card にしない）
+  h2#secN                # 節の見出し（「 N. 名前」の文字。丸数字の span は無い。節を section で包まない）
   p.sec-intro            # 節の説明（1 〜 2 文）
   ul.cards
     li.card              # span.tag + a + p + span.lang（ lang の中に time ）
@@ -200,20 +199,21 @@ grep -c 'class="to-top"' portal.html                                            
 カード数は、文書数から 3 件（ `megumino.html` ・ `autumn-colors.html` ・ `color-palette.html` ）を引いた数と一致する。
 
 ### 意匠の要点
-- 意匠は、文書と同じ wafu の意匠（ `~/.claude/skills/wafu-html-style/assets/wafu-style.css` の全文を `<style>` に内包する）である。生成り色の背景、 UD ゴシック系の書体、黄朽葉の h2 帯と丸数字、柿色の差し色。本文は 20px 、最小の文字も 16px である。変数は、スキルの CSS の `:root` で定める（ `--bg` `--ink` `--muted` `--card` `--line` `--orange` `--yellow` `--pale-yellow` `--link` など）。
-  - 例外として、 `portal.html` だけが一覧ページである。スキルの CSS の後ろに、 portal 固有の部品（カード・検索・目次の件数・新着・「↑ 目次へ」）を足す。
-  - スキルの `.card` は中央寄せの絵文字カードなので、一覧のカード（ `li.card` ）は左寄せに上書きしている。
-- カードは 1 列の縦並び（ `ul.cards` はグリッドで `gap:14px` ）で、左に 8px の橙の線を引く。カード全体をクリックできるよう、 `a::after` を `inset:0` に広げている。
+- 意匠は、文書と同じ contrast の意匠（ `~/.claude/skills/contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、後ろに portal 固有の部品を足す）である。白地に黒、紺の h2 帯、本文 20px 、最小の文字も 16px 。色は contrast の変数（ `--ink` `--navy` `--yellow` `--gray` `--rule` `--muted` `--link` ）だけを使う。書体は指定しない。
+  - 例外として、 `portal.html` だけが一覧ページである。固有の部品は、カード・検索窓（灰の箱）・新着（目次と同じ灰の箱）・「↑ 目次へ」・ `[hidden]` である。検索窓の入力欄は `width:min(100%,640px)` とする（ `max-width` は contrast が禁じる）。
+  - 理由 : 固有 CSS の追加は、スキルの検査で C02 の WARN になるが、 portal の部品に必要なので残す。
+- カードは 1 列の縦並び（ `ul.cards` はグリッドで `gap:14px` ）で、黒の 3px の枠と、左に紺の 12px の太線を引く。カード全体をクリックできるよう、 `a::after` を `inset:0` に広げている。
 ```css
-ul.cards{list-style:none;margin:0 0 20px;padding:0;display:grid;grid-template-columns:1fr;gap:14px}
-li.card{position:relative;text-align:left;background:var(--card);border:2px solid var(--line);border-left:8px solid var(--orange);border-radius:12px;padding:14px 22px 12px}
-.card a::after{content:"";position:absolute;inset:0}
-li.card:hover,li.card:focus-within{background:var(--pale-yellow)}
-li.card:focus-within{outline:3px solid var(--ink);outline-offset:2px}
-.card a:focus-visible{outline:none}
+ul.cards { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: 1fr; gap: 14px; }
+li.card { position: relative; margin: 0; background: #fff; border: 3px solid var(--ink); border-left: 12px solid var(--navy); border-radius: 14px; padding: 12px 18px 10px; }
+li.card:hover { background: #fff7c2; }
+li.card:focus-within { background: #fff7c2; outline: 4px solid var(--ink); outline-offset: 3px; }
+.card a { display: inline-block; font-weight: bold; line-height: 1.5; }
+.card a::after { content: ""; position: absolute; inset: 0; }
+.card a:focus-visible { outline: none; }
 ```
 - ホバーとキーボード操作の表示は、リンク文字ではなくカード全体に付ける（クリックできるのがカード全体のため）。リンク自身の枠線は、 `:focus-within` の枠線と重なるので消している。
-- 文字サイズは px で書く（スキルの規約）。本文は `main.wrap`（ `max-width: 860px` ・中央寄せ）に入れる。
+- 文字サイズは px で書く（スキルの規約）。幅は `main` の `padding` が決め、中央寄せや `max-width` の上限は作らない。
 - 上記以外の値は、 `portal.html` の `<style>` が正である。この `CLAUDE.md` に全文を写さないのは、写しが古くなって実物と食い違うのを避けるためである。数値を変えたら、上の変数とコード片だけ合わせる。
 
 ### 構成についての相談
