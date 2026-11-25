@@ -39,7 +39,7 @@ python -m http.server 8000
 ├── CLAUDE.md                 # 作業指示（文書の意匠は Claude Code のスキルを正とする）
 ├── future-article-themes.md  # 現状の整理と、次に書く文書のテーマ候補
 ├── public_URL.txt            # 公開 URL とリポジトリ URL（Git 管理外）
-└── *.html                    # 各文書（ index.html と portal.html を除き 73 本）
+└── *.html                    # 各文書（ index.html と portal.html を除き 72 本）
 ```
 
 文書はそれぞれ独立した HTML ファイルです。一覧から各文書へ相対リンクで移動できます。ビルド工程や外部依存はありません。

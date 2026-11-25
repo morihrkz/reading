@@ -2,7 +2,7 @@
 
 **文書名** : `future-article-themes.md`
 **基準日** : 2026 年 11 月 21 日（前回は 11 月 14 日。この間に文書が 22 本増え、 1 本が削除され、 1 本が掲載対象外になり、 portal の節が組み替わった）。なお、基準日の後に `solo-income-with-ai-japan.html` を第 5 節へ、 `iran-dprk-human-rights-votes.html` を第 2 節へ、 `us-parties-china-russia-trilateral-summit.html` を第 2 節へ加えた（ 2026 年 11 月 22 日・ 23 日・ 25 日）。また、 2026 年 11 月 25 日に、 `elder-housing.html` を大幅に改訂し（静岡市などの自治体の取組みの章と、参考文献を追加。 contrast の意匠へ変更。以下の出典・限界に関する 82 ・ 108 ・ 199 行の記述は、改訂前のまま）、 `suginami-nursing-home-address-change.html` を廃止して削除した（第 6 節。以下の本数と集計、および 53 行・ 111 行の記述は、削除前のまま残してある）。以下の本数と集計は、基準日時点のままである
-**対象** : 『作成文書――A Reading Room 』の、 portal に掲載された文書 67 本・ 8 節。 `index.html` ・ `megumino.html` ・ `autumn-colors.html` ・ `color-palette.html` の 4 件は、今も将来も portal に載せない（ユーザーの決定。 `CLAUDE.md` に記載）。 `portal.html` は一覧そのもので、文書の数に入れない。ファイルは、この 4 件のうち `index.html` を除く 3 件を含め、文書が 70 本ある。
+**対象** : 『作成文書――A Reading Room 』の、 portal に掲載された文書 67 本・ 8 節。 `index.html` ・ `megumino.html` ・ `color-palette.html` の 3 件は、今も将来も portal に載せない（ユーザーの決定。 `CLAUDE.md` に記載）。 `portal.html` は一覧そのもので、文書の数に入れない。ファイルは、この 4 件のうち `index.html` を除く 3 件を含め、文書が 70 本ある。
 **増減の内訳** : 前回の 47 本に、 22 本が加わった。そこから、廃止した 1 本（ `superiority-social-comparison.html` ）と、掲載対象外にした 1 本（ `color-palette.html` ）を引くと、 67 本になる（ 47 + 22 − 1 − 1 ）。 `disagreement-and-sense-of-superiority.html` は、 11 月 19 日に追加して同日に廃止したので、差し引きに入らない。
 **削除の注記** : 2026 年 11 月 19 日に、 `superiority-social-comparison.html` と `disagreement-and-sense-of-superiority.html` を廃止した（別のリポジトリで、 2 本を統合した新しい文書を作ったため）。前回までの本稿にあった、これらへの言及は、この版で外した。
 **役割** : 作成文書の現状を診断し、次に書く・直す文書を優先順に提案する。新規の候補ごとに、執筆の前に決めておくこと（置き場所、入口、論点の分担、確度の見通し、接続先）を示す。
@@ -299,7 +299,7 @@
 ## 8. 文書を足すときの手順
 
 1. **設計メモを先に作る。** 6 章と同じ項目（仮題、置き場所、入口、問いと骨格、論点の分担、確度の見通し、接続、リスク）を埋めてから、本文に進む。
-2. **置き場所を先に決める。** 既存の節に収まるか、節を新設するかを、メモの段階で決める。節の新設は、先にユーザーへ相談する。 `index.html` ・ `megumino.html` ・ `autumn-colors.html` ・ `color-palette.html` の 4 件は、 portal に載せない。
+2. **置き場所を先に決める。** 既存の節に収まるか、節を新設するかを、メモの段階で決める。節の新設は、先にユーザーへ相談する。 `index.html` ・ `megumino.html` ・ `color-palette.html` の 3 件は、 portal に載せない。
 3. **接続先は本文で確かめる。** 題名の印象だけで挙げない。該当する節を特定し、確認できないものは「論理上の接続」と書く。続編は、メタ情報帯に「前作 : …」と書く（ `adabas-overview.html` の例）。本文中のリンクで相互につなぐ場合は、双方向に置く（ `trump-omar-midterms-2026.html` と `us-midterm-2026.html` のように、片方にしかリンクがない状態を避ける）。
 4. **統計や書誌は一次資料で確かめる。** 記憶に基づく数字や条文のまま公開しない。確かめられなかった点は、「限界」または「確認できていないこと」の節に、検索した語や取得できなかった理由まで書く。他者の公開した記事に基づく場合は、転載か、要約・再構成かを明示する。
 5. **意匠は `contrast-html-style` に従う。** 配色・寸法・マークアップは、スキル（ `~/.claude/skills/contrast-html-style/SKILL.md` ）が正である（ 2026-11-25 に、 `wafu-html-style` から切り替えた）。

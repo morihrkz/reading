@@ -1,31 +1,29 @@
 # reading リポジトリの作業指示
 
-「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 73 本。うち 70 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）のほかには、 `ahamo-migration-guide.html` （チェック状態を保存）と `plateau-ai-workflow-guide.html` （コード欄のコピーボタン）の 2 本だけが使う。ほかの文書には使わない。
+「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 72 本。うち 70 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）のほかには、 `ahamo-migration-guide.html` （チェック状態を保存）と `plateau-ai-workflow-guide.html` （コード欄のコピーボタン）の 2 本だけが使う。ほかの文書には使わない。
 
 ## HTML 文書の意匠
-HTML 文書の新規作成にも、既存の文書の意匠の修正・検証にも、ローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。同日、除外した文書（ `megumino.html` ・ `color-palette.html` ・ `autumn-colors.html` と、すでに contrast だった `elder-housing.html` ・ `us-parties-china-russia-trilateral-summit.html` ）を除く、すべての文書を、 wafu から contrast へ変換した（ユーザーの指示）。 wafu 意匠の文書は、もう無い。 `wafu-html-style` は廃止予定で、このリポジトリでは使わない。例外は、下の `megumino.html` ・ `color-palette.html` ・ `autumn-colors.html` である。
+HTML 文書の新規作成にも、既存の文書の意匠の修正・検証にも、ローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。同日、除外した文書（ `megumino.html` ・ `color-palette.html` ・ `autumn-colors.html` と、すでに contrast だった `elder-housing.html` ・ `us-parties-china-russia-trilateral-summit.html` ）を除く、すべての文書を、 wafu から contrast へ変換した（ユーザーの指示）。 wafu 意匠の文書は、もう無い。そこで、スキル `wafu-html-style` を廃止し（役割は `contrast-html-style` が引き継いだ）、 wafu の元になった `autumn-colors.html` も削除した（いずれも、ユーザーの指示。 2026-11-25 ）。例外は、下の `megumino.html` と `color-palette.html` である。
 
 - 文書の意匠の正は、スキル（ `contrast-html-style` ）である。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
 - 2026-11-25 の一括変換は、意匠だけを変え、文字列を変えていない。そのため、 `check_contrast_html.py` に、本文の書き方に由来する NG が残る文書がある（キッカー・副題・リードの欠如 C03 、番号のない見出し C04 ・ C05 、ラベル後のコロン C11 、裸の URL C10 、脚注の番号の飛び C06 ）。頼まれていないのに直さない。直すときは、本文を直す作業として、ユーザーに相談する。
 - 文書ごとの固有の部品（ `dl.summary` ・ `.company` ・ `.compare` ・アニメーションなど）は、その文書の `<style>` に、 contrast の CSS の後ろへ足してある。色は contrast の変数だけを使う。 C02 の WARN が出るのは、意図したものである。
   - 例外の色が 1 か所ある。 `electric-motor-guide.html` の整流子の図は、図内の文字が「オレンジ」「緑」と色名を言うので、橙（ `#f26b00` ）と緑（ `#1f8a3b` ）を固有 CSS に足した（ユーザーの決定。 2026-11-25 ）。ほかの図には足さない。
-  - `electric-motor-guide.html` は、 CSS だけで動くアニメーション（停止ボタンつき）を持つ。スキルが「未対応」としている部品で、固有 CSS として移してある。
-- 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。意匠は排他的で、同じ文書に重ねて適用しない（ wafu と contrast も重ねない）。
+  - `electric-motor-guide.html` は、 CSS だけで動くアニメーション（停止ボタンつき）を持つ。スキルの `assets/contrast-anim.css` の方式（停止ボタン）に沿った固有 CSS で、この文書独自の動きも足してある。
+- 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。意匠は排他的で、同じ文書に重ねて適用しない。
 - `color-palette.html` には、 contrast を適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
-- `autumn-colors.html` も、 contrast を適用していない(適用作業の対象から除いた)。独自の意匠のまま残す。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
-- `megumino.html` （経路案内）は、 contrast 意匠のスキルの対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 wafu や contrast のスキルの規約に合わせて直さず、それらの検査を当てて直さない。
+- `megumino.html` （経路案内）は、 contrast 意匠のスキルの対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 contrast のスキルの規約に合わせて直さず、その検査を当てて直さない。
   - 色は意味で使い分ける。白地に黒の文字を基本に、紺 `#00205b` が見出し、黄 `#ffd400` が系統番号と地図の番号、赤 `#b3001b` が降車・目的地、青 `#0022a8` がリンク。文字と地のコントラスト比は 7 以上を保つ。
   - 地図（ `route_1_web.png` 〜 `route_4_web.png` ）は、 OpenStreetMap のデータから描いた横 1080px の PNG である。図の中と説明文の両方に、出典（ © OpenStreetMap contributors ）を入れる。地図の番号は、図の下の `ol.steps` の番号と一致させる。描画スクリプトは残していない。
 - `portal.html` は、 2026-11-25 に contrast の CSS へ切り替えた（ユーザーの指示）。 `contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、その後ろに portal 固有の部品（カード・検索・新着・「↑ 目次へ」）を足す。
 - スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は一覧ページで、仕様は後述の「 portal.html の構造」にある。 `check_contrast_html.py` を当てると、固有 CSS を足したことによる C02 の WARN が必ず 1 件出る（意図したもの）。ほかの検出は、 NG なら直す。
 - 文書の冒頭部（ `.kicker` ・ `.subtitle` ・ `.lede` ・ `.meta` ）の有無は、文書ごとに揺れている。揃っていない文書を見つけても、頼まれていないのに揃えない。新しい文書は、スキルの定めに従う。
 
-## portal.html の掲載対象外（ 4 件）
-次の 4 件は、今も将来も `portal.html` に載せない（ユーザーの決定。 2026-11-21 ）。カードも、新着も、件数にも入れない。掲載を提案しない。
+## portal.html の掲載対象外（ 3 件）
+次の 3 件は、今も将来も `portal.html` に載せない（ユーザーの決定。 2026-11-21 。もとは 4 件で、 `autumn-colors.html` は 2026-11-25 に削除した）。カードも、新着も、件数にも入れない。掲載を提案しない。
 
 - `index.html`
 - `megumino.html`
-- `autumn-colors.html`
 - `color-palette.html`
 
 ## index.html には触れない
@@ -194,13 +192,13 @@ script                   # 本文検索
 カード数と文書数は、次のコマンドで機械的に数えて照合する。 `nav.toc` の数字は、節ごとにカード数と一致するかを見る。
 
 ```
-grep -o '<li class="card">' portal.html | wc -l                                          # カード数。文書数 - 3 と一致
-ls *.html | grep -v -e '^index.html$' -e '^portal.html$' | wc -l                         # 文書数（掲載対象外の 3 件を含む）
+grep -o '<li class="card">' portal.html | wc -l                                          # カード数。文書数 - 2 と一致
+ls *.html | grep -v -e '^index.html$' -e '^portal.html$' | wc -l                         # 文書数（掲載対象外の 2 件を含む）
 grep -c '<time datetime' portal.html                                                     # カード数 + 新着の 5 件
 grep -c 'class="to-top"' portal.html                                                     # 節の数と一致
 ```
-文書ファイルのうち、どのカードからも `href` されていないものがないかも確かめる（掲載対象外の 4 件のうち `index.html` を除く 3 件、 `megumino.html` ・ `autumn-colors.html` ・ `color-palette.html` だけが、リンクを持たない）。
-カード数は、文書数から 3 件（ `megumino.html` ・ `autumn-colors.html` ・ `color-palette.html` ）を引いた数と一致する。
+文書ファイルのうち、どのカードからも `href` されていないものがないかも確かめる（掲載対象外の 3 件のうち `index.html` を除く 2 件、 `megumino.html` ・ `color-palette.html` だけが、リンクを持たない）。
+カード数は、文書数から 2 件（ `megumino.html` ・ `color-palette.html` ）を引いた数と一致する。
 
 ### 意匠の要点
 - 意匠は、文書と同じ contrast の意匠（ `~/.claude/skills/contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、後ろに portal 固有の部品を足す）である。白地に黒、紺の h2 帯、本文 20px 、最小の文字も 16px 。色は contrast の変数（ `--ink` `--navy` `--yellow` `--gray` `--rule` `--muted` `--link` ）だけを使う。書体は指定しない。
