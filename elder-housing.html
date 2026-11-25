@@ -3,443 +3,500 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>高齢者向け住まい・施設、七類型の違い</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
+<title>高齢者向け住まい・施設の七類型と、身寄りがない人を支える自治体の仕組み</title>
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  nav.toc>ol>li{break-inside:avoid}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* コード、必須、印、結合セルのある表 */
-  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
-  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
-  pre code{background:none;padding:0;font-size:inherit}
-  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
-  pre.term{background:#000;color:#fff;border-color:#000}
-  pre.term code{color:#fff}
-  code.term{background:#000;color:#fff}
-  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
-  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
-  .must pre.term code{color:#fff}
-  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
-  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
-  @media(max-width:640px){
-    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
-    table.cardspan tbody td[rowspan]{display:none}
-    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
   }
-  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
-  .t{fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <p class="kicker">高齢者福祉制度の解説</p>
-<h1>介護付き、住宅型、サ高住、グループホーム、老健、特養、養護老人ホーム<br>――七つの「高齢者向け住まい・施設」を分けるものは何か</h1>
-<p class="subtitle">Distinguishing Seven Types of Elder Housing and Care Facilities by Their Legal Frameworks, Long-Term Care Insurance, and Entry Routes</p>
-</header>
-<div class="wrap">
+<h1>高齢者向け住まい・施設の七類型<br>――選び方と、身寄りがない人を支える自治体の仕組み</h1>
+<p class="subtitle">Seven Types of Housing and Care Facilities for Older Adults and Municipal Support for People Without Family Ties: Shizuoka City's Ending Plan Support in Comparative Perspective</p>
 <div class="lede">
-<p>「介護付き有料老人ホーム」「住宅型有料老人ホーム」「サービス付き高齢者向け住宅」「グループホーム」。ここに「介護老人保健施設」「介護老人福祉施設（特別養護老人ホーム）」「養護老人ホーム」を加えると、名前の響きはいよいよ紛らわしくなる。七つとも「高齢者が支援を受けながら暮らす場」という点では共通しており、パンフレットの写真もよく似た明るいロビーや個室が並ぶ。</p>
-<p>だが根拠となる法律も、介護保険の使い方も、入居を決める仕組みも、費用の組み立て方も、実はそれぞれ別物である。前半の四つは入居者が事業者と直接契約して入る「契約型の住まい」、後半の三つは入所要件の判定や措置を経て入る「判定型の施設」という、入口の仕組みの大きな分かれ目がある。本記事では、七類型を同じ物差しで並べ、違いがどこから生まれているのかを一つずつ確認していく。</p>
+<p>「介護付き有料老人ホーム」「住宅型有料老人ホーム」「サービス付き高齢者向け住宅」「グループホーム」。ここに「介護老人保健施設」「介護老人福祉施設（特別養護老人ホーム）」「養護老人ホーム」を加えると、名前の響きはいよいよ紛らわしくなる。七つとも「高齢者が支援を受けながら暮らす場」という点では共通しており、パンフレットの写真もよく似ている。だが、根拠となる法律も、介護保険の使い方も、入る仕組みも、費用の組み立て方も、それぞれ別物である。</p>
+<p>本稿は二つの部分からなる。前半（第 1 〜 4 章）は、七類型を同じ物差しで並べ、違いがどこから生まれるのかを確かめる。後半（第 5 〜 7 章）は、住まいを選ぶ以前の問題を扱う。頼れる親族がいない人が、入院・入所の手続きや、亡くなったあとの葬儀・家財処分を誰に任せるか、という問題である。静岡市が 2025 年 11 月に相談受付を始めた「エンディングプラン・サポート」を詳しく解説し、ほかの自治体の取組みと並べる。</p>
 </div>
+<div class="meta"><strong>【対象と限界】</strong>前半は、老人福祉法・介護保険法上の一般的な制度区分の整理であり、個別の施設の契約内容・費用・体制は、ここで示す傾向と異なることがある。費用の数値は目安で、確定的な相場や基準ではない。軽費老人ホーム（ケアハウス）と介護医療院は扱わない。後半は、静岡市・北九州市・横須賀市・岡崎市の公表資料と、国のガイドラインに基づく。静岡市の制度は 2025 年 11 月に始まったばかりで、開始後の利用実績は公表資料で確認できなかった。岡崎市の内容は、市の公式ページではなく、厚生労働省に掲載された市の資料による。ほかにも同種の事業を行う自治体がある可能性があるが、全国の一覧は確認していない。実際の検討では、各自治体の最新の案内と、契約書・重要事項説明書で確認してほしい。</div>
 
-<div class="meta band"><strong>【対象と限界】</strong>本稿は、老人福祉法・介護保険法上の一般的な制度区分を整理したものであり、個別の施設の契約内容・費用・体制はここで示す傾向と異なる場合がある。費用や要介護度の目安として挙げる数値は、確定的な相場や基準を示すものではなく、判定型の施設の入所要件や負担軽減の仕組みは制度改正で変わりうる。実際の入居検討にあたっては、厚生労働省・自治体が公開する最新の情報、および各施設の重要事項説明書での確認を前提としてほしい。</div>
-
-<nav class="toc"><b>目次</b>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
 <ol>
-<li><a href="#sec1">比較の前提となる基礎知識</a></li>
-<li><a href="#sec2">介護付き有料老人ホーム</a>
+<li><a href="#sec1">七類型を分ける軸</a>
 <ol>
-<li><a href="#sec2-1">制度上の位置づけ</a></li>
-<li><a href="#sec2-2">対象となる入居者</a></li>
-<li><a href="#sec2-3">提供される介護・医療サービスの範囲</a></li>
-<li><a href="#sec2-4">介護保険の使い方の違い</a></li>
-<li><a href="#sec2-5">費用の目安</a></li>
-<li><a href="#sec2-6">看取り・重度化対応の可否</a></li>
-<li><a href="#sec2-7">向いている人の具体像</a></li>
+<li><a href="#sec1-1">入口の仕組み――契約型と判定型</a></li>
+<li><a href="#sec1-2">介護保険の使い方――特定施設の指定</a></li>
+<li><a href="#sec1-3">二つの法律、二つの名前</a></li>
 </ol>
 </li>
-<li><a href="#sec3">住宅型有料老人ホーム</a>
+<li><a href="#sec2">七類型の比較表</a></li>
+<li><a href="#sec3">契約型の四類型</a>
 <ol>
-<li><a href="#sec3-1">制度上の位置づけ</a></li>
-<li><a href="#sec3-2">対象となる入居者</a></li>
-<li><a href="#sec3-3">提供される介護・医療サービスの範囲</a></li>
-<li><a href="#sec3-4">介護保険の使い方の違い</a></li>
-<li><a href="#sec3-5">費用の目安</a></li>
-<li><a href="#sec3-6">看取り・重度化対応の可否</a></li>
-<li><a href="#sec3-7">向いている人の具体像</a></li>
+<li><a href="#sec3-1">介護付き有料老人ホーム</a></li>
+<li><a href="#sec3-2">住宅型有料老人ホーム</a></li>
+<li><a href="#sec3-3">サービス付き高齢者向け住宅（サ高住）</a></li>
+<li><a href="#sec3-4">グループホーム（認知症対応型共同生活介護）</a></li>
 </ol>
 </li>
-<li><a href="#sec4">サービス付き高齢者向け住宅（サ高住）</a>
+<li><a href="#sec4">判定型の三施設</a>
 <ol>
-<li><a href="#sec4-1">制度上の位置づけ</a></li>
-<li><a href="#sec4-2">対象となる入居者</a></li>
-<li><a href="#sec4-3">提供される介護・医療サービスの範囲</a></li>
-<li><a href="#sec4-4">介護保険の使い方の違い</a></li>
-<li><a href="#sec4-5">費用の目安</a></li>
-<li><a href="#sec4-6">看取り・重度化対応の可否</a></li>
-<li><a href="#sec4-7">向いている人の具体像</a></li>
+<li><a href="#sec4-1">介護老人保健施設（老健）</a></li>
+<li><a href="#sec4-2">介護老人福祉施設（特別養護老人ホーム）</a></li>
+<li><a href="#sec4-3">養護老人ホーム</a></li>
 </ol>
 </li>
-<li><a href="#sec5">グループホーム（認知症対応型共同生活介護）</a>
+<li><a href="#sec5">住まいの手前にある問題――頼れる親族がいない人の入院・入所・死後</a>
 <ol>
-<li><a href="#sec5-1">制度上の位置づけ</a></li>
-<li><a href="#sec5-2">対象となる入居者</a></li>
-<li><a href="#sec5-3">提供される介護・医療サービスの範囲</a></li>
-<li><a href="#sec5-4">介護保険の使い方の違い</a></li>
-<li><a href="#sec5-5">費用の目安</a></li>
-<li><a href="#sec5-6">看取り・重度化対応の可否</a></li>
-<li><a href="#sec5-7">向いている人の具体像</a></li>
+<li><a href="#sec5-1">家族が担ってきたことを、誰が担うのか</a></li>
+<li><a href="#sec5-2">民間の終身サポート事業と、その不安</a></li>
+<li><a href="#sec5-3">国のガイドライン</a></li>
 </ol>
 </li>
-<li><a href="#sec6">介護老人保健施設（老健）</a>
+<li><a href="#sec6">静岡市「エンディングプラン・サポート」</a>
 <ol>
-<li><a href="#sec6-1">制度上の位置づけ</a></li>
-<li><a href="#sec6-2">対象となる入所者</a></li>
-<li><a href="#sec6-3">提供される介護・医療サービスの範囲</a></li>
-<li><a href="#sec6-4">介護保険の使い方の違い</a></li>
-<li><a href="#sec6-5">費用の目安</a></li>
-<li><a href="#sec6-6">看取り・重度化対応の可否</a></li>
-<li><a href="#sec6-7">向いている人の具体像</a></li>
+<li><a href="#sec6-1">位置づけと開始の経緯</a></li>
+<li><a href="#sec6-2">仕組みと利用の流れ</a></li>
+<li><a href="#sec6-3">対象と費用</a></li>
+<li><a href="#sec6-4">強みと限界</a></li>
 </ol>
 </li>
-<li><a href="#sec7">介護老人福祉施設（特別養護老人ホーム）</a>
+<li><a href="#sec7">ほかの自治体の取組み</a>
 <ol>
-<li><a href="#sec7-1">制度上の位置づけ</a></li>
-<li><a href="#sec7-2">一つの施設に二つの名前がある不思議</a></li>
-<li><a href="#sec7-3">対象となる入所者</a></li>
-<li><a href="#sec7-4">提供される介護・医療サービスの範囲</a></li>
-<li><a href="#sec7-5">介護保険の使い方の違い</a></li>
-<li><a href="#sec7-6">費用の目安</a></li>
-<li><a href="#sec7-7">看取り・重度化対応の可否</a></li>
-<li><a href="#sec7-8">向いている人の具体像</a></li>
+<li><a href="#sec7-1">横須賀市</a></li>
+<li><a href="#sec7-2">岡崎市</a></li>
+<li><a href="#sec7-3">北九州市</a></li>
+<li><a href="#sec7-4">三つの型に整理する</a></li>
 </ol>
 </li>
-<li><a href="#sec8">養護老人ホーム</a>
+<li><a href="#sec8">選び方の視点</a>
 <ol>
-<li><a href="#sec8-1">制度上の位置づけ</a></li>
-<li><a href="#sec8-2">対象となる入所者</a></li>
-<li><a href="#sec8-3">提供される介護・医療サービスの範囲</a></li>
-<li><a href="#sec8-4">介護保険の使い方の違い</a></li>
-<li><a href="#sec8-5">費用の目安</a></li>
-<li><a href="#sec8-6">看取り・重度化対応の可否</a></li>
-<li><a href="#sec8-7">向いている人の具体像</a></li>
+<li><a href="#sec8-1">住まいを選ぶ視点</a></li>
+<li><a href="#sec8-2">身寄りがない場合の確認事項</a></li>
 </ol>
 </li>
-<li><a href="#sec9">七類型の比較表</a></li>
-<li><a href="#sec10">選び方の視点</a></li>
-<li><a href="#sec11">まとめ</a></li>
+<li><a href="#sec9">まとめ</a></li>
 </ol>
 </nav>
 
-<section id="sec1"><h2><span class="no">1</span> 比較の前提となる基礎知識</h2>
-<p>七類型の違いを理解するには、まず三つの前提を押さえておく必要がある。</p>
-<p>一つ目は、入口の仕組みによる「契約型」と「判定型」の区別である。本稿でいう契約型の住まいとは、入居者が事業者と直接契約して入る有料老人ホーム（介護付き・住宅型）・サ高住・グループホームを指す。判定型の施設とは、入所要件を満たすかどうかの判定を経て入る老健・特養・養護老人ホームを指す。老健と特養は要介護認定と施設側の入所判定が、養護老人ホームは市町村の措置が入口になる（老健・特養も入所後は施設と契約を結ぶが、その前に判定がある）。判定型の三施設は、介護保険法・老人福祉法に基づいて運営され、費用に公費が投じられ、所得に応じた負担軽減の仕組みを持つ。なお、グループホームは直接契約で入る点では契約型だが、介護保険法上の地域密着型サービスであり、認知症の診断や住民票の所在といった利用要件がある点で、判定型に近い面も持つ。</p>
-<p>この区分は、世間でいう「民間施設」と「公的施設」の呼び分けにおおむね重なるが、運営主体による区分ではない。特養と老健の運営主体は主に社会福祉法人と医療法人で、法的には民間法人である（自治体が運営するものもある）。運営主体では民間と公的を切り分けられないため、本稿では「民間」「公的」という呼称を使わず、入口の仕組みで呼び分ける。</p>
-<p>二つ目は「介護保険」の基本的な仕組みである。介護保険では、要介護度（要支援 1 ・ 2 、要介護 1 〜 5 ）に応じて、一か月あたりに利用できる介護サービスの上限額が決まっている。これを「区分支給限度基準額」と呼ぶ。在宅で訪問介護やデイサービスを組み合わせて使う場合は、この上限の範囲内でサービスを選び、超えた分は全額自己負担になる。</p>
-<p>三つ目は「特定施設入居者生活介護」という指定制度である。都道府県などからこの指定を受けた施設では、区分支給限度基準額とは別に、要介護度に応じた定額の介護サービス費が設定される。施設のスタッフが食事・入浴・排泄などの介護を包括的に提供する体制が前提になっており、利用者は個別に訪問介護事業者と契約する必要がない。</p>
-<p>契約型の四類型の違いの大半は、「特定施設入居者生活介護の指定を受けているかどうか」という点に集約される。この指定の有無が、費用の予測しやすさにも、住み続けられる期間の見通しにも直結する。以下の各類型の解説では、この点を軸に読んでほしい。</p>
-<p>これに対して判定型の三施設では、軸が変わる。入居者が自由に選んで契約できる契約型の住まいと異なり、老健と特養は要介護認定と施設側の入所判定が、養護老人ホームは市町村の措置が入口になる。さらに老健と特養は、介護保険法が定める「介護保険施設」である。介護保険施設には老健と特養のほか「介護医療院」があるが、本稿では老健と特養を扱う。</p>
-</section>
+<h2 id="sec1">1. 七類型を分ける軸</h2>
+<p>七類型の違いを理解するには、三つの前提を押さえておく必要がある。入口の仕組み、介護保険の使い方、そして二つの法律による呼び名の二重構造である。</p>
+<h3 id="sec1-1">1.1 入口の仕組み――契約型と判定型</h3>
+<p>七類型は、入る仕組みで大きく二つに分かれる。前半の四つは、入居者が事業者と直接契約して入る「契約型」である。介護付き有料老人ホーム、住宅型有料老人ホーム、サービス付き高齢者向け住宅（サ高住）、グループホームがこれにあたる。後半の三つは、入所の要件を満たすかどうかの判定を経て入る「判定型」である。老健と特養は、要介護認定と施設側の入所判定が入口になり、養護老人ホームは市町村の措置が入口になる。</p>
+<p>判定型の三施設は、介護保険法・老人福祉法に基づいて運営され、費用に公費が投じられ、所得に応じた負担軽減の仕組みを持つ。グループホームは、直接契約で入る点では契約型だが、介護保険法上の地域密着型サービスで、認知症の診断や住民票の所在といった利用要件がある。この点では判定型に近い面も持つ。</p>
+<div class="point"><p>「契約型」と「判定型」は、入口の仕組みによる区分である。運営主体による区分ではない。特養と老健の運営主体は主に社会福祉法人と医療法人で、法的には民間法人である。世間でいう「民間施設」「公的施設」の呼び分けは、制度上は正確さを欠く。</p></div>
+<h3 id="sec1-2">1.2 介護保険の使い方――特定施設の指定</h3>
+<p>介護保険では、要介護度（要支援 1 ・ 2 、要介護 1 〜 5 ）に応じて、一か月に使えるサービスの上限額が決まっている。これを「区分支給限度基準額」と呼ぶ。在宅で訪問介護やデイサービスを組み合わせて使う場合は、この上限の範囲内でサービスを選び、超えた分は全額自己負担になる。</p>
+<p>一方、都道府県などから「特定施設入居者生活介護」の指定を受けた施設では、上限額とは別に、要介護度に応じた定額の介護サービス費が設定される。施設の職員が食事・入浴・排泄などの介護を包括的に提供するので、利用者が訪問介護事業者と個別に契約する必要がない。契約型の四類型の違いの大半は、この指定を受けているかどうかに集約される。指定の有無が、費用の見通しやすさと、住み続けられる期間の見通しに直結する。</p>
+<h3 id="sec1-3">1.3 二つの法律、二つの名前</h3>
+<p>「介護老人福祉施設」と「特別養護老人ホーム」は、制度上は別々の言葉だが、同じ施設を指している。世間の人が混同しているのではなく、法律の側が二つの名前を持たせている。この施設は、もともと老人福祉法に基づく「特別養護老人ホーム」として生まれた。 2000 年に介護保険制度が始まると、介護保険法は、介護サービスを提供する側の呼び名として「介護老人福祉施設」と名づけ、指定を受けた特養を介護保険の施設サービスとして扱うことにした。建物も職員も入所者も変わらないまま、老人福祉法の視点では前者、介護保険法の視点では後者と呼ばれる。</p>
+<p>この二重構造は、契約型の住まいにもある。介護付き有料老人ホームは、老人福祉法上は「有料老人ホーム」で、介護保険法上は「特定施設」と呼ばれる。日本の高齢者施設の名前がわかりにくいのは、二つの法律が同じ現場を別々の言葉で切り取っているからである。実際の施設名は、ほとんどの場合「特別養護老人ホーム」（特養）であり、「介護老人福祉施設」は、請求書や制度文書の中で目にする名前である。</p>
 
-<section id="sec2"><h2><span class="no">2</span> 介護付き有料老人ホーム</h2>
-<h3 id="sec2-1">2.1 制度上の位置づけ</h3>
-<p>老人福祉法上の「有料老人ホーム」の一種で、都道府県などから特定施設入居者生活介護の指定を受けている施設を指す。「介護付き」という名称は、この指定を受けている施設だけが名乗ることを許されている。</p>
-<h3 id="sec2-2">2.2 対象となる入居者</h3>
-<p>自立段階の高齢者から要介護 5 まで、幅広く受け入れる施設が多いが、要介護認定を受けた人だけを対象とする「介護専用型」の施設もある。年齢要件は概ね 60 歳以上または 65 歳以上とする施設が多いが、施設ごとに異なる。</p>
-<h3 id="sec2-3">2.3 提供される介護・医療サービスの範囲</h3>
-<p>施設に所属する介護職員・看護職員が、食事・入浴・排泄などの介護を直接提供する。訪問介護事業者を個別に探して契約する必要がない点が、次に説明する住宅型やサ高住との大きな違いである。</p>
-<h3 id="sec2-4">2.4 介護保険の使い方の違い</h3>
-<p>特定施設入居者生活介護の指定により、要介護度に応じた定額の介護サービス費を利用する。区分支給限度基準額の枠外で計算されるため、介護サービスをどれだけ使っても月々の介護保険の自己負担は原則一定になる（ただし、指定サービスの範囲外のオプションには別途費用がかかることがある）。</p>
-<h3 id="sec2-5">2.5 費用の目安</h3>
-<p>入居時に数十万円から数千万円までと幅の大きい入居一時金を設定する施設が多く、月額費用は目安として 15 万円から 30 万円程度とされるが、地域差・施設差が大きく、これはあくまで一般的な傾向にすぎない。</p>
-<h3 id="sec2-6">2.6 看取り・重度化対応の可否</h3>
-<p>終身での利用を前提とする施設が多く、要介護度が上がっても住み続けられるよう体制を整えている施設が比較的多い。看取りに対応する施設も増えているが、対応の有無・範囲は施設ごとに確認が必要である。</p>
-<h3 id="sec2-7">2.7 向いている人の具体像</h3>
-<p>現時点では自立度が高くても、将来の要介護度の上昇や医療的ケアの必要性を見据え、住み替えをせずに一つの住まいで暮らし続けたいと考えている人に向いている。</p>
-</section>
-
-<section id="sec3"><h2><span class="no">3</span> 住宅型有料老人ホーム</h2>
-<h3 id="sec3-1">3.1 制度上の位置づけ</h3>
-<p>老人福祉法上の「有料老人ホーム」である点は介護付きと同じだが、特定施設入居者生活介護の指定を受けていない施設を指す。</p>
-<h3 id="sec3-2">3.2 対象となる入居者</h3>
-<p>自立段階の高齢者から要介護度の高い人まで、施設によって受け入れ範囲が異なる。年齢要件は介護付きと同様、施設ごとの規定による。</p>
-<h3 id="sec3-3">3.3 提供される介護・医療サービスの範囲</h3>
-<p>施設が提供するのは食事・清掃などの生活支援が中心で、介護サービスは入居者本人が外部の訪問介護・デイサービスなどの事業者と個別に契約して利用する。同じ建物内に系列の訪問介護事業所を併設している場合も多いが、制度上は在宅で介護保険を使う場合と同じ枠組みである。</p>
-<h3 id="sec3-4">3.4 介護保険の使い方の違い</h3>
-<p>特定施設の指定を受けていないため、区分支給限度基準額の範囲内で訪問介護等を組み合わせて利用する。必要な介護量が増えるほど利用限度額に近づき、それを超えた分は全額自己負担になる点に注意が必要である。</p>
-<h3 id="sec3-5">3.5 費用の目安</h3>
-<p>入居一時金の有無は施設により異なり、月額費用は家賃・管理費・食費などで目安として 10 万円から 25 万円程度、これに加えて利用した分の介護サービス費がかかる。介護度が上がるほど総費用が読みにくくなる傾向がある。</p>
-<h3 id="sec3-6">3.6 看取り・重度化対応の可否</h3>
-<p>訪問介護等の外部サービスでどこまで対応できるかに左右されるため、施設・事業者の体制によって差が大きい。重度化や医療的ケアの必要性が高まった段階で、住み替えを検討することになる場合もある。</p>
-<h3 id="sec3-7">3.7 向いている人の具体像</h3>
-<p>現在は比較的自立度が高く、必要なサービスを自分で選んで組み合わせたい人、決まったパッケージよりも柔軟な使い方を望む人に向いている。</p>
-</section>
-
-<section id="sec4"><h2><span class="no">4</span> サービス付き高齢者向け住宅（サ高住）</h2>
-<h3 id="sec4-1">4.1 制度上の位置づけ</h3>
-<p>老人福祉法上の施設ではなく、高齢者住まい法（高齢者の居住の安定確保に関する法律）に基づき都道府県などに登録された、賃貸住宅としての位置づけを持つ。「安否確認」と「生活相談」の提供が登録の要件になっている。</p>
-<h3 id="sec4-2">4.2 対象となる入居者</h3>
-<p>60 歳以上の人、または 60 歳未満でも要介護・要支援認定を受けている人などが対象になる。多くは自立から軽度の要介護者を想定した「一般型」だが、特定施設の指定を受けた「介護型」も一部存在する。</p>
-<h3 id="sec4-3">4.3 提供される介護・医療サービスの範囲</h3>
-<p>一般型では、住宅型有料老人ホームと同様に、介護サービスは外部の訪問介護等を個別に契約して利用する。安否確認と生活相談は必須サービスとして提供されるが、直接の身体介護は含まれない。介護型は特定施設の指定を受けており、介護付き有料老人ホームに近い枠組みになる。</p>
-<h3 id="sec4-4">4.4 介護保険の使い方の違い</h3>
-<p>一般型は区分支給限度基準額の範囲内で訪問介護等を利用する点で住宅型有料老人ホームと同様である。介護型は特定施設入居者生活介護の定額制になる。契約前にどちらの型かを必ず確認する必要がある。</p>
-<h3 id="sec4-5">4.5 費用の目安</h3>
-<p>賃貸住宅であるため、有料老人ホームのような高額な入居一時金を求めない施設が一般的で、敷金と月々の家賃・共益費・サービス費が中心になる。月額の目安は 10 万円から 20 万円程度とされるが、これも施設・地域により差がある。介護費用は利用した分だけ別途かかる。</p>
-<h3 id="sec4-6">4.6 看取り・重度化対応の可否</h3>
-<p>一般型は、重度化や医療的ケアの必要性が高まると、賃貸借契約であることも関係し、住み続けることが難しくなる場合がある。介護型は介護付き有料老人ホームに近い継続性を期待できることが多い。</p>
-<h3 id="sec4-7">4.7 向いている人の具体像</h3>
-<p>比較的自立度が高い段階で、賃貸住宅に近い自由度を保ちながら、見守り付きの住まいに移りたいと考えている人に向いている。</p>
-</section>
-
-<section id="sec5"><h2><span class="no">5</span> グループホーム（認知症対応型共同生活介護）</h2>
-<h3 id="sec5-1">5.1 制度上の位置づけ</h3>
-<p>介護保険法上の「地域密着型サービス」の一類型であり、有料老人ホームやサ高住とは制度上の系統が異なる。原則として、施設が所在する市区町村に住民票がある人だけが利用できる。</p>
-<h3 id="sec5-2">5.2 対象となる入居者</h3>
-<p>要支援 2 以上の認定を受け、かつ医師から認知症の診断を受けていることが利用の条件になる。身体的な自立度は比較的高いが、認知症により見守りや生活支援を要する人を主な対象としている。</p>
-<h3 id="sec5-3">5.3 提供される介護・医療サービスの範囲</h3>
-<p>五人から九人程度の少人数の「ユニット」で、専門的な知識を持つスタッフとともに、家事などの役割を分担しながら共同生活を送る形態を取る。家庭的な環境の中で、認知症の症状の進行を緩やかにすることを目的にしている。</p>
-<h3 id="sec5-4">5.4 介護保険の使い方の違い</h3>
-<p>地域密着型サービスとして、要介護度に応じた定額の介護サービス費が設定される点は特定施設に近いが、根拠となる制度区分そのものが異なる。</p>
-<h3 id="sec5-5">5.5 費用の目安</h3>
-<p>入居時の一時金は施設により有無・金額が異なり、設定する場合は数十万円程度が目安になる。月額費用は目安として 15 万円から 20 万円程度とされるが、地域差が大きい。</p>
-<h3 id="sec5-6">5.6 看取り・重度化対応の可否</h3>
-<p>認知症への対応を主目的とした施設であるため、身体的な介護の必要性が大きく高まったり、医療的ケアが常時必要になったりした場合には、他の施設や医療機関への住み替えを検討することになる場合がある。</p>
-<h3 id="sec5-7">5.7 向いている人の具体像</h3>
-<p>認知症の診断を受けており、身体的にはある程度動けるものの、一人での生活や見守りのない環境に不安がある人に向いている。</p>
-</section>
-
-<section id="sec6"><h2><span class="no">6</span> 介護老人保健施設（老健）</h2>
-<h3 id="sec6-1">6.1 制度上の位置づけ</h3>
-<p>介護保険法に基づく「介護保険施設」の一つで、病院での治療を終えた人が自宅へ戻るまでの中間に位置づけられる。契約型の住まいと違い、終の棲家としてではなく、在宅復帰を目指すリハビリ施設として設計されている。</p>
-<h3 id="sec6-2">6.2 対象となる入所者</h3>
-<p>要介護 1 以上の認定を受けた人が対象で、病状が安定しており、入院治療までは必要ないが、リハビリや看護・介護を要する人が想定されている。要支援の人や自立の人は利用できない。</p>
-<h3 id="sec6-3">6.3 提供される介護・医療サービスの範囲</h3>
-<p>医師・看護職員・介護職員に加え、理学療法士・作業療法士・言語聴覚士といったリハビリ専門職が配置され、機能回復訓練が日常的に行われる。医療と介護の両方を一つの施設で受けられる点が、他の施設にない特徴である。</p>
-<h3 id="sec6-4">6.4 介護保険の使い方の違い</h3>
-<p>介護保険の施設サービスとして、要介護度に応じた定額の介護サービス費が設定される。利用者はその 1 〜 3 割（所得による）を負担し、これに居住費・食費・日常生活費が加わる。在宅復帰が見込めるかどうかを、施設側が定期的に判定する。</p>
-<h3 id="sec6-5">6.5 費用の目安</h3>
-<p>入所一時金は不要で、月額費用は多床室で 8 万円前後から、個室やユニット型では 12 万〜 17 万円程度とされるが、要介護度や居室の種類、所得に応じた負担軽減の有無で大きく変わる。これも一般的な傾向にすぎない。</p>
-<h3 id="sec6-6">6.6 看取り・重度化対応の可否</h3>
-<p>在宅復帰を目的とする施設であるため、入所期間は原則として数か月単位で見直され、長期の入所を前提としていない。看取りに対応する老健もあるが、最期まで暮らし続ける場としては、特養などへの移行を検討することが多い。</p>
-<h3 id="sec6-7">6.7 向いている人の具体像</h3>
-<p>入院後に体力や生活機能が落ち、すぐには自宅へ戻れないものの、リハビリを受ければ在宅生活に戻れる見込みがある人に向いている。</p>
-</section>
-
-<section id="sec7"><h2><span class="no">7</span> 介護老人福祉施設（特別養護老人ホーム）</h2>
-<h3 id="sec7-1">7.1 制度上の位置づけ</h3>
-<p>老人福祉法上の「特別養護老人ホーム」であり、介護保険法上は「介護老人福祉施設」にあたる。老健と並ぶ介護保険施設の一つだが、在宅復帰ではなく、常に介護を必要とする人が終身の生活の場として暮らすことを主な役割とする。二つの名前の関係は次の節で述べる。</p>
-<h3 id="sec7-2">7.2 一つの施設に二つの名前がある不思議</h3>
-<p>「介護老人福祉施設」と「特別養護老人ホーム」は、制度上は別々の言葉でありながら、同じ施設を指している。これは世間の人が混同しているのではなく、法律の側が二つの名前を持たせているのである。</p>
-<p>この施設は、もともと老人福祉法に基づく「特別養護老人ホーム」として生まれた。ところが 2000 年に介護保険制度が始まると、介護保険法はこの施設を、介護サービスを提供する側の呼び名として改めて「介護老人福祉施設」と名づけ、指定を受けた特養を介護保険の施設サービスとして扱うことにした。施設の建物も職員も入所者も変わらないまま、老人福祉法の視点では「特別養護老人ホーム」、介護保険法の視点では「介護老人福祉施設」と呼ばれる。同じ人物が、勤め先では役職名で、役所では別の肩書きで呼ばれるようなものである。</p>
-<p>実は、この二重構造は契約型の住まいにもある。介護付き有料老人ホームは、老人福祉法上は「有料老人ホーム」で、介護保険法上は「特定施設」と呼ばれる。日本の高齢者施設の名前がわかりにくいのは、老人福祉法と介護保険法という二つの法律が、同じ現場を別々の言葉で切り取っているからである。実際の施設名としては、ほとんどの場合「特別養護老人ホーム」（特養）と呼ばれ、「介護老人福祉施設」は介護保険の請求書や制度文書の中で目にする名前である。</p>
-<h3 id="sec7-3">7.3 対象となる入所者</h3>
-<p>原則として要介護 3 以上の認定を受けた、 65 歳以上の人が対象である。要介護 1 ・ 2 の人は、認知症や知的障害・精神障害により日常生活に支障をきたす、虐待などで在宅生活が困難である、といったやむを得ない事情がある場合に限り、特例として入所が認められる。</p>
-<h3 id="sec7-4">7.4 提供される介護・医療サービスの範囲</h3>
-<p>介護職員が食事・入浴・排泄などの介護を提供し、看護職員が健康管理にあたる。医師は常勤でないことも多く、医療的ケアの範囲には限りがあるため、老健に比べると医療面の体制は薄い。個室中心のユニット型と、多床室を中心とする従来型がある。</p>
-<h3 id="sec7-5">7.5 介護保険の使い方の違い</h3>
-<p>要介護度に応じた定額の施設サービス費を、 1 〜 3 割（所得による）負担する。これに居住費・食費が加わる。低所得の人には、居住費・食費の負担を軽くする補足給付の制度がある。</p>
-<h3 id="sec7-6">7.6 費用の目安</h3>
-<p>入所一時金は不要で、月額費用は多床室で 6 万〜 10 万円程度、ユニット型個室では 10 万〜 15 万円程度とされるが、要介護度・所得・補足給付の有無で大きく変わる。介護付き有料老人ホームより低く抑えられる傾向がある。</p>
-<h3 id="sec7-7">7.7 看取り・重度化対応の可否</h3>
-<p>終身での利用を前提としており、要介護度が上がっても住み続けられる。看取りに対応する特養も多い。ただし、医療的ケアの必要性が高まり、長期入院になった場合は退所となることがある。</p>
-<h3 id="sec7-8">7.8 向いている人の具体像</h3>
-<p>在宅での生活が難しくなった重い要介護状態の人で、費用を抑えながら最期まで暮らせる場を探している人に向いている。入所希望者が多く、待機が生じる地域がある点には留意したい。</p>
-</section>
-
-<section id="sec8"><h2><span class="no">8</span> 養護老人ホーム</h2>
-<h3 id="sec8-1">8.1 制度上の位置づけ</h3>
-<p>老人福祉法に基づく「老人福祉施設」の一つで、介護保険施設ではない。入所は利用者と施設の契約ではなく、市町村が入所の必要性を判定して決める「措置」による。</p>
-<h3 id="sec8-2">8.2 対象となる入所者</h3>
-<p>65 歳以上で、環境上の理由と経済的な理由により、自宅で養護を受けることが困難な人が対象である。必ずしも要介護である必要はなく、むしろ身体的には自立に近い人が多い。介護の必要度ではなく、住環境や経済状況といった生活上の困窮が基準になる。</p>
-<h3 id="sec8-3">8.3 提供される介護・医療サービスの範囲</h3>
-<p>食事の提供、健康管理、社会復帰のための相談・援助、生活指導が中心で、介護そのものが主な目的ではない。介護が必要になった場合は、入所者本人が外部の介護サービスを利用する「一般型」が基本だが、施設が介護サービスを提供する「介護サービス提供型（特定施設の指定を受けたもの）」を設ける養護老人ホームもある。</p>
-<h3 id="sec8-4">8.4 介護保険の使い方の違い</h3>
-<p>一般型は、在宅で介護保険を使うのと同じ形で、区分支給限度基準額の範囲内で訪問介護等を利用する。介護サービス提供型は、特定施設入居者生活介護として定額制になる。</p>
-<h3 id="sec8-5">8.5 費用の目安</h3>
-<p>費用は措置の仕組みの中で、入所者本人と扶養義務者の収入に応じて市町村が決める。生活保護を受けている人は負担が生じないこともあり、一律の相場を示しにくい。入所一時金は不要である。</p>
-<h3 id="sec8-6">8.6 看取り・重度化対応の可否</h3>
-<p>介護が主目的でないため、要介護度が重くなった場合は、特養などの介護保険施設への住み替えを検討することになる場合がある。施設によって対応に差が大きい。</p>
-<h3 id="sec8-7">8.7 向いている人の具体像</h3>
-<p>身体的には自立に近い状態だが、住まいを失った、家族の支援が得られない、費用の負担が重く有料老人ホームなどの契約型の住まいに入れないなど、生活上の困窮から自宅で暮らし続けられない人に向いている。自分で選んで契約するのではなく、市町村の福祉窓口への相談が入口になる。</p>
-</section>
-
-<section id="sec9"><h2><span class="no">9</span> 七類型の比較表</h2>
-<table>
+<h2 id="sec2">2. 七類型の比較表</h2>
+<p>各類型の詳細に入る前に、全体を一枚の表で見渡しておく。以降の章は、この表の各行を順に説明している。</p>
+<table class="cards">
+<caption>七類型の比較</caption>
 <thead><tr><th>類型</th><th>根拠法</th><th>対象の目安</th><th>介護の提供形態・介護保険の枠組み</th><th>費用の目安（月額）</th><th>看取り・重度化対応</th></tr></thead>
 <tbody>
-<tr><th>介護付き有料老人ホーム（契約型）</th><td data-label="根拠法">老人福祉法</td><td data-label="対象の目安">自立〜要介護 5 （施設による）</td><td data-label="介護の提供形態・介護保険の枠組み">施設スタッフが直接提供。特定施設入居者生活介護（定額）</td><td data-label="費用の目安（月額）">15 万〜 30 万円程度</td><td data-label="看取り・重度化対応">比較的対応しやすい施設が多い</td></tr>
-<tr><th>住宅型有料老人ホーム（契約型）</th><td data-label="根拠法">老人福祉法</td><td data-label="対象の目安">自立〜要介護度の高い人まで（施設による）</td><td data-label="介護の提供形態・介護保険の枠組み">外部の訪問介護等を個別契約。区分支給限度基準額の範囲内</td><td data-label="費用の目安（月額）">10 万〜 25 万円程度 + 介護費</td><td data-label="看取り・重度化対応">施設・事業者の体制次第</td></tr>
-<tr><th>サ高住・一般型（契約型）</th><td data-label="根拠法">高齢者住まい法</td><td data-label="対象の目安">自立〜軽度の要介護</td><td data-label="介護の提供形態・介護保険の枠組み">外部の訪問介護等を個別契約。区分支給限度基準額の範囲内</td><td data-label="費用の目安（月額）">10 万〜 20 万円程度 + 介護費</td><td data-label="看取り・重度化対応">一般型は難しい場合がある</td></tr>
-<tr><th>グループホーム（契約型・地域密着型）</th><td data-label="根拠法">介護保険法</td><td data-label="対象の目安">要支援 2 以上、かつ認知症の診断あり</td><td data-label="介護の提供形態・介護保険の枠組み">ユニット内でスタッフとの共同生活。地域密着型サービス（定額）</td><td data-label="費用の目安（月額）">15 万〜 20 万円程度</td><td data-label="看取り・重度化対応">身体介護が重度化すると住み替えの可能性</td></tr>
-<tr><th>介護老人保健施設（老健・判定型）</th><td data-label="根拠法">介護保険法</td><td data-label="対象の目安">要介護 1 以上。在宅復帰を目指す人</td><td data-label="介護の提供形態・介護保険の枠組み">リハビリ・看護・介護を一体で提供。施設サービス（定額）</td><td data-label="費用の目安（月額）">8 万〜 17 万円程度</td><td data-label="看取り・重度化対応">在宅復帰が前提で、長期入所向きではない</td></tr>
-<tr><th>介護老人福祉施設（特養・判定型）</th><td data-label="根拠法">老人福祉法（特別養護老人ホーム）・介護保険法（介護老人福祉施設）</td><td data-label="対象の目安">原則要介護 3 以上</td><td data-label="介護の提供形態・介護保険の枠組み">施設スタッフが直接提供。施設サービス（定額）</td><td data-label="費用の目安（月額）">6 万〜 15 万円程度</td><td data-label="看取り・重度化対応">終身利用が前提で、看取りに対応する施設も多い</td></tr>
-<tr><th>養護老人ホーム（判定型・措置）</th><td data-label="根拠法">老人福祉法</td><td data-label="対象の目安">65 歳以上で、環境上・経済的理由により在宅養護が困難な人</td><td data-label="介護の提供形態・介護保険の枠組み">外部サービス利用が基本（一般型）。介護サービス提供型は特定施設</td><td data-label="費用の目安（月額）">本人・扶養義務者の収入に応じて市町村が決定</td><td data-label="看取り・重度化対応">介護が重度化すると住み替えを検討する場合がある</td></tr>
+<tr><td data-label="類型">介護付き有料老人ホーム（契約型）</td><td data-label="根拠法">老人福祉法</td><td data-label="対象の目安">自立〜要介護 5 （施設による）</td><td data-label="介護の提供形態・介護保険の枠組み">施設職員が直接提供。特定施設入居者生活介護（定額）</td><td data-label="費用の目安（月額）">15 万〜 30 万円程度</td><td data-label="看取り・重度化対応">比較的対応しやすい施設が多い</td></tr>
+<tr><td data-label="類型">住宅型有料老人ホーム（契約型）</td><td data-label="根拠法">老人福祉法</td><td data-label="対象の目安">自立〜要介護度の高い人まで（施設による）</td><td data-label="介護の提供形態・介護保険の枠組み">外部の訪問介護等を個別契約。区分支給限度基準額の範囲内</td><td data-label="費用の目安（月額）">10 万〜 25 万円程度 + 介護費</td><td data-label="看取り・重度化対応">施設・事業者の体制次第</td></tr>
+<tr><td data-label="類型">サ高住・一般型（契約型）</td><td data-label="根拠法">高齢者住まい法</td><td data-label="対象の目安">自立〜軽度の要介護</td><td data-label="介護の提供形態・介護保険の枠組み">外部の訪問介護等を個別契約。区分支給限度基準額の範囲内</td><td data-label="費用の目安（月額）">10 万〜 20 万円程度 + 介護費</td><td data-label="看取り・重度化対応">一般型は難しい場合がある</td></tr>
+<tr><td data-label="類型">グループホーム（契約型・地域密着型）</td><td data-label="根拠法">介護保険法</td><td data-label="対象の目安">要支援 2 以上、かつ認知症の診断あり</td><td data-label="介護の提供形態・介護保険の枠組み">ユニット内でスタッフとの共同生活。地域密着型サービス（定額）</td><td data-label="費用の目安（月額）">15 万〜 20 万円程度</td><td data-label="看取り・重度化対応">身体介護が重度化すると住み替えの可能性</td></tr>
+<tr><td data-label="類型">介護老人保健施設（老健・判定型）</td><td data-label="根拠法">介護保険法</td><td data-label="対象の目安">要介護 1 以上。在宅復帰を目指す人</td><td data-label="介護の提供形態・介護保険の枠組み">リハビリ・看護・介護を一体で提供。施設サービス（定額）</td><td data-label="費用の目安（月額）">8 万〜 17 万円程度</td><td data-label="看取り・重度化対応">在宅復帰が前提で、長期入所向きではない</td></tr>
+<tr><td data-label="類型">介護老人福祉施設（特養・判定型）</td><td data-label="根拠法">老人福祉法（特別養護老人ホーム）・介護保険法（介護老人福祉施設）</td><td data-label="対象の目安">原則要介護 3 以上</td><td data-label="介護の提供形態・介護保険の枠組み">施設職員が直接提供。施設サービス（定額）</td><td data-label="費用の目安（月額）">6 万〜 15 万円程度</td><td data-label="看取り・重度化対応">終身利用が前提で、看取りに対応する施設も多い</td></tr>
+<tr><td data-label="類型">養護老人ホーム（判定型・措置）</td><td data-label="根拠法">老人福祉法</td><td data-label="対象の目安">65 歳以上で、環境上・経済的理由により在宅養護が困難な人</td><td data-label="介護の提供形態・介護保険の枠組み">外部サービス利用が基本（一般型）。介護サービス提供型は特定施設</td><td data-label="費用の目安（月額）">本人・扶養義務者の収入に応じて市町村が決定</td><td data-label="看取り・重度化対応">介護が重度化すると住み替えを検討する場合がある</td></tr>
 </tbody>
 </table>
-<div class="box">
-<strong>費用の数値の読み方</strong><br>
-費用の金額は、あくまで一般的な傾向を示す目安であり、地域差・施設差が大きい。契約前には必ず個々の施設の重要事項説明書等で確認してほしい。
-</div>
-</section>
+<div class="note">費用の金額は、あくまで一般的な傾向を示す目安であり、地域差・施設差が大きい。契約の前に、個々の施設の重要事項説明書などで確認してほしい。</div>
 
-<section id="sec10"><h2><span class="no">10</span> 選び方の視点</h2>
-<p>七類型の制度上の違いを踏まえたうえで、実際に選ぶ際に確認しておきたい視点を挙げる。</p>
+<h2 id="sec3">3. 契約型の四類型</h2>
+<p>契約型の四類型は、入居者が事業者と直接契約して入る。違いを生むのは、特定施設の指定の有無と、制度上の系統である。</p>
+<h3 id="sec3-1">3.1 介護付き有料老人ホーム</h3>
+<p>特定施設入居者生活介護の指定を受けた有料老人ホームで、「介護付き」を名乗れるのは、この指定を受けた施設だけである。施設の職員が介護を直接提供するので、介護サービスをどれだけ使っても、月々の介護保険の自己負担は原則一定になる。</p>
+<dl class="spec">
+<div><dt>対象</dt><dd>自立から要介護 5 まで、幅広く受け入れる施設が多い。要介護認定を受けた人だけを対象とする「介護専用型」もある。年齢は 60 歳以上または 65 歳以上とする施設が多い</dd></div>
+<div><dt>費用</dt><dd>入居一時金は数十万円から数千万円まで幅が大きい。月額は 15 万〜 30 万円程度が目安。指定サービスの範囲外のオプションには、別に費用がかかることがある</dd></div>
+<div><dt>看取り</dt><dd>終身での利用を前提とする施設が多い。看取りに対応する施設も増えているが、対応の有無と範囲は施設ごとに確認が要る</dd></div>
+<div><dt>向く人</dt><dd>将来の要介護度の上昇や医療的ケアの必要性を見据え、住み替えずに一つの住まいで暮らし続けたい人</dd></div>
+</dl>
+<h3 id="sec3-2">3.2 住宅型有料老人ホーム</h3>
+<p>同じ有料老人ホームでも、特定施設の指定を受けていない施設である。施設が提供するのは食事・清掃などの生活支援が中心で、介護は、入居者が外部の訪問介護・デイサービスなどと個別に契約して使う。同じ建物に系列の訪問介護事業所がある場合も多いが、制度上は在宅で介護保険を使うのと同じ枠組みである。</p>
+<dl class="spec">
+<div><dt>対象</dt><dd>自立から要介護度の高い人まで、施設によって受け入れ範囲が異なる</dd></div>
+<div><dt>費用</dt><dd>入居一時金の有無は施設による。月額は家賃・管理費・食費などで 10 万〜 25 万円程度が目安で、これに介護サービス費がかかる。必要な介護量が増えて上限額を超えると、超えた分は全額自己負担になり、総費用が読みにくくなる</dd></div>
+<div><dt>看取り</dt><dd>外部サービスでどこまで対応できるかに左右され、施設・事業者の体制で差が大きい。重度化した段階で住み替えを検討する場合もある</dd></div>
+<div><dt>向く人</dt><dd>比較的自立度が高く、必要なサービスを自分で選んで組み合わせたい人</dd></div>
+</dl>
+<h3 id="sec3-3">3.3 サービス付き高齢者向け住宅（サ高住）</h3>
+<p>老人福祉法上の施設ではなく、高齢者住まい法に基づいて都道府県などに登録された、賃貸住宅である。「安否確認」と「生活相談」の提供が登録の要件で、直接の身体介護は含まれない。多くは外部の訪問介護を個別に契約する「一般型」だが、特定施設の指定を受けた「介護型」も一部にある。契約の前に、どちらの型かを必ず確かめる。</p>
+<dl class="spec">
+<div><dt>対象</dt><dd>60 歳以上の人、または 60 歳未満で要介護・要支援認定を受けている人など。一般型は自立から軽度の要介護を想定している</dd></div>
+<div><dt>費用</dt><dd>高額な入居一時金を求めない施設が一般的で、敷金と、月々の家賃・共益費・サービス費が中心になる。月額は 10 万〜 20 万円程度が目安で、介護費は別にかかる</dd></div>
+<div><dt>看取り</dt><dd>一般型は賃貸借契約であることも関係し、重度化や医療的ケアの増加で住み続けにくくなる場合がある。介護型は、介護付き有料老人ホームに近い継続性を期待できることが多い</dd></div>
+<div><dt>向く人</dt><dd>比較的自立度が高い段階で、賃貸住宅に近い自由度を保ちながら、見守り付きの住まいに移りたい人</dd></div>
+</dl>
+<h3 id="sec3-4">3.4 グループホーム（認知症対応型共同生活介護）</h3>
+<p>介護保険法上の「地域密着型サービス」で、有料老人ホームやサ高住とは制度上の系統が異なる。原則として、施設がある市区町村に住民票がある人だけが使える。五人から九人程度の「ユニット」で、専門知識を持つスタッフとともに、家事を分担しながら共同生活を送る。家庭的な環境の中で、認知症の症状の進行を緩やかにすることを目的にしている。</p>
+<dl class="spec">
+<div><dt>対象</dt><dd>要支援 2 以上の認定を受け、かつ医師から認知症の診断を受けている人。身体的な自立度は比較的高いが、見守りや生活支援を要する人が主な対象である</dd></div>
+<div><dt>費用</dt><dd>要介護度に応じた定額の介護サービス費が設定される。入居時の一時金は施設により有無と金額が異なり、設定する場合は数十万円程度が目安。月額は 15 万〜 20 万円程度で、地域差が大きい</dd></div>
+<div><dt>看取り</dt><dd>認知症への対応が主目的のため、身体介護の必要性が大きく高まったり、医療的ケアが常時必要になったりすると、他の施設や医療機関への住み替えを検討する場合がある</dd></div>
+<div><dt>向く人</dt><dd>認知症の診断を受けていて、身体的にはある程度動けるが、一人暮らしや見守りのない環境に不安がある人</dd></div>
+</dl>
+
+<h2 id="sec4">4. 判定型の三施設</h2>
+<p>判定型の三施設は、入所の要件を満たすかどうかの判定を経て入る。契約型と違い、費用に公費が投じられ、所得に応じた負担軽減がある。目的がそれぞれ異なる点が、選ぶときの軸になる。</p>
+<h3 id="sec4-1">4.1 介護老人保健施設（老健）</h3>
+<p>介護保険法に基づく「介護保険施設」の一つで、病院での治療を終えた人が自宅へ戻るまでの中間に位置づけられる。終の棲家ではなく、在宅復帰を目指すリハビリ施設として設計されている。在宅復帰が見込めるかどうかを、施設側が定期的に判定する。</p>
+<dl class="spec">
+<div><dt>対象</dt><dd>要介護 1 以上で、病状が安定し、入院治療までは要らないが、リハビリや看護・介護を要する人。要支援の人や自立の人は使えない</dd></div>
+<div><dt>サービス</dt><dd>医師・看護職員・介護職員に加え、理学療法士・作業療法士・言語聴覚士が配置され、機能回復訓練が日常的に行われる。医療と介護の両方を一つの施設で受けられる点が特徴である</dd></div>
+<div><dt>費用</dt><dd>定額の介護サービス費の 1 〜 3 割（所得による）を負担し、居住費・食費・日常生活費が加わる。入所一時金は要らない。月額は多床室で 8 万円前後から、個室やユニット型で 12 万〜 17 万円程度</dd></div>
+<div><dt>看取り</dt><dd>入所期間は原則として数か月単位で見直され、長期入所を前提としない。看取りに対応する老健もあるが、最期まで暮らす場としては、特養への移行を検討することが多い</dd></div>
+<div><dt>向く人</dt><dd>入院後に体力や生活機能が落ち、すぐには自宅へ戻れないが、リハビリを受ければ在宅生活に戻れる見込みがある人</dd></div>
+</dl>
+<h3 id="sec4-2">4.2 介護老人福祉施設（特別養護老人ホーム）</h3>
+<p>老人福祉法上の「特別養護老人ホーム」で、介護保険法上は「介護老人福祉施設」にあたる（二つの名前の関係は 1.3 を参照）。老健と並ぶ介護保険施設だが、役割は在宅復帰ではなく、常に介護を必要とする人の終身の生活の場である。</p>
+<dl class="spec">
+<div><dt>対象</dt><dd>原則として、要介護 3 以上の認定を受けた 65 歳以上の人。要介護 1 ・ 2 の人は、認知症や知的障害・精神障害で日常生活に支障がある、虐待などで在宅生活が困難である、といったやむを得ない事情がある場合に限り、特例で入所できる</dd></div>
+<div><dt>サービス</dt><dd>介護職員が食事・入浴・排泄などの介護を提供し、看護職員が健康管理にあたる。医師は常勤でないことも多く、医療面の体制は老健より薄い。個室中心のユニット型と、多床室中心の従来型がある</dd></div>
+<div><dt>費用</dt><dd>定額の施設サービス費の 1 〜 3 割（所得による）に、居住費・食費が加わる。低所得の人には、居住費・食費を軽くする補足給付がある。入所一時金は要らない。月額は多床室で 6 万〜 10 万円程度、ユニット型個室で 10 万〜 15 万円程度</dd></div>
+<div><dt>看取り</dt><dd>終身での利用を前提とし、要介護度が上がっても住み続けられる。看取りに対応する特養も多い。ただし、医療的ケアが増えて長期入院になると、退所になることがある</dd></div>
+<div><dt>向く人</dt><dd>在宅での生活が難しい重い要介護状態の人で、費用を抑えながら最期まで暮らせる場を探している人。入所希望者が多く、待機が生じる地域がある点には留意したい</dd></div>
+</dl>
+<h3 id="sec4-3">4.3 養護老人ホーム</h3>
+<p>老人福祉法に基づく「老人福祉施設」の一つで、介護保険施設ではない。入所は、利用者と施設の契約ではなく、市町村が必要性を判定して決める「措置」による。介護の必要度ではなく、住環境や経済状況といった生活上の困窮が基準になる点が、ほかの六類型と決定的に異なる。</p>
+<dl class="spec">
+<div><dt>対象</dt><dd>65 歳以上で、環境上の理由と経済的な理由により、自宅で養護を受けることが困難な人。必ずしも要介護である必要はなく、身体的には自立に近い人が多い</dd></div>
+<div><dt>サービス</dt><dd>食事の提供、健康管理、社会復帰のための相談・援助、生活指導が中心で、介護そのものは主な目的ではない。介護が必要になれば、本人が外部の介護サービスを使う「一般型」が基本で、施設が提供する「介護サービス提供型」（特定施設の指定を受けたもの）を設ける施設もある</dd></div>
+<div><dt>費用</dt><dd>本人と扶養義務者の収入に応じて、市町村が決める。生活保護を受けている人は負担が生じないこともあり、一律の相場を示しにくい。入所一時金は要らない</dd></div>
+<div><dt>看取り</dt><dd>介護が主目的でないため、要介護度が重くなると、特養などへの住み替えを検討する場合がある。施設による差が大きい</dd></div>
+<div><dt>向く人</dt><dd>住まいを失った、家族の支援が得られない、費用の負担が重く契約型の住まいに入れないなど、生活上の困窮から自宅で暮らし続けられない人。入口は、市町村の福祉窓口への相談になる</dd></div>
+</dl>
+
+<h2 id="sec5">5. 住まいの手前にある問題――頼れる親族がいない人の入院・入所・死後</h2>
+<p>ここまでの七類型は、どこで暮らすかの違いだった。だが、住まいを決めても解決しない問題が残る。入院や入所の手続きを誰が支えるか、亡くなったあとの葬儀・納骨・家財の処分・各種の清算を誰が担うか、という問題である。</p>
+<h3 id="sec5-1">5.1 家族が担ってきたことを、誰が担うのか</h3>
+<p>静岡市は、高齢化率の上昇、高齢者のひとり暮らし世帯の増加、 50 歳時の未婚率の上昇により、高齢者に「もしも」のことがあったとき、従来の家族・親族頼みの対応では困難なことが多くなっている、と述べている。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 同市が 2022 年度に行った調査では、孤立死を「身近な問題だと思う」「やや身近な問題だと思う」と答えた人が 61.5% あり、認知症などで判断能力が不十分になった場合に備えた意思表示を「必要性は感じるが、決めていない」と答えた人が 46.7% あった。</p>
+<p>この空白を埋める民間のサービスが、「高齢者等終身サポート事業」である。国のガイドラインは、病院への入院や介護施設への入所の際の手続き支援、日用品の買い物などの日常生活の支援、葬儀や死後の財産処分などの死後事務を、家族・親族に代わって支援する事業と説明している。 <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 七類型の施設に入っても、入居契約が死後の対応まで引き受けるとは限らない。含まれるかどうかは施設ごとに異なるので、契約書で確かめる必要がある。</p>
+<h3 id="sec5-2">5.2 民間の終身サポート事業と、その不安</h3>
+<p>日本総合研究所のコラムは、この事業の実施に許認可や届出は要らず、誰でも始められるため、信頼できる事業者を見分けにくいと指摘している。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 利用者の不安は主に二つある。急な入院費や死後の清算のために預けた預託金が保全されるか。契約どおりに葬儀などが行われるか。</p>
+<p>事業者の側にも課題がある。契約から利用者の死亡まで長い期間がかかり、数十年先まで事業者の安定性を保証するのは難しい。預託金や利用料を低く抑え、利用者の死後の寄付・遺贈に頼って経営する事業者もあるが、その収入は時期も金額も予測しにくい。利用者から全財産の寄付を約束されている場合は、利用者の生活の質より、事業者の取り分を増やす方向の支援になる危険も指摘されている。</p>
+<div class="caution"><p>契約から亡くなるまでは、長い期間がある。その間に事業者が倒産し、本人が認知症などで判断能力を失っていると、預託金の回収も、代わりの事業者探しも難しくなる。</p></div>
+<h3 id="sec5-3">5.3 国のガイドライン</h3>
+<p>こうした利用者保護の必要から、内閣官房と関係省庁は、 2024 年 6 月に「高齢者等終身サポート事業者ガイドライン」を示した。 <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 対象は、本人との契約に基づき、身元保証等サービスと死後事務サービスを継続的に提供する事業者である。法律ではなく、事業者が守るべき法律上の規定と、留意すべき事項を整理したものである。</p>
 <ul>
-<li><strong>現在の要介護度と、将来の変化への備え</strong>――今の状態だけでなく、要介護度が上がった場合にも同じ住まいに住み続けられるかを確認する。</li>
-<li><strong>認知症の診断の有無</strong>――認知症の診断がある場合、グループホームが選択肢に入るかどうかで比較の対象が変わる。</li>
-<li><strong>費用の見通しやすさ</strong>――毎月の費用を一定に近い形で見通したいのか、必要なサービスを都度選ぶ方が合うのかで、特定施設の指定の有無が判断材料になる。</li>
-<li><strong>住み替えへの許容度</strong>――将来の住み替えを前提にするか、できる限り同じ場所で暮らし続けたいかによって、向いている類型が変わる。</li>
-<li><strong>希望する立地・住民票の所在</strong>――グループホームは住民票がある市区町村の施設に限られる点など、立地の制約も確認しておく。</li>
-<li><strong>入口の違いと費用の負担力</strong>――契約型の住まいは入居者が自由に選んで契約できるが費用は高めになりやすい。判定型の施設は費用を抑えやすい反面、要介護度や困窮の程度といった入所要件があり、待機が生じることもある。</li>
-<li><strong>目的が「暮らし続ける」か「戻る」か</strong>――老健は在宅復帰を目指す中間施設であり、特養は終身の生活の場である。同じ「介護施設」でも、目的が異なる。</li>
+<li><strong>契約の前</strong><br>契約書と重要事項説明書を交付して、契約内容を説明する。寄附・遺贈を契約の条件にすることは避ける。遺贈を受ける場合も、公正証書遺言によることが望ましい。</li>
+<li><strong>契約の履行</strong><br>提供したサービスの時期・内容・費用の記録を作り、定期的に利用者へ報告する。前払金（預託金）を預かる場合は、運営資金などと明確に区分して管理することが望ましい。</li>
+<li><strong>判断能力が落ちたとき</strong><br>成年後見制度の活用が必要になる。後見人が選ばれたあとは、契約内容を後見人とよく相談することが望ましい。</li>
+<li><strong>事業者の体制</strong><br>情報の開示、個人情報の適正な取扱い、事業継続のための対策、相談窓口の設置に取り組む。</li>
 </ul>
-</section>
+<p>ガイドラインは、今後の課題として、事業者の認定制度などの検討にも触れている。 <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 本稿の調査では、事業者が守っているかどうかを確かめる国の認定の仕組みは確認できなかった。その役割を、自治体が先に担い始めたのが、次章の静岡市の取組みである。</p>
 
-<section id="sec11"><h2><span class="no">11</span> まとめ</h2>
-<p>七類型の違いは、根拠となる法律、入居・入所を決める仕組み（契約か、入所判定か、措置か）、特定施設入居者生活介護の指定の有無、そして介護保険の使い方という四つの軸に整理できる。契約型の四類型のうち、介護付き有料老人ホームは施設が包括的に介護を提供し費用が見通しやすい一方、住宅型有料老人ホームとサ高住（一般型）は外部サービスを組み合わせる分、自由度と引き換えに費用の予測がやや難しくなる。グループホームは認知症への対応に特化した、少人数の共同生活という独自の位置づけを持つ。</p>
-<p>判定型の三施設は、それぞれ目的が異なる。老健は在宅復帰を目指すリハビリの場、特養は重い要介護状態の人の終身の生活の場、養護老人ホームは生活上の困窮により自宅で暮らせない人の受け皿である。なお、特養が「介護老人福祉施設」とも呼ばれるのは、同じ施設を老人福祉法と介護保険法がそれぞれの名前で呼んでいるためであり、別の施設ではない。</p>
-<p>「契約型」と「判定型」は、入口の仕組みによる区分であり、運営主体による区分ではない。特養と老健の運営主体は主に社会福祉法人と医療法人で、法的には民間法人である。世間で使われる「民間施設」「公的施設」という呼び分けは、この点で制度上の正確さを欠くことに注意してほしい。</p>
-<p>どの類型が向いているかは、現在の状態だけでなく将来の変化への備え方によっても変わるため、比較表と選び方の視点を手がかりに、複数の施設を実際に見学しながら検討することを勧める。</p>
+<h2 id="sec6">6. 静岡市「エンディングプラン・サポート」</h2>
+<p>静岡市の「エンディングプラン・サポート」は、頼れる親族がいない高齢者が民間の事業者と死後事務の契約を結ぶとき、市が相談を受け、契約から死後事務の完了までを見届ける仕組みである。</p>
+<h3 id="sec6-1">6.1 位置づけと開始の経緯</h3>
+<p>この取組みは、静岡市が 2024 年 10 月に発表した「未来のあんしんに向けた取組」の三つ目の柱である。一つ目は、緊急連絡先や遺言書の保管場所などを市にあらかじめ登録し、本人が意思表示できなくなったときや亡くなったときに、医療機関や警察などの照会に市が答える「終活情報の登録・伝達」（ 2025 年 4 月開始。 2025 年 9 月末の登録は 14 件）。二つ目は、現金や不動産の生前寄附・遺贈寄附を、子育て・教育や文化財の保存に生かす取組み（ 2024 年 12 月開始）である。三つ目のエンディングプラン・サポートは、 2025 年 10 月 21 日の市長定例記者会見で発表され、 11 月 4 日に相談受付が始まった。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
+<p>市は、これに先立って、市の基準を満たす事業者を認める「終活支援優良事業者認証事業」を行っていた。事業者が市に申請し、審査を受けて認証される。認証を受けるには、生前事務と死後事務のサービスを 1 年以上続け、 12 か月分の決算が確定していること、市内に本店・支店・営業所などがあることが要る。審査の項目は、組織運営の健全性、契約の締結・履行（判断能力が落ちたときの扱いを含む）、サービスの管理の三つである。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 市の資料によれば、終活支援を進める中で、「頼れる親族がいないが、どうしよう」「契約したとおりの対応がなされるのだろうか」という声が市に寄せられた。その不安に応えるため、「市の関与をさらに一歩進めた」のがエンディングプラン・サポートである。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup></p>
+<h3 id="sec6-2">6.2 仕組みと利用の流れ</h3>
+<p>登場するのは四者である。利用者、市が認証した優良事業者、市が 100% 出資する一般財団法人「静岡市土地等利活用推進公社」（以下、公社）、そして市である。利用の流れは次のとおりで、市は、事業者および公社と、それぞれ連携協定を結んで事業を進める。 <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup></p>
+<figure>
+<svg viewBox="0 0 480 384" role="img" aria-label="利用者は優良事業者と契約を結び、預託金を公社に預ける。亡くなったあと、公社が預託金を事業者に渡す。市は全体を見届ける。">
+<defs><marker id="ar" markerUnits="userSpaceOnUse" markerWidth="18" markerHeight="18" refX="16" refY="9" orient="auto"><path class="f-ink" d="M0 0 L18 9 L0 18 z"/></marker></defs>
+<rect class="f-gray s-ink" x="20" y="40" width="170" height="90" rx="12"/>
+<text class="t" x="105" y="93" text-anchor="middle">利用者</text>
+<rect class="f-navy s-ink" x="290" y="40" width="170" height="90" rx="12"/>
+<text class="t white" x="375" y="93" text-anchor="middle">優良事業者</text>
+<path class="nf s-ink" d="M192 85 L286 85" marker-end="url(#ar)"/>
+<text class="t" x="241" y="72" text-anchor="middle">契約</text>
+<rect class="f-gray s-ink" x="20" y="190" width="170" height="90" rx="12"/>
+<text class="t" x="105" y="243" text-anchor="middle">公社</text>
+<path class="nf s-ink" d="M105 132 L105 186" marker-end="url(#ar)"/>
+<text class="t" x="124" y="166">預託</text>
+<path class="nf s-ink" d="M192 235 L375 235 L375 134" marker-end="url(#ar)"/>
+<text class="t" x="283" y="222" text-anchor="middle">死後に渡す</text>
+<rect class="f-yellow s-ink" x="20" y="304" width="440" height="64" rx="12"/>
+<text class="t" x="240" y="344" text-anchor="middle">市が全体を見届ける</text>
+</svg>
+<figcaption><span class="cap">図 1 : エンディングプラン・サポートの四者</span>利用者は、優良事業者と公正証書で死後事務委任契約を結び、必要な経費を公社に預ける。亡くなったあと、公社が預託金を事業者に渡し、事業者が死後事務を行う。市は、相談から死後事務の完了までを見届ける。</figcaption>
+</figure>
+<ol class="steps">
+<li><strong>市に相談する</strong>利用を希望する人は、市の担当課（安心感がある温かい社会推進課）に相談する。市は、優良事業者を紹介し、契約に向けた話し合いを支える。</li>
+<li><strong>公正証書で契約する</strong>利用者と優良事業者が、公証人が作る公正証書で、死後事務委任契約を結ぶ。死後事務委任契約とは、葬儀や納骨、家財の処分、電気・ガス料金や施設・入院費用の清算などの手続きを、亡くなったあとに第三者に任せる契約である。利用者は、必要に応じて遺言書も作る。</li>
+<li><strong>預託金を公社に預ける</strong>利用者は、契約の履行に要る経費を、公社に預ける。公社が預託金を管理する。預託金は、本人の思いや生活状況を確認したうえで、足りなくならないよう必要な経費を算出する。余った場合の扱いも、あらかじめ本人の考えを確認しておく。</li>
+<li><strong>亡くなったあと、事業者が預託金を受け取る</strong>優良事業者が、公社から預託金を受け取る。</li>
+<li class="goal"><strong>死後事務が実施される</strong>事業者が契約に基づいて事務を行い、市がその実施を確認する。</li>
+</ol>
+<p>利用者が契約のあとに判断能力を失ったときは、市が成年後見制度の利用など、関係機関の支援につなぐ。また、家の行く末も終活では避けて通れないため、市は公社とともに、住まいや空き家の悩みを聞き、活用方法の提案や売却・賃借の支援を行うとしている。 <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup></p>
+<h3 id="sec6-3">6.3 対象と費用</h3>
+<dl class="spec">
+<div><dt>対象</dt><dd>静岡市内に住所があり、原則 65 歳以上で、頼れる親族がいない人</dd></div>
+<div><dt>市のサポート</dt><dd>無料（相談、事業者の紹介、契約に向けた話し合いの支援、見届け）</dd></div>
+<div class="hot"><dt>自己負担</dt><dd>預託金など、死後事務委任契約に伴う費用は、利用者の自己負担。金額は契約内容によって異なり、上限はない</dd></div>
+<div><dt>預託金の期間</dt><dd>「もしも」のときまで、何年でも預かる</dd></div>
+<div><dt>認証事業者</dt><dd>開始時点（ 2025 年 10 月 21 日）で二者。社会福祉法人まごころと、合同会社 Welbie （ウェルビー）</dd></div>
+</dl>
+<p>この数字は、すべて市の会見資料による。 <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 預託金の目安額や、事業者に払う費用の例は、資料に示されていない。</p>
+<h3 id="sec6-4">6.4 強みと限界</h3>
+<p>公表資料から読み取れる強みは三つある。以下は、資料の記述と国のガイドラインを照らした、筆者の整理である。</p>
+<ul>
+<li><strong>預託金が、事業者の手元にない</strong><br>預託金を市の外郭団体が管理するので、事業者の経営と預託金が切り離される。ガイドラインが望ましいとする、運営資金との区分管理に沿った設計である。</li>
+<li><strong>契約内容が、本人の意思に基づくと確かめられる</strong><br>契約書を公正証書で作る。契約の相手は、市の基準を満たして認証された事業者である。</li>
+<li><strong>市が、契約の行方を見届ける</strong><br>民間事業者との契約で不安になりがちな、「本当に契約どおりに実行されるのか」という点に、第三者の目が入る。</li>
+</ul>
+<p>一方で、限界も読み取れる。認証事業者が二者だけで、選択肢は多くない。対象は、市内に住所がある人で、頼れる親族がいない人に限られる。費用の上限がなく、目安も示されないので、総額の見通しは、事業者との個別の相談に委ねられる。そして、資料が示しているのは死後事務を軸にした仕組みであり、生前の入院・入所時の保証や、日常生活の支援は、この資料からは読み取れない。開始から日が浅く、利用実績も確認できなかった。</p>
+<div class="point"><p>この仕組みが確かめるのは、契約どおりに死後事務が行われることである。住まいの確保や、介護の提供を代わりに行うものではない。第 1 〜 4 章の七類型の選択とは、別に考える必要がある。</p></div>
 
-<p class="endnote">本記事の内容は執筆時点（ 2026 年 10 月）の制度に基づく。介護保険制度や関連法令は改正される可能性があるため、実際の利用にあたっては、厚生労働省や自治体が公開する最新の情報、および各施設への確認を行ってほしい。</p>
-</section>
+<h2 id="sec7">7. ほかの自治体の取組み</h2>
+<p>同種の取組みは、静岡市が最初ではない。確認できたのは、横須賀市、岡崎市、北九州市の三市である。ほかにも行う自治体はあるとみられるが、全国の一覧は確認していない。</p>
+<h3 id="sec7-1">7.1 横須賀市</h3>
+<p>神奈川県横須賀市は、 2015 年 7 月から、名称が同じ「エンディングプラン・サポート事業」を行っている。対象は、頼れる親族がいない人で、所得などの制限がある。本人が生前に葬儀会社と死後事務委任契約を結び、費用を事業者に前納する。事業者は、訪問などで安否を確認し、亡くなったあとは、本人の希望どおりに火葬から納骨までを行う。市は、それを確認する。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
+<p>横須賀市は、もう一つ、「わたしの終活登録」（ 2018 年度開始）も行っている。市民なら誰でも無料で、緊急連絡先、かかりつけ医、葬儀の生前契約先、遺言書の保管場所、墓の所在地などを登録でき、本人が倒れたときや亡くなったときに、市が病院・警察・消防などの問い合わせに答える。 2024 年 3 月末の累計登録者は 826 人だった。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup> 静岡市の「終活情報の登録・伝達」と、ほぼ同じ発想の取組みである。</p>
+<h3 id="sec7-2">7.2 岡崎市</h3>
+<p>愛知県岡崎市は、 2024 年 7 月に「終活応援事業」を始めた。公募で選んだ五者の事業者と 2024 年 4 月に協定を結んでいる。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 市民が協定事業者と死後事務の契約を結び、市に登録すると、市が、亡くなったときに契約事業者へ連絡し、事業者から契約の履行の報告を受ける。相談の窓口は、市が委託する成年後見支援センターである。利用料と預託金は、本人が負担する。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
+<p>2024 年 10 月時点の資料では、過去 1 年の新規相談が 18 人、死後事務契約の情報の登録が 0 人だった。課題としては、利用者が増えたときの採算性と人員のほか、民間事業者の情報を提供することが「民業圧迫」や「事業者の斡旋」と受け取られるおそれ、事業者を監督する機関の明確化への要望が挙げられている。 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 制度を作っても、利用が立ち上がるには時間がかかることを示す例である。</p>
+<h3 id="sec7-3">7.3 北九州市</h3>
+<p>北九州市は、社会福祉協議会が 2025 年 11 月 5 日に、常設の相談窓口「北九州市終活あんしんセンター」を開いた。市は補助金を出している。窓口は、月 4 回から、月曜〜金曜の 10 時〜 16 時に広がった。同時に計画されたのが、国のガイドラインの遵守などを条件に事業者を登録して紹介する事業、死後事務の支援、身寄りのない人や資力のない人への低額な月額保険料による死後事務支援で、市の 2025 年 10 月の資料では、順次開始の予定とされている。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></p>
+<h3 id="sec7-4">7.4 三つの型に整理する</h3>
+<table class="cards">
+<caption>確認できた四市の取組み</caption>
+<thead><tr><th>自治体</th><th>取組み</th><th>開始</th><th>預託金・費用</th><th>市の役割</th></tr></thead>
+<tbody>
+<tr><td data-label="自治体">静岡市</td><td data-label="取組み">エンディングプラン・サポート</td><td data-label="開始">2025 年 11 月（相談受付）</td><td data-label="預託金・費用">預託金は市の外郭団体の公社が管理。市の相談は無料</td><td data-label="市の役割">優良事業者を紹介し、契約から死後事務の完了まで見届ける</td></tr>
+<tr><td data-label="自治体">横須賀市</td><td data-label="取組み">エンディングプラン・サポート事業</td><td data-label="開始">2015 年 7 月</td><td data-label="預託金・費用">本人が葬儀会社に前納する</td><td data-label="市の役割">契約の履行を確認する。対象は頼れる親族がいない人で、所得などの制限がある</td></tr>
+<tr><td data-label="自治体">岡崎市</td><td data-label="取組み">終活応援事業</td><td data-label="開始">2024 年 7 月</td><td data-label="預託金・費用">利用料・預託金は本人負担</td><td data-label="市の役割">協定事業者との契約を登録し、死亡時に事業者へ連絡して、履行報告を受ける</td></tr>
+<tr><td data-label="自治体">北九州市</td><td data-label="取組み">終活あんしんセンター（社会福祉協議会が運営）</td><td data-label="開始">2025 年 11 月 5 日（開設）</td><td data-label="預託金・費用">低額な月額保険料による死後事務支援を計画（順次開始の予定）</td><td data-label="市の役割">補助金を出す。事業者は、国のガイドラインの遵守を条件に登録・紹介する</td></tr>
+</tbody>
+</table>
+<p>この四市は、市の関わり方で、三つの型に整理できる。以下は筆者の整理である。</p>
+<ul>
+<li><strong>見届け型</strong><br>市が事業者と協定を結んだり、事業者を認証したりして、契約の履行を確認する。静岡市、横須賀市、岡崎市がこれにあたる。違いは、お金の置き場にある。横須賀市は事業者に前納し、静岡市は市の外郭団体に預ける。岡崎市は本人負担と書かれているだけで、預け先は資料からは読み取れない。</li>
+<li><strong>窓口・紹介型</strong><br>相談窓口を整え、基準を満たした事業者を登録して紹介する。北九州市がこれにあたる。市が契約の履行まで見届けるかどうかは、資料からは読み取れない。</li>
+<li><strong>事前登録型</strong><br>本人の情報を市に登録しておき、本人が意思表示できないときに、医療機関などの照会に市が答える。静岡市の「終活情報の登録・伝達」と、横須賀市の「わたしの終活登録」がこれにあたる。見届け型と組み合わせて使える。</li>
+</ul>
+<p>どの型も、市が死後事務そのものを行うのではない。市の役割は、情報の提供、基準の設定、確認である。事業者の継続性という根本の課題を、市がどこまで受け止めるかは、自治体によって差がある。</p>
+
+<h2 id="sec8">8. 選び方の視点</h2>
+<h3 id="sec8-1">8.1 住まいを選ぶ視点</h3>
+<p>七類型の制度上の違いを踏まえて、実際に選ぶときに確かめておきたい視点を挙げる。</p>
+<ul>
+<li><strong>現在の要介護度と、将来の変化への備え</strong><br>今の状態だけでなく、要介護度が上がったときにも、同じ住まいに住み続けられるかを確かめる。</li>
+<li><strong>認知症の診断の有無</strong><br>診断があれば、グループホームが選択肢に入る。</li>
+<li><strong>費用の見通しやすさ</strong><br>毎月の費用を一定に近い形で見通したいのか、必要なサービスを都度選びたいのかで、特定施設の指定の有無が判断材料になる。</li>
+<li><strong>住み替えへの許容度</strong><br>将来の住み替えを前提にするか、同じ場所で暮らし続けたいかで、向く類型が変わる。</li>
+<li><strong>立地と住民票の所在</strong><br>グループホームは、住民票がある市区町村の施設に限られる。</li>
+<li><strong>入口の違いと費用の負担力</strong><br>契約型は自由に選んで契約できるが、費用は高めになりやすい。判定型は費用を抑えやすい反面、入所要件があり、待機が生じることもある。</li>
+<li><strong>目的が「暮らし続ける」か「戻る」か</strong><br>老健は在宅復帰を目指す中間施設で、特養は終身の生活の場である。同じ「介護施設」でも、目的が異なる。</li>
+</ul>
+<h3 id="sec8-2">8.2 身寄りがない場合の確認事項</h3>
+<p>頼れる親族がいない場合は、住まいの選択に加えて、入院・入所の手続きと、死後の対応を誰に任せるかを決めておく必要がある。次の項目は、国のガイドラインと、自治体の仕組みを踏まえて、契約の前に確かめたい点を並べたものである。</p>
+<div class="checklist">
+<span class="cl-title">契約の前の確認事項</span>
+<ul>
+<li><input type="checkbox" id="c1"><label for="c1">住んでいる市区町村に、死後事務の見届けや、事業者の認証・登録・紹介の制度があるか、市の窓口か地域包括支援センターで確かめた</label></li>
+<li><input type="checkbox" id="c2"><label for="c2">契約しようとする事業者が、市の認証・登録・協定の対象かを確かめた</label></li>
+<li><input type="checkbox" id="c3"><label for="c3">契約書と重要事項説明書の交付を受け、説明を聞いた</label></li>
+<li><input type="checkbox" id="c4"><label for="c4">預託金の保管先と、事業者の運営資金と区分して管理されているかを確かめた</label></li>
+<li><input type="checkbox" id="c5"><label for="c5">預託金が不足したとき、余ったときの扱いが、契約に書かれている</label></li>
+<li><input type="checkbox" id="c6"><label for="c6">寄附や遺贈が、契約の条件になっていない</label></li>
+<li><input type="checkbox" id="c7"><label for="c7">入会金・預託金・事務手数料などの総額の見積もりを、項目を分けて出してもらった</label></li>
+<li><input type="checkbox" id="c8"><label for="c8">判断能力が落ちたときの対応（成年後見制度など）を確かめた</label></li>
+<li><input type="checkbox" id="c9"><label for="c9">契約を解除するときの手順を確かめた</label></li>
+</ul>
+<p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されない。印刷や手書きメモと併用すること。</p>
 </div>
+
+<h2 id="sec9">9. まとめ</h2>
+<p>七類型の違いは、根拠となる法律、入る仕組み（契約か、入所判定か、措置か）、特定施設の指定の有無、介護保険の使い方という、四つの軸に整理できる。契約型の四類型のうち、介護付き有料老人ホームは、施設が包括的に介護を提供し、費用が見通しやすい。住宅型有料老人ホームとサ高住（一般型）は、外部のサービスを組み合わせる分、自由度と引き換えに費用が読みにくい。グループホームは、認知症に特化した少人数の共同生活である。判定型の三施設は、目的が異なる。老健は在宅復帰を目指すリハビリの場、特養は重い要介護状態の人の終身の生活の場、養護老人ホームは生活上の困窮で自宅で暮らせない人の受け皿である。</p>
+<p>ただし、住まいを決めるだけでは、頼れる親族がいない人の不安は解けない。入院・入所の手続きと、亡くなったあとの葬儀・家財処分・清算を、誰に任せるかが残る。民間の終身サポート事業は、その受け皿になるが、事業は誰でも始められ、預託金の保全と事業者の継続性に不安がある。国のガイドラインは、預託金の区分管理などを求めているが、事業者が守っているかを確かめる国の認定の仕組みは、本稿の調査では確認できなかった。</p>
+<p>静岡市のエンディングプラン・サポートは、その不安に、自治体が認証・預託金の管理・見届けで応えようとする試みである。横須賀市は 2015 年から、岡崎市は 2024 年から、北九州市は 2025 年から、それぞれの形で取り組んでいる。ただし、どの取組みも、開始からの日が浅いか、利用実績が確認できていない。住んでいる自治体に同様の制度があるかは、市の窓口で確かめたい。どの類型が向くかは、現在の状態だけでなく、将来の変化と、頼れる人の有無によっても変わる。複数の施設を実際に見学し、契約書を読んで、検討することを勧める。</p>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> 静岡市「 2025 年 10 月 21 日市長定例記者会見 資料 1 　未来のあんしんに向けた取組『エンディングプラン・サポート』の開始」、 2025 年 10 月 21 日。 <a href="https://www.city.shizuoka.lg.jp/documents/56916/kaiken1021-1.pdf">静岡市の会見資料 (PDF)</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> 内閣官房、内閣府、金融庁、消費者庁ほか関係省庁「高齢者等終身サポート事業者ガイドライン」、 2024 年 6 月。 <a href="https://www.mhlw.go.jp/content/001262636.pdf">ガイドライン本文 (PDF)</a> <a href="https://www.mhlw.go.jp/content/001262635.pdf">主なポイント (PDF)</a></li>
+<li id="ref-3"><a href="#fnref-3-1">^</a> 日本総合研究所「急がれる高齢者等終身サポート事業者の課題への対応」、 Economist Column No.2025-056 、 2025 年 11 月 6 日。 <a href="https://www.jri.co.jp/page.jsp?id=112412">日本総合研究所のコラム</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> 北九州市保健福祉局長寿社会対策課「終活支援における静岡市と北九州市の取組みについて」、 2025 年 10 月 16 日。 <a href="https://www.city.kitakyushu.lg.jp/files/001166188.pdf">北九州市の資料 (PDF)</a></li>
+<li id="ref-5">^ <sup><a href="#fnref-5-1">a</a></sup> <sup><a href="#fnref-5-2">b</a></sup> 内閣府『令和 6 年版高齢社会白書（全体版）』トピックス 事例 4 「神奈川県横須賀市」。 <a href="https://www8.cao.go.jp/kourei/whitepaper/w-2024/html/zenbun/s1_3_topics4.html">内閣府の高齢社会白書</a></li>
+<li id="ref-6"><a href="#fnref-6-1">^</a> 岡崎市ふくし相談課「岡崎市終活応援事業の実践」、 2024 年 10 月 29 日の会議資料 3 （厚生労働省が掲載）。 <a href="https://www.mhlw.go.jp/content/12000000/001321500.pdf">岡崎市の発表資料 (PDF)</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> 厚生労働省掲載「愛知県岡崎市『終活応援事業』（取組開始：令和 6 年度〜）」、令和 6 年度までの取組状況の資料。 <a href="https://www.mhlw.go.jp/content/001474407.pdf">厚生労働省掲載の資料 (PDF)</a></li>
+</ol>
+<p class="endnote">本稿の内容は、 2026 年 11 月に確認できた公開資料に基づく。静岡市の制度は開始から日が浅く、各自治体の事業の内容・費用・実績は変わりうる。利用を検討するときは、各自治体の最新の案内と、事業者の契約書・重要事項説明書で確認してほしい。</p>
+</div>
+</main>
 </body>
 </html>
