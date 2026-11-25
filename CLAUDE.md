@@ -1,6 +1,6 @@
 # reading リポジトリの作業指示
 
-「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 73 本。うち 70 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
+「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 74 本。うち 71 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
 
 ## HTML 文書の意匠
 HTML 文書の新規作成には、必ずローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。既存の wafu 意匠の文書（ 72 本）の意匠修正・検証には、これまでどおり `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。 `wafu-html-style` は廃止予定で、新しい文書には使わない。例外は、下の `megumino.html` と `color-palette.html` である。

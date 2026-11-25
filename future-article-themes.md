@@ -1,7 +1,7 @@
 # 「作成文書」次の文書テーマ
 
 **文書名** : `future-article-themes.md`
-**基準日** : 2026 年 11 月 21 日（前回は 11 月 14 日。この間に文書が 22 本増え、 1 本が削除され、 1 本が掲載対象外になり、 portal の節が組み替わった）。なお、基準日の後に `solo-income-with-ai-japan.html` を第 5 節へ、 `iran-dprk-human-rights-votes.html` を第 2 節へ加えた（ 2026 年 11 月 22 日と 23 日）。以下の本数と集計は、基準日時点のままである
+**基準日** : 2026 年 11 月 21 日（前回は 11 月 14 日。この間に文書が 22 本増え、 1 本が削除され、 1 本が掲載対象外になり、 portal の節が組み替わった）。なお、基準日の後に `solo-income-with-ai-japan.html` を第 5 節へ、 `iran-dprk-human-rights-votes.html` を第 2 節へ、 `us-parties-china-russia-trilateral-summit.html` を第 2 節へ加えた（ 2026 年 11 月 22 日・ 23 日・ 25 日）。以下の本数と集計は、基準日時点のままである
 **対象** : 『作成文書――A Reading Room 』の、 portal に掲載された文書 67 本・ 8 節。 `index.html` ・ `megumino.html` ・ `autumn-colors.html` ・ `color-palette.html` の 4 件は、今も将来も portal に載せない（ユーザーの決定。 `CLAUDE.md` に記載）。 `portal.html` は一覧そのもので、文書の数に入れない。ファイルは、この 4 件のうち `index.html` を除く 3 件を含め、文書が 70 本ある。
 **増減の内訳** : 前回の 47 本に、 22 本が加わった。そこから、廃止した 1 本（ `superiority-social-comparison.html` ）と、掲載対象外にした 1 本（ `color-palette.html` ）を引くと、 67 本になる（ 47 + 22 − 1 − 1 ）。 `disagreement-and-sense-of-superiority.html` は、 11 月 19 日に追加して同日に廃止したので、差し引きに入らない。
 **削除の注記** : 2026 年 11 月 19 日に、 `superiority-social-comparison.html` と `disagreement-and-sense-of-superiority.html` を廃止した（別のリポジトリで、 2 本を統合した新しい文書を作ったため）。前回までの本稿にあった、これらへの言及は、この版で外した。
