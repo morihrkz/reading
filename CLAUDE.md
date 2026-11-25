@@ -3,14 +3,16 @@
 「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 73 本。うち 70 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
 
 ## HTML 文書の意匠
-HTML 文書の新規作成、既存文書の意匠修正・検証には、必ずローカルスキル `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。例外は、下の `megumino.html` と `color-palette.html` である。
+HTML 文書の新規作成には、必ずローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。既存の wafu 意匠の文書（ 72 本）の意匠修正・検証には、これまでどおり `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。 `wafu-html-style` は廃止予定で、新しい文書には使わない。例外は、下の `megumino.html` と `color-palette.html` である。
 
-- 文書の意匠の正はこのスキルである。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
-- 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。 4 つの意匠は排他的で、同じ文書に重ねて適用しない。
+- 文書の意匠の正は、スキルである（新規は `contrast-html-style` 、既存の wafu 文書は `wafu-html-style` ）。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
+- 既存の wafu 文書は、当面そのままにする（ユーザーの決定。 2026-11-25 ）。頼まれていないのに、 contrast へ書き換えない。変換は、文書に手を入れるときに、ユーザーと相談して行う。一括変換は、別の大きな作業として扱う。
+- 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。意匠は排他的で、同じ文書に重ねて適用しない（ wafu と contrast も重ねない）。
 - `color-palette.html` には、 wafu を適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
 - `megumino.html` （経路案内）は、 wafu の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 wafu に戻さず、 wafu 用の検査を当てて直さない。
   - 色は意味で使い分ける。白地に黒の文字を基本に、紺 `#00205b` が見出し、黄 `#ffd400` が系統番号と地図の番号、赤 `#b3001b` が降車・目的地、青 `#0022a8` がリンク。文字と地のコントラスト比は 7 以上を保つ。
   - 地図（ `route_1_web.png` 〜 `route_4_web.png` ）は、 OpenStreetMap のデータから描いた横 1080px の PNG である。図の中と説明文の両方に、出典（ © OpenStreetMap contributors ）を入れる。地図の番号は、図の下の `ol.steps` の番号と一致させる。描画スクリプトは残していない。
+- `portal.html` は、当面 wafu の CSS を内包したままにする。 `wafu-html-style` を廃止する前に、 `portal.html` の CSS の正の置き場（ portal 自身に持たせるか、 contrast に合わせるか）を、ユーザーと決める。
 - スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は文書と別の意匠で、仕様は後述の「 portal.html の構造」にある。文書用の検査を `portal.html` にそのまま当てて、誤検出を直さない。
 - 文書の冒頭部（ `.kicker` ・ `.subtitle` ・ `.lede` ・ `.meta` ）の有無は、文書ごとに揺れている。揃っていない文書を見つけても、頼まれていないのに揃えない。新しい文書は、スキルの定めに従う。
 
@@ -73,6 +75,13 @@ HTML 文書の新規作成、既存文書の意匠修正・検証には、必ず
   - `navigate` は `file://` を拒否する。作業ディレクトリで `python -m http.server` を一時起動し、 `http://127.0.0.1:PORT/...` 経由で開く。確認後は、サーバーを必ず停止する。
   - レスポンシブの確認幅は、文書も `portal.html` も 480px の前後である（ `portal.html` には `@media` が無く、幅に応じた切り替えはない。はみ出しが無いかを見る）。
   - 同一タブでの `location.hash` だけの遷移は、スクリプトを再実行しない。ページ内リンクは、新規タブで完全に読み込んでも確かめる。
+- Claude in Chrome が使えない環境(Mac で Safari だけの場合など)では、 WebKit で確かめる。依頼がなくても、完了を報告する前に行う。
+  - 実行 : `python $HOME/.claude/scripts/check_layout_webkit.py <ファイル> --shots <スクラッチパッド内のフォルダ>` 。 Mac で `python` がなければ `python3` 、 Windows で `python` がなければ `py` 。 Web サーバーはスクリプトが内側で起動して止めるので、別に起動しない。仕様は `~/.claude/scripts/check_layout_webkit_spec.md` 。
+  - 幅は 390 ・ 480 ・ 700 ・ 1200px が既定である。 `contrast-html-style` の文書には `--min-contrast 7` を付ける。 NG は直し、 WARN は内容を見て判断し、結果を報告に含める。
+  - 初回は PC ごとに `--setup` が要る(仮想環境と WebKit の導入。外部からのダウンロードを伴うので、実行の前にユーザーの承認を得る)。未導入だと、終了コード 3 で案内が出る。
+  - スクリーンショットは、 `Read` で開いて目視する。数値だけで済ませない。
+  - Windows 版は未検証である(仕様書の「導入と、 PC ごとの注意」)。 Windows で初めて使うときは、既知の文書で Mac と同じ結果になるかを確かめる。
+  - 実機の Safari そのものではなく、 Playwright 付属の WebKit である。細部(フォントなど)は違うことがあるので、最終確認はユーザーが実機で目視する。
 - ダークモードは、全体の方針になっていない。文書と `portal.html` はライト表示で、スキルにもダークの仕様はない。どの文書も `prefers-color-scheme: dark` の変数を持たない。新しい文書にも、ダーク変数を入れない。
   - 例外は `index.html` である（ダーク固定の装飾ページ。触れない）。
   - ダークモードの作業を頼まれたら、方針（全体に広げるか、外すか）をユーザーに確認する。
