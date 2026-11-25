@@ -181,7 +181,6 @@
   }
   /* この文書に固有の部品(contrast の色に置き換えたもの) */
   /* アニメーション(この文書の図。色は contrast の変数へ置き換えた) */
-  .spin-slow{transform-origin:0 0;animation:spin 6s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
   .needle{transform-origin:0 0;animation:needle 8s infinite;animation-delay:.9s;animation-fill-mode:backwards}
   @keyframes needle{0%{transform:rotate(0)}25%{transform:rotate(90deg)}50%{transform:rotate(180deg)}75%{transform:rotate(270deg)}100%{transform:rotate(360deg)}}
@@ -223,7 +222,7 @@
   /* 整流子の図だけの色(図内の文字が「オレンジ」「緑」と色名を言うので、実際の橙と緑にする。 contrast の配色表にない例外) */
   svg .s-orange{stroke:#f26b00} svg .s-green{stroke:#1f8a3b}
   svg .t.orange{fill:#993a00} svg .t.green{fill:#005f26}
-  svg .t.red{fill:var(--red)} svg .t.navy{fill:var(--navy)} svg .t.gray{fill:var(--muted)}
+  svg .t.red{fill:var(--red)} svg .t.navy{fill:var(--navy)}
   figure svg.vert{width:min(100%,360px)}
   svg.w200 .t,svg.w240 .t,svg.w260 .t,svg.w320 .t{font-size:16px}
   svg.w400 .t{font-size:20px}
