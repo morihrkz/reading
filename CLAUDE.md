@@ -1,12 +1,13 @@
 # reading リポジトリの作業指示
 
-「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 74 本。うち 71 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
+「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 73 本。うち 70 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
 
 ## HTML 文書の意匠
-HTML 文書の新規作成には、必ずローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。既存の wafu 意匠の文書（ 72 本）の意匠修正・検証には、これまでどおり `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。 `wafu-html-style` は廃止予定で、新しい文書には使わない。例外は、下の `megumino.html` と `color-palette.html` である。
+HTML 文書の新規作成には、必ずローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。既存の wafu 意匠の文書（ 70 本）の意匠修正・検証には、これまでどおり `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。 `wafu-html-style` は廃止予定で、新しい文書には使わない。例外は、下の `megumino.html` と `color-palette.html` である。
 
 - 文書の意匠の正は、スキルである（新規は `contrast-html-style` 、既存の wafu 文書は `wafu-html-style` ）。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
 - 既存の wafu 文書は、当面そのままにする（ユーザーの決定。 2026-11-25 ）。頼まれていないのに、 contrast へ書き換えない。変換は、文書に手を入れるときに、ユーザーと相談して行う。一括変換は、別の大きな作業として扱う。
+  - 変換した例 : `elder-housing.html` は、 2026-11-25 の大幅な改訂（自治体の取組みの章を追加し、構成を組み直した）のときに、ユーザーの指示で contrast へ変換した。このように、文書を大きく書き直すときが、変換の機会である。
 - 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。意匠は排他的で、同じ文書に重ねて適用しない（ wafu と contrast も重ねない）。
 - `color-palette.html` には、 wafu を適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
 - `megumino.html` （経路案内）は、 wafu の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 wafu に戻さず、 wafu 用の検査を当てて直さない。
