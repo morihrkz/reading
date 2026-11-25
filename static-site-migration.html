@@ -4,210 +4,234 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>静的サイト移行の実務記録―― DNS 移管とネームサーバー設定</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
-  /* この文書に固有の部品(和色に合わせたもの) */
-  code{background:#f8e4cb;padding:.1rem .35rem;border-radius:6px;font-size:max(16px,.92em);overflow-wrap:anywhere}
-  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#efe3c8;padding:12px 16px;border-radius:12px;margin:0 0 20px;font-size:16px;line-height:1.6}
-  pre code{background:none;padding:0;font-size:inherit}
-  .dg-accent{color:var(--link)}
-  .dg-box{fill:#f8e4cb;stroke:#cdb98f;stroke-width:1.5}
-  .dg-line{stroke:currentColor;opacity:.8}
-  figure svg.dg-narrow{display:block;max-width:420px;margin:0 auto}
-  blockquote{border-left:6px solid var(--line);color:var(--muted);margin:0 0 20px;padding-left:18px;font-style:italic}
-  blockquote p{margin-bottom:10px}
-  blockquote p:last-child{margin-bottom:0}
-  hr{border:none;border-top:2px solid var(--line);margin:40px 0}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+  }
+  /* この文書に固有の部品(contrast の色に置き換えたもの) */
+  blockquote { border-left: 6px solid var(--rule); color: var(--muted); margin: 0 0 20px; padding-left: 18px; font-style: italic; }
+  blockquote p { margin-bottom: 10px; }
+  blockquote p:last-child { margin-bottom: 0; }
+  hr { border: none; border-top: 3px solid var(--rule); margin: 40px 0; }
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
+<p class="kicker">実務記録</p>
 <h1>静的サイト移行の実務記録<br>―― DNS 移管とネームサーバー設定</h1>
 <p class="subtitle">A Practical Record of Static Site Migration: DNS Transfer and Nameserver Configuration</p>
-</header>
-<div class="wrap">
-<div class="kicker">実務記録</div>
 <div class="lede"><p>二年間更新していなかった自社ウェブサイトを、レンタルサーバーから GitHub Pages へ移した記録。</p></div>
 <nav class="toc" aria-label="目次">
-<b>目次</b>
+<p class="toc-title">目次</p>
 <ol>
-<li><a href="#s1">はじめに</a></li>
-<li><a href="#s2">なぜサーバーを移すことにしたのか</a>
+<li><a href="#sec1">はじめに</a></li>
+<li><a href="#sec2">なぜサーバーを移すことにしたのか</a>
 <ol>
-<li><a href="#s2-1">二年間、放置されていたサイト</a></li>
-<li><a href="#s2-2">動的サイトと静的サイト</a></li>
-<li><a href="#s2-3">旧記事は移さず、新たなコンテンツを作った</a></li>
+<li><a href="#sec2-1">二年間、放置されていたサイト</a></li>
+<li><a href="#sec2-2">動的サイトと静的サイト</a></li>
+<li><a href="#sec2-3">旧記事は移さず、新たなコンテンツを作った</a></li>
 </ol>
 </li>
-<li><a href="#s3">先に調べる、特に DNS を</a>
+<li><a href="#sec3">先に調べる、特に DNS を</a>
 <ol>
-<li><a href="#s3-1">ドメインとサーバーは別契約、という基本</a></li>
-<li><a href="#s3-2">最大の論点：　サーバー契約をやめても DNS は生き残るか</a></li>
-<li><a href="#s3-3">ホスティング先の選定： GitHub Pages を採用</a></li>
-<li><a href="#s3-4">全体の実施順序</a></li>
-<li><a href="#s3-5">順序を入れ替えてはいけない四箇所</a></li>
+<li><a href="#sec3-1">ドメインとサーバーは別契約、という基本</a></li>
+<li><a href="#sec3-2">最大の論点：　サーバー契約をやめても DNS は生き残るか</a></li>
+<li><a href="#sec3-3">ホスティング先の選定： GitHub Pages を採用</a></li>
+<li><a href="#sec3-4">全体の実施順序</a></li>
+<li><a href="#sec3-5">順序を入れ替えてはいけない四箇所</a></li>
 </ol>
 </li>
-<li><a href="#s4">ここからが本番、実際の移行作業</a>
+<li><a href="#sec4">ここからが本番、実際の移行作業</a>
 <ol>
-<li><a href="#s4-1">工程 1 : 移行前の保全、 DNS レコードのバックアップ</a></li>
-<li><a href="#s4-2">工程 2 : ネームサーバーを Xserver Domain へ切り替える</a></li>
-<li><a href="#s4-3">工程 3 : サイトを構築する</a></li>
-<li><a href="#s4-4">工程 4 : 旧 WordPress 環境を削除する</a></li>
-<li><a href="#s4-5">工程 5 : DNS を GitHub Pages へ向ける</a></li>
-<li><a href="#s4-6">工程 6 : 切替後の検証</a></li>
+<li><a href="#sec4-1">工程 1 : 移行前の保全、 DNS レコードのバックアップ</a></li>
+<li><a href="#sec4-2">工程 2 : ネームサーバーを Xserver Domain へ切り替える</a></li>
+<li><a href="#sec4-3">工程 3 : サイトを構築する</a></li>
+<li><a href="#sec4-4">工程 4 : 旧 WordPress 環境を削除する</a></li>
+<li><a href="#sec4-5">工程 5 : DNS を GitHub Pages へ向ける</a></li>
+<li><a href="#sec4-6">工程 6 : 切替後の検証</a></li>
 </ol>
 </li>
-<li><a href="#s5">終わってから、わかったこと</a>
+<li><a href="#sec5">終わってから、わかったこと</a>
 <ol>
-<li><a href="#s5-1">待つより先にどこにたずねるかを考える</a></li>
-<li><a href="#s5-2">移行で得たものは、費用よりも単純さだった</a></li>
-<li><a href="#s5-3">移行後に残ったもの、消えたもの</a></li>
+<li><a href="#sec5-1">待つより先にどこにたずねるかを考える</a></li>
+<li><a href="#sec5-2">移行で得たものは、費用よりも単純さだった</a></li>
+<li><a href="#sec5-3">移行後に残ったもの、消えたもの</a></li>
 </ol>
 </li>
 </ol>
 </nav>
-<section id="s1">
-<h2><span class="no">1</span>はじめに</h2>
+<h2 id="sec1">1. はじめに</h2>
 <p>「もとのサーバーから HTML ファイルを GitHub Pages に移し、ドメインの向き先を変える。」
 こう言うと、単純な作業に聞こえる。ところが実際に手を動かすと話は変わった。
  <strong>DNS はどの契約に属しているのか。設定は本当に引き継がれるのか。何を確認してから削除すべきなのか。</strong>
@@ -222,62 +246,60 @@
 <p>本記事は、筆者が 2026 年 8 月に実際におこなった移行作業をもとにした記録である。
 移行対象のドメイン名 <code>pyx.co.jp</code> 、および利用したレンタルサーバー・ドメイン事業者の名称 <code>XServer</code> などは実名で記載した一方、サーバーの契約 ID 、旧サーバーの IP アドレス、ドメインの登録者情報などの識別情報は伏せてある。
 金額・手順・画面の文言は、利用するサービスや時期によって異なる場合がある。実際の作業前には、各サービスの公式ドキュメントもあわせて確認してほしい。</p>
-</section>
 
-<section id="s2">
-<h2><span class="no">2</span>なぜサーバーを移すことにしたのか</h2>
-<h3 id="s2-1">2.1 二年間、放置されていたサイト</h3>
+<h2 id="sec2">2. なぜサーバーを移すことにしたのか</h2>
+<h3 id="sec2-1">2.1 二年間、放置されていたサイト</h3>
 <p><code>pyx.co.jp</code> は筆者の会社のサイトで、 WordPress を動かし、その環境で作ったものだった。
 ところが二年間、記事の更新も、プラグインの更新なども、手を付けていない状態が続いていた。動いてはいるが、誰も世話をしていないサイトである。
 そこに、レンタルサーバーの契約期限という具体的な締切がやってきた。残り三週間しかない。契約は自動更新が設定されておらず、支払いを行わなければ、期限日にアカウントが自然に凍結される見込みだった。
 この期限をきっかけに、「同じ構成のまま契約を更新するか」を考えることになった。</p>
-<h3 id="s2-2">2.2 動的サイトと静的サイト</h3>
+<h3 id="sec2-2">2.2 動的サイトと静的サイト</h3>
 <p>WordPress の様な CMS （コンテンツ管理システム）で作られたサイトは、アクセスが来るたびにサーバー内のプログラム（ PHP など）が動き、データベースから記事の内容を取り出して、その場で HTML を組み立てて返す。これを<strong>動的サイト</strong>と呼ぶ。
 一方の<strong>静的サイト</strong>は、あらかじめ完成させておいた HTML / CSS / 画像などのファイルを置いておくだけの仕組みである。アクセスが来ても、サーバーは「今から組み立てる」のではなく「もう完成しているファイルをそのまま渡す」だけである。</p>
 <figure>
-<svg class="dg-narrow" viewBox="0 0 260 515" role="img" aria-label="動的サイトはリクエストのたびにPHPプログラムとデータベースを使ってHTMLを組み立てて返すのに対し、静的サイトは保存済みのHTML/CSSファイルをそのまま渡すだけである">
+<svg viewBox="0 0 480 951" role="img" aria-label="動的サイトはリクエストのたびにPHPプログラムとデータベースを使ってHTMLを組み立てて返すのに対し、静的サイトは保存済みのHTML/CSSファイルをそのまま渡すだけである">
 <defs>
 <marker id="fig1n-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-<path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+<path class="f-ink" d="M0,0 L10,5 L0,10 z"/>
 </marker>
 </defs>
-<text x="10" y="20" font-size="14.7" font-weight="bold" fill="currentColor">動的サイト</text>
-<text x="10" y="37" font-size="12.5" fill="currentColor">アクセスの都度、組み立てる</text>
-<rect x="10" y="50" width="240" height="40" class="dg-box"/>
-<text x="130" y="75" font-size="13.7" text-anchor="middle" fill="currentColor">ブラウザ</text>
-<line x1="130" y1="90" x2="130" y2="120" class="dg-line" stroke-width="1.5" marker-end="url(#fig1n-arrow)"/>
-<text x="145" y="108" font-size="12.5" fill="currentColor">①リクエスト</text>
-<rect x="10" y="124" width="240" height="46" class="dg-box"/>
-<text x="130" y="144" font-size="13.7" text-anchor="middle" fill="currentColor">サーバーの PHP</text>
-<text x="130" y="160" font-size="12.6" text-anchor="middle" fill="currentColor">プログラム</text>
-<line x1="150" y1="170" x2="150" y2="198" class="dg-line" stroke-width="1.5" marker-end="url(#fig1n-arrow)"/>
-<text x="165" y="188" font-size="12.5" fill="currentColor">②問い合わせ</text>
-<line x1="110" y1="198" x2="110" y2="170" class="dg-line" stroke-width="1.5" marker-end="url(#fig1n-arrow)"/>
-<rect x="10" y="202" width="240" height="46" class="dg-box"/>
-<text x="130" y="222" font-size="13.7" text-anchor="middle" fill="currentColor">データベース</text>
-<text x="130" y="238" font-size="12.5" text-anchor="middle" fill="currentColor">（記事本文など）</text>
-<text x="95" y="192" font-size="12.5" text-anchor="end" fill="currentColor">③記事データ</text>
-<line x1="110" y1="248" x2="110" y2="276" class="dg-line" stroke-width="1.5" marker-end="url(#fig1n-arrow)"/>
-<text x="10" y="266" font-size="12.5" fill="currentColor">④HTML を返す</text>
-<text x="130" y="298" font-size="12.6" text-anchor="middle" fill="currentColor" class="dg-accent">その場で HTML を生成</text>
-<text x="130" y="314" font-size="12.6" text-anchor="middle" fill="currentColor" class="dg-accent">（ PHP と DB が常時必要）</text>
-<line x1="10" y1="332" x2="250" y2="332" class="dg-line" stroke-width="1"/>
-<text x="10" y="354" font-size="14.7" font-weight="bold" fill="currentColor">静的サイト</text>
-<text x="10" y="371" font-size="12.5" fill="currentColor">用意したファイルをそのまま渡す</text>
-<rect x="10" y="384" width="240" height="46" class="dg-box"/>
-<text x="130" y="404" font-size="13.1" text-anchor="middle" fill="currentColor">保存済みの HTML/CSS</text>
-<text x="130" y="420" font-size="12.5" text-anchor="middle" fill="currentColor">（あらかじめ完成しているファイル）</text>
-<line x1="130" y1="430" x2="130" y2="460" class="dg-line" stroke-width="1.5" marker-end="url(#fig1n-arrow)"/>
-<text x="145" y="449" font-size="12.5" fill="currentColor">渡すだけ</text>
-<rect x="10" y="464" width="240" height="40" class="dg-box"/>
-<text x="130" y="489" font-size="13.7" text-anchor="middle" fill="currentColor">ブラウザ</text>
+<text class="t" x="18.5" y="36.9">動的サイト</text>
+<text class="t" x="18.5" y="68.3">アクセスの都度、組み立てる</text>
+<rect class="f-gray s-ink" x="18.5" y="92.3" width="443.1" height="73.8"/>
+<text class="t" x="240" y="138.5" text-anchor="middle">ブラウザ</text>
+<line class="s-ink" x1="240" y1="166.2" x2="240" y2="221.5" marker-end="url(#fig1n-arrow)"/>
+<text class="t" x="267.7" y="199.4">①リクエスト</text>
+<rect class="f-gray s-ink" x="18.5" y="228.9" width="443.1" height="84.9"/>
+<text class="t" x="240" y="265.8" text-anchor="middle">サーバーの PHP</text>
+<text class="t" x="240" y="295.4" text-anchor="middle">プログラム</text>
+<line class="s-ink" x1="276.9" y1="313.8" x2="276.9" y2="365.5" marker-end="url(#fig1n-arrow)"/>
+<text class="t" x="304.6" y="347.1">②問い合わせ</text>
+<line class="s-ink" x1="203.1" y1="365.5" x2="203.1" y2="313.8" marker-end="url(#fig1n-arrow)"/>
+<rect class="f-gray s-ink" x="18.5" y="372.9" width="443.1" height="84.9"/>
+<text class="t" x="240" y="409.8" text-anchor="middle">データベース</text>
+<text class="t" x="240" y="439.4" text-anchor="middle">（記事本文など）</text>
+<text class="t" x="175.4" y="354.5" text-anchor="end">③記事データ</text>
+<line class="s-ink" x1="203.1" y1="457.8" x2="203.1" y2="509.5" marker-end="url(#fig1n-arrow)"/>
+<text class="t" x="18.5" y="491.1">④HTML を返す</text>
+<text class="t" x="240" y="550.2" text-anchor="middle">その場で HTML を生成</text>
+<text class="t" x="240" y="579.7" text-anchor="middle">（ PHP と DB が常時必要）</text>
+<line class="s-ink" x1="18.5" y1="612.9" x2="461.5" y2="612.9"/>
+<text class="t" x="18.5" y="653.5">静的サイト</text>
+<text class="t" x="18.5" y="684.9">用意したファイルをそのまま渡す</text>
+<rect class="f-gray s-ink" x="18.5" y="708.9" width="443.1" height="84.9"/>
+<text class="t" x="240" y="745.8" text-anchor="middle">保存済みの HTML/CSS</text>
+<text class="t" x="240" y="775.4" text-anchor="middle">（あらかじめ完成しているファイル）</text>
+<line class="s-ink" x1="240" y1="793.8" x2="240" y2="849.2" marker-end="url(#fig1n-arrow)"/>
+<text class="t" x="267.7" y="828.9">渡すだけ</text>
+<rect class="f-gray s-ink" x="18.5" y="856.6" width="443.1" height="73.8"/>
+<text class="t" x="240" y="902.8" text-anchor="middle">ブラウザ</text>
 </svg>
 <figcaption>図 1 : 動的サイトと静的サイトの、リクエストごとの処理の違い（静的サイトはサーバー側でアプリケーションを実行しない）</figcaption>
 </figure>
 <p><strong>「このサイトは、必ずしも WordPress の上に構築されている必要は無いのではないか。」</strong>
 これが、作り直しを検討した最初の動機だった。
 （なお、動的サイトを実現する手段は WordPress 以外にもあるが、便宜上、「動的サイト = WordPress 」としている。）</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>観点</th>
@@ -310,62 +332,60 @@
 </table>
 <p>WordPress は世界中の膨大な数のサイトを支える優れたソフトウェアである。編集者が複数いて、日常的に記事を書き、コメント機能や複雑なワークフローを必要とするサイトにとっては依然として強力な選択肢である。
 しかし <code>pyx.co.jp</code> はそれに該当するサイトではなかった。</p>
-<h3 id="s2-3">2.3 旧記事は移さず、新たなコンテンツを作った</h3>
+<h3 id="sec2-3">2.3 旧記事は移さず、新たなコンテンツを作った</h3>
 <p>もう一つ、早い段階で決めたことがある。<strong>旧サイトの内容は一つも移行しない</strong>という判断である。
 二年近く更新が止まっていた内容を、手間をかけて移し替える価値があるかを考えた結果だった。新サイトで当初公開する内容は仮の一枚のページのみとし、本格的な内容は落ち着いてから作り込むという方針にした。</p>
 <p>移行というと、今あるものをそのまま新しい場所に持っていく、と考えがちだが、価値が薄れた内容まで運び込む必要はない。移すものが少なければ移行作業は軽くなる。</p>
-</section>
 
-<section id="s3">
-<h2><span class="no">3</span>先に調べる、特に DNS を</h2>
+<h2 id="sec3">3. 先に調べる、特に DNS を</h2>
 <p>ここで一度、作業の手を止めた。期限が決まっている以上、行き当たりばったりで進めるのは危険である。作成日から数えて実質二週間ほどしかない期限だった。
 AI に相談しながら、現状の整理・技術選定・作業順序・想定される落とし穴を、一つの文書にまとめていった。以下は、その計画段階で分かったことの記録である。</p>
-<h3 id="s3-1">3.1 ドメインとサーバーは別契約、という基本</h3>
+<h3 id="sec3-1">3.1 ドメインとサーバーは別契約、という基本</h3>
 <p>まず前提として、「ドメイン」と「サーバー（ホスティング先）」は、別の契約である。
 インターネット上のサーバーは <code>203.0.113.25</code> の様な「 IP アドレス」で区別されているが、人間が毎回この数字を覚えるのは大変なので、 <code>pyx.co.jp</code> の様な「ドメイン名」を使う。
 この二つを結びつける、インターネット全体の電話帳にあたる仕組みが <strong>DNS (Domain Name System)</strong> である。</p>
 <figure>
-<svg class="dg-narrow" viewBox="0 0 260 420" role="img" aria-label="ブラウザはまずDNSサーバーにドメイン名の問い合わせを行いIPアドレスを受け取り、次にそのIPのウェブサーバーへHTTPリクエストを送ってデータを受け取る">
+<svg viewBox="0 0 480 775" role="img" aria-label="ブラウザはまずDNSサーバーにドメイン名の問い合わせを行いIPアドレスを受け取り、次にそのIPのウェブサーバーへHTTPリクエストを送ってデータを受け取る">
 <defs>
 <marker id="fig2n-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-<path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+<path class="f-ink" d="M0,0 L10,5 L0,10 z"/>
 </marker>
 </defs>
-<rect x="10" y="10" width="240" height="46" class="dg-box"/>
-<text x="130" y="30" font-size="13.7" text-anchor="middle" fill="currentColor">ブラウザ</text>
-<text x="130" y="46" font-size="12.5" text-anchor="middle" fill="currentColor">（ PC やスマホ）</text>
-<line x1="150" y1="56" x2="150" y2="122" class="dg-line" stroke-width="1.5" marker-end="url(#fig2n-arrow)"/>
-<text x="163" y="82" font-size="12.5" fill="currentColor">①「この住所の</text>
-<text x="163" y="96" font-size="12.5" fill="currentColor">IP は？」</text>
-<line x1="110" y1="122" x2="110" y2="56" class="dg-line" stroke-width="1.5" marker-end="url(#fig2n-arrow)"/>
-<text x="97" y="82" font-size="12.5" text-anchor="end" fill="currentColor">②「この IP</text>
-<text x="97" y="96" font-size="12.5" text-anchor="end" fill="currentColor">です」</text>
-<rect x="10" y="126" width="240" height="46" class="dg-box"/>
-<text x="130" y="146" font-size="13.7" text-anchor="middle" fill="currentColor">DNS サーバー</text>
-<text x="130" y="162" font-size="12.5" text-anchor="middle" fill="currentColor">（ドメインの電話帳）</text>
-<line x1="150" y1="172" x2="150" y2="238" class="dg-line" stroke-width="1.5" marker-end="url(#fig2n-arrow)"/>
-<text x="163" y="188" font-size="12.5" fill="currentColor">③「データを</text>
-<text x="163" y="203" font-size="12.5" fill="currentColor">ください」</text>
-<text x="163" y="218" font-size="12.5" fill="currentColor">（ HTTP</text>
-<text x="163" y="233" font-size="12.5" fill="currentColor">リクエスト）</text>
-<rect x="10" y="242" width="240" height="46" class="dg-box"/>
-<text x="130" y="262" font-size="13.7" text-anchor="middle" fill="currentColor">ウェブサーバー</text>
-<text x="130" y="278" font-size="12.5" text-anchor="middle" fill="currentColor">（データの置き場）</text>
-<line x1="110" y1="358" x2="110" y2="292" class="dg-line" stroke-width="1.5" marker-end="url(#fig2n-arrow)"/>
-<text x="97" y="330" font-size="12.5" text-anchor="end" fill="currentColor">④（データ）</text>
-<rect x="10" y="358" width="240" height="46" class="dg-box"/>
-<text x="130" y="378" font-size="13.7" text-anchor="middle" fill="currentColor">ブラウザ</text>
-<text x="130" y="394" font-size="12.5" text-anchor="middle" fill="currentColor">ページを表示</text>
+<rect class="f-gray s-ink" x="18.5" y="18.5" width="443.1" height="84.9"/>
+<text class="t" x="240" y="55.4" text-anchor="middle">ブラウザ</text>
+<text class="t" x="240" y="84.9" text-anchor="middle">（ PC やスマホ）</text>
+<line class="s-ink" x1="276.9" y1="103.4" x2="276.9" y2="225.2" marker-end="url(#fig2n-arrow)"/>
+<text class="t" x="300.9" y="151.4">①「この住所の</text>
+<text class="t" x="300.9" y="177.2">IP は？」</text>
+<line class="s-ink" x1="203.1" y1="225.2" x2="203.1" y2="103.4" marker-end="url(#fig2n-arrow)"/>
+<text class="t" x="179.1" y="151.4" text-anchor="end">②「この IP</text>
+<text class="t" x="179.1" y="177.2" text-anchor="end">です」</text>
+<rect class="f-gray s-ink" x="18.5" y="232.6" width="443.1" height="84.9"/>
+<text class="t" x="240" y="269.5" text-anchor="middle">DNS サーバー</text>
+<text class="t" x="240" y="299.1" text-anchor="middle">（ドメインの電話帳）</text>
+<line class="s-ink" x1="276.9" y1="317.5" x2="276.9" y2="439.4" marker-end="url(#fig2n-arrow)"/>
+<text class="t" x="300.9" y="347.1">③「データを</text>
+<text class="t" x="300.9" y="374.8">ください」</text>
+<text class="t" x="300.9" y="402.5">（ HTTP</text>
+<text class="t" x="300.9" y="430.2">リクエスト）</text>
+<rect class="f-gray s-ink" x="18.5" y="446.8" width="443.1" height="84.9"/>
+<text class="t" x="240" y="483.7" text-anchor="middle">ウェブサーバー</text>
+<text class="t" x="240" y="513.2" text-anchor="middle">（データの置き場）</text>
+<line class="s-ink" x1="203.1" y1="660.9" x2="203.1" y2="539.1" marker-end="url(#fig2n-arrow)"/>
+<text class="t" x="179.1" y="609.2" text-anchor="end">④（データ）</text>
+<rect class="f-gray s-ink" x="18.5" y="660.9" width="443.1" height="84.9"/>
+<text class="t" x="240" y="697.8" text-anchor="middle">ブラウザ</text>
+<text class="t" x="240" y="727.4" text-anchor="middle">ページを表示</text>
 </svg>
 <figcaption>図 2 : URL を入力してからページが表示されるまでの流れ</figcaption>
 </figure>
 <p><code>pyx.co.jp</code> の場合、ドメインの登録先とレンタルサーバーの契約先はどちらも同じ事業者 (XServer) だった。同じ会社でも「ドメイン契約」と「レンタルサーバー契約」という別々の契約として管理されている。
 ドメイン契約は前月のうちにすでに 2027 年まで支払い済みで確保されており、サーバー契約とは無関係に存続する状態だった。</p>
-<h3 id="s3-2">3.2 最大の論点：　サーバー契約をやめても DNS は生き残るか</h3>
+<h3 id="sec3-2">3.2 最大の論点：　サーバー契約をやめても DNS は生き残るか</h3>
 <p>計画段階でいちばん時間を使ったのが、この一点だった。<strong>レンタルサーバーの契約をやめたとき、ドメインの DNS 設定を編集する手段と、ドメイン名から IP アドレスを引く「名前解決」の仕組みは、どうなるのか。</strong></p>
 <p>これは類推だけでは確定できない問題だった。 XServer の公式案内には、期限を超過したサーバーアカウントについて「凍結が行われるとホームページへのアクセスやメールの送受信が行えなくなります」とだけ書かれており、「 DNS レコードの管理ができなくなる」とは明記されていなかった。
 一方で、 XServer には管理画面が二種類あり、役割が分かれていることも分かった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>管理画面</th>
@@ -398,52 +418,52 @@ ns4.xserver.jp.  ns5.xserver.jp.
 2. ns1.xserver.jp 〜 ns5.xserver.jp による名前解決は、レンタルサーバー契約者専用であり、サーバー契約が凍結されると使えなくなる。したがって、凍結前にネームサーバーを Xserver Domain へ切り替えておく必要がある。</p>
 <p>この回答により、作業の前提が一点変わった。<strong>サーバー契約が凍結される前に、ネームサーバーを Xserver Domain へ切り替える作業が、独立した必須工程として加わった</strong>のである（詳しくは第３部）。</p>
 <figure>
-<svg class="dg-narrow" viewBox="0 0 260 555" role="img" aria-label="切り替え前はDNSレコードの編集機能と名前解決機能がどちらもサーバー契約に紐づいているため、サーバー契約を終了すると両方失う。切り替え後はどちらもドメイン契約に紐づくため、サーバー契約を終了しても両方残る">
+<svg viewBox="0 0 480 1025" role="img" aria-label="切り替え前はDNSレコードの編集機能と名前解決機能がどちらもサーバー契約に紐づいているため、サーバー契約を終了すると両方失う。切り替え後はどちらもドメイン契約に紐づくため、サーバー契約を終了しても両方残る">
 <defs>
 <marker id="fig3n-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-<path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+<path class="f-ink" d="M0,0 L10,5 L0,10 z"/>
 </marker>
 </defs>
-<text x="10" y="18" font-size="13.7" font-weight="bold" fill="currentColor">切り替え前</text>
-<text x="10" y="34" font-size="12.5" fill="currentColor">二つともサーバー契約に紐づく</text>
-<rect x="10" y="44" width="115" height="40" class="dg-box"/>
-<text x="67" y="63" font-size="12.5" text-anchor="middle" fill="currentColor">ドメイン契約</text>
-<text x="67" y="78" font-size="12.5" text-anchor="middle" fill="currentColor">（支払済）</text>
-<rect x="135" y="44" width="115" height="40" class="dg-box" stroke="currentColor" stroke-width="1.5"/>
-<text x="192" y="63" font-size="12.5" text-anchor="middle" fill="currentColor">サーバー契約</text>
-<text x="192" y="78" font-size="12.5" text-anchor="middle" fill="currentColor">（やめたい）</text>
-<line x1="192" y1="84" x2="150" y2="114" class="dg-line" stroke-width="1.5" marker-end="url(#fig3n-arrow)"/>
-<line x1="192" y1="84" x2="192" y2="164" class="dg-line" stroke-width="1.5" marker-end="url(#fig3n-arrow)"/>
-<rect x="10" y="118" width="240" height="40" class="dg-box"/>
-<text x="130" y="143" font-size="13.1" text-anchor="middle" fill="currentColor">レコードの編集</text>
-<rect x="10" y="168" width="240" height="40" class="dg-box"/>
-<text x="130" y="193" font-size="13.1" text-anchor="middle" fill="currentColor">名前解決（ IP を引く）</text>
-<text x="10" y="230" font-size="13.1" fill="currentColor">✕　サーバー契約を終了すると、</text>
-<text x="10" y="247" font-size="13.1" fill="currentColor">編集する手段も名前解決も</text>
-<text x="10" y="264" font-size="13.1" fill="currentColor">同時に失う</text>
-<line x1="10" y1="284" x2="250" y2="284" class="dg-line" stroke-width="1"/>
-<text x="10" y="308" font-size="13.7" font-weight="bold" fill="currentColor">切り替え後</text>
-<text x="10" y="324" font-size="12.5" fill="currentColor">二つともドメイン契約に紐づく</text>
-<rect x="10" y="334" width="115" height="40" class="dg-box" stroke="currentColor" stroke-width="1.5"/>
-<text x="67" y="353" font-size="12.5" text-anchor="middle" fill="currentColor">ドメイン契約</text>
-<text x="67" y="368" font-size="12.5" text-anchor="middle" fill="currentColor">（支払済）</text>
-<rect x="135" y="334" width="115" height="40" class="dg-box"/>
-<text x="192" y="353" font-size="12.5" text-anchor="middle" fill="currentColor">サーバー契約</text>
-<text x="192" y="368" font-size="12.5" text-anchor="middle" fill="currentColor">（やめてよい）</text>
-<line x1="67" y1="374" x2="67" y2="404" class="dg-line" stroke-width="1.5" marker-end="url(#fig3n-arrow)"/>
-<line x1="67" y1="374" x2="130" y2="454" class="dg-line" stroke-width="1.5" marker-end="url(#fig3n-arrow)"/>
-<rect x="10" y="408" width="240" height="40" class="dg-box"/>
-<text x="130" y="433" font-size="13.1" text-anchor="middle" fill="currentColor">レコードの編集</text>
-<rect x="10" y="458" width="240" height="40" class="dg-box"/>
-<text x="130" y="483" font-size="13.1" text-anchor="middle" fill="currentColor">名前解決（ IP を引く）</text>
-<text x="10" y="520" font-size="13.1" fill="currentColor" class="dg-accent">○　サーバー契約を終了しても、</text>
-<text x="10" y="537" font-size="13.1" fill="currentColor" class="dg-accent">編集する手段も名前解決も残る</text>
+<text class="t" x="18.5" y="33.2">切り替え前</text>
+<text class="t" x="18.5" y="62.8">二つともサーバー契約に紐づく</text>
+<rect class="f-gray s-ink" x="18.5" y="81.2" width="212.3" height="73.8"/>
+<text class="t" x="123.7" y="116.3" text-anchor="middle">ドメイン契約</text>
+<text class="t" x="123.7" y="144" text-anchor="middle">（支払済）</text>
+<rect class="f-gray s-ink" x="249.2" y="81.2" width="212.3" height="73.8"/>
+<text class="t" x="354.5" y="116.3" text-anchor="middle">サーバー契約</text>
+<text class="t" x="354.5" y="144" text-anchor="middle">（やめたい）</text>
+<line class="s-ink" x1="354.5" y1="155.1" x2="276.9" y2="210.5" marker-end="url(#fig3n-arrow)"/>
+<line class="s-ink" x1="354.5" y1="155.1" x2="354.5" y2="302.8" marker-end="url(#fig3n-arrow)"/>
+<rect class="f-gray s-ink" x="18.5" y="217.8" width="443.1" height="73.8"/>
+<text class="t" x="240" y="264" text-anchor="middle">レコードの編集</text>
+<rect class="f-gray s-ink" x="18.5" y="310.2" width="443.1" height="73.8"/>
+<text class="t" x="240" y="356.3" text-anchor="middle">名前解決（ IP を引く）</text>
+<text class="t" x="18.5" y="424.6">✕　サーバー契約を終了すると、</text>
+<text class="t" x="18.5" y="456">編集する手段も名前解決も</text>
+<text class="t" x="18.5" y="487.4">同時に失う</text>
+<line class="s-ink" x1="18.5" y1="524.3" x2="461.5" y2="524.3"/>
+<text class="t" x="18.5" y="568.6">切り替え後</text>
+<text class="t" x="18.5" y="598.2">二つともドメイン契約に紐づく</text>
+<rect class="f-gray s-ink" x="18.5" y="616.6" width="212.3" height="73.8"/>
+<text class="t" x="123.7" y="651.7" text-anchor="middle">ドメイン契約</text>
+<text class="t" x="123.7" y="679.4" text-anchor="middle">（支払済）</text>
+<rect class="f-gray s-ink" x="249.2" y="616.6" width="212.3" height="73.8"/>
+<text class="t" x="354.5" y="651.7" text-anchor="middle">サーバー契約</text>
+<text class="t" x="354.5" y="679.4" text-anchor="middle">（やめてよい）</text>
+<line class="s-ink" x1="123.7" y1="690.5" x2="123.7" y2="745.8" marker-end="url(#fig3n-arrow)"/>
+<line class="s-ink" x1="123.7" y1="690.5" x2="240" y2="838.2" marker-end="url(#fig3n-arrow)"/>
+<rect class="f-gray s-ink" x="18.5" y="753.2" width="443.1" height="73.8"/>
+<text class="t" x="240" y="799.4" text-anchor="middle">レコードの編集</text>
+<rect class="f-gray s-ink" x="18.5" y="845.5" width="443.1" height="73.8"/>
+<text class="t" x="240" y="891.7" text-anchor="middle">名前解決（ IP を引く）</text>
+<text class="t" x="18.5" y="960">○　サーバー契約を終了しても、</text>
+<text class="t" x="18.5" y="991.4">編集する手段も名前解決も残る</text>
 </svg>
 <figcaption>図 3 : DNS にまつわる二つの機能が、どちらの契約に紐づいているか</figcaption>
 </figure>
-<h3 id="s3-3">3.3 ホスティング先の選定： GitHub Pages を採用</h3>
+<h3 id="sec3-3">3.3 ホスティング先の選定： GitHub Pages を採用</h3>
 <p>静的サイトの置き場所として GitHub Pages と Cloudflare Pages を比較した。決め手は費用ではなく、<strong>変更点を少なく済ませられるかどうか</strong>だった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>比較項目</th>
@@ -474,9 +494,9 @@ ns4.xserver.jp.  ns5.xserver.jp.
 GitHub Pages なら、 Xserver Domain 側の DNS レコード設定画面で A レコードを追加するだけで完結する。</p>
 <p>あわせて、いわゆる静的サイトジェネレーターなども特に導入しないことにした。公開する内容が準備中を示す一枚もののページである以上、ビルド工程を挟む理由がなかったためである。依存パッケージのない、単一の <code>index.html</code> として作成する方針にした。
 リポジトリは新規に <code>pyx-site</code> という名前で作成し、公開範囲は Public （公開）とした。無料プランでは、 Private （非公開）のリポジトリで GitHub Pages を有効化できないと、この段階で判明したためである。</p>
-<h3 id="s3-4">3.4 全体の実施順序</h3>
+<h3 id="sec3-4">3.4 全体の実施順序</h3>
 <p>サーバー契約の期限日から逆算し、作業を六つの工程に分けた。上から順に実行すれば、前提を満たさないまま先に進んでしまうことがない並びである。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>工程</th>
@@ -511,9 +531,9 @@ GitHub Pages なら、 Xserver Domain 側の DNS レコード設定画面で A �
 </tbody>
 </table>
 <p>工程 1 と工程 2 は、 DNS に一切手を触れる前後の関係にあるため、必ずこの順で行う必要がある。一方、工程 2 （ネームサーバー切替）と工程 3 （サイト構築）は互いに独立しているため、並行して進めることができた。</p>
-<h3 id="s3-5">3.5 順序を入れ替えてはいけない四箇所</h3>
+<h3 id="sec3-5">3.5 順序を入れ替えてはいけない四箇所</h3>
 <p>作業の多くは前後させても支障ないが、次の四つは技術上・安全上の理由から順序が固定される。計画段階でここを洗い出しておいたことが、後の工程で実際に役立った。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>この順序</th>
@@ -539,13 +559,11 @@ GitHub Pages なら、 Xserver Domain 側の DNS レコード設定画面で A �
 </tr>
 </tbody>
 </table>
-</section>
 
-<section id="s4">
-<h2><span class="no">4</span>ここからが本番、実際の移行作業</h2>
+<h2 id="sec4">4. ここからが本番、実際の移行作業</h2>
 <p>そして、実際の切り替えに入った。ここから先は、計画書の中では数行だった作業が、ひとつずつ現実の判断になる。
 計画どおりに進んだところもあれば、<strong>実際に設定を切り替えた瞬間に、計画とは違う答えが返ってきたところもあった。</strong></p>
-<h3 id="s4-1">4.1 工程 1 : 移行前の保全、 DNS レコードのバックアップ</h3>
+<h3 id="sec4-1">4.1 工程 1 : 移行前の保全、 DNS レコードのバックアップ</h3>
 <p>DNS に最初の変更を加える前に、現在の設定値を全件控えた。旧 WordPress のコンテンツ自体は移行しないため保全対象外だが、 DNS 設定は失うと取り返しがつかないため、最優先で控える工程である。</p>
 <pre><code>dig +short NS pyx.co.jp
 dig +short A pyx.co.jp
@@ -553,7 +571,7 @@ dig +short A www.pyx.co.jp
 dig +short MX pyx.co.jp
 dig +short TXT pyx.co.jp
 </code></pre>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>タイプ</th>
@@ -593,7 +611,7 @@ dig +short TXT pyx.co.jp
 <p>MX と TXT (SPF) の 2 件は、「全レコードを漏れなく控える」という保全要件を満たすために機械的に記録したものである。 <code>pyx.co.jp</code> のメールアドレスは使用したことがなく、今後も使う予定がなかったため、メール関連の移行・保全そのものは検討対象から外した。</p>
 <p>あわせて、 XServer アカウント（ドメイン契約管理ページ）にログインし、 DNS レコード設定画面をスクリーンショットで保存した。 <code>dig</code> の結果は管理画面上の表示と完全には一致しない場合があるため、両方を控えておくのが安全である。控えは Git リポジトリとは別の、ローカルの控え用フォルダに保存した。
 この控えは、後の工程で実際に役に立った。ただし戻すためではなく、戻さなくてよいと判断するために使った。詳しくは次項に記す。</p>
-<h3 id="s4-2">4.2 工程 2 : ネームサーバーを Xserver Domain へ切り替える</h3>
+<h3 id="sec4-2">4.2 工程 2 : ネームサーバーを Xserver Domain へ切り替える</h3>
 <p>XServer アカウントの管理画面で「ネームサーバーの設定」を開き、ネームサーバーを Xserver Domain （サーバー契約に依存しない、ドメイン契約側の標準 DNS 管理機能）に切り替えた。切り替え自体は、管理画面上の一操作で完了する。</p>
 <p>切り替えの反映確認は、必ず権威サーバーへ直接おこなった。</p>
 <pre><code># 委任情報（レジストリ側）
@@ -603,7 +621,7 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 </code></pre>
 <p>ここで、計画書にはなかった事実が一つ現れた。<strong>切り替えは成功したが、それまで設定されていた DNS レコードは、一件も引き継がれなかった。</strong>
 「切り替えたのだから、古い A レコードもそのまま新しい DNS に移るだろう」と考えていたら、ここで作業は止まっていたはずである。実際には、ゾーンを成立させるための NS と SOA は用意されたものの、設定したはずの A/MX/TXT は空だった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>レコード</th>
@@ -658,7 +676,7 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 <p>この判断に伴う副作用として、 A レコードが存在しないため、キャッシュが切れ次第 <code>pyx.co.jp</code> は名前解決できなくなった。二年間放置されたサイトだったため実害はないと判断したが、この影響は 3-4 で改めて触れる。</p>
 <h5>反映が安定するまでの経過</h5>
 <p>切り替え直後は、通常の調べ方（リゾルバ経由）で確認するたびに、結果が異なった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>時刻</th>
@@ -699,7 +717,7 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 しかし、レジストリの委任先からはすでに外れているため、通常の名前解決でそこへ到達することはない。<strong>「古い情報が残っている」ことと「古い情報が使われている」ことは別である。</strong></p>
 <p>原因は技術的な障害ではなく、<strong>誰に問い合わせているか</strong>だった。
 通常の調べ方は途中のキャッシュを経由するため、変更直後は古い情報と新しい情報が混ざる。一方、そのドメインの設定を実際に保持している権威サーバーへ直接尋ねると、答えは最初から一貫していた。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>調べ方</th>
@@ -723,9 +741,9 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 <p>設定を確かめたいときは、待つのではなく、聞く相手を変える。</p>
 <p>これが、この移行を通じて得たいちばん実用的な教訓だった。設定が正しいかどうかは、変更した直後から権威サーバーに聞けば分かる。時間を置く必要はない。
 さらに紛らわしいのは、「レコードが存在しない」という否定の答えもキャッシュされることである（ネガティブキャッシュ）。設定した直後に通常の方法で調べると「まだ無い」と表示されるのが普通で、これが一時間ほど続くこともある。ここで設定を疑って触り直すと、正しかったはずの設定を壊しかねない。</p>
-<h3 id="s4-3">4.3 工程 3 : サイトを構築する</h3>
+<h3 id="sec4-3">4.3 工程 3 : サイトを構築する</h3>
 <p>作業は AI に指示を出しながら進めた。新規リポジトリ <code>pyx-site</code> を作成し、準備中であることを示す一枚物のページを、プレビュー URL で確認できる状態にするまでが、この工程の範囲である。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>項目</th>
@@ -765,11 +783,11 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
 </div>
 <p>次の工程で旧環境を削除すると、後戻りができなくなる (3-4) 。この確認だけが、削除に進む前の唯一の安全策になるため、満たしていない項目があれば、先を急がずここで直した。</p>
-<h3 id="s4-4">4.4 工程 4 : 旧 WordPress 環境を削除する</h3>
+<h3 id="sec4-4">4.4 工程 4 : 旧 WordPress 環境を削除する</h3>
 <p>3-3 の完成条件をすべて満たしたことを確認したうえで、サーバー内の WordPress のデータベースとファイル一式を削除した。
 <strong>削除するのは WordPress のデータのみで、サーバー契約自体の解約は行わない。</strong>契約は期限日まで通常どおり継続し、自動更新が設定されていないため、期限日に自然に凍結される見込みである。</p>
 <p>この工程には、二つの影響があった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>影響</th>
@@ -789,13 +807,13 @@ dig @ns1.xdomain.ne.jp pyx.co.jp A
 </table>
 <p>当初は「削除から DNS 切替までの間だけ、表示が乱れる」と想定していたが、実際にはその期間が前倒しで始まっていた形である。二年近く利用されていないサイトだったため実害はないと判断したが、削除の成否をブラウザで確認できなくなったため、確認手順はサーバーパネル経由に切り替えた。
 <strong>後戻りが存在しない作業では、安全策は「事前の確認」に一本化される。</strong>本計画では、削除より後でロールバックする方法を用意するのではなく、削除に進む前の完成確認 (3-3) に安全性のすべてを預ける設計にした。</p>
-<h3 id="s4-5">4.5 工程 5 : DNS を GitHub Pages へ向ける</h3>
+<h3 id="sec4-5">4.5 工程 5 : DNS を GitHub Pages へ向ける</h3>
 <p>まず GitHub 側で Custom domain を設定し、そのあとで DNS レコードを設定する。この順序を守った (2-5) 。
 GitHub 公式ドキュメントでは DNS プロバイダ側でドメインを向ける前に GitHub Pages 側へカスタムドメインを追加するよう明記している。先に DNS だけを向けてしまうと、そのドメインで第三者が自分のサイトをホストできてしまう状態が生じうるためである。</p>
 <p>リポジトリの Settings → Pages にある Custom domain 欄に <code>pyx.co.jp</code> を入力して保存すると、直下に DNS Check in progress と表示される。この時点ではまだ DNS 側を設定していないため、確認は失敗表示のままだが、想定どおりで異常ではない。
 保存と同時に、リポジトリ直下に <code>CNAME</code> ファイル（中身は <code>pyx.co.jp</code> の一行のみ）が GitHub 側で自動生成・コミットされた。</p>
 <p>続いて Xserver Domain 側の DNS レコード設定画面で、次の 5 件を追加した。工程 2 でゾーンを空のまま進めていたため (3-2) 、これは削除・書き換えを伴わない、純粋な追加作業だった。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>タイプ</th>
@@ -845,7 +863,7 @@ curl -I https://pyx.co.jp
 </code></pre>
 <p>権威サーバー側の答えが揃っていることを確認できたため、あとは時間の問題だった。 GitHub の Pages 設定画面が DNS Check successful （緑のチェックマーク）に変わったのを確認したあと、 Enforce HTTPS を有効化した。
 SSL 証明書の自動発行には最大 1 時間程度、反映には最大 24 時間程度かかることがあるとされているが、今回は大きな遅れなく反映された。</p>
-<h3 id="s4-6">4.6 工程 6 : 切替後の検証</h3>
+<h3 id="sec4-6">4.6 工程 6 : 切替後の検証</h3>
 <p>最後に、独自ドメイン経由での表示を確認した。</p>
 <div class="checklist">
 <span class="cl-title">切替後の検証 チェックリスト</span>
@@ -860,7 +878,7 @@ SSL 証明書の自動発行には最大 1 時間程度、反映には最大 24 
 <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
 </div>
 <p>ここまでで、当初の目的だった「サーバー契約期限までに、旧サイトの表示に依存しない形へ移行する」ことは達成できた。</p>
-<table>
+<table class="cards">
 <thead>
 <tr>
 <th>確認事項</th>
@@ -888,12 +906,10 @@ SSL 証明書の自動発行には最大 1 時間程度、反映には最大 24 
 </table>
 <p>最後の一点は、記事公開後の 2026 年 9 月 1 日に確認できた。
 JPRS の WHOIS で <code>pyx.co.jp</code> を検索したところ、 [ 状態 ] が <code>Connected (2027/08/31)</code> 、 [ 最終更新 ] が <code>2026/09/01 01:08:56 (JST)</code> と表示されており、更新料の支払いがレジストリへ正しく反映されていることを確認できた。</p>
-</section>
 
-<section id="s5">
-<h2><span class="no">5</span>終わってから、わかったこと</h2>
+<h2 id="sec5">5. 終わってから、わかったこと</h2>
 <p>終わってみると、この移行でいちばん重要だったのは、<strong>「いま何がどの契約に紐づいているのか」を見誤らないことと、「ここから先は戻れない」という地点を先に見つけておくこと</strong>だった。緊張が集まっていたのは、この二点だった。</p>
-<h3 id="s5-1">5.1 待つより先にどこにたずねるかを考える</h3>
+<h3 id="sec5-1">5.1 待つより先にどこにたずねるかを考える</h3>
 <ul>
 <li>サーバー契約をやめる前に、 DNS の管理と名前解決がどの契約に紐づいているかを確認する。憶測で進めず、事業者に直接問い合わせる (2-2)</li>
 <li>DNS に触る前に、現在の設定を全件控える。使わないと分かっていても、「何を失うかを知る」ためだけに価値がある (3-1)</li>
@@ -902,12 +918,11 @@ JPRS の WHOIS で <code>pyx.co.jp</code> を検索したところ、 [ 状態 ]
 <li>後戻りが存在しない工程（今回で言えば旧環境の削除）の前には、安全策を「事前の完成確認」に一本化する (3-3, 3-4)</li>
 <li>Custom domain の設定は DNS レコードの設定より先に行う。順序には、思いつきではなく理由がある (2-5, 3-5)</li>
 </ul>
-<h3 id="s5-2">5.2 移行で得たものは、費用よりも単純さだった</h3>
+<h3 id="sec5-2">5.2 移行で得たものは、費用よりも単純さだった</h3>
 <p>費用の面では、月々のレンタルサーバー代が無くなり、かかるのはドメインの維持費用だけになった。これは移行の目的そのものではなく、動的サイトが必須でない場合の選択肢の多さにより、結果として生じた副次的な効果である。</p>
-<h3 id="s5-3">5.3 移行後に残ったもの、消えたもの</h3>
+<h3 id="sec5-3">5.3 移行後に残ったもの、消えたもの</h3>
 <p>移行を終えて実感するのは、サイト維持のためにおこなう作業の少なさである。 WordPress の管理画面で入力する必要がなくなり、サイトを更新するときは HTML ファイルを更新して GitHub へ push するという、ずっと小さな運用である。</p>
-</section>
 
-</div>
+</main>
 </body>
 </html>

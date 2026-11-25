@@ -4,181 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>文章表現技法の体系――修辞学・心理学・ジャーナリズムからの 18 技法</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  nav.toc>ol>li{break-inside:avoid}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* コード、必須、印、結合セルのある表 */
-  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
-  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
-  pre code{background:none;padding:0;font-size:inherit}
-  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
-  pre.term{background:#000;color:#fff;border-color:#000}
-  pre.term code{color:#fff}
-  code.term{background:#000;color:#fff}
-  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
-  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
-  .must pre.term code{color:#fff}
-  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
-  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
-  @media(max-width:640px){
-    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
-    table.cardspan tbody td[rowspan]{display:none}
-    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
   }
-  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
-  .t{fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <p class="kicker">文章技法カタログ</p>
 <h1>文章表現技法の体系<br>――修辞学・心理学・ジャーナリズムからの 18 技法</h1>
 <p class="subtitle">A System of Techniques for Written Expression: Eighteen Methods from Rhetoric, Psychology, and Journalism</p>
-</header>
-<div class="wrap">
 <div class="lede">
 <p>「浜町銀座商店街――魚屋、八百屋、金物屋、洋品店、履物屋、パン屋。だがこの『昭和のままの店構え』、実は生き残るために仕組まれた戦略だったのだ。」――この一文だけで先を読みたくなるとすれば、それは偶然ではない。書き手はそこで、列挙のリズムを作り、そのリズムを裏切り、答えを保留する、といった技法を意識的に使っている。</p>
 <p>文章を魅力的にする技法は、一つの理論ではない。修辞学、心理学、物語論、ジャーナリズム、コピーライティング、エディトリアルデザインという、まったく別々の分野でそれぞれ独立に発見され、名付けられてきた技法の寄せ集めである。本稿は、その寄せ集めを一望できるカタログとしてまとめたものだ。</p>
 </div>
-<div class="meta band"><strong>【本稿の性格】</strong>本稿は、修辞学・心理学・物語論・ジャーナリズム・コピーライティング・エディトリアルデザインという別々の分野で独立に発見・命名されてきた技法を、実務でそのまま使える粒度に落とし込んだカタログである。各技法の起源や定式化者については一次資料または複数の情報源を確認しているが、これらを単一の理論体系として統合する意図はなく、また個別の技法の有効性を実証研究として検証したものでもない。効果の説明は学説・通説に基づく一般的な理解を要約したものであり、断定的な科学的主張として提示するものではない。</div>
-<nav class="toc"><b>目次</b>
+<div class="meta"><strong>【本稿の性格】</strong>本稿は、修辞学・心理学・物語論・ジャーナリズム・コピーライティング・エディトリアルデザインという別々の分野で独立に発見・命名されてきた技法を、実務でそのまま使える粒度に落とし込んだカタログである。各技法の起源や定式化者については一次資料または複数の情報源を確認しているが、これらを単一の理論体系として統合する意図はなく、また個別の技法の有効性を実証研究として検証したものでもない。効果の説明は学説・通説に基づく一般的な理解を要約したものであり、断定的な科学的主張として提示するものではない。</div>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
 <ol>
 <li><a href="#sec1">はじめに</a>
 <ol>
@@ -236,7 +250,7 @@
 <li><a href="#sec11">技法は、迷ったときの地図になる</a></li>
 </ol>
 </nav>
-<section id="sec1"><h2><span class="no">1</span> はじめに</h2>
+<h2 id="sec1">1.  はじめに</h2>
 <p>「浜町銀座商店街――魚屋、八百屋、金物屋、洋品店、履物屋、パン屋。だがこの『昭和のままの店構え』、実は生き残るために仕組まれた戦略だったのだ。」</p>
 <p>これは、この記事のために書き下ろした架空の書き出しである。実在する商店街を取材したものではない。固有名詞を六つ並べたあとに、それを軽く裏切る一文を置く。この一文だけを読んでも、多くの人は「え、どういうこと」と先を読みたくなるはずだ。</p>
 <p>それは偶然ではない。この書き出しを作るとき、いくつかの技法を意識的に使っている。固有名詞を列挙してリズムを作り、そのリズムを裏切る文で読者の注意を引く。要所には、本文から一文を抜き出して大きく見せる「プルクオート」を置く。段落の長さを操作して、読むテンポそのものをコントロールする。</p>
@@ -251,9 +265,8 @@
 「 PAS (Problem - Agitate - Solve) 」、「文長によるテンポ制御」、「可読性指標」、<br>
 「プルクオート」、「サイドバー・囲み記事・キャプション」、<br>
 「見出し設計とスキャン読み」</p>
-</section>
 
-<section id="sec2"><h2><span class="no">2</span> 修辞学（レトリック）の技法</h2>
+<h2 id="sec2">2.  修辞学（レトリック）の技法</h2>
 <p>古代ギリシア・ローマの弁論術に起源を持つ、文の「構文」そのものでリズムと説得力を作る技法群。二千年以上前に体系化されたにもかかわらず、現代の演説やキャッチコピーでも変わらず使われている。</p>
 <h3 id="sec2-1">2.1 列挙法・首句反復 (enumeratio/anaphora)</h3>
 <p>修辞学</p>
@@ -279,9 +292,8 @@
 <p><strong>なぜ効くのか</strong><br><br>文末は読者の記憶に残りやすい位置（新近性効果）であるため、そこを反復語で固定すると、その語がテーマとして刷り込まれやすい。</p>
 <p><strong>具体例</strong><br><br>「品揃えは変わらない。値付けも変わらない。開店時間も変わらない。接客も変わらない。」――文末を「〜も変わらない」で統一し、商店街に対する紋切り型のイメージをリズムよく列挙してから、次段でそれを相対化する構成に使える。</p>
 <p><strong>注意点・乱用のリスク</strong><br><br>首句反復より使用頻度は低く、多用すると説教くさい印象になりやすい。宣言・結論部に絞って使うと効果的。</p>
-</section>
 
-<section id="sec3"><h2><span class="no">3</span> 読者を引き込む心理学の技法</h2>
+<h2 id="sec3">3.  読者を引き込む心理学の技法</h2>
 <p>なぜ人はある構成にだけ引き込まれるのか。この問いに答えを与えるのが、認知心理学や行動経済学の知見である。修辞学が「どう組み立てるか」の技法だとすれば、こちらは「なぜそれが効くのか」のメカニズムに近い。</p>
 <h3 id="sec3-1">3.1 curiosity gap （好奇心の間隙）</h3>
 <p>心理学</p>
@@ -301,9 +313,8 @@
 <p><strong>なぜ効くのか</strong><br><br>読者は提示された情報を無意識に「伏線」として保持する。それが後で回収されると満足感が生まれ、逆に回収されないと（あるいは無関係な要素が多すぎると）物語の焦点がぼやける。</p>
 <p><strong>具体例</strong><br><br>実践ガイドの文脈では、「冒頭で提示した謎かけには、必ず本文中で答えを用意する」という運用に読み替えられる。 curiosity gap で開けた空白を放置しないための、いわば品質管理の原則。</p>
 <p><strong>注意点・乱用のリスク</strong><br><br>厳密に適用しすぎると、雑談的な余談やディテールを一切書けなくなる。実用文では「読者の記憶に残る規模の伏線」に限定して適用するのが現実的。</p>
-</section>
 
-<section id="sec4"><h2><span class="no">4</span> 物語構造の技法</h2>
+<h2 id="sec4">4.  物語構造の技法</h2>
 <p>一文・一段落単位の技法ではなく、記事全体の設計図に関わる技法。ノンフィクションや実用記事であっても、物語構造を借りると読者の体感的な「流れ」が生まれる。</p>
 <h3 id="sec4-1">4.1 三幕構成</h3>
 <p>物語論</p>
@@ -317,9 +328,8 @@
 <p><strong>なぜ効くのか</strong><br><br>抽象論だけでは実感が湧かず、具体例だけでは「で、結局何が言いたいのか」が見えなくなる。往復させることで、主張の説得力と実感の両方を確保できる。</p>
 <p><strong>具体例</strong><br><br>先の商店街の例は「商店街は町の記憶装置だった（抽象）」→「金物屋の三代目が先代の帳面をそのまま使い続けている（具体）」→「昭和・平成・令和の店主たちが、それぞれの時代に合わせて商いのやり方を引き継ぎ直してきた（抽象への回帰）」という往復を、章の中で、あるいは章をまたいで繰り返している。</p>
 <p><strong>注意点・乱用のリスク</strong><br><br>往復の幅が狭すぎる（抽象と具体がほぼ同じことを言い換えているだけ）と、単なる冗長な文章になる。具体例は、抽象論からは予想できないディテールを含んでいるほうが良い。</p>
-</section>
 
-<section id="sec5"><h2><span class="no">5</span> リード文（書き出し）の型――ジャーナリズムの技法</h2>
+<h2 id="sec5">5.  リード文（書き出し）の型――ジャーナリズムの技法</h2>
 <p>記事の最初の数行は、読み進めるかどうかを決める最大の分岐点である。新聞・雑誌ジャーナリズムは、この書き出しの型を長年かけて洗練させてきた。</p>
 <h3 id="sec5-1">5.1 逆三角形・サマリーリード</h3>
 <p>ジャーナリズム</p>
@@ -333,9 +343,8 @@
 <p><strong>なぜ効くのか</strong><br><br>人間は抽象的な統計やテーゼより、具体的な人物や場面の描写に感情移入しやすい。逆三角形が「情報の効率」を優先する型だとすれば、アネクドートリードは「読者の感情的な没入」を優先する型である。</p>
 <p><strong>具体例</strong><br><br>先の商店街の例は「シャッター通りが待っている――はずだった」という、書き手自身の体感から始まる。統計や定義からではなく、感覚の描写から入っている。</p>
 <p><strong>注意点・乱用のリスク</strong><br><br>エピソードが長すぎると、本題になかなか入らず読者が離脱する。逸話は「本題への入り口」であって、本題そのものではないことを忘れない。</p>
-</section>
 
-<section id="sec6"><h2><span class="no">6</span> コピーライティングのフレームワーク</h2>
+<h2 id="sec6">6.  コピーライティングのフレームワーク</h2>
 <p>広告・セールスライティングの世界で発展した、読者の行動を最終的な一歩（購入・登録・共感）まで導くための構成フレームワーク。実用記事でも「最後まで読ませ、行動につなげる」目的があるなら応用できる。</p>
 <h3 id="sec6-1">6.1 AIDA</h3>
 <p>コピーライティング</p>
@@ -349,9 +358,8 @@
 <p><strong>なぜ効くのか</strong><br><br>問題を提示しただけでは、読者は「まあ大した問題ではない」と読み流してしまう。あえて問題を掘り下げて実感させてから解決策を示すことで、解決策のありがたみが増す。</p>
 <p><strong>具体例</strong><br><br>「技法はバラバラに存在し、体系だって学ぶ機会がない (Problem) 」「だから多くの書き手は、なぜ自分の文章が読まれないのか分からないまま書き続けている (Agitate) 」「この記事はその技法を一望できるカタログとして整理する (Solve) 」という流れに読み替えられる。</p>
 <p><strong>注意点・乱用のリスク</strong><br><br>Agitate （問題の掘り下げ）を煽情的にやりすぎると、不安を煽るだけの文章になりかねない。実用ガイドでは Agitate を「共感」程度に抑えるのが穏当。</p>
-</section>
 
-<section id="sec7"><h2><span class="no">7</span> 文章そのもののテンポと可読性</h2>
+<h2 id="sec7">7.  文章そのもののテンポと可読性</h2>
 <p>構成の技法とは別に、一文一文の長さ・難易度そのものが読みやすさを左右する。こちらは経験則と、それを裏付ける計量的な指標の両方が存在する。</p>
 <h3 id="sec7-1">7.1 文長によるテンポ制御</h3>
 <p>文章読本・作文技術</p>
@@ -365,9 +373,8 @@
 <p><strong>なぜ効くのか</strong><br><br>感覚的な「読みやすさ」を数値化することで、自分の文章の癖（一文が長すぎる、専門用語が多すぎる等）を客観的にチェックできる。あくまで補助的な指標であり、これ自体が良い文章を保証するものではない。</p>
 <p><strong>具体例</strong><br><br>実用記事を書いたあと、 jReadability のようなツールに通し、平均文長や語彙の難易度が想定読者に見合っているかを確認する、という使い方ができる。</p>
 <p><strong>注意点・乱用のリスク</strong><br><br>数値を下げること自体が目的化すると、不自然に単純化された、味気ない文章になる。指標は診断のためのものであり、最終判断は人間の読み手の感覚に委ねるべき。</p>
-</section>
 
-<section id="sec8"><h2><span class="no">8</span> エディトリアルデザイン（誌面設計）の技法</h2>
+<h2 id="sec8">8.  エディトリアルデザイン（誌面設計）の技法</h2>
 <p>最後は、文章そのものではなく、文章の「見せ方」に関わる技法。雑誌・新聞編集の現場で培われてきたレイアウトの工夫であり、文章構成論とは別のレイヤーに属する。</p>
 <h3 id="sec8-1">8.1 プルクオート</h3>
 <p>エディトリアルデザイン</p>
@@ -387,11 +394,10 @@
 <p><strong>なぜ効くのか</strong><br><br>見出しだけを読んでも記事の骨子が伝わるように設計しておけば、精読する読者にもスキャン読みする読者にも対応できる。目次（この記事冒頭のもの）も、スキャン読みへの対応の一形態である。</p>
 <p><strong>具体例</strong><br><br>この記事の見出しは「◯◯とは」ではなく、なるべく技法名そのものを名詞で置き、小見出しの並びだけで全体の地図が見えるように統一している。</p>
 <p><strong>注意点・乱用のリスク</strong><br><br>見出しを凝りすぎて内容を表さない（いわゆる「うまい見出し」優先）にすると、スキャン読みする読者には逆に何の記事か伝わらなくなる。</p>
-</section>
 
-<section id="sec9"><h2><span class="no">9</span> 技法同士の関係を整理する</h2>
+<h2 id="sec9">9.  技法同士の関係を整理する</h2>
 <p>ここまで 18 の技法を並べたが、これらは決して同じレイヤーにある技法ではない。混同すると「なぜこの技法を使うのか」の説明がぶれてしまうので、いったん整理しておく。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>レイヤー</th><th>扱う対象</th><th>代表的な技法</th></tr></thead>
 <tbody>
 <tr><th>文の構文（レトリック）</th><td data-label="扱う対象">一文・一節の組み立て方</td><td data-label="代表的な技法">列挙法・トライコロン・アンチテーゼ・エピストロフィ</td></tr>
@@ -405,9 +411,8 @@
 </table>
 <p>重要なのは、これらのレイヤーは互いに排他的ではなく、同時に重ねて使えるという点だ。たとえば curiosity gap で読者の興味を引きつけながら（心理）、三幕構成で記事全体を組み立て（構造）、要所にプルクオートを置く（見せ方）――一つの記事の中で、複数のレイヤーの技法が同時並行で働いている。逆に言えば、「なぜかうまく読ませる記事」を分解すると、たいてい複数のレイヤーの技法が重なっていることが多い。</p>
 <p>技法は一つずつ効くのではなく、レイヤーの異なる技法を重ねたときに、初めて「読まされてしまう文章」になる。</p>
-</section>
 
-<section id="sec10"><h2><span class="no">10</span> 実践チェックリスト</h2>
+<h2 id="sec10">10.  実践チェックリスト</h2>
 <p>書き終えたら、あるいは書く前の設計段階で、以下を確認してみてほしい。すべてを満たす必要はないが、多く当てはまるほど「読まされる」文章に近づく。</p>
 <ul>
 <li><strong>書き出し</strong><br><br>逆三角形（結論先出し）とアネクドートリード（具体的な場面から）、どちらの型を使うかを意識して選んだか。</li>
@@ -420,19 +425,17 @@
 <li><strong>可読性</strong><br><br>専門用語や一文の長さが、想定読者にとって過剰になっていないか。</li>
 <li><strong>行動喚起</strong><br><br>この記事を読んだ読者に、次に何をしてほしいのかが明確か（ AIDA の Action 、 PAS の Solve に相当）。</li>
 </ul>
-</section>
 
-<section id="sec11"><h2><span class="no">11</span> 技法は、迷ったときの地図になる</h2>
+<h2 id="sec11">11.  技法は、迷ったときの地図になる</h2>
 <p>文章の魅力は、最終的には言語化しきれない部分に宿る。だからこの記事に挙げた 18 の技法をすべて満たしても、面白い文章が自動的に書けるわけではない。修辞学は二千年以上前から存在するが、退屈な演説は今もなくならない。</p>
 <p>それでも、これらの技法を知っておく価値はある。書いていて「何かが足りない」と感じたとき、あるいは読み返して「なぜかうまく読ませられない」と感じたとき、この記事のカタログは、その違和感の正体を言い当てるための地図になる。書き出しの型が合っていないのか。構文のリズムが単調なのか。空白を作ったのに埋め忘れているのか。地図があれば、迷った場所を指差すことができる。</p>
 <p>この記事に挙げた商店街の例文も、はじめから技法を狙って書いたわけではない。感覚的に「ここは畳みかけたい」「ここで一度立ち止まらせたい」と判断しながら書き、書き終えてから「これは列挙法だ」「これは curiosity gap だ」と後付けで気づいた箇所も多い。だが、それらの判断には、すでに名前がついていた。技法を知ることの意味は、感覚を置き換えることではなく、<strong>すでに使っている感覚に、再現可能な名前を与えること</strong>にある。</p>
 <p>名前がつけば、次はもっと自覚的に使える。
 そして自覚的に使えば、次はもっと外して、もっと組み合わせられる。</p>
-</section>
 
 <div class="refs">
 <h2>参考文献・出典</h2>
-<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1"><a href="#fnref-1-1">^</a> Wikipedia, "Rule of three (writing) " 。トライコロン（三段法）の定義と由来について。 <a href="https://en.wikipedia.org/wiki/Rule_of_three_(writing)">Wikipedia</a></li>
 <li id="ref-2"><a href="#fnref-2-1">^</a> Manner of Speaking, "Rhetorical Devices: Tricolon" 。キケロの使用例、 "Veni, vidi, vici" について。 <a href="https://mannerofspeaking.org/2015/03/16/rhetorical-devices-tricolon/">mannerofspeaking.org</a></li>
@@ -462,6 +465,6 @@
 <li id="ref-26"><a href="#fnref-26-1">^</a> Nielsen Norman Group, "F-Shaped Pattern For Reading Web Content" 。アイトラッキング調査によるウェブ読者の視線パターンについて。 <a href="https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/">nngroup.com</a></li>
 </ol>
 </div>
-</div>
+</main>
 </body>
 </html>

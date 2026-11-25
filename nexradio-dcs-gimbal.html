@@ -4,161 +4,186 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NexRadio 14 と DCS ジンバル</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
-  /* この文書に固有の部品(和色に合わせたもの) */
-  code{background:#f8e4cb;padding:.1rem .35rem;border-radius:6px;font-size:max(16px,.92em);overflow-wrap:anywhere}
-  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#efe3c8;padding:12px 16px;border-radius:12px;margin:0 0 20px;font-size:16px;line-height:1.6}
-  pre code{background:none;padding:0;font-size:inherit}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+  }
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <h1>BETAFPV NexRadio 14 と DCS ジンバル</h1>
-</header>
-<div class="wrap">
-
-
-
 <p class="meta">情報の確認日 : 2026 年 11 月 5 日。 TX16S MK II の所有を前提に改訂し、全体を査読した。</p>
 
 <div class="lede">
@@ -166,44 +191,43 @@
 </div>
 
 <nav class="toc" aria-label="目次">
-<b>目次</b>
+<p class="toc-title">目次</p>
 <ol>
-<li><a href="#s1">要点</a></li>
-<li><a href="#s2">NexRadio 14 の仕様</a>
+<li><a href="#sec1">要点</a></li>
+<li><a href="#sec2">NexRadio 14 の仕様</a>
 <ol>
-<li><a href="#s2-1">本体仕様</a></li>
-<li><a href="#s2-2">RF と拡張性</a></li>
+<li><a href="#sec2-1">本体仕様</a></li>
+<li><a href="#sec2-2">RF と拡張性</a></li>
 </ol>
 </li>
-<li><a href="#s3">スティック検出方式の技術解説</a>
+<li><a href="#sec3">スティック検出方式の技術解説</a>
 <ol>
-<li><a href="#s3-1">三方式の比較</a></li>
-<li><a href="#s3-2">静電容量センシングの原理</a></li>
-<li><a href="#s3-3">DCS の利点と留意点</a></li>
+<li><a href="#sec3-1">三方式の比較</a></li>
+<li><a href="#sec3-2">静電容量センシングの原理</a></li>
+<li><a href="#sec3-3">DCS の利点と留意点</a></li>
 </ol>
 </li>
-<li><a href="#s4">NexRadio DCS Gimbal 単体品</a>
+<li><a href="#sec4">NexRadio DCS Gimbal 単体品</a>
 <ol>
-<li><a href="#s4-1">仕様と価格</a></li>
-<li><a href="#s4-2">TX16S MK II への換装</a></li>
-<li><a href="#s4-3">換装のメリットとリスク</a></li>
+<li><a href="#sec4-1">仕様と価格</a></li>
+<li><a href="#sec4-2">TX16S MK II への換装</a></li>
+<li><a href="#sec4-3">換装のメリットとリスク</a></li>
 </ol>
 </li>
-<li><a href="#s5">コスト比較</a></li>
-<li><a href="#s6">日本国内の流通状況と法規</a>
+<li><a href="#sec5">コスト比較</a></li>
+<li><a href="#sec6">日本国内の流通状況と法規</a>
 <ol>
-<li><a href="#s6-1">流通状況</a></li>
-<li><a href="#s6-2">技適との関係</a></li>
-<li><a href="#s6-3">個人輸入するときの注意</a></li>
+<li><a href="#sec6-1">流通状況</a></li>
+<li><a href="#sec6-2">技適との関係</a></li>
+<li><a href="#sec6-3">個人輸入するときの注意</a></li>
 </ol>
 </li>
-<li><a href="#s7">導入判断チェックリスト</a></li>
-<li><a href="#s8">未確認事項</a></li>
+<li><a href="#sec7">導入判断チェックリスト</a></li>
+<li><a href="#sec8">未確認事項</a></li>
 </ol>
 </nav>
 
-<section id="s1">
-<h2><span class="no">1</span>要点</h2>
+<h2 id="sec1">1. 要点</h2>
 <ul>
 <li><strong>NexRadio 14</strong> は、 BETAFPV が「世界初」とうたうデジタル静電容量方式 (DCS) ジンバルを搭載した、 EdgeTX 搭載のプロポである。内蔵 RF は ELRS Gemini-X （デュアルバンド）で、現在はベータテスト枠で先行販売されている <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。</li>
 <li><strong>NexRadio DCS Gimbal</strong> は、同じジンバルの単体品である。他社製プロポへの後付けを想定しており、ベータ枠は限定 100 台、価格は約 32 米ドルである <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</li>
@@ -216,15 +240,12 @@
 <strong>注意</strong><br>本書の「世界初」「ほぼ半永久」「磁気の影響を一切受けない」などの表現は、メーカーの主張を整理したものである。実測で確かめた結果ではない。確度の低い事項は、第 8 章にまとめた。
 </div>
 
-</section>
+<h2 id="sec2">2. NexRadio 14 の仕様</h2>
 
-<section id="s2">
-<h2><span class="no">2</span>NexRadio 14 の仕様</h2>
-
-<h3 id="s2-1">2.1 本体仕様</h3>
+<h3 id="sec2-1">2.1 本体仕様</h3>
 <p>製品ページと報道記事から確認できた仕様を示す <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup><sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。</p>
 
-<table>
+<table class="cardrow">
 <thead>
 <tr><th>項目</th><th>内容</th><th>補足</th></tr>
 </thead>
@@ -241,22 +262,19 @@
 </tbody>
 </table>
 
-<h3 id="s2-2">2.2 RF と拡張性</h3>
+<h3 id="sec2-2">2.2 RF と拡張性</h3>
 <ul>
 <li><strong>内蔵 RF</strong><br>ExpressLRS (ELRS) の Gemini-X に対応するデュアルバンド送信モジュールを内蔵する。 2.4 GHz 帯と 900 MHz / 868 MHz 帯の組み合わせで、 2 系統を同時に使うことで、リンクの安定性を高める方式である。</li>
 <li><strong>外部モジュールベイ</strong><br>背面に Micro / Nano サイズのモジュールを載せるベイがある（モジュールは付属しない）。これにより、 ELRS 以外のプロトコルを追加できる <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。</li>
 <li><strong>国内での利用</strong><br>内蔵モジュールの周波数帯や出力が、日本の技適・運用条件に適合するかは、別に確認が必要である。とくに 900 MHz / 868 MHz 帯は、 2.4 GHz 帯と国内での扱いが異なる。本書では扱わない（第 6 章を参照）。</li>
 </ul>
 
-</section>
+<h2 id="sec3">3. スティック検出方式の技術解説</h2>
 
-<section id="s3">
-<h2><span class="no">3</span>スティック検出方式の技術解説</h2>
-
-<h3 id="s3-1">3.1 三方式の比較</h3>
+<h3 id="sec3-1">3.1 三方式の比較</h3>
 <p>工学・製造の分野では、「 Digital Capacitive Sensing 」は一般に「静電容量方式」または「デジタル静電容量方式」と呼ばれる。プロポのスティックで使われる三方式を比べる。</p>
 
-<table>
+<table class="cardrow">
 <thead>
 <tr><th>項目</th><th>① ポテンショメータ（抵抗式）</th><th>② ホールエフェクト（磁気式）</th><th>③ デジタル静電容量（ DCS 方式）</th></tr>
 </thead>
@@ -270,7 +288,7 @@
 </tbody>
 </table>
 
-<h3 id="s3-2">3.2 静電容量センシングの原理</h3>
+<h3 id="sec3-2">3.2 静電容量センシングの原理</h3>
 <p>静電容量は、向き合う二つの電極の間に電荷をどれだけ蓄えられるかを表す量である。電極の重なる面積や間隔が変わると、静電容量も変わる。スティックの動きを、この電極配置の変化に置き換えて読み取るのが、静電容量式のジンバルである。以下は一般的な原理の説明であり、 NexRadio の内部構造を示すものではない。</p>
 <ol>
 <li><strong>位置から容量へ</strong><br>スティックの傾きに連動して、電極の重なり方が変わる。その結果、静電容量が連続的に変化する。</li>
@@ -279,7 +297,7 @@
 </ol>
 <p>商品ページは、 13 ビット（ 8,192 段階）の分解能と、最大 1 kHz の「スマートサンプリング」を挙げていると報告されている <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup><sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> 。スマートサンプリングの具体的な処理内容は、公開情報からは分からない。なお、 1 kHz という数字は、再確認で裏取りできていない（第 8 章）。</p>
 
-<h3 id="s3-3">3.3 DCS の利点と留意点</h3>
+<h3 id="sec3-3">3.3 DCS の利点と留意点</h3>
 <p><strong>期待される利点</strong></p>
 <ol>
 <li><strong>磁気干渉からの解放</strong><br>スマートフォンのスピーカー、モーター、工具などの磁場によるセンターずれや誤動作を、原理的に避けられる。 TX16S MK II の標準ジンバルは磁気式（ホール式）なので、換装で得られる差の中心はここにある。</li>
@@ -293,13 +311,10 @@
 <li><strong>機械部分の寿命は別</strong><br>検出部が摩耗しなくても、スティックの軸、バネ、ギアなどの機械部品は消耗する。「ジンバル全体が半永久」という意味ではない。</li>
 </ul>
 
-</section>
+<h2 id="sec4">4. NexRadio DCS Gimbal 単体品</h2>
 
-<section id="s4">
-<h2><span class="no">4</span>NexRadio DCS Gimbal 単体品</h2>
-
-<h3 id="s4-1">4.1 仕様と価格</h3>
-<table>
+<h3 id="sec4-1">4.1 仕様と価格</h3>
+<table class="cardrow">
 <thead>
 <tr><th>項目</th><th>内容</th></tr>
 </thead>
@@ -315,7 +330,7 @@
 </table>
 <p>円換算は為替で変わる。約 32 米ドルは、 1 米ドルが 155 円前後なら、約 5,000 円である。送料と税は含まない。左右 2 個が必要で、この価格が 1 個分なら、約 1 万円になる。</p>
 
-<h3 id="s4-2">4.2 TX16S MK II への換装</h3>
+<h3 id="sec4-2">4.2 TX16S MK II への換装</h3>
 <p>BETAFPV は、 RadioMaster 製プロポ向けの取付ガイドと、 EdgeTX 用ファームウェア(<code>.uf2</code>)を配布している。公式情報から確認できた点は次のとおり <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。</p>
 <ul>
 <li><strong>対応機種</strong><br>BETAFPV の別ページには、 RadioMaster の TX16 / TX15 / Boxer が対応機種として挙げられている。取付ガイドは、 <strong>TX16S MK II</strong> を対象にしている。お手元の機体は、この対象に当たる。</li>
@@ -327,8 +342,8 @@
 
 <div class="caution"><p><strong>購入前に、取付ガイドの最新版を原文で読むこと。</strong>本書が根拠にしたガイドの内容は、検索結果の要約を通じて得たものである。ベータ品は、ガイドが更新されうる。とくに、ケーブルの長さとコネクタ形状、 UART の割り当て、ファームウェアの書き込み手順は、原文で照合してから注文すること。</p></div>
 
-<h3 id="s4-3">4.3 換装のメリットとリスク</h3>
-<table>
+<h3 id="sec4-3">4.3 換装のメリットとリスク</h3>
+<table class="cardrow">
 <thead>
 <tr><th>観点</th><th>メリット</th><th>リスク・注意</th></tr>
 </thead>
@@ -341,12 +356,9 @@
 </tbody>
 </table>
 
-</section>
-
-<section id="s5">
-<h2><span class="no">5</span>コスト比較</h2>
+<h2 id="sec5">5. コスト比較</h2>
 <p>RadioMaster 純正の CNC ジンバル（ AG01 など）は、元資料に約 2 万〜 2.5 万円とある。ただし、本書では店頭価格を確かめておらず、左右 2 個の組の価格かどうかも分からない。これに対して、 DCS ジンバルは約 32 米ドルである <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。この価格も 1 個分か 2 個分かが未確認なので、下の表は左右 2 個分に換算して比べる必要がある。</p>
-<table>
+<table class="cardrow">
 <thead>
 <tr><th>選択肢</th><th>費用の目安</th><th>検出方式</th><th>特徴</th></tr>
 </thead>
@@ -358,25 +370,22 @@
 </table>
 <p>価格差は大きいが、比べているのは検出方式だけではない。純正 CNC ジンバルは、筐体の剛性、スティックの感触、調整機構も含めた商品である。 DCS ジンバルの機械的な作りの品質は、実物のレビューを待って判断したい。また、 TX16S MK II の標準ジンバルはすでに非接触のホール式である。換装で得られる差は、接触式から非接触式への改善ではなく、磁気式から静電容量式への違いに限られる。この差に費用をかける価値があるかが、判断の中心になる。</p>
 
-</section>
+<h2 id="sec6">6. 日本国内の流通状況と法規</h2>
 
-<section id="s6">
-<h2><span class="no">6</span>日本国内の流通状況と法規</h2>
-
-<h3 id="s6-1">6.1 流通状況</h3>
+<h3 id="sec6-1">6.1 流通状況</h3>
 <ul>
 <li><strong>国内販売</strong><br>日本国内の主要ドローン専門店（ Goldstone Japan 、 Goohobby 、 DAYSCAPE など）や主要 EC サイト（ Amazon 、楽天）では、一般販売・在庫を確認できていない。</li>
 <li><strong>現在の立ち位置</strong><br>海外の BETAFPV 公式サイトで、「 BETA TEST 」枠として先行販売されている段階である。</li>
 <li><strong>今後の見通し</strong><br>海外で量産・通常販売が始まれば、国内の代理店やショップがカスタムパーツとして取り扱う可能性は高い。ただし、時期は不明である。 NexRadio 14 本体については、公開済みの発売時期の情報はない <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 。</li>
 </ul>
 
-<h3 id="s6-2">6.2 技適との関係</h3>
+<h3 id="sec6-2">6.2 技適との関係</h3>
 <p>技適（技術基準適合証明）は、電波を発する無線設備に求められる制度である。ジンバルは位置を検出して信号に変える部品で、電波を発しないため、単体では技適の対象外と考えられる。したがって、技適に適合した状態の TX16S MK II のスティック部分だけを入れ替えても、無線部分の適合状態は変わらないと考えられる。</p>
 <div class="box">
 <strong>注意</strong><br>上の判断は、一般的な理解にもとづく。個別の改造が法令上どう扱われるかを確認する場合は、総務省や専門家の見解を参照すること。一方、 NexRadio 14 <strong>本体</strong>は、無線設備を内蔵するため、国内で適法に使うには技適の確認が不可欠である。
 </div>
 
-<h3 id="s6-3">6.3 個人輸入するときの注意</h3>
+<h3 id="sec6-3">6.3 個人輸入するときの注意</h3>
 <ul>
 <li><strong>送料と税</strong><br>国際送料に加え、輸入時に消費税などがかかる。少額の商品でも、合計は商品価格より高くなる。</li>
 <li><strong>ベータ品の性質</strong><br>ベータ枠の商品は、仕様・ファームウェア・取付ガイドが更新される可能性がある。初期ロットの不具合も覚悟したい。</li>
@@ -384,10 +393,7 @@
 <li><strong>入手を待つ選択肢</strong><br>国内の取り扱いや、レビューが出てから決めるのも合理的である。</li>
 </ul>
 
-</section>
-
-<section id="s7">
-<h2><span class="no">7</span>導入判断チェックリスト</h2>
+<h2 id="sec7">7. 導入判断チェックリスト</h2>
 <p>換装を検討するときの点検項目を示す。</p>
 <div class="checklist">
 <span class="cl-title">購入前チェックリスト</span>
@@ -405,12 +411,9 @@
 <p class="save-note">※チェック状態はこのページを閉じる（更新する）と保存されません。印刷や手書きメモと併用してください。</p>
 </div>
 
-</section>
-
-<section id="s8">
-<h2><span class="no">8</span>未確認事項</h2>
+<h2 id="sec8">8. 未確認事項</h2>
 <p>本書の作成時に、裏取りができなかった事項、または情報源が食い違った事項を示す。今回の査読では、 BETAFPV と RadioMaster の公式ページが取得制限（ HTTP 429 ）で再確認できなかった。本体仕様は報道記事との照合にとどまる。</p>
-<table>
+<table class="cardrow">
 <thead>
 <tr><th>事項</th><th>状況</th><th>確認方法</th></tr>
 </thead>
@@ -425,11 +428,9 @@
 <tr><th scope="row">NexRadio 14 本体の価格</th><td data-label="状況">報道記事には価格の記載がなく、別の検索結果は 135.99 米ドルと報告している。</td><td data-label="確認方法">公式の商品ページを直接確かめる。</td></tr>
 </tbody>
 </table>
-
-</section>
 <div class="refs">
 <h2>参考文献・資料</h2>
-<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> BETAFPV, <em>[BETA TEST] NexRadio 14 Radio Controller</em>, 製品ページ。 <a href="https://betafpv.com/products/nexradio-14-radio-controller">BETAFPV 公式</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> BETAFPV, <em>[BETA TEST] NexRadio Gimbal</em>, 製品ページ。 <a href="https://betafpv.com/products/nexradio-gimbal">BETAFPV 公式</a></li>
@@ -439,6 +440,6 @@
 </ol>
 </div>
 
-</div>
+</main>
 </body>
 </html>

@@ -4,157 +4,188 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>新築マンションの平均価格が一億円超え。一体、誰が買っているのか</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+  }
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <p class="kicker">解説記事・住宅市場の統計</p>
 <h1>新築マンションの平均価格が一億円超え。<br>一体、誰が買っているのか</h1>
 <p class="subtitle">Who Buys Japan's ¥100 Million New Condominiums? Reading Average Prices Against Buyer Survey Data</p>
-</header>
-<div class="wrap">
-
 <p class="meta">作成 : 2026-10-30 ／ 数値の確認日 : 2026-10-30</p>
 
 <div class="lede">
@@ -162,39 +193,38 @@
 <p>この文書は、公表されている統計と調査をたどり、購入者がどんな人たちで、何を理由に買っているのかを整理する。</p>
 </div>
 
-<div class="meta band"><strong>【方法と限界】</strong>数値は、 2026 年 10 月 30 日までに確認した公表資料による。購入者の層（実需の共働き世帯、資産家、投資家、海外居住者）の割合を、一つの統計で示す資料は見つからなかった。そのため、各層を別々の資料で確かめ、確かめられなかった部分は推測であると明記している。不動産経済研究所の数値は、原資料ではなく解説記事で確認したものである（参考文献欄に明記）。</div>
+<div class="meta"><strong>【方法と限界】</strong>数値は、 2026 年 10 月 30 日までに確認した公表資料による。購入者の層（実需の共働き世帯、資産家、投資家、海外居住者）の割合を、一つの統計で示す資料は見つからなかった。そのため、各層を別々の資料で確かめ、確かめられなかった部分は推測であると明記している。不動産経済研究所の数値は、原資料ではなく解説記事で確認したものである（参考文献欄に明記）。</div>
 
 <nav class="toc" aria-label="目次">
-<b>目次</b>
+<p class="toc-title">目次</p>
 <ol>
-<li><a href="#s1">平均価格の読み方</a>
+<li><a href="#sec1">平均価格の読み方</a>
 <ol>
-<li><a href="#s1-1">数字の推移</a></li>
-<li><a href="#s1-2">平均は「実際の購入価格」ではない</a></li>
+<li><a href="#sec1-1">数字の推移</a></li>
+<li><a href="#sec1-2">平均は「実際の購入価格」ではない</a></li>
 </ol>
 </li>
-<li><a href="#s2">購入者の主な層</a>
+<li><a href="#sec2">購入者の主な層</a>
 <ol>
-<li><a href="#s2-1">高所得の共働き世帯（実需層）</a></li>
-<li><a href="#s2-2">資産性を重視する層と資産家</a></li>
-<li><a href="#s2-3">投資家・法人</a></li>
-<li><a href="#s2-4">海外居住者</a></li>
+<li><a href="#sec2-1">高所得の共働き世帯（実需層）</a></li>
+<li><a href="#sec2-2">資産性を重視する層と資産家</a></li>
+<li><a href="#sec2-3">投資家・法人</a></li>
+<li><a href="#sec2-4">海外居住者</a></li>
 </ol>
 </li>
-<li><a href="#s3">なぜ価格は上がったのか</a></li>
-<li><a href="#s4">買えない人の選択</a></li>
-<li><a href="#s5">まとめ</a></li>
-<li><a href="#s6">確かめられなかったこと</a></li>
+<li><a href="#sec3">なぜ価格は上がったのか</a></li>
+<li><a href="#sec4">買えない人の選択</a></li>
+<li><a href="#sec5">まとめ</a></li>
+<li><a href="#sec6">確かめられなかったこと</a></li>
 </ol>
 </nav>
 
-<section id="s1">
-<h2><span class="no">1</span>平均価格の読み方</h2>
+<h2 id="sec1">1. 平均価格の読み方</h2>
 
-<h3 id="s1-1">1.1 数字の推移</h3>
+<h3 id="sec1-1">1.1 数字の推移</h3>
 <p>「平均価格 1 億円超え」の出どころは、不動産経済研究所が毎年公表する新築分譲マンションの市場動向である。東京 23 区の 1 戸当たりの平均価格は、次のように推移している。</p>
 
-<table>
+<table class="cardrow">
 <thead>
 <tr><th>区分</th><th>平均価格</th><th>前年（度）比</th><th>補足</th></tr>
 </thead>
@@ -208,7 +238,7 @@
 
 <p>平均価格は 3 年連続で 1 億円を超えている。ただし 2024 年は、前年を下回った。平均価格は物件の入れ替わりに左右されるため、この下落は、個々のマンションが値下がりしたことを意味しない。同時に、発売戸数が大きく減っている点にも注意が必要である。高額な物件が少数供給されるだけで、平均は動く。</p>
 
-<h3 id="s1-2">1.2 平均は「実際の購入価格」ではない</h3>
+<h3 id="sec1-2">1.2 平均は「実際の購入価格」ではない</h3>
 <p>不動産経済研究所の平均は、その年に発売された物件の価格の平均である。これに対し、リクルートの SUUMO リサーチセンターは、実際に契約した人に購入価格を尋ねている。 2025 年の調査では、首都圏の平均購入価格が 7,324 万円、東京 23 区の物件は 9,598 万円だった <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup> 。東京 23 区の物件で比べると、約 4,000 万円の開きがある。</p>
 <p>この開きの理由は、二つの資料からは確定できない。考えられるのは、次の 3 点である。</p>
 <ul>
@@ -217,13 +247,11 @@
 <li><strong>購入者の層の偏り</strong><br>億ション（1 億円以上の住戸）を買う人が、アンケートに答えにくい可能性がある。</li>
 </ul>
 <p>いずれも推測である。確実に言えるのは、「平均 1 億円超え」と「購入者が実際に払った額」を同じものとして読んではいけない、という点だ。契約者調査で購入価格の分布を見ると、首都圏では 6,000 〜 8,000 万円未満が 32.1% で最も多く、 1 億円以上は 14.3% である（1 億〜 1 億 5,000 万円未満が 11.3% 、 1 億 5,000 万円以上が 3.0%）<sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup> 。</p>
-</section>
 
-<section id="s2">
-<h2><span class="no">2</span>購入者の主な層</h2>
+<h2 id="sec2">2. 購入者の主な層</h2>
 <p>購入者の姿を最も詳しく示すのは、 SUUMO リサーチセンターの契約者動向調査である。 2025 年に首都圏（東京都・神奈川県・埼玉県・千葉県）で新築分譲マンションを契約した 5,140 件の回答を集計している <sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup> 。主な結果は、次のとおりである。</p>
 
-<table>
+<table class="cardrow">
 <thead>
 <tr><th>項目</th><th>数値</th><th>読み取れること</th></tr>
 </thead>
@@ -240,26 +268,24 @@
 </table>
 <p>数値はいずれも首都圏全体の契約者の集計で、東京 23 区に限った値ではない。以下、層ごとに読み解く。</p>
 
-<h3 id="s2-1">2.1 高所得の共働き世帯（実需層）</h3>
+<h3 id="sec2-1">2.1 高所得の共働き世帯（実需層）</h3>
 <p>最も多いのは、住むために買う共働き世帯である。世帯総年収が 1,000 万円以上の既婚・共働き世帯だけで、契約者全体の 39% を占める。その平均購入価格は 8,483 万円で、最多の価格帯は 6,000 〜 8,000 万円未満（39%）である <sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup> 。年収が高い層ほど、東京 23 区の物件を選ぶ傾向もある。世帯総年収 1,000 万円以上の既婚・共働き世帯では、 41.3% が 23 区の物件を買った。 1,000 万円未満の世帯では 16.1% にとどまり、千葉県（20.1%）のほうが多い <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup> 。</p>
 <p>ただし、年収が高いことと、余裕を持って買っていることは別である。契約者の自己資金比率は、 0% が 20.6% 、 5% 未満が 23.4% で、頭金をほとんど入れない人が合わせて 4 割を超える。その分、借入が大きくなり、ペアローンの比率が高くなっている <sup id="fnref-5-7"><a href="#ref-5">[5]</a></sup> 。二人の収入が続くことを前提にした返済計画である点には、注意が必要だ。なお、この調査には職業の項目がなく、医師・弁護士・外資系勤務といった内訳は分からない。</p>
 
-<h3 id="s2-2">2.2 資産性を重視する層と資産家</h3>
+<h3 id="sec2-2">2.2 資産性を重視する層と資産家</h3>
 <p>購入理由の第 1 位は「資産を持ちたい、資産として有利だと思ったから」（36.7%）だった。この理由が首位になったのは、 2003 年以降で初めてである。一方、「金利が低く買い時だと思ったから」と「税制が有利で買い時だと思ったから」は、 2003 年以降で最も低くなった <sup id="fnref-5-8"><a href="#ref-5">[5]</a></sup> 。居住のために買う人の間でも、資産価値を意識して買う人が増えている。</p>
 <p>自己資金比率が「全額キャッシュ」の人は 11.3% である。 50 歳以上の夫婦のみ世帯（シニアカップル世帯）では、自己資金比率の平均が 73.6% に達し、手元資金の比重が大きい層があることが分かる <sup id="fnref-5-9"><a href="#ref-5">[5]</a></sup> 。ただし、この調査から、資産家・富裕層の割合を読み取ることはできない。</p>
 <p>相続対策としての購入については、制度が変わった。国税庁は、 2024 年 1 月 1 日以後に相続・遺贈・贈与で取得した居住用の分譲マンションについて、築年数・総階数・所在階・敷地持分の狭さから「評価乖離率」を求め、評価額を補正する新しいルールを定めている <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。従来の評価額が推計される市場価格の 6 割に届かない場合は、補正によって 6 割程度まで引き上げられる <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 。算式は、総階数が多く、所在階が高いほど乖離率が大きくなる設計だ。「タワーマンションの高層階で評価額を大きく圧縮する」という従来の方法は、 2024 年以降は効きにくくなっている。ただし、現金より評価が低くなる場面は残る。実際の判断は、個別の事情で大きく変わるため、税理士などの専門家に確認するのが前提である。</p>
 
-<h3 id="s2-3">2.3 投資家・法人</h3>
+<h3 id="sec2-3">2.3 投資家・法人</h3>
 <p>個人投資家や法人の購入割合を示す公的な統計は、今回確認した範囲では見つからなかった。契約者動向調査からも、この割合は読み取れない。したがって、「投資家が価格を押し上げている」とする見方は、現時点では数字で裏づけられていない。</p>
 <p>一般論としては、購入価格が高いほど賃料に対する利回りは下がりやすく、空室や金利上昇のリスクが相対的に大きくなる。金利については、日本銀行が 2026 年 9 月 18 日の金融政策決定会合で、短期金利の誘導目標を 1.0% 程度から 1.25% 程度へ引き上げた <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。借入で買う投資家にとって、金利の上昇は収支を悪化させる要因である。また、 2024 年のように平均価格が下がる年があることは、「値上がりが続く」前提が常には成り立たないことを示している <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</p>
 
-<h3 id="s2-4">2.4 海外居住者</h3>
+<h3 id="sec2-4">2.4 海外居住者</h3>
 <p>国土交通省は、不動産登記を基にした調査を初めて公表した。それによると、 2025 年 1 〜 6 月に東京 23 区で新築マンションを取得した人のうち、海外に居住する人の割合は 3.5% だった（2024 年通年は 1.6%）。都心 6 区では 7.5%（同 3.2%）、新宿区では 14.6% である。東京 23 区の海外居住者の取得 308 戸のうち、台湾が 192 戸（6 割超）、中国が 30 戸、シンガポールが 21 戸だった <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。</p>
 <p>この数字は、「海外に住所がある人」の割合である。日本に住む外国人や、外国法人の日本支店は含まれず、国籍も登記には記載されないため、「外国人の購入割合」そのものではない <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。逆に言えば、「外国人が大量に買い占めている」というイメージを、この調査だけで裏づけることも、否定することもできない。都心の一部の区では目立つものの、 23 区全体では 1 割に満たない、というのが確認できた範囲である。円安が海外からの需要を後押ししたという見方もあるが、今回確認した資料には、その因果を示すデータはない。</p>
-</section>
 
-<section id="s3">
-<h2><span class="no">3</span>なぜ価格は上がったのか</h2>
+<h2 id="sec3">3. なぜ価格は上がったのか</h2>
 <p>購入者の顔ぶれだけでなく、価格を押し上げた要因も見ておく必要がある。数字で確かめられたものと、一般に指摘されているだけのものを分けて挙げる。</p>
 <ul>
 <li><strong>建築費・人件費の高止まり（確認できた）</strong><br>不動産経済研究所は、資材・人件費ともに上昇し、販売価格が高止まりしていると説明している <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup><sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 。</li>
@@ -270,10 +296,8 @@
 <li><strong>円安と海外資金（因果は未確認）</strong><br>海外居住者の取得は 23 区全体で 3.5% にとどまり、これだけで価格を説明できるとは考えにくい水準である <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 。</li>
 </ul>
 <p>低金利は、これまで借入余力を支えてきた要因である。しかし、日本銀行は 2026 年 9 月に政策金利を 1.25% 程度へ引き上げ、今後も引き上げを続ける方針を示している <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> 。「金利が低いから買える」という前提は、すでに変わりつつある。</p>
-</section>
 
-<section id="s4">
-<h2><span class="no">4</span>買えない人の選択</h2>
+<h2 id="sec4">4. 買えない人の選択</h2>
 <p>平均 1 億円超という数字は、多くの世帯にとって手の届かない水準である。もっとも、実際の契約者は、それより低い価格帯に多くいる。首都圏の契約者の購入価格は、 6,000 〜 8,000 万円未満が最も多く、 1 億円以上は 14.3% だった <sup id="fnref-5-12"><a href="#ref-5">[5]</a></sup> 。</p>
 <p>年収によって、選ぶ場所も分かれる。既婚・共働き世帯のうち世帯総年収 1,000 万円未満の世帯は、 23 区より千葉県を選ぶ割合が高い <sup id="fnref-5-13"><a href="#ref-5">[5]</a></sup> 。また、新築を検討した人の 54% は、中古マンションも並行して検討していた <sup id="fnref-5-14"><a href="#ref-5">[5]</a></sup> 。郊外の物件、中古、賃貸の継続という選択肢が、現実に使い分けられている。</p>
 <p>注意したいのは、この調査が「買った人」だけを対象にしている点だ。買わなかった人・買えなかった人の数や理由は、この調査では分からない。「都心の新築が一部の高所得層のための市場になりつつある」という見方は広がっているが、その度合いを測るには、別の統計が必要である。</p>
@@ -281,10 +305,8 @@
 <blockquote>
 <p>「平均 1 億円超え」は、発売された物件の価格の平均である。実際に契約した人の平均購入価格は、 23 区の物件でも 9,598 万円で、 1 億円以上の契約は首都圏全体の 14.3% にとどまる。数字は、どの母集団の平均かを確かめてから読む必要がある。</p>
 </blockquote>
-</section>
 
-<section id="s5">
-<h2><span class="no">5</span>まとめ</h2>
+<h2 id="sec5">5. まとめ</h2>
 <ul>
 <li>東京 23 区の新築マンションの平均価格は、 2023 年から 3 年連続で 1 億円を超え、 2025 年は 1 億 3,613 万円。ただし 2024 年は前年を下回っており、毎年上がっているわけではない。</li>
 <li>この平均は発売物件の価格の平均で、契約者の平均購入価格（首都圏 7,324 万円、 23 区の物件 9,598 万円）とは約 4,000 万円の差がある。</li>
@@ -293,10 +315,8 @@
 <li>海外居住者の取得は、 2025 年 1 〜 6 月の 23 区で 3.5%（都心 6 区で 7.5%）。投資家・法人の割合を示す統計は確認できなかった。</li>
 <li>日本銀行は 2026 年 9 月に政策金利を 1.25% 程度へ引き上げた。「低金利だから買える」という前提は、変わりつつある。</li>
 </ul>
-</section>
 
-<section id="s6">
-<h2><span class="no">6</span>確かめられなかったこと</h2>
+<h2 id="sec6">6. 確かめられなかったこと</h2>
 <div class="box">
 <ul>
 <li>購入者の層（実需・資産家・投資家・海外居住者）ごとの、一つの基準による割合。</li>
@@ -308,10 +328,9 @@
 </div>
 
 <div class="box">※ 本記事は一般的な解説であり、特定の物件や投資・税務の判断を勧めるものではない。数値は調査機関や時期によって異なる。最新の統計（不動産経済研究所などの公表データ）で確認すること。投資や相続税に関わる判断は、必ず専門家に相談すること。</div>
-</section>
 <div class="refs">
 <h2>参考文献・資料</h2>
-<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> 不動産経済研究所の首都圏新築分譲マンション市場動向（2023 年）。東京都区部の平均価格 1 億 1,483 万円、前年比 39.4% 上昇。本稿は <em>nippon.com</em> の解説記事で確認した。 <a href="https://www.nippon.com/ja/japan-data/h01896/">nippon.com 解説記事</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> 不動産経済研究所の首都圏新築分譲マンション市場動向（2024 年）。東京都区部の平均価格 1 億 1,181 万円、発売戸数 8,275 戸。本稿は <em>nippon.com</em> の解説記事で確認した。 <a href="https://www.nippon.com/ja/japan-data/h02287/">nippon.com 解説記事</a></li>
@@ -323,6 +342,6 @@
 <li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> 日本銀行「金融市場調節方針の変更（2026 年 9 月金融政策決定会合）」、 2026 年 9 月 18 日。無担保コールレート（オーバーナイト物）を 1.25% 程度に引き上げ（従来は 1.0% 程度）。 <a href="https://www.boj.or.jp/mopo/mpmdeci/mpr_2026/k260918b.pdf">日本銀行 公開 PDF</a></li>
 </ol>
 </div>
-</div>
+</main>
 </body>
 </html>

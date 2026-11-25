@@ -1,16 +1,19 @@
 # reading リポジトリの作業指示
 
-「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 73 本。うち 70 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）にだけ使い、文書には使わない。
+「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 73 本。うち 70 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）のほかには、 `ahamo-migration-guide.html` （チェック状態を保存）と `plateau-ai-workflow-guide.html` （コード欄のコピーボタン）の 2 本だけが使う。ほかの文書には使わない。
 
 ## HTML 文書の意匠
-HTML 文書の新規作成には、必ずローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。既存の wafu 意匠の文書（ 70 本）の意匠修正・検証には、これまでどおり `wafu-html-style`(`~/.claude/skills/wafu-html-style/SKILL.md`)を使う。 `wafu-html-style` は廃止予定で、新しい文書には使わない。例外は、下の `megumino.html` と `color-palette.html` である。
+HTML 文書の新規作成にも、既存の文書の意匠の修正・検証にも、ローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。同日、除外した文書（ `megumino.html` ・ `color-palette.html` ・ `autumn-colors.html` と、すでに contrast だった `elder-housing.html` ・ `us-parties-china-russia-trilateral-summit.html` ）を除く、すべての文書を、 wafu から contrast へ変換した（ユーザーの指示）。 wafu 意匠の文書は、もう無い。 `wafu-html-style` は廃止予定で、このリポジトリでは使わない。例外は、下の `megumino.html` ・ `color-palette.html` ・ `autumn-colors.html` である。
 
-- 文書の意匠の正は、スキルである（新規は `contrast-html-style` 、既存の wafu 文書は `wafu-html-style` ）。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
-- 既存の wafu 文書は、当面そのままにする（ユーザーの決定。 2026-11-25 ）。頼まれていないのに、 contrast へ書き換えない。変換は、文書に手を入れるときに、ユーザーと相談して行う。一括変換は、別の大きな作業として扱う。
-  - 変換した例 : `elder-housing.html` は、 2026-11-25 の大幅な改訂（自治体の取組みの章を追加し、構成を組み直した）のときに、ユーザーの指示で contrast へ変換した。このように、文書を大きく書き直すときが、変換の機会である。
+- 文書の意匠の正は、スキル（ `contrast-html-style` ）である。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
+- 2026-11-25 の一括変換は、意匠だけを変え、文字列を変えていない。そのため、 `check_contrast_html.py` に、本文の書き方に由来する NG が残る文書がある（キッカー・副題・リードの欠如 C03 、番号のない見出し C04 ・ C05 、ラベル後のコロン C11 、裸の URL C10 、脚注の番号の飛び C06 ）。頼まれていないのに直さない。直すときは、本文を直す作業として、ユーザーに相談する。
+- 文書ごとの固有の部品（ `dl.summary` ・ `.company` ・ `.compare` ・アニメーションなど）は、その文書の `<style>` に、 contrast の CSS の後ろへ足してある。色は contrast の変数だけを使う。 C02 の WARN が出るのは、意図したものである。
+  - 例外の色が 1 か所ある。 `electric-motor-guide.html` の整流子の図は、図内の文字が「オレンジ」「緑」と色名を言うので、橙（ `#f26b00` ）と緑（ `#1f8a3b` ）を固有 CSS に足した（ユーザーの決定。 2026-11-25 ）。ほかの図には足さない。
+  - `electric-motor-guide.html` は、 CSS だけで動くアニメーション（停止ボタンつき）を持つ。スキルが「未対応」としている部品で、固有 CSS として移してある。
 - 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。意匠は排他的で、同じ文書に重ねて適用しない（ wafu と contrast も重ねない）。
-- `color-palette.html` には、 wafu を適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
-- `megumino.html` （経路案内）は、 wafu の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 wafu に戻さず、 wafu 用の検査を当てて直さない。
+- `color-palette.html` には、 contrast を適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
+- `autumn-colors.html` も、 contrast を適用していない(適用作業の対象から除いた)。独自の意匠のまま残す。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
+- `megumino.html` （経路案内）は、 contrast 意匠のスキルの対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 wafu や contrast のスキルの規約に合わせて直さず、それらの検査を当てて直さない。
   - 色は意味で使い分ける。白地に黒の文字を基本に、紺 `#00205b` が見出し、黄 `#ffd400` が系統番号と地図の番号、赤 `#b3001b` が降車・目的地、青 `#0022a8` がリンク。文字と地のコントラスト比は 7 以上を保つ。
   - 地図（ `route_1_web.png` 〜 `route_4_web.png` ）は、 OpenStreetMap のデータから描いた横 1080px の PNG である。図の中と説明文の両方に、出典（ © OpenStreetMap contributors ）を入れる。地図の番号は、図の下の `ol.steps` の番号と一致させる。描画スクリプトは残していない。
 - `portal.html` は、 2026-11-25 に contrast の CSS へ切り替えた（ユーザーの指示）。 `contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、その後ろに portal 固有の部品（カード・検索・新着・「↑ 目次へ」）を足す。

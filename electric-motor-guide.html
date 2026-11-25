@@ -4,153 +4,189 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>電動機と発電機の原理</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  /* 記事向けの部品 */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄 */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
-  /* アニメーション(この文書の図) */
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+  }
+  /* この文書に固有の部品(contrast の色に置き換えたもの) */
+  /* アニメーション(この文書の図。色は contrast の変数へ置き換えた) */
   .spin-slow{transform-origin:0 0;animation:spin 6s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
   .needle{transform-origin:0 0;animation:needle 8s infinite;animation-delay:.9s;animation-fill-mode:backwards}
   @keyframes needle{0%{transform:rotate(0)}25%{transform:rotate(90deg)}50%{transform:rotate(180deg)}75%{transform:rotate(270deg)}100%{transform:rotate(360deg)}}
   .pole{animation:pole 8s infinite}
-  @keyframes pole{0%{fill:#b7282e}12%{fill:#b7282e}25%{fill:#cdb98f}37%{fill:#cdb98f}50%{fill:#5e3d50}62%{fill:#5e3d50}75%{fill:#cdb98f}87%{fill:#cdb98f}100%{fill:#b7282e}}
+  @keyframes pole{0%{fill:var(--red)}12%{fill:var(--red)}25%{fill:var(--rule)}37%{fill:var(--rule)}50%{fill:var(--navy)}62%{fill:var(--navy)}75%{fill:var(--rule)}87%{fill:var(--rule)}100%{fill:var(--red)}}
   .p-top{animation-delay:0s}.p-right{animation-delay:-6s}.p-bottom{animation-delay:-4s}.p-left{animation-delay:-2s}
   .gen-magnet{transform-origin:0 0;animation:spin 3s linear infinite}
   .glow{animation:glow 1.5s ease-in-out infinite}
@@ -159,11 +195,11 @@
   .fan{transform-origin:0 0;animation:spin 1.2s linear infinite}
   .dc-rot{transform-origin:0 0;animation:dcrot 4s linear infinite}
   @keyframes dcrot{from{transform:rotate(-90deg)}to{transform:rotate(270deg)}}
-  .dc-a{animation:dca 4s linear infinite;fill:#b7282e}
-  .dc-b{animation:dcb 4s linear infinite;fill:#5e3d50}
-  @keyframes dca{0%,24.9%{fill:#b7282e}25%,74.9%{fill:#5e3d50}75%,100%{fill:#b7282e}}
-  @keyframes dcb{0%,24.9%{fill:#5e3d50}25%,74.9%{fill:#b7282e}75%,100%{fill:#5e3d50}}
-  .dc-flip{fill:#5e5339;animation:dcflip 4s linear infinite;opacity:0}
+  .dc-a{animation:dca 4s linear infinite;fill:var(--red)}
+  .dc-b{animation:dcb 4s linear infinite;fill:var(--navy)}
+  @keyframes dca{0%,24.9%{fill:var(--red)}25%,74.9%{fill:var(--navy)}75%,100%{fill:var(--red)}}
+  @keyframes dcb{0%,24.9%{fill:var(--navy)}25%,74.9%{fill:var(--red)}75%,100%{fill:var(--navy)}}
+  .dc-flip{fill:var(--ink);animation:dcflip 4s linear infinite;opacity:0}
   @keyframes dcflip{0%,24%{opacity:0}26%,32%{opacity:1}36%,74%{opacity:0}76%,82%{opacity:1}86%,100%{opacity:0}}
   .cm-rot{transform-origin:0 0;animation:spin 6s linear infinite}
   .cm-l1{animation:cml1 6s linear infinite}
@@ -175,87 +211,86 @@
   /* 停止ボタン(CSS だけ。 wafu-anim.css の部品) */
   .anim-stop{position:absolute;opacity:0;width:1px;height:1px}
   .anim-btn{position:sticky;top:8px;z-index:10;display:flex;justify-content:flex-end;margin:12px 0 0;pointer-events:none}
-  .anim-btn label{pointer-events:auto;display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:24px;background:var(--ink);color:#fff;font-weight:bold;font-size:18px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+  .anim-btn label{pointer-events:auto;display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:24px;background:var(--navy);color:#fff;border:3px solid var(--ink);font-weight:bold;font-size:18px;cursor:pointer}
   .anim-btn .off{display:none}
-  .anim-stop:focus-visible ~ .wrap .anim-btn label{outline:3px solid var(--ink);outline-offset:3px}
-  .anim-stop:checked ~ .wrap .anim-btn .on{display:none}
-  .anim-stop:checked ~ .wrap .anim-btn .off{display:inline}
-  .anim-stop:checked ~ header svg *,.anim-stop:checked ~ .wrap svg *{animation-play-state:paused !important}
-  /* 図の幅(縦積みにした図は幅を抑える) */
-  figure svg.vert{max-width:360px;margin:0 auto}
-  svg.big .ts{font-size:19px}
+  .anim-stop:focus-visible ~ main .anim-btn label{outline:4px solid var(--ink);outline-offset:3px}
+  .anim-stop:checked ~ main .anim-btn .on{display:none}
+  .anim-stop:checked ~ main .anim-btn .off{display:inline}
+  .anim-stop:checked ~ main svg *{animation-play-state:paused !important}
+  /* 図の色・文字・幅(この文書固有) */
+  svg .f-rule{fill:var(--rule)}
+  svg .s-yellow{stroke:var(--yellow)} svg .s-fat{stroke-width:14}
+  /* 整流子の図だけの色(図内の文字が「オレンジ」「緑」と色名を言うので、実際の橙と緑にする。 contrast の配色表にない例外) */
+  svg .s-orange{stroke:#f26b00} svg .s-green{stroke:#1f8a3b}
+  svg .t.orange{fill:#993a00} svg .t.green{fill:#005f26}
+  svg .t.red{fill:var(--red)} svg .t.navy{fill:var(--navy)} svg .t.gray{fill:var(--muted)}
+  figure svg.vert{width:min(100%,360px)}
+  svg.w200 .t,svg.w240 .t,svg.w260 .t,svg.w320 .t{font-size:16px}
+  svg.w400 .t{font-size:20px}
+  svg.w640 .t{font-size:20px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+  .grid4 figure{margin:0}
+  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
+  .grid4 .step b{display:block;color:var(--navy)}
+  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:480px){.grid4{grid-template-columns:1fr}}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+  .card{background:#fff;border:3px solid var(--ink);border-radius:14px;padding:10px;text-align:center;line-height:1.6;font-size:18px}
+  .c-red{color:var(--red);font-weight:bold} .c-navy{color:var(--navy);font-weight:bold} .c-gray{color:var(--muted);font-weight:bold}
+  .tnote { font-size: 17px; color: var(--muted); }
 </style>
 </head>
 <body>
 <input type="checkbox" id="anim-stop" class="anim-stop">
 
 <!-- 共通の矢じるし -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<svg width="0" height="0" aria-hidden="true">
   <defs>
-    <marker id="ar-k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3a2e2a"/></marker>
-    <marker id="ar-o" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#ed6d3d"/></marker>
-    <marker id="ar-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#8c7f5e"/></marker>
-    <marker id="ar-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#b7282e"/></marker>
+    <marker id="ar-k" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#000"/></marker>
+    <marker id="ar-o" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#000"/></marker>
+    <marker id="ar-g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#6b7480"/></marker>
+    <marker id="ar-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#b3001b"/></marker>
 
     <!-- 電磁石の土台（くぎ・コイル・電池） -->
-    <g id="emag">
-      <rect x="90" y="100" width="130" height="16" rx="4" fill="#a99f86"/>
-      <g stroke="#a55b3a" stroke-width="6" stroke-linecap="round">
-        <line x1="112" y1="90" x2="122" y2="126"/><line x1="128" y1="90" x2="138" y2="126"/>
-        <line x1="144" y1="90" x2="154" y2="126"/><line x1="160" y1="90" x2="170" y2="126"/>
-        <line x1="176" y1="90" x2="186" y2="126"/><line x1="192" y1="90" x2="202" y2="126"/>
-      </g>
-      <path d="M112 126 V200 H125 M204 90 V70 H250 V200 H195" fill="none" stroke="#3a2e2a" stroke-width="3"/>
-      <rect x="125" y="186" width="70" height="28" rx="5" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-    </g>
+    
 
     <!-- モーターの固定された磁石 -->
-    <g id="stator">
-      <rect x="4" y="55" width="40" height="90" rx="6" fill="#b7282e"/>
-      <rect x="156" y="55" width="40" height="90" rx="6" fill="#5e3d50"/>
-      <text x="24" y="109" text-anchor="middle" class="t white tb" font-size="26" fill="#fff" style="fill:#fff">N</text>
-      <text x="176" y="109" text-anchor="middle" class="t tb" font-size="26" style="fill:#fff">S</text>
-    </g>
+    
   </defs>
 </svg>
 
-<header class="hero">
-  <svg viewBox="-60 -60 120 120" width="110" height="110" role="img" aria-label="回るプロペラ">
-    <circle r="52" fill="#fff" opacity=".5"/>
+<main>
+<svg class="w120" viewBox="-60 -60 120 120" width="110" height="110" role="img" aria-label="回るプロペラ">
+    <circle class="f-white" r="52" opacity=".5"/>
     <g class="fan">
-      <ellipse cx="0" cy="-26" rx="14" ry="26" fill="#b7282e"/>
-      <ellipse cx="0" cy="-26" rx="14" ry="26" fill="#5e3d50" transform="rotate(120)"/>
-      <ellipse cx="0" cy="-26" rx="14" ry="26" fill="#8c7f5e" transform="rotate(240)"/>
+      <ellipse class="f-red" cx="0" cy="-26" rx="14" ry="26"/>
+      <ellipse class="f-navy" cx="0" cy="-26" rx="14" ry="26" transform="rotate(120)"/>
+      <ellipse class="f-rule" cx="0" cy="-26" rx="14" ry="26" transform="rotate(240)"/>
     </g>
-    <circle r="8" fill="#3a2e2a"/>
+    <circle class="f-ink" r="8"/>
   </svg>
   <h1>電動機と発電機の原理</h1>
   <p>扇風機から電車、電気自動車に至るまで、電気エネルギーを回転運動に変換する装置が電動機（モーター）である。本書では、電磁力と電磁誘導の二つの現象を軸に、直流機・交流機の動作原理と、電動機が発電機としても動作する理由を、図を用いて解説する。</p>
-</header>
-
-<div class="wrap">
 <div class="anim-btn"><label for="anim-stop"><span class="on">アニメーションを止める</span><span class="off">アニメーションを再開する</span></label></div>
 
-<nav class="toc">
-  <b>目次</b>
-  <ol>
-    <li><a href="#s0">電動機とは</a></li>
-    <li><a href="#s1">磁気と電流の関係</a></li>
-    <li><a href="#s2">直流電動機の動作原理</a></li>
-    <li><a href="#s3">電動機発展の歴史</a></li>
-    <li><a href="#s4">直流と交流</a></li>
-    <li><a href="#s5">交流電動機の動作原理</a></li>
-    <li><a href="#s6">直流電動機と交流電動機の比較</a></li>
-    <li><a href="#s7">電動機の発電機としての動作</a></li>
-    <li><a href="#s8">電気自動車と回生ブレーキ</a></li>
-    <li><a href="#s9">演習問題と用語集</a></li>
-  </ol>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">電動機とは</a></li>
+<li><a href="#sec2">磁気と電流の関係</a></li>
+<li><a href="#sec3">直流電動機の動作原理</a></li>
+<li><a href="#sec4">電動機発展の歴史</a></li>
+<li><a href="#sec5">直流と交流</a></li>
+<li><a href="#sec6">交流電動機の動作原理</a></li>
+<li><a href="#sec7">直流電動機と交流電動機の比較</a></li>
+<li><a href="#sec8">電動機の発電機としての動作</a></li>
+<li><a href="#sec9">電気自動車と回生ブレーキ</a></li>
+<li><a href="#sec10">演習問題と用語集</a></li>
+</ol>
 </nav>
 
 <!-- 0 -->
-<section id="s0">
-  <h2><span class="no">1</span> 電動機とは</h2>
+<h2 id="sec1">1.  電動機とは</h2>
   <p>電動機（モーター）とは、<b>電気エネルギーを回転運動の力学的エネルギーに変換する機械</b>である。身のまわりの機器から産業設備まで、きわめて広く用いられている。</p>
   <div class="cards">
     <div class="card">扇風機</div>
@@ -267,49 +302,47 @@
   </div>
   <p>いずれの機器でも、電動機が回転力（トルク）を発生させ、それを羽根や車輪などに伝えている。では、電気エネルギーはどのような原理で回転力に変換されるのか。その鍵となるのが<b>磁石（磁界）</b>である。</p>
   <figure>
-    <svg class="vert" viewBox="0 0 320 310" role="img" aria-label="電気が回る力になる図">
-<rect x="20" y="10" width="280" height="60" rx="14" fill="#f6e6b8" stroke="#d19826" stroke-width="3"/>
-<text x="160" y="48" text-anchor="middle" class="t tm tb">電気エネルギー</text>
-<line x1="160" y1="74" x2="160" y2="106" stroke="#3a2e2a" stroke-width="4" marker-end="url(#ar-k)"/>
-<rect x="20" y="110" width="280" height="84" rx="14" fill="#e8dae0" stroke="#5e3d50" stroke-width="3"/>
-<text x="160" y="148" text-anchor="middle" class="t tm tb">電動機</text>
-<text x="160" y="178" text-anchor="middle" class="t ts">（磁界を利用）</text>
-<line x1="160" y1="198" x2="160" y2="230" stroke="#3a2e2a" stroke-width="4" marker-end="url(#ar-k)"/>
-<rect x="20" y="234" width="280" height="60" rx="14" fill="#e3dec6" stroke="#8c7f5e" stroke-width="3"/>
-<text x="160" y="272" text-anchor="middle" class="t tm tb">回転力</text>
+    <svg class="w320 vert" viewBox="0 0 320 310" role="img" aria-label="電気が回る力になる図">
+<rect class="f-yellow s-ink" x="20" y="10" width="280" height="60" rx="14"/>
+<text class="t" x="160" y="48" text-anchor="middle">電気エネルギー</text>
+<line class="s-ink" x1="160" y1="74" x2="160" y2="106" marker-end="url(#ar-k)"/>
+<rect class="f-gray s-navy" x="20" y="110" width="280" height="84" rx="14"/>
+<text class="t" x="160" y="148" text-anchor="middle">電動機</text>
+<text class="t" x="160" y="178" text-anchor="middle">（磁界を利用）</text>
+<line class="s-ink" x1="160" y1="198" x2="160" y2="230" marker-end="url(#ar-k)"/>
+<rect class="f-gray s-rule" x="20" y="234" width="280" height="60" rx="14"/>
+<text class="t" x="160" y="272" text-anchor="middle">回転力</text>
 </svg>
     <figcaption>電動機は、電気エネルギーを回転力に変換する機械である。</figcaption>
   </figure>
-</section>
 
 <!-- 1 -->
-<section id="s1">
-  <h2><span class="no">2</span> 磁気と電流の関係</h2>
+<h2 id="sec2">2.  磁気と電流の関係</h2>
 
   <h3>① 磁極の間に働く力</h3>
   <p>磁石には、 <b>N 極</b>（図では赤）と <b>S 極</b>（図では青）の二つの磁極がある。二つの磁石を近づけると、<b>異種の磁極どうしは引き合い、同種の磁極どうしは反発する</b>。</p>
   <figure>
-    <svg class="vert" viewBox="0 0 320 260" role="img" aria-label="磁石が引き合う図としりぞけ合う図">
-<rect x="20" y="20" width="56" height="50" fill="#b7282e"/>
-<text x="48" y="53" text-anchor="middle" class="t tb" font-size="22" style="fill:#fff">N</text>
-<rect x="76" y="20" width="56" height="50" fill="#5e3d50"/>
-<text x="104" y="53" text-anchor="middle" class="t tb" font-size="22" style="fill:#fff">S</text>
-<rect x="188" y="20" width="56" height="50" fill="#b7282e"/>
-<text x="216" y="53" text-anchor="middle" class="t tb" font-size="22" style="fill:#fff">N</text>
-<rect x="244" y="20" width="56" height="50" fill="#5e3d50"/>
-<text x="272" y="53" text-anchor="middle" class="t tb" font-size="22" style="fill:#fff">S</text>
-<line x1="136" y1="45" x2="164" y2="45" stroke="#8c7f5e" stroke-width="5" marker-end="url(#ar-g)"/><line x1="184" y1="45" x2="156" y2="45" stroke="#8c7f5e" stroke-width="5" marker-end="url(#ar-g)"/>
-<text x="160" y="112" text-anchor="middle" class="t tm tb" style="fill:#5e5339">異種の磁極は引き合う</text>
-<rect x="20" y="150" width="56" height="50" fill="#b7282e"/>
-<text x="48" y="183" text-anchor="middle" class="t tb" font-size="22" style="fill:#fff">N</text>
-<rect x="76" y="150" width="56" height="50" fill="#5e3d50"/>
-<text x="104" y="183" text-anchor="middle" class="t tb" font-size="22" style="fill:#fff">S</text>
-<rect x="188" y="150" width="56" height="50" fill="#5e3d50"/>
-<text x="216" y="183" text-anchor="middle" class="t tb" font-size="22" style="fill:#fff">S</text>
-<rect x="244" y="150" width="56" height="50" fill="#b7282e"/>
-<text x="272" y="183" text-anchor="middle" class="t tb" font-size="22" style="fill:#fff">N</text>
-<line x1="164" y1="175" x2="140" y2="175" stroke="#b7282e" stroke-width="5" marker-end="url(#ar-r)"/><line x1="156" y1="175" x2="180" y2="175" stroke="#b7282e" stroke-width="5" marker-end="url(#ar-r)"/>
-<text x="160" y="242" text-anchor="middle" class="t tm tb" style="fill:#b7282e">同種の磁極は反発する</text>
+    <svg class="w320 vert" viewBox="0 0 320 260" role="img" aria-label="磁石が引き合う図としりぞけ合う図">
+<rect class="f-red" x="20" y="20" width="56" height="50"/>
+<text class="t white" x="48" y="53" text-anchor="middle">N</text>
+<rect class="f-navy" x="76" y="20" width="56" height="50"/>
+<text class="t white" x="104" y="53" text-anchor="middle">S</text>
+<rect class="f-red" x="188" y="20" width="56" height="50"/>
+<text class="t white" x="216" y="53" text-anchor="middle">N</text>
+<rect class="f-navy" x="244" y="20" width="56" height="50"/>
+<text class="t white" x="272" y="53" text-anchor="middle">S</text>
+<line class="s-rule" x1="136" y1="45" x2="164" y2="45" marker-end="url(#ar-g)"/><line class="s-rule" x1="184" y1="45" x2="156" y2="45" marker-end="url(#ar-g)"/>
+<text class="t green" x="160" y="112" text-anchor="middle">異種の磁極は引き合う</text>
+<rect class="f-red" x="20" y="150" width="56" height="50"/>
+<text class="t white" x="48" y="183" text-anchor="middle">N</text>
+<rect class="f-navy" x="76" y="150" width="56" height="50"/>
+<text class="t white" x="104" y="183" text-anchor="middle">S</text>
+<rect class="f-navy" x="188" y="150" width="56" height="50"/>
+<text class="t white" x="216" y="183" text-anchor="middle">S</text>
+<rect class="f-red" x="244" y="150" width="56" height="50"/>
+<text class="t white" x="272" y="183" text-anchor="middle">N</text>
+<line class="s-red" x1="164" y1="175" x2="140" y2="175" marker-end="url(#ar-r)"/><line class="s-red" x1="156" y1="175" x2="180" y2="175" marker-end="url(#ar-r)"/>
+<text class="t red" x="160" y="242" text-anchor="middle">同種の磁極は反発する</text>
 </svg>
     <figcaption>N 極と S 極の間には引力が、同種の磁極の間には斥力が働く。</figcaption>
   </figure>
@@ -318,21 +351,39 @@
   <p>鉄心に導線を巻いたコイルに電流を流すと、鉄心が<b>磁化</b>されて磁石となる。これが<b>電磁石</b>である。電流を止めれば、磁力はほぼ失われる。</p>
   <p>また、<b>電流の向きを逆にすると、 N 極と S 極が入れ替わる</b>。磁極を電気的に反転できるこの性質は、電動機の動作の基礎となる。（電流と磁界の向きの関係は、アンペールの右ねじの法則に従う。）</p>
   <figure>
-    <svg class="vert" viewBox="30 0 260 530" role="img" aria-label="電池の向きを変えると電磁石のNとSが入れかわる図">
-<g transform="translate(0 0)"><use href="#emag"/>
-<circle cx="236" cy="108" r="17" fill="#b7282e"/><text x="236" y="115" text-anchor="middle" class="t tb" style="fill:#fff" font-size="20">N</text>
-<circle cx="74" cy="108" r="17" fill="#5e3d50"/><text x="74" y="115" text-anchor="middle" class="t tb" style="fill:#fff" font-size="20">S</text>
-<text x="135" y="206" text-anchor="middle" class="t tb" font-size="20">−</text>
-<text x="185" y="206" text-anchor="middle" class="t tb" font-size="20" style="fill:#b7282e">＋</text>
-<text x="160" y="50" text-anchor="middle" class="t ts tb">電池の向き ①</text></g>
-<g transform="translate(0 250)"><use href="#emag"/>
-<circle cx="236" cy="108" r="17" fill="#5e3d50"/><text x="236" y="115" text-anchor="middle" class="t tb" style="fill:#fff" font-size="20">S</text>
-<circle cx="74" cy="108" r="17" fill="#b7282e"/><text x="74" y="115" text-anchor="middle" class="t tb" style="fill:#fff" font-size="20">N</text>
-<text x="135" y="206" text-anchor="middle" class="t tb" font-size="20" style="fill:#b7282e">＋</text>
-<text x="185" y="206" text-anchor="middle" class="t tb" font-size="20">−</text>
-<text x="160" y="50" text-anchor="middle" class="t ts tb">電池の向き ②（逆）</text></g>
-<text x="160" y="500" text-anchor="middle" class="t ts">オレンジ色の線は、</text>
-<text x="160" y="522" text-anchor="middle" class="t ts">巻いた導線（コイル）</text>
+    <svg class="w260 vert" viewBox="30 0 260 530" role="img" aria-label="電池の向きを変えると電磁石のNとSが入れかわる図">
+<g transform="translate(0 0)"><g>
+      <rect class="f-rule" x="90" y="100" width="130" height="16" rx="4"/>
+      <g class="s-red s-thick" stroke-linecap="round">
+        <line x1="112" y1="90" x2="122" y2="126"/><line x1="128" y1="90" x2="138" y2="126"/>
+        <line x1="144" y1="90" x2="154" y2="126"/><line x1="160" y1="90" x2="170" y2="126"/>
+        <line x1="176" y1="90" x2="186" y2="126"/><line x1="192" y1="90" x2="202" y2="126"/>
+      </g>
+      <path class="nf s-ink" d="M112 126 V200 H125 M204 90 V70 H250 V200 H195"/>
+      <rect class="f-white s-ink" x="125" y="186" width="70" height="28" rx="5"/>
+    </g>
+<circle class="f-red" cx="236" cy="108" r="17"/><text class="t white" x="236" y="115" text-anchor="middle">N</text>
+<circle class="f-navy" cx="74" cy="108" r="17"/><text class="t white" x="74" y="115" text-anchor="middle">S</text>
+<text class="t" x="135" y="206" text-anchor="middle">−</text>
+<text class="t red" x="185" y="206" text-anchor="middle">＋</text>
+<text class="t" x="160" y="50" text-anchor="middle">電池の向き ①</text></g>
+<g transform="translate(0 250)"><g>
+      <rect class="f-rule" x="90" y="100" width="130" height="16" rx="4"/>
+      <g class="s-red s-thick" stroke-linecap="round">
+        <line x1="112" y1="90" x2="122" y2="126"/><line x1="128" y1="90" x2="138" y2="126"/>
+        <line x1="144" y1="90" x2="154" y2="126"/><line x1="160" y1="90" x2="170" y2="126"/>
+        <line x1="176" y1="90" x2="186" y2="126"/><line x1="192" y1="90" x2="202" y2="126"/>
+      </g>
+      <path class="nf s-ink" d="M112 126 V200 H125 M204 90 V70 H250 V200 H195"/>
+      <rect class="f-white s-ink" x="125" y="186" width="70" height="28" rx="5"/>
+    </g>
+<circle class="f-navy" cx="236" cy="108" r="17"/><text class="t white" x="236" y="115" text-anchor="middle">S</text>
+<circle class="f-red" cx="74" cy="108" r="17"/><text class="t white" x="74" y="115" text-anchor="middle">N</text>
+<text class="t red" x="135" y="206" text-anchor="middle">＋</text>
+<text class="t" x="185" y="206" text-anchor="middle">−</text>
+<text class="t" x="160" y="50" text-anchor="middle">電池の向き ②（逆）</text></g>
+<text class="t" x="160" y="500" text-anchor="middle">オレンジ色の線は、</text>
+<text class="t" x="160" y="522" text-anchor="middle">巻いた導線（コイル）</text>
 </svg>
     <figcaption>電流の向きを逆にするだけで、 N 極と S 極が入れ替わる。</figcaption>
   </figure>
@@ -343,11 +394,9 @@
   <div class="caution">
     <p>電池の両端を導線のみで直接接続すると短絡（ショート）となり、大電流によって導線や電池が発熱し、やけどや発火のおそれがある。通電は短時間にとどめること。</p>
   </div>
-</section>
 
 <!-- 2 -->
-<section id="s2">
-  <h2><span class="no">3</span> 直流電動機の動作原理</h2>
+<h2 id="sec3">3.  直流電動機の動作原理</h2>
   <p>直流とは、電池のように<b>向きが時間的に変化しない電流</b>である。直流電動機は、次の二つの要素で構成される。</p>
   <ul>
     <li><b>固定子（ステータ）</b>……静止部。 N 極と S 極が向かい合い、磁界を作る。</li>
@@ -356,16 +405,21 @@
   <p>回転子の導体には、磁界から<b>電磁力</b>が働く。磁束密度を <i>B</i> 、導体を流れる電流を <i>I</i> 、磁界中にある導体の長さを <i>l</i> とすると、磁界と導体が直交する場合の力の大きさは <i>F</i> = <i>BIl</i> で表され、その向きは<b>フレミングの左手の法則</b>で定まる。</p>
   <p>まず、動作の様子を図で確認する。回転子の磁極が固定子の磁極と向かい合う位置を通過するたびに、回転子の N 極（赤）と S 極（青）が入れ替わる点に注目されたい。</p>
   <figure>
-    <svg class="big" viewBox="0 0 400 230" role="img" aria-label="直流モーターが回るアニメーション">
-      <g transform="translate(100 15)"><use href="#stator"/></g>
+    <svg class="w400 big" viewBox="0 0 400 230" role="img" aria-label="直流モーターが回るアニメーション">
+      <g transform="translate(100 15)"><g>
+      <rect class="f-red" x="4" y="55" width="40" height="90" rx="6"/>
+      <rect class="f-navy" x="156" y="55" width="40" height="90" rx="6"/>
+      <text class="t white" x="24" y="109" text-anchor="middle">N</text>
+      <text class="t white" x="176" y="109" text-anchor="middle">S</text>
+    </g></g>
       <g transform="translate(200 115)">
         <g class="dc-rot">
           <rect class="dc-a" x="0" y="-7" width="58" height="14" rx="7"/>
           <rect class="dc-b" x="-58" y="-7" width="58" height="14" rx="7"/>
         </g>
-        <circle r="7" fill="#3a2e2a"/>
+        <circle class="f-ink" r="7"/>
       </g>
-      <text x="200" y="222" text-anchor="middle" class="t ts tb dc-flip">いま電流の向きを切り替えた</text>
+      <text class="t dc-flip" x="200" y="222" text-anchor="middle">いま電流の向きを切り替えた</text>
     </svg>
     <figcaption>回転子は時計回りに回り続ける。磁極が向かい合う直前に極性が切り替わるため、回転が止まらない。</figcaption>
   </figure>
@@ -373,42 +427,62 @@
 
   <div class="grid4">
     <figure>
-      <svg viewBox="0 0 200 200" role="img" aria-label="段階1">
-        <use href="#stator"/>
-        <g transform="rotate(-90 100 100)"><rect x="100" y="93" width="58" height="14" rx="7" fill="#b7282e"/><rect x="42" y="93" width="58" height="14" rx="7" fill="#5e3d50"/></g>
-        <circle cx="100" cy="100" r="7" fill="#3a2e2a"/>
-        <path d="M130 48 A56 56 0 0 1 152 70" fill="none" stroke="#ed6d3d" stroke-width="4" marker-end="url(#ar-o)"/>
-        <text x="100" y="196" text-anchor="middle" class="t ts">① 開始</text>
+      <svg class="w200" viewBox="0 0 200 200" role="img" aria-label="段階1">
+        <g>
+      <rect class="f-red" x="4" y="55" width="40" height="90" rx="6"/>
+      <rect class="f-navy" x="156" y="55" width="40" height="90" rx="6"/>
+      <text class="t white" x="24" y="109" text-anchor="middle">N</text>
+      <text class="t white" x="176" y="109" text-anchor="middle">S</text>
+    </g>
+        <g transform="rotate(-90 100 100)"><rect class="f-red" x="100" y="93" width="58" height="14" rx="7"/><rect class="f-navy" x="42" y="93" width="58" height="14" rx="7"/></g>
+        <circle class="f-ink" cx="100" cy="100" r="7"/>
+        <path class="nf s-ink" d="M130 48 A56 56 0 0 1 152 70" marker-end="url(#ar-o)"/>
+        <text class="t" x="100" y="196" text-anchor="middle">① 開始</text>
       </svg>
       <div class="step"><b>引力が働く</b>回転子の N 極（赤）は右の S 極（青）に、 S 極（青）は左の N 極（赤）に引かれる。</div>
     </figure>
     <figure>
-      <svg viewBox="0 0 200 200" role="img" aria-label="段階2">
-        <use href="#stator"/>
-        <g transform="rotate(-45 100 100)"><rect x="100" y="93" width="58" height="14" rx="7" fill="#b7282e"/><rect x="42" y="93" width="58" height="14" rx="7" fill="#5e3d50"/></g>
-        <circle cx="100" cy="100" r="7" fill="#3a2e2a"/>
-        <path d="M146 78 A56 56 0 0 1 156 108" fill="none" stroke="#ed6d3d" stroke-width="4" marker-end="url(#ar-o)"/>
-        <text x="100" y="196" text-anchor="middle" class="t ts">② 回転</text>
+      <svg class="w200" viewBox="0 0 200 200" role="img" aria-label="段階2">
+        <g>
+      <rect class="f-red" x="4" y="55" width="40" height="90" rx="6"/>
+      <rect class="f-navy" x="156" y="55" width="40" height="90" rx="6"/>
+      <text class="t white" x="24" y="109" text-anchor="middle">N</text>
+      <text class="t white" x="176" y="109" text-anchor="middle">S</text>
+    </g>
+        <g transform="rotate(-45 100 100)"><rect class="f-red" x="100" y="93" width="58" height="14" rx="7"/><rect class="f-navy" x="42" y="93" width="58" height="14" rx="7"/></g>
+        <circle class="f-ink" cx="100" cy="100" r="7"/>
+        <path class="nf s-ink" d="M146 78 A56 56 0 0 1 156 108" marker-end="url(#ar-o)"/>
+        <text class="t" x="100" y="196" text-anchor="middle">② 回転</text>
       </svg>
       <div class="step"><b>回転が進む</b>引力により、回転子が回転する。</div>
     </figure>
     <figure>
-      <svg viewBox="0 0 200 200" role="img" aria-label="段階3">
-        <use href="#stator"/>
-        <g><rect x="100" y="93" width="58" height="14" rx="7" fill="#b7282e"/><rect x="42" y="93" width="58" height="14" rx="7" fill="#5e3d50"/></g>
-        <circle cx="100" cy="100" r="7" fill="#3a2e2a"/>
-        <text x="100" y="40" text-anchor="middle" class="t tb" font-size="22" style="fill:#b7282e">整列</text>
-        <text x="100" y="196" text-anchor="middle" class="t ts">③ 磁極が向かい合う</text>
+      <svg class="w200" viewBox="0 0 200 200" role="img" aria-label="段階3">
+        <g>
+      <rect class="f-red" x="4" y="55" width="40" height="90" rx="6"/>
+      <rect class="f-navy" x="156" y="55" width="40" height="90" rx="6"/>
+      <text class="t white" x="24" y="109" text-anchor="middle">N</text>
+      <text class="t white" x="176" y="109" text-anchor="middle">S</text>
+    </g>
+        <g><rect class="f-red" x="100" y="93" width="58" height="14" rx="7"/><rect class="f-navy" x="42" y="93" width="58" height="14" rx="7"/></g>
+        <circle class="f-ink" cx="100" cy="100" r="7"/>
+        <text class="t red" x="100" y="40" text-anchor="middle">整列</text>
+        <text class="t" x="100" y="196" text-anchor="middle">③ 磁極が向かい合う</text>
       </svg>
       <div class="step"><b>このままでは停止する</b>磁極が正対すると、回転方向に力が働かなくなる。</div>
     </figure>
     <figure>
-      <svg viewBox="0 0 200 200" role="img" aria-label="段階4">
-        <use href="#stator"/>
-        <g transform="rotate(35 100 100)"><rect x="100" y="93" width="58" height="14" rx="7" fill="#5e3d50"/><rect x="42" y="93" width="58" height="14" rx="7" fill="#b7282e"/></g>
-        <circle cx="100" cy="100" r="7" fill="#3a2e2a"/>
-        <text x="100" y="40" text-anchor="middle" class="t tb" font-size="20" style="fill:#5e5339">電流の向きを反転</text>
-        <text x="100" y="196" text-anchor="middle" class="t ts">④ 回転の継続</text>
+      <svg class="w200" viewBox="0 0 200 200" role="img" aria-label="段階4">
+        <g>
+      <rect class="f-red" x="4" y="55" width="40" height="90" rx="6"/>
+      <rect class="f-navy" x="156" y="55" width="40" height="90" rx="6"/>
+      <text class="t white" x="24" y="109" text-anchor="middle">N</text>
+      <text class="t white" x="176" y="109" text-anchor="middle">S</text>
+    </g>
+        <g transform="rotate(35 100 100)"><rect class="f-navy" x="100" y="93" width="58" height="14" rx="7"/><rect class="f-red" x="42" y="93" width="58" height="14" rx="7"/></g>
+        <circle class="f-ink" cx="100" cy="100" r="7"/>
+        <text class="t green" x="100" y="40" text-anchor="middle">電流の向きを反転</text>
+        <text class="t" x="100" y="196" text-anchor="middle">④ 回転の継続</text>
       </svg>
       <div class="step"><b>N 極と S 極が入れ替わる</b>回転方向に力が働くようになり、回転が続く。</div>
     </figure>
@@ -421,65 +495,63 @@
   <h3>電流の向きを切り替える機構：ブラシと整流子</h3>
   <p>適切な位置で電流の向きを切り替える役割を担うのが、<b>ブラシ</b>と<b>整流子</b>である。整流子は、二つに分割された円環状の導体片で、回転子と一体で回転する。ブラシは、整流子に接触して電流を供給する固定部品である。</p>
   <figure>
-    <svg class="big" viewBox="0 0 400 270" role="img" aria-label="ブラシと整流子のアニメーション">
+    <svg class="w400 big" viewBox="0 0 400 270" role="img" aria-label="ブラシと整流子のアニメーション">
       <g transform="translate(90 20)">
         <g transform="translate(110 110)">
           <g class="cm-rot">
-            <path d="M-6 -39.5 A40 40 0 0 0 -6 39.5" fill="none" stroke="#ed6d3d" stroke-width="14"/>
-            <path d="M6 -39.5 A40 40 0 0 1 6 39.5" fill="none" stroke="#8c7f5e" stroke-width="14"/>
-            <rect x="-34" y="-18" width="68" height="36" rx="6" fill="#f6e6b8" stroke="#a55b3a" stroke-width="3"/>
+            <path class="nf s-orange s-fat" d="M-6 -39.5 A40 40 0 0 0 -6 39.5"/>
+            <path class="nf s-green s-fat" d="M6 -39.5 A40 40 0 0 1 6 39.5"/>
+            <rect class="f-yellow s-red" x="-34" y="-18" width="68" height="36" rx="6"/>
           </g>
         </g>
-        <rect x="36" y="102" width="26" height="16" fill="#8c7f5e"/><rect x="158" y="102" width="26" height="16" fill="#8c7f5e"/>
-        <path d="M36 110 H22 V212 H88 M184 110 H198 V212 H132" fill="none" stroke="#3a2e2a" stroke-width="3"/>
-        <rect x="88" y="198" width="44" height="28" rx="5" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-        <text x="72" y="226" class="t tb" font-size="18" style="fill:#b7282e">＋</text><text x="136" y="226" class="t tb" font-size="18">−</text>
-        <text x="28" y="96" text-anchor="middle" class="t ts">ブラシ</text><text x="192" y="96" text-anchor="middle" class="t ts">ブラシ</text>
+        <rect class="f-rule" x="36" y="102" width="26" height="16"/><rect class="f-rule" x="158" y="102" width="26" height="16"/>
+        <path class="nf s-ink" d="M36 110 H22 V212 H88 M184 110 H198 V212 H132"/>
+        <rect class="f-white s-ink" x="88" y="198" width="44" height="28" rx="5"/>
+        <text class="t red" x="72" y="226">＋</text><text class="t" x="136" y="226">−</text>
+        <text class="t" x="28" y="96" text-anchor="middle">ブラシ</text><text class="t" x="192" y="96" text-anchor="middle">ブラシ</text>
       </g>
-      <text x="200" y="20" text-anchor="middle" class="t ts tb cm-l1" style="fill:#a9461f">＋側に接続しているのは オレンジ</text>
-      <text x="200" y="20" text-anchor="middle" class="t ts tb cm-l2" style="fill:#5e5339">＋側に接続しているのは 緑</text>
-      <text x="200" y="262" text-anchor="middle" class="t ts">（灰色の四角がブラシ。静止している）</text>
+      <text class="t cm-l1 orange" x="200" y="20" text-anchor="middle">＋側に接続しているのは オレンジ</text>
+      <text class="t cm-l2 green" x="200" y="20" text-anchor="middle">＋側に接続しているのは 緑</text>
+      <text class="t" x="200" y="262" text-anchor="middle">（灰色の四角がブラシ。静止している）</text>
     </svg>
     <figcaption>整流子は回転するが、ブラシは静止している。半回転するたびに、＋側に接続する整流子片が入れ替わる。</figcaption>
   </figure>
   <p>静止させて比較すると、次のようになる。</p>
   <figure>
-    <svg class="vert" viewBox="0 0 240 580" role="img" aria-label="整流子が半回転すると電気の向きが逆になる図">
+    <svg class="w240 vert" viewBox="0 0 240 580" role="img" aria-label="整流子が半回転すると電気の向きが逆になる図">
 <g>
-        <path d="M104 70.5 A40 40 0 0 0 104 149.5" fill="none" stroke="#ed6d3d" stroke-width="14"/>
-        <path d="M116 70.5 A40 40 0 0 1 116 149.5" fill="none" stroke="#8c7f5e" stroke-width="14"/>
-        <rect x="76" y="92" width="68" height="36" rx="6" fill="#f6e6b8" stroke="#a55b3a" stroke-width="3"/>
-        <text x="110" y="116" text-anchor="middle" class="t ts">コイル</text>
-        <rect x="36" y="102" width="26" height="16" fill="#8c7f5e"/><rect x="158" y="102" width="26" height="16" fill="#8c7f5e"/>
-        <path d="M36 110 H22 V212 H88 M184 110 H198 V212 H132" fill="none" stroke="#3a2e2a" stroke-width="3"/>
-        <rect x="88" y="198" width="44" height="28" rx="5" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-        <text x="80" y="236" class="t tb" font-size="18" style="fill:#b7282e">＋</text><text x="134" y="236" class="t tb" font-size="18">−</text>
-        <text x="110" y="22" text-anchor="middle" class="t ts tb">半回転の前</text>
-        <text x="110" y="45" text-anchor="middle" class="t ts" style="fill:#a9461f">オレンジが＋側に接続</text>
+        <path class="nf s-orange s-fat" d="M104 70.5 A40 40 0 0 0 104 149.5"/>
+        <path class="nf s-green s-fat" d="M116 70.5 A40 40 0 0 1 116 149.5"/>
+        <rect class="f-yellow s-red" x="76" y="92" width="68" height="36" rx="6"/>
+        <text class="t" x="110" y="116" text-anchor="middle">コイル</text>
+        <rect class="f-rule" x="36" y="102" width="26" height="16"/><rect class="f-rule" x="158" y="102" width="26" height="16"/>
+        <path class="nf s-ink" d="M36 110 H22 V212 H88 M184 110 H198 V212 H132"/>
+        <rect class="f-white s-ink" x="88" y="198" width="44" height="28" rx="5"/>
+        <text class="t red" x="80" y="236">＋</text><text class="t" x="134" y="236">−</text>
+        <text class="t" x="110" y="22" text-anchor="middle">半回転の前</text>
+        <text class="t orange" x="110" y="45" text-anchor="middle">オレンジが＋側に接続</text>
       </g>
-<text x="135" y="292" text-anchor="start" class="t tm tb">半回転</text>
-<line x1="110" y1="262" x2="110" y2="318" stroke="#3a2e2a" stroke-width="4" marker-end="url(#ar-k)"/>
+<text class="t" x="135" y="292" text-anchor="start">半回転</text>
+<line class="s-ink" x1="110" y1="262" x2="110" y2="318" marker-end="url(#ar-k)"/>
 <g transform="translate(0 330)">
-        <path d="M104 70.5 A40 40 0 0 0 104 149.5" fill="none" stroke="#8c7f5e" stroke-width="14"/>
-        <path d="M116 70.5 A40 40 0 0 1 116 149.5" fill="none" stroke="#ed6d3d" stroke-width="14"/>
-        <rect x="76" y="92" width="68" height="36" rx="6" fill="#f6e6b8" stroke="#a55b3a" stroke-width="3"/>
-        <text x="110" y="116" text-anchor="middle" class="t ts">コイル</text>
-        <rect x="36" y="102" width="26" height="16" fill="#8c7f5e"/><rect x="158" y="102" width="26" height="16" fill="#8c7f5e"/>
-        <path d="M36 110 H22 V212 H88 M184 110 H198 V212 H132" fill="none" stroke="#3a2e2a" stroke-width="3"/>
-        <rect x="88" y="198" width="44" height="28" rx="5" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-        <text x="80" y="236" class="t tb" font-size="18" style="fill:#b7282e">＋</text><text x="134" y="236" class="t tb" font-size="18">−</text>
-        <text x="110" y="22" text-anchor="middle" class="t ts tb">半回転のあと</text>
-        <text x="110" y="45" text-anchor="middle" class="t ts" style="fill:#5e5339">緑が＋側に接続</text>
+        <path class="nf s-green s-fat" d="M104 70.5 A40 40 0 0 0 104 149.5"/>
+        <path class="nf s-orange s-fat" d="M116 70.5 A40 40 0 0 1 116 149.5"/>
+        <rect class="f-yellow s-red" x="76" y="92" width="68" height="36" rx="6"/>
+        <text class="t" x="110" y="116" text-anchor="middle">コイル</text>
+        <rect class="f-rule" x="36" y="102" width="26" height="16"/><rect class="f-rule" x="158" y="102" width="26" height="16"/>
+        <path class="nf s-ink" d="M36 110 H22 V212 H88 M184 110 H198 V212 H132"/>
+        <rect class="f-white s-ink" x="88" y="198" width="44" height="28" rx="5"/>
+        <text class="t red" x="80" y="236">＋</text><text class="t" x="134" y="236">−</text>
+        <text class="t" x="110" y="22" text-anchor="middle">半回転のあと</text>
+        <text class="t green" x="110" y="45" text-anchor="middle">緑が＋側に接続</text>
       </g>
 </svg>
     <figcaption>整流子が半回転すると、＋側に接続する整流子片が入れ替わる。このため、コイルを流れる電流の向きが反転する。<br>（灰色の四角がブラシ。電池は下にある）</figcaption>
   </figure>
   <p>ブラシと整流子は摺動接触するため、摩耗や火花（スパーク）が生じる。これが直流電動機の欠点である。そこで、ブラシをもたない<b>ブラシレスモーター</b>が開発されている。ブラシレスモーターでは、電流の切り替えを電子回路が担う。</p>
-</section>
 
 <!-- 3 -->
-<section id="s3">
-  <h2><span class="no">4</span> 電動機発展の歴史</h2>
+<h2 id="sec4">4.  電動機発展の歴史</h2>
   <p>電動機は、特定の一人の発明者によって一度に完成したものではなく、多くの研究者・技術者による改良の積み重ねによって発展してきた。</p>
   <ul class="tl">
     <li><span class="yr">1821 年</span><b>マイケル・ファラデー</b>（イギリス）<br>電流と磁石の相互作用によって導体が連続回転することを初めて実証した。電動機の原型とされる装置である。</li>
@@ -488,11 +560,9 @@
     <li><span class="yr">1834 年</span><b>モーリッツ・フォン・ヤコビ</b>（ロシア）<br>本格的な回転式の電動機を開発した。</li>
     <li><span class="yr">1888 年</span><b>ニコラ・テスラ</b>（アメリカ）<br>交流電動機（多相交流による誘導電動機）を発明した。工場や都市での利用が広がり、産業の発展を大きく促した。</li>
   </ul>
-</section>
 
 <!-- 4 -->
-<section id="s4">
-  <h2><span class="no">5</span> 直流と交流</h2>
+<h2 id="sec5">5.  直流と交流</h2>
   <p>次に、電動機に供給する電気の性質を整理する。電流には、時間変化の仕方により二種類がある。</p>
   <ul>
     <li><b>直流 (DC)</b>……流れる向きが<b>一定</b>である。電池やバッテリーが供給する電気がこれにあたる。</li>
@@ -500,32 +570,32 @@
   </ul>
   <p>水流にたとえると、直流は一方向への定常的な流れ、交流は管内の水が前後に往復する流れに相当する。</p>
   <figure>
-    <svg class="vert" viewBox="0 0 320 510" role="img" aria-label="直流と交流のグラフ">
+    <svg class="w320 vert" viewBox="0 0 320 510" role="img" aria-label="直流と交流のグラフ">
 
       <!-- DC -->
-      <text x="150" y="24" text-anchor="middle" class="t tm tb" style="fill:#a9461f">直流 (DC)</text>
-      <line x1="40" y1="130" x2="290" y2="130" stroke="#8c7f5e" stroke-width="2"/>
-      <line x1="40" y1="40" x2="40" y2="215" stroke="#8c7f5e" stroke-width="2"/>
-      <line x1="40" y1="72" x2="280" y2="72" stroke="#ed6d3d" stroke-width="6" stroke-linecap="round"/>
-      <text x="50" y="58" class="t ts">＋の向き</text><text x="50" y="205" class="t ts">−の向き</text>
-      <text x="282" y="150" text-anchor="end" class="t ts">時間 →</text>
-      <g stroke="#ed6d3d" stroke-width="4" fill="none" marker-end="url(#ar-o)">
+      <text class="t orange" x="150" y="24" text-anchor="middle">直流 (DC)</text>
+      <line class="s-rule" x1="40" y1="130" x2="290" y2="130"/>
+      <line class="s-rule" x1="40" y1="40" x2="40" y2="215"/>
+      <line class="s-yellow s-thick" x1="40" y1="72" x2="280" y2="72" stroke-linecap="round"/>
+      <text class="t" x="50" y="58">＋の向き</text><text class="t" x="50" y="205">−の向き</text>
+      <text class="t" x="282" y="150" text-anchor="end">時間 →</text>
+      <g class="nf s-ink" marker-end="url(#ar-o)">
         <line x1="50" y1="233" x2="110" y2="233" marker-end="url(#ar-o)"/><line x1="125" y1="233" x2="185" y2="233" marker-end="url(#ar-o)"/><line x1="200" y1="233" x2="260" y2="233" marker-end="url(#ar-o)"/>
       </g>
       
 <g transform="translate(-300 260)">
 <!-- AC -->
-      <text x="470" y="24" text-anchor="middle" class="t tm tb" style="fill:#5e3d50">交流 (AC)</text>
-      <line x1="340" y1="130" x2="610" y2="130" stroke="#8c7f5e" stroke-width="2"/>
-      <line x1="350" y1="40" x2="350" y2="215" stroke="#8c7f5e" stroke-width="2"/>
-      <path d="M350 130 C372 57 388 57 410 130 C432 203 448 203 470 130 C492 57 508 57 530 130 C552 203 568 203 590 130" fill="none" stroke="#5e3d50" stroke-width="6" stroke-linecap="round"/>
-      <text x="358" y="58" class="t ts">＋の向き</text><text x="358" y="205" class="t ts">−の向き</text>
-      <text x="608" y="150" text-anchor="end" class="t ts">時間 →</text>
+      <text class="t navy" x="470" y="24" text-anchor="middle">交流 (AC)</text>
+      <line class="s-rule" x1="340" y1="130" x2="610" y2="130"/>
+      <line class="s-rule" x1="350" y1="40" x2="350" y2="215"/>
+      <path class="nf s-navy s-thick" d="M350 130 C372 57 388 57 410 130 C432 203 448 203 470 130 C492 57 508 57 530 130 C552 203 568 203 590 130" stroke-linecap="round"/>
+      <text class="t" x="358" y="58">＋の向き</text><text class="t" x="358" y="205">−の向き</text>
+      <text class="t" x="608" y="150" text-anchor="end">時間 →</text>
       <g stroke-width="4">
-        <line x1="355" y1="233" x2="405" y2="233" stroke="#5e3d50" marker-end="url(#ar-k)"/>
-        <line x1="475" y1="233" x2="425" y2="233" stroke="#5e3d50" marker-end="url(#ar-k)"/>
-        <line x1="485" y1="233" x2="535" y2="233" stroke="#5e3d50" marker-end="url(#ar-k)"/>
-        <line x1="605" y1="233" x2="555" y2="233" stroke="#5e3d50" marker-end="url(#ar-k)"/>
+        <line class="s-navy" x1="355" y1="233" x2="405" y2="233" marker-end="url(#ar-k)"/>
+        <line class="s-navy" x1="475" y1="233" x2="425" y2="233" marker-end="url(#ar-k)"/>
+        <line class="s-navy" x1="485" y1="233" x2="535" y2="233" marker-end="url(#ar-k)"/>
+        <line class="s-navy" x1="605" y1="233" x2="555" y2="233" marker-end="url(#ar-k)"/>
       </g>
     
 </g>
@@ -533,35 +603,33 @@
     <figcaption>直流は時間によらず一定である。交流は、正（＋）と負（−）の間を正弦波状に往復する。下の矢印は電流の向きを表す。</figcaption>
   </figure>
   <p>交流が 1 秒間に繰り返す周期の数を<b>周波数</b>といい、単位はヘルツ (Hz) で表す。日本の商用電源の周波数は、東日本で 50 Hz 、西日本で 60 Hz である。なお、 1 周期の間に電流の向きは 2 回反転するため、 50 Hz では 1 秒間に 100 回、向きが入れ替わる。</p>
-</section>
 
 <!-- 5 -->
-<section id="s5">
-  <h2><span class="no">6</span> 交流電動機の動作原理</h2>
+<h2 id="sec6">6.  交流電動機の動作原理</h2>
   <p>交流電動機には、ブラシも整流子も必要ない。電流の向きが周期的に変化する<b>交流の性質</b>を、そのまま利用できるからである。</p>
   <p>電動機の外側の固定子に複数のコイルを配置し、位相を少しずつずらした交流（実際には<b>三相交流</b>）を流す。すると、合成磁界の <b>N 極の位置が空間的に回転していく</b>。これを<b>回転磁界</b>という。内側の回転子は、この回転磁界に引かれて回転する。</p>
   <p>方位磁針の近くで磁石を回すと、針がそれに追従して回る。これと同じ現象である。</p>
 
   <figure>
-    <svg class="big" viewBox="0 0 400 370" role="img" aria-label="回転磁界のアニメーション">
-      <circle cx="200" cy="185" r="130" fill="none" stroke="#cdb98f" stroke-width="3" stroke-dasharray="8 8"/>
-      <circle class="pole p-top" cx="200" cy="55" r="34" fill="#cdb98f" stroke="#3a2e2a" stroke-width="3"/>
-      <circle class="pole p-right" cx="330" cy="185" r="34" fill="#cdb98f" stroke="#3a2e2a" stroke-width="3"/>
-      <circle class="pole p-bottom" cx="200" cy="315" r="34" fill="#cdb98f" stroke="#3a2e2a" stroke-width="3"/>
-      <circle class="pole p-left" cx="70" cy="185" r="34" fill="#cdb98f" stroke="#3a2e2a" stroke-width="3"/>
-      <g class="t ts" text-anchor="middle" style="font-size:19px">
-        <text x="200" y="107" >電磁石</text><text x="330" y="237">電磁石</text><text x="200" y="367">電磁石</text><text x="70" y="237">電磁石</text>
+    <svg class="w400 big" viewBox="0 0 400 370" role="img" aria-label="回転磁界のアニメーション">
+      <circle class="nf s-rule" cx="200" cy="185" r="130" stroke-dasharray="8 8"/>
+      <circle class="pole p-top f-rule s-ink" cx="200" cy="55" r="34"/>
+      <circle class="pole p-right f-rule s-ink" cx="330" cy="185" r="34"/>
+      <circle class="pole p-bottom f-rule s-ink" cx="200" cy="315" r="34"/>
+      <circle class="pole p-left f-rule s-ink" cx="70" cy="185" r="34"/>
+      <g class="t ts" text-anchor="middle">
+        <text class="t" x="200" y="107" >電磁石</text><text class="t" x="330" y="237">電磁石</text><text class="t" x="200" y="367">電磁石</text><text class="t" x="70" y="237">電磁石</text>
       </g>
       <g transform="translate(200 185)">
         <g class="needle">
-          <rect x="-11" y="-62" width="22" height="62" rx="8" fill="#5e3d50"/>
-          <rect x="-11" y="0" width="22" height="62" rx="8" fill="#b7282e"/>
-          <circle r="6" fill="#3a2e2a"/>
+          <rect class="f-navy" x="-11" y="-62" width="22" height="62" rx="8"/>
+          <rect class="f-red" x="-11" y="0" width="22" height="62" rx="8"/>
+          <circle class="f-ink" r="6"/>
         </g>
       </g>
     </svg>
     <figcaption>
-      <span style="color:#b7282e;font-weight:bold">赤＝ N 極</span>　<span style="color:#5e3d50;font-weight:bold">青＝ S 極</span>　<span style="color:#8c7f5e;font-weight:bold">灰色＝磁化が弱い</span><br>
+      <span class="c-red">赤＝ N 極</span>　<span class="c-navy">青＝ S 極</span>　<span class="c-gray">灰色＝磁化が弱い</span><br>
       固定子の電磁石が順に励磁される（ N 極の位置が回転する）と、中央の回転子の S 極（青）が、 N 極（赤）に励磁された電磁石に引かれて追従する。
     </figcaption>
   </figure>
@@ -571,12 +639,10 @@
     <p>回転磁界の速度（同期速度）は、電源周波数を <i>f</i> [Hz] 、固定子の極数を <i>p</i> とすると、 <i>n</i><sub>s</sub> = 120<i>f</i> / <i>p</i> [min<sup>−1</sup>] で与えられる。回転子が永久磁石または電磁石で、この速度と同じ速度で回るものを<b>同期電動機</b>という。一方、回転子の導体に電磁誘導で電流を生じさせて回すものを<b>誘導電動機</b>といい、回転子は同期速度よりわずかに遅く回る。</p>
   </div>
   <p>ただし、このように回転速度が電源周波数で決まるため、かつては速度制御が困難であった。現在では、<b>インバーター</b>（直流を任意の周波数・電圧の交流に変換する電力変換回路）によって周波数を自由に制御でき、周波数を上げれば高速に、下げれば低速に回転させることができる。</p>
-</section>
 
 <!-- 6 -->
-<section id="s6">
-  <h2><span class="no">7</span> 直流電動機と交流電動機の比較</h2>
-  <table>
+<h2 id="sec7">7.  直流電動機と交流電動機の比較</h2>
+  <table class="cardrow">
     <thead><tr><th>比較項目</th><th>直流電動機 (DC)</th><th>交流電動機 (AC)</th></tr></thead>
     <tbody>
       <tr><th>使う電気</th><td data-label="直流電動機 (DC)">電池・バッテリーなどの<b>直流</b></td><td data-label="交流電動機 (AC)">商用電源や工場の<b>交流</b></td></tr>
@@ -587,39 +653,37 @@
       <tr><th>主な用途</th><td data-label="直流電動機 (DC)">玩具、ラジコン、小型の扇風機、小型機器</td><td data-label="交流電動機 (AC)">冷蔵庫、洗濯機、工場の大型機械、電車</td></tr>
     </tbody>
   </table>
-  <p style="font-size:17px;color:var(--muted)">※現在広く使われているブラシレス DC モーターは、ブラシがないため、交流電動機と同様に耐久性が高い。</p>
-</section>
+  <p class="tnote">※現在広く使われているブラシレス DC モーターは、ブラシがないため、交流電動機と同様に耐久性が高い。</p>
 
 <!-- 7 -->
-<section id="s7">
-  <h2><span class="no">8</span> 電動機の発電機としての動作</h2>
+<h2 id="sec8">8.  電動機の発電機としての動作</h2>
   <p>ここまで、電動機を、電気エネルギーを回転運動に変換する装置として扱ってきた。この変換は可逆であり、同じ構造の機械が逆の働きも行う。</p>
   <p>電動機は、電流を供給すると<b>回転する</b>。逆に、外力で電動機の軸を<b>回転させる</b>と、端子間に<b>起電力が発生する</b>。回転運動を電気エネルギーに変換する機械を<b>発電機</b>という。電動機と発電機は、<b>同一の構造がもつ二つの動作モード</b>とみなすことができる。</p>
   <figure>
-    <svg class="vert" viewBox="0 0 320 580" role="img" aria-label="モーターと発電機は表と裏の関係">
+    <svg class="w320 vert" viewBox="0 0 320 580" role="img" aria-label="モーターと発電機は表と裏の関係">
 <g transform="translate(0 0)">
-<rect x="10" y="10" width="300" height="278" rx="14" fill="#e8dae0"/>
-<text x="25" y="42" text-anchor="start" class="t tb tm" font-size="20" style="fill:#5e3d50">電動機として動作させるとき</text>
-<rect x="60" y="58" width="200" height="44" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="87.0" text-anchor="middle" class="t tm tb">電気</text>
-<line x1="160" y1="106" x2="160" y2="132" stroke="#3a2e2a" stroke-width="4" marker-end="url(#ar-k)"/>
-<rect x="60" y="136" width="200" height="60" rx="10" fill="#fff" stroke="#5e3d50" stroke-width="4"/>
-<text x="160" y="173.0" text-anchor="middle" class="t tm tb">電動機</text>
-<line x1="160" y1="200" x2="160" y2="226" stroke="#3a2e2a" stroke-width="4" marker-end="url(#ar-k)"/>
-<rect x="60" y="230" width="200" height="44" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="259.0" text-anchor="middle" class="t tm tb">回転</text>
+<rect class="f-gray" x="10" y="10" width="300" height="278" rx="14"/>
+<text class="t navy" x="25" y="42" text-anchor="start">電動機として動作させるとき</text>
+<rect class="f-white s-ink" x="60" y="58" width="200" height="44" rx="10"/>
+<text class="t" x="160" y="87.0" text-anchor="middle">電気</text>
+<line class="s-ink" x1="160" y1="106" x2="160" y2="132" marker-end="url(#ar-k)"/>
+<rect class="f-white s-navy" x="60" y="136" width="200" height="60" rx="10"/>
+<text class="t" x="160" y="173.0" text-anchor="middle">電動機</text>
+<line class="s-ink" x1="160" y1="200" x2="160" y2="226" marker-end="url(#ar-k)"/>
+<rect class="f-white s-ink" x="60" y="230" width="200" height="44" rx="10"/>
+<text class="t" x="160" y="259.0" text-anchor="middle">回転</text>
 </g>
 <g transform="translate(0 290)">
-<rect x="10" y="10" width="300" height="278" rx="14" fill="#e3dec6"/>
-<text x="25" y="42" text-anchor="start" class="t tb tm" font-size="20" style="fill:#5e5339">発電機として動作させるとき</text>
-<rect x="60" y="58" width="200" height="44" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="87.0" text-anchor="middle" class="t tm tb">回転を与える</text>
-<line x1="160" y1="106" x2="160" y2="132" stroke="#3a2e2a" stroke-width="4" marker-end="url(#ar-k)"/>
-<rect x="60" y="136" width="200" height="60" rx="10" fill="#fff" stroke="#8c7f5e" stroke-width="4"/>
-<text x="160" y="173.0" text-anchor="middle" class="t tm tb">同一の機械</text>
-<line x1="160" y1="200" x2="160" y2="226" stroke="#3a2e2a" stroke-width="4" marker-end="url(#ar-k)"/>
-<rect x="60" y="230" width="200" height="44" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="259.0" text-anchor="middle" class="t tm tb">電気</text>
+<rect class="f-gray" x="10" y="10" width="300" height="278" rx="14"/>
+<text class="t green" x="25" y="42" text-anchor="start">発電機として動作させるとき</text>
+<rect class="f-white s-ink" x="60" y="58" width="200" height="44" rx="10"/>
+<text class="t" x="160" y="87.0" text-anchor="middle">回転を与える</text>
+<line class="s-ink" x1="160" y1="106" x2="160" y2="132" marker-end="url(#ar-k)"/>
+<rect class="f-white s-rule" x="60" y="136" width="200" height="60" rx="10"/>
+<text class="t" x="160" y="173.0" text-anchor="middle">同一の機械</text>
+<line class="s-ink" x1="160" y1="200" x2="160" y2="226" marker-end="url(#ar-k)"/>
+<rect class="f-white s-ink" x="60" y="230" width="200" height="44" rx="10"/>
+<text class="t" x="160" y="259.0" text-anchor="middle">電気</text>
 </g>
 </svg>
     <figcaption>電気を供給すれば回転する（電動機）。回転させれば電気が得られる（発電機）。</figcaption>
@@ -628,49 +692,49 @@
   <h3>電磁誘導と発電の原理</h3>
   <p>コイルを貫く磁束が時間的に変化すると、コイルに起電力が生じる。この現象を<b>電磁誘導</b>といい、 1831 年にファラデーが発見した。誘導起電力 <i>e</i> は、コイルの巻数を <i>N</i> 、磁束を <i>Φ</i> 、時間を <i>t</i> として、 <i>e</i> = −<i>N</i> d<i>Φ</i>/d<i>t</i> で与えられる（ファラデーの電磁誘導の法則）。負号は、誘導電流が磁束の変化を妨げる向きに流れることを表す（レンツの法則）。磁石が回転してコイルに近づいたり遠ざかったりするたびに磁束が変化し、起電力が生じる。</p>
   <figure>
-    <svg viewBox="0 0 640 282" role="img" aria-label="手回し発電機のアニメーション">
+    <svg class="w640" viewBox="0 0 640 282" role="img" aria-label="手回し発電機のアニメーション">
       <!-- ハンドル -->
-      <circle cx="70" cy="110" r="46" fill="#f6e6b8" stroke="#d19826" stroke-width="3"/>
+      <circle class="f-yellow s-ink" cx="70" cy="110" r="46"/>
       <g transform="translate(70 110)"><g class="crank">
-        <line x1="0" y1="0" x2="0" y2="-36" stroke="#3a2e2a" stroke-width="7" stroke-linecap="round"/>
-        <circle cx="0" cy="-36" r="9" fill="#b7282e"/>
+        <line class="s-ink s-thick" x1="0" y1="0" x2="0" y2="-36" stroke-linecap="round"/>
+        <circle class="f-red" cx="0" cy="-36" r="9"/>
       </g></g>
-      <text x="82" y="190" text-anchor="middle" class="t tb" font-size="29">ハンドルを</text>
-      <text x="82" y="222" text-anchor="middle" class="t tb" font-size="29">回転させる</text>
-      <line x1="120" y1="110" x2="226" y2="110" stroke="#8c7f5e" stroke-width="5" stroke-dasharray="3 7"/>
-      <text x="172" y="96" text-anchor="middle" class="t" font-size="29">軸</text>
+      <text class="t lg" x="82" y="190" text-anchor="middle">ハンドルを</text>
+      <text class="t lg" x="82" y="222" text-anchor="middle">回転させる</text>
+      <line class="s-rule" x1="120" y1="110" x2="226" y2="110" stroke-dasharray="3 7"/>
+      <text class="t lg" x="172" y="96" text-anchor="middle">軸</text>
       <!-- コイル左右 -->
-      <g stroke="#a55b3a" stroke-width="6" stroke-linecap="round">
-        <line x1="172" y1="60" x2="172" y2="160" stroke="none"/>
+      <g class="s-red s-thick" stroke-linecap="round">
+        <line x1="172" y1="60" x2="172" y2="160"/>
       </g>
       <g transform="translate(262 110)">
         <g class="gen-magnet">
-          <rect x="-60" y="-21" width="60" height="42" fill="#b7282e"/>
-          <rect x="0" y="-21" width="60" height="42" fill="#5e3d50"/>
-          <text x="-30" y="10" text-anchor="middle" class="t tb" style="fill:#fff" font-size="29">N</text>
-          <text x="30" y="10" text-anchor="middle" class="t tb" style="fill:#fff" font-size="29">S</text>
+          <rect class="f-red" x="-60" y="-21" width="60" height="42"/>
+          <rect class="f-navy" x="0" y="-21" width="60" height="42"/>
+          <text class="t white lg" x="-30" y="10" text-anchor="middle">N</text>
+          <text class="t white lg" x="30" y="10" text-anchor="middle">S</text>
         </g>
       </g>
       <!-- コイル：上と下 -->
-      <g id="gcoil" stroke="#a55b3a" stroke-width="6" stroke-linecap="round">
+      <g class="s-red s-thick" id="gcoil" stroke-linecap="round">
         <line x1="212" y1="40" x2="222" y2="62"/><line x1="232" y1="40" x2="242" y2="62"/><line x1="252" y1="40" x2="262" y2="62"/>
         <line x1="272" y1="40" x2="282" y2="62"/><line x1="292" y1="40" x2="302" y2="62"/>
         <line x1="212" y1="158" x2="222" y2="180"/><line x1="232" y1="158" x2="242" y2="180"/><line x1="252" y1="158" x2="262" y2="180"/>
         <line x1="272" y1="158" x2="282" y2="180"/><line x1="292" y1="158" x2="302" y2="180"/>
       </g>
-      <text x="262" y="28" text-anchor="middle" class="t tb" font-size="29">コイル</text>
-      <text x="262" y="212" text-anchor="middle" class="t tb" font-size="29">コイル</text>
+      <text class="t lg" x="262" y="28" text-anchor="middle">コイル</text>
+      <text class="t lg" x="262" y="212" text-anchor="middle">コイル</text>
       <!-- 配線 -->
-      <path d="M212 51 H190 V240 H500 V150 M302 51 H350 V30 H500 V68 M212 169 H190 M302 169 H340 V240" fill="none" stroke="#3a2e2a" stroke-width="3"/>
-      <path class="flow" d="M212 51 H190 V240 H500 V150 M302 51 H350 V30 H500 V68 M212 169 H190 M302 169 H340 V240" fill="none" stroke="#ed6d3d" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 16"/>
+      <path class="nf s-ink" d="M212 51 H190 V240 H500 V150 M302 51 H350 V30 H500 V68 M212 169 H190 M302 169 H340 V240"/>
+      <path class="flow nf s-yellow s-thick" d="M212 51 H190 V240 H500 V150 M302 51 H350 V30 H500 V68 M212 169 H190 M302 169 H340 V240" stroke-linecap="round" stroke-dasharray="1 16"/>
       <!-- 電球 -->
       <g transform="translate(500 110)">
-        <circle class="glow" r="64" fill="#e8c46a"/>
-        <circle r="38" fill="#fbf1cf" stroke="#3a2e2a" stroke-width="4"/>
-        <path d="M-14 8 L-6 -12 L0 6 L6 -12 L14 8" fill="none" stroke="#a55b3a" stroke-width="3"/>
-        <rect x="-16" y="36" width="32" height="20" rx="4" fill="#8c7f5e"/>
+        <circle class="glow f-yellow" r="64"/>
+        <circle class="f-white s-ink" r="38"/>
+        <path class="nf s-red" d="M-14 8 L-6 -12 L0 6 L6 -12 L14 8"/>
+        <rect class="f-rule" x="-16" y="36" width="32" height="20" rx="4"/>
       </g>
-      <text x="500" y="274" text-anchor="middle" class="t tb" font-size="29">電球が点灯する</text>
+      <text class="t lg" x="500" y="274" text-anchor="middle">電球が点灯する</text>
     </svg>
     <figcaption>磁石が回転すると、コイルに起電力が生じて電球が点灯する。オレンジの点が電流の流れを表す。（点が往復し、明るさが強弱を繰り返すのは、発生する電流が向きの入れ替わる交流であるためである）</figcaption>
   </figure>
@@ -681,57 +745,53 @@
     <li><b>交流電動機を回転させると → 交流の電気</b>。磁石が回転するたびに、＋と−が入れ替わる起電力が生じる。<br>例：水力・火力・原子力・風力の発電所の大型発電機（同期発電機）、自動車のオルタネーター（内部で整流して直流を得る）。</li>
   </ul>
   <p>家庭や工場に供給される電力の大部分は、水・蒸気・風などの力で大型の交流発電機を回転させて得られている。</p>
-</section>
 
 <!-- 8 -->
-<section id="s8">
-  <h2><span class="no">9</span> 電気自動車と回生ブレーキ</h2>
+<h2 id="sec9">9.  電気自動車と回生ブレーキ</h2>
   <p>電気自動車 (EV) やハイブリッド車の駆動用電動機は、<b>一台で二つの役割</b>を果たす。</p>
   <ul>
     <li><b><ruby>力行<rt>リキコウ</rt></ruby>（加速）時</b>：バッテリーの電気エネルギーで電動機を回転させ、車輪を駆動する（<ruby>力行<rt>リキコウ</rt></ruby>とは、電動機が電力を使って動力を出している状態をいう）。</li>
     <li><b>制動（減速）時</b>：車両の運動エネルギーによって車輪が電動機を回転させる。電動機は<b>発電機</b>として動作し、発生した電力をバッテリーに戻す。この方式を<b>回生ブレーキ</b>（回生制動）という。</li>
   </ul>
   <figure>
-    <svg class="vert" viewBox="0 0 320 780" role="img" aria-label="加速とブレーキのときの電気の流れ">
+    <svg class="w320 vert" viewBox="0 0 320 780" role="img" aria-label="加速とブレーキのときの電気の流れ">
 <g transform="translate(0 0)">
-<rect x="10" y="10" width="300" height="374" rx="14" fill="#f6e6b8"/>
-<text x="25" y="42" text-anchor="start" class="t tb tm" font-size="20" style="fill:#8b4429">力行（加速）時</text>
-<rect x="60" y="56" width="200" height="56" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="80" text-anchor="middle" class="t ts tb">バッテリー</text><text x="160" y="100" text-anchor="middle" class="t ts tb" style="font-weight:normal">（直流）</text>
-<line x1="160" y1="116" x2="160" y2="138" stroke="#ed6d3d" stroke-width="5" marker-end="url(#ar-o)"/>
-<rect x="60" y="142" width="200" height="56" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="166" text-anchor="middle" class="t ts tb">インバーター</text><text x="160" y="186" text-anchor="middle" class="t ts tb" style="font-weight:normal">直流→交流</text>
-<line x1="160" y1="202" x2="160" y2="224" stroke="#ed6d3d" stroke-width="5" marker-end="url(#ar-o)"/>
-<rect x="60" y="228" width="200" height="56" rx="10" fill="#fff" stroke="#5e3d50" stroke-width="4"/>
-<text x="160" y="262" text-anchor="middle" class="t ts tb">電動機</text>
-<line x1="160" y1="288" x2="160" y2="310" stroke="#ed6d3d" stroke-width="5" marker-end="url(#ar-o)"/>
-<rect x="60" y="314" width="200" height="56" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="348" text-anchor="middle" class="t ts tb">タイヤ</text>
+<rect class="f-yellow" x="10" y="10" width="300" height="374" rx="14"/>
+<text class="t red" x="25" y="42" text-anchor="start">力行（加速）時</text>
+<rect class="f-white s-ink" x="60" y="56" width="200" height="56" rx="10"/>
+<text class="t" x="160" y="80" text-anchor="middle">バッテリー</text><text class="t" x="160" y="100" text-anchor="middle">（直流）</text>
+<line class="s-ink" x1="160" y1="116" x2="160" y2="138" marker-end="url(#ar-o)"/>
+<rect class="f-white s-ink" x="60" y="142" width="200" height="56" rx="10"/>
+<text class="t" x="160" y="166" text-anchor="middle">インバーター</text><text class="t" x="160" y="186" text-anchor="middle">直流→交流</text>
+<line class="s-ink" x1="160" y1="202" x2="160" y2="224" marker-end="url(#ar-o)"/>
+<rect class="f-white s-navy" x="60" y="228" width="200" height="56" rx="10"/>
+<text class="t" x="160" y="262" text-anchor="middle">電動機</text>
+<line class="s-ink" x1="160" y1="288" x2="160" y2="310" marker-end="url(#ar-o)"/>
+<rect class="f-white s-ink" x="60" y="314" width="200" height="56" rx="10"/>
+<text class="t" x="160" y="348" text-anchor="middle">タイヤ</text>
 </g>
 <g transform="translate(0 394)">
-<rect x="10" y="10" width="300" height="374" rx="14" fill="#e3dec6"/>
-<text x="25" y="42" text-anchor="start" class="t tb tm" font-size="20" style="fill:#5e5339">制動（回生ブレーキ）時</text>
-<rect x="60" y="56" width="200" height="56" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="80" text-anchor="middle" class="t ts tb">バッテリー</text><text x="160" y="100" text-anchor="middle" class="t ts tb" style="font-weight:normal">（直流）</text>
-<line x1="160" y1="138" x2="160" y2="116" stroke="#8c7f5e" stroke-width="5" marker-end="url(#ar-g)"/>
-<rect x="60" y="142" width="200" height="56" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="166" text-anchor="middle" class="t ts tb">インバーター</text><text x="160" y="186" text-anchor="middle" class="t ts tb" style="font-weight:normal">交流→直流</text>
-<line x1="160" y1="224" x2="160" y2="202" stroke="#8c7f5e" stroke-width="5" marker-end="url(#ar-g)"/>
-<rect x="60" y="228" width="200" height="56" rx="10" fill="#fff" stroke="#8c7f5e" stroke-width="4"/>
-<text x="160" y="252" text-anchor="middle" class="t ts tb">発電機</text><text x="160" y="272" text-anchor="middle" class="t ts tb" style="font-weight:normal">（電動機）</text>
-<line x1="160" y1="310" x2="160" y2="288" stroke="#8c7f5e" stroke-width="5" marker-end="url(#ar-g)"/>
-<rect x="60" y="314" width="200" height="56" rx="10" fill="#fff" stroke="#3a2e2a" stroke-width="3"/>
-<text x="160" y="348" text-anchor="middle" class="t ts tb">タイヤ</text>
+<rect class="f-gray" x="10" y="10" width="300" height="374" rx="14"/>
+<text class="t green" x="25" y="42" text-anchor="start">制動（回生ブレーキ）時</text>
+<rect class="f-white s-ink" x="60" y="56" width="200" height="56" rx="10"/>
+<text class="t" x="160" y="80" text-anchor="middle">バッテリー</text><text class="t" x="160" y="100" text-anchor="middle">（直流）</text>
+<line class="s-rule" x1="160" y1="138" x2="160" y2="116" marker-end="url(#ar-g)"/>
+<rect class="f-white s-ink" x="60" y="142" width="200" height="56" rx="10"/>
+<text class="t" x="160" y="166" text-anchor="middle">インバーター</text><text class="t" x="160" y="186" text-anchor="middle">交流→直流</text>
+<line class="s-rule" x1="160" y1="224" x2="160" y2="202" marker-end="url(#ar-g)"/>
+<rect class="f-white s-rule" x="60" y="228" width="200" height="56" rx="10"/>
+<text class="t" x="160" y="252" text-anchor="middle">発電機</text><text class="t" x="160" y="272" text-anchor="middle">（電動機）</text>
+<line class="s-rule" x1="160" y1="310" x2="160" y2="288" marker-end="url(#ar-g)"/>
+<rect class="f-white s-ink" x="60" y="314" width="200" height="56" rx="10"/>
+<text class="t" x="160" y="348" text-anchor="middle">タイヤ</text>
 </g>
 </svg>
     <figcaption><ruby>力行<rt>リキコウ</rt></ruby>時：電力は上から下へ流れ、車輪を駆動する。制動時：車輪の運動エネルギーが、電力として下から上へ戻る。</figcaption>
   </figure>
   <p>バッテリーは直流、駆動用電動機は交流を用いることが多いため、両者の間に置かれる<b>インバーター</b>が、直流と交流の相互変換を行う。従来のブレーキが運動エネルギーを熱として捨てていたのに対し、回生ブレーキはそれを電気エネルギーとして回収できるため、エネルギー効率の向上に寄与する。</p>
-</section>
 
 <!-- 9 -->
-<section id="s9">
-  <h2><span class="no">10</span> 演習問題と用語集</h2>
+<h2 id="sec10">10.  演習問題と用語集</h2>
   <h3>演習問題（設問をクリックすると解答が表示される）</h3>
   <div class="quiz">
     <details><summary>Q1 ． N 極どうしを近づけると、どのような力が働くか。</summary><p><span class="ans">解答：</span>斥力（反発力）が働く。</p></details>
@@ -759,8 +819,6 @@
   <div class="point">
     <p>まとめ：<b>電気と磁気は相互に変換される</b>。電流は磁界を作り、磁界中の電流には力が働く（電動機の原理）。また、磁束が変化すると起電力が生じる（発電機の原理）。この二つの現象によって、電動機は回転力を生み、発電機は電気を作る。</p>
   </div>
-</section>
-
-</div>
+</main>
 </body>
 </html>

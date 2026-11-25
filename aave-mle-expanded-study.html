@@ -4,244 +4,265 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>「黒人英語」は何を指すのか</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
-  /* この文書に固有の部品(和色に合わせたもの) */
-  code{background:#f8e4cb;padding:.1rem .35rem;border-radius:6px;font-size:max(16px,.92em);overflow-wrap:anywhere}
-  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#efe3c8;padding:12px 16px;border-radius:12px;margin:0 0 20px;font-size:16px;line-height:1.6}
-  pre code{background:none;padding:0;font-size:inherit}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+  }
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <p class="kicker">社会言語学・言語史</p>
 <h1>「黒人英語」は何を指すのか<br>――AAVE と MLE の表現・起源・捉え方</h1>
 <p class="subtitle">African American Vernacular English and Multicultural London English: A Survey of Expressions, Disputed Origins, and Scholarly Perspectives</p>
-</header>
-<div class="wrap">
 <div class="lede">
 <p>「黒人英語」と呼ばれる言語変種の代表に、米国のアフリカ系アメリカ人の共同体で用いられてきた AAVE がある。英国には、別の経緯で形成された多民族の若者の都市方言 MLE がある。両者は重なる部分を持つが、同じ対象ではない。本稿は、両者の代表的な表現を、文法・語彙・語用論の観点から検討し、起源がどこまで確かかを区分して示し、言語学・哲学・史学がこれらの変種をどう捉えてきたかを論じる。</p>
 </div>
-<div class="meta band"><strong>【方法と限界】</strong>本稿は、公開された辞書・研究機関のページ・論文の要旨を調べた結果に基づく。原典の全文を読んでいない出典が多く、その旨を参考文献欄に記した。話し言葉の実例は、辞書の引用文と教育機関の解説に限られ、コーパス調査は行っていない。日本語訳はすべて筆者による一例である。</div>
+<div class="meta"><strong>【方法と限界】</strong>本稿は、公開された辞書・研究機関のページ・論文の要旨を調べた結果に基づく。原典の全文を読んでいない出典が多く、その旨を参考文献欄に記した。話し言葉の実例は、辞書の引用文と教育機関の解説に限られ、コーパス調査は行っていない。日本語訳はすべて筆者による一例である。</div>
 
 <nav class="toc" aria-label="目次">
-<b>目次</b>
+<p class="toc-title">目次</p>
 <ol>
-<li><a href="#s1">問いと方法</a></li>
-<li><a href="#s2">用語と範囲</a>
+<li><a href="#sec1">問いと方法</a></li>
+<li><a href="#sec2">用語と範囲</a>
 <ol>
-<li><a href="#s2-1">AAVE と AAE</a></li>
-<li><a href="#s2-2">MLE と周辺の呼称</a></li>
+<li><a href="#sec2-1">AAVE と AAE</a></li>
+<li><a href="#sec2-2">MLE と周辺の呼称</a></li>
 </ol>
 </li>
-<li><a href="#s3">歴史的背景</a>
+<li><a href="#sec3">歴史的背景</a>
 <ol>
-<li><a href="#s3-1">米国の大移動</a></li>
-<li><a href="#s3-2">英国のウィンドラッシュ世代</a></li>
+<li><a href="#sec3-1">米国の大移動</a></li>
+<li><a href="#sec3-2">英国のウィンドラッシュ世代</a></li>
 </ol>
 </li>
-<li><a href="#s4">十の表現の検討</a>
+<li><a href="#sec4">十の表現の検討</a>
 <ol>
-<li><a href="#s4-1">AAVE の五つの表現</a></li>
-<li><a href="#s4-2">MLE の五つの表現</a></li>
-<li><a href="#s4-3">追加の用例 (AAVE)</a></li>
-<li><a href="#s4-4">追加の用例 (MLE)</a></li>
+<li><a href="#sec4-1">AAVE の五つの表現</a></li>
+<li><a href="#sec4-2">MLE の五つの表現</a></li>
+<li><a href="#sec4-3">追加の用例 (AAVE)</a></li>
+<li><a href="#sec4-4">追加の用例 (MLE)</a></li>
 </ol>
 </li>
-<li><a href="#s5">AAVE と MLE の比較</a></li>
-<li><a href="#s6">起源をめぐる論点</a>
+<li><a href="#sec5">AAVE と MLE の比較</a></li>
+<li><a href="#sec6">起源をめぐる論点</a>
 <ol>
-<li><a href="#s6-1">AAVE の成立</a></li>
-<li><a href="#s6-2"><code>y'all</code> と過去の <code>ain't</code></a></li>
-<li><a href="#s6-3"><code>innit</code> と <code>-dem</code></a></li>
+<li><a href="#sec6-1">AAVE の成立</a></li>
+<li><a href="#sec6-2">y'all と過去の ain't</a></li>
+<li><a href="#sec6-3">innit と -dem</a></li>
 </ol>
 </li>
-<li><a href="#s7">学問の捉え方</a>
+<li><a href="#sec7">学問の捉え方</a>
 <ol>
-<li><a href="#s7-1">言語学</a></li>
-<li><a href="#s7-2">史学</a></li>
-<li><a href="#s7-3">哲学</a></li>
+<li><a href="#sec7-1">言語学</a></li>
+<li><a href="#sec7-2">史学</a></li>
+<li><a href="#sec7-3">哲学</a></li>
 </ol>
 </li>
-<li><a href="#s8">結論</a></li>
-<li><a href="#s9">限界</a></li>
+<li><a href="#sec8">結論</a></li>
+<li><a href="#sec9">限界</a></li>
 </ol>
 </nav>
 
-<section id="s1">
-<h2><span class="no">1</span>問いと方法</h2>
+<h2 id="sec1">1. 問いと方法</h2>
 <p>本稿は、三つの問いに答える。第一に、「黒人英語」という語は何を指し、 AAVE と MLE はどこで重なり、どこで分かれるのか。第二に、代表的な十の表現は、文法・語彙・語用論のどれとして説明でき、その起源はどこまで確かなのか。第三に、言語学・哲学・史学は、これらの変種をどのように捉えてきたのか。</p>
 <p>結論は、調査の結果として得る。調査では、各主張を次の三つに区分する。「確立した事実」は、複数の独立した研究または主要な辞書で記述が一致するもの。「未確定の仮説」は、研究者の間で説が分かれる、または出典の間で記述が食い違うもの。「投機的な理論」は、検証できる証拠が乏しいものである。この区分は、確認できた出典に基づく筆者の判断である。</p>
 <p>本稿は、増補の素材とした既存の解説稿（以下「素材」）の記述を、確認済みの事実としては扱わなかった。年代、語源、語義の記述を一つずつ出典に照らし、裏付けのない記述は本文から外した。外した項目は 9 節で述べる。</p>
-</section>
 
-<section id="s2">
-<h2><span class="no">2</span>用語と範囲</h2>
-<h3 id="s2-1">2.1 AAVE と AAE</h3>
+<h2 id="sec2">2. 用語と範囲</h2>
+<h3 id="sec2-1">2.1 AAVE と AAE</h3>
 <p>米国のアフリカ系アメリカ人の共同体で用いられてきた変種を、研究者は AAVE (African American Vernacular English) または AAE (African American English) と呼ぶ。 両者の使い分けの詳細は、本稿の調査では確認していない。</p>
 <p>この変種を、独立した規則の体系を持つ方言として記述する立場は、 社会言語学者 Labov の 1972 年の著作に代表される。 Labov は、非標準の話し方が学習の障害になるとは考えられないと論じた <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 。この見方は、 1997 年の米国言語学会の決議でも示されている（ 7.1 節）。</p>
 
-<h3 id="s2-2">2.2 MLE と周辺の呼称</h3>
+<h3 id="sec2-2">2.2 MLE と周辺の呼称</h3>
 <p>英国の MLE (Multicultural London English) は、ロンドンの多民族の若者の都市方言を指す語として使われる。 MLE の形成を調べた Cheshire らは、民族的な多様性に由来する多様な言語特徴の集まり (feature pool) から、この変種が形成されたと論じた <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</p>
 <p>MLE に先立つ若者の言語として、ロンドン・ジャマイカ英語 (London Jamaican) と多民族の俗語 (multiracial vernacular) の二つが挙げられている <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 。筆者の判断では、 MLE 、 Black British English 、ジャマイカ・パトワ語（ British Jamaican Creole などの呼称）は、同じ対象の言い換えではない。ただし、各語の研究上の厳密な定義は、本稿の調査では確認できなかった。</p>
 <p>以上から、「黒人英語」という語を AAVE と MLE の両方に当てはめることには、注意が要る。 MLE の話し手は、アフリカ系の子孫に限られない多民族の若者だからである。</p>
-</section>
 
-<section id="s3">
-<h2><span class="no">3</span>歴史的背景</h2>
-<h3 id="s3-1">3.1 米国の大移動</h3>
+<h2 id="sec3">3. 歴史的背景</h2>
+<h3 id="sec3-1">3.1 米国の大移動</h3>
 <p>Britannica は、 1916 年から 1970 年にかけて、約 600 万人の黒人が南部から北部・西部の都市へ移ったと記す <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup> 。この数値は百科事典の記述であり、移動そのものは確立した事実として扱う。移動に伴って南部の話し方が北部・西部の都市へ広がったと考えることはできるが、これは筆者の推測であり、変種の広がりとの因果関係は、本稿の調査では確認していない。</p>
 
-<h3 id="s3-2">3.2 英国のウィンドラッシュ世代</h3>
+<h3 id="sec3-2">3.2 英国のウィンドラッシュ世代</h3>
 <p>英国の公文書館によれば、エンパイア・ウィンドラッシュ号は 1948 年 6 月 22 日にエセックスのティルベリーに到着した。 1948 年から 1971 年にかけてカリブ海諸国から英国へ来た人々は、ウィンドラッシュ世代と呼ばれる <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup> 。素材は移民の時期を「 1940 〜 70 年代」（ 2 節）と「 1950 年代以降」（比較表）の二通りに書いていた。いずれも上の記録と合わないため、本稿は 1948 年を起点とする。</p>
 <p>この到着は、移住全体を象徴する出来事として扱われることがある <sup id="fnref-20-2"><a href="#ref-20">[20]</a></sup> 。移住の全体は、一つの出来事に還元できない。</p>
-</section>
 
-<section id="s4">
-<h2><span class="no">4</span>十の表現の検討</h2>
+<h2 id="sec4">4. 十の表現の検討</h2>
 <p>以下の表は、十の表現について、意味、文法・語彙・語用論上の説明、起源の確かさの区分を示す。日本語訳は、原語の砕けた調子を反映して筆者が付けた一例である。例文のうち「作例」と記したものは筆者が作った短い文であり、その用法が成立することは、挙げた辞書・解説の記述で裏付けている。話者集団の全員がこれらを使うとは限らず、場面や個人によって使い分けられる点にも留意する必要がある。</p>
 
-<h3 id="s4-1">4.1 AAVE の五つの表現</h3>
-<table>
+<h3 id="sec4-1">4.1 AAVE の五つの表現</h3>
+<table class="cardrow">
 <thead><tr><th>表現</th><th>意味</th><th>説明</th><th>起源と区分</th><th>例文と訳</th></tr></thead>
 <tbody>
 <tr><th scope="row"><code>ain't</code></th><td data-label="意味"><code>have not</code> の否定。 AAVE では過去の否定（ <code>didn't</code> 相当）にも現れる。素材は <code>am not</code> から <code>have not</code> までの万能な否定語とするが、 <code>am not</code> や <code>is not</code> の用法は、本稿の出典では確認できていない。</td><td data-label="説明">文法。助動詞の否定形。過去の否定として使われる点が、他の多くの非標準変種と異なるとされる <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。 <code>ain't</code> の後の動詞は、原形のほか過去形も取りうる <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</td><td data-label="起源と区分"><strong>未確定</strong><br> 過去の <code>ain't</code> は、現在完了の <code>ain't</code> からの再分析とする提案がある一方、高年層が <code>ain't</code> と過去形の組み合わせを好むことから古い構成の可能性も指摘されている <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup> 。</td><td data-label="例文と訳"><em>"I ain't see nothing."</em> <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。「何も見なかった」。素材の例文 <em>"He ain't listening to me."</em>（「彼は私の話を聞いていない」）の用法は、出典では確認できていない。</td></tr>
@@ -253,8 +274,8 @@
 </table>
 <p>habitual <code>be</code> の意味は、素材の「恒常的な状態」ではなく、習慣・反復と記す方が出典に近い <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。状態を表す述語との共起の制約については、確認できていない。</p>
 
-<h3 id="s4-2">4.2 MLE の五つの表現</h3>
-<table>
+<h3 id="sec4-2">4.2 MLE の五つの表現</h3>
+<table class="cardrow">
 <thead><tr><th>表現</th><th>意味</th><th>説明</th><th>起源と区分</th><th>例文と訳</th></tr></thead>
 <tbody>
 <tr><th scope="row"><code>bruv</code> / <code>blud</code></th><td data-label="意味">友人や仲間への呼びかけ。「おい」「兄弟」に近い。</td><td data-label="説明">語彙・語用論。呼びかけ語 (vocative) 。 MLE の特徴として、一群の呼びかけ語が多用される点が挙げられている <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。ただし、 <code>bruv</code> 自体の語義の出典は確認できていない。</td><td data-label="起源と区分"><strong>投機的</strong><br> <code>blud</code> の語源を <code>blood</code> や <code>bredren</code> とする説明は、辞書的な裏付けを確認できていない。素材の「ジャマイカ英語の blood brother 」は、そのような表現の実在を確認できず、削除した。</td><td data-label="例文と訳">作例 <em>"Alright, bruv?"</em> 「調子はどう ? 」</td></tr>
@@ -265,9 +286,9 @@
 </tbody>
 </table>
 
-<h3 id="s4-3">4.3 追加の用例 (AAVE)</h3>
+<h3 id="sec4-3">4.3 追加の用例 (AAVE)</h3>
 <p>次の四つは、 Hawaii LangNet が AAVE の特徴として挙げる例文である <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 。同ページは、これらの特徴が体系的であり、かつ変異を伴う、すなわち標準形と交替して現れると述べる。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>用例</th><th>意味</th><th>説明</th><th>出典</th></tr></thead>
 <tbody>
 <tr><th scope="row"><em>"He been married."</em><br>「彼は（ずっと前から）結婚している」</th><td data-label="意味">遠い過去から続く状態。</td><td data-label="説明">文法。この文は現在も既婚であることを示す。</td><td data-label="出典"><sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup></td></tr>
@@ -277,9 +298,9 @@
 </tbody>
 </table>
 
-<h3 id="s4-4">4.4 追加の用例 (MLE)</h3>
+<h3 id="sec4-4">4.4 追加の用例 (MLE)</h3>
 <p>次の三つは、 Green's Dictionary of Slang の見出しと引用に基づく。同辞書の引用には小説・映画の脚本が含まれる。これらは実際の話し言葉の記録ではなく、作者が話し言葉を写したものである。したがって、使用の実態を示す証拠としては限界がある。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>用例</th><th>意味</th><th>説明</th><th>出典</th></tr></thead>
 <tbody>
 <tr><th scope="row"><em>"What-a-gwarn? How comes you reach home so early?"</em> （ 1999 年の小説より）<br>「どうした。なんでこんなに早く帰ってきたんだ」</th><td data-label="意味"><code>wagwan</code> 。「調子はどう」「何が起きている」。</td><td data-label="説明">語用論。挨拶として働く。 <code>what's going on</code> の縮約で、西インド諸島と英国の黒人の若者のスラングと記される。</td><td data-label="出典"><sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></td></tr>
@@ -288,11 +309,9 @@
 </tbody>
 </table>
 <p>MLE の文法面では、引用辞（発言を引く導入の語）の <code>this is</code> に代名詞が続く形（ <em>this is me</em> など）と、 <code>man</code> の代名詞的な用法が、特徴として挙げられている <sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup><sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup> 。これらの具体的な例文は、本稿では確認できなかった。 MLE を語彙（スラング）の面でのみ語ることは、 AAVE が文法で語られる傾向と非対称であり、誤った対比を生むおそれがある。本稿は、この偏りを資料の限界として記す。</p>
-</section>
 
-<section id="s5">
-<h2><span class="no">5</span>AAVE と MLE の比較</h2>
-<table>
+<h2 id="sec5">5. AAVE と MLE の比較</h2>
+<table class="cardrow">
 <thead><tr><th>項目</th><th>米国の AAVE</th><th>英国の MLE</th></tr></thead>
 <tbody>
 <tr><th scope="row">話し手</th><td data-label="米国の AAVE">主にアフリカ系アメリカ人の共同体 <sup id="fnref-15-2"><a href="#ref-15">[15]</a></sup> 。地域・世代・場面による差があり、全員が同じように使うわけではない。</td><td data-label="英国の MLE">ロンドンの多民族の若者 <sup id="fnref-11-4"><a href="#ref-11">[11]</a></sup> 。個人や場面による使い分けがある。</td></tr>
@@ -303,11 +322,9 @@
 </tbody>
 </table>
 <p>この表は、「固有」ではなく「特徴的」という言い方を前提にしている。 <code>ain't</code> は他の非標準変種にも見られ、 <code>y'all</code> は南部英語に広く見られ、 <code>innit</code> は英国北部にも独立に生じている <sup id="fnref-1-11"><a href="#ref-1">[1]</a></sup><sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup><sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup> 。したがって、これらを AAVE または MLE だけの表現と断定することはできない。</p>
-</section>
 
-<section id="s6">
-<h2><span class="no">6</span>起源をめぐる論点</h2>
-<h3 id="s6-1">6.1 AAVE の成立</h3>
+<h2 id="sec6">6. 起源をめぐる論点</h2>
+<h3 id="sec6-1">6.1 AAVE の成立</h3>
 <p>AAVE の起源をめぐる主要な立場は、四つに整理できる <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup> 。各立場は、主張、根拠、批判の順に述べる。</p>
 <p><strong>クレオール起源説</strong><br>主張は、 AAVE が、奴隷とされたアフリカ系の人々が話した混成の言語（クレオール）に由来するというものである。根拠の種類として、奴隷制の社会史的条件、離散した地域の変種の録音、カリブ海のクレオールや西アフリカの言語との類似が挙げられる。弱い形の説（ Holm と Rickford に結びつけられる）は、プランテーション南部全体にクレオールがあったとは限らないが、形成期に混成語的な話し方が要素として働いたとする。批判は、英語起源説の側から出される。</p>
 <p><strong>新英語起源説</strong><br>主張は、 AAVE が初期の入植者の英語方言として始まったというものである。 Poplack や Tagliamonte に結びつけられる新英語起源説は、 AAVE の他の文法的特徴を、後の言語変化の結果と見る。 Poplack は、共同体が固まるにつれて、特定の特徴が革新されたと論じる。批判は、筆者の整理では、英語に帰せない特徴が実在すれば、この説の説明力が限られる点に向けられる（次の Mufwene の記述を参照）。</p>
@@ -315,38 +332,32 @@
 <p><strong>基層・中間説</strong><br>主張は、英語起源説とクレオール起源説の折衷として、基層（ substrate 、下層にある言語の影響）や言語接触が早い時期から関与したとするものである。 Winford や Mufwene らは、折衷的な立場を求めた。否定の構文を調べた研究は、初期の AAE が英語とクレオールの双方に由来する要素を持っていたはずだと結論する <sup id="fnref-28-1"><a href="#ref-28">[28]</a></sup> 。この立場への批判は、本稿の調査では確認できなかった。</p>
 <p>以上の論点は、研究者の間で決着していない。どの説が優勢かの判断は、本稿の調査では確認できなかったため、記さない。起源は<strong>未確定</strong><br>の区分に置く。素材の「奴隷制の歴史・南部方言・アフリカ諸語が混ざり合ってできた」という記述は、基層・中間説に近いが、確定した事実ではない。</p>
 
-<h3 id="s6-2">6.2 <code>y'all</code> と過去の <code>ain't</code></h3>
+<h3 id="sec6-2">6.2 <code>y'all</code> と過去の <code>ain't</code></h3>
 <p><code>y'all</code> の起源には、スコッツ・アイリッシュ移民の <code>ye aw</code> に由来するという説と、初期のアフリカ系の変種やクレオールを経て南部英語に入ったとする説がある。二つの説の優劣は、確認できた出典からは決められない <sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup> 。初出年の記述も出典によって食い違う。 Salon は OED の初出を 1824 年とするが <sup id="fnref-23-3"><a href="#ref-23">[23]</a></sup> 、別の解説は 1856 年とし、辞書の記述は直接確認できなかった。</p>
 <p>過去の <code>ain't</code> は、 AAE の特徴と記述する研究がある一方、その成立が現在完了の <code>ain't</code> の再分析なのか、古い構成なのかは未確定である <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。</p>
 
-<h3 id="s6-3">6.3 <code>innit</code> と <code>-dem</code></h3>
+<h3 id="sec6-3">6.3 <code>innit</code> と <code>-dem</code></h3>
 <p><code>innit</code> について、言語学者 Pichler は、 <code>isn't it</code>（おそらく <code>ain't it</code> を経由）の頻度による音声の縮約と、話者による再分析（語を別の構造に捉え直すこと）を、文法化として説明する。言語接触が果たした役割は補助的であり、その提案は暫定的であると自ら述べる <sup id="fnref-10-4"><a href="#ref-10">[10]</a></sup> 。一方、 <code>innit</code> がジャマイカ・クレオールに由来するという先行研究の主張に対しては、辞書の証拠は弱くしかそれを支えないと評価する。 <code>innit</code> は、南部イングランドとロンドンで少なくとも 1970 年代から使われ、北部の Berwick での使用は、独立した体系内部の発達と考えられている <sup id="fnref-10-5"><a href="#ref-10">[10]</a></sup> 。ここから、 <code>innit</code> を MLE だけの表現と見ることは難しい。</p>
 <p><code>-dem</code> には、三つの分析がある。第一に、複数接尾辞とする見方。これはオンライン辞書や一般向けの解説に見られる説明で、研究文献での担い手は確認していない。第二に、掲示板に投稿した Patrick の見方である。 Patrick は、 Bill Stewart に由来するとされる「連合複数」（ associative plural 、名前などに添えて「その人たち」を表す複数）の用語で説明する。ジャマイカ・クレオールでは <code>[名前] an dem</code> や <code>[名前]-dem</code> の形が可能で、これは英語の通常の複数では表しにくい <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup> 。 APiCS （クレオール諸語の構造を集めたデータベース）には <em>di maan dem a wok</em>（「その男たちが働いている」）という例がある <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 。第三に、ジャマイカ・クレオールに複数標識はなく、後置の <code>dem</code> は包括性の標識であるとする分析が、 Creole Language Library の一論文にある（著者は未確認）<sup id="fnref-25-1"><a href="#ref-25">[25]</a></sup> 。 Patrick の投稿は掲示板への投稿であり、査読を経ていない。三つの分析の優劣は、本稿では判断しない。</p>
-</section>
 
-<section id="s7">
-<h2><span class="no">7</span>学問の捉え方</h2>
-<h3 id="s7-1">7.1 言語学</h3>
+<h2 id="sec7">7. 学問の捉え方</h2>
+<h3 id="sec7-1">7.1 言語学</h3>
 <p>言語学では、 AAVE を規則を持つ体系として記述する立場が、 Labov の著作 <sup id="fnref-15-3"><a href="#ref-15">[15]</a></sup> や、次の決議に示されている。 1997 年 1 月 3 日の米国言語学会の決議は、この変種が他の自然な話し言葉と同じく体系的で規則に従うと述べ、「スラング」や「壊れた英語」という呼称は不正確で貶めるものだとした <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> 。同決議は、言語と方言の区別が言語学的な根拠よりも社会的・政治的な根拠に基づくとも述べ、標準英語の習得を支える立場も取った <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup> 。</p>
 <p>この立場は記述的である。つまり、変種の優劣を決めず、実際の使用を規則として説明する。一方、規範的な立場は、標準英語の習得を重んじる。以下は筆者の整理である。上の決議も標準英語の習得を支持し <sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup> 、 Ann Arbor の判決も標準英語の読みの指導を学校に求めた <sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup> 。つまり、記述的な立場も、標準英語の習得そのものを否定していない。両者の関係は、 7.2 節の裁判と決議で具体的に現れた。本稿は、どちらの立場が正しいかを先に決めない。</p>
 
-<h3 id="s7-2">7.2 史学</h3>
+<h3 id="sec7-2">7.2 史学</h3>
 <p>1979 年 7 月 12 日、ミシガン州アナーバーの連邦地裁（ Joiner 判事）は、黒人の児童が起こした訴訟で判決を出した。判決は、黒人英語自体は言語上の障壁ではなく、教師が児童の家庭の言語を考慮せずに標準英語の読みを教えることが障壁になっていると認めたとされる。学校側には、この変種の話者を識別し、その知識を標準英語の読みの指導に使うことを命じた <sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup> 。判決文の本文は、本稿では読んでいない。</p>
 <p>1996 年 12 月 18 日、オークランドの教育委員会は、西アフリカ・ニジェール = コンゴ系の言語体系を「 Ebonics 」と呼び、児童の主要な言語と認める決議を採択した。決議は、それが「遺伝的に基づき、英語の方言ではない」と述べていた <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup> 。委員会は、 1997 年 1 月 15 日に決議を修正し、「遺伝的に基づく」という文言を削除して、「起源を持つ」という表現に改めた。ただし、「英語の方言ではない」という主張は残った。この修正の記述は、解説記事の要約による <sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup> 。</p>
 <p>この二つの事例は、変種の地位をめぐる議論が教育政策と直結していたことを示す。この文言は修正で削除された。決議の主張と言語学者の起源論は、区別して読む必要があると筆者は考える。</p>
 
-<h3 id="s7-3">7.3 哲学</h3>
+<h3 id="sec7-3">7.3 哲学</h3>
 <p>哲学の観点として、 Fricker の認識的不正義の議論を取り上げる。 Fricker の中心的な事例では、証言的不正義は、聞き手の同一性に関する偏見が原因で、話者の信用性が不当に低く見積もられる場合に生じる <sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup> 。</p>
 <p>以下は筆者の解釈である。この枠組みを方言の話者に当てはめるなら、話し方への偏見が、内容とは無関係に発言の信用性を下げる場合がありうる。ただし、 Fricker 自身が方言話者を例に論じたかは、本稿では原典を読んでおらず、確認できていない。この当てはめは、仮の枠組みにとどまる。</p>
-</section>
 
-<section id="s8">
-<h2><span class="no">8</span>結論</h2>
+<h2 id="sec8">8. 結論</h2>
 <p>第一の問いについて、「黒人英語」という語は、米国のアフリカ系アメリカ人の共同体の変種 (AAVE) に当てられることがあるが、日本語の辞書の定義は確認していない。 MLE は多民族の若者の変種であり、 AAVE と同じ対象ではない。両者は、カリブの英語との関係が論じられる点で重なる。第二の問いについて、十の表現のうち、起源が確立したと言えるものは本稿では確認できなかった。多くは<strong>未確定</strong><br>であり、 <code>blud</code> の語源は<strong>投機的</strong><br>である。第三の問いについて、言語学は規則を持つ体系として記述し、史学は教育政策との結びつきを示し、哲学は偏見と信用性の関係を論じる枠組みを与える。ただし、哲学の当てはめは筆者の解釈である。</p>
-</section>
 
-<section id="s9">
-<h2><span class="no">9</span>限界</h2>
+<h2 id="sec9">9. 限界</h2>
 <ul>
 <li>本稿は、検索結果の要約と公開ページに基づく。 Labov 、 Fricker 、 Green 、 Cheshire らの原典の全文は読んでいない。</li>
 <li>日本語の辞書が「黒人英語」をどう定義しているかは、確認していない。 1 節の問いは、研究上の呼称の整理で代える。</li>
@@ -354,10 +365,9 @@
 <li>MLE の資料は Green's Dictionary of Slang に偏り、 AAVE の資料は文法の解説に偏る。小説や映画の引用は、実際の話し言葉の証拠ではない。用例には犯罪や薬物を連想させるものが多いため、代表例としては避けた。</li>
 <li>話者集団は一枚岩ではない。用例は特定の話者・場面での用法であり、集団の全員が使うとは限らない。スラングの移り変わりは速く、本稿の記述は 2026 年 11 月時点で確認できた範囲に限られる。</li>
 </ul>
-</section>
 <div class="refs">
 <h2>参考文献・資料</h2>
-<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> <sup><a href="#fnref-1-10">j</a></sup> <sup><a href="#fnref-1-11">k</a></sup> Hawaii LangNet. "African American Vernacular English (AAVE) ". University of Hawai‘i at Mānoa, Sato Center. <a href="https://www.hawaii.edu/satocenter/langnet/definitions/aave.html">Hawaii LangNet</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> Fisher, Sabriya. <em>Variation and Change in Past Tense Negation in African American English</em>. 博士論文 , University of Pennsylvania. <a href="https://repository.upenn.edu/edissertations/2925">ペンシルベニア大学リポジトリ</a></li>
@@ -391,6 +401,6 @@
 </ol>
 </div>
 <p class="endnote">本稿は、検索結果の要約と公開ページの本文に基づく調査であり、原典の全文を読んでいない出典が多い。該当する出典には、その旨を参考文献欄に記した。日本語訳はすべて筆者による一例である。</p>
-</div>
+</main>
 </body>
 </html>

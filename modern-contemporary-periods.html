@@ -4,179 +4,194 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>「近代」と「現代」の時代区分論――世界史と日本史の対照年表</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  nav.toc>ol>li{break-inside:avoid}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* コード、必須、印、結合セルのある表 */
-  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
-  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
-  pre code{background:none;padding:0;font-size:inherit}
-  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
-  pre.term{background:#000;color:#fff;border-color:#000}
-  pre.term code{color:#fff}
-  code.term{background:#000;color:#fff}
-  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
-  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
-  .must pre.term code{color:#fff}
-  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
-  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
-  @media(max-width:640px){
-    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
-    table.cardspan tbody td[rowspan]{display:none}
-    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
   }
-  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
-  .t{fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
-  h4{font-size:20px;margin:22px 0 6px;color:var(--link)}
+  /* この文書に固有の部品(contrast の色に置き換えたもの) */
+  h4 { font-size: 20px; margin: 22px 0 6px; color: var(--navy); }
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <p class="kicker">歴史学・時代区分論</p>
 <h1>「近代」と「現代」の時代区分論<br>――世界史と日本史の対照年表</h1>
 <p class="subtitle">On the Periodization of 'Modern' and 'Contemporary': A Comparative Chronology of World and Japanese History</p>
-</header>
-<div class="wrap">
 <div class="lede"><p>世界史と日本史を一本の年表に重ね合わせて読む。</p></div>
-<div class="meta band"><strong>【方法と限界】</strong>時代区分は、出来事そのものではなく、何を重視するかによって異なる歴史叙述上の道具である。本記事の年表は比較のための骨組みであり、同時期に起きた出来事が因果関係にあること、また一つの地域の変化を世界全体に一般化することを意味しない。また、本記事はヨーロッパと日本の事例を中心に据えており、アフリカ・中南米・西アジア・東南アジアの歴史には十分に踏み込めていない。</div>
-<nav class="toc"><b>目次</b>
+<div class="meta"><strong>【方法と限界】</strong>時代区分は、出来事そのものではなく、何を重視するかによって異なる歴史叙述上の道具である。本記事の年表は比較のための骨組みであり、同時期に起きた出来事が因果関係にあること、また一つの地域の変化を世界全体に一般化することを意味しない。また、本記事はヨーロッパと日本の事例を中心に据えており、アフリカ・中南米・西アジア・東南アジアの歴史には十分に踏み込めていない。</div>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
 <ol>
 <li><a href="#sec1">問題提起――年表を見比べる</a></li>
 <li><a href="#sec2">読み解きの方法――この記事が年表をどう編み、事象をどう分類するか</a></li>
@@ -253,7 +268,7 @@
 <li><a href="#sec16">用語集――この記事に登場した重要語</a></li>
 </ol>
 </nav>
-<section id="sec1"><h2><span class="no">1</span> 問題提起――年表を見比べる</h2>
+<h2 id="sec1">1.  問題提起――年表を見比べる</h2>
 <p>歴史の本の年表には、「近代」「現代」という区分が印刷されている。ところが、日本史の年表と世界史の年表とでは、「近代」が始まる位置がまったく異なっている。</p>
 <p>日本史の年表では、「近代」は<strong>明治維新（ 1868 年）</strong>のあたりから始まっている。ところが世界史の年表では、「近代」ははるかに早く、<strong>大航海時代</strong>や<strong>宗教改革</strong>のころ、つまり 1500 年前後から始まっている。
 三百年以上のずれがある。同じ「近代」という語を使っているのに、なぜこれほど違うのだろうか。</p>
@@ -268,15 +283,14 @@
 時代区分とは、後の時代に生きる者が、自分の立っている現在から過去を振り返り、便宜的に引いた線にすぎない。したがって、立っている場所が変われば、線の位置も変わる。</p>
 <p><strong>メモ</strong><br>読者自身が年表を作るとすれば、「現在」の始まりをどの年に置くだろうか。またそれはなぜか。
 この問いを頭の片隅に置きながら、以下を読み進めてほしい。</p>
-</section>
 
-<section id="sec2"><h2><span class="no">2</span> 読み解きの方法――この記事が年表をどう編み、事象をどう分類するか</h2>
+<h2 id="sec2">2.  読み解きの方法――この記事が年表をどう編み、事象をどう分類するか</h2>
 <p>この記事はまず、世界史と日本史を上下二段に分けた対照年表を土台に置く。上段に世界の事象を、下段に日本の事象を、時系列で並べる。
 以下の各章の記述は、すべてこの対照年表を出発点としている。</p>
 <p>「上下二段に分ける」という形式を採ったのには理由がある。
 世界史と日本史をそれぞれ別個に記述すると、同じ時期に地球の各地で何が起きていたかが見えにくくなる。たとえば、日本にペリーの艦隊が来航した 1853 年前後には、クリミア戦争、インド大反乱、アメリカの南北戦争、中国の太平天国の乱が並行して起きている。個別に語られがちなこれらの事象は、上下に並べた瞬間、一つのつながりとして立ち上がってくる。</p>
 <p>さらに、事象をその性格に応じて五つに分類し、次のように色分けして示す。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>色</th><th>意味</th><th>その色で塗った事象の例</th></tr></thead>
 <tbody>
 <tr><th><strong>赤</strong></th><td data-label="意味">戦争・革命</td><td data-label="その色で塗った事象の例">フランス革命、二つの世界大戦、戊辰戦争</td></tr>
@@ -292,9 +306,8 @@
 <p>この記事は、通史・教科書・概説書・地図帳など複数の文献を参照しており、一つの事象についてはできるだけ二つ以上の資料で確認するという方針を取っている。単一の資料のみに依拠すると、その著者固有の視点がそのまま結論として採用されてしまう危険があるためである。</p>
 <p><strong>メモ</strong><br>年号の記述に食い違いがある資料も少なくない。
 たとえば「産業革命がいつ始まったか」は、資料によって 1760 年代とも 1780 年代とも書かれている。どちらかが誤っているのではなく、「始まり」をどう定義するかが異なっている。</p>
-</section>
 
-<section id="sec3"><h2><span class="no">3</span> そもそも「近代」とは何か――この記事の中心的な問い</h2>
+<h2 id="sec3">3.  そもそも「近代」とは何か――この記事の中心的な問い</h2>
 <p>「古代・中世・近代」という三区分はそれほど古い時代から存在していたわけではなく、ヨーロッパの知識人たちが、ある時期に自分たちの立場から作り出したものである。</p>
 <p>ルネサンス期の知識人たちは、おおよそ次のように考えた。
 「古代のギリシャ・ローマは素晴らしかった。ところがその後、暗く停滞した時代が長く続いた。そして今、われわれの時代になって、ふたたび光が戻ってきた」。
@@ -313,7 +326,7 @@
 <p>つまり日本語の「近代 / 現代」という二層構造は、日本語独自の整理法であって、世界共通の分類ではない。翻訳の際にこの二語のずれが生じるのは、そのためである。</p>
 <h3 id="sec3-2">3.2 「近代」を構成する要素は何か</h3>
 <p>年代ではなく内容の面から「近代」を捉えることもできる。文献を読み比べると、おおむね次の六点が、繰り返し「近代の指標」として挙げられていた。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>しるし</th><th>どういうことか</th></tr></thead>
 <tbody>
 <tr><th><strong>主権国家</strong></th><td data-label="どういうことか">はっきりした国境を持つ国が、その中のことを最終的に決める。王や貴族や教会が、あちこちで別々に支配するのではなくなる。</td></tr>
@@ -328,9 +341,8 @@
 したがって、「この年から近代」と一本の線で区切ることには、本質的な困難が伴う。線を引くことで理解はしやすくなるが、その利便性と引き換えに、こぼれ落ちるものも生じる。</p>
 <p><strong>メモ</strong><br>「近代」を年代ではなく内容で定義するとすれば、上記六点のうちどれが最も重い意味を持つだろうか。読者なりに一つを選び、その理由を考えてみてほしい。</p>
 <p>（この記事の終盤で、一つの見解を示す。）</p>
-</section>
 
-<section id="sec4"><h2><span class="no">4</span> 世界の近代の始まり――1500 年ごろ〜 1789 年</h2>
+<h2 id="sec4">4.  世界の近代の始まり――1500 年ごろ〜 1789 年</h2>
 <p>世界史の年表で「近代の始まり」とされる時期を年表に書き入れると、 1490 年代から 1600 年代にかけて大きな事象が集中していることが分かる。</p>
 <ul>
 <li><strong>1450 年ごろ</strong> グーテンベルクが活版印刷を実用化する。それまで手で写すしかなかった本が、大量に、はやく、安く作れる様になった。</li>
@@ -357,9 +369,8 @@
 一般に「鎖国」と呼ばれるが、完全に閉ざされていたわけではなく、長崎（オランダ・中国）、対馬（朝鮮）、薩摩（琉球）、松前（アイヌ）という四つの窓口は開かれていた。近年の教科書では「四つの口」という表現が用いられることが多いようである。</p>
 <p>この点にも、時代区分と類似した構造を見て取ることができる。「鎖国」という一語でまとめると理解しやすい反面、実際に存在した細かな交流が見えなくなってしまう。</p>
 <p><strong>メモ</strong><br>もし印刷術が存在しなかったら、宗教改革は同様に拡大しただろうか。「新しい技術」と「新しい思想」は、どちらが先行すると考えるべきだろうか。</p>
-</section>
 
-<section id="sec5"><h2><span class="no">5</span> 二つの革命が世界を変えた――1776 年〜 1848 年</h2>
+<h2 id="sec5">5.  二つの革命が世界を変えた――1776 年〜 1848 年</h2>
 <p>年表の中で、色分けしたマーカーが最も密集しているのがこの時期である。赤（革命）と青（技術）が同時に、しかも同じヨーロッパの地域に集中している。</p>
 <p>文献では、この時期を<strong>二重革命</strong>と呼ぶことがある。イギリスで始まった<strong>産業革命</strong>と、フランスで起きた<strong>フランス革命</strong>という二つの革命が、ほぼ同時に世界を変えたためである。
 前者は「ものの生産方法」を、後者は「政治の決定方法」を、それぞれ根本から変えた。</p>
@@ -395,9 +406,8 @@
 つまり、後に急速な近代化を可能にした基盤は、江戸時代のうちにかなりの程度形成されていたことになる。</p>
 <p>ここでも、「遅れていた / 進んでいた」という単一の尺度で測ろうとすると、見えなくなるものがある。</p>
 <p><strong>メモ</strong><br>「機械が労働のあり方を変える」という現象は、現在の身の回りでも起きているだろうか。産業革命期の人々と共通する感覚を抱く場面はあるだろうか。</p>
-</section>
 
-<section id="sec6"><h2><span class="no">6</span> 日本が世界の年表につながる――1853 年〜 1890 年</h2>
+<h2 id="sec6">6.  日本が世界の年表につながる――1853 年〜 1890 年</h2>
 <p>年表の上段と下段、つまり世界と日本の線がはっきりと交差するのがこの時期である。日本史の年表が「近代」と記し始めるのも、この時期からである。</p>
 <ul>
 <li><strong>1853 年</strong> ペリーの艦隊が浦賀に来る。翌年、日米和親条約。</li>
@@ -433,12 +443,11 @@
 <p>結局のところ、これも「革命」という語をどう定義するかという問題に帰着する。時代区分の議論と同様に、語の定義を先に確定しなければ、結論も定まらない。
 歴史をめぐる議論には、こうした構造を持つものが少なくないと理解した。</p>
 <p><strong>メモ</strong><br>「上から進められた変革」と「下から沸き起こった変革」とでは、その後の社会にどのような相違が残るだろうか。</p>
-</section>
 
-<section id="sec7"><h2><span class="no">7</span> 帝国の世紀――1870 年〜 1914 年 / 世界が縮小した時代</h2>
+<h2 id="sec7">7.  帝国の世紀――1870 年〜 1914 年 / 世界が縮小した時代</h2>
 <p>十九世紀後半、世界地図の勢力分布は急速に塗り替えられていった。ヨーロッパ諸国と、それに続くアメリカと日本が、アジア・アフリカ・太平洋地域を自国の勢力圏に組み込んでいった時代である。</p>
 <p>年表を見渡すと、この時期に青（技術）と黄（移動）の印が密集していることに気づく。技術と支配は、密接に結びついている。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>技術</th><th>それが可能にしたこと</th></tr></thead>
 <tbody>
 <tr><th><strong>蒸気船</strong></th><td data-label="それが可能にしたこと">風にたよらず、時刻表どおりに海をわたれる。川をさかのぼって内陸へも入れる。</td></tr>
@@ -472,7 +481,7 @@
 <p>結果は、想定していたよりも素朴な構造であった。中心にあるのは通常の銅線である。電気信号はこの銅線を通る。
 問題はその外側であった。海水は電気を通すため、銅線を十分に絶縁しなければ、信号が海水側へ漏れてしまう。加えて海底は水圧が高く、貝類や虫害の被害を受けることもある。
 ここで用いられたのが、<strong>グッタペルカ</strong>という、聞き慣れない名称の素材であった。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>層</th><th>使われた素材</th><th>役目</th></tr></thead>
 <tbody>
 <tr><th>いちばん内側</th><td data-label="使われた素材">銅線</td><td data-label="役目">電気信号を通す道</td></tr>
@@ -489,9 +498,8 @@
 現在の光ファイバーケーブルも、いずれ「かつてはガラス繊維を用いていたらしい」と、後世に調べられる対象になるのかもしれない。</p>
 <p><strong>メモ</strong><br>技術が進歩すれば、世界は自動的に平和になるだろうか。それとも、技術は使い方次第だろうか。
 この時代の事例は、その問いに一つの手がかりを与えてくれる。</p>
-</section>
 
-<section id="sec8"><h2><span class="no">8</span> 1914 年――ここから「現代」か――特に重要な論点</h2>
+<h2 id="sec8">8.  1914 年――ここから「現代」か――特に重要な論点</h2>
 <p>第一次世界大戦は 1914 年から 1918 年まで続いた。この戦争を「近代の終わり」あるいは「現代の始まり」と位置づける歴史家は少なくない。</p>
 <p>ある著名な歴史家は、 1789 年のフランス革命から 1914 年までを<strong>「長い十九世紀」</strong>、 1914 年から 1991 年のソ連解体までを<strong>「短い二十世紀」</strong>と呼んだ。暦年上の百年ではなく、内容のまとまりで区切るという発想である。
 この呼称は、「時代区分はここまで自由に設定してよいのか」という驚きを与える。同時に、その自由度こそが時代区分という営みの本質を示してもいる。</p>
@@ -519,9 +527,8 @@ W ・ B ・イェイツ「再臨」より</p>
 1925 年には、二十五歳以上の男性すべてに選挙権が付与された（普通選挙法）。ただし女性は対象外であり、同年に治安維持法も制定されている。
 権利拡大の動きと統制強化の動きが、同時に進行していた。</p>
 <p><strong>メモ</strong><br>ある事象が「時代の画期」となるのは、その事象自体の規模が大きいからだろうか。それとも、後世の人間がそこに線を引いたからだろうか。</p>
-</section>
 
-<section id="sec9"><h2><span class="no">9</span> 戦争と戦争のあいだ――1919 年〜 1939 年 / 機能しなかった二十年</h2>
+<h2 id="sec9">9.  戦争と戦争のあいだ――1919 年〜 1939 年 / 機能しなかった二十年</h2>
 <p>第一次世界大戦の後、世界の人々は「もう二度とこのような戦争を繰り返さない」と考えた。国際連盟が設立され、戦争を違法とする条約も締結された。
 ところが、そのわずか二十年後に、さらに大規模な戦争が勃発する。この二十年間に何が起きていたのかは、近現代史の中でもとりわけ込み入った経緯をたどる。</p>
 <ul>
@@ -551,15 +558,14 @@ W ・ B ・イェイツ「再臨」より</p>
 <p>技術それ自体に善悪はない。しかし技術の変化は、政治の手法をも変える。
 ラジオ、テレビ、そしてインターネットと、同様の現象がその後も繰り返し観察される。</p>
 <p><strong>メモ</strong><br>生活が困窮したとき、人はどのような言葉に引き寄せられるのか。それを知っておくことに、どのような意義があるだろうか。</p>
-</section>
 
-<section id="sec10"><h2><span class="no">10</span> 1945 年――日本史が「現代」と呼ぶ年――1939 年〜 1945 年</h2>
+<h2 id="sec10">10.  1945 年――日本史が「現代」と呼ぶ年――1939 年〜 1945 年</h2>
 <p>第二次世界大戦は、人類史上最も多くの死者を出した戦争である。犠牲者数は推計によって幅があるが、五千万人から八千万人程度とされる。
 その多くは兵士ではなく、一般の生活者であった。</p>
 <p>この戦争について、この記事では事象の網羅よりも、「なぜこの年が時代の画期とされるのか」を検討することに重点を置いた。</p>
 <h3 id="sec10-1">10.1 日本にとっての 1945 年</h3>
 <p>日本史の教科書や年表が、ほぼ例外なく 1945 年を「現代の始まり」とするのには、明確な理由がある。この年を境に、国家の制度が根本から入れ替わったためである。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th></th><th>1945 年より前</th><th>1945 年より後</th></tr></thead>
 <tbody>
 <tr><th>主権</th><td data-label="1945 年より前">天皇にあるとされた</td><td data-label="1945 年より後">国民にある</td></tr>
@@ -584,9 +590,8 @@ W ・ B ・イェイツ「再臨」より</p>
 <p><strong>実際には</strong><br>国際連合の加盟国数は、発足時の 51 か国から現在の 193 か国まで増加している。 40 年ほどの間に国家数が 3 倍以上になった計算になる。
 現在われわれが目にする世界地図は、実際にはかなり新しいものなのである。</p>
 <p><strong>メモ</strong><br>「戦争が終結した年」を新時代の始まりとするのは、日本にとって自然な発想に思える。では、その土地で戦争が終わらなかった人々にとって、事情はどうであっただろうか。</p>
-</section>
 
-<section id="sec11"><h2><span class="no">11</span> 冷戦と高度経済成長――1945 年〜 1973 年</h2>
+<h2 id="sec11">11.  冷戦と高度経済成長――1945 年〜 1973 年</h2>
 <p>戦争終結後、世界は直ちに二陣営に分裂した。アメリカを中心とする陣営と、ソ連を中心とする陣営である。
 直接には交戦しないが対立が持続する状態であったため、<strong>冷たい戦争（冷戦）</strong>と呼ばれた。</p>
 <p>ただし「冷たかった」のはヨーロッパの内部に限られる。朝鮮半島、ベトナム、アフリカ、中東、中南米では、実際に死者を伴う戦争が発生している。
@@ -616,9 +621,8 @@ W ・ B ・イェイツ「再臨」より</p>
 「洗濯機は、いかなる政治運動よりも社会を変えたのではないか」と論じる研究者もいる。</p>
 <p>この視点は、政治史のみを追っていては見えてこない。歴史上の大きな変化は、議会や戦場だけでなく、台所にも存在するのである。</p>
 <p><strong>メモ</strong><br>読者の家庭に、最も最近導入された「暮らしを変えた機器」は何だろうか。それは、どれだけの時間を人々に返し、あるいはどれだけの時間を奪っただろうか。</p>
-</section>
 
-<section id="sec12"><h2><span class="no">12</span> 1973 年と 1989 年――さらに二本、線を引きたくなる年</h2>
+<h2 id="sec12">12.  1973 年と 1989 年――さらに二本、線を引きたくなる年</h2>
 <p>年表を眺めていると、 1945 年のほかにも「ここで何かが転換している」と思われる箇所が二つあった。 1973 年と 1989 年である。</p>
 <h3 id="sec12-1">12.1 「 1973 年」――拡大の時代の終焉</h3>
 <p>この年、第一次石油危機が発生した。原油価格が数か月で四倍近くに高騰し、日本ではトイレットペーパーの買い占め騒動が起きている。
@@ -641,9 +645,8 @@ W ・ B ・イェイツ「再臨」より</p>
 <p>候補が四つもあるのは、<strong>「現代」が長くなりすぎたから</strong>だと考えられる。 1945 年から数えると、もう八十年である。
 八十年前を「現代」と呼ぶのは、そろそろ無理がある。線は、時間の経過とともに引き直しを要するのである。</p>
 <p><strong>メモ</strong><br>読者が子ども時代を過ごした世界と、現在の世界とで、最も変化した点は何だろうか。その変化は、教科書の年表に記載されているだろうか。</p>
-</section>
 
-<section id="sec13"><h2><span class="no">13</span> われわれが立っている位置――1991 年〜現在</h2>
+<h2 id="sec13">13.  われわれが立っている位置――1991 年〜現在</h2>
 <p>ここからは年表の右端の部分にあたる。刊行済みの年表にも、まだ数行しか記述がない領域である。
 時間的に近すぎるため、何が重要な事象なのか、いまだ定まっていないのだと考えられる。</p>
 <ul>
@@ -671,9 +674,8 @@ W ・ B ・イェイツ「再臨」より</p>
 <p>いずれになるかは判然としない。
 ただ、現時点でその時代を生きている者には、自らの時代の名称を決定する資格がないということだけは明確になった。名称を与えるのは、常に後の世代である。</p>
 <p><strong>メモ</strong><br>今日のニュースの中で、百年後の年表に一行残るとすればどれだろうか。そしてその予測は、果たして的中するだろうか。</p>
-</section>
 
-<section id="sec14"><h2><span class="no">14</span> 総括――「近代」と「現代」について、この記事がたどり着いた結論</h2>
+<h2 id="sec14">14.  総括――「近代」と「現代」について、この記事がたどり着いた結論</h2>
 <p>ここまでの内容を、五点にまとめる。</p>
 <h3 id="sec14-1">14.1 まとめ① 時代の画期に、唯一の正解は存在しない</h3>
 <p>これが最初にして最大の結論である。「近代はいつから始まるか」「現代はいつから始まるか」に、公式の正解は存在しない。
@@ -699,7 +701,7 @@ W ・ B ・イェイツ「再臨」より</p>
 <p>第二章の色分けからは、技術変化、対立、制度調整という順に見える事例がある。
 ただし、これは普遍法則ではない。制度が先行する場合、対立が制度を変えない場合、地域ごとに順序が異なる場合も多い。
 ここでは、年表を比較するための仮説として扱う。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>技術・条件の変化</th><th>混乱・対立</th><th>あとから来た制度</th></tr></thead>
 <tbody>
 <tr><th>印刷術</th><td data-label="混乱・対立">宗教戦争</td><td data-label="あとから来た制度">主権国家の体系（ 1648 年）</td></tr>
@@ -714,7 +716,7 @@ W ・ B ・イェイツ「再臨」より</p>
 そこに、いくらかの希望があると考える。</p>
 <h3 id="sec14-5">14.5 まとめ⑤ 独自の時代区分を試みる</h3>
 <p>最後に、この記事の結論として、独自の時代区分を提示する。既存の学説の引用ではなく、ここまでの年表の検討をふまえた、筆者なりの試案である。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>試案の時代名</th><th>時期</th><th>その時代のとくちょう</th></tr></thead>
 <tbody>
 <tr><th><strong>つながりはじめた時代</strong></th><td data-label="時期">1500 〜 1780 年ごろ</td><td data-label="その時代のとくちょう">海の道で世界が一つになる。ただし、つながり方はとても不公平だった。</td></tr>
@@ -731,11 +733,10 @@ W ・ B ・イェイツ「再臨」より</p>
 <p><strong>メモ</strong><br>この記事の結論 : 年表を読む際には、記載されている事象そのものだけでなく、その年表がどこで区切られているかに注目するとよい。区切りの位置にこそ、その年表を作成した者の視点が、最も明確に表れている。</p>
 <p>この記事は当初、「近代と現代の境目はどこか」という、明確な答えを持つ問いから出発した。しかし考察を進めるうちに見えてきたのは、必要なのは答えそのものではなく問いの立て方であったということである。人口・生産量・平均寿命といった数量的な指標による裏づけは、この記事では簡略にとどまっており、今後の課題として残されている。
 年表の線は、いつでも自らの手で引き直してよい――これが、この記事を通じて得られた最大の収穫であった。</p>
-</section>
 
-<section id="sec15"><h2><span class="no">15</span> 対照年表――世界と日本を並べて読む年表</h2>
+<h2 id="sec15">15.  対照年表――世界と日本を並べて読む年表</h2>
 <p>世界の事象と日本の事象を、同一の表にまとめた。横に見比べることで、同時期に何が起きていたかを把握できる。</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>年</th><th>世界</th><th>日本</th></tr></thead>
 <tbody>
 <tr><th>1543</th><td data-label="世界">コペルニクスの地動説</td><td data-label="日本">鉄砲の伝来</td></tr>
@@ -764,9 +765,8 @@ W ・ B ・イェイツ「再臨」より</p>
 <p>この対照表からは、興味深い点が見えてくる。
 日本の欄が空欄になりそうな年でも、必ず何らかの事象は生じている。逆に、日本にとって重大事であった年が、世界の欄では比較的静穏であることもある。
 どちらの欄を主軸に置くかによって、時代の見え方は大きく異なる。</p>
-</section>
 
-<section id="sec16"><h2><span class="no">16</span> 用語集――この記事に登場した重要語</h2>
+<h2 id="sec16">16.  用語集――この記事に登場した重要語</h2>
 <p><strong>近代 (modern)</strong><br>もとは「今の」という意味の言葉。世界史ではおよそ十六世紀以降、日本史では明治維新以降を指すことが多い。主権国家・産業化・資本主義・科学・個人の権利・国民意識といった特徴でとらえられる。</p>
 <p><strong>近世 (early modern)</strong><br>近代の入り口にあたる時期。世界史ではおよそ十六〜十八世紀、日本史では織豊時代から江戸時代までを指す。同じ言葉でも中身がずれるので注意がいる。</p>
 <p><strong>現代 (contemporary)</strong><br>「同じ時代を生きている」という意味あい。日本史ではふつう 1945 年以降。世界史では 1914 年、 1945 年、 1989 年など、本によって線の位置が変わる。</p>
@@ -777,7 +777,6 @@ W ・ B ・イェイツ「再臨」より</p>
 <p><strong>冷戦</strong><br>米ソが直接には全面戦争をしないまま、四十年以上つづいた対立。ただし、その周辺の地域では実際の戦争が起きていた。</p>
 <p><strong>高度経済成長期</strong><br>日本で 1955 年ごろから 1973 年まで続いた、急速に経済成長した期間。生活のかたちが大きく変わる一方、公害という深刻な代償も伴った。</p>
 <p><strong>時代区分</strong><br>長い時間を、いくつかのまとまりに分けて理解するやり方。自然に存在するものではなく、あとの時代の人が作る道具である。この記事の中心テーマ。</p>
-</section>
 
 <div class="refs">
 <h2>参考文献・資料</h2>
@@ -796,6 +795,6 @@ W ・ B ・イェイツ「再臨」より</p>
 <li><strong>地域の郷土資料館の展示・資料</strong>――自分の暮らす土地に、いつ電気が通り、いつ鉄道が来たのかを調べると、大きな歴史が身近になる。地道だが、得るものの多い調べ方である。</li>
 </ol>
 </div>
-</div>
+</main>
 </body>
 </html>

@@ -4,158 +4,188 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ノルウェーは石油を富に変えたか――北海油田をめぐる記事の事実検証</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+  }
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <p class="kicker">ファクトチェック・エネルギー政策</p>
 <h1>ノルウェーは石油を富に変えたか<br>――北海油田をめぐる記事の事実検証</h1>
 <p class="subtitle">Revenue Versus Wealth: A Fact-Check of Comparative North Sea Petroleum Management in Norway and the United Kingdom</p>
-</header>
-<div class="wrap">
-
-
 <div class="lede">
 <p>New Straits Times 紙の記事「 Norway turned oil into wealth 」は、ノルウェーと英国が同じ時期に北海で大規模な石油を発見しながら、前者は国民資本に、後者は公的収入に変えたと論じる。本稿は、この記事の事実の記述と中心的な主張が、客観的に確かめられる事実に支えられているかを検証する。</p>
 <p>結論を先に述べる。記事の歴史的事実と制度の記述は、確認できた範囲で正確である。「成功」の優劣という評価は規範的な判断であり、事実だけでは決まらないが、貸借対照表と世代間の富という基準なら擁護できる。</p>
@@ -166,44 +196,41 @@
 </div>
 
 <nav class="toc" aria-label="目次">
-<b>目次</b>
+<p class="toc-title">目次</p>
 <ol>
-<li><a href="#s1">文書の情報</a></li>
-<li><a href="#s2">出典の来歴と開示</a></li>
-<li><a href="#s3">要約と総合判定</a></li>
-<li><a href="#s4">主張ごとの検証</a>
+<li><a href="#sec1">文書の情報</a></li>
+<li><a href="#sec2">出典の来歴と開示</a></li>
+<li><a href="#sec3">要約と総合判定</a></li>
+<li><a href="#sec4">主張ごとの検証</a>
 <ol>
-<li><a href="#s4-1">北海での発見時期</a></li>
-<li><a href="#s4-2">基金の規模</a></li>
-<li><a href="#s4-3">英国に国家石油基金がないこと</a></li>
-<li><a href="#s4-4">水力発電の免許制度という起源</a></li>
-<li><a href="#s4-5">ノルウェーの国家参加と課税</a></li>
-<li><a href="#s4-6">英国の BNOC と Britoil</a></li>
-<li><a href="#s4-7">石油基金の創設と海外投資</a></li>
-<li><a href="#s4-8">人口の差</a></li>
+<li><a href="#sec4-1">北海での発見時期</a></li>
+<li><a href="#sec4-2">基金の規模</a></li>
+<li><a href="#sec4-3">英国に国家石油基金がないこと</a></li>
+<li><a href="#sec4-4">水力発電の免許制度という起源</a></li>
+<li><a href="#sec4-5">ノルウェーの国家参加と課税</a></li>
+<li><a href="#sec4-6">英国の BNOC と Britoil</a></li>
+<li><a href="#sec4-7">石油基金の創設と海外投資</a></li>
+<li><a href="#sec4-8">人口の差</a></li>
 </ol>
 </li>
-<li><a href="#s5">比較政策の検討</a>
+<li><a href="#sec5">比較政策の検討</a>
 <ol>
-<li><a href="#s5-1">ノルウェーの設計を支持する論点</a></li>
-<li><a href="#s5-2">英国の選択を弁護する論点</a></li>
+<li><a href="#sec5-1">ノルウェーの設計を支持する論点</a></li>
+<li><a href="#sec5-2">英国の選択を弁護する論点</a></li>
 </ol>
 </li>
-<li><a href="#s6">交絡要因と人口調整</a></li>
-<li><a href="#s7">結論</a></li>
+<li><a href="#sec6">交絡要因と人口調整</a></li>
+<li><a href="#sec7">結論</a></li>
 </ol>
 </nav>
 
-<section id="s1">
-<h2><span class="no">1</span>文書の情報</h2>
+<h2 id="sec1">1. 文書の情報</h2>
 
 <p>検証対象は New Straits Times 紙の記事「 <a href="https://www.nst.com.my/business/insight/2026/10/1547742/norway-turned-oil-wealth">Norway turned oil into wealth</a> 」。<br>検証の中心は、「ノルウェーは北海の油田を有効に活用し、英国は同じようには成功しなかった」という趣旨の主張。</p>
 
 <p>記事は、この主張をそのままの文言では書いていない。記事の論旨は、英国が北海の石油を「公的収入」に変え、ノルウェーが「国民資本」に変えたという対比である。本稿は、この対比を中心的な主張として扱う。</p>
-</section>
 
-<section id="s2">
-<h2><span class="no">2</span>出典の来歴と開示</h2>
+<h2 id="sec2">2. 出典の来歴と開示</h2>
 
 <p>公開元は New Straits Times Press (M) Bhd である。同社は、マレーシアを代表する英字日刊紙を発行している。記事の末尾で、読者の関心が「マレーシアや他の資源産出国」に向けられていることからも、記事が国内の政策論議を意識して書かれたことが分かる。</p>
 
@@ -211,10 +238,8 @@
 
 <p><strong>筆者の判断</strong><br>
 公開元が国内向けの政策論議の媒体であることは、記事の事実を誤りとする理由にはならない。ただし、結論が教訓の形で語られているため、事実の記述と教訓の部分は分けて読む必要がある。</p>
-</section>
 
-<section id="s3">
-<h2><span class="no">3</span>要約と総合判定</h2>
+<h2 id="sec3">3. 要約と総合判定</h2>
 
 <div class="box">
 <ul>
@@ -225,50 +250,48 @@
 </div>
 
 <p>総合すると、記事は事実の面で大きな誤りを含まず、自らの限界も本文で述べている。人口の違い、油田の地質、経済規模の違いを挙げ、英国がノルウェーを模倣すれば同じ結果になったとは言えないと明記している点は、論の信頼性を高めている。</p>
-</section>
 
-<section id="s4">
-<h2><span class="no">4</span>主張ごとの検証</h2>
+<h2 id="sec4">4. 主張ごとの検証</h2>
 
-<h3 id="s4-1">4.1 北海での発見時期</h3>
+<h3 id="sec4-1">4.1 北海での発見時期</h3>
 <p>記事は、ノルウェー側の Ekofisk が 1969 年から 1970 年に、英国側の Forties が 1970 年に発見されたと述べる。 Ekofisk は 1969 年末に Phillips Petroleum が、 Forties は 1970 年に BP が発見したと理解している。両者はほぼ同時期であり、記事の記述と整合する。ただし、本稿では発見年を一次資料で直接確認していない。</p>
 <p><strong>判定</strong><br>おおむね正確（一次資料は未確認）。</p>
 
-<h3 id="s4-2">4.2 基金の規模</h3>
+<h3 id="sec4-2">4.2 基金の規模</h3>
 <p>記事は、政府年金基金グローバル (GPFG) の 2025 年末の評価額を「約 21.3 兆 NOK 」とする。 NBIM の年次報告書によれば、 2025 年末の評価額は 21 兆 2,680 億 NOK であり、前年末の 19 兆 7,420 億 NOK から増えた。ノルウェー政府の白書は、これを「約 21 兆 3,000 億」と丸めている。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
 <p>なお、 2025 年の増加には為替の影響がある。 NBIM の報告では、クローネ高が評価額を押し下げたため、運用益の額より評価額の増加は小さい。</p>
 <p><strong>判定</strong><br>正確。</p>
 
-<h3 id="s4-3">4.3 英国に国家石油基金がないこと</h3>
+<h3 id="sec4-3">4.3 英国に国家石油基金がないこと</h3>
 <p>記事は、英国が巨額の収入を得たが、比較できる国家石油基金は蓄積しなかったと述べる。英国が北海の収入を貯める政府系ファンドを設けなかったことは、広く知られた事実である。 OBR によれば、北海関連の収入は 1984 年度から 1985 年度に 120 億ポンドの記録的な水準に達し、その後 1991 年度から 1992 年度には 10 億ポンドへと 90% 以上減った。主な要因は、海上油田に対する法人税の主税率が 45% から 33% に下がったことである。 <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></p>
 <p>収入の GDP 比は、 OBR の資料により 3.4% と 3.1% の二通りが示されている。なお、指示書にある「税収全体の最大 9% 」という数字は、本稿では裏づけを確認できなかった。</p>
 <p><strong>判定</strong><br>正確。ただし、収入のピークの比率は資料間で食い違う。</p>
 
-<h3 id="s4-4">4.4 水力発電の免許制度という起源</h3>
+<h3 id="sec4-4">4.4 水力発電の免許制度という起源</h3>
 <p>記事は、ノルウェーが 20 世紀初頭の水力発電の免許・返還の制度を通じて、資源の経済的な利益を国民に残す考え方を育てたと述べる。 1906 年から 1917 年の免許法 (Konsesjonslovene) と、返還の原則が背景にあるという理解である。ただし、本稿では法令の原文を確認していない。</p>
 <p><strong>判定</strong><br>おおむね妥当（一次資料は未確認）。「制度的な記憶」という表現は、歴史的な因果を断定するものではなく、解釈である。</p>
 
-<h3 id="s4-5">4.5 ノルウェーの国家参加と課税</h3>
+<h3 id="sec4-5">4.5 ノルウェーの国家参加と課税</h3>
 <p>記事は、国営会社 Statoil （現 Equinor ）の設立と、国の直接財政参加 (SDFI) を挙げ、石油の利益に高い課税をしたと述べる。 SDFI は 1985 年 1 月 1 日に始まった制度で、それ以前の国の持分は Statoil を通じて保有されていた。石油の課税については、法人税と特別石油税を合わせた限界税率が 78% である。 2022 年の改正前は、法人税 22% と特別石油税 56% の組み合わせだった。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></p>
 <p>記事は 78% という数字を書いていない。「相当な課税」という記述の裏づけとして、この税率が使えるということである。</p>
 <p><strong>判定</strong><br>正確。 Statoil の設立年（ 1972 年）は未確認。</p>
 
-<h3 id="s4-6">4.6 英国の BNOC と Britoil</h3>
+<h3 id="sec4-6">4.6 英国の BNOC と Britoil</h3>
 <p>記事は、英国が 1975 年に英国国営石油会社 (BNOC) を設立して国の直接関与を行い、その探鉱・生産部門が Britoil となり、 1982 年に過半数の株式が売却され、残りがその数年後に売られたと述べる。 BNOC は 1975 年の石油・海底パイプライン法に基づいて設立された。 1982 年の石油・ガス（企業）法により、上流部門が Britoil となり、 1982 年 11 月に政府保有株の 51% が売却され、残りの少数株主持分は 1985 年 11 月に売却された。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></p>
 <p>この項の出典の一部は百科事典の記述であり、一次資料ではない。政府文書（ Hansard など）での照合が望ましい。</p>
 <p><strong>判定</strong><br>正確（二次資料による確認）。</p>
 
-<h3 id="s4-7">4.7 石油基金の創設と海外投資</h3>
+<h3 id="sec4-7">4.7 石油基金の創設と海外投資</h3>
 <p>記事は、石油基金の創設を 1990 年、最初の拠出を 1996 年とし、基金の大半が海外で運用されていると述べる。基金の根拠法は 1990 年 6 月 22 日に成立し、現在は政府年金基金法と呼ばれる。最初の拠出が 1996 年であることは、 NBIM の沿革と整合する。 <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup></p>
 <p>指示書は、初回の拠出額を 19.8 億 NOK としている。この数字は NBIM の沿革にある 1996 年末の基金の評価額（約 19.8 億 NOK ）と一致するが、拠出額そのものとして確認できたわけではない。記事は金額を書いていないため、記事の正確さには影響しない。</p>
 <p><strong>判定</strong><br>正確。拠出額は未確認。</p>
 
-<h3 id="s4-8">4.8 人口の差</h3>
+<h3 id="sec4-8">4.8 人口の差</h3>
 <p>記事は、ノルウェーの人口が英国のごく一部にすぎないと述べる。 ONS によれば、英国の人口は 2024 年半ばに約 6,930 万人である。ノルウェーは、資料により 555 万人から 562 万人の幅があり、 OECD の基礎統計は 560 万人としている。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></p>
 <p>人口比はおよそ 12 倍である。指示書は英国の人口を約 6,700 万人としているが、最新の公式推計は約 6,930 万人であり、指示書の数字は古い。</p>
 <p><strong>判定</strong><br>正確。</p>
 
-<table>
+<table class="cardrow">
 <thead>
 <tr><th>#</th><th>主張</th><th>判定</th><th>確認の度合い</th></tr>
 </thead>
@@ -283,21 +306,19 @@
 <tr><th scope="row">8</th><td data-label="主張">人口は英国の一部</td><td data-label="判定">正確</td><td data-label="確認の度合い">ONS と OECD で確認</td></tr>
 </tbody>
 </table>
-</section>
 
-<section id="s5">
-<h2><span class="no">5</span>比較政策の検討</h2>
+<h2 id="sec5">5. 比較政策の検討</h2>
 
 <p>記事の中心にあるのは、収入と富の区別である。ノルウェーは、海底の石油という有限の資産を、売却によって得た金融資産に換え、将来に残す設計を取った。英国は、収入を一般会計に組み入れた。 OBR が示すとおり、英国の北海収入は 1980 年代半ばに頂点に達してから急減しており、残された金融資産はない。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup></p>
 
-<h3 id="s5-1">5.1 ノルウェーの設計を支持する論点</h3>
+<h3 id="sec5-1">5.1 ノルウェーの設計を支持する論点</h3>
 <ul>
 <li><strong>世代間の公平</strong><br>枯渇する地下資産を、国外の金融資産に換えることで、将来の世代に便益を残せる。</li>
 <li><strong>オランダ病の緩和</strong><br>基金が主に外国の証券に投資するため、国内の為替の過熱や本土産業への圧迫を抑えやすい。</li>
 <li><strong>財政規律</strong><br>2001 年の財政ルールは、予算への繰り入れを基金の期待実質収益に結びつける。当初 4% で、のちに 3% に改められたと理解している（本稿では未確認）。</li>
 </ul>
 
-<h3 id="s5-2">5.2 英国の選択を弁護する論点</h3>
+<h3 id="sec5-2">5.2 英国の選択を弁護する論点</h3>
 <ul>
 <li><strong>危機への対応</strong><br>1970 年代後半から 1980 年代初めの英国は、スタグフレーションと国際収支の悪化に直面していた。北海の収入は、通貨と財政を支えたと言える。</li>
 <li><strong>産業の蓄積</strong><br>アバディーンを中心とする海洋工学とサービス産業が育ち、多数の雇用を生んだ。</li>
@@ -306,10 +327,8 @@
 
 <p><strong>筆者の判断</strong><br>
 英国の政策が「失敗」だったかどうかは、目的の置き方で変わる。目的が当面の危機の緩和なら、英国の選択は合理的だった。目的が資源の利益を世代を超えて残すことなら、ノルウェーの選択が優れている。記事自身も、英国の資源が単に「浪費された」と言うことは正しくないと述べており、この区別に沿っている。</p>
-</section>
 
-<section id="s6">
-<h2><span class="no">6</span>交絡要因と人口調整</h2>
+<h2 id="sec6">6. 交絡要因と人口調整</h2>
 
 <p>人口の差だけで、一人当たりの富は大きく変わる。収入が同じでも、ノルウェーの一人当たり資産は、人口比のおよそ 12 倍になる。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> ただし、これは収入が同じだった場合の単純な算術であり、実際の収入は同じではなかった。油田の地質、生産の時期、枯渇の速度、油価の変動が異なる。英国が基金を作っていたとしても、一人当たりの規模は桁違いに小さかったはずである。</p>
 
@@ -319,20 +338,17 @@
 <strong>検証上の留意点</strong><br>
 「ノルウェーが成功し、英国が失敗した」という二分法は、国民の貸借対照表という一つの基準に立つ場合にのみ成り立つ。この基準は妥当だが、唯一ではない。記事の比較が最も強いのは、生活水準の説明としてではなく、国の資産と世代間の富をめぐる議論としてである。
 </div>
-</section>
 
-<section id="s7">
-<h2><span class="no">7</span>結論</h2>
+<h2 id="sec7">7. 結論</h2>
 
 <p>以上を踏まえると、記事の事実の記述は、確認できた範囲で信頼できる。 2025 年末の基金の評価額、 BNOC と Britoil の経過、石油基金の創設と最初の拠出、人口の差は、公開資料と一致した。未確認の項目は、発見年、水力発電の免許法、 Statoil の設立年、財政ルールの導入年である。</p>
 
 <p>中心的な主張については、「収入として使った国」と「資本として残した国」という区別が、貸借対照表の基準で擁護できると考える。一方で、これは規範的な評価であり、英国の当時の課題と選択を無視してはならない。</p>
 
 <p>最後に、指示書の数字のうち、記事に書かれていないもの（ 78% 、約 6,700 万人など）は、検証の補助として使った。人口については、最新の公式推計の約 6,930 万人に改めた。</p>
-</section>
 <div class="refs">
 <h2>参考文献・資料</h2>
-<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻ります。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクです。</p>
 <ol>
 <li id="ref-1"><a href="#fnref-1-1">^</a> Norges Bank Investment Management, <em>Annual report 2025</em>. 2025 年末の基金評価額と運用成績。 <a href="https://www.nbim.no/en/news-and-insights/reports/2025/annual-report-2025">NBIM 公式サイト</a></li>
 <li id="ref-2"><a href="#fnref-2-1">^</a> Norwegian Offshore Directorate, "Management of revenues". 基金の評価額と石油収入の管理。 <a href="https://www.norskpetroleum.no/en/economy/management-of-revenues/">Norwegian Petroleum</a></li>
@@ -344,8 +360,8 @@
 <li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> Office for National Statistics, <em>Population estimates for the UK, England, Wales, Scotland and Northern Ireland: mid-2024</em>. 英国の人口推計。 <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/bulletins/annualmidyearpopulationestimates/mid2024">ONS 公開ページ</a></li>
 <li id="ref-9"><a href="#fnref-9-1">^</a> OECD, "Basic statistics of Norway, 2025", <em>OECD Economic Surveys: Norway 2026</em>. ノルウェーの人口。 <a href="https://www.oecd.org/en/publications/oecd-economic-surveys-norway-2026_5cc02644-en/full-report/basic-statistics-of-norway-2025_7ddeefc8.html">OECD 公開ページ</a></li>
 </ol>
-<p class="refs-note">本稿は、公開資料との照合による事実検証であり、政策の優劣を最終的に判定するものではない。確認できなかった項目は、本文に未確認と明記した。</p>
+<p class="note">本稿は、公開資料との照合による事実検証であり、政策の優劣を最終的に判定するものではない。確認できなかった項目は、本文に未確認と明記した。</p>
 </div>
-</div>
+</main>
 </body>
 </html>

@@ -4,181 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>一歳で別の家に行っていた私へ――「もしも」の人生は誰のものか</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  nav.toc>ol>li{break-inside:avoid}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  /* 冒頭部と文中の部品(キッカー、副題、リード文、メタ情報、情報ボックス、末尾の注記) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* コード、必須、印、結合セルのある表 */
-  code{background:#efe3c8;padding:0 .3em;border-radius:6px;font-size:.95em;overflow-wrap:anywhere}
-  pre{background:#efe3c8;border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:14px 0;font-size:17px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}
-  pre code{background:none;padding:0;font-size:inherit}
-  /* ターミナルに打つ文字列は黒地に白文字(黒 #000 と白 #fff は配色表の外の固定色) */
-  pre.term{background:#000;color:#fff;border-color:#000}
-  pre.term code{color:#fff}
-  code.term{background:#000;color:#fff}
-  .must{background:var(--red);color:#fff;border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .must::before{content:"必須";display:block;font-weight:bold;color:#fff}
-  .must code:not(.term),.must pre:not(.term){color:var(--ink)}
-  .must pre.term code{color:#fff}
-  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:16px;line-height:1.6;padding:0 12px;border-radius:999px;margin-right:6px}
-  /* 先頭列に rowspan の結合セルがある表(table.cardspan)。幅 640px 以下で、結合セルを隠し、各行の先頭に data-group の帯を出す */
-  @media(max-width:640px){
-    table.cardspan tbody tr[data-group]::before{content:attr(data-group);display:block;background:var(--ink);color:#fff;font-weight:bold;padding:10px 14px}
-    table.cardspan tbody td[rowspan]{display:none}
-    table.cardspan tbody td:not([rowspan]){border-left-color:var(--copper)}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
   }
-  /* インライン SVG の文字(書体は body から継承される。ここでは指定しない) */
-  .t{fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <p class="kicker">思考実験・人生の偶然性</p>
 <h1>一歳で別の家に行っていた私へ<br>――「もしも」の人生は誰のものか</h1>
 <p class="subtitle">On the Metaphysics of Unlived Lives: Contingency, Identity, and Responsibility</p>
-</header>
-<div class="wrap">
 <div class="lede">
 <p>一歳の誕生日を過ぎたころ、あなたが今の家族から離れ、別の言語を話す家庭に迎えられたとする。二十年後、その人はどんな声で笑い、何を恥じ、どんな未来を望んでいるだろう。その人を「別の人生を歩んだ私」と呼べるのか。それとも、その問い方自体が、存在しなかった二人を並べているのだろうか。</p>
 </div>
 <p class="meta">【本稿の射程】これは一つの思考実験から出発するエッセイであり、実証研究ではない。ここで示す推論は個別の想像から導かれるものであり、自己や人格をめぐる一般理論として提示するものではない。</p>
 
-<nav class="toc"><b>目次</b>
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
 <ol>
 <li><a href="#sec1">一歳の分かれ道を想像する</a></li>
 <li><a href="#sec2">「別の私」は、同じ私なのか</a></li>
@@ -188,52 +202,47 @@
 </ol>
 </nav>
 
-<section id="sec1"><h2><span class="no">1</span> 一歳の分かれ道を想像する</h2>
+<h2 id="sec1">1.  一歳の分かれ道を想像する</h2>
 <p>一歳の子どもは、自分の国籍や家族の歴史を説明できない。けれど、すでに身体は世界に応答している。抱き上げられたときの安心、聞き慣れた声、食卓の匂い、眠りにつく手順。のちに「私の記憶」として語れるより前から、周囲とのやりとりは始まっている。</p>
 <p>では、ある日その子が別の家へ移ったらどうなるか。養親の話す言葉を覚え、近所の子と遊び、別の学校へ通い、別の祝日や歴史を身近なものとして知る。二十歳の誕生日に何を望むか、何を成功と呼ぶか、どんな冗談で笑うかは、いまと大きく違うかもしれない。ここで魅力的なのは、別の国の「典型的な人」になるという予測ではない。国籍から性格を決めつけることはできない。そうではなく、本人が自分を知るために使う言葉や、当然だと思う選択肢が、育った環境によって変わりうるという想像だ。</p>
 <p>この想像は、過去を少し揺らす。いま自分が好きなもの、誇りに思うもの、苦手なもの。そのどれもが、最初から自分の奥底にしまわれていて、成長とともに発見されたとは限らない。出会った先生、家族の口癖、たまたま選んだ部活、断られた誘い、通学路で見た景色。数えきれない小さな出来事が、後から「私らしさ」と呼ばれる形を作ってきたのかもしれない。</p>
 
 <figure>
-<svg viewBox="0 0 440 430" role="img" aria-label="同じ出発点を仮定した二つの経路が、異なる人間関係や言語、経験を経て異なる現在像へ至る。ただし右側の二者が数的に同一人物かどうかは図だけでは決まらない。" xmlns="http://www.w3.org/2000/svg"><rect x="100" y="8" width="240" height="70" rx="10" fill="#e3dec6" stroke="#8c7f5e" stroke-width="2"/><text class="t" x="220" y="38" font-size="21" text-anchor="middle">一歳の子ども</text><text class="t" x="220" y="68" font-size="21" text-anchor="middle">同じ出発点を仮定</text><path d="M220 78 V100 H110 V124" fill="none" stroke="#5e5339" stroke-width="3"/><polygon points="101,114 119,114 110,126" fill="#5e5339"/><path d="M220 78 V100 H330 V124" fill="none" stroke="#a55b3a" stroke-width="3"/><polygon points="321,114 339,114 330,126" fill="#a55b3a"/><rect x="10" y="128" width="200" height="92" rx="10" fill="#f3ead7" stroke="#8c7f5e" stroke-width="2"/><text class="t" x="110" y="158" font-size="20" text-anchor="middle">経路 A</text><text class="t" x="110" y="190" font-size="20" text-anchor="middle">家庭・言語・経験</text><rect x="230" y="128" width="200" height="92" rx="10" fill="#f3ead7" stroke="#a55b3a" stroke-width="2"/><text class="t" x="330" y="158" font-size="20" text-anchor="middle">経路 B</text><text class="t" x="330" y="190" font-size="20" text-anchor="middle">家庭・言語・経験</text><line x1="110" y1="220" x2="110" y2="242" stroke="#5e5339" stroke-width="3"/><polygon points="101,240 119,240 110,252" fill="#5e5339"/><line x1="330" y1="220" x2="330" y2="242" stroke="#a55b3a" stroke-width="3"/><polygon points="321,240 339,240 330,252" fill="#a55b3a"/><rect x="10" y="254" width="200" height="56" rx="10" fill="#e3dec6" stroke="#8c7f5e" stroke-width="2"/><text class="t" x="110" y="290" font-size="22" text-anchor="middle" font-weight="700">現在 A</text><rect x="230" y="254" width="200" height="56" rx="10" fill="#e3dec6" stroke="#a55b3a" stroke-width="2"/><text class="t" x="330" y="290" font-size="22" text-anchor="middle" font-weight="700">現在 B</text><text class="t" x="220" y="352" font-size="20" text-anchor="middle">経路が違えば人物像も変わる。</text><text class="t" x="220" y="382" font-size="20" text-anchor="middle">それでも「同じ私」と言えるかは、</text><text class="t" x="220" y="412" font-size="20" text-anchor="middle">別の問い。</text></svg>
+<svg viewBox="0 0 440 430" role="img" aria-label="同じ出発点を仮定した二つの経路が、異なる人間関係や言語、経験を経て異なる現在像へ至る。ただし右側の二者が数的に同一人物かどうかは図だけでは決まらない。" xmlns="http://www.w3.org/2000/svg"><rect class="f-gray s-rule" x="100" y="8" width="240" height="70" rx="10"/><text class="t" x="220" y="38" text-anchor="middle">一歳の子ども</text><text class="t" x="220" y="68" text-anchor="middle">同じ出発点を仮定</text><path class="nf s-navy" d="M220 78 V100 H110 V124"/><polygon class="f-navy" points="101,114 119,114 110,126"/><path class="nf s-red" d="M220 78 V100 H330 V124"/><polygon class="f-red" points="321,114 339,114 330,126"/><rect class="f-white s-rule" x="10" y="128" width="200" height="92" rx="10"/><text class="t" x="110" y="158" text-anchor="middle">経路 A</text><text class="t" x="110" y="190" text-anchor="middle">家庭・言語・経験</text><rect class="f-white s-red" x="230" y="128" width="200" height="92" rx="10"/><text class="t" x="330" y="158" text-anchor="middle">経路 B</text><text class="t" x="330" y="190" text-anchor="middle">家庭・言語・経験</text><line class="s-navy" x1="110" y1="220" x2="110" y2="242"/><polygon class="f-navy" points="101,240 119,240 110,252"/><line class="s-red" x1="330" y1="220" x2="330" y2="242"/><polygon class="f-red" points="321,240 339,240 330,252"/><rect class="f-gray s-rule" x="10" y="254" width="200" height="56" rx="10"/><text class="t" x="110" y="290" text-anchor="middle">現在 A</text><rect class="f-gray s-red" x="230" y="254" width="200" height="56" rx="10"/><text class="t" x="330" y="290" text-anchor="middle">現在 B</text><text class="t" x="220" y="352" text-anchor="middle">経路が違えば人物像も変わる。</text><text class="t" x="220" y="382" text-anchor="middle">それでも「同じ私」と言えるかは、</text><text class="t" x="220" y="412" text-anchor="middle">別の問い。</text></svg>
 <figcaption>図は思考実験の構造を表す。現実に一人の子どもが二つの経路を同時に歩くわけではなく、「現在 A 」と「現在 B 」の同一性は図からは決められない。</figcaption>
 </figure>
-</section>
 
-<section id="sec2"><h2><span class="no">2</span> 「別の私」は、同じ私なのか</h2>
+<h2 id="sec2">2.  「別の私」は、同じ私なのか</h2>
 <p>ここで「別の私」という言い方に立ち止まりたい。いまの自分と、別の家で育った自分を比べるとき、私たちは一人の子どもを二つに複製し、二本の時間を並べるように想像する。しかし複製ができるのは想像の中だけだ。現実には、どちらか一方の経路だけが起きる。もう一方は、「こうだったかもしれない」と言うための比較対象である。</p>
 <p>哲学でいう人格の同一性は、時間の隔たりを越えて、ある時点の人と別の時点の人がどういう意味で同じ人物なのかを問う。身体や生物としての連続性を重視する立場もあれば、記憶や意図など心理的なつながりを重視する立場もあり、両者の関係をめぐって議論が続いている <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。ところが養子の想像では、比較の片方は現実の過去や未来ではなく、実現しなかった可能性だ。ふだんの「私は子どものころの私と同じ人だ」という判断を、そのまま別の可能世界へ持ち込んでよいかは自明ではない。</p>
 <p>だから、「違う家庭で育った私は、同じ私か」という質問に、ただ一つの答えが待っているとは限らない。生物個体を基準にすれば、同じ出生から続く身体だと言えるかもしれない。心理的な特徴の似かよりを基準にすれば、いまの自分とはずいぶん遠い人物像になるかもしれない。けれど、どちらの見方を採るかで、問いの意味そのものが変わる。</p>
 <div class="box"><strong>この思考実験が確かに見せること</strong><br>「今の私の性格や価値観は、別の環境でも同じ形で育ったはずだ」という見込みは、確かなものではない。<br><br><strong>それだけでは決まらないこと</strong><br>別の環境で育った人が、形而上学的な意味で「同一人物」かどうか。自己の核が存在するかどうか。</div>
 <p>ここに、この思考実験のちょうどよい射程がある。人生の条件が違えば、人格のかなりの部分が違っていたかもしれない。そのことは強く想像できる。一方で、それが自己の存在を否定するかどうかは、この想像だけでは結論できない。別の人生を思い浮かべる力と、その人生の持ち主を同定する基準は、別の仕事をしている。</p>
-</section>
 
-<section id="sec3"><h2><span class="no">3</span> 偶然でできていることは、偽物ということか</h2>
+<h2 id="sec3">3.  偶然でできていることは、偽物ということか</h2>
 <p>もし今の自分が偶然の連鎖に左右されているなら、いま大切にしているものまで偶然で、だから本当ではないのではないか。思考実験は、ときにそんな不安を連れてくる。</p>
 <p>けれど、何かが偶然に始まったことは、それが偽物だという意味ではない。ある友人と同じクラスになったのは偶然でも、その友情が与えた支えは現実だ。ある言葉を家庭で覚えたことに選択の余地はなくても、その言葉で考え、誰かに気持ちを伝えた経験は本人の人生の一部だ。由来が選べなかったものも、いまの自分にとって何を意味するかは、後から受け止め直すことができる。</p>
 <p>ここでは「自分で選んだ」と「自分のものだ」を分けてみるとよい。私たちは出身地や幼少期を選べない。多くの気質や得意不得意も、最初から選択したわけではない。それでも、その条件から何を学び、誰に応答し、どんな行動を重ねるかには、ある程度の余地がある。自由とは条件の外へ出る力ではなく、条件を知りながら、それへの応答を少しずつ作る力なのかもしれない。</p>
 <p>もちろん、誰もが同じ程度の余地を持つわけではない。貧困、差別、病気、暴力のように、選択肢を大きく狭める条件がある。「環境が人を作る」という言葉を、本人の努力不足を責める説明に使ってはいけない。逆に「本人の選択」を強調しすぎれば、選択肢そのものが誰によって与えられたのかを見失う。思考実験の価値は、性格を環境か本人のどちらか一方に帰すことではなく、人生を生きる条件がどれほど広い範囲で選択に先立っているかを見せるところにある。</p>
-</section>
 
-<section id="sec4"><h2><span class="no">4</span> 選ばなかった人生は、現在をどう変えるか</h2>
+<h2 id="sec4">4.  選ばなかった人生は、現在をどう変えるか</h2>
 <p>別の家で育った自分は、いまの自分より幸せだったのだろうか。そう考え始めると、架空の人生に現実の評価をつけたくなる。しかし想像できるのは、別の食卓や言語や学校の断片であって、その人生を内側から生きる感覚すべてではない。異なる環境には別の喜びだけでなく、別の傷や偶然もある。その人生を「もっとよかった」と決める材料は、私たちの手元にない。</p>
 <p>むしろ、この想像を使ってできるのは、現在の自分を当然視しないことだ。自分の常識が唯一の自然な常識だと思わなくてよくなる。自分の成功をすべて個人の力だけに帰すことにも、失敗をすべて性格のせいにすることにも、慎重になれる。自分が選ばなかった条件を認めることは、責任を消すためではなく、他人の歩みを測る尺度を少し緩めるために役立つ。</p>
 <p>デレク・パーフィットは、人格同一性の問いを検討しながら、「同じ人であり続けること」そのもの以外に、心理的なつながりや継承関係のような、生存にとって重要なものがあると論じた <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。この考えを養子の思考実験に借りるなら、想像上の二人が同一人物かどうかだけでなく、どんな関係が「私の人生を私のものにしている」と感じさせるのかを尋ねられる。身体、記憶、他者の記憶に残る行為、守ってきた約束。答えは一つとは限らない。</p>
-</section>
 
-<section id="sec5"><h2><span class="no">5</span> 分かれ道のこちら側で</h2>
+<h2 id="sec5">5.  分かれ道のこちら側で</h2>
 <p>一歳で別の家庭へ行っていたなら、いまの自分とは違う言葉で考え、違う人に恋をし、違う仕事を望んでいたかもしれない。その人を「私」と呼ぶべきかどうかは、立場によって答えが分かれる。けれど、その想像が今の私に突きつけるものは明瞭だ。いまの自分を、最初から完成していた本質の発見として説明することはできない。</p>
 <p>私たちは、選んでいない出発点を受け取り、出会った人や出来事に変えられ、その変化を自分の履歴として引き受けていく。そこには、制御できない偶然と、そこから生まれる応答の両方がある。自分は過去の条件だけに閉じ込められてはいないが、条件から切り離された自由な創作者でもない。「別の私」がいたかどうかは分からない。けれど、今の私が唯一ありえた姿ではない。</p>
 <p>この二文は、自分を軽く見るためのものではない。反対に、現在の自分を唯一の必然だと誇ったり、唯一の失敗だと決めつけたりしないための余白をつくる。生まれた家を選べなかったことと、これからの一歩を選ぶこと。その二つを同時に見つめるところから、「もしも」の人生は現実の生き方に戻ってくる。</p>
-</section>
 
 <div class="refs">
 <h2>参考文献・資料</h2>
-<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1"><a href="#fnref-1-1">^</a> Stanford Encyclopedia of Philosophy, "Personal Identity". 人格の時間的存続をめぐる主要な立場の概説。 <a href="https://plato.stanford.edu/entries/identity-personal/">記事</a></li>
 <li id="ref-2"><a href="#fnref-2-1">^</a> Derek Parfit, <em>Reasons and Persons</em>, Oxford University Press, 1984. 人格同一性と、心理的連続性など「生存にとって重要なもの」を論じた著作。概要は Stanford Encyclopedia of Philosophy, "Personal Identity and Ethics" も参照。 <a href="https://plato.stanford.edu/entries/identity-ethics/">概説記事</a></li>
 </ol>
 </div>
-</div>
+</main>
 </body>
 </html>

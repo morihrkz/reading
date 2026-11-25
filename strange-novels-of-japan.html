@@ -4,189 +4,220 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>三大奇書の紹介 ―― 『黒死館殺人事件』『虚無への供物』『ドグラ・マグラ』</title>
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#00205b">
 <style>
-  :root{
-    /* 秋の和色（染め色）。 12 色のうち、地色・文字色・罫線に使うものと、その派生色 */
-    --bg:#f3ead7;          /* 生成り */
-    --ink:#3a2e2a;         /* 焦茶 : 本文（生成り地で約 11:1 ） */
-    --muted:#6d5640;       /* 煤竹色 : 補助文字（約 5.7:1 ） */
-    --card:#fbf6ea;        /* 生成りの明るい派生色 : カード地 */
-    --line:#cdb98f;        /* 枯色を濃くした罫線 */
-    --red:#b7282e;         /* 茜色 */
-    --blue:#5e3d50;        /* 葡萄鼠 */
-    --yellow:#d19826;      /* 黄朽葉 */
-    --green:#8c7f5e;       /* 利休茶 : 枠線・チェック用（文字には使わない） */
-    --orange:#ed6d3d;      /* 柿色 : 線・飾り用（文字には使わない） */
-    --copper:#a55b3a;      /* 代赭 */
-    /* 文字に使う濃い派生色（いずれも生成り地で 4.5:1 以上） */
-    --link:#8b4429;        /* 代赭を濃くした色 : リンク、見出し語（約 5.9:1 ） */
-    --moss-ink:#5e5339;    /* 利休茶を濃くした色 : 演習、正解の文字（約 6.3:1 ） */
-    --persimmon-deep:#a9461f; /* 柿色を濃くした色 : 表の見出し行（白文字で約 5.9:1 ） */
-    /* 淡色（囲みの地） */
-    --pale-red:#f3d5cc; --pale-blue:#e8dae0; --pale-yellow:#f6e6b8; --pale-green:#e3dec6;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--bg);color:var(--ink);
-    font-family:"BIZ UDPGothic","Yu Gothic UI","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
-    line-height:1.9;font-size:20px}
-  .wrap{max-width:none;margin:0;padding:0 clamp(1rem,4vw,4rem) 60px}
-  a{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-  header.hero{background:linear-gradient(135deg,#e8c98a,#e8935f);padding:36px clamp(1rem,4vw,4rem) 28px;text-align:left}
-  .hero h1{margin:8px 0 6px;font-size:1.4rem;line-height:1.3}
-  .hero p{margin:0}
-  nav.toc{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 20px;margin:24px 0;font-size:18px}
-  nav.toc b{display:block;margin-bottom:4px}
-  nav.toc ol{margin:0;padding-left:1.4em}
-  nav.toc>ol{columns:2;column-gap:28px}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--link);text-decoration:underline;text-underline-offset:.2em}
-  @media(max-width:560px){nav.toc>ol{columns:1}}
-  section{margin:48px 0}
-  h2{font-size:20px;margin:0 0 14px;padding:8px 14px;background:var(--yellow);border-radius:10px;display:flex;gap:10px;align-items:center;line-height:1.4}
-  h2 .no{background:var(--ink);color:#fff;border-radius:50%;min-width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;font-size:20px}
-  h3{font-size:20px;margin:28px 0 8px;border-left:8px solid var(--orange);padding-left:10px}
-  p{margin:12px 0}
-  figure{margin:18px 0;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px}
-  figure svg{display:block;width:100%;height:auto}
-  figcaption{font-size:17px;color:var(--muted);text-align:center;margin-top:6px;line-height:1.7}
-  .point{background:var(--pale-yellow);border:3px dashed var(--yellow);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .point::before{content:"要点";display:block;font-weight:bold;color:var(--link)}
-  .caution{background:var(--pale-red);border:3px solid var(--red);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .caution::before{content:"留意事項";display:block;font-weight:bold;color:var(--red)}
-  .try{background:var(--pale-green);border:3px solid var(--green);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .try::before{content:"演習";display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 18px;margin:18px 0}
-  .checklist .cl-title{display:block;font-weight:bold;color:var(--moss-ink)}
-  .checklist .cl-title::before{content:"✅ "}
-  .checklist ul{list-style:none;padding:0;margin:6px 0 0}
-  .checklist li{position:relative;padding:8px 0 8px 42px;border-bottom:2px dashed var(--line);font-size:18px;line-height:1.7}
-  .checklist li:last-child{border-bottom:0}
-  .checklist input[type="checkbox"]{position:absolute;margin:0;left:4px;top:11px;width:26px;height:26px;accent-color:var(--moss-ink);cursor:pointer}
-  .checklist label{cursor:pointer}
-  .checklist .save-note{font-size:16px;color:var(--muted);text-align:center;margin:6px 0 0}
-  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:640px){.grid4{grid-template-columns:repeat(2,1fr)}}
-  .grid4 figure{margin:0;padding:8px}
-  .grid4 .step{font-size:16px;line-height:1.6;text-align:center;margin-top:4px}
-  .grid4 .step b{display:block;color:var(--link)}
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
-  .card{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px;text-align:center;line-height:1.6;font-size:17px}
-  .card .e{font-size:40px;display:block}
-  .tl{list-style:none;margin:16px 0;padding:0 0 0 18px;border-left:6px solid var(--orange)}
-  .tl li{position:relative;margin:0 0 18px;padding:10px 14px;background:var(--card);border:2px solid var(--line);border-radius:12px}
-  .tl li::before{content:"";position:absolute;left:-33px;top:18px;width:18px;height:18px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink)}
-  .tl .yr{display:inline-block;background:var(--ink);color:#fff;border-radius:999px;padding:0 12px;font-weight:bold;margin-right:8px}
-  table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:2px solid var(--line);border-radius:12px;overflow:hidden;font-size:17px;line-height:1.7}
-  th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;word-break:auto-phrase}
-  thead th{color:#fff}
-  thead th:first-child{background:var(--ink)}
-  thead th:nth-child(2){background:var(--persimmon-deep)} thead th:nth-child(3){background:var(--blue)}
-  thead th:nth-child(n+4){background:var(--copper)}
-  tbody th{background:#efe3c8}
-  tr:last-child th,tr:last-child td{border-bottom:0}
-  /* 幅 640px 以下では、表を「行ごとのカード」に組み替える(横スクロールにしない)。
-     各セルの列名は、 <td data-label="列名"> が持つ。見出し行は画面から隠す(読み上げには残す) */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{background:none;border:0;border-radius:0;overflow:visible}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr{background:var(--card);border:2px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
-    tbody th{background:var(--ink);color:#fff;white-space:normal;padding:10px 14px;border-bottom:0}
-    tbody td{padding:10px 14px 10px 12px;border-bottom:1px solid var(--line);border-left:8px solid var(--copper)}
-    tbody td:nth-of-type(1){border-left-color:var(--persimmon-deep)}
-    tbody td:nth-of-type(2){border-left-color:var(--blue)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:bold;font-size:16px;color:var(--muted);line-height:1.5}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-  .quiz details{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;margin:10px 0}
-  .quiz summary{cursor:pointer;font-weight:bold}
-  .quiz details[open]{border-color:var(--moss-ink)}
-  .quiz .ans{color:var(--moss-ink);font-weight:bold}
-  dl.words dt{font-weight:bold;margin-top:12px;color:var(--link)}
-  dl.words dd{margin:0 0 0 1em}
-  footer{text-align:center;color:var(--muted);font-size:16px;padding-top:20px}
-  /* 記事向けの部品(SKILL.md の「記事向けの部品」。 kids-html-style から引き継ぎ、和色に寄せた) */
-  .kicker{display:inline-block;background:var(--card);border:2px solid var(--line);border-radius:999px;padding:0 14px;font-size:.9rem;font-weight:bold;letter-spacing:.1em;line-height:1.8;margin:0 0 4px}
-  .subtitle{color:var(--muted);font-size:17px;line-height:1.7;margin:6px 0 12px}
-  .hero .subtitle{color:var(--ink);font-size:1.05rem}
-  .lede{border-left:8px solid var(--orange);padding:4px 0 4px 14px;margin:18px 0}
-  .meta{color:var(--muted);font-size:17px;line-height:1.9}
-  .meta.band{border-top:2px dashed var(--line);border-bottom:2px dashed var(--line);padding:14px 0;margin:0 0 32px}
-  .box{background:#f8e4cb;border:2px solid #e2b98a;border-radius:12px;padding:12px 18px;margin:0 0 22px}
-  .box ul{margin:6px 0 0;padding-left:1.4em}
-  .box strong{color:var(--ink)}
-  .lede>:first-child,.box>:first-child{margin-top:0}
-  .lede>:last-child,.box>:last-child{margin-bottom:0}
-  .endnote{font-size:16px;color:var(--muted)}
-  /* 要旨の一覧(dl.summary)と蛍光ペン風のマーカー。ことば集(dl.words)とは別の部品 */
-  dl.summary{margin:14px 0}
-  dl.summary>div{display:flex;flex-wrap:wrap;gap:0 .4em;padding:4px 0;border-bottom:2px dashed var(--line)}
-  dl.summary dt{white-space:nowrap}
-  dl.summary dt::after{content:"："}
-  dl.summary dd{margin:0;flex:1 1 12em}
-  mark{background:linear-gradient(transparent 55%,#e0c38c 55%);color:inherit;font-weight:bold;padding:0 .1em}
-  /* 脚注の参照番号と参考文献欄(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:.9em;line-height:0}
-  sup a{font-weight:bold;text-decoration:none}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:3px dashed var(--line);margin-top:48px;padding-top:16px}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:16px;line-height:1.7;overflow-wrap:anywhere;word-break:break-word}
-  .refs ol{padding-left:1.8em}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{font-weight:bold}
+  .refs li>a:first-child{text-decoration:none}
   .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--pale-yellow);border-radius:6px}
-  /* SVG common */
-  .t{font-family:inherit;fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+  }
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <h1>三大奇書の紹介 ―― 『黒死館殺人事件』『虚無への供物』『ドグラ・マグラ』</h1>
-</header>
-<div class="wrap">
 <p class="meta">作成日 : 2026 年 10 月 30 日 ／ 目的 : 三作品の紹介と、「奇書」と呼ばれる理由の整理</p>
 
 <div class="box">この文書は、筆者（ Claude ）の既存の知識にもとづいて書いた。ただし第 5 章（『ドグラ・マグラ』）と第 7 章（映像化・メディア展開）は、日本語版ウィキペディアで確認した内容で、出典を末尾に示した。それ以外の章は、原典や書誌での確認をしていない。刊行年・初出誌・数値など、事実関係の細部は、引用や公開の前に版元の書誌や各文庫の解説で確かめてほしい。また、読む楽しみを損なわないよう、犯人・動機・結末にあたる事柄は書いていない。</div>
 
 <nav class="toc" aria-label="目次">
-<b>目次</b>
+<p class="toc-title">目次</p>
 <ol>
-<li><a href="#s1">要約 ―― 「奇書」とは何か</a></li>
-<li><a href="#s2">三作品の概要</a></li>
-<li><a href="#s3">小栗虫太郎『黒死館殺人事件』</a>
+<li><a href="#sec1">要約 ―― 「奇書」とは何か</a></li>
+<li><a href="#sec2">三作品の概要</a></li>
+<li><a href="#sec3">小栗虫太郎『黒死館殺人事件』</a>
 <ol>
-<li><a href="#s3-1">作品と作者</a></li>
-<li><a href="#s3-2">なぜ奇書と呼ばれるのか</a></li>
+<li><a href="#sec3-1">作品と作者</a></li>
+<li><a href="#sec3-2">なぜ奇書と呼ばれるのか</a></li>
 </ol>
 </li>
-<li><a href="#s4">中井英夫『虚無への供物』</a>
+<li><a href="#sec4">中井英夫『虚無への供物』</a>
 <ol>
-<li><a href="#s4-1">作品と作者</a></li>
-<li><a href="#s4-2">なぜ奇書と呼ばれるのか</a></li>
+<li><a href="#sec4-1">作品と作者</a></li>
+<li><a href="#sec4-2">なぜ奇書と呼ばれるのか</a></li>
 </ol>
 </li>
-<li><a href="#s5">夢野久作『ドグラ・マグラ』</a>
+<li><a href="#sec5">夢野久作『ドグラ・マグラ』</a>
 <ol>
-<li><a href="#s5-1">作品と作者</a></li>
-<li><a href="#s5-2">なぜ奇書と呼ばれるのか</a></li>
+<li><a href="#sec5-1">作品と作者</a></li>
+<li><a href="#sec5-2">なぜ奇書と呼ばれるのか</a></li>
 </ol>
 </li>
-<li><a href="#s6">三作品の比較</a></li>
-<li><a href="#s7">映像化・メディア展開</a></li>
-<li><a href="#s8">これから読む人への案内</a></li>
+<li><a href="#sec6">三作品の比較</a></li>
+<li><a href="#sec7">映像化・メディア展開</a></li>
+<li><a href="#sec8">これから読む人への案内</a></li>
 </ol>
 </nav>
 
-<section id="s1">
-<h2><span class="no">1</span>要約 ―― 「奇書」とは何か</h2>
+<h2 id="sec1">1. 要約 ―― 「奇書」とは何か</h2>
 <p>「奇書」は、内容や形式が常識から大きく外れ、普通の読み方では収まらない書物を指す。日本の推理小説では、小栗虫太郎『黒死館殺人事件』、中井英夫『虚無への供物』、夢野久作『ドグラ・マグラ』の三作を、「日本探偵小説三大奇書」と呼ぶ <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。この文書は、その三作を取り上げる。</p>
 <p>三作は、いずれも推理小説の形をとりながら、推理小説として「まっとうに」読める枠を、それぞれ別の方向へ突き破っている。</p>
 <ul>
@@ -195,11 +226,9 @@
 <li><strong>『ドグラ・マグラ』</strong>は、<strong>構造の迷宮</strong>で破る。論文風の文章が入れ子に組み込まれ、真相も明言されず、読者は再読を迫られる。</li>
 </ul>
 <p>つまり、『黒死館殺人事件』は「読みにくさ」の奇書、『虚無への供物』は「推理小説とは何かを問う」奇書、『ドグラ・マグラ』は「読む者を迷わせる構造」の奇書、と整理できる。</p>
-</section>
 
-<section id="s2">
-<h2><span class="no">2</span>三作品の概要</h2>
-<table>
+<h2 id="sec2">2. 三作品の概要</h2>
+<table class="cardrow">
 <thead>
 <tr><th>項目</th><th>『黒死館殺人事件』</th><th>『虚無への供物』</th><th>『ドグラ・マグラ』</th></tr>
 </thead>
@@ -211,15 +240,13 @@
 <tr><th scope="row">奇書たるゆえん</th><td data-label="『黒死館殺人事件』">衒学（ペダントリー）の過剰。難読の語彙と文体</td><td data-label="『虚無への供物』">推理小説への自己批評。反推理小説（アンチ・ミステリ）</td><td data-label="『ドグラ・マグラ』">入れ子の構造と、宙づりの真相。読者を迷宮に誘う</td></tr>
 </tbody>
 </table>
-</section>
 
-<section id="s3">
-<h2><span class="no">3</span>小栗虫太郎『黒死館殺人事件』</h2>
-<h3 id="s3-1">3.1 作品と作者</h3>
+<h2 id="sec3">3. 小栗虫太郎『黒死館殺人事件』</h2>
+<h3 id="sec3-1">3.1 作品と作者</h3>
 <p>作者の小栗虫太郎は、戦前の探偵小説・冒険小説の書き手である。『黒死館殺人事件』は、その代表作として知られる。</p>
 <p>舞台は、異国の趣をもつ洋館「黒死館」。当主の死後、館では不可解な連続殺人が起こる。捜査に乗り出すのが、博識の探偵・法水麟太郎である。物語は、館に集う人々と、館にまつわる呪われた伝承、そして殺人の謎をめぐって進む。</p>
 
-<h3 id="s3-2">3.2 なぜ奇書と呼ばれるのか</h3>
+<h3 id="sec3-2">3.2 なぜ奇書と呼ばれるのか</h3>
 <p>理由は、おおよそ四つに分けられる。</p>
 <p><strong>(1) 衒学の過剰</strong><br>
 探偵と語り手は、神学、降霊術、占星術、紋章学、錬金術、音楽理論、医学、暗号などの知識を、ほとんど途切れなく繰り出す。事件の解決に必要な量をはるかに超えており、知識を見せること自体が、小説の目的のようになっている。</p>
@@ -230,15 +257,13 @@
 <p><strong>(4) 全体の異様な密度</strong><br>
 舞台の洋館、人形めいた登場人物、音楽と呪いのイメージが、一つの閉じた世界を作る。現実の探偵小説というより、幻想小説に近い手ざわりがある。</p>
 <div class="box">要するに『黒死館殺人事件』は、「謎を解く楽しみ」よりも「知識と文体に圧倒される体験」で読ませる作品である。そこが、読者を選ぶ理由であり、奇書と呼ばれる理由でもある。</div>
-</section>
 
-<section id="s4">
-<h2><span class="no">4</span>中井英夫『虚無への供物』</h2>
-<h3 id="s4-1">4.1 作品と作者</h3>
+<h2 id="sec4">4. 中井英夫『虚無への供物』</h2>
+<h3 id="sec4-1">4.1 作品と作者</h3>
 <p>作者の中井英夫は、もともと短歌雑誌の編集者として知られ、新人の発掘にも関わった人物である。『虚無への供物』は、その彼が書いた初の長編小説にあたる。</p>
 <p>物語の中心は、氷沼家。この一族は、 1954 年の洞爺丸事件で肉親を亡くしたほか、不幸が重なっている。そこへ新たな死が起こり、密室や見立ての趣向をともなう連続事件へ発展していく。事件を追うのは、職業探偵ではなく、事件に引き寄せられた素人たちである。</p>
 
-<h3 id="s4-2">4.2 なぜ奇書と呼ばれるのか</h3>
+<h3 id="sec4-2">4.2 なぜ奇書と呼ばれるのか</h3>
 <p><strong>(1) 推理小説を疑う推理小説</strong><br>
 素人探偵たちは、謎解きを一種の遊戯として楽しんでいる。ところが作品は、その遊戯が、実在の死者を前にして許されるのかという問いを、物語の内側から立ち上げる。謎解きの興奮に身を任せていた読者が、いつの間にか問われる側に回る。この構造が、「反推理小説」と呼ばれる理由である。</p>
 <p><strong>(2) 現実の大惨事との接続</strong><br>
@@ -248,15 +273,13 @@
 <p><strong>(4) 長さと趣向の過密</strong><br>
 密室、見立て、暗号、薔薇や色彩の象徴、推理合戦などの趣向が、これでもかと盛り込まれている。「あらゆる探偵小説の趣向を詰め込んだうえで、その全体を疑う」という二重の構えが、普通の推理小説の枠を超えている。</p>
 <div class="box">要するに『虚無への供物』は、「謎が解けるか」よりも、「謎を解くとはどういうことか」を読者に考えさせる作品である。推理小説として読んだ読者ほど、読み終えたあとに揺さぶられる。</div>
-</section>
 
-<section id="s5">
-<h2><span class="no">5</span>夢野久作『ドグラ・マグラ』</h2>
-<h3 id="s5-1">5.1 作品と作者</h3>
+<h2 id="sec5">5. 夢野久作『ドグラ・マグラ』</h2>
+<h3 id="sec5-1">5.1 作品と作者</h3>
 <p>作者の夢野久作は、昭和初期の探偵小説・幻想小説の書き手で、『ドグラ・マグラ』を発表した翌年に亡くなった。この作品は、 1935 年 1 月に書き下ろしで刊行され、当時の宣伝文句は「幻魔怪奇探偵小説」だった。 1926 年に原型となる「狂人の解放治療」を書き始め、 10 年近く推敲を重ねたとされる <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 。</p>
 <p>物語は、記憶を失った「わたし」が、九州帝国大学医学部精神病科の病室で目覚める場面から始まる。「わたし」は、自分が誰なのかも分からないまま、法医学者の若林鏡太郎や、精神医学者の正木敬之らが語る、呉一郎という青年をめぐる事件に触れていく <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> 。</p>
 
-<h3 id="s5-2">5.2 なぜ奇書と呼ばれるのか</h3>
+<h3 id="sec5-2">5.2 なぜ奇書と呼ばれるのか</h3>
 <p><strong>(1) 入れ子になった学術風の文章</strong><br>
 作中には、「胎児の夢」「脳髄論」「キチガイ地獄外道祭文」など、論文や祭文の形をとった長大な文章が組み込まれている。これらが入れ子のように重なり、物語の筋をたどること自体が、容易でない <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup> 。</p>
 <p><strong>(2) 作中作と再読の強制</strong><br>
@@ -268,11 +291,9 @@
 <p><strong>(5) 評価が大きく揺れる</strong><br>
 江戸川乱歩は「わけのわからぬ小説」と評した。一方、ハヤカワ・ポケット・ミステリ版では、戦前の変格探偵小説の頂点とも位置づけられた。同じ作品に、これほど離れた評価が並ぶこと自体が、奇書の証しである <sup id="fnref-3-9"><a href="#ref-3">[3]</a></sup> 。</p>
 <div class="box">要するに『ドグラ・マグラ』は、「謎が解けるか」「謎を解くとは何か」を超えて、「読むという行為そのものが迷路になる」作品である。三作のなかで、構造の面から最も読者を惑わせる。</div>
-</section>
 
-<section id="s6">
-<h2><span class="no">6</span>三作品の比較</h2>
-<table>
+<h2 id="sec6">6. 三作品の比較</h2>
+<table class="cardrow">
 <thead>
 <tr><th>観点</th><th>『黒死館殺人事件』</th><th>『虚無への供物』</th><th>『ドグラ・マグラ』</th></tr>
 </thead>
@@ -284,12 +305,10 @@
 <tr><th scope="row">向く読者</th><td data-label="『黒死館殺人事件』">文体や衒学そのものを楽しめる人</td><td data-label="『虚無への供物』">推理小説の約束事に親しんだうえで、それを問い直したい人</td><td data-label="『ドグラ・マグラ』">解決のない迷宮を、繰り返し読んで味わえる人</td></tr>
 </tbody>
 </table>
-</section>
 
-<section id="s7">
-<h2><span class="no">7</span>映像化・メディア展開</h2>
+<h2 id="sec7">7. 映像化・メディア展開</h2>
 <p>結論から言えば、<strong>映画化が確認できたのは『ドグラ・マグラ』だけ</strong>で、 1988 年に公開された。『黒死館殺人事件』『虚無への供物』は、映画化を確認できなかった。確認できたのは、『虚無への供物』のテレビドラマ化と、『黒死館殺人事件』の漫画化である。</p>
-<table>
+<table class="cardrow">
 <thead>
 <tr><th>作品</th><th>媒体</th><th>内容</th></tr>
 </thead>
@@ -307,10 +326,8 @@
 </table>
 <div class="box">「確認できなかった」は、「存在しない」の意味ではない。今回の調べは、日本語版ウィキペディアの作品ページ（と、一般的なウェブ検索）に限っている。小規模な上演、ラジオドラマ、同人作品などは、載っていない可能性がある。確かめるには、映画データベースや国立国会図書館の検索が有効である。</div>
 <p>映像化の状況は、作品ごとに大きく異なる。『ドグラ・マグラ』は、映画、アニメ、舞台、漫画、音楽と、幅広く展開されている。これに対し、『黒死館殺人事件』『虚無への供物』は、映像化が少ない。筆者の推測では、『黒死館殺人事件』は衒学と文体が魅力の中心で、映像に置き換えると核心が失われやすく、『虚無への供物』は読者への問いかけが作品の仕掛けで、これも映像化が難しい。これは推測であり、出典のある事実ではない。</p>
-</section>
 
-<section id="s8">
-<h2><span class="no">8</span>これから読む人への案内</h2>
+<h2 id="sec8">8. これから読む人への案内</h2>
 <ul>
 <li><strong>読む順序</strong><br>
 初めてなら、『虚無への供物』を先に読む方が入りやすいと思われる。筋をたどりやすく、問いの面白さが読み進める力になる。</li>
@@ -322,16 +339,15 @@
 どちらの作品も、結末を知ってしまうと魅力が大きく損なわれる。あらすじ紹介や書評を読む際は、ネタバレの有無に注意してほしい。</li>
 </ul>
 <div class="box">結末の内容は、この文書に意図して書いていない。三作品の構造を深く論じるには、結末への言及が不可欠であり、それは読了後の資料に譲る。</div>
-</section>
 <div class="refs">
 <h2>参考文献・資料</h2>
-<p class="refs-note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> 「黒死館殺人事件」の項（漫画版の節）。 2026 年 10 月 30 日に閲覧。 <a href="https://ja.wikipedia.org/wiki/黒死館殺人事件">ウィキペディア日本語版</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> 「虚無への供物」の項と、「薔薇の殺意〜虚無への供物」の記事。 2026 年 10 月 30 日に閲覧。 <a href="https://ja.wikipedia.org/wiki/虚無への供物">ウィキペディア日本語版</a></li>
 <li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <sup><a href="#fnref-3-5">e</a></sup> <sup><a href="#fnref-3-6">f</a></sup> <sup><a href="#fnref-3-7">g</a></sup> <sup><a href="#fnref-3-8">h</a></sup> <sup><a href="#fnref-3-9">i</a></sup> <sup><a href="#fnref-3-10">j</a></sup> <sup><a href="#fnref-3-11">k</a></sup> <sup><a href="#fnref-3-12">l</a></sup> <sup><a href="#fnref-3-13">m</a></sup> <sup><a href="#fnref-3-14">n</a></sup> 「ドグラ・マグラ」の項。三大奇書の呼称、刊行事情、構成、評価、映像化・メディア展開の記述にもとづく。 2026 年 10 月 30 日に閲覧。 <a href="https://ja.wikipedia.org/wiki/ドグラ・マグラ">ウィキペディア日本語版</a></li>
 </ol>
 </div>
-</div>
+</main>
 </body>
 </html>

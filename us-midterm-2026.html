@@ -6,156 +6,198 @@
 <meta name="color-scheme" content="light">
 <title>2026 U.S. Midterms: Democrats Win Congress</title>
 <style>
-  /* ===== Design tokens: an ivory-paper journal palette ===== */
-  :root{
-    --paper:#fbf8f1;      /* page */
-    --paper-2:#f2eddf;    /* tinted panels, code */
-    --panel:#fffdf8;      /* figure panels */
-    --ink:#1a1d24;        /* body text (about 16:1 on paper) */
-    --muted:#555b6b;      /* secondary text (about 6:1 on paper) */
-    --rule:#d8d0bc;       /* hairlines */
-    --navy:#17325c;       /* headings, links, labels */
-    --crimson:#8f2a2f;    /* section numbers, kicker, link hover */
-    --gold:#a9822f;       /* ornament only, never text */
-    --dem:#1f4e8c;        /* Democratic blue (charts) */
-    --rep:#b3302f;        /* Republican crimson (charts) */
-    --ind:#5f6b7a;        /* independents, uncalled outlines (charts) */
-    --measure:54rem;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
+     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
+  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{margin:0;background:var(--paper);color:var(--ink);border-top:6px solid var(--navy);
-    font-weight:400;font-size:1.1875rem;line-height:1.72;font-variant-numeric:lining-nums;
-    text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
-  .wrap,header.hero{max-width:var(--measure);margin:0 auto;padding-left:clamp(1.1rem,5vw,2rem);padding-right:clamp(1.1rem,5vw,2rem)}
-  .wrap{padding-bottom:4.5rem}
-
-  /* ===== Links ===== */
-  a{color:var(--navy);text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.18em;text-decoration-color:rgba(23,50,92,.4)}
-  a:hover{color:var(--crimson);text-decoration-color:currentColor}
-  a:focus-visible,summary:focus-visible{outline:3px solid var(--navy);outline-offset:3px;border-radius:2px}
-
-  /* ===== Title block ===== */
-  header.hero{text-align:center;padding-top:4rem;padding-bottom:.5rem}
-  .kicker{display:block;font-weight:600;font-size:.74rem;line-height:1.4;letter-spacing:.24em;text-transform:uppercase;color:var(--crimson);margin:0 0 1.1rem}
-  .hero h1{font-weight:700;font-size:clamp(1.85rem,4.6vw,2.7rem);line-height:1.18;letter-spacing:-.012em;color:var(--ink);margin:0;text-wrap:balance}
-  .hero::after{content:"";display:block;width:88px;height:2px;background:var(--gold);margin:1.7rem auto 0}
-
-  /* byline strip directly under the title block */
-  .wrap>.meta:first-child{text-align:center;padding:.95rem 0;margin:1.6rem 0 2rem;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-  .meta{font-weight:400;font-size:.8rem;line-height:1.7;color:var(--muted);letter-spacing:.01em}
-  .refs+.meta{text-align:center;margin:2.6rem 0 0;padding-top:1.1rem;border-top:1px solid var(--rule)}
-
-  /* ===== Abstract-style notice ===== */
-  .box{background:var(--paper-2);border:1px solid var(--rule);border-left:4px solid var(--navy);
-    padding:1.05rem 1.3rem 1.1rem;margin:0 0 2rem;font-size:.97rem;line-height:1.66}
-  .box>strong:first-child{display:block;font-weight:600;font-size:.72rem;line-height:1.5;letter-spacing:.14em;text-transform:uppercase;color:var(--navy);margin-bottom:.4rem}
-  .box ul{margin:.7rem 0 0;padding-left:1.25rem}
-  .box li{margin:.45rem 0}
-  .box li>strong{color:var(--navy);font-weight:600}
-
-  /* ===== Contents ===== */
-  nav.toc{margin:2.2rem 0 2.8rem;padding:1.1rem 0 1.2rem;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);font-weight:400;font-size:.93rem;line-height:1.5}
-  nav.toc>b{display:block;font-weight:600;font-size:.72rem;line-height:1.4;letter-spacing:.2em;text-transform:uppercase;color:var(--navy);margin-bottom:.75rem}
-  nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
-  nav.toc li{counter-increment:t;position:relative;padding:.2rem 0 .2rem 2.1rem}
-  nav.toc li li{padding-left:2.7rem;break-inside:avoid}
-  nav.toc li::before{content:counters(t,".");position:absolute;left:0;top:.2rem;font-weight:600;color:var(--crimson);font-variant-numeric:tabular-nums}
-  nav.toc li li::before{left:0}
-  nav.toc ol ol{margin:.15rem 0 .25rem -2.1rem}
-  nav.toc>ol{columns:2;column-gap:2.4rem}
-  nav.toc a{color:var(--ink);text-decoration:none}
-  nav.toc a:hover{color:var(--navy);text-decoration:underline}
-  @media(max-width:600px){nav.toc>ol{columns:1}}
-
-  /* ===== Sections and headings ===== */
-  section{margin:3.4rem 0}
-  h2{display:flex;align-items:baseline;gap:.75rem;margin:0 0 1.15rem;padding-bottom:.5rem;border-bottom:1px solid var(--rule);
-    font-weight:600;font-size:1.55rem;line-height:1.25;letter-spacing:-.005em;color:var(--navy);scroll-margin-top:1rem}
-  h2 .no{flex:none;min-width:1.5rem;font-weight:600;font-size:.95rem;line-height:1;letter-spacing:.06em;color:var(--crimson)}
-  h3{margin:2.2rem 0 .55rem;font-weight:600;font-size:1.16rem;line-height:1.35;color:var(--ink);scroll-margin-top:1rem}
-  h3::before{content:"";display:inline-block;width:.55rem;height:.55rem;background:var(--gold);transform:rotate(45deg);margin-right:.7rem;vertical-align:.12em}
-  p{margin:0 0 1.05rem;orphans:2;widows:2}
-  @media(min-width:700px){.wrap p{text-align:justify;hyphens:auto;-webkit-hyphens:auto}}
-  #s1 h2+p::first-letter{float:left;font-weight:700;font-size:4.4rem;line-height:.78;color:var(--navy);padding:.35rem .6rem 0 0}
-  strong{font-weight:600}
-  mark{background:linear-gradient(transparent 60%,rgba(169,130,47,.3) 60%);color:inherit;font-weight:600;padding:0 .1em}
-
-  /* ===== Tables: booktabs style (rules at top, under header, at bottom) ===== */
-  table{width:100%;border-collapse:collapse;margin:1.5rem 0 2rem;font-weight:400;font-size:.9rem;line-height:1.55;font-variant-numeric:tabular-nums;
-    border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
-  th,td{padding:.65rem .8rem;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule);overflow-wrap:break-word}
-  thead th{font-weight:600;font-size:.7rem;line-height:1.4;letter-spacing:.12em;text-transform:uppercase;color:var(--navy);border-bottom:1px solid var(--ink);padding-bottom:.6rem}
-  tbody th{font-weight:600;font-size:.98rem;line-height:1.45;color:var(--ink);min-width:9rem}
-  tbody tr:nth-child(even){background:rgba(23,50,92,.035)}
-  tbody tr:last-child>*{border-bottom:0}
-  /* Narrow screens: each row becomes a small card; column names come from data-label */
-  @media(max-width:640px){
-    table,tbody,tr,th,td{display:block}
-    table{border:0;margin:1.3rem 0 1.6rem}
-    thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-    tbody tr,tbody tr:nth-child(even){background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--navy);margin:0 0 1rem}
-    tbody th{padding:.7rem .9rem .5rem;border-bottom:1px solid var(--rule)}
-    tbody td{padding:.6rem .9rem;border-bottom:1px solid var(--rule)}
-    tbody td:last-child{border-bottom:0}
-    tbody td::before{content:attr(data-label);display:block;font-weight:600;font-size:.68rem;line-height:1.5;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
+  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  /* 見出し */
+  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
+  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
+  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
+  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
+  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
+  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
+  td { font-size: 20px; line-height: 1.5; }
+  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
+  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--navy); }
+  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
+  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
+  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
+     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
+  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
+  .point { border-color: var(--navy); }
+  .point::before { content: "要点"; background: var(--navy); color: #fff; }
+  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
+  .must { border-color: var(--red); background: #fff0f1; }
+  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
+  .try { border-style: dashed; }
+  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
+  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
+  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
+  ol.steps > li.goal { color: var(--red); }
+  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
+  dl.spec dd { margin: 0; padding: 10px 14px; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
+  dl.spec > div.hot a { color: #fff; }
+  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
+  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
+  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
+  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
+  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
+  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
+  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
+  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
+  .quiz details p { margin: 0; padding: 10px 14px; }
+  .quiz .ans { font-weight: bold; color: var(--red); }
+  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  figure { margin: 1.2rem 0; }
+  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
+  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
+  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
+  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
+  svg .t.lg { font-size: 28px; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--ink); }
+  svg .f-navy { fill: var(--navy); }
+  svg .f-yellow { fill: var(--yellow); }
+  svg .f-red { fill: var(--red); }
+  svg .f-gray { fill: var(--gray); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
+  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
+  svg .s-red { stroke: var(--red); stroke-width: 3; }
+  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
+  svg .s-thick { stroke-width: 6; }
+  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
+  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
+  .checklist .cl-title::before { content: "✅ "; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
+  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
+  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
+  .toc a:hover{color:var(--link);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
   }
-
-  /* ===== Figures ===== */
-  figure{margin:1.9rem 0;padding:1.15rem 1rem .95rem;background:var(--panel);border:1px solid var(--rule);border-top:3px solid var(--navy)}
-  figure svg{display:block;width:100%;max-width:560px;height:auto;margin:0 auto}
-  figcaption{margin-top:.8rem;font-weight:400;font-size:.86rem;line-height:1.6;color:var(--muted);text-align:left}
-  .fig-label{margin-right:.5em;font-weight:600;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
-  .fig-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,352px),1fr));gap:1rem;margin:1.9rem 0}
-  .fig-pair figure{margin:0}
-  .legend{list-style:none;margin:.9rem 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem 1.2rem}
-  .legend li{margin:0;font-weight:400;font-size:.85rem;line-height:1.5;color:var(--ink)}
-  .sw{display:inline-block;width:.8em;height:.8em;border-radius:50%;margin-right:.4em;vertical-align:-.06em}
-  .sw-d{background:var(--dem)}
-  .sw-r{background:var(--rep)}
-  .sw-i{background:var(--ind)}
-  .sw-vac{background:#e8e3d4;border:3px solid var(--ind)}
-  .sw-dhold{background:#e8e3d4;border:3px solid var(--dem)}
-  .sw-rhold{background:#e8e3d4;border:3px solid var(--rep)}
-  .sw-flip{background:var(--dem);border:3px solid var(--rep)}
-  .t{fill:var(--ink)}
-  .ts{font-size:16px} .tm{font-size:20px} .tb{font-weight:bold}
-  .white{fill:#fff}
-
-  /* ===== Footnote marks and references ===== */
-  sup{font-size:.68em;line-height:0;margin-left:.08em}
-  sup a{font-weight:500;color:var(--crimson);text-decoration:none;letter-spacing:.01em}
+  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
+  sup{font-size:16px;line-height:0}
+  sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
-  .refs{border-top:4px double var(--ink);margin-top:3.6rem;padding-top:1.5rem}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p,.refs li{font-size:.88rem;line-height:1.62;overflow-wrap:anywhere;hyphens:none}
-  .refs p{text-align:left}
-  .refs ol{padding-left:1.7rem}
-  .refs li{margin:.4rem 0;padding-left:.2rem}
-  .refs .refs-note{color:var(--muted)}
+  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child,.refs li>sup a{font-weight:600}
-  .refs li:target,sup:target{background:rgba(169,130,47,.22);border-radius:3px}
-
-  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--paper-2);border:1px solid var(--rule);padding:.9rem 1rem;margin:0 0 1.3rem;font-weight:400;font-size:.85rem;line-height:1.6}
-  pre code{background:none;padding:0}
-
-  @media print{
-    body{border-top:0;background:#fff;font-size:11pt}
-    .wrap,header.hero{max-width:none;padding-left:0;padding-right:0}
-    a{color:inherit;text-decoration:none}
-    figure,table,.box,tr{break-inside:avoid}
-    section{margin:1.8rem 0}
+  .refs li>a:first-child{text-decoration:none}
+  .refs sup a{font-style:italic}
+  .refs li:target,sup:target{background:var(--yellow)}
+  /* 末尾の注記 */
+  .endnote { font-size: 18px; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
+     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  @media (max-width: 640px) {
+    table.cards, table.cardspan, table.cardrow { border: 0; }
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
+    table.cards td:first-child a { color: #fff; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
+    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
   }
+  /* この文書に固有の部品(contrast の色に置き換えたもの) */
+  .fig-label { margin-right: .5em; font-weight: bold; }
+  .fig-pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 352px), 1fr)); gap: 1rem; margin: 1.9rem 0; }
+  .fig-pair figure { margin: 0; }
+  .legend { list-style: none; margin: .9rem 0 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem 1.2rem; }
+  .legend li { margin: 0; font-size: 18px; line-height: 1.5; }
+  .sw { display: inline-block; width: .8em; height: .8em; border-radius: 50%; margin-right: .4em; vertical-align: -.06em; }
+  .sw-d { background: var(--navy); }
+  .sw-r { background: var(--red); }
+  .sw-i { background: var(--ink); }
+  .sw-vac { background: var(--gray); border: 3px solid var(--rule); }
+  .sw-dhold { background: var(--gray); border: 3px solid var(--navy); }
+  .sw-rhold { background: var(--gray); border: 3px solid var(--red); }
+  .sw-flip { background: var(--navy); border: 3px solid var(--red); }
 </style>
 </head>
 <body>
-<header class="hero">
+<main>
 <p class="kicker">Election Analysis &middot; Decision Desk Edition</p>
 <h1>2026 U.S. Midterms: Democrats Win Congress &mdash; Balance of Power and Race Calls</h1>
-</header>
-<div class="wrap">
 <p class="meta">U.S. Midterm Elections &middot; Election Night and Morning-After Coverage &middot; Updated: Nov. 23, 2026 (latest figures: Nov. 20 evening, per Yahoo News, with the status of four House races refreshed on Nov. 23; House count cross-checked against NBC News and the New York Times via WRAL, Nov. 18; election-night figures: Nov. 5, 9:29 AM EST)</p>
 <p>Democrats have won control of both the House of Representatives and the Senate in the 2026 midterm elections, which major U.S. outlets describe as a rebuke of President Donald Trump. This page synthesizes race calls, partial returns, and voter poll findings from NBC News, CBS News, CNBC, CNN, and Yahoo News, updated with later tallies that trace to the Associated Press. The AP called the Mississippi Senate race for Democrat Scott Colom on Nov. 11 and the Alaska Senate race for Democrat Mary Peltola on Nov. 17&ndash;18, which completes the Senate count at 56 Democrats and 44 Republicans. In the House, Democrats hold 257 seats with five races still unresolved.</p>
 <div class="box"><strong>Decision Desk Notice (Nov. 23, 2026):</strong> This is not a final edition. Both chambers remain called for Democrats, but not every seat is settled: the Senate is fully called, while the House count still shows five uncalled races in the Yahoo News tally of Nov. 20 (two Louisiana runoffs on Dec. 12 and three races decided by roughly 300 votes). Since then, Rep. Scott DesJarlais has conceded in Tennessee&#39;s 4th, and recounts are under way or scheduled in Minnesota&#39;s 1st and North Carolina&#39;s 5th. I could not confirm whether the Yahoo count has been updated for the Tennessee concession, so the totals below are unchanged. Each figure below comes from the most recent source found for it, and the sources were retrieved at different times.
@@ -169,54 +211,49 @@
 </ul>
 All figures are preliminary until certified. CNN&#39;s own pages could not be retrieved directly; CNN&#39;s position below comes from its published headline and summaries.</div>
 <nav class="toc" aria-label="Table of Contents">
-<b>Contents</b>
+<p class="toc-title">Contents</p>
 <ol>
-<li><a href="#s1">Key Takeaways</a></li>
-<li><a href="#s2">How the Midterms Work</a></li>
-<li><a href="#s3">The Battle for Congress</a></li>
-<li><a href="#s4">Voter Priorities</a></li>
-<li><a href="#s5">Key Senate Races</a>
+<li><a href="#sec1">Key Takeaways</a></li>
+<li><a href="#sec2">How the Midterms Work</a></li>
+<li><a href="#sec3">The Battle for Congress</a></li>
+<li><a href="#sec4">Voter Priorities</a></li>
+<li><a href="#sec5">Key Senate Races</a>
 <ol>
-<li><a href="#s5-1">Roy Cooper defeats Michael Whatley</a></li>
-<li><a href="#s5-2">Jon Ossoff holds his seat</a></li>
-<li><a href="#s5-3">Chris Pappas defeats John Sununu</a></li>
-<li><a href="#s5-4">James Talarico defeats Ken Paxton</a></li>
-<li><a href="#s5-5">Abdul El-Sayed defeats Mike Rogers</a></li>
-<li><a href="#s5-6">Sherrod Brown defeats Jon Husted</a></li>
-<li><a href="#s5-7">Annie Andrews defeats Darline Graham</a></li>
-<li><a href="#s5-8">Troy Jackson defeats Susan Collins</a></li>
-<li><a href="#s5-9">Iowa and Kansas: two more flips</a></li>
-<li><a href="#s5-10">Alaska and Mississippi flip, and Republican holds</a></li>
+<li><a href="#sec5-1">Roy Cooper defeats Michael Whatley</a></li>
+<li><a href="#sec5-2">Jon Ossoff holds his seat</a></li>
+<li><a href="#sec5-3">Chris Pappas defeats John Sununu</a></li>
+<li><a href="#sec5-4">James Talarico defeats Ken Paxton</a></li>
+<li><a href="#sec5-5">Abdul El-Sayed defeats Mike Rogers</a></li>
+<li><a href="#sec5-6">Sherrod Brown defeats Jon Husted</a></li>
+<li><a href="#sec5-7">Annie Andrews defeats Darline Graham</a></li>
+<li><a href="#sec5-8">Troy Jackson defeats Susan Collins</a></li>
+<li><a href="#sec5-9">Iowa and Kansas: two more flips</a></li>
+<li><a href="#sec5-10">Alaska and Mississippi flip, and Republican holds</a></li>
 </ol>
 </li>
-<li><a href="#s6">The Stakes and Policy Implications</a></li>
-<li><a href="#s7">Coffee Break: Why Doesn&#39;t an American Party Have a &ldquo;Leader&rdquo;?</a>
+<li><a href="#sec6">The Stakes and Policy Implications</a></li>
+<li><a href="#sec7">Coffee Break: Why Doesn't an American Party Have a “Leader”?</a>
 <ol>
-<li><a href="#s7-1">Who spoke for the parties on election night?</a></li>
-<li><a href="#s7-2">Four structural reasons</a></li>
-<li><a href="#s7-3">So who leads when nobody does?</a></li>
+<li><a href="#sec7-1">Who spoke for the parties on election night?</a></li>
+<li><a href="#sec7-2">Four structural reasons</a></li>
+<li><a href="#sec7-3">So who leads when nobody does?</a></li>
 </ol>
 </li>
 </ol>
 </nav>
-<section id="s1">
-<h2><span class="no">1</span>Key Takeaways</h2>
+<h2 id="sec1">1. Key Takeaways</h2>
 <p>The result has been clear since election night, and the days since have not changed it: Democrats have won control of both chambers of Congress for the final two years of President Donald Trump&#39;s term, in an election that outlets from CBS to CNN frame as a rebuke of the president. As of Nov. 20, Yahoo News counts 257 Democratic House seats with five races unresolved, and a 56-seat Democratic Senate majority now that every Senate race has been called, the last being Alaska for Democrat Mary Peltola.<sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup><sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup><sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup><sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup><sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup></p>
 <p>In the House, CBS News projected the Democratic win at 10:15 PM EST on election night, and NBC News and CNN called it within minutes. NBC News&#39;s count on Nov. 5 stood at 249 Democratic seats called (a net gain of 40) against 158 Republican, with 28 races uncalled, and it estimated Democrats would finish with about 259 seats and Republicans about 176 (218 needed). CNBC&#39;s Election Desk, at an earlier check, projected at least 250 Democratic and 160 Republican seats. The AP count then moved to 254 Democratic, 162 Republican, and 19 uncalled by 9:00 PM EST on Nov. 8, and to 255 Democratic with 15 uncalled by 6:41 PM EST on Nov. 10. By Nov. 18, NBC News and the New York Times showed 257 Democrats, and Yahoo News&#39;s Nov. 20 update still had 257 with five races open (Republicans at 173 by subtraction, matching NBC). Democrats would equal the 257 seats they won in 2008, the most for either party this century, and Yahoo reports a 14-point Democratic margin in the House popular vote, the largest in a midterm since 1974.<sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup><sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup><sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup><sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup><sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup></p>
 <p>In the Senate, CBS News projected Democratic control shortly after 11:30 PM EST, and NBC News and CNBC&#39;s Election Desk now show the same. The election-night tallies from NBC (54 Democrats, counting the two independents who caucus with them, and 44 Republicans) and CNBC&#39;s Election Desk (at least 54 and at least 42) were already well past the 51 needed for control even though Vice President JD Vance would break a 50-50 tie. Democrats began the night needing a net gain of four seats. They flipped seven by the end of election night: North Carolina, South Carolina, Texas, Ohio, Kansas, Iowa, and Maine. They also held Michigan, Georgia, Minnesota, New Hampshire, and Virginia. Republicans held Florida (Ashley Moody) and Nebraska (Pete Ricketts, over independent Dan Osborn). Mississippi then became the eighth flip when the AP called it for Colom on Nov. 11 (55 seats against 44 Republicans), and Alaska became the ninth when Peltola won just over 50% of the vote on Nov. 17&ndash;18, which avoided ranked-choice tabulation and brings Democrats to 56 seats against 44 Republicans. Every Senate race is now called.<sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup><sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup><sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup><sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup></p>
 <p>Voter polls point the same way. CBS News exit polling put Trump&#39;s approval at 38%, on track for the lowest midterm approval for a president in CBS exit polling, and about three-quarters of voters were at least dissatisfied with the country&#39;s direction. In the CNBC Voter Poll, 59% said their House vote was meant to express support or opposition to Trump (43% against, 16% for), 62% said inflation is due more to Trump&#39;s policies, and 65% said tariffs hurt the national economy. The NBC News exit poll found 62% of voters disapproving of Trump.<sup id="fnref-7-4"><a href="#ref-7">[7]</a></sup><sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup><sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup></p>
-</section>
 
-<section id="s2">
-<h2><span class="no">2</span>How the Midterms Work</h2>
-<p>Held at the midpoint of a president&#39;s four-year term, midterm elections determine the composition of the United States Congress. While the presidency is not on the ballot, shifts in congressional control reshape legislative priorities, federal spending, subpoena and oversight powers, and the confirmation of judicial and executive nominees.</p><table><thead><tr><th>Feature</th><th>House of Representatives</th><th>Senate</th></tr></thead>
+<h2 id="sec2">2. How the Midterms Work</h2>
+<p>Held at the midpoint of a president&#39;s four-year term, midterm elections determine the composition of the United States Congress. While the presidency is not on the ballot, shifts in congressional control reshape legislative priorities, federal spending, subpoena and oversight powers, and the confirmation of judicial and executive nominees.</p><table class="cardrow"><thead><tr><th>Feature</th><th>House of Representatives</th><th>Senate</th></tr></thead>
 <tbody><tr><th scope="row">Total Seats</th><td data-label="House of Representatives">435</td><td data-label="Senate">100</td></tr><tr><th scope="row">Term Length</th><td data-label="House of Representatives">2 years</td><td data-label="Senate">6 years</td></tr><tr><th scope="row">Seats Up in 2026</th><td data-label="House of Representatives">All 435 seats</td><td data-label="Senate">Roughly one-third (35 seats)</td></tr><tr><th scope="row">Majority Threshold</th><td data-label="House of Representatives">218 seats</td><td data-label="Senate">51 seats (or 50 with the Vice President breaking a tie)</td></tr></tbody></table><p class="meta">In the Senate, working majorities can shift depending on vacancies and the party affiliation of the sitting Vice President.</p>
-</section>
 
-<section id="s3">
-<h2><span class="no">3</span>The Battle for Congress</h2>
+<h2 id="sec3">3. The Battle for Congress</h2>
 
-<table>
+<table class="cardrow">
 <thead><tr><th>Item</th><th>Status</th><th>Detail</th></tr></thead>
 <tbody>
 <tr><th scope="row">House: 218 needed</th><td data-label="Status">Democrats win control</td><td data-label="Detail">Called by CBS News (10:15 PM EST), NBC News, and CNN (about 10:19 PM EST). Yahoo News (updated Nov. 20): 257 D called, 5 uncalled (173 R by subtraction; NBC shows 257 D / 173 R on its own count). Nov. 10 (AP-based): 255 D / 165 R / 15 uncalled. Nov. 8 (AP): 254 D / 162 R / 19 uncalled. NBC (Nov. 5): 249 D / 158 R / 28 uncalled; estimate about 259 D / 176 R.</td></tr>
@@ -228,7 +265,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 <div class="fig-pair">
 <figure>
 <svg viewBox="0 -28 600 358" role="img" aria-label="House composition after the midterms (435 seats), as of Nov. 20 (Yahoo News): 257 Democrats called, 5 uncalled, 173 Republicans (by subtraction). Democrats are past the 218-seat majority.">
-  <g fill="#1f4e8c"><title>Democrats called 257</title>
+  <g class="f-navy"><title>Democrats called 257</title>
     <circle cx="197.4" cy="315.0" r="6.6"/>
     <circle cx="180.8" cy="315.0" r="6.6"/>
     <circle cx="164.2" cy="315.0" r="6.6"/>
@@ -487,14 +524,14 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="350.8" cy="136.6" r="6.6"/>
     <circle cx="376.4" cy="57.7" r="6.6"/>
   </g>
-  <g fill="#e8e3d4" stroke="#5f6b7a" stroke-width="2.5"><title>Uncalled 5</title>
+  <g class="f-gray s-rule"><title>Uncalled 5</title>
     <circle cx="343.7" cy="169.1" r="6.6"/>
     <circle cx="359.2" cy="121.8" r="6.6"/>
     <circle cx="367.6" cy="107.0" r="6.6"/>
     <circle cx="391.3" cy="45.0" r="6.6"/>
     <circle cx="376.0" cy="92.3" r="6.6"/>
   </g>
-  <g fill="#b3302f"><title>Republicans 173 (by subtraction)</title>
+  <g class="f-red"><title>Republicans 173 (by subtraction)</title>
     <circle cx="384.3" cy="77.7" r="6.6"/>
     <circle cx="335.1" cy="218.6" r="6.6"/>
     <circle cx="392.7" cy="63.1" r="6.6"/>
@@ -669,8 +706,8 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="568.4" cy="315.0" r="6.6"/>
     <circle cx="585.0" cy="315.0" r="6.6"/>
   </g>
-  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#1a1d24" stroke-width="1.5" stroke-dasharray="4 3"/>
-  <text class="t" x="300" y="-4" text-anchor="middle" font-size="28">Majority: 218</text>
+  <line class="s-ink" x1="300" y1="16" x2="300" y2="220.4" stroke-dasharray="4 3"/>
+  <text class="t lg" x="300" y="-4" text-anchor="middle">Majority: 218</text>
 </svg>
 <ul class="legend">
 <li><span class="sw sw-d"></span>Democrats called 257</li>
@@ -681,11 +718,11 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 </figure>
 <figure>
 <svg viewBox="0 -28 600 358" role="img" aria-label="Senate composition after the midterms (100 seats), as of Nov. 20 after the AP called Alaska: 56 Democrats including 2 independents, 44 Republicans, none uncalled. Democrats flipped 9 Republican-held seats.">
-  <g fill="#5f6b7a"><title>Independents 2 (caucus with Democrats; not up)</title>
+  <g class="f-ink"><title>Independents 2 (caucus with Democrats; not up)</title>
     <circle cx="197.4" cy="315.0" r="14.6"/>
     <circle cx="160.9" cy="315.0" r="14.6"/>
   </g>
-  <g fill="#1f4e8c"><title>Democrats, seat not up 32</title>
+  <g class="f-navy"><title>Democrats, seat not up 32</title>
     <circle cx="124.4" cy="315.0" r="14.6"/>
     <circle cx="88.0" cy="315.0" r="14.6"/>
     <circle cx="51.5" cy="315.0" r="14.6"/>
@@ -719,7 +756,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="153.9" cy="113.9" r="14.6"/>
     <circle cx="157.5" cy="68.2" r="14.6"/>
   </g>
-  <g fill="#e8e3d4" stroke="#1f4e8c" stroke-width="5.5"><title>Democratic holds 13 (on the ballot)</title>
+  <g class="f-gray s-navy s-thick"><title>Democratic holds 13 (on the ballot)</title>
     <circle cx="187.2" cy="93.6" r="11.8"/>
     <circle cx="205.5" cy="125.2" r="11.8"/>
     <circle cx="223.8" cy="156.8" r="11.8"/>
@@ -734,7 +771,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="280.2" cy="177.3" r="11.8"/>
     <circle cx="262.8" cy="32.4" r="11.8"/>
   </g>
-  <g fill="#1f4e8c" stroke="#b3302f" stroke-width="5.5"><title>Democratic flips 9: NC, SC, TX, OH, KS, IA, ME, MS, AK</title>
+  <g class="f-navy s-red s-thick"><title>Democratic flips 9: NC, SC, TX, OH, KS, IA, ME, MS, AK</title>
     <circle cx="280.4" cy="103.9" r="11.8"/>
     <circle cx="300.0" cy="212.4" r="11.8"/>
     <circle cx="300.0" cy="139.4" r="11.8"/>
@@ -745,7 +782,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="338.9" cy="69.5" r="11.8"/>
     <circle cx="319.8" cy="177.3" r="11.8"/>
   </g>
-  <g fill="#e8e3d4" stroke="#b3302f" stroke-width="5.5"><title>Republican holds 13 (on the ballot)</title>
+  <g class="f-gray s-red s-thick"><title>Republican holds 13 (on the ballot)</title>
     <circle cx="339.1" cy="143.8" r="11.8"/>
     <circle cx="373.8" cy="39.7" r="11.8"/>
     <circle cx="358.0" cy="111.1" r="11.8"/>
@@ -760,7 +797,7 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="446.1" cy="113.9" r="11.8"/>
     <circle cx="427.8" cy="145.8" r="11.8"/>
   </g>
-  <g fill="#b3302f"><title>Republicans, seat not up 31</title>
+  <g class="f-red"><title>Republicans, seat not up 31</title>
     <circle cx="473.5" cy="88.9" r="14.6"/>
     <circle cx="409.5" cy="177.7" r="14.6"/>
     <circle cx="391.1" cy="209.9" r="14.6"/>
@@ -793,8 +830,8 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
     <circle cx="548.5" cy="315.0" r="14.6"/>
     <circle cx="585.0" cy="315.0" r="14.6"/>
   </g>
-  <line x1="300" y1="16" x2="300" y2="220.4" stroke="#1a1d24" stroke-width="1.5" stroke-dasharray="4 3"/>
-  <text class="t" x="300" y="-4" text-anchor="middle" font-size="28">Majority: 51</text>
+  <line class="s-ink" x1="300" y1="16" x2="300" y2="220.4" stroke-dasharray="4 3"/>
+  <text class="t lg" x="300" y="-4" text-anchor="middle">Majority: 51</text>
 </svg>
 <ul class="legend">
 <li><span class="sw sw-d"></span>Democrats, not up 32</li>
@@ -811,58 +848,50 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 <p>Of the 15 House races still uncalled on Nov. 10, ten have since been decided and five remained open in the Nov. 20 count. Louisiana&#39;s 5th and 6th go to a Dec. 12 runoff. As of Nov. 23, Democrats have won Tennessee&#39;s 4th by 280 votes (Victoria Broderick over Rep. Scott DesJarlais, who conceded on Nov. 16) and lead by 324 in Minnesota&#39;s 1st (Jake Johnson over Rep. Brad Finstad, who requested a recount that runs Nov. 30 to Dec. 3) and by 331 in North Carolina&#39;s 5th (Chuck Hubbard over Rep. Virginia Foxx, who requested a recount). Races settled since Nov. 10 include North Carolina&#39;s 3rd, where the AP called Democrat Raymond Smith the winner over Rep. Greg Murphy, who conceded, and North Carolina&#39;s 10th, where Democrat Ashley Bell requested a recount but then conceded to Rep. Pat Harrigan (R), who had led by more than 2,500 votes. I did not retrieve the outcomes of the other Nov. 10 uncalled races (such as Colorado&#39;s 4th, Maine&#39;s 2nd, and Alaska&#39;s at-large seat; NBC&#39;s headline has Republican Nick Begich re-elected in Alaska) from a source that lists them; they are counted among the 257 Democratic and 173 Republican seats only through the totals reported by Yahoo News and NBC.<sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup><sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup><sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup><sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup></p>
 <p>The governors&#39; races mirrored the national mood. Democrats won Ohio (Amy Acton, over Vivek Ramaswamy), Texas (Gina Hinojosa, who unseated Gov. Greg Abbott), Georgia (Keisha Lance Bottoms), and Iowa (Rob Sand), and CNBC also projects Jocelyn Benson in Michigan (over John James) and David Crowley in Wisconsin. Republican Byron Donalds won Florida.<sup id="fnref-7-6"><a href="#ref-7">[7]</a></sup><sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> The AP&#39;s table as of Nov. 8 listed five Democratic flips (Georgia, Iowa, Nevada, Ohio, and Texas) and a 28-to-20 Democratic edge in governorships, with Alaska and Kansas uncalled. Yahoo News&#39;s Nov. 20 update brings Democrats to 30 governorships: Democrat Jonathan Kreiss-Tomkins was called in Alaska early on Saturday, Nov. 14, with a majority of first-choice votes (he takes office Dec. 7), making Alaska the sixth flip, and Democrat Cindy Holscher held Kansas.<sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup><sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup></p>
 <p>Before the vote, Reuters framed the question as whether either party would win unified control or Washington would fracture into divided government in 2027. The answer is divided government: Republicans keep the White House, and Democrats hold both chambers.<sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup></p>
-</section>
 
-<section id="s4">
-<h2><span class="no">4</span>Voter Priorities</h2>
+<h2 id="sec4">4. Voter Priorities</h2>
 <p>The CNBC Voter Poll, fielded across Election Day, highlights frustration centered on the economy and the president. About 75% rated the economy &ldquo;not so good&rdquo; or &ldquo;poor,&rdquo; and 79% said the cost of living causes them severe or moderate hardship.<sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup></p>
 <p>Voters were also asked about foreign policy: 74% said Iran was a crucial or major factor in their congressional vote, and 62% said military action there was the wrong decision. On candidates, 61% of Texas voters viewed Ken Paxton negatively, 58% of Maine voters said Susan Collins is too aligned with Trump (while 56% said Troy Jackson lacks the temperament to serve), and 58% of North Carolina voters said Michael Whatley was too close to Trump.<sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup></p>
 <p>The NBC News exit poll points the same way: 62% of voters disapprove of Trump, more than three-quarters disapprove of Congress, and nearly half see the election as a chance to rebuke the president. Latino voters backed Democrats for the House 60% to 35% (Kamala Harris won 51% in 2024), and the economy was the top issue for Latino voters (45%) and Black voters (50%). State-level findings include 65% of Texas voters saying Ken Paxton lacks the right personal character, 63% of South Carolina voters saying Graham lacks the right experience, and 55% of Kansas voters saying Sen. Roger Marshall lacks the right personal character.<sup id="fnref-6-4"><a href="#ref-6">[6]</a></sup></p>
 <p>CBS News exit polling adds that Trump&#39;s approval was underwater in nearly all Senate battleground states, and that 69% of Maine voters said Trump&#39;s tariffs had harmed their local economy.<sup id="fnref-7-7"><a href="#ref-7">[7]</a></sup></p>
-</section>
 
-<section id="s5">
-<h2><span class="no">5</span>Key Senate Races</h2>
+<h2 id="sec5">5. Key Senate Races</h2>
 <p>Democrats needed a net gain of four seats and ended election night with seven flips, plus holds in Michigan, Georgia, Minnesota, New Hampshire, and Virginia; Mississippi and Alaska later made nine. Percentages below are NBC News tallies from its Senate results page (7:30 AM EST on Nov. 5), except for Alaska and Mississippi, which are updated in 5.10. They are partial election-night counts, not final totals.</p>
-<h3 id="s5-1">5.1 Roy Cooper defeats Michael Whatley</h3>
+<h3 id="sec5-1">5.1 Roy Cooper defeats Michael Whatley</h3>
 <p><strong>North Carolina &middot; Flip</strong><br> Former Democratic Governor Roy Cooper was the first Senate flip of the night, called at 8:30 PM EST; NBC&#39;s tally shows 58.7% to 39.1% (99.0% in). He flipped the seat of retiring Republican Senator Thom Tillis and will be the first Democrat elected to the Senate from North Carolina since Kay Hagan in 2008.<sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup><sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup><sup id="fnref-7-8"><a href="#ref-7">[7]</a></sup></p>
-<h3 id="s5-2">5.2 Jon Ossoff holds his seat</h3>
+<h3 id="sec5-2">5.2 Jon Ossoff holds his seat</h3>
 <p><strong>Georgia &middot; Hold</strong><br> Democrat Jon Ossoff won re-election over Republican Mike Collins, who conceded; CBS News called the race at 7:39 PM EST. NBC&#39;s tally shows 59.0% to 41.0% (98.7% in).<sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-9"><a href="#ref-7">[7]</a></sup></p>
-<h3 id="s5-3">5.3 Chris Pappas defeats John Sununu</h3>
+<h3 id="sec5-3">5.3 Chris Pappas defeats John Sununu</h3>
 <p><strong>New Hampshire &middot; Hold</strong><br> Democrat Chris Pappas won the open seat, keeping it in Democratic hands (called 8:21 PM EST). NBC&#39;s tally shows 56.2% to 41.9% (90.1% in).<sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-10"><a href="#ref-7">[7]</a></sup></p>
-<h3 id="s5-4">5.4 James Talarico defeats Ken Paxton</h3>
+<h3 id="sec5-4">5.4 James Talarico defeats Ken Paxton</h3>
 <p><strong>Texas &middot; Flip</strong><br> Democrat James Talarico defeated Republican state Attorney General Ken Paxton for the seat of Senator John Cornyn. CBS News called the race at 10:55 PM EST, the first Democratic Senate win in Texas since 1988, and Cornyn congratulated Talarico. NBC&#39;s tally shows 54.9% to 43.2% (93.7% in). The Texas governor&#39;s race also flipped, with Gina Hinojosa defeating incumbent Greg Abbott.<sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-11"><a href="#ref-7">[7]</a></sup><sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup></p>
-<h3 id="s5-5">5.5 Abdul El-Sayed defeats Mike Rogers</h3>
+<h3 id="sec5-5">5.5 Abdul El-Sayed defeats Mike Rogers</h3>
 <p><strong>Michigan &middot; Hold</strong><br> For retiring Senator Gary Peters&#39; seat, Democrat Abdul El-Sayed defeated former Republican Representative Mike Rogers, keeping the seat in Democratic hands; CBS News called it at 2:30 AM EST. NBC&#39;s tally shows 52.3% to 45.7% (94.4% in).<sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-12"><a href="#ref-7">[7]</a></sup></p>
-<h3 id="s5-6">5.6 Sherrod Brown defeats Jon Husted</h3>
+<h3 id="sec5-6">5.6 Sherrod Brown defeats Jon Husted</h3>
 <p><strong>Ohio &middot; Flip</strong><br> In the special election, Democrat Sherrod Brown defeated Republican Jon Husted, called at 11:11 PM EST. NBC&#39;s tally shows 49.7% to 45.5% (97.3% in). Democrat Amy Acton also won the governor&#39;s race over Vivek Ramaswamy.<sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-13"><a href="#ref-7">[7]</a></sup><sup id="fnref-1-10"><a href="#ref-1">[1]</a></sup></p>
-<h3 id="s5-7">5.7 Annie Andrews defeats Darline Graham</h3>
+<h3 id="sec5-7">5.7 Annie Andrews defeats Darline Graham</h3>
 <p><strong>South Carolina &middot; Flip</strong><br> NBC News (9:58 PM EST) and CNN projected Democrat Annie Andrews as the winner over Republican Sen. Darline Graham, an upset and the first Democratic Senate seat in South Carolina since 1998. NBC&#39;s tally shows 51.1% to 46.7% (99.0% in).<sup id="fnref-1-11"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup><sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup></p>
-<h3 id="s5-8">5.8 Troy Jackson defeats Susan Collins</h3>
+<h3 id="sec5-8">5.8 Troy Jackson defeats Susan Collins</h3>
 <p><strong>Maine &middot; Flip</strong><br> The race that looked even at 10:19 PM EST broke for Democrat Troy Jackson. Republican Susan Collins conceded, and CBS News called the race at 12:52 AM EST. NBC&#39;s tally shows 53.8% to 46.1% (85.7% in). In the exit poll, 69% of Maine voters said Trump&#39;s tariffs had harmed the local economy.<sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-14"><a href="#ref-7">[7]</a></sup></p>
-<h3 id="s5-9">5.9 Iowa and Kansas: two more flips</h3>
+<h3 id="sec5-9">5.9 Iowa and Kansas: two more flips</h3>
 <p><strong>Iowa &middot; Flip</strong><br> <strong>Kansas &middot; Flip</strong><br> In Iowa, Democratic state Rep. Josh Turek defeated Republican Rep. Ashley Hinson (NBC: 50.5% to 46.4%, 98.1% in; called 11:34 PM EST), a call that came within minutes of CBS News projecting Democratic control of the Senate. In Kansas, Democrat Adam Hamilton defeated Sen. Roger Marshall (50.9% to 46.1%, 98.5% in; called 11:26 PM EST). Democrat Rob Sand also won the Iowa governorship.<sup id="fnref-2-10"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-15"><a href="#ref-7">[7]</a></sup></p>
-<h3 id="s5-10">5.10 Alaska and Mississippi flip, and Republican holds</h3>
+<h3 id="sec5-10">5.10 Alaska and Mississippi flip, and Republican holds</h3>
 <p><strong>Alaska &middot; Flip</strong><br> Alaska was the last Senate race called. On election night NBC had Democrat Mary Peltola ahead of Republican Sen. Dan Sullivan, 48.2% to 47.9% with 74.1% in, and the race uses ranked-choice voting (per CNBC).<sup id="fnref-2-11"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-16"><a href="#ref-7">[7]</a></sup> By Nov. 10 Peltola&#39;s lead was 2,517 votes with about 76% counted, and on Nov. 11 Yahoo News had her at 49.0% to Sullivan&#39;s 47.2% with about 84% counted.<sup id="fnref-11-5"><a href="#ref-11">[11]</a></sup><sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup> As later ballots were counted, Peltola secured &ldquo;just over 50%&rdquo; of the vote, narrowly clearing the threshold that avoids Alaska&#39;s ranked-choice tabulation (Yahoo News, Nov. 20). The call came late on Tuesday, Nov. 17 (Alaska Public Media dates its story Nov. 17, PBS carrying the AP Nov. 18). She is the first Alaska Democrat elected to the Senate since 2008. This setback for Sullivan came after his campaign had claimed in a memo that he would win under ranked-choice counting, which the Peltola campaign called &ldquo;fictitious.&rdquo;<sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup><sup id="fnref-18-3"><a href="#ref-18">[18]</a></sup> Search summaries report that Sullivan will not concede before certification, and an NBC headline says the Justice Department sought dismissal of its lawsuit in the race; I did not retrieve either page, and no source I read gives a final vote total, so the result is uncertified.<sup id="fnref-19-2"><a href="#ref-19">[19]</a></sup></p>
 <p><strong>Mississippi &middot; Flip</strong><br> The Associated Press called the race for Democrat Scott Colom on Wednesday, Nov. 11, eight days after Election Day, with about 99% of precincts reporting. Colom led Republican Sen. Cindy Hyde-Smith 49.2% to 48.7%, a margin of 4,669 votes by MS NOW&#39;s count (the AP-based figure that night was reported as 4,645; the sources do not explain the gap). Hyde-Smith called Colom to concede at about 6 PM EST and said in a video on X that she respects &ldquo;the decision of Mississippi voters.&rdquo; Jackson County, a Republican stronghold, reported more than 2,000 additional votes on Nov. 11, but Hyde-Smith gained no ground. The call rests on uncertified results; the Secretary of State is due to declare results on Dec. 3.<sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup><sup id="fnref-17-3"><a href="#ref-17">[17]</a></sup><sup id="fnref-12-5"><a href="#ref-12">[12]</a></sup> Colom will be Mississippi&#39;s first Black senator since Reconstruction (Reuters, via Yahoo News, dates the last one to 1874), and the first Democrat to win a Senate race in the state since 1982; Yahoo News frames it as the first Democratic senator since 1989, when John Stennis, elected in 1982, left office. It is the eighth Republican-held seat Democrats flipped this cycle and lifted them to 55 Senate seats at the time.<sup id="fnref-16-3"><a href="#ref-16">[16]</a></sup><sup id="fnref-17-4"><a href="#ref-17">[17]</a></sup> The count had been close throughout: on election night Colom led 49.0% to 48.9% on NBC&#39;s page (95.7% in), and a CNBC update citing the AP had him ahead by 65 votes. His lead grew to about 2,500 votes on Nov. 6 and 2,633 on Nov. 10 (about 97% counted).<sup id="fnref-11-6"><a href="#ref-11">[11]</a></sup> Before the call, the NRSC and the Hyde-Smith campaign had asked that affidavit ballots be preserved, which Colom&#39;s campaign called a &ldquo;desperate stunt,&rdquo; and estimates of ballots still outstanding ranged from about 3,600 mail ballots (CBS) to about 30,000 votes (KCRA).<sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup><sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup></p>
 <p><strong>Florida &middot; Hold</strong><br> <strong>Nebraska &middot; Hold</strong><br> Republican Ashley Moody held the Florida special-election seat (50.9% to 48.0%, 99.0% in; called 8:41 PM EST). In Nebraska, Republican Pete Ricketts defeated independent Dan Osborn (50.3% to 43.8%, 90.2% in), called at 4:01 AM EST. Osborn had led 53.0% to 41.7% when only 37.3% of the vote was in.<sup id="fnref-2-12"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-17"><a href="#ref-7">[7]</a></sup></p>
-</section>
 
-<section id="s6">
-<h2><span class="no">6</span>The Stakes and Policy Implications</h2>
+<h2 id="sec6">6. The Stakes and Policy Implications</h2>
 <p>With both chambers called for Democrats, subpoena and oversight powers over the Trump administration will pass to incoming Democratic committee chairs when the 120th Congress convenes, and a Democratic Senate controls the confirmation calendar for federal judges and executive appointees. The Senate margin is wider than the 51 seats needed, but it is still short of the 60 votes required to overcome a filibuster, even with 56 seats, and the president retains his veto.<sup id="fnref-12-6"><a href="#ref-12">[12]</a></sup></p>
 <p>The reaction so far shows how each side reads the result. Trump said he would accept the results and told CBS he would &ldquo;work with&rdquo; Democrats, while also posting that he &ldquo;wasn&#39;t on the Ballot&rdquo; and that if he were, &ldquo;we would have won IN A LANDSLIDE!&rdquo; Senate Republican leader John Thune said Senate Republicans would push back against Democratic priorities. Chuck Schumer said Democrats won the Senate &ldquo;against all odds,&rdquo; Hakeem Jeffries said &ldquo;America is back,&rdquo; and Nancy Pelosi endorsed Jeffries for speaker. Iran&#39;s parliament speaker, Mohammad Bagher Ghalibaf, linked the results to Americans&#39; rejection of war.<sup id="fnref-7-18"><a href="#ref-7">[7]</a></sup></p>
 <p>In the days since, Schumer said on Nov. 4 that when Trump defies the public or the law, Democrats will investigate, sue, and &ldquo;entangle him in legislative razor wire.&rdquo; Leadership of the Senate Democratic caucus is already in question: Schumer has led it since 2017, and several incoming senators have signaled they want new leadership. On Nov. 7, Sen. Chris Van Hollen urged Democrats not to rush the choice of a majority leader, and an aide said he will not pursue the post.<sup id="fnref-13-3"><a href="#ref-13">[13]</a></sup></p>
 <p>For international allies, including Japan, the critical focus remains congressional influence over tariffs, Pacific defense pacts, and appropriations. Tariffs were a visible liability for the president, with 65% of voters in the CNBC poll saying they hurt the national economy, but Congress&#39;s levers are mainly spending and oversight, and the White House keeps its veto. Definitive policy directions will crystallize once the five remaining House races are settled and the new Congress is seated in January.<sup id="fnref-1-12"><a href="#ref-1">[1]</a></sup></p>
-</section>
 
-<section id="s7">
-<h2><span class="no">7</span>Coffee Break: Why Doesn&#39;t an American Party Have a &ldquo;Leader&rdquo;?</h2>
+<h2 id="sec7">7. Coffee Break: Why Doesn&#39;t an American Party Have a &ldquo;Leader&rdquo;?</h2>
 <p class="meta">A side note from the election-night desk. Not part of the race calls.</p>
-<h3 id="s7-1">7.1 Who spoke for the parties on election night?</h3>
+<h3 id="sec7-1">7.1 Who spoke for the parties on election night?</h3>
 <p>Scroll back through the night&#39;s coverage and a pattern appears. Donald Trump wrote that he &ldquo;wasn&#39;t on the Ballot,&rdquo; and a senior Republican strategist blamed him for the result. On the Democratic side, Hakeem Jeffries, Chuck Schumer, Nancy Pelosi, and Barack Obama each weighed in on the result, yet none of them is &ldquo;the leader of the Democratic Party.&rdquo; A reader used to Japanese or British politics keeps looking for one: the party president (the LDP&#39;s <i>s&#1a1d24;sai</i>) or party leader who becomes prime minister when the party wins.<sup id="fnref-7-19"><a href="#ref-7">[7]</a></sup></p>
 <p>The short answer is that American parties do have officials, but no single office that combines what a parliamentary leader holds at once: head of the party organization, chooser of candidates, head of the legislative caucus, and head of government. The closest candidates are these.</p>
-<table>
+<table class="cardrow">
 <thead><tr><th>Position</th><th>Who (as of this report)</th><th>What they actually control</th></tr></thead>
 <tbody>
 <tr><th scope="row">President (when in office)</th><td data-label="Who (as of this report)">Donald Trump (Republican). The Democrats have no equivalent.</td><td data-label="What they actually control">Nothing by party rule. The president is leader only by custom: the governing party looks to the White House for direction, and voters judge the party by the president.</td></tr>
@@ -871,22 +900,21 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 <tr><th scope="row">State parties and governors</th><td data-label="Who (as of this report)">50 state party organizations; state committee chairs sit on the national committee.</td><td data-label="What they actually control">Their own organizations, under state law, including the state&#39;s primary or caucus rules.</td></tr>
 </tbody>
 </table>
-<h3 id="s7-2">7.2 Four structural reasons</h3>
+<h3 id="sec7-2">7.2 Four structural reasons</h3>
 <ol>
 <li><strong>Separation of powers.</strong> A parliamentary leader&#39;s power rests on making or breaking the government. In the United States, the president is elected separately from Congress, cannot be brought down by a vote of no confidence (removal requires impeachment), and cannot dissolve it. The Constitution does not mention parties at all. A member of Congress owes the seat to local voters, so no one in Washington can enforce a party line the way a prime minister can.</li>
 <li><strong>Federalism.</strong> Each of the 50 states runs its own elections and has its own state party under state law. The national committees were created as coordinating bodies: the DNC in 1848 and the RNC in 1856. The DNC&#39;s charter gives it &ldquo;general responsibility for the affairs of the Democratic Party between National Conventions,&rdquo; but it sets the rules for caucuses and primaries that the states usually run themselves.<sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup><sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup></li>
 <li><strong>Primaries took nominations away from party bosses.</strong> After the chaotic 1968 Democratic convention, the DNC&#39;s McGovern&ndash;Fraser Commission required state parties to open delegate selection, and the result was a shift from insider-run conventions and caucuses to primary elections. Because state primary laws generally cover all parties, Republicans were swept along. George McGovern, who led the commission, later summarized the change: &ldquo;I opened up the doors of the Democratic Party, and 20 million people walked out.&rdquo; Voters in each state, not a leader, decide who carries the party&#39;s label.<sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></li>
 <li><strong>Big tents in a two-party system.</strong> This one is my interpretation rather than a finding from the sources. Winner-take-all elections push every faction into one of two tents. A party that has to win Maine, Georgia, and Texas on the same night has to tolerate candidates who differ a great deal, and a leader who enforced one line would risk losing some of those states.</li>
 </ol>
-<h3 id="s7-3">7.3 So who leads when nobody does?</h3>
+<h3 id="sec7-3">7.3 So who leads when nobody does?</h3>
 <p>In practice, leadership is occupied rather than appointed. While a party holds the White House, the president is its de facto leader, which is why a bad night for Republicans reads as a verdict on Trump, and why his &ldquo;wasn&#39;t on the Ballot&rdquo; post is, in effect, an argument about whose verdict this was.<sup id="fnref-7-20"><a href="#ref-7">[7]</a></sup></p>
 <p>The party out of the White House has no such figure. Its voice is a shifting cast of congressional leaders, governors, former presidents, and, eventually, whoever wins the presidential primaries; the nominee then becomes the party&#39;s de facto leader. Pelosi&#39;s endorsement of Jeffries for speaker is the more typical way authority is conferred: by the members of one chamber, one office at a time.<sup id="fnref-7-21"><a href="#ref-7">[7]</a></sup></p>
 <p>So the missing party leader is less a gap than a design choice. The system hands out pieces of leadership to different people and lets a presidency and a primary fill in the rest. For anyone following Washington from Tokyo, the better question is not &ldquo;Who leads the party?&rdquo; but &ldquo;Who controls this particular lever?&rdquo;</p>
-</section>
 <div class="refs">
 <h2>Sources and Editorial Notes</h2>
 <p>This report synthesizes coverage from major U.S. news organizations and was last updated on Nov. 23, 2026. The election-night figures draw on NBC News&#39;s Senate and House results pages (both updated 9:29 AM EST on Nov. 5), CNBC&#39;s Election Desk (page updated 5:23 PM EST), and CBS News&#39;s live updates. The Nov. 11 update adds a Yahoo News tracker of uncalled races (updated 6:41 PM EST on Nov. 10), California Today&#39;s master guide (Associated Press tallies as of 9:00 PM EST on Nov. 8), CBS News&#39;s Senate live updates (7:23 PM EST on Nov. 7), KTUU&#39;s Alaska report (Nov. 5), and a KCRA report (Nov. 7). The Nov. 12 update adds the Mississippi call, taken from MS NOW and Yahoo News; NPR and Mississippi Today headlines returned by search confirm the AP call, but those pages could not be retrieved. The Nov. 21 update adds a Yahoo News final-results article (updated Nov. 20) for the Senate total, the five open House races, and the governorships, plus NBC News&#39;s House results page and a New York Times article carried by WRAL (Nov. 18) for the House count and the North Carolina and Minnesota recounts. The Nov. 23 update refreshes only the four open or closed House races listed under &ldquo;House races still open,&rdquo; using the linked WWNO, WAFB, Tennessee Lookout, MPR News, and WBTV reports (read as search summaries, not as full pages); it does not change the House or Senate totals, which still rest on the Nov. 20 Yahoo News figures. The Alaska call date comes from search results naming the AP, PBS, and Alaska Public Media; those pages were not retrieved, and NBC&#39;s page was read through a partly summarized fetch. The Washington Post&#39;s Nov. 18 article was blocked. The AP figures reach this page through those secondary sites, not from the AP directly, and NBC&#39;s and CNBC&#39;s own pages were not retrieved again. Because the pages were retrieved at different times, figures may not be mutually consistent; for example, the uncalled-House-race count was seven (New York Times, Nov. 17) and five (NBC and Yahoo) in sources a few days apart, and the Alaska percentages and vote margins come from different snapshots. CNN&#39;s pages could not be fetched directly, so CNN&#39;s position is taken from its published headline and summaries as returned by search. Vote shares are partial tallies, and the NBC Senate table does not label every candidate&#39;s party, so labels here follow the battleground cards and the other outlets. The background in the Coffee Break column comes from encyclopedia entries and is a general account, not a legal analysis. Final seat counts and certified winners should be tracked via official state election authorities and ongoing live decision desk updates.</p>
-<p class="refs-note">Click ^ beside each item to return to the passage that cites it. Where a source is cited in several places, the letters a, b, c after ^ link to each citation in turn.</p>
+<p class="note">Click ^ beside each item to return to the passage that cites it. Where a source is cited in several places, the letters a, b, c after ^ link to each citation in turn.</p>
 <ol>
 <li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> <sup><a href="#fnref-1-10">j</a></sup> <sup><a href="#fnref-1-11">k</a></sup> <sup><a href="#fnref-1-12">l</a></sup> CNBC, &quot;Midterm elections 2026 live updates.&quot; House and Senate projections, Election Desk ratings, governors, and CNBC Voter Poll findings. <a href="https://www.cnbc.com/2026/11/03/midterm-elections-2026-live-updates.html" target="_blank" rel="noopener">CNBC</a></li>
 <li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <sup><a href="#fnref-2-6">f</a></sup> <sup><a href="#fnref-2-7">g</a></sup> <sup><a href="#fnref-2-8">h</a></sup> <sup><a href="#fnref-2-9">i</a></sup> <sup><a href="#fnref-2-10">j</a></sup> <sup><a href="#fnref-2-11">k</a></sup> <sup><a href="#fnref-2-12">l</a></sup> NBC News, &quot;U.S. Senate Midterm Election Live Results 2026.&quot; Race-by-race Senate status and partial vote shares. <a href="https://www.nbcnews.com/politics/2026-elections/senate-results" target="_blank" rel="noopener">NBC News</a></li>
@@ -911,6 +939,6 @@ All figures are preliminary until certified. CNN&#39;s own pages could not be re
 </ol>
 </div>
 <p class="meta">Data as of Nov. 23, 2026 (latest totals: Nov. 20 evening; four House races refreshed Nov. 23; this is not a final edition, because House races in Louisiana, Minnesota, and North Carolina remain open and the totals may lag recent concessions). Real-time race calls and vote tabulations are continuously updating; verify final congressional composition and certified winners through official state election authorities and ongoing news coverage.</p>
-</div>
+</main>
 </body>
 </html>
