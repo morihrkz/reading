@@ -19,8 +19,8 @@ HTML 文書の新規作成にも、既存の文書の意匠の修正・検証に
 - `megumino.html` （経路案内）は、意匠スキル（ `readable-html-style` と旧 `contrast-html-style` ）の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。意匠スキルの規約に合わせて直さず、その検査を当てて直さない。
   - 色は意味で使い分ける。白地に黒の文字を基本に、紺 `#00205b` が見出し、黄 `#ffd400` が系統番号と地図の番号、赤 `#b3001b` が降車・目的地、青 `#0022a8` がリンク。文字と地のコントラスト比は 7 以上を保つ。
   - 地図（ `route_1_web.png` 〜 `route_4_web.png` ）は、 OpenStreetMap のデータから描いた横 1080px の PNG である。図の中と説明文の両方に、出典（ © OpenStreetMap contributors ）を入れる。地図の番号は、図の下の `ol.steps` の番号と一致させる。描画スクリプトは残していない。
-- `portal.html` は、 2026-11-25 に contrast の CSS へ切り替えた（ユーザーの指示）。 2026-11-26 に文書の意匠を `readable-html-style` へ切り替えたあとも、 `portal.html` は旧 contrast のままである（変更は、別途相談する）。 `contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、その後ろに portal 固有の部品（カード・検索・新着・「↑ 目次へ」）を足す。
-- スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は一覧ページで、仕様は後述の「 portal.html の構造」にある。 `check_contrast_html.py` を当てると、固有 CSS を足したことによる C02 の WARN が必ず 1 件出る（意図したもの）。ほかの検出は、 NG なら直す。
+- `portal.html` は、旧 contrast の CSS の全文を土台に portal 固有の部品（カード・検索・新着・「↑ 目次へ」）を足し、末尾の上書き用 CSS で、配色と文字サイズだけを `readable-html-style` に合わせている（ 2026-11-26 、ユーザーの指示）。枠は灰で、枠の太さ・角の丸み・余白・行間は旧 contrast のままである。経緯 : 2026-11-25 に contrast の CSS へ切り替えた（ユーザーの指示）。
+- スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は一覧ページで、仕様は後述の「 portal.html の構造」にある。 `check_contrast_html.py` を当てると、 WARN が 2 件出る（固有 CSS を足したことによる C02 と、 `theme-color` の `#3d5a52` が旧配色にないことによる C12 。どちらも意図したもの）。ほかの検出は、 NG なら直す。
 - 文書の冒頭部（ `.kicker` ・ `.subtitle` ・ `.lede` ・ `.meta` ）の有無は、文書ごとに揺れている。揃っていない文書を見つけても、頼まれていないのに揃えない。新しい文書は、スキルの定めに従う。
 
 ## portal.html の掲載対象外（ 3 件）
@@ -83,7 +83,7 @@ HTML 文書の新規作成にも、既存の文書の意匠の修正・検証に
   - 同一タブでの `location.hash` だけの遷移は、スクリプトを再実行しない。ページ内リンクは、新規タブで完全に読み込んでも確かめる。
 - Claude in Chrome が使えない環境(Mac で Safari だけの場合など)では、 WebKit で確かめる。依頼がなくても、完了を報告する前に行う。
   - 実行 : `python $HOME/.claude/scripts/check_layout_webkit.py <ファイル> --shots <スクラッチパッド内のフォルダ>` 。 Mac で `python` がなければ `python3` 、 Windows で `python` がなければ `py` 。 Web サーバーはスクリプトが内側で起動して止めるので、別に起動しない。仕様は `~/.claude/scripts/check_layout_webkit_spec.md` 。
-  - 幅は 390 ・ 480 ・ 700 ・ 1200px が既定である。コントラスト比の基準は、文書は既定の 4.5 でよい。旧 contrast のままの `portal.html` には `--min-contrast 7` を付ける。 NG は直し、 WARN は内容を見て判断し、結果を報告に含める。
+  - 幅は 390 ・ 480 ・ 700 ・ 1200px が既定である。コントラスト比の基準は、文書も `portal.html` も既定の 4.5 でよい（ `portal.html` は、 2026-11-26 に配色を変える前は 7 だった。 `--min-contrast 7` を付けると、補助の文字などに WARN が出る）。 NG は直し、 WARN は内容を見て判断し、結果を報告に含める。
   - 初回は PC ごとに `--setup` が要る(仮想環境と WebKit の導入。外部からのダウンロードを伴うので、実行の前にユーザーの承認を得る)。未導入だと、終了コード 3 で案内が出る。
   - スクリーンショットは、 `Read` で開いて目視する。数値だけで済ませない。
   - Windows 版は未検証である(仕様書の「導入と、 PC ごとの注意」)。 Windows で初めて使うときは、既知の文書で Mac と同じ結果になるかを確かめる。
@@ -205,10 +205,12 @@ grep -c 'class="to-top"' portal.html                                            
 カード数は、文書数から 2 件（ `megumino.html` ・ `color-palette.html` ）を引いた数と一致する。
 
 ### 意匠の要点
-- 意匠は、旧 contrast の意匠（ `~/.claude/skills/contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、後ろに portal 固有の部品を足す）である。白地に黒、紺の h2 帯、本文 20px 、最小の文字も 16px 。色は contrast の変数（ `--ink` `--navy` `--yellow` `--gray` `--rule` `--muted` `--link` ）だけを使う。書体は指定しない。
+- 土台は旧 contrast の意匠（ `~/.claude/skills/contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、後ろに portal 固有の部品を足す）で、末尾の上書き用 CSS で配色と文字サイズを `readable-html-style` にそろえる。地は薄い灰緑、 h2 の帯は緑、本文 1.2rem 、最小の文字は 1rem 。色は contrast の変数名（ `--ink` `--navy` `--yellow` `--gray` `--rule` `--muted` `--link` ）のまま値を上書きし、ホバー用の `--note-bg` を足している。色はこれらの変数だけを使う（カードと入力欄の地、帯と印の文字の白を除く）。書体は指定しない。
+  - 上書きの値 : `--ink:#242522` `--bg:#f7f8f6` `--navy:#3d5a52` `--yellow:#ffe27a` `--red:#c0392b` `--link:#3d5a52` `--gray:#eceee7` `--rule:#868a83` `--muted:#65695f` `--note-bg:#fff6d6`
+  - 理由 : 土台を書き換えずに末尾で上書きすると、上書きの塊と `theme-color` を戻すだけで元に戻せ、土台は検査の控えと逐語で一致したままになる。
   - 例外として、 `portal.html` だけが一覧ページである。固有の部品は、カード・検索窓（灰の箱）・新着（目次と同じ灰の箱）・「↑ 目次へ」・ `[hidden]` である。検索窓の入力欄は `width:min(100%,640px)` とする（ `max-width` は contrast が禁じる）。
   - 理由 : 固有 CSS の追加は、スキルの検査で C02 の WARN になるが、 portal の部品に必要なので残す。
-- カードは 1 列の縦並び（ `ul.cards` はグリッドで `gap:14px` ）で、黒の 3px の枠と、左に紺の 12px の太線を引く。カード全体をクリックできるよう、 `a::after` を `inset:0` に広げている。
+- カードは 1 列の縦並び（ `ul.cards` はグリッドで `gap:14px` ）で、灰の 3px の枠と、左に緑の 12px の太線を引く。カード全体をクリックできるよう、 `a::after` を `inset:0` に広げている。
 ```css
 ul.cards { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: 1fr; gap: 14px; }
 li.card { position: relative; margin: 0; background: #fff; border: 3px solid var(--ink); border-left: 12px solid var(--navy); border-radius: 14px; padding: 12px 18px 10px; }
@@ -217,9 +219,16 @@ li.card:focus-within { background: #fff7c2; outline: 4px solid var(--ink); outli
 .card a { display: inline-block; font-weight: bold; line-height: 1.5; }
 .card a::after { content: ""; position: absolute; inset: 0; }
 .card a:focus-visible { outline: none; }
+/* ここから下は、末尾の上書き用 CSS のうちカードに効くもの（上の指定より優先する） */
+.card a { font-size: 1.3rem; }
+.card p { font-size: 1.2rem; }
+.card p.snippet { font-size: 1rem; }
+.card .tag { font-size: 1rem; background: var(--navy); color: #fff; border-color: var(--navy); }
+li.card:hover, li.card:focus-within { background: var(--note-bg); }
+li.card { border-top-color: var(--rule); border-right-color: var(--rule); border-bottom-color: var(--rule); }
 ```
 - ホバーとキーボード操作の表示は、リンク文字ではなくカード全体に付ける（クリックできるのがカード全体のため）。リンク自身の枠線は、 `:focus-within` の枠線と重なるので消している。
-- 文字サイズは px で書く（旧 contrast の規約）。幅は `main` の `padding` が決め、中央寄せや `max-width` の上限は作らない。
+- 文字サイズは、土台が px で、上書きが rem である。新しい指定は rem で、上書きの塊に書く。幅は `main` の `padding` が決め、中央寄せや `max-width` の上限は作らない。
 - 上記以外の値は、 `portal.html` の `<style>` が正である。この `CLAUDE.md` に全文を写さないのは、写しが古くなって実物と食い違うのを避けるためである。数値を変えたら、上の変数とコード片だけ合わせる。
 
 ### 構成についての相談

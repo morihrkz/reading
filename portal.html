@@ -6,7 +6,7 @@
 <title>作成文書</title>
 <meta name="description" content="作成文書の一覧">
 <meta name="color-scheme" content="only light">
-<meta name="theme-color" content="#00205b">
+<meta name="theme-color" content="#3d5a52">
 <style>
   /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
      紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
@@ -209,6 +209,26 @@
   nav.recent a { color: var(--ink); text-decoration: none; }
   nav.recent a:hover, nav.recent a:focus-visible { color: var(--link); text-decoration: underline; }
   [hidden] { display: none !important; }
+  /* 2026-11-26: 配色と文字サイズだけを readable-html-style に合わせる(この塊を消すと戻る) */
+  :root{--ink:#242522;--bg:#f7f8f6;--navy:#3d5a52;--yellow:#ffe27a;--red:#c0392b;--link:#3d5a52;--gray:#eceee7;--rule:#868a83;--muted:#65695f;--note-bg:#fff6d6}
+  body { font-size: 1.2rem; }
+  .kicker { font-size: 1.05rem; }
+  h1 { font-size: 1.8rem; color: var(--ink); }
+  .subtitle { font-size: 1.2rem; }
+  h2 { font-size: 1.4rem; }
+  .toc-title, .toc li { font-size: 1.05rem; }
+  .toc li span { font-size: 1rem; }
+  .sec-intro { font-size: 1.2rem; }
+  .card a { font-size: 1.3rem; }
+  .card p { font-size: 1.2rem; }
+  .card p.snippet { font-size: 1rem; }
+  .card .tag { font-size: 1rem; background: var(--navy); color: #fff; border-color: var(--navy); }
+  .card .lang, .search-status, nav.recent time { font-size: 1rem; }
+  .search label, nav.recent, .to-top, .endnote { font-size: 1.05rem; }
+  li.card:hover, li.card:focus-within { background: var(--note-bg); }
+  /* 枠の色を灰にする(太さは変えない。左の太線は緑のまま) */
+  .toc, form.search, nav.recent { border-color: var(--rule); }
+  li.card { border-top-color: var(--rule); border-right-color: var(--rule); border-bottom-color: var(--rule); }
 </style>
 </head>
 <body>
