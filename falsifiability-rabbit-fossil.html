@@ -5,179 +5,179 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>反証可能性と「ウサギの化石」――古い地層からの発見は何を意味するか</title>
 <meta name="color-scheme" content="only light">
-<meta name="theme-color" content="#00205b">
+<meta name="theme-color" content="#3d5a52">
 <style>
-  /* 配色(白地に黒を基本に、色は意味を決めて使う)。色はここだけで決め、以降は var() で参照する
-     紺 : 見出し・表の見出し　黄 : 印と強調　赤 : 必須・重要　青 : リンク　灰 : 表の見出し列・目次・コード */
-  :root{color-scheme:only light;--ink:#000;--bg:#fff;--navy:#00205b;--yellow:#ffd400;--red:#b3001b;--link:#0022a8;--gray:#e9edf2;--rule:#6b7480;--muted:#3b4350}
+  /* 配色(薄い緑の基調。落ち着いた見た目のまま、読みやすくする)。色はここだけで決め、以降は var() で参照する
+     緑 : 見出し・構造　黄 : マーカーと注意　赤 : 必須・重要 */
+  :root{color-scheme:only light;--bg:#f7f8f6;--text:#242522;--muted:#65695f;--accent:#3d5a52;--line:#868a83;--box:#eceee7;--mark:#ffe27a;--note-bg:#fff6d6;--note:#d9a400;--must-bg:#fde8e6;--must:#c0392b}
+  /* 旧 contrast の色の名前の別名。変換した文書の追加 CSS を、書き換えずに使うためのもの。新しい指定には使わない */
+  :root{--ink:var(--text);--navy:var(--accent);--yellow:var(--mark);--red:var(--must);--link:var(--accent);--gray:var(--box);--rule:var(--line)}
   *,*::before,*::after{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body { font-size: 20px; line-height: 1.6; color: var(--ink); background: var(--bg); margin: 0; }
+  body { font-size: 1.2rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
   main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
-  a { color: var(--link); font-weight: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .2em; }
-  a:focus-visible { outline: 4px solid var(--ink); outline-offset: 3px; }
+  a { color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
   /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
-  .kicker { font-size: 18px; letter-spacing: .1em; color: var(--navy); font-weight: 700; margin: 0 0 .4rem; }
-  h1 { font-size: 32px; line-height: 1.3; color: var(--navy); }
-  .subtitle { font-size: 18px; color: var(--muted); margin: 0 0 1rem; }
-  .lede { border-left: 8px solid var(--navy); padding-left: 1rem; margin: 1rem 0; }
-  .meta { border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); padding: 1rem 0; margin: 0 0 2.5rem; font-size: 18px; line-height: 1.7; }
+  .kicker { font-size: 1.05rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 1.8rem; line-height: 1.5; color: var(--text); }
+  .subtitle { color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: 1.05rem; line-height: 1.9; }
   /* 見出し */
-  h1, h2, h3 { word-break: keep-all; overflow-wrap: anywhere; }
-  h2 { font-size: 26px; line-height: 1.3; color: #fff; background: var(--navy); padding: 10px 14px; margin: 44px 0 18px; border-radius: 6px; }
-  h3 { font-size: 23px; line-height: 1.4; color: var(--navy); margin: 1.8rem 0 .8rem; padding-bottom: 4px; border-bottom: 3px solid var(--navy); }
+  h1, h2, h3 { overflow-wrap: anywhere; }
+  h2 { font-size: 1.4rem; line-height: 1.6; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.3rem; line-height: 1.6; margin-top: 1.8rem; }
   /* 段落・箇条書き(font-size は書かず、body から継承) */
   ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
   li { margin-bottom: .4em; }
-  /* 表 : 見出しは紺の地に白、見出し列は灰の地。値は標準の太さ */
-  table { border-collapse: collapse; width: 100%; margin: 1rem 0; border: 3px solid var(--ink); }
-  caption { font-size: 18px; font-weight: bold; text-align: left; padding: 8px 0; }
-  th, td { border: 2px solid var(--rule); padding: 10px 12px; text-align: left; vertical-align: top; }
-  th { background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.6; }
-  td { font-size: 20px; line-height: 1.5; }
-  thead th, table.cards th, table.cardspan th { background: var(--navy); color: #fff; font-size: 18px; }
-  code { background: var(--gray); color: var(--ink); padding: .1rem .35rem; border-radius: 6px; font-size: 18px; overflow-wrap: anywhere; }
-  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray); padding: 12px 16px; border: 2px solid var(--rule); border-radius: 8px; margin: 0 0 20px; }
+  mark { background: var(--mark); color: var(--text); padding: 0 .15em; }
+  /* 表。横スクロールを作らないため、見出しも折り返す */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 1.2rem; }
+  caption { font-weight: bold; text-align: left; padding: .5rem 0; }
+  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+  th { background: var(--box); }
+  /* コード。長い行は折り返す */
+  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: max(.92em, 1rem); overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--box); padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
   pre code { background: none; padding: 0; }
-  /* ターミナルに打つ文字列は黒地に白文字(SKILL.md の「ターミナル入力」) */
+  /* ターミナルに打つ文字列は黒地に白文字 */
   pre.term { background: #000; color: #fff; }
   pre.term code { color: #fff; }
   code.term { background: #000; color: #fff; }
   /* 情報ボックス・注記・印 */
-  .box { background: #fff; border: 4px solid var(--navy); border-radius: 14px; padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
-  .box strong { color: var(--navy); }
-  .note { background: #fff7c2; border: 3px solid var(--ink); border-left: 12px solid var(--yellow); padding: 12px 16px; margin: 1rem 0; }
-  .tag { display: inline-block; font-size: 16px; font-weight: bold; line-height: 1.5; background: var(--yellow); color: var(--ink); border: 2px solid var(--ink); border-radius: 8px; padding: 0 .5rem; margin-right: .3rem; }
-  /* 囲み : 見出し帯つきのカード。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、帯の記号と枠の形でも区別する
-     要点 = 紺の帯　留意事項 = 黄の帯　必須 = 赤の帯と淡い赤の地　演習 = 黒の帯と破線の枠 */
-  .point, .caution, .must, .try { border: 4px solid var(--ink); border-radius: 14px; margin: 1.2rem 0; padding: 0 16px 4px; background: #fff; overflow: hidden; }
-  .point::before, .caution::before, .must::before, .try::before { display: block; margin: 0 -16px 10px; padding: 6px 16px; font-size: 18px; font-weight: bold; line-height: 1.5; letter-spacing: .08em; }
-  .point > p, .caution > p, .must > p, .try > p { margin: 10px 0; }
-  .point { border-color: var(--navy); }
-  .point::before { content: "要点"; background: var(--navy); color: #fff; }
-  .caution::before { content: "▲ 留意事項"; background: var(--yellow); color: var(--ink); border-bottom: 3px solid var(--ink); }
-  .must { border-color: var(--red); background: #fff0f1; }
-  .must::before { content: "★ 必須"; background: var(--red); color: #fff; }
-  .try { border-style: dashed; }
-  .try::before { content: "▶ 演習"; background: var(--ink); color: #fff; }
-  mark { background: var(--yellow); color: var(--ink); padding: 0 .15em; }
-  /* 手順(ol.steps) : 番号は黄の丸に黒の縁。最後の項目に li.goal を付けると、赤の ★ になる。図・コード・段落を中に置いてよい */
-  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 3px solid var(--ink); }
-  ol.steps > li { counter-increment: n; position: relative; min-height: 60px; margin: 0; padding: 12px 0 12px 62px; border-bottom: 3px solid var(--ink); }
-  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: 10px; width: 44px; height: 44px; border-radius: 50%; background: var(--yellow); border: 4px solid var(--ink); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; line-height: 1; }
-  ol.steps > li > strong:first-child { display: block; font-size: 22px; line-height: 1.4; margin-bottom: 2px; }
-  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: 6px 0; }
-  ol.steps > li.goal { color: var(--red); }
-  ol.steps > li.goal::before { content: "★"; background: var(--red); color: #fff; border-color: var(--red); font-size: 22px; }
+  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--accent); }
+  .note { background: var(--note-bg); border-left: 5px solid var(--note); padding: .7rem 1rem; margin: 1rem 0; }
+  .tag, .yr { display: inline-block; font-size: 1rem; line-height: 1.6; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 囲み。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、記号と枠の形でも区別する
+     要点 = 緑の左線と枠　留意事項 = 黄の地　必須 = 赤の地　演習 = 緑の破線 */
+  .point, .caution, .must, .try { margin: 1.2rem 0; padding: .7rem 1rem; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; font-weight: bold; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: .3rem 0 0; }
+  .point { background: var(--box); border: 1px solid var(--line); border-left: 5px solid var(--accent); }
+  .point::before { content: "要点"; color: var(--accent); }
+  .caution { background: var(--note-bg); border-left: 5px solid var(--note); }
+  .caution::before { content: "▲ 留意事項"; }
+  .must { background: var(--must-bg); border-left: 5px solid var(--must); }
+  .must::before { content: "★ 必須"; color: var(--must); }
+  .try { border: 2px dashed var(--accent); }
+  .try::before { content: "▶ 演習"; color: var(--accent); }
+  /* 手順(ol.steps)。番号は緑の縁の丸。最後の項目に li.goal を付けると、緑で塗った ★ になる */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 1px solid var(--line); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 3.8rem; margin: 0; padding: .8rem 0 .8rem 3rem; border-bottom: 1px solid var(--line); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: .9rem; width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--bg); color: var(--accent); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: .5rem 0; }
+  ol.steps > li.goal::before { content: "★"; background: var(--accent); color: #fff; }
   /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
-  dl.spec { margin: 1.2rem 0; border: 4px solid var(--navy); border-radius: 14px; overflow: hidden; }
-  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 2px solid var(--rule); }
+  dl.spec { margin: 1.2rem 0; border: 1px solid var(--line); font-size: 1.1rem; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 1px solid var(--line); }
   dl.spec > div:last-child { border-bottom: 0; }
-  dl.spec dt { padding: 10px 8px 10px 14px; background: var(--gray); font-size: 17px; font-weight: bold; line-height: 1.9; }
-  dl.spec dd { margin: 0; padding: 10px 14px; }
-  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--red); color: #fff; }
-  dl.spec > div.hot a { color: #fff; }
-  @media (max-width: 640px) { dl.spec > div { grid-template-columns: 5.2em 1fr; } }
-  /* ことば集(dl.words)・年表(ul.tl)・クイズ(div.quiz) */
+  dl.spec dt { padding: .5rem .7rem; background: var(--box); font-weight: bold; }
+  dl.spec dd { margin: 0; padding: .5rem .7rem; overflow-wrap: anywhere; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--must-bg); }
+  dl.spec > div.hot dt { border-left: 5px solid var(--must); color: var(--must); }
+  /* ことば集(dl.words) */
   dl.words { margin: 1rem 0; }
-  dl.words dt { font-weight: bold; color: var(--navy); margin-top: 14px; }
-  dl.words dd { margin: 2px 0 0; padding-left: 14px; border-left: 6px solid var(--gray); }
-  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--navy); }
+  dl.words dt { font-weight: bold; color: var(--accent); margin-top: 1rem; }
+  dl.words dd { margin: .2rem 0 0; padding-left: .8rem; border-left: 3px solid var(--line); }
+  /* 年表(ul.tl)。緑の縦の線と丸印。年は .yr か .tag */
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--accent); }
   ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
-  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .4em; width: 18px; height: 18px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); }
-  .yr { display: inline-block; background: var(--navy); color: #fff; font-size: 17px; font-weight: bold; line-height: 1.5; padding: 0 10px; border-radius: 8px; margin-right: .4rem; }
-  .quiz details { border: 3px solid var(--ink); border-radius: 14px; margin: 12px 0; background: #fff; overflow: hidden; }
-  .quiz summary { cursor: pointer; padding: 10px 14px; font-weight: bold; background: var(--gray); }
-  .quiz summary:focus-visible { outline: 4px solid var(--ink); outline-offset: -4px; }
-  .quiz details[open] summary { background: var(--yellow); border-bottom: 3px solid var(--ink); }
-  .quiz details p { margin: 0; padding: 10px 14px; }
-  .quiz .ans { font-weight: bold; color: var(--red); }
-  /* 図(figure + インライン SVG)。幅は 560px まで。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない) */
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .45em; width: 18px; height: 18px; border-radius: 50%; background: var(--bg); border: 3px solid var(--accent); }
+  /* クイズ(div.quiz)。開くと答えが出る */
+  .quiz details { border: 1px solid var(--line); border-radius: 3px; margin: .8rem 0; }
+  .quiz summary { cursor: pointer; padding: .6rem 1rem; font-weight: bold; background: var(--box); }
+  .quiz summary:focus-visible { outline: 3px solid var(--text); outline-offset: -3px; }
+  .quiz details[open] summary { border-bottom: 1px solid var(--line); }
+  .quiz details p { margin: 0; padding: .6rem 1rem; }
+  .quiz .ans { font-weight: bold; color: var(--accent); }
+  /* 図(figure + インライン SVG)。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない)
+     f-navy ・ s-navy は、旧 contrast の書き方をそのまま使うための別名 */
   figure { margin: 1.2rem 0; }
-  figure svg { display: block; width: min(100%, 560px); height: auto; background: #fff; border: 3px solid var(--ink); border-radius: 14px; }
-  figcaption { padding: 8px 0 0; font-size: 18px; line-height: 1.5; }
-  figcaption .cap { display: block; font-size: 20px; font-weight: bold; }
-  svg .t { fill: var(--ink); font-size: 24px; font-weight: bold; }
-  svg .t.lg { font-size: 28px; }
+  /* 幅の制限は、下のクラスで描いた図だけにかける。クラスを使わない図(横長の大きな図など)の大きさは変えない */
+  figure svg:has(.t, .nf, [class^="f-"], [class^="s-"]) { display: block; width: min(100%, 480px); height: auto; }
+  figcaption { padding: .5rem 0 0; font-size: 1.05rem; }
+  figcaption .cap { display: block; font-weight: bold; }
+  svg .t { fill: var(--text); font-size: 1.5rem; }
+  svg .t.lg { font-size: 1.75rem; }
   svg .t.white { fill: #fff; }
   svg .nf { fill: none; }
-  svg .f-ink { fill: var(--ink); }
-  svg .f-navy { fill: var(--navy); }
-  svg .f-yellow { fill: var(--yellow); }
-  svg .f-red { fill: var(--red); }
-  svg .f-gray { fill: var(--gray); }
+  svg .f-ink { fill: var(--text); }
+  svg .f-accent, svg .f-navy { fill: var(--accent); }
+  svg .f-yellow { fill: var(--mark); }
+  svg .f-red { fill: var(--must); }
+  svg .f-gray { fill: var(--box); }
+  svg .f-bg { fill: var(--bg); }
   svg .f-white { fill: #fff; }
-  svg .s-ink { stroke: var(--ink); stroke-width: 3; }
-  svg .s-navy { stroke: var(--navy); stroke-width: 3; }
-  svg .s-red { stroke: var(--red); stroke-width: 3; }
-  svg .s-rule { stroke: var(--rule); stroke-width: 3; }
-  svg .s-thick { stroke-width: 6; }
-  /* チェックリスト(div.checklist。マークアップは SKILL.md の「チェックリスト」) */
-  .checklist { background: var(--gray); border: 3px solid var(--ink); border-radius: 14px; padding: 1rem 1.25rem; margin: 1.2rem 0; }
-  .checklist .cl-title { display: block; font-weight: bold; color: var(--navy); margin-bottom: .6rem; }
-  .checklist .cl-title::before { content: "✅ "; }
+  svg .s-ink { stroke: var(--text); stroke-width: 2; }
+  svg .s-accent, svg .s-navy { stroke: var(--accent); stroke-width: 2; }
+  svg .s-red { stroke: var(--must); stroke-width: 2; }
+  svg .s-rule { stroke: var(--line); stroke-width: 2; }
+  svg .s-thick { stroke-width: 3; }
+  /* チェックリスト(div.checklist)。題名(.cl-title)は、内容を区別する必要があるときだけ置く。定型の注意書きは置かない */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: .6rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin: .4rem 0 .2rem; }
   .checklist ul { list-style: none; padding: 0; margin: 0; }
-  .checklist li { margin-bottom: 0; padding: .5rem 0 .5rem 2.6rem; position: relative; border-bottom: 2px dashed var(--rule); }
+  .checklist li { margin: 0; padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
   .checklist li:last-child { border-bottom: none; }
-  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .6rem; width: 28px; height: 28px; accent-color: var(--navy); cursor: pointer; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .85rem; width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--accent); cursor: pointer; }
   .checklist label { cursor: pointer; }
-  .save-note { font-size: 16px; color: var(--muted); text-align: center; margin: .5rem 0 0; }
-  /* 目次(nav.toc。マークアップは SKILL.md の「見出し番号と目次」) */
-  .toc{background:var(--gray);border:3px solid var(--ink);border-radius:14px;padding:1rem 1.4rem;margin:1.5rem 0}
+  /* 目次(nav.toc) */
+  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
   .toc>ol{columns:2;column-gap:2rem;margin:0}
-  .toc-title{font-size:18px;letter-spacing:.1em;color:var(--navy);font-weight:700;margin:0 0 .6rem}
-  .toc li{font-size:18px;margin-bottom:.3rem;break-inside:avoid}
+  .toc-title{font-size:1.05rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:1.05rem;margin-bottom:.3rem;break-inside:avoid}
   .toc li li{color:var(--muted)}
-  .toc a{color:var(--ink);text-decoration:none;font-weight:normal}
-  .toc a:hover{color:var(--link);text-decoration:underline}
+  .toc a{color:var(--text);text-decoration:none}
+  .toc a:hover{color:var(--accent);text-decoration:underline}
   @media (max-width:640px){
     .toc>ol{columns:1}
+    dl.spec > div { grid-template-columns: 5.2em 1fr; }
   }
-  /* 脚注の参照番号(マークアップは SKILL.md の「脚注と参考文献」) */
-  sup{font-size:16px;line-height:0}
+  /* 脚注の参照番号 */
+  sup{font-size:.72em;line-height:0}
   sup a{text-decoration:none}
   sup a:hover{text-decoration:underline}
   /* 参考文献欄(div.refs) */
-  .refs{border-top:4px solid var(--ink);margin-top:3rem;padding-top:1rem}
+  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
   .refs h2{margin-top:0}
-  .refs p{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
-  .refs li{font-size:18px;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs p{font-size:1.05rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:1.05rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
   .refs em{font-style:italic}
-  .refs li>a:first-child{text-decoration:none}
-  .refs sup a{font-style:italic}
-  .refs li:target,sup:target{background:var(--yellow)}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:var(--mark)}
   /* 末尾の注記 */
-  .endnote { font-size: 18px; color: var(--muted); }
-  /* 表のカード化(幅 640px 以下)。table に cards / cardspan / cardrow のいずれかを付けた表だけが対象。
-     1 行が 1 枚のカードになり、題名は紺の帯、各値の上に灰の帯で見出し語を出す */
+  .endnote { font-size: 1.05rem; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。 table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
   @media (max-width: 640px) {
-    table.cards, table.cardspan, table.cardrow { border: 0; }
     table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
     table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
     table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cards tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
-    table.cards td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
     table.cards td:last-child { border-bottom: 0; }
-    table.cards td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
-    table.cards td:first-child { background: var(--navy); color: #fff; font-size: 23px; font-weight: bold; line-height: 1.4; }
-    table.cards td:first-child a { color: #fff; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1.3rem; }
     table.cards td:first-child::before { display: none; }
     table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
     table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardspan tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
-    table.cardspan td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
     table.cardspan td:last-child { border-bottom: 0; }
-    table.cardspan td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
-    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--navy); color: #fff; font-weight: bold; font-size: 23px; line-height: 1.4; padding: 10px 12px; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1.3rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
     table.cardspan td[rowspan] { display: none; }
     table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
     table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
-    table.cardrow tr { border: 4px solid var(--navy); margin: 14px 0 20px; background: #fff; border-radius: 14px; overflow: hidden; }
-    table.cardrow td { border: 0; border-bottom: 2px solid var(--rule); padding: 10px 12px; font-size: 20px; }
+    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
     table.cardrow td:last-child { border-bottom: 0; }
-    table.cardrow td::before { content: attr(data-label); display: block; margin: -10px -12px 8px; padding: 4px 12px; background: var(--gray); font-size: 17px; line-height: 1.9; font-weight: bold; }
-    table.cardrow th { background: var(--navy); color: #fff; font-size: 23px; line-height: 1.4; border: 0; padding: 10px 12px; white-space: normal; text-align: left; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cardrow th { background: var(--box); font-size: 1.3rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; text-align: left; }
   }
   /* この文書に固有の部品(contrast の色に置き換えたもの) */
   svg .t.sm { font-size: 20px; }

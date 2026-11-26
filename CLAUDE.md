@@ -12,8 +12,7 @@ HTML 文書の新規作成にも、既存の文書の意匠の修正・検証に
 - 文書ごとの固有の部品（ `dl.summary` ・ `.company` ・ `.compare` ・アニメーションなど）は、その文書の `<style>` に、意匠の CSS の後ろへ足してある。新しく書く指定の色は、 `readable-html-style` の変数を使う。旧 contrast の色の名前（ `--navy` など）は、変換した文書の追加 CSS のための別名で、新しい指定には使わない。 C02 の WARN が出るのは、意図したものである。
   - 例外の色が 1 か所ある。 `electric-motor-guide.html` の整流子の図は、図内の文字が「オレンジ」「緑」と色名を言うので、橙（ `#f26b00` ）と緑（ `#1f8a3b` ）を固有 CSS に足した（ユーザーの決定。 2026-11-25 ）。ほかの図には足さない。
   - `electric-motor-guide.html` は、 CSS だけで動くアニメーション（停止ボタンつき）を持つ。スキルの `assets/readable-anim.css` と同じ方式（停止ボタン）の固有 CSS で、この文書独自の動きも足してある。
-- `electric-motor-guide.html` と `election-schedule-japan.html` は、本文が図の色を「青」「紺」と呼ぶので、図の中だけ紺を保つ（変換スクリプトの `--keep-navy` ）。
-- 一括変換が終わるまで、旧 contrast の CSS を持つ文書が残る。その修正では、旧意匠のまま直すか、先に変換するかを、ユーザーに確認する。
+- `electric-motor-guide.html` ・ `election-schedule-japan.html` ・ `us-midterm-2026.html` は、本文が図の色を「青」「紺」「 blue 」と呼ぶので、図の中は紺を保つ（変換スクリプトの `--keep-navy` ）。図の外で紺を使う箇所（ `electric-motor-guide.html` の「青＝ S 極」の文字と、 `us-midterm-2026.html` の凡例）は、固有 CSS で紺にしている。
 - 他の意匠スキル( `doc-html-style` ・ `contrast-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない（ `portal.html` の保守を除く）。意匠は排他的で、同じ文書に重ねて適用しない。
 - `color-palette.html` には、 contrast も `readable-html-style` も適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
 - `megumino.html` （経路案内）は、意匠スキル（ `readable-html-style` と旧 `contrast-html-style` ）の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。意匠スキルの規約に合わせて直さず、その検査を当てて直さない。
