@@ -13,7 +13,7 @@ HTML 文書の新規作成にも、既存の文書の意匠の修正・検証に
   - 例外の色が 1 か所ある。 `electric-motor-guide.html` の整流子の図は、図内の文字が「オレンジ」「緑」と色名を言うので、橙（ `#f26b00` ）と緑（ `#1f8a3b` ）を固有 CSS に足した（ユーザーの決定。 2026-11-25 ）。ほかの図には足さない。
   - `electric-motor-guide.html` は、 CSS だけで動くアニメーション（停止ボタンつき）を持つ。スキルの `assets/readable-anim.css` と同じ方式（停止ボタン）の固有 CSS で、この文書独自の動きも足してある。
 - `electric-motor-guide.html` ・ `election-schedule-japan.html` ・ `us-midterm-2026.html` は、本文が図の色を「青」「紺」「 blue 」と呼ぶので、図の中は紺を保つ（変換スクリプトの `--keep-navy` ）。図の外で紺を使う箇所（ `electric-motor-guide.html` の「青＝ S 極」の文字と、 `us-midterm-2026.html` の凡例）は、固有 CSS で紺にしている。
-- 他の意匠スキル( `doc-html-style` ・ `contrast-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない（ `portal.html` の保守を除く）。意匠は排他的で、同じ文書に重ねて適用しない。
+- 他の意匠スキル( `doc-html-style` ・ `contrast-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない（ `portal.html` の保守を除く）。意匠は排他的で、同じ文書に重ねて適用しない。
 - `color-palette.html` には、 contrast も `readable-html-style` も適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
 - `megumino.html` （経路案内）は、意匠スキル（ `readable-html-style` と旧 `contrast-html-style` ）の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。意匠スキルの規約に合わせて直さず、その検査を当てて直さない。
   - 色は意味で使い分ける。白地に黒の文字を基本に、紺 `#00205b` が見出し、黄 `#ffd400` が系統番号と地図の番号、赤 `#b3001b` が降車・目的地、青 `#0022a8` がリンク。文字と地のコントラスト比は 7 以上を保つ。
