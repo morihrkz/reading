@@ -3,19 +3,23 @@
 「作成文書」（ GitHub Pages で公開する静的サイト。副題 A Reading Room ）のリポジトリである。調査・手順書・資料など、 Claude と作った HTML 文書を保管する。構成は、一覧の `portal.html` 1 枚、文書の `*.html` （ 73 本。うち 71 本を一覧に載せる）、公開サイトのトップに置く装飾ページ `index.html` （後述。触れない）、 `README.md` 、 `future-article-themes.md` （次に書く文書の計画）。ビルド工程と外部ライブラリは使わない。 JavaScript は、 `portal.html` の本文検索（後述）のほかには、 `ahamo-migration-guide.html` （チェック状態を保存）と `plateau-ai-workflow-guide.html` （コード欄のコピーボタン）の 2 本だけが使う。ほかの文書には使わない。
 
 ## HTML 文書の意匠
-HTML 文書の新規作成にも、既存の文書の意匠の修正・検証にも、ローカルスキル `contrast-html-style`(`~/.claude/skills/contrast-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-25 ）。同日、除外した文書（ `megumino.html` ・ `color-palette.html` ・ `autumn-colors.html` と、すでに contrast だった `elder-housing.html` ・ `us-parties-china-russia-trilateral-summit.html` ）を除く、すべての文書を、 wafu から contrast へ変換した（ユーザーの指示）。 wafu 意匠の文書は、もう無い。そこで、スキル `wafu-html-style` を廃止し（役割は `contrast-html-style` が引き継いだ）、 wafu の元になった `autumn-colors.html` も削除した（いずれも、ユーザーの指示。 2026-11-25 ）。例外は、下の `megumino.html` と `color-palette.html` である。
+HTML 文書の新規作成にも、既存の文書の意匠の修正・検証にも、ローカルスキル `readable-html-style`(`~/.claude/skills/readable-html-style/SKILL.md`)を使う（ユーザーの決定。 2026-11-26 。 `contrast-html-style` と `library-html-style` を統合した後継）。
 
-- 文書の意匠の正は、スキル（ `contrast-html-style` ）である。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
-- 2026-11-25 の一括変換は、意匠だけを変え、文字列を変えていない。そのため、 `check_contrast_html.py` に、本文の書き方に由来する NG が残る文書がある（キッカー・副題・リードの欠如 C03 、番号のない見出し C04 ・ C05 、ラベル後のコロン C11 、裸の URL C10 、脚注の番号の飛び C06 ）。頼まれていないのに直さない。直すときは、本文を直す作業として、ユーザーに相談する。
-- 文書ごとの固有の部品（ `dl.summary` ・ `.company` ・ `.compare` ・アニメーションなど）は、その文書の `<style>` に、 contrast の CSS の後ろへ足してある。色は contrast の変数だけを使う。 C02 の WARN が出るのは、意図したものである。
+以前の経緯 : 2026-11-25 に、 `contrast-html-style` を使うと決めた（ユーザーの決定）。同日、除外した文書（ `megumino.html` ・ `color-palette.html` ・ `autumn-colors.html` と、すでに contrast だった `elder-housing.html` ・ `us-parties-china-russia-trilateral-summit.html` ）を除く、すべての文書を、 wafu から contrast へ変換した（ユーザーの指示）。 wafu 意匠の文書は、もう無い。そこで、スキル `wafu-html-style` を廃止し（役割は `contrast-html-style` が引き継いだ）、 wafu の元になった `autumn-colors.html` も削除した（いずれも、ユーザーの指示。 2026-11-25 ）。例外は、下の `megumino.html` と `color-palette.html` である。
+
+- 文書の意匠の正は、スキル（ `readable-html-style` ）である。配色・寸法・マークアップ・出力前チェックは、すべてスキル側に書かれている。この `CLAUDE.md` にコピーしない。
+- 2026-11-25 の一括変換は、意匠だけを変え、文字列を変えていない。そのため、 `check_readable_html.py` に、本文の書き方に由来する NG が残る文書がある（キッカー・副題・リードの欠如 C03 、番号のない見出し C04 ・ C05 、ラベル後のコロン C11 、裸の URL C10 、脚注の番号の飛び C06 ）。頼まれていないのに直さない。直すときは、本文を直す作業として、ユーザーに相談する。
+- 文書ごとの固有の部品（ `dl.summary` ・ `.company` ・ `.compare` ・アニメーションなど）は、その文書の `<style>` に、意匠の CSS の後ろへ足してある。新しく書く指定の色は、 `readable-html-style` の変数を使う。旧 contrast の色の名前（ `--navy` など）は、変換した文書の追加 CSS のための別名で、新しい指定には使わない。 C02 の WARN が出るのは、意図したものである。
   - 例外の色が 1 か所ある。 `electric-motor-guide.html` の整流子の図は、図内の文字が「オレンジ」「緑」と色名を言うので、橙（ `#f26b00` ）と緑（ `#1f8a3b` ）を固有 CSS に足した（ユーザーの決定。 2026-11-25 ）。ほかの図には足さない。
-  - `electric-motor-guide.html` は、 CSS だけで動くアニメーション（停止ボタンつき）を持つ。スキルの `assets/contrast-anim.css` の方式（停止ボタン）に沿った固有 CSS で、この文書独自の動きも足してある。
-- 他の意匠スキル( `doc-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない。意匠は排他的で、同じ文書に重ねて適用しない。
-- `color-palette.html` には、 contrast を適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
-- `megumino.html` （経路案内）は、 contrast 意匠のスキルの対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。 contrast のスキルの規約に合わせて直さず、その検査を当てて直さない。
+  - `electric-motor-guide.html` は、 CSS だけで動くアニメーション（停止ボタンつき）を持つ。スキルの `assets/readable-anim.css` と同じ方式（停止ボタン）の固有 CSS で、この文書独自の動きも足してある。
+- `electric-motor-guide.html` と `election-schedule-japan.html` は、本文が図の色を「青」「紺」と呼ぶので、図の中だけ紺を保つ（変換スクリプトの `--keep-navy` ）。
+- 一括変換が終わるまで、旧 contrast の CSS を持つ文書が残る。その修正では、旧意匠のまま直すか、先に変換するかを、ユーザーに確認する。
+- 他の意匠スキル( `doc-html-style` ・ `contrast-html-style` ・ `library-html-style` ・ `kids-html-style` )は、このリポジトリでは使わない（ `portal.html` の保守を除く）。意匠は排他的で、同じ文書に重ねて適用しない。
+- `color-palette.html` には、 contrast も `readable-html-style` も適用していない(適用作業の対象から除いた)。この文書の意匠を直すときは、先にユーザーへ方針を確認する。
+- `megumino.html` （経路案内）は、意匠スキル（ `readable-html-style` と旧 `contrast-html-style` ）の対象外である（ユーザーの決定。 2026-11-25 ）。屋外の小さいスマホで読むための独自の意匠で、この文書の `<style>` が正である。意匠スキルの規約に合わせて直さず、その検査を当てて直さない。
   - 色は意味で使い分ける。白地に黒の文字を基本に、紺 `#00205b` が見出し、黄 `#ffd400` が系統番号と地図の番号、赤 `#b3001b` が降車・目的地、青 `#0022a8` がリンク。文字と地のコントラスト比は 7 以上を保つ。
   - 地図（ `route_1_web.png` 〜 `route_4_web.png` ）は、 OpenStreetMap のデータから描いた横 1080px の PNG である。図の中と説明文の両方に、出典（ © OpenStreetMap contributors ）を入れる。地図の番号は、図の下の `ol.steps` の番号と一致させる。描画スクリプトは残していない。
-- `portal.html` は、 2026-11-25 に contrast の CSS へ切り替えた（ユーザーの指示）。 `contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、その後ろに portal 固有の部品（カード・検索・新着・「↑ 目次へ」）を足す。
+- `portal.html` は、 2026-11-25 に contrast の CSS へ切り替えた（ユーザーの指示）。 2026-11-26 に文書の意匠を `readable-html-style` へ切り替えたあとも、 `portal.html` は旧 contrast のままである（変更は、別途相談する）。 `contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、その後ろに portal 固有の部品（カード・検索・新着・「↑ 目次へ」）を足す。
 - スキルの対象は文書だけで、 `portal.html` は含まない。 `portal.html` は一覧ページで、仕様は後述の「 portal.html の構造」にある。 `check_contrast_html.py` を当てると、固有 CSS を足したことによる C02 の WARN が必ず 1 件出る（意図したもの）。ほかの検出は、 NG なら直す。
 - 文書の冒頭部（ `.kicker` ・ `.subtitle` ・ `.lede` ・ `.meta` ）の有無は、文書ごとに揺れている。揃っていない文書を見つけても、頼まれていないのに揃えない。新しい文書は、スキルの定めに従う。
 
@@ -75,11 +79,11 @@ HTML 文書の新規作成にも、既存の文書の意匠の修正・検証に
   - 一括作業（意匠の適用、表記の一括変換など）の後も、全文書に対して実行する。
 - 見た目や挙動に関わる変更（レイアウト、レスポンシブ、目次のリンクなど）は、 Claude in Chrome で実際に開いて確かめてから、完了を報告する。
   - `navigate` は `file://` を拒否する。作業ディレクトリで `python -m http.server` を一時起動し、 `http://127.0.0.1:PORT/...` 経由で開く。確認後は、サーバーを必ず停止する。
-  - レスポンシブの確認幅は、文書も `portal.html` も 480px の前後である（ `portal.html` には `@media` が無く、幅に応じた切り替えはない。はみ出しが無いかを見る）。
+  - レスポンシブの確認幅は、文書は 640px の前後、 `portal.html` は 480px の前後である（ `portal.html` には `@media` が無く、幅に応じた切り替えはない。はみ出しが無いかを見る）。
   - 同一タブでの `location.hash` だけの遷移は、スクリプトを再実行しない。ページ内リンクは、新規タブで完全に読み込んでも確かめる。
 - Claude in Chrome が使えない環境(Mac で Safari だけの場合など)では、 WebKit で確かめる。依頼がなくても、完了を報告する前に行う。
   - 実行 : `python $HOME/.claude/scripts/check_layout_webkit.py <ファイル> --shots <スクラッチパッド内のフォルダ>` 。 Mac で `python` がなければ `python3` 、 Windows で `python` がなければ `py` 。 Web サーバーはスクリプトが内側で起動して止めるので、別に起動しない。仕様は `~/.claude/scripts/check_layout_webkit_spec.md` 。
-  - 幅は 390 ・ 480 ・ 700 ・ 1200px が既定である。 `contrast-html-style` の文書には `--min-contrast 7` を付ける。 NG は直し、 WARN は内容を見て判断し、結果を報告に含める。
+  - 幅は 390 ・ 480 ・ 700 ・ 1200px が既定である。コントラスト比の基準は、文書は既定の 4.5 でよい。旧 contrast のままの `portal.html` には `--min-contrast 7` を付ける。 NG は直し、 WARN は内容を見て判断し、結果を報告に含める。
   - 初回は PC ごとに `--setup` が要る(仮想環境と WebKit の導入。外部からのダウンロードを伴うので、実行の前にユーザーの承認を得る)。未導入だと、終了コード 3 で案内が出る。
   - スクリーンショットは、 `Read` で開いて目視する。数値だけで済ませない。
   - Windows 版は未検証である(仕様書の「導入と、 PC ごとの注意」)。 Windows で初めて使うときは、既知の文書で Mac と同じ結果になるかを確かめる。
@@ -201,7 +205,7 @@ grep -c 'class="to-top"' portal.html                                            
 カード数は、文書数から 2 件（ `megumino.html` ・ `color-palette.html` ）を引いた数と一致する。
 
 ### 意匠の要点
-- 意匠は、文書と同じ contrast の意匠（ `~/.claude/skills/contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、後ろに portal 固有の部品を足す）である。白地に黒、紺の h2 帯、本文 20px 、最小の文字も 16px 。色は contrast の変数（ `--ink` `--navy` `--yellow` `--gray` `--rule` `--muted` `--link` ）だけを使う。書体は指定しない。
+- 意匠は、旧 contrast の意匠（ `~/.claude/skills/contrast-html-style/assets/contrast-style.css` の全文を `<style>` に内包し、後ろに portal 固有の部品を足す）である。白地に黒、紺の h2 帯、本文 20px 、最小の文字も 16px 。色は contrast の変数（ `--ink` `--navy` `--yellow` `--gray` `--rule` `--muted` `--link` ）だけを使う。書体は指定しない。
   - 例外として、 `portal.html` だけが一覧ページである。固有の部品は、カード・検索窓（灰の箱）・新着（目次と同じ灰の箱）・「↑ 目次へ」・ `[hidden]` である。検索窓の入力欄は `width:min(100%,640px)` とする（ `max-width` は contrast が禁じる）。
   - 理由 : 固有 CSS の追加は、スキルの検査で C02 の WARN になるが、 portal の部品に必要なので残す。
 - カードは 1 列の縦並び（ `ul.cards` はグリッドで `gap:14px` ）で、黒の 3px の枠と、左に紺の 12px の太線を引く。カード全体をクリックできるよう、 `a::after` を `inset:0` に広げている。
@@ -215,7 +219,7 @@ li.card:focus-within { background: #fff7c2; outline: 4px solid var(--ink); outli
 .card a:focus-visible { outline: none; }
 ```
 - ホバーとキーボード操作の表示は、リンク文字ではなくカード全体に付ける（クリックできるのがカード全体のため）。リンク自身の枠線は、 `:focus-within` の枠線と重なるので消している。
-- 文字サイズは px で書く（スキルの規約）。幅は `main` の `padding` が決め、中央寄せや `max-width` の上限は作らない。
+- 文字サイズは px で書く（旧 contrast の規約）。幅は `main` の `padding` が決め、中央寄せや `max-width` の上限は作らない。
 - 上記以外の値は、 `portal.html` の `<style>` が正である。この `CLAUDE.md` に全文を写さないのは、写しが古くなって実物と食い違うのを避けるためである。数値を変えたら、上の変数とコード片だけ合わせる。
 
 ### 構成についての相談
