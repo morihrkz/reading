@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#3d5a52">
+<title>「数学が苦手だから文系へ」は多いのか――データで測る仮説の当否と、減らすための設計</title>
+<style>
+  /* 配色(薄い緑の基調。落ち着いた見た目のまま、読みやすくする)。色はここだけで決め、以降は var() で参照する
+     緑 : 見出し・構造　黄 : マーカーと注意　赤 : 必須・重要 */
+  :root{color-scheme:only light;--bg:#f7f8f6;--text:#242522;--muted:#65695f;--accent:#3d5a52;--line:#868a83;--box:#eceee7;--mark:#ffe27a;--note-bg:#fff6d6;--note:#d9a400;--must-bg:#fde8e6;--must:#c0392b}
+  /* 旧 contrast の色の名前の別名。変換した文書の追加 CSS を、書き換えずに使うためのもの。新しい指定には使わない */
+  :root{--ink:var(--text);--navy:var(--accent);--yellow:var(--mark);--red:var(--must);--link:var(--accent);--gray:var(--box);--rule:var(--line)}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body { font-size: 1.2rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 1.05rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 1.8rem; line-height: 1.5; color: var(--text); }
+  .subtitle { color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: 1.05rem; line-height: 1.9; }
+  /* 見出し */
+  h1, h2, h3 { overflow-wrap: anywhere; }
+  h2 { font-size: 1.4rem; line-height: 1.6; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.3rem; line-height: 1.6; margin-top: 1.8rem; }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  mark { background: var(--mark); color: var(--text); padding: 0 .15em; }
+  /* 表。横スクロールを作らないため、見出しも折り返す */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 1.2rem; }
+  caption { font-weight: bold; text-align: left; padding: .5rem 0; }
+  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+  th { background: var(--box); }
+  /* コード。長い行は折り返す */
+  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: max(.92em, 1rem); overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--box); padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字 */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--accent); }
+  .note { background: var(--note-bg); border-left: 5px solid var(--note); padding: .7rem 1rem; margin: 1rem 0; }
+  .tag, .yr { display: inline-block; font-size: 1rem; line-height: 1.6; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 囲み。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、記号と枠の形でも区別する
+     要点 = 緑の左線と枠　留意事項 = 黄の地　必須 = 赤の地　演習 = 緑の破線 */
+  .point, .caution, .must, .try { margin: 1.2rem 0; padding: .7rem 1rem; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; font-weight: bold; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: .3rem 0 0; }
+  .point { background: var(--box); border: 1px solid var(--line); border-left: 5px solid var(--accent); }
+  .point::before { content: "要点"; color: var(--accent); }
+  .caution { background: var(--note-bg); border-left: 5px solid var(--note); }
+  .caution::before { content: "▲ 留意事項"; }
+  .must { background: var(--must-bg); border-left: 5px solid var(--must); }
+  .must::before { content: "★ 必須"; color: var(--must); }
+  .try { border: 2px dashed var(--accent); }
+  .try::before { content: "▶ 演習"; color: var(--accent); }
+  /* 手順(ol.steps)。番号は緑の縁の丸。最後の項目に li.goal を付けると、緑で塗った ★ になる */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 1px solid var(--line); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 3.8rem; margin: 0; padding: .8rem 0 .8rem 3rem; border-bottom: 1px solid var(--line); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: .9rem; width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--bg); color: var(--accent); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: .5rem 0; }
+  ol.steps > li.goal::before { content: "★"; background: var(--accent); color: #fff; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 1px solid var(--line); font-size: 1.1rem; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 1px solid var(--line); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: .5rem .7rem; background: var(--box); font-weight: bold; }
+  dl.spec dd { margin: 0; padding: .5rem .7rem; overflow-wrap: anywhere; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--must-bg); }
+  dl.spec > div.hot dt { border-left: 5px solid var(--must); color: var(--must); }
+  /* ことば集(dl.words) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--accent); margin-top: 1rem; }
+  dl.words dd { margin: .2rem 0 0; padding-left: .8rem; border-left: 3px solid var(--line); }
+  /* 年表(ul.tl)。緑の縦の線と丸印。年は .yr か .tag */
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--accent); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .45em; width: 18px; height: 18px; border-radius: 50%; background: var(--bg); border: 3px solid var(--accent); }
+  /* クイズ(div.quiz)。開くと答えが出る */
+  .quiz details { border: 1px solid var(--line); border-radius: 3px; margin: .8rem 0; }
+  .quiz summary { cursor: pointer; padding: .6rem 1rem; font-weight: bold; background: var(--box); }
+  .quiz summary:focus-visible { outline: 3px solid var(--text); outline-offset: -3px; }
+  .quiz details[open] summary { border-bottom: 1px solid var(--line); }
+  .quiz details p { margin: 0; padding: .6rem 1rem; }
+  .quiz .ans { font-weight: bold; color: var(--accent); }
+  /* 図(figure + インライン SVG)。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない)
+     f-navy ・ s-navy は、旧 contrast の書き方をそのまま使うための別名 */
+  figure { margin: 1.2rem 0; }
+  /* 幅の制限は、下のクラスで描いた図だけにかける。クラスを使わない図(横長の大きな図など)の大きさは変えない */
+  figure svg:has(.t, .nf, [class^="f-"], [class^="s-"]) { display: block; width: min(100%, 480px); height: auto; }
+  figcaption { padding: .5rem 0 0; font-size: 1.05rem; }
+  figcaption .cap { display: block; font-weight: bold; }
+  svg .t { fill: var(--text); font-size: 1.5rem; }
+  svg .t.lg { font-size: 1.75rem; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--text); }
+  svg .f-accent, svg .f-navy { fill: var(--accent); }
+  svg .f-yellow { fill: var(--mark); }
+  svg .f-red { fill: var(--must); }
+  svg .f-gray { fill: var(--box); }
+  svg .f-bg { fill: var(--bg); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--text); stroke-width: 2; }
+  svg .s-accent, svg .s-navy { stroke: var(--accent); stroke-width: 2; }
+  svg .s-red { stroke: var(--must); stroke-width: 2; }
+  svg .s-rule { stroke: var(--line); stroke-width: 2; }
+  svg .s-thick { stroke-width: 3; }
+  /* チェックリスト(div.checklist)。題名(.cl-title)は、内容を区別する必要があるときだけ置く。定型の注意書きは置かない */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: .6rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin: .4rem 0 .2rem; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin: 0; padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .85rem; width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  /* 目次(nav.toc) */
+  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:1.05rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:1.05rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--text);text-decoration:none}
+  .toc a:hover{color:var(--accent);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
+    dl.spec > div { grid-template-columns: 5.2em 1fr; }
+  }
+  /* 脚注の参照番号 */
+  sup{font-size:.72em;line-height:0}
+  sup a{text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:1.05rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:1.05rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:var(--mark)}
+  /* 末尾の注記 */
+  .endnote { font-size: 1.05rem; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。 table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 640px) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1.3rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1.3rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cardrow th { background: var(--box); font-size: 1.3rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; text-align: left; }
+  }
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">教育政策・進路選択の検証</p>
+<h1>「数学が苦手だから文系へ」は多いのか<br>――データで測る仮説の当否と、減らすための設計</h1>
+<p class="subtitle">An Evidence-Based Assessment of Mathematics Aversion in the Choice of Humanities and Social Science Programmes in Japan</p>
+<div class="lede">
+<p>日本の文系学部には、理系に進みたかったが数学が苦手で諦めた者が多い。そう考える人は少なくないと思われる。本稿は、社会科学・人文科学の学部をまとめて「文系」と呼び、この仮説を公的調査と研究によって検証する。</p>
+<p>結論を先に述べれば、仮説は前半と後半で評価が分かれる。数学や理科の苦手意識が文系選択に関わることは、複数の調査が示す。一方、理系に進みたかった者が多いことを示す全国データは見当たらず、国立教育政策研究所の調査はむしろ逆を示唆する。減らすべきは文系という選択ではない。数学のつまずきによって、望むかどうかを考える前に選択肢が閉じる事態である。</p>
+</div>
+<div class="meta"><strong>【方法と限界】</strong> 2026 年 11 月 27 日までに公開された官公庁の統計・報告書、研究論文、報道を照合した。独自の調査は行っていない。主要な数値は原資料で確かめ、原資料に当たれず二次的な紹介に拠ったものは本文にその旨を記した。「筆者の試算」「筆者の整理」「筆者の提案」とした箇所は、出典の見解ではない。</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">結論――仮説は三つの主張に分けて判定する</a>
+</li>
+<li><a href="#sec2">前提を測る――数学の力は高いのに、進路は文系に傾く</a>
+<ol>
+<li><a href="#sec2-1">学部学生の 45% は人文科学と社会科学に在籍する</a></li>
+<li><a href="#sec2-2">得点は上位、数学への意欲は平均以下</a></li>
+</ol>
+</li>
+<li><a href="#sec3">苦手意識は文系選択をどこまで動かすか</a>
+<ol>
+<li><a href="#sec3-1">調査は苦手意識の大きさを示す</a></li>
+<li><a href="#sec3-2">ただし、数字を全国に広げることはできない</a></li>
+<li><a href="#sec3-3">追跡データも、教科の得意・不得意との結びつきを示す</a></li>
+</ol>
+</li>
+<li><a href="#sec4">「本当は理系に行きたかった」者は多いのか</a>
+<ol>
+<li><a href="#sec4-1">文系コースで自分を理系寄りと考える者は 8%</a></li>
+<li><a href="#sec4-2">理系寄りの割合は減らず、「よくわからない」が減る</a></li>
+<li><a href="#sec4-3">望みが育つ前に閉じる経路は、測られていない</a></li>
+</ol>
+</li>
+<li><a href="#sec5">反対説の検討――数学だけが原因ではない</a>
+<ol>
+<li><a href="#sec5-1">費用が理系を遠ざける</a></li>
+<li><a href="#sec5-2">入試は数学を避けられる形になっている</a></li>
+<li><a href="#sec5-3">相対的な得意と性別の影響は、論争が続く</a></li>
+<li><a href="#sec5-4">定員の構成は、好みだけでは動かない</a></li>
+</ol>
+</li>
+<li><a href="#sec6">「理系は得だ」と説けば解決するのか</a>
+</li>
+<li><a href="#sec7">減らすための設計――数学で選択肢を閉じない</a>
+<ol>
+<li><a href="#sec7-1">つまずきを早く見つけ、戻れるようにする</a></li>
+<li><a href="#sec7-2">数学の意味と出口を見せる</a></li>
+<li><a href="#sec7-3">分ける時期を遅らせ、引き返す道を残す</a></li>
+<li><a href="#sec7-4">入試は、一律の強制と自由な回避の間で設計する</a></li>
+<li><a href="#sec7-5">費用の壁を下げる</a></li>
+<li><a href="#sec7-6">成果は比率ではなく、追跡で測る</a></li>
+</ol>
+</li>
+<li><a href="#sec8">誰が何から始めるか</a>
+</li>
+<li><a href="#sec9">結び――「諦めた多数」より「考える前に消える選択肢」</a>
+</li>
+<li><a href="#sec10">付記――ファクトチェックの記録</a>
+</li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. 結論――仮説は三つの主張に分けて判定する</h2>
+<p>「理系に進みたかったが、数学が苦手なので文系へ」という一文には、三つの主張が重なっている。苦手であること、苦手が理由であること、本当は理系を望んでいたことである。それぞれに必要な証拠は異なる。まとめて肯定も否定もできない。</p>
+<table class="cards">
+<caption>表 1 仮説を構成する三つの主張と、本稿の判定</caption>
+<thead><tr><th>主張</th><th>判定</th><th>主な根拠</th></tr></thead>
+<tbody>
+<tr><td data-label="主張">文系の生徒には数学を苦手とする者が多い</td><td data-label="判定">支持される。ただし調査は小規模</td><td data-label="主な根拠">広島の男子校で、文系の 54% が最も苦手な教科に数学を挙げた</td></tr>
+<tr><td data-label="主張">苦手意識は文系を選ぶ大きな理由である</td><td data-label="判定">おおむね支持される。代表性に限界</td><td data-label="主な根拠">学習アプリ利用者の調査で、文系の 49.9% が「理系科目が苦手だったから」を選んだ</td></tr>
+<tr><td data-label="主張">文系の者の多くは理系に進みたかった</td><td data-label="判定">裏づけがない</td><td data-label="主な根拠">全国調査で、高校 3 年の文系コースのうち自分を理系寄りと考える者は 8%</td></tr>
+</tbody>
+</table>
+<p>以下では、まず文系の規模を確かめ、次に三つの主張を順に調べる。そのうえで、数学以外の要因と、減らすための手立てを検討する。</p>
+
+<h2 id="sec2">2. 前提を測る――数学の力は高いのに、進路は文系に傾く</h2>
+<h3 id="sec2-1">2.1 学部学生の 45% は人文科学と社会科学に在籍する</h3>
+<p>2025 年度の学校基本調査では、大学の学部学生は 264 万 5,837 人である。このうち人文科学は 35 万 6,648 人、社会科学は 84 万 4,823 人で、合わせて全体の 45.4% を占める <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。理学・工学・農学の合計は、その半分にも届かない。</p>
+<table class="cards">
+<caption>表 2 大学の学部学生の分野別構成（ 2025 年度。構成比は筆者の計算）</caption>
+<thead><tr><th>分野</th><th>学生数</th><th>構成比</th></tr></thead>
+<tbody>
+<tr><td data-label="分野">社会科学</td><td data-label="学生数">844,823 人</td><td data-label="構成比">31.9%</td></tr>
+<tr><td data-label="分野">人文科学</td><td data-label="学生数">356,648 人</td><td data-label="構成比">13.5%</td></tr>
+<tr><td data-label="分野">理学・工学・農学</td><td data-label="学生数">556,336 人</td><td data-label="構成比">21.0%</td></tr>
+<tr><td data-label="分野">保健</td><td data-label="学生数">349,817 人</td><td data-label="構成比">13.2%</td></tr>
+<tr><td data-label="分野">その他</td><td data-label="学生数">538,213 人</td><td data-label="構成比">20.3%</td></tr>
+</tbody>
+</table>
+<p>表の数値は在籍者であり、入学者ではない。なお、 2026 年度の調査は速報が 2026 年 8 月に公表されたが、全項目の確定値は同年 12 月に公表する予定とされている <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。分野別の最新値は、その時点で更新される。</p>
+<p>高校の段階でも傾きは明らかである。 2024 年度の普通科高校（全日制・定時制）の最終学年では、文系が 51.4% 、理系が 30.8% 、コース分けをしていない学校の生徒が 17.8% だった <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。国際的にみると、日本の学士課程卒業者のうち理工系（自然科学・技術・工学・数学。以下 STEM ）は 20% で、 OECD 全体の 23% を下回る <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> 。</p>
+<h3 id="sec2-2">2.2 得点は上位、数学への意欲は平均以下</h3>
+<p>数学の力が足りないわけではない。 15 歳を対象とする OECD の学習到達度調査 (PISA) の 2025 年調査で、日本の数学的リテラシーは 525 点、 OECD 加盟 38 か国で 1 位だった。ただし、習熟度の低い層は 2022 年の 12.0% から 16.1% へ有意に増えている <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup> 。平均の高さは、つまずく生徒の少なさを保証しない。</p>
+<p>中学 2 年を対象とする国際数学・理科教育動向調査 (TIMSS) の 2023 年調査も、同じ構図を示す。数学の得点は 595 点で、 44 か国中 4 位である。ところが意欲の指標は、国際平均に届かないものが多い <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup> 。</p>
+<table class="cards">
+<caption>表 3 中学 2 年の数学に対する意識（ 2023 年、肯定的な回答の割合）</caption>
+<thead><tr><th>項目</th><th>日本</th><th>国際平均</th></tr></thead>
+<tbody>
+<tr><td data-label="項目">数学を勉強すると日常生活に役立つ</td><td data-label="日本">74%</td><td data-label="国際平均">74%</td></tr>
+<tr><td data-label="項目">数学の勉強は楽しい</td><td data-label="日本">60%</td><td data-label="国際平均">64%</td></tr>
+<tr><td data-label="項目">数学は得意だ（「得意な教科ではない」を否定した割合）</td><td data-label="日本">39%</td><td data-label="国際平均">44%</td></tr>
+<tr><td data-label="項目">数学を使うことが含まれる職業につきたい</td><td data-label="日本">22%</td><td data-label="国際平均">48%</td></tr>
+</tbody>
+</table>
+<p>国際平均は参加国の顔ぶれに左右されるため、細かな差を読みすぎてはならない。それでも、職業についての開きは大きい。役立つと認める生徒は平均並みにいるのに、数学を使う仕事を望む生徒の割合は、国際平均の半分に届かない。では苦手意識は、進路をどこまで動かすのか。</p>
+
+<h2 id="sec3">3. 苦手意識は文系選択をどこまで動かすか</h2>
+<h3 id="sec3-1">3.1 調査は苦手意識の大きさを示す</h3>
+<p>学習管理アプリの運営会社であるスタディプラスは、 2023 年 6 月から 7 月に利用者の高校生・大学生を調べた。文系を選んだ 1,221 人が理由として最も多く挙げたのは「理系科目が苦手だったから」で、 49.9% だった（複数回答）。同じ会社が同年 11 月に行った自由記述の分析でも、理系を避ける趣旨の理由を書いた者は文系の 36.0% にのぼり、文系を避ける趣旨の理由を書いた理系の 10.2% を大きく上回った <sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup> 。</p>
+<p>学校内の調査も同じ方向を指す。広島市の男子校で、高校 1 ・ 2 年生 240 人の回答を集計した研究では、文理を選ぶ最大の理由として「教科の得意・不得意」を挙げた者が、文系で 64% 、理系で 57% だった。最も苦手な教科は、文系では数学が 54% 、理科が 25% を占めた。理系では英語が 47% で最も多い <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> 。</p>
+<p>この結果には見落としやすい点がある。得意・不得意で進路を決めるのは、文系だけではない。理系を選ぶ側にも、苦手な教科を避ける力が働いていると考えられる。</p>
+<h3 id="sec3-2">3.2 ただし、数字を全国に広げることはできない</h3>
+<p>前項の調査には限界がある。アプリ利用者の回答は全国の高校生を代表しない。一つの学校の結果は、ほかの学校に当てはまるとは限らない。また「理系科目」には理科も含まれ、 49.9% を数学だけの影響と読むことはできない。</p>
+<p>尋ね方によって比重は変わる。内閣府の委託で高校生を対象に行われた 2021 年度の調査では、進路を希望する理由として「興味・関心があるから」を挙げた者が女子 64.0% 、男子 57.4% で最も多く、「自身の得意科目で判断したから」は女子 13.0% 、男子 15.9% にとどまった <sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup> 。こちらは希望する進路の理由を尋ねた複数回答で、文理の選択理由とは問いが異なる。女子を志望先で分けると、得意科目で判断した者は理学部・工学部の志望者で 23.0% 、文系学部の志望者で 17.7% だった <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 。苦手意識が重要な要因であることは認められるが、文系進学者の何割がそれだけで決めたかは、分からない。</p>
+<h3 id="sec3-3">3.3 追跡データも、教科の得意・不得意との結びつきを示す</h3>
+<p>同じ子どもを長期に追った分析もある。 2001 年生まれを対象とする国の縦断調査を使った 2025 年の研究は、 4 年制大学の進学者について学部選択の要因を調べた。高校 1 年で数学が得意な者は理系学部（保健を含む）を選ぶ確率が 11.2 ポイント高く、理科が得意な者は 18.7 ポイント高かった。逆に国語が得意な者は 11.9 ポイント、社会が得意な者は 13.9 ポイント低い <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup> 。</p>
+<p>これは他の条件をそろえた相関の分析で、因果関係を確定するものではない。示されているのは「数学が苦手」の影響だけではなく、どの教科が得意かの組み合わせと進路との結びつきである。では、苦手意識を抱えて文系を選んだ者は、本当は理系に行きたかったのか。</p>
+
+<h2 id="sec4">4. 「本当は理系に行きたかった」者は多いのか</h2>
+<h3 id="sec4-1">4.1 文系コースで自分を理系寄りと考える者は 8%</h3>
+<p>国立教育政策研究所は 2011 年 9 月、全国の中学 3 年生と高校 1 年生・ 3 年生を調査し、 2013 年に最終報告をまとめた。高校 3 年生の回答は 3 万 3,127 人分である。ここに、仮説の後半を調べる手がかりがある。</p>
+<p>自分を「理系」「どちらかといえば理系」と考える生徒は、理系コースでは 75% だったが、文系コースでは 8% だった。逆に「文系」「どちらかといえば文系」と考える生徒は、文系コースで 83% 、理系コースで 13% である <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> 。</p>
+<figure>
+<svg viewBox="0 0 480 300" role="img" aria-label="高校3年生の文系コースでは理系寄りが8%、文系寄りが83%。理系コースでは理系寄りが75%、文系寄りが13%。">
+<text class="t" x="20" y="30">文系コースの高校 3 年生</text>
+<rect class="f-yellow s-accent" x="20" y="45" width="35" height="60"/>
+<rect class="f-gray s-accent" x="55" y="45" width="365" height="60"/>
+<rect class="f-bg s-accent" x="420" y="45" width="40" height="60"/>
+<text class="t" x="237" y="83" text-anchor="middle">文系寄り 83%</text>
+<text class="t" x="20" y="135">理系寄り 8%</text>
+<text class="t" x="460" y="135" text-anchor="end">ほか 9%</text>
+<text class="t" x="20" y="180">理系コースの高校 3 年生</text>
+<rect class="f-accent s-accent" x="20" y="195" width="330" height="60"/>
+<rect class="f-gray s-accent" x="350" y="195" width="57" height="60"/>
+<rect class="f-bg s-accent" x="407" y="195" width="53" height="60"/>
+<text class="t white" x="185" y="233" text-anchor="middle">理系寄り 75%</text>
+<text class="t" x="460" y="285" text-anchor="end">文系寄り 13% 、ほか 12%</text>
+</svg>
+<figcaption><span class="cap">図 1 ：学習コース別にみた、高校 3 年生の文系・理系の自己認識</span> 2011 年調査。文系コースで理系寄りは 8% 、文系寄りは 83% 。理系コースで理系寄りは 75% 、文系寄りは 13% 。「ほか」は 100% から両者を引いた残りで、筆者の計算。</figcaption>
+</figure>
+<p>8% は小さいが、人数にすると無視できない。報告書が推定する高校 3 年の文系コースの生徒は 43 万 3,263 人であり、その 8% は約 3.5 万人にあたる（筆者の試算）。調査の時点で、この規模の生徒が自己認識と異なるコースにいた計算になる。ただし、この数字は大学進学者に限ったものではなく、理由が数学かどうかも示さない。</p>
+<div class="caution"><p>内閣府の政策資料は、この結果を「理系志向だけど文系コースにいる 8% 」と図に記している <sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup> 。原報告書によれば、分母は文系コースの高校 3 年生である。理系志向の生徒のうちの 8% でも、全生徒の 8% でもない。</p></div>
+<h3 id="sec4-2">4.2 理系寄りの割合は減らず、「よくわからない」が減る</h3>
+<p>学年による違いをみると、理系寄りの割合は中学 3 年と高校 3 年で変わらない。増えるのは文系寄りで、減るのは「よくわからない」である <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。</p>
+<table class="cards">
+<caption>表 4 学年別にみた文系・理系の自己認識（ 2011 年調査。「どちらかといえば」を含む）</caption>
+<thead><tr><th>学年</th><th>理系寄り</th><th>文系寄り</th><th>よくわからない</th></tr></thead>
+<tbody>
+<tr><td data-label="学年">中学 3 年</td><td data-label="理系寄り">31%</td><td data-label="文系寄り">31%</td><td data-label="よくわからない">32%</td></tr>
+<tr><td data-label="学年">高校 1 年</td><td data-label="理系寄り">35%</td><td data-label="文系寄り">39%</td><td data-label="よくわからない">20%</td></tr>
+<tr><td data-label="学年">高校 3 年</td><td data-label="理系寄り">31%</td><td data-label="文系寄り">51%</td><td data-label="よくわからない">12%</td></tr>
+</tbody>
+</table>
+<p>理系を望んでいた大勢が文系へ流れた、という姿はこの表からは見えない。ただし注意が要る。これは同じ月に別々の学年を調べた横断調査で、同じ生徒を追いかけたものではない。内閣府の資料は「わからない」と答えた層が文系志向に移ったと説明するが <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> 、個人の移動を確かめた結果ではなく、推定と理解すべきである。</p>
+<h3 id="sec4-3">4.3 望みが育つ前に閉じる経路は、測られていない</h3>
+<p>では仮説の後半は誤りなのか。そこまでは言えない。数学のつまずきが進路を狭める道筋には、少なくとも二つが考えられる。理系を望んだあとで諦める経路と、望む気持ちが育つ前に候補から消える経路である。</p>
+<figure>
+<svg viewBox="0 0 480 300" role="img" aria-label="数学のつまずきから、望んだが諦める経路Aと、望みが育たない経路Bに分かれる。経路Bは測られていない。">
+<defs><marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path class="f-accent" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+<rect class="f-gray s-accent" x="70" y="10" width="340" height="60" rx="3"/>
+<text class="t" x="240" y="48" text-anchor="middle">数学のつまずき</text>
+<path class="nf s-accent s-thick" d="M170 72 L125 115" marker-end="url(#ar)"/>
+<path class="nf s-accent s-thick" d="M310 72 L355 115" marker-end="url(#ar)"/>
+<rect class="f-white s-accent" x="10" y="122" width="220" height="165" rx="3"/>
+<text class="t" x="120" y="156" text-anchor="middle">経路 A</text>
+<text class="t" x="120" y="193" text-anchor="middle">理系を望むが</text>
+<text class="t" x="120" y="224" text-anchor="middle">諦める</text>
+<text class="t" x="120" y="268" text-anchor="middle">手がかりは 8%</text>
+<rect class="f-yellow s-accent" x="250" y="122" width="220" height="165" rx="3"/>
+<text class="t" x="360" y="156" text-anchor="middle">経路 B</text>
+<text class="t" x="360" y="193" text-anchor="middle">理系への望みが</text>
+<text class="t" x="360" y="224" text-anchor="middle">育たない</text>
+<text class="t" x="360" y="268" text-anchor="middle">測定がない</text>
+</svg>
+<figcaption><span class="cap">図 2 ：数学のつまずきが選択肢を閉じる二つの経路（筆者の整理）</span>経路 A は理系を望みながら諦める場合、経路 B は望みそのものが育たない場合である。 8% の調査が捉えるのは経路 A の一部にすぎない。</figcaption>
+</figure>
+<p>人は、手の届かないと感じたものを、初めから望まなかったと考え直すことがある。そうであれば、諦めた生徒の一部は調査で「文系寄り」と答え、 8% には現れない。中学 2 年で数学を使う職業を望む割合が 22% にとどまることは、早い段階で候補が絞られている可能性を示唆する <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 。もっとも、これは相関であり、苦手意識が原因だと証明するものではない。</p>
+<p>以上から、仮説は次のように言い直すのが妥当と考えられる。数学や理科の苦手意識を抱えて文系を選ぶ者は多いと推測される。しかし、理系を望みながら諦めた者が多数だとは確認できない。望むに至らなかった者がどれほどいるかは、まだ分かっていない。それでは、数学のほかに何が分かれ道をつくるのか。</p>
+
+<h2 id="sec5">5. 反対説の検討――数学だけが原因ではない</h2>
+<h3 id="sec5-1">5.1 費用が理系を遠ざける</h3>
+<p>理系は学費がかさみやすい。国立教育政策研究所の紀要に載った研究は、世帯年収 400 万円未満で大学進学を予定する高校 3 年生を分析した。その結果、自宅外から私立大学に通うことを避ける生徒ほど、理工農系以外を志望しやすいという因果関係が推定された <sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup> 。数学の得手不得手とは別に、費用が理系を遠ざける経路があると考えられる。</p>
+<h3 id="sec5-2">5.2 入試は数学を避けられる形になっている</h3>
+<p>2025 年度入試について、文部科学省の委託調査は、大学入学共通テストを利用する選抜区分での数学の扱いをまとめている <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 。国立と私立の差は著しい。</p>
+<table class="cards">
+<caption>表 5 共通テストを利用する選抜区分のうち、数学を必須とする割合（ 2025 年度入試）</caption>
+<thead><tr><th>設置者</th><th>人文科学</th><th>社会科学</th></tr></thead>
+<tbody>
+<tr><td data-label="設置者">国立大学</td><td data-label="人文科学">89.1%</td><td data-label="社会科学">79.9%</td></tr>
+<tr><td data-label="設置者">公立大学</td><td data-label="人文科学">26.2%</td><td data-label="社会科学">51.0%</td></tr>
+<tr><td data-label="設置者">私立大学</td><td data-label="人文科学">5.3%</td><td data-label="社会科学">8.7%</td></tr>
+</tbody>
+</table>
+<p>私立大学では、人文科学の 85.2% 、社会科学の 86.6% の区分が数学を選択科目としている。割合は区分の数で数えたもので、募集人員の割合ではなく、大学ごとの個別試験も含まない。数学を避けられる制度が苦手意識を固定している可能性はある。同時に、苦手な生徒に進学の道を開いているともいえる。この表だけでは、どちらの作用が強いかは判断できない。</p>
+<h3 id="sec5-3">5.3 相対的な得意と性別の影響は、論争が続く</h3>
+<p>生徒は自分の中で教科を比べて進路を決める、という説がある。 64 か国・約 30 万人の PISA データを分析した 2019 年の研究は、読解と数学の得点差を考慮すると、数学を多く使う進路への意欲の男女差が約 75% 縮むと報告した <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 。しかし 2023 年の追試研究では、新しいデータを使うと、この得点差で説明できる男女差は、進路の意欲で 0.4 ～ 10.2% 、米国の実際の大学専攻で約 12% にとどまった <sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> 。著者らは、進路の選び方の測り方などが違いを生んだ可能性を挙げる。決着したとは言いがたい。</p>
+<p>性別の差そのものは国内でも確認される。先の 2011 年調査で、高校 3 年の理系寄りの割合は男子 40% 、女子 20% だった <sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup> 。中央教育審議会の部会は、理数の得点に男女の大きな差がない一方で、数学への自信や科学分野への志向には差があると指摘する <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup> 。</p>
+<h3 id="sec5-4">5.4 定員の構成は、好みだけでは動かない</h3>
+<p>大学の定員の構成が変わらなければ、志望が変わっても理系の在籍者は増えにくい。国は理系などの成長分野へ学部を転換する大学を基金で支援している。 2025 年度補正予算で 200 億円を積み増し、 1,000 億円規模で再始動した <sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup> 。大規模な転換を支援する枠は、文系学部の定員を減らすことを要件としている <sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup> 。苦手意識の対策は、受け皿の整備と並べて考える必要がある。</p>
+
+<h2 id="sec6">6. 「理系は得だ」と説けば解決するのか</h2>
+<p>文部科学省の高校改革の基本方針は、理系出身者の所得が高いというデータに触れている <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> 。引用元の 2011 年の分析では、男性の平均年収は文系出身者が 559.02 万円、理系出身者が 600.99 万円だった（いずれも平均 46 歳）<sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup> 。ただし、これは主に出身学部で分けた比較である。</p>
+<p>能力の代理指標と高校での経験をそろえた 2019 年の研究では、理系の賃金の上乗せは男性 3.2% 、女性 11.7% と推定された。著者は、この値を因果的な効果ではなく、あくまで相関と断っている <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup> 。「理系の人は所得が高い」と「理系に進めば所得が上がる」は、別の主張である。</p>
+<p>数学の学習そのものに効果があるとする因果研究もある。米国では、州の数学の卒業要件が引き上げられたことで、黒人生徒の数学履修と後の所得が増え、追加の 1 科目あたりの収益は約 10% と推定された。一方、白人生徒には変化がみられなかった <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup> 。効果は誰にでも同じではない。所得の話だけで生徒を動かそうとするのは、根拠の面でも危うい。</p>
+
+<h2 id="sec7">7. 減らすための設計――数学で選択肢を閉じない</h2>
+<p>目標の置き方が出発点になる。文系の人数を減らすこと自体を目標にすると、苦手な生徒を理系に押し込むか、名称だけを変えることになりかねない。減らすべきは、数学を理由に、望まないまま、あるいは検討しないまま進路が決まる状態である。以下は、そのための手立てを筆者が整理したものである。</p>
+<h3 id="sec7-1">7.1 つまずきを早く見つけ、戻れるようにする</h3>
+<p>数学は積み上げの教科である。中央教育審議会の部会が 2026 年 10 月にまとめた報告は、ある単元の定着不足が後の学習に響き、学習の困難が雪だるま式に増える傾向を指摘する <sup id="fnref-17-2"><a href="#ref-17">[17]</a></sup> 。同じ報告は、高校の進路選択を契機に、私立文系の志望者などが数学の学習を諦める現状があるとの指摘も載せている <sup id="fnref-17-3"><a href="#ref-17">[17]</a></sup> 。先のアプリ調査でも、数学の苦手を自覚する時期は小中学校が大半を占めるが、高校になってからという者も 2 割を超えた <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。</p>
+<p>手立てとしては、割合・比・分数・関数などの理解を節目ごとに診断し、分からない箇所まで戻る時間を時間割に組み込むことが考えられる。数学への不安に働きかける介入については、 50 研究をまとめた分析で、不安の軽減と成績の向上に中程度の効果（効果量 0.47 と 0.50 ）が報告されている <sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup> 。ただし対象や方法は研究ごとに異なり、日本の学校での効果を直接示すものではない。診断を生徒の振り分けに使わないことも条件になる。</p>
+<h3 id="sec7-2">7.2 数学の意味と出口を見せる</h3>
+<p>日本の生徒は、数学を現実の場面で使う自信が低い。 2022 年の PISA で、実生活の課題に絡めて数学的な解を求める自信があると答えた生徒は 30.0% で、 OECD 平均の 52.5% を大きく下回った <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup> 。</p>
+<p>次期学習指導要領の案には、必履修の数学Ⅰに「社会を読み解く数学」と「数学ガイダンス」を新設し、数学 A ・ B ・ C を一つの選択科目にまとめる内容が盛り込まれている <sup id="fnref-17-4"><a href="#ref-17">[17]</a></sup> 。答申と告示の前の段階であり、実施の内容は変わりうる。</p>
+<p>海外には、小さな働きかけの効果を調べた実験がある。米国ウィスコンシン州の 181 家族を対象に、理数科目の役立ちを伝える資料を保護者へ届けた実験では、子の大学入学試験 (ACT) の数学・理科の得点が 12 パーセンタイル分高くなった。高校での理数の学びを介して、 5 年後の理系キャリアの追求にも間接的につながったという <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup> 。能力は伸ばせるという考え方を伝える全米規模の短い介入では、翌年に上級の数学を履修する生徒が 33% から 36% に増えた。後者の履修の分析は、事前に計画されていない探索的なものである <sup id="fnref-25-1"><a href="#ref-25">[25]</a></sup> 。効果はあるとしても大きくはなく、授業の改善に代わるものではない。</p>
+<h3 id="sec7-3">7.3 分ける時期を遅らせ、引き返す道を残す</h3>
+<p>2011 年の調査では、高校の 3 校に 2 校が文理のコースを分けていた。選択の時期は 1 年の 10 月から 12 月が最も多く、分かれるのは 2 年の 4 月からが大半だった <sup id="fnref-11-4"><a href="#ref-11">[11]</a></sup> 。研究所の分析を紹介した報道によれば、 2 年で選んで 3 年から分かれる学校の生徒は、 1 年で選んで 2 年から分かれる学校の生徒より、教科への好感度や重視度が高い傾向にあった。同時に、コース選択を設ける学校は、設けない学校よりも好感度が高かった <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> 。</p>
+<p>この結果は、分割を遅らせる意義を示唆する一方、コースを廃止すれば解決するという主張は支えない。学校の特性が異なるため、因果関係とも言い切れない。文部科学省は、将来的に文理の区分がなくなることを目指しつつ、コース変更を可能にするなどの柔軟な対応も検討する必要があるとしている <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 。変更を認めるなら、移った生徒が未履修の数学を補える仕組みが欠かせない。</p>
+<h3 id="sec7-4">7.4 入試は、一律の強制と自由な回避の間で設計する</h3>
+<p>中央教育審議会の部会は、高校数学の学びの成果が大学入試で適切に評価されるよう、高校と大学の対話を求めている。方法として、共通テストや個別試験のほか、数学の科目の履修・修得を出願時に確認することも例に挙げる <sup id="fnref-17-5"><a href="#ref-17">[17]</a></sup> 。大学側の動きもある。青山学院大学経済学部は 2027 年度入試で方式を新設し、数学を必須とする方式の募集人員が約 355 名中約 235 名となると報じられた <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> 。</p>
+<p>制度を急に変えた国の経験は参考になる。フランスは 2019 年の高校改革で科目の選択制を広げ、数学を全員の共通科目から外した。フランス数学会の副会長でもある研究者の分析では、理科系の学びを厚く履修して普通バカロレアを得る者の割合は、改革前の 52% から 2022 年に 27% へ下がり、理科系の履修者の減り方は、男子の 30% に対して女子は 60% だった <sup id="fnref-28-1"><a href="#ref-28">[28]</a></sup> 。政府は 2022 年 11 月、数学の専門科目を選ばない高校 2 年相当の生徒に、 2023 年の新学年から週 1 時間半の数学を必修として戻すと発表した <sup id="fnref-29-1"><a href="#ref-29">[29]</a></sup> 。</p>
+<p>韓国は反対の方向、つまり試験の統合を進めている。 2028 年度の大学入試から数学などの選択科目をなくすため、理系志向の受験生が文系学部で有利になる傾向が強まると、現地の予備校は予測している <sup id="fnref-30-1"><a href="#ref-30">[30]</a></sup> 。まだ実施前の予測である。二つの例からは、自由化は避ける道を広げ、一律化は別の生徒を押し出しうる、という教訓が引き出せる。</p>
+<p>日本で現実的なのは、段階を踏むことだと考えられる。まず各学部が、入学後に必要な数学を具体的に公表する。次に、その内容に合わせて履修確認や必須方式を広げる。同時に、入学後の学び直しを用意する。</p>
+<h3 id="sec7-5">7.5 費用の壁を下げる</h3>
+<p>理系を望み、力もある生徒が費用で諦めるなら、授業改善では解決しない。 5.1 の研究は、授業料の減免や奨学金だけでは、自宅外通学の費用を賄いきれないことを指摘する <sup id="fnref-13-2"><a href="#ref-13">[13]</a></sup> 。住居費まで含めた支援と、通える範囲の理系の学びの確保が検討に値する。</p>
+<h3 id="sec7-6">7.6 成果は比率ではなく、追跡で測る</h3>
+<p>基本方針は、 2040 年の普通科高校で文系と理系の生徒の割合が同程度になることを目標に掲げる <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> 。方向を示す指標にはなるが、比率だけでは、生徒が納得して選んだかどうかは分からない。コースの名称や分け方が変われば、数字も動く。</p>
+<p>同じ子どもを追う調査の土台は、 3.3 で触れた国の縦断調査のようにすでにある <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> 。筆者は、中学 3 年から大学進学後まで追う調査に、三つの問いを組み込むことを提案する。その時点で関心のある分野、実際の進路、そして数学を理由に候補から外した分野の有無である。これにより、 4 章で測れなかった経路 B に光が当たり、仮説の当否も施策の効果も検証しやすくなる。</p>
+
+<h2 id="sec8">8. 誰が何から始めるか</h2>
+<p>手立ては、主体ごとに分けると動かしやすい。根拠の強さには差があるため、小さく試して確かめることが前提になる。</p>
+<table class="cards">
+<caption>表 6 主体別の最初の一手（筆者の提案）</caption>
+<thead><tr><th>主体</th><th>最初の一手</th><th>根拠の現状</th><th>避けたい落とし穴</th></tr></thead>
+<tbody>
+<tr><td data-label="主体">家庭</td><td data-label="最初の一手">数学がどの学びや仕事で使われるかを、具体例で話す</td><td data-label="根拠の現状">米国の小規模な無作為化実験がある</td><td data-label="避けたい落とし穴">収入の不安をあおる</td></tr>
+<tr><td data-label="主体">中学校・高校</td><td data-label="最初の一手">文理選択の前につまずきを診断し、学び直す時間を設ける。選択後の変更も認める</td><td data-label="根拠の現状">困難の累積は指摘されているが、診断の効果は国内で本稿が確認できていない</td><td data-label="避けたい落とし穴">診断を振り分けに使う</td></tr>
+<tr><td data-label="主体">大学</td><td data-label="最初の一手">学部で必要な数学を公表し、入試と入学後の支援をそろえて変える</td><td data-label="根拠の現状">審議会の提言の段階</td><td data-label="避けたい落とし穴">予告なく要件を変える</td></tr>
+<tr><td data-label="主体">国・自治体</td><td data-label="最初の一手">追跡調査に進路を外した理由の問いを加え、費用の支援と定員を併せて点検する</td><td data-label="根拠の現状">費用の影響には国内の研究がある</td><td data-label="避けたい落とし穴">比率の目標だけを追う</td></tr>
+</tbody>
+</table>
+
+<h2 id="sec9">9. 結び――「諦めた多数」より「考える前に消える選択肢」</h2>
+<p>冒頭の仮説に答える。数学の苦手意識が文系選択に影響していることは、おおむね認められる。しかし、文系進学者のおそらく多くが理系を望みながら諦めた、とまでは言えない。利用できる全国データは、少なくとも高校 3 年の自己認識の上では、そうした生徒が少数であることを示している。</p>
+<p>本稿の限界は三つある。中心となる全国調査は 2011 年のもので、その後の教育課程や入試の変化を反映していない。追跡データは教科の得意と学部選択の関係を示すが、数学を理由に理系の望みを手放したかを直接尋ねた資料は、本稿の調査では見つからなかった。苦手意識を扱う近年の調査には、代表性の弱いものが含まれる。</p>
+<p>それでも、取るべき方向は定められる。つまずきは早く見つける。進路は引き返せるようにする。成果は追いかけて確かめる。数学の得点が低いから文系へ、という道をなくすことはできなくても、その道しか見えない生徒を減らすことはできると考えられる。</p>
+
+<h2 id="sec10">10. 付記――ファクトチェックの記録</h2>
+<p>執筆の過程で照合した主な言い回しと、確認の結果を記す。</p>
+<table class="cards">
+<caption>表 7 流通する言い回しと確認結果</caption>
+<thead><tr><th>言い回し</th><th>確認結果</th></tr></thead>
+<tbody>
+<tr><td data-label="言い回し">大学生の半分が文系</td><td data-label="確認結果">基本方針の概数表現 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup> 。 2025 年度の学部学生では 45.4%<sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></td></tr>
+<tr><td data-label="言い回し">高校の理系は 2 割</td><td data-label="確認結果">2011 年調査の高校 3 年全体で理系コースは 22%<sup id="fnref-11-5"><a href="#ref-11">[11]</a></sup> 。 2024 年度の普通科では 30.8%<sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup> 。対象が違うため、増加とは直ちに言えない</td></tr>
+<tr><td data-label="言い回し">理系志向で文系コースにいる者が 8%</td><td data-label="確認結果">分母は文系コースの高校 3 年生 <sup id="fnref-11-6"><a href="#ref-11">[11]</a></sup></td></tr>
+<tr><td data-label="言い回し">「わからない」層が文系志向に移った</td><td data-label="確認結果">横断調査からの推定。個人は追跡していない <sup id="fnref-11-7"><a href="#ref-11">[11]</a></sup> <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup></td></tr>
+<tr><td data-label="言い回し">文系の半数は数学が苦手で選んだ</td><td data-label="確認結果">49.9% はアプリ利用者の複数回答で、対象は数学に限らない理系科目 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup></td></tr>
+<tr><td data-label="言い回し">理系に進めば所得が上がる</td><td data-label="確認結果">平均値の差はあるが、因果関係は確定していない <sup id="fnref-19-2"><a href="#ref-19">[19]</a></sup> <sup id="fnref-20-2"><a href="#ref-20">[20]</a></sup></td></tr>
+<tr><td data-label="言い回し">読解の得意さが理系の男女差の大部分を説明する</td><td data-label="確認結果">2019 年の研究の主張 <sup id="fnref-15-2"><a href="#ref-15">[15]</a></sup> に、追試研究が異を唱えている <sup id="fnref-16-2"><a href="#ref-16">[16]</a></sup></td></tr>
+</tbody>
+</table>
+
+<div class="refs">
+<h2>参考文献・資料</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> 文部科学省「令和 7 年度学校基本調査」高等教育機関・関係学科別学生数、 2025 年。 <a href="https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040392729&amp;fileKind=0">e-Stat 統計表 (Excel)</a></li>
+<li id="ref-2"><a href="#fnref-2-1">^</a> 文部科学省「令和 8 年度学校基本統計（学校基本調査の結果）速報値」 2026 年 8 月 26 日。 <a href="https://www.mext.go.jp/content/20260826-mxt_chousa01-000050842_01.pdf">文部科学省 公表資料</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <sup><a href="#fnref-3-5">e</a></sup> <sup><a href="#fnref-3-6">f</a></sup> 文部科学省「高校教育改革に関する基本方針（グランドデザイン）～ 2040 年に向けた『 N-E.X.T. ハイスクール構想』～」 2026 年 2 月 13 日。 <a href="https://www.mext.go.jp/content/20260213-mxt_koukou01-000046079_03.pdf">文部科学省 本文</a></li>
+<li id="ref-4"><a href="#fnref-4-1">^</a> OECD, <em>Education at a Glance 2025</em> 日本カントリーノート、 2025 年。 <a href="https://www.oecd.org/content/dam/oecd/ja/publications/reports/2025/09/education-at-a-glance-2025-country-notes_9749f4ff/japan_edc5a3a9/c78ac36e-ja.pdf">OECD 日本語版</a></li>
+<li id="ref-5"><a href="#fnref-5-1">^</a> 文部科学省・国立教育政策研究所「 OECD 生徒の学習到達度調査 PISA2025 のポイント」 2026 年 9 月 8 日。 <a href="https://www.nier.go.jp/05_kenkyu_seika/pisa/pdf/2025/01_point.pdf">国立教育政策研究所 資料</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> 文部科学省・国立教育政策研究所「国際数学・理科教育動向調査 (TIMSS2023) の結果（概要）」 2024 年。 <a href="https://www.mext.go.jp/content/20241223-mxt_chousa02-000039290-8.pdf">文部科学省 資料</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> <sup><a href="#fnref-7-3">c</a></sup> スタディプラス株式会社「 5,150 名の学生の文理選択と学部・学問系統について調査」 2023 年 12 月 20 日。同年 6 〜 7 月の調査結果の紹介を含む。 <a href="https://info.studyplus.co.jp/716">同社発表</a></li>
+<li id="ref-8"><a href="#fnref-8-1">^</a> 花野木政信・磯崎哲夫・林武広「大学進学を目指す高校生の文系・理系コース選択の時期と要因」<em>日本教科教育学会誌</em> 40 巻 1 号、 85–93 頁、 2017 年。 <a href="https://www.jstage.jst.go.jp/article/jcrdajp/40/1/40_85/_pdf">J-STAGE 論文</a></li>
+<li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> 内閣府委託調査「女子生徒等の理工系分野への進路選択における地域性についての調査研究 調査報告書」 2022 年 3 月。 <a href="https://www.gender.go.jp/research/kenkyu/pdf/riko_sentaku_research_r03_honpen.pdf">男女共同参画局 報告書</a></li>
+<li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> 井上敦・田中隆一「経済・商学部進学率の男女差」 RIETI Discussion Paper 25-J-018 、 2025 年 8 月。 <a href="https://www.rieti.go.jp/jp/publications/dp/25j018.pdf">経済産業研究所 論文</a></li>
+<li id="ref-11">^ <sup><a href="#fnref-11-1">a</a></sup> <sup><a href="#fnref-11-2">b</a></sup> <sup><a href="#fnref-11-3">c</a></sup> <sup><a href="#fnref-11-4">d</a></sup> <sup><a href="#fnref-11-5">e</a></sup> <sup><a href="#fnref-11-6">f</a></sup> <sup><a href="#fnref-11-7">g</a></sup> 国立教育政策研究所「中学校・高等学校における理系進路選択に関する研究 最終報告書」 2013 年。 <a href="https://nier.repo.nii.ac.jp/record/468/files/20130611150700-0000.pdf">研究所リポジトリ（約 52MB ）</a></li>
+<li id="ref-12">^ <sup><a href="#fnref-12-1">a</a></sup> <sup><a href="#fnref-12-2">b</a></sup> <sup><a href="#fnref-12-3">c</a></sup> 総合科学技術・イノベーション会議「 Society 5.0 の実現に向けた教育・人材育成に関する政策パッケージ」 2022 年。 <a href="https://www8.cao.go.jp/cstp/tyousakai/kyouikujinzai/saishu_1.pdf">内閣府 資料</a></li>
+<li id="ref-13">^ <sup><a href="#fnref-13-1">a</a></sup> <sup><a href="#fnref-13-2">b</a></sup> 日下田岳史「強い資金制約のもとで回避される理系進路選択」<em>国立教育政策研究所紀要</em>第 153 集、 2024 年。 <a href="https://nier.repo.nii.ac.jp/record/2000056/files/153_a09.pdf">研究所リポジトリ</a></li>
+<li id="ref-14"><a href="#fnref-14-1">^</a> 文部科学省委託調査「大学入学者選抜の実態の把握及び分析等に関する調査研究 調査報告書」 2026 年 2 月。図表 4-16 、 4-17 。 <a href="https://www.mext.go.jp/content/20260327-mxt_daigakuc02-000048422_02.pdf">文部科学省 報告書</a></li>
+<li id="ref-15">^ <sup><a href="#fnref-15-1">a</a></sup> <sup><a href="#fnref-15-2">b</a></sup> Breda, T. and Napp, C. “Girls’ comparative advantage in reading can largely explain the gender gap in math-related fields.” <em>PNAS</em>, 2019. <a href="https://ideas.repec.org/a/nas/journl/v116y2019p15435-15440.html">IDEAS 要旨</a></li>
+<li id="ref-16">^ <sup><a href="#fnref-16-1">a</a></sup> <sup><a href="#fnref-16-2">b</a></sup> Wan, S., Lauermann, F., Bailey, D. H. and Eccles, J. S. “Girls’ comparative advantage in language arts explains little of the gender gap in math-related fields: A replication and extension.” <em>PNAS</em>, vol. 120, no. 40, 2023. <a href="https://doi.org/10.1073/pnas.2305629120">DOI</a> <a href="https://forrt.org/flora-replication-atlas/doi/10.1073/pnas.2305629120/">追試データベース</a></li>
+<li id="ref-17">^ <sup><a href="#fnref-17-1">a</a></sup> <sup><a href="#fnref-17-2">b</a></sup> <sup><a href="#fnref-17-3">c</a></sup> <sup><a href="#fnref-17-4">d</a></sup> <sup><a href="#fnref-17-5">e</a></sup> 中央教育審議会初等中等教育分科会教育課程部会「次期学習指導要領等に向けた審議まとめ」 2026 年 10 月 5 日。 <a href="https://www.mext.go.jp/content/20261005-mxt_kyoiku01-000052367-1.pdf">文部科学省 資料</a></li>
+<li id="ref-18">^ <sup><a href="#fnref-18-1">a</a></sup> <sup><a href="#fnref-18-2">b</a></sup> 文部科学省「成長分野転換基金の公募選定結果をお知らせします」 2026 年 9 月 16 日。 <a href="https://www.mext.go.jp/content/20260916-mxt_senmon01-000027827_01.pdf">文部科学省 報道発表</a></li>
+<li id="ref-19">^ <sup><a href="#fnref-19-1">a</a></sup> <sup><a href="#fnref-19-2">b</a></sup> 浦坂純子・西村和雄・平田純一・八木匡「理系出身者と文系出身者の年収比較――JHPS データに基づく分析結果」 RIETI Discussion Paper 11-J-020 、 2011 年。 <a href="https://www.rieti.go.jp/jp/publications/dp/11j020.pdf">経済産業研究所 論文</a></li>
+<li id="ref-20">^ <sup><a href="#fnref-20-1">a</a></sup> <sup><a href="#fnref-20-2">b</a></sup> 安井健悟「大学と大学院の専攻の賃金プレミアム」<em>経済分析</em>第 199 号、 2019 年。 <a href="https://www.esri.cao.go.jp/jp/esri/archive/bun/bun199/bun199c.pdf">内閣府経済社会総合研究所 論文</a></li>
+<li id="ref-21"><a href="#fnref-21-1">^</a> Goodman, J. “The Labor of Division: Returns to Compulsory High School Math Coursework.” NBER Working Paper 23063, 2017, revised 2018. <a href="https://www.nber.org/system/files/working_papers/w23063/w23063.pdf">NBER 論文</a></li>
+<li id="ref-22"><a href="#fnref-22-1">^</a> Sammallahti, E., Finell, J., Jonsson, B. and Korhonen, J. “A Meta-Analysis of Math Anxiety Interventions.” <em>Journal of Numerical Cognition</em>, vol. 9, no. 2, 346–362, 2023. <a href="https://files.eric.ed.gov/fulltext/EJ1400784.pdf">ERIC 論文</a></li>
+<li id="ref-23"><a href="#fnref-23-1">^</a> 文部科学省・国立教育政策研究所「 OECD 生徒の学習到達度調査 PISA2022 のポイント」 2023 年。 <a href="https://www.nier.go.jp/kokusai/pisa/pdf/2022/01_point_2.pdf">国立教育政策研究所 資料</a></li>
+<li id="ref-24"><a href="#fnref-24-1">^</a> Rozek, C. S., Svoboda, R. C., Harackiewicz, J. M., Hulleman, C. S. and Hyde, J. S. “Utility-value intervention with parents increases students’ STEM preparation and career pursuit.” <em>PNAS</em>, 2017. <a href="https://files.eric.ed.gov/fulltext/ED578858.pdf">ERIC 論文</a></li>
+<li id="ref-25"><a href="#fnref-25-1">^</a> Yeager, D. S. et al. “A national experiment reveals where a growth mindset improves achievement.” <em>Nature</em>, 2019. <a href="https://www.nature.com/articles/s41586-019-1466-y">Nature 論文</a></li>
+<li id="ref-26"><a href="#fnref-26-1">^</a> リセマム「高校での文理選択が進路意識を向上、高 3 からの分割が優位」 2013 年 6 月 11 日。 <a href="https://resemom.jp/article/2013/06/11/13897.html">報道記事</a></li>
+<li id="ref-27"><a href="#fnref-27-1">^</a> 大学ジャーナルオンライン「青山学院大学 経済学部 一般選抜で『数学必須』方式を追加 2027 年度入試」 2026 年 6 月 17 日。 <a href="https://univ-journal.jp/997625/">報道記事</a></li>
+<li id="ref-28"><a href="#fnref-28-1">^</a> Guénais, M. “Comment la réforme du lycée éloigne les filles des maths et des sciences.” <em>The Conversation</em>, 2024 年 3 月 7 日。 <a href="https://theconversation.com/comment-la-reforme-du-lycee-eloigne-les-filles-des-maths-et-des-sciences-224773">The Conversation 記事</a></li>
+<li id="ref-29"><a href="#fnref-29-1">^</a> Weka “Retour des maths obligatoires pour tous les lycéens dès la première à la rentrée 2023.” 2022 年 11 月 14 日。 <a href="https://www.weka.fr/actualite/education/article/retour-des-maths-obligatoires-pour-tous-les-lyceens-des-la-premiere-a-la-rentree-2023-158897/">報道記事</a></li>
+<li id="ref-30"><a href="#fnref-30-1">^</a> Seoul Economic Daily “Unified CSAT in 2028 Accelerates Science Students’ ‘Humanities Invasion’.” 2026 年 3 月 24 日（韓国語からの機械翻訳版）。 <a href="https://en.sedaily.com/society/2026/03/24/unified-csat-in-2028-accelerates-science-students">報道記事</a></li>
+</ol>
+<p class="endnote">本稿は公開資料に基づく考察であり、特定の生徒への進路の助言ではない。情報は 2026 年 11 月 27 日時点のもので、統計の確定値や審議中の制度は、その後に変わることがある。</p>
+</div>
+</main>
+</body>
+</html>
