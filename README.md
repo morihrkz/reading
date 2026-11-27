@@ -48,7 +48,7 @@ python -m http.server 8000
 
 - HTML と CSS による静的サイト
 - ビルドツール、外部ライブラリ不要
-- JavaScript は、 `portal.html` の本文検索だけに使用
+- JavaScript は、 `portal.html` の本文検索のほか、 `ahamo-migration-guide.html` （チェック状態の保存）、 `plateau-ai-workflow-guide.html` （コード欄のコピーボタン）、 `color-palette.html` （色見本のカードの生成と、色コードのコピー）の 3 本だけで使用
 
 ## ライセンス
 
