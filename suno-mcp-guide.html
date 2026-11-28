@@ -184,7 +184,7 @@
 <body>
 <main>
 <h1>Claude と Suno をつなぐ MCP の手順書</h1>
-<p class="meta">作成日 : 2026-10-31 ／ 公式資料の取得日 : 2026-10-31 ／ 対象 : Suno MCP （ベータ版）と Claude ／ 利用環境 : Windows 11(PowerShell 7)と Mac(zsh)</p>
+<p class="meta">作成日 : 2026-10-31 ／ 公式資料の取得日 : 2026-10-31 ／ 対象 : Suno MCP （ベータ版）と Claude ／ 利用環境 : Windows 11 (PowerShell 7) と Mac (zsh)</p>
 
 <div class="caution"><p><strong>この手順書は、公式資料をもとに書かれており、 2026 年 10 月 31 日の作成時点で、実機では確認されていない。</strong>手順どおりに進めても、画面の表示や結果が異なることがある。うまくいかなかったときは、読者の操作が誤っているとは限らない。まず、本書が挙げる公式の案内で最新の内容を確かめてほしい。</p></div>
 
@@ -331,7 +331,7 @@
 
 <h2 id="sec2">2. MCP とは</h2>
 <h3 id="sec2-1">2.1 一言でいうと</h3>
-<p>MCP(Model Context Protocol)は、 AI と外部のサービスをつなぐための共通の取り決めである。 MCP の公式サイトは、 MCP を「 AI アプリケーションを外部システムにつなぐための、オープンソースの標準」と説明している。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
+<p>MCP (Model Context Protocol) は、 AI と外部のサービスをつなぐための共通の取り決めである。 MCP の公式サイトは、 MCP を「 AI アプリケーションを外部システムにつなぐための、オープンソースの標準」と説明している。 <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup></p>
 <p>同じ公式サイトは、 USB-C の差し込み口にたとえている。 USB-C が電子機器をつなぐ共通の形を決めているように、 MCP は AI アプリを外部のシステムにつなぐ共通の形を決める、という説明である。 <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup></p>
 <p><strong>このたとえが当てはまらない点。</strong> USB-C は、差し込めば機器が動く。 MCP の接続は、差し込むだけでは終わらない。つなぐ先の URL を登録し、 Suno にサインインして、アクセスを承認する手順が要る。 <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup> また、 USB-C のケーブルは機器を勝手に操作しないが、 MCP でつないだ AI は、利用者の代わりに操作を行う。この違いが、第 9 章の安全の話につながる。</p>
 
@@ -356,7 +356,7 @@
 
 <h3 id="sec3-2">3.2 Claude のアカウント</h3>
 <p>Claude のアカウントが要る。 Claude アプリにカスタムコネクタ（自分で接続先の URL を登録するコネクタ）を追加できるのは、 Free から Enterprise までのプランである。ただし Free は、カスタムコネクタが一つまでである。 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> ほかのコネクタを入れているときは、空きがあるかを確かめる。個別のプラン名ごとの対応は、資料で確認できなかった（要確認）。</p>
-<p>ターミナルで使う Claude Code(経路 B )は、 Claude の有料プラン(Pro ・ Max ・ Ultra ・ Team ・ Enterprise)か、 Claude Console （事前に支払ったクレジットで API を使う形のアカウント。作成者の補足）のアカウントなどでログインする。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> この資料の列挙に Free は見当たらなかったが、 Free で使えないと言い切れるかは確認できていない（要確認）。</p>
+<p>ターミナルで使う Claude Code(経路 B )は、 Claude の有料プラン (Pro ・ Max ・ Ultra ・ Team ・ Enterprise) か、 Claude Console （事前に支払ったクレジットで API を使う形のアカウント。作成者の補足）のアカウントなどでログインする。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> この資料の列挙に Free は見当たらなかったが、 Free で使えないと言い切れるかは確認できていない（要確認）。</p>
 <p><strong>プランの確かめ方。</strong> Claude アプリの設定のうち、アカウントやプランの情報を表示する画面で、現在のプラン名を見る。画面の名前は版によって異なる場合がある（作成者の案内）。</p>
 <p>Team と Enterprise では、カスタムコネクタを組織に追加できるのは、所有者(Owner など)に限られる。 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 自分が所有者でないときは、所有者に依頼する必要がある。</p>
 
@@ -456,7 +456,7 @@
 
 <h4>ステップ B1 : ターミナルを開く</h4>
 <p><strong>何のために</strong><br>コマンドを打ち込む窓を用意するため。</p>
-<p><strong>操作</strong><br>Windows では PowerShell 7 を、 Mac ではターミナル(zsh)を開く。</p>
+<p><strong>操作</strong><br>Windows では PowerShell 7 を、 Mac ではターミナル (zsh) を開く。</p>
 <p><strong>うまくいったとき</strong><br>入力待ちの画面が開く。 Windows で PowerShell を使っているときは、 Anthropic の資料によれば、行の先頭に <code>PS C:\</code> が表示される。 <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup> Mac の zsh での表示は、資料で確認できなかった。</p>
 <p><strong>うまくいかないとき</strong><br>開き方が分からないときは、 OS の案内や、 Anthropic のドキュメントを確認する。ターミナルや PowerShell 7 の入手・起動の詳しい手順は、本書の範囲外である。</p>
 
@@ -466,7 +466,7 @@
 <pre class="term"><code>irm https://claude.ai/install.ps1 | iex</code></pre>
 <p>Mac の zsh には次を打つ。 <sup id="fnref-8-5"><a href="#ref-8">[8]</a></sup></p>
 <pre class="term"><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
-<p>どちらも、インターネット上のインストール用の命令を取り込んで、そのまま実行するコマンドである。 Anthropic の公式ページに書かれたこの形のままを使い、ほかのページで見つけた別の URL は使わない。 Windows のコマンドプロンプト(CMD)用のコマンドは別のものである。 PowerShell と取り違えないよう、画面の行頭に <code>PS</code> が付いていることを確かめる。 <sup id="fnref-8-6"><a href="#ref-8">[8]</a></sup></p>
+<p>どちらも、インターネット上のインストール用の命令を取り込んで、そのまま実行するコマンドである。 Anthropic の公式ページに書かれたこの形のままを使い、ほかのページで見つけた別の URL は使わない。 Windows のコマンドプロンプト (CMD) 用のコマンドは別のものである。 PowerShell と取り違えないよう、画面の行頭に <code>PS</code> が付いていることを確かめる。 <sup id="fnref-8-6"><a href="#ref-8">[8]</a></sup></p>
 <p><strong>うまくいったとき</strong><br>エラーなく終わる。成功したかどうかは、次のステップで確かめる。</p>
 <p><strong>うまくいかないとき</strong><br>エラーが出たら、コマンドを打った場所(PowerShell か CMD か)と、自分の OS に合うコマンドかを見直す（作成者の推奨）。 OS ごとのコマンドの違いは資料にある。 <sup id="fnref-8-7"><a href="#ref-8">[8]</a></sup> そのほかの失敗は、 Anthropic のインストールの案内(<em>Troubleshoot installation</em>)を確認する。 <sup id="fnref-8-8"><a href="#ref-8">[8]</a></sup></p>
 
@@ -592,7 +592,7 @@ claude</code></pre>
 <p>曲をつくるとクレジットを消費する。 <sup id="fnref-1-15"><a href="#ref-1">[1]</a></sup><sup id="fnref-3-15"><a href="#ref-3">[3]</a></sup> クレジットの量・必要数・料金は変わりうるため、 Suno の公式ページで最新の内容を確かめる。取得日は 2026-10-31 である。 Claude 側の料金やプランも、 Anthropic の公式ページで確かめる。</p>
 
 <h3 id="sec9-4">9.4 つくった曲の権利</h3>
-<p>Suno のヘルプ（取得日 2026-10-31 、更新日の記載なし）によれば、曲をつくった時点で Pro か Premier のプランに加入していれば、その曲の所有者とみなされ、加入をやめても商用利用の権利が残る。無料(Free)のプランでつくった曲は Suno が所有権を保持し、非商用でのみ使える。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> プランの名前や条件は変わりうる。公開や販売をする前に、必ず最新のヘルプと規約を確かめてほしい。</p>
+<p>Suno のヘルプ（取得日 2026-10-31 、更新日の記載なし）によれば、曲をつくった時点で Pro か Premier のプランに加入していれば、その曲の所有者とみなされ、加入をやめても商用利用の権利が残る。無料 (Free) のプランでつくった曲は Suno が所有権を保持し、非商用でのみ使える。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> プランの名前や条件は変わりうる。公開や販売をする前に、必ず最新のヘルプと規約を確かめてほしい。</p>
 
 <h3 id="sec9-5">9.5 接続をやめる・取り消す</h3>
 <ul>
