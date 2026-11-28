@@ -211,7 +211,7 @@
 </li>
 <li><a href="#sec6">公開の前に、構成ファイルを読む</a>
 <ol>
-<li><a href="#sec6-1">wrangler.jsonc ― Cloudflare への指示書</a></li>
+<li><a href="#sec6-1">wrangler.jsonc ―― Cloudflare への指示書</a></li>
 <li><a href="#sec6-2">astro.config.mjs と src/worker.ts</a></li>
 </ol>
 </li>
@@ -263,7 +263,7 @@
 <p>EmDash は 2026 年 9 月に版 1.0 が公開されたばかりである <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。ネットにある古い解説は、 1.0 より前の版の手順で書かれていることがある。たとえば <code class="term">emdash dev</code> などのコマンドは、 1.0 で削除された <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。この記事に書いたコマンドと、手元の画面が食い違ったら、公式ドキュメント <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup><sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup> を優先してほしい。</p>
 <h3 id="sec1-2">1.2 先に知っておく――「手元の PC 」と「 Cloudflare 」は別の場所である</h3>
 <p>この記事には、二つの場所が出てくる。ここを取り違えると、あとで「手元で書いた記事が、公開したサイトに無い」と戸惑うことになる。手を動かす前に、ここで整理しておく。</p>
-<div class="box"><strong>たとえ話 ― 設計図と、実際のお店</strong><br><strong>手元の PC</strong> は、「設計図と模型を置いた工房」である。ここでは、いくら壊しても、誰にも見られない。 <strong>Cloudflare</strong> は、「実際に開店するお店」である。工房から設計図を送ると、同じ造りのお店が建つ。ただし、工房の模型に飾った商品（記事や画像）は、お店には運ばれない。お店に並べる商品は、お店に着いてから、お店の管理画面で並べ直す。</div>
+<div class="box"><strong>たとえ話――設計図と、実際のお店</strong><br><strong>手元の PC</strong> は、「設計図と模型を置いた工房」である。ここでは、いくら壊しても、誰にも見られない。 <strong>Cloudflare</strong> は、「実際に開店するお店」である。工房から設計図を送ると、同じ造りのお店が建つ。ただし、工房の模型に飾った商品（記事や画像）は、お店には運ばれない。お店に並べる商品は、お店に着いてから、お店の管理画面で並べ直す。</div>
 <p>運ばれるものと、運ばれないものを、表にまとめる。</p>
 <table class="cardrow">
 <thead><tr><th>もの</th><th>公開のとき Cloudflare に運ばれるか</th><th>どうするか</th></tr></thead>
@@ -372,7 +372,7 @@ pnpm --version</code></pre>
 
 <h2 id="sec6">6. 公開の前に、構成ファイルを読む</h2>
 <p>手元で動いたので、 Cloudflare に載せる前に、雛形に入っている設定の意味を知っておく。ここは読むだけで、書き換えない。 <code>Ctrl + C</code> でいったん <code class="term">pnpm dev</code> を止めてから、エディターで <code>my-emdash-site</code> のフォルダを開く。</p>
-<h3 id="sec6-1">6.1 wrangler.jsonc ― Cloudflare への指示書</h3>
+<h3 id="sec6-1">6.1 wrangler.jsonc ―― Cloudflare への指示書</h3>
 <p>Wrangler は、 Cloudflare の設定と公開のためのコマンドである。 <code>wrangler.jsonc</code> は、何をどの名前で用意するかを書いた指示書である。公式ガイドが示す例は次のとおりである <sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup> 。雛形の中身は、これと近い形のはずだが、日付や名前は雛形のほうが正しい。</p>
 <pre><code>{
   "name": "my-emdash-site",
