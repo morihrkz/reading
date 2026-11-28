@@ -184,7 +184,7 @@
 <body>
 <main>
 <h1>Claude と Suno をつなぐ MCP の手順書</h1>
-<p class="meta">作成日 : 2026-10-31 ／ 公式資料の取得日 : 2026-10-31 ／ 対象 : Suno MCP(ベータ版)と Claude ／ 利用環境 : Windows 11(PowerShell 7)と Mac(zsh)</p>
+<p class="meta">作成日 : 2026-10-31 ／ 公式資料の取得日 : 2026-10-31 ／ 対象 : Suno MCP （ベータ版）と Claude ／ 利用環境 : Windows 11(PowerShell 7)と Mac(zsh)</p>
 
 <div class="caution"><p><strong>この手順書は、公式資料をもとに書かれており、 2026 年 10 月 31 日の作成時点で、実機では確認されていない。</strong>手順どおりに進めても、画面の表示や結果が異なることがある。うまくいかなかったときは、読者の操作が誤っているとは限らない。まず、本書が挙げる公式の案内で最新の内容を確かめてほしい。</p></div>
 
@@ -267,13 +267,13 @@
 <p>この手順書は、 Claude と Suno のアカウントを持つ人が、 Claude の会話から Suno に曲づくりを頼めるようにするための手順をまとめたものである。 Claude と Suno の各プランの条件は、第 3 章に書く。 Suno は、 AI で曲をつくるサービスである。 Suno 自身が、 Claude などの AI アシスタントとつなぐための公式の接続口「 Suno MCP (Beta)」を提供している。 <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup></p>
 <p>つながると、 Suno の公式ページによれば、次のことを AI アシスタントとの会話から頼めるようになる。 <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup></p>
 <ul>
-<li>文章による説明から曲をつくる(歌詞とスタイルは AI が書く)。</li>
+<li>文章による説明から曲をつくる（歌詞とスタイルは AI が書く）。</li>
 <li>ボイスメモなどのアップロードした音声から、曲をつくる。</li>
 <li>ライブラリにある曲の、カバー・マッシュアップ・延長をつくる。</li>
-<li>保存してある Suno Voices(歌声の設定)を、曲に使う。</li>
+<li>保存してある Suno Voices （歌声の設定）を、曲に使う。</li>
 </ul>
 <p>本書が手順を詳しく書くのは、このうち「文章による説明から曲をつくる」だけである。ほかの機能は、紹介にとどめる。</p>
-<p><strong>範囲外 : MV(ミュージックビデオ)などの映像づくり。</strong>元の投稿の投稿者は、同じ会話で映像も頼み、 57 秒の MV にしたと報告している。 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> しかし、投稿には映像をどの道具で作ったかが書かれていない。 Suno の公式資料にも、 Suno MCP で映像をつくる方法は見当たらなかった。公式資料で裏付けの取れる方法が確認できなかったため、本書は MV の章を設けない。</p>
+<p><strong>範囲外 : MV （ミュージックビデオ）などの映像づくり。</strong>元の投稿の投稿者は、同じ会話で映像も頼み、 57 秒の MV にしたと報告している。 <sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup> しかし、投稿には映像をどの道具で作ったかが書かれていない。 Suno の公式資料にも、 Suno MCP で映像をつくる方法は見当たらなかった。公式資料で裏付けの取れる方法が確認できなかったため、本書は MV の章を設けない。</p>
 
 <h3 id="sec1-2">1.2 前提と注意</h3>
 <ul>
@@ -351,19 +351,19 @@
 
 <h2 id="sec3">3. 事前準備</h2>
 <h3 id="sec3-1">3.1 Suno のアカウント</h3>
-<p>Suno のアカウントが要る。 Suno の FAQ は、「 Suno MCP (Beta) は、無料のプランを含む、すべての Suno プランで使える」という趣旨で答えている。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> ただし、曲をつくるとクレジット(曲づくりに使う利用枠)を消費する。 FAQ は「音楽をつくるとき、プランに応じたクレジットを使う」という趣旨で説明している。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></p>
-<p><strong>プランの確かめ方。</strong> suno.com にサインインし、アカウントや料金プランを表示する画面で、現在のプラン名と、残りのクレジットを見る(作成者の案内)。画面の名前は版によって異なる場合がある。見つからないときは、 Suno の公式の案内を確認してほしい。残りのクレジットは、 AI ツールに尋ねる方法もある。 <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup></p>
+<p>Suno のアカウントが要る。 Suno の FAQ は、「 Suno MCP (Beta) は、無料のプランを含む、すべての Suno プランで使える」という趣旨で答えている。 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup> ただし、曲をつくるとクレジット（曲づくりに使う利用枠）を消費する。 FAQ は「音楽をつくるとき、プランに応じたクレジットを使う」という趣旨で説明している。 <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup></p>
+<p><strong>プランの確かめ方。</strong> suno.com にサインインし、アカウントや料金プランを表示する画面で、現在のプラン名と、残りのクレジットを見る（作成者の案内）。画面の名前は版によって異なる場合がある。見つからないときは、 Suno の公式の案内を確認してほしい。残りのクレジットは、 AI ツールに尋ねる方法もある。 <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup></p>
 
 <h3 id="sec3-2">3.2 Claude のアカウント</h3>
-<p>Claude のアカウントが要る。 Claude アプリにカスタムコネクタ(自分で接続先の URL を登録するコネクタ)を追加できるのは、 Free から Enterprise までのプランである。ただし Free は、カスタムコネクタが一つまでである。 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> ほかのコネクタを入れているときは、空きがあるかを確かめる。個別のプラン名ごとの対応は、資料で確認できなかった(要確認)。</p>
-<p>ターミナルで使う Claude Code(経路 B )は、 Claude の有料プラン(Pro ・ Max ・ Ultra ・ Team ・ Enterprise)か、 Claude Console(事前に支払ったクレジットで API を使う形のアカウント。作成者の補足)のアカウントなどでログインする。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> この資料の列挙に Free は見当たらなかったが、 Free で使えないと言い切れるかは確認できていない(要確認)。</p>
-<p><strong>プランの確かめ方。</strong> Claude アプリの設定のうち、アカウントやプランの情報を表示する画面で、現在のプラン名を見る。画面の名前は版によって異なる場合がある(作成者の案内)。</p>
+<p>Claude のアカウントが要る。 Claude アプリにカスタムコネクタ（自分で接続先の URL を登録するコネクタ）を追加できるのは、 Free から Enterprise までのプランである。ただし Free は、カスタムコネクタが一つまでである。 <sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> ほかのコネクタを入れているときは、空きがあるかを確かめる。個別のプラン名ごとの対応は、資料で確認できなかった（要確認）。</p>
+<p>ターミナルで使う Claude Code(経路 B )は、 Claude の有料プラン(Pro ・ Max ・ Ultra ・ Team ・ Enterprise)か、 Claude Console （事前に支払ったクレジットで API を使う形のアカウント。作成者の補足）のアカウントなどでログインする。 <sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup> この資料の列挙に Free は見当たらなかったが、 Free で使えないと言い切れるかは確認できていない（要確認）。</p>
+<p><strong>プランの確かめ方。</strong> Claude アプリの設定のうち、アカウントやプランの情報を表示する画面で、現在のプラン名を見る。画面の名前は版によって異なる場合がある（作成者の案内）。</p>
 <p>Team と Enterprise では、カスタムコネクタを組織に追加できるのは、所有者(Owner など)に限られる。 <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 自分が所有者でないときは、所有者に依頼する必要がある。</p>
 
 <h3 id="sec3-3">3.3 使う道具</h3>
 <ul>
 <li><strong>Claude アプリ</strong> : 経路 A で使う。</li>
-<li><strong>ターミナル</strong> : 経路 B だけで使う。コマンド(文字で入力する命令)を打ち込む窓である。 Windows では PowerShell 7 、 Mac では zsh が動くターミナルを使う。本書では、ターミナルを「開く」ことはできる前提で書く。</li>
+<li><strong>ターミナル</strong> : 経路 B だけで使う。コマンド（文字で入力する命令）を打ち込む窓である。 Windows では PowerShell 7 、 Mac では zsh が動くターミナルを使う。本書では、ターミナルを「開く」ことはできる前提で書く。</li>
 </ul>
 
 <h3 id="sec3-4">3.4 準備のチェックリスト</h3>
@@ -387,7 +387,7 @@
 <tbody>
 <tr><th scope="row">A-1 : Claude アプリのカスタムコネクタ</th><td data-label="操作の場所">Claude アプリの Customize > Connectors</td><td data-label="必要なもの">Claude のアカウント(Free でも一つまで可)。 <sup id="fnref-7-4"><a href="#ref-7">[7]</a></sup></td><td data-label="注意点">Team と Enterprise は、所有者が先に追加する。 <sup id="fnref-7-5"><a href="#ref-7">[7]</a></sup></td></tr>
 <tr><th scope="row">A-2 : Claude アプリの Code タブ</th><td data-label="操作の場所">Code タブの入力欄の横の「 + 」</td><td data-label="必要なもの">Code タブを使える Claude のアカウント。必要なプランは、資料で確認できなかった。</td><td data-label="注意点">コネクタの項目は WSL のセッションでは使えない。 <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup></td></tr>
-<tr><th scope="row">B : ターミナルの Claude Code</th><td data-label="操作の場所">ターミナル</td><td data-label="必要なもの">Claude Code のインストールとログイン。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td><td data-label="注意点">コマンドを自分で打つ。追加した場所(スコープ)の考え方がある。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><th scope="row">B : ターミナルの Claude Code</th><td data-label="操作の場所">ターミナル</td><td data-label="必要なもの">Claude Code のインストールとログイン。 <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup></td><td data-label="注意点">コマンドを自分で打つ。追加した場所（スコープ）の考え方がある。 <sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td></tr>
 </tbody>
 </table>
 
@@ -400,16 +400,16 @@
 <p>この方法は、本書の本流には入れない。 Claude にコマンドを実行させる方法なので、内容を確かめずに許可すると危険があるためである。この方法を試すときに確かめるべきことは、第 9 章の 9.2 に書く。</p>
 
 <h2 id="sec5">5. 接続の手順</h2>
-<p>経路ごとに、選んだ経路の節だけを読めばよい。各ステップには「何のために」「操作」「うまくいったとき」「うまくいかないとき」の四つを書く。画面の操作は、 Windows でも Mac でも、アプリの同じ画面で行うと想定している(これは作成者の解釈である)。</p>
+<p>経路ごとに、選んだ経路の節だけを読めばよい。各ステップには「何のために」「操作」「うまくいったとき」「うまくいかないとき」の四つを書く。画面の操作は、 Windows でも Mac でも、アプリの同じ画面で行うと想定している（これは作成者の解釈である）。</p>
 <div class="box">各ステップの「うまくいったとき」のうち、出典の脚注が付いていない表示は、<strong>公式資料から想定した内容(作成者の解釈)</strong>であり、実機では確認していない。実際の表示と違うことがある。</div>
 
 <h3 id="sec5-1">5.1 経路 A-1 : Claude アプリのカスタムコネクタ</h3>
-<p>この節は、経路 A-1 を選んだ人向けである。 Anthropic の資料が Pro と Max の個人プランの手順として示すものを書く。 <sup id="fnref-7-6"><a href="#ref-7">[7]</a></sup> Free で同じ手順になるかは、確認できなかった(要確認)。 Team と Enterprise では、先に所有者が「 Organization settings > Connectors 」から追加する。所有者が追加したあと、メンバーは「 Customize > Connectors 」で、そのコネクタの「 Connect 」を選ぶ。 <sup id="fnref-7-7"><a href="#ref-7">[7]</a></sup></p>
+<p>この節は、経路 A-1 を選んだ人向けである。 Anthropic の資料が Pro と Max の個人プランの手順として示すものを書く。 <sup id="fnref-7-6"><a href="#ref-7">[7]</a></sup> Free で同じ手順になるかは、確認できなかった（要確認）。 Team と Enterprise では、先に所有者が「 Organization settings > Connectors 」から追加する。所有者が追加したあと、メンバーは「 Customize > Connectors 」で、そのコネクタの「 Connect 」を選ぶ。 <sup id="fnref-7-7"><a href="#ref-7">[7]</a></sup></p>
 
 <h4>ステップ A1-1 : コネクタの画面を開く</h4>
-<p><strong>何のために</strong><br>コネクタ(外部サービスとの接続)を管理する画面に移るため。カスタムコネクタは、この画面から追加する。</p>
+<p><strong>何のために</strong><br>コネクタ（外部サービスとの接続）を管理する画面に移るため。カスタムコネクタは、この画面から追加する。</p>
 <p><strong>操作</strong><br>Claude アプリで「 Customize 」を開き、「 Connectors 」を選ぶ。 <sup id="fnref-7-8"><a href="#ref-7">[7]</a></sup></p>
-<p><strong>うまくいったとき</strong><br>コネクタを管理する画面が開くと想定される(作成者の解釈。未確認)。</p>
+<p><strong>うまくいったとき</strong><br>コネクタを管理する画面が開くと想定される（作成者の解釈。未確認）。</p>
 <p><strong>うまくいかないとき</strong><br>メニューの名前は版によって異なる場合がある。見つからないときは、 Claude の公式ヘルプ <em>Get started with custom connectors using remote MCP</em> を確認する。 <sup id="fnref-7-9"><a href="#ref-7">[7]</a></sup></p>
 
 <h4>ステップ A1-2 : Suno をカスタムコネクタとして追加する</h4>
@@ -423,36 +423,36 @@
 <pre><code>https://api.suno.com/mcp</code></pre>
 <ol start="4">
 <li>「 Continue 」を選ぶ。</li>
-<li>認証の設定が表示されたら、内容を確かめて「 Continue 」を選ぶ。 Anthropic の資料によれば、この画面には「 Authentication 」(選択肢は「 Sign in now 」「 Sign in when needed 」「 No sign in 」)、「 OAuth client 」、「 Request headers 」の欄がある。 <sup id="fnref-7-11"><a href="#ref-7">[7]</a></sup> 「 OAuth client 」は Claude が自分をどう名乗るかの設定、「 Request headers 」は API キーなどの固定の認証情報を付ける欄である(これは資料の説明からの作成者の解釈)。 Suno の公式ガイドは、これらの欄に触れていない。 <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> どの選択肢が Suno に適するかは、公式資料で確認できなかった。 Suno は、サインインして承認する方式で、 API キーは要らない。 <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup> したがって、「 No sign in 」を選ばず、画面に表示された内容を自分では変えないことをおすすめする(作成者の推奨)。</li>
+<li>認証の設定が表示されたら、内容を確かめて「 Continue 」を選ぶ。 Anthropic の資料によれば、この画面には「 Authentication 」（選択肢は「 Sign in now 」「 Sign in when needed 」「 No sign in 」）、「 OAuth client 」、「 Request headers 」の欄がある。 <sup id="fnref-7-11"><a href="#ref-7">[7]</a></sup> 「 OAuth client 」は Claude が自分をどう名乗るかの設定、「 Request headers 」は API キーなどの固定の認証情報を付ける欄である（これは資料の説明からの作成者の解釈）。 Suno の公式ガイドは、これらの欄に触れていない。 <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> どの選択肢が Suno に適するかは、公式資料で確認できなかった。 Suno は、サインインして承認する方式で、 API キーは要らない。 <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup> したがって、「 No sign in 」を選ばず、画面に表示された内容を自分では変えないことをおすすめする（作成者の推奨）。</li>
 <li>「 Add 」を選ぶ。</li>
 </ol>
-<p>URL は、一字一句そのまま入力する。似た名前の別の URL を使ってはならない(第 9 章を参照)。</p>
-<p><strong>うまくいったとき</strong><br>コネクタの一覧に「 Suno 」が加わると想定される(作成者の解釈。未確認)。</p>
+<p>URL は、一字一句そのまま入力する。似た名前の別の URL を使ってはならない（第 9 章を参照）。</p>
+<p><strong>うまくいったとき</strong><br>コネクタの一覧に「 Suno 」が加わると想定される（作成者の解釈。未確認）。</p>
 <p><strong>うまくいかないとき</strong><br>Suno の FAQ は、つながらないときは、 MCP の URL(<code>https://api.suno.com/mcp</code>)が正しいことと、 Suno のサインインと承認が終わっていることを、見直すよう案内している。 <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup> コネクタの内容を直したいときは、いったん削除してから、直した内容で追加し直す必要がある。 <sup id="fnref-7-12"><a href="#ref-7">[7]</a></sup></p>
 
 <h4>ステップ A1-3 : Suno にサインインして承認する</h4>
 <p><strong>何のために</strong><br>Claude が、利用者の Suno アカウントを使えるようにするため。この接続に API キーは要らない。 Suno にサインインして、アクセスを一度承認する方式である。 <sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup></p>
-<p><strong>操作</strong><br>追加した「 Suno 」の「 Connect 」を選ぶ。 <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup> ブラウザなどで Suno のサインインの画面が表示されたら、自分の Suno アカウントでサインインし、求められた権限を読んでから承認する。権限の内容は確かめずに承認しない(第 9 章を参照)。</p>
-<p><strong>うまくいったとき</strong><br>サインインと承認が終わり、 Suno が接続済みの状態になると想定される(作成者の解釈。未確認)。具体的な表示の文言は、資料で確認できなかった。</p>
-<p><strong>うまくいかないとき</strong><br>サインインの画面を途中で閉じたときは、もう一度「 Connect 」を選んでみる(作成者の推奨。公式資料の記述ではない)。それでも進まないときは、 Suno の公式ガイドを確認する。 <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup></p>
+<p><strong>操作</strong><br>追加した「 Suno 」の「 Connect 」を選ぶ。 <sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup> ブラウザなどで Suno のサインインの画面が表示されたら、自分の Suno アカウントでサインインし、求められた権限を読んでから承認する。権限の内容は確かめずに承認しない（第 9 章を参照）。</p>
+<p><strong>うまくいったとき</strong><br>サインインと承認が終わり、 Suno が接続済みの状態になると想定される（作成者の解釈。未確認）。具体的な表示の文言は、資料で確認できなかった。</p>
+<p><strong>うまくいかないとき</strong><br>サインインの画面を途中で閉じたときは、もう一度「 Connect 」を選んでみる（作成者の推奨。公式資料の記述ではない）。それでも進まないときは、 Suno の公式ガイドを確認する。 <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup></p>
 
 <h3 id="sec5-2">5.2 経路 A-2 : Claude アプリの Code タブ</h3>
-<p>この節は、経路 A-2 を選んだ人向けである。 Code タブは、 Claude のデスクトップアプリの中で Claude Code を使う画面である。 <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup> コネクタを追加する操作は、 Anthropic の資料によれば、 Claude のアカウントでの、ローカルまたは SSH(別のコンピュータへの接続)のセッションが対象である。 <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup></p>
+<p>この節は、経路 A-2 を選んだ人向けである。 Code タブは、 Claude のデスクトップアプリの中で Claude Code を使う画面である。 <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup> コネクタを追加する操作は、 Anthropic の資料によれば、 Claude のアカウントでの、ローカルまたは SSH （別のコンピュータへの接続）のセッションが対象である。 <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup></p>
 
 <h4>ステップ A2-1 : Code タブでコネクタの画面を開く</h4>
 <p><strong>何のために</strong><br>Code タブから、コネクタを追加する入口に移るため。</p>
 <p><strong>操作</strong><br>Code タブで、プロンプトの入力欄の横の「 + 」を選び、「 Add connectors 」を選ぶと、コネクタの一覧が開く。メニューに「 Connectors 」と表示されている場合は、それを選び、「 Browse connectors 」を選ぶ。 <sup id="fnref-9-5"><a href="#ref-9">[9]</a></sup></p>
-<p><strong>うまくいったとき</strong><br>コネクタの一覧が開くと想定される(作成者の解釈。未確認)。</p>
-<p><strong>うまくいかないとき</strong><br>WSL(Windows 上の Linux 環境)のセッションでは、「 Connectors 」の項目がグレーになる。 <sup id="fnref-9-6"><a href="#ref-9">[9]</a></sup> その場合は、 WSL でないセッションで開き直してみる(作成者の推奨。資料に対処の記載はない)。 Code タブが開けないときや、必要なプランは、資料で確認できなかった。 Anthropic の公式ドキュメントを確認してほしい。 <sup id="fnref-9-7"><a href="#ref-9">[9]</a></sup></p>
+<p><strong>うまくいったとき</strong><br>コネクタの一覧が開くと想定される（作成者の解釈。未確認）。</p>
+<p><strong>うまくいかないとき</strong><br>WSL(Windows 上の Linux 環境)のセッションでは、「 Connectors 」の項目がグレーになる。 <sup id="fnref-9-6"><a href="#ref-9">[9]</a></sup> その場合は、 WSL でないセッションで開き直してみる（作成者の推奨。資料に対処の記載はない）。 Code タブが開けないときや、必要なプランは、資料で確認できなかった。 Anthropic の公式ドキュメントを確認してほしい。 <sup id="fnref-9-7"><a href="#ref-9">[9]</a></sup></p>
 
 <h4>ステップ A2-2 : Suno を追加する</h4>
 <p><strong>何のために</strong><br>一覧に目的のコネクタがないときの代わりの方法を使うため。 Suno が Code タブの一覧に載っているかは、資料で確認できなかった。</p>
-<p><strong>操作</strong><br>一覧に Suno が見当たらないときは、カスタムコネクタとして追加する。 Anthropic の資料は、一覧にない連携は、設定ファイルへの手動の追加か、カスタムコネクタの作成で行うと説明している。 <sup id="fnref-9-8"><a href="#ref-9">[9]</a></sup> ただし、 Code タブでの追加が経路 A-1 のステップ A1-2 と A1-3 と同じ手順になるか、また Claude アプリで追加したコネクタが Code タブにも現れるかは、資料で確認できなかった(要確認)。確実に進めたいときは、経路 A-1 で追加する。コネクタの管理や接続の解除は、サイドバーの「 Customize 」から「 Connectors 」を開いて行う。 <sup id="fnref-9-9"><a href="#ref-9">[9]</a></sup></p>
-<p><strong>うまくいったとき</strong><br>コネクタの管理画面に Suno が現れると想定される(作成者の解釈。未確認)。</p>
+<p><strong>操作</strong><br>一覧に Suno が見当たらないときは、カスタムコネクタとして追加する。 Anthropic の資料は、一覧にない連携は、設定ファイルへの手動の追加か、カスタムコネクタの作成で行うと説明している。 <sup id="fnref-9-8"><a href="#ref-9">[9]</a></sup> ただし、 Code タブでの追加が経路 A-1 のステップ A1-2 と A1-3 と同じ手順になるか、また Claude アプリで追加したコネクタが Code タブにも現れるかは、資料で確認できなかった（要確認）。確実に進めたいときは、経路 A-1 で追加する。コネクタの管理や接続の解除は、サイドバーの「 Customize 」から「 Connectors 」を開いて行う。 <sup id="fnref-9-9"><a href="#ref-9">[9]</a></sup></p>
+<p><strong>うまくいったとき</strong><br>コネクタの管理画面に Suno が現れると想定される（作成者の解釈。未確認）。</p>
 <p><strong>うまくいかないとき</strong><br>経路 A-1 に切り替える。または、 Anthropic の公式ドキュメントを確認する。 <sup id="fnref-9-10"><a href="#ref-9">[9]</a></sup></p>
 
 <h3 id="sec5-3">5.3 経路 B : ターミナルの Claude Code</h3>
-<p>この節は、経路 B を選んだ人向けである。コマンドを打つ場所が二か所あることに注意してほしい。 <code class="term">claude</code> で始まる <code class="term">claude --version</code> や <code class="term">claude mcp add</code> などは、ターミナルの画面で打つ。 <code class="term">/login</code> や <code class="term">/mcp</code> のように <code>/</code> で始まるものは、 <code class="term">claude</code> を起動したあとの、 Claude Code の入力欄に打つ。 <code class="term">claude</code> コマンドの CLI(コマンドで操作する形)は、 Claude Code のターミナル版である。</p>
+<p>この節は、経路 B を選んだ人向けである。コマンドを打つ場所が二か所あることに注意してほしい。 <code class="term">claude</code> で始まる <code class="term">claude --version</code> や <code class="term">claude mcp add</code> などは、ターミナルの画面で打つ。 <code class="term">/login</code> や <code class="term">/mcp</code> のように <code>/</code> で始まるものは、 <code class="term">claude</code> を起動したあとの、 Claude Code の入力欄に打つ。 <code class="term">claude</code> コマンドの CLI （コマンドで操作する形）は、 Claude Code のターミナル版である。</p>
 
 <h4>ステップ B1 : ターミナルを開く</h4>
 <p><strong>何のために</strong><br>コマンドを打ち込む窓を用意するため。</p>
@@ -468,18 +468,18 @@
 <pre class="term"><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
 <p>どちらも、インターネット上のインストール用の命令を取り込んで、そのまま実行するコマンドである。 Anthropic の公式ページに書かれたこの形のままを使い、ほかのページで見つけた別の URL は使わない。 Windows のコマンドプロンプト(CMD)用のコマンドは別のものである。 PowerShell と取り違えないよう、画面の行頭に <code>PS</code> が付いていることを確かめる。 <sup id="fnref-8-6"><a href="#ref-8">[8]</a></sup></p>
 <p><strong>うまくいったとき</strong><br>エラーなく終わる。成功したかどうかは、次のステップで確かめる。</p>
-<p><strong>うまくいかないとき</strong><br>エラーが出たら、コマンドを打った場所(PowerShell か CMD か)と、自分の OS に合うコマンドかを見直す(作成者の推奨)。 OS ごとのコマンドの違いは資料にある。 <sup id="fnref-8-7"><a href="#ref-8">[8]</a></sup> そのほかの失敗は、 Anthropic のインストールの案内(<em>Troubleshoot installation</em>)を確認する。 <sup id="fnref-8-8"><a href="#ref-8">[8]</a></sup></p>
+<p><strong>うまくいかないとき</strong><br>エラーが出たら、コマンドを打った場所(PowerShell か CMD か)と、自分の OS に合うコマンドかを見直す（作成者の推奨）。 OS ごとのコマンドの違いは資料にある。 <sup id="fnref-8-7"><a href="#ref-8">[8]</a></sup> そのほかの失敗は、 Anthropic のインストールの案内(<em>Troubleshoot installation</em>)を確認する。 <sup id="fnref-8-8"><a href="#ref-8">[8]</a></sup></p>
 
 <h4>ステップ B3 : インストールを確かめる</h4>
 <p><strong>何のために</strong><br>インストールが成功し、 <code class="term">claude</code> が呼び出せることを確かめるため。</p>
-<p><strong>操作</strong><br>ターミナルを開き直して(新しいウィンドウにして)、次を打つ。 Windows でも Mac でも同じである。 <sup id="fnref-8-9"><a href="#ref-8">[8]</a></sup></p>
+<p><strong>操作</strong><br>ターミナルを開き直して（新しいウィンドウにして）、次を打つ。 Windows でも Mac でも同じである。 <sup id="fnref-8-9"><a href="#ref-8">[8]</a></sup></p>
 <pre class="term"><code>claude --version</code></pre>
 <p><strong>うまくいったとき</strong><br>バージョン番号が表示される。 <sup id="fnref-8-10"><a href="#ref-8">[8]</a></sup>(作成者の手元の確認では、バージョン番号に続けて <code>(Claude Code)</code> と表示された。)</p>
-<p><strong>うまくいかないとき</strong><br>シェルが <code class="term">claude</code> を見つけられないと言ったら、インストール先が PATH(コマンドを探す場所の一覧)に入っていない。 Anthropic の Quickstart の PATH に関する案内を確認する。 <sup id="fnref-8-11"><a href="#ref-8">[8]</a></sup></p>
+<p><strong>うまくいかないとき</strong><br>シェルが <code class="term">claude</code> を見つけられないと言ったら、インストール先が PATH （コマンドを探す場所の一覧）に入っていない。 Anthropic の Quickstart の PATH に関する案内を確認する。 <sup id="fnref-8-11"><a href="#ref-8">[8]</a></sup></p>
 
 <h4>ステップ B4 : Claude Code にログインする</h4>
 <p><strong>何のために</strong><br>Claude Code が、利用者の Claude のアカウントで動くようにするため。</p>
-<p><strong>操作</strong><br>使いたい作業フォルダを一つ決め、そこに移動してから、 <code class="term">claude</code> を起動する。 <sup id="fnref-8-12"><a href="#ref-8">[8]</a></sup> ステップ B5 で追加する接続は、既定では、追加したフォルダ(プロジェクト)の中でだけ有効になる。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 以後は、<strong>ステップ B5 も B6 も、このフォルダで行う</strong>。全部のフォルダで使う設定もあるが、その書式は Anthropic の資料で確認してほしい。 <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup></p>
+<p><strong>操作</strong><br>使いたい作業フォルダを一つ決め、そこに移動してから、 <code class="term">claude</code> を起動する。 <sup id="fnref-8-12"><a href="#ref-8">[8]</a></sup> ステップ B5 で追加する接続は、既定では、追加したフォルダ（プロジェクト）の中でだけ有効になる。 <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 以後は、<strong>ステップ B5 も B6 も、このフォルダで行う</strong>。全部のフォルダで使う設定もあるが、その書式は Anthropic の資料で確認してほしい。 <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup></p>
 <pre class="term"><code>cd &lt;あなたの作業フォルダのパス&gt;
 claude</code></pre>
 <p><code>&lt;あなたの作業フォルダのパス&gt;</code> には、自分で使うフォルダの場所を入れる。 Anthropic の資料は、 <code class="term">cd</code> のあとにプロジェクトのパスを入れて <code class="term">claude</code> を起動する形を示している。 <sup id="fnref-8-13"><a href="#ref-8">[8]</a></sup> 初回は、ログインを求められる。画面の案内に従い、ブラウザで認証する。 <sup id="fnref-8-14"><a href="#ref-8">[8]</a></sup></p>
@@ -491,15 +491,15 @@ claude</code></pre>
 <p><strong>操作</strong><br>ステップ B4 と<strong>同じフォルダ</strong>で、ターミナルの画面に次を打つ。 Windows でも Mac でも同じ形である。 <sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup></p>
 <pre class="term"><code>claude mcp add --transport http suno https://api.suno.com/mcp</code></pre>
 <p>このコマンドは、「 HTTP という方式で、 <code>suno</code> という名前の接続口を、この URL で登録する」という意味である。 <sup id="fnref-6-4"><a href="#ref-6">[6]</a></sup> オプション(<code class="term">--transport</code> など)は、名前と URL より前に置く。 <sup id="fnref-6-5"><a href="#ref-6">[6]</a></sup></p>
-<p><strong>うまくいったとき</strong><br>エラーが出ずに終わると想定される(作成者の解釈。未確認)。接続の状態は、ステップ B6 と第 6 章で確かめる。</p>
-<p><strong>うまくいかないとき</strong><br>コマンドを打ち間違えていないか、特に URL を確かめる。 <code class="term">claude mcp add --help</code> を打つと、書式の説明が表示される(作成者の手元で確認した)。</p>
+<p><strong>うまくいったとき</strong><br>エラーが出ずに終わると想定される（作成者の解釈。未確認）。接続の状態は、ステップ B6 と第 6 章で確かめる。</p>
+<p><strong>うまくいかないとき</strong><br>コマンドを打ち間違えていないか、特に URL を確かめる。 <code class="term">claude mcp add --help</code> を打つと、書式の説明が表示される（作成者の手元で確認した）。</p>
 
 <h4>ステップ B6 : Suno にサインインして承認する</h4>
 <p><strong>何のために</strong><br>Claude Code が、利用者の Suno アカウントを使えるようにするため。 API キーは要らない。 <sup id="fnref-1-10"><a href="#ref-1">[1]</a></sup></p>
 <p><strong>操作</strong><br>ステップ B4 と同じフォルダで <code class="term">claude</code> を起動し、入力欄に次を打つ。 <sup id="fnref-6-6"><a href="#ref-6">[6]</a></sup></p>
 <pre class="term"><code>/mcp</code></pre>
 <p>ブラウザでの手順に従い、 Suno にサインインして承認する。 <sup id="fnref-6-7"><a href="#ref-6">[6]</a></sup> 求められた権限は、読んでから承認する。 <sup id="fnref-7-13"><a href="#ref-7">[7]</a></sup></p>
-<p><strong>うまくいったとき</strong><br>サインインと承認が終わると想定される(作成者の解釈。未確認)。具体的な表示の文言は、資料で確認できなかった。</p>
+<p><strong>うまくいったとき</strong><br>サインインと承認が終わると想定される（作成者の解釈。未確認）。具体的な表示の文言は、資料で確認できなかった。</p>
 <p><strong>うまくいかないとき</strong><br>ブラウザが自動で開かないときは、画面に表示された URL をコピーして、手でブラウザに貼り付けて開く。 <sup id="fnref-6-8"><a href="#ref-6">[6]</a></sup></p>
 
 <h2 id="sec6">6. 接続の確認</h2>
@@ -507,8 +507,8 @@ claude</code></pre>
 <h3 id="sec6-1">6.1 経路 A の確認</h3>
 <p><strong>何のために</strong><br>追加したコネクタが、会話で使える状態かを確かめるため。</p>
 <p><strong>操作</strong><br>「 Customize > Connectors 」の一覧に「 Suno 」があることを確かめる。さらに、会話の画面で「 + 」を選び、「 Connectors 」を選んで、 Suno のスイッチがオンになっていることを確かめる。 <sup id="fnref-7-14"><a href="#ref-7">[7]</a></sup></p>
-<p><strong>うまくいったとき</strong><br>一覧に Suno があり、会話でオンになっていると想定される(作成者の解釈。未確認)。</p>
-<p>経路 A-2 (Code タブ)で追加したときは、サイドバーの「 Customize 」から「 Connectors 」を開いて、 Suno があるかを確かめる。 <sup id="fnref-9-11"><a href="#ref-9">[9]</a></sup> 会話でのオンの操作が Code タブでも同じ表示かは、資料で確認できなかった(要確認)。</p>
+<p><strong>うまくいったとき</strong><br>一覧に Suno があり、会話でオンになっていると想定される（作成者の解釈。未確認）。</p>
+<p>経路 A-2 (Code タブ)で追加したときは、サイドバーの「 Customize 」から「 Connectors 」を開いて、 Suno があるかを確かめる。 <sup id="fnref-9-11"><a href="#ref-9">[9]</a></sup> 会話でのオンの操作が Code タブでも同じ表示かは、資料で確認できなかった（要確認）。</p>
 <p><strong>うまくいかないとき</strong><br>Suno が一覧にないときは、ステップ A1-2 をやり直す。オフのときは、オンにする。 Suno の FAQ は、 Suno が AI アシスタントの接続一覧に自動では出ないことがあり、そのときはカスタムコネクタとして追加するよう案内している。 <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup></p>
 
 <h3 id="sec6-2">6.2 経路 B の確認</h3>
@@ -516,7 +516,7 @@ claude</code></pre>
 <p><strong>操作</strong><br>ターミナルで、次を打つ。登録済みの接続口の一覧が表示される。 <sup id="fnref-6-9"><a href="#ref-6">[6]</a></sup></p>
 <pre class="term"><code>claude mcp list</code></pre>
 <p>また、 Claude Code の入力欄で <code class="term">/mcp</code> を打つと、接続の状態を確かめられる。 <sup id="fnref-6-10"><a href="#ref-6">[6]</a></sup></p>
-<p><strong>うまくいったとき</strong><br>一覧に <code>suno</code> が出ると想定される(作成者の解釈。未確認)。状態を示す表示の文言は、資料で確認できなかった。</p>
+<p><strong>うまくいったとき</strong><br>一覧に <code>suno</code> が出ると想定される（作成者の解釈。未確認）。状態を示す表示の文言は、資料で確認できなかった。</p>
 <p><strong>うまくいかないとき</strong><br>一覧に出ないときは、追加したときと別のフォルダで確かめていないか見直す。既定の追加先は、そのフォルダの中だけで有効だからである。 <sup id="fnref-6-11"><a href="#ref-6">[6]</a></sup></p>
 
 <h3 id="sec6-3">6.3 共通の確認 : 残りのクレジットを尋ねる</h3>
@@ -524,11 +524,11 @@ claude</code></pre>
 <p><strong>操作</strong><br>Claude の会話に、たとえば次のように頼む。 Suno の公式ページは、 AI ツールに残りのクレジットを尋ねられると説明している。 <sup id="fnref-1-11"><a href="#ref-1">[1]</a></sup></p>
 <pre><code>Suno の残りのクレジットを教えてください。</code></pre>
 <p>これは例であり、言い回しは自由に変えてよい。残量の問い合わせでクレジットが減るかは、資料に記載がなく、確認できなかった。</p>
-<p><strong>うまくいったとき</strong><br>Claude が Suno に問い合わせて、残りのクレジットを答えると想定される(作成者の解釈。未確認)。途中で、道具の使用を許可するか尋ねる画面が出ることがある(第 7 章の 7.2 を参照)。</p>
+<p><strong>うまくいったとき</strong><br>Claude が Suno に問い合わせて、残りのクレジットを答えると想定される（作成者の解釈。未確認）。途中で、道具の使用を許可するか尋ねる画面が出ることがある（第 7 章の 7.2 を参照）。</p>
 <p><strong>うまくいかないとき</strong><br>Claude が Suno を使えないと答えるときは、接続が済んでいないか、会話で Suno がオフになっている可能性がある。ステップ A1-3 または B6 のサインインと承認が終わっているか、 Suno が会話でオンになっているかを見直す。 <sup id="fnref-3-7"><a href="#ref-3">[3]</a></sup><sup id="fnref-7-15"><a href="#ref-7">[7]</a></sup></p>
 
 <h2 id="sec7">7. 曲をつくる</h2>
-<div class="box"><strong>費用の注意。</strong>曲をつくるとクレジットを消費する。 Suno の公式ページは、曲のクレジットは現在のプランのものを使い、 suno.com でつくるときと同じだと説明している。 <sup id="fnref-1-12"><a href="#ref-1">[1]</a></sup> 頼む曲の数は、依頼文に書いておくことをおすすめする(作成者の推奨)。</div>
+<div class="box"><strong>費用の注意。</strong>曲をつくるとクレジットを消費する。 Suno の公式ページは、曲のクレジットは現在のプランのものを使い、 suno.com でつくるときと同じだと説明している。 <sup id="fnref-1-12"><a href="#ref-1">[1]</a></sup> 頼む曲の数は、依頼文に書いておくことをおすすめする（作成者の推奨）。</div>
 
 <h3 id="sec7-1">7.1 最初の一曲</h3>
 <p><strong>何のために</strong><br>接続できた状態で、実際に一曲つくり、流れを確かめるため。</p>
@@ -536,19 +536,19 @@ claude</code></pre>
 <pre><code>Suno で、雨の日の散歩をテーマにした、やさしいアコースティックギターの曲を一曲だけつくってください。歌詞とスタイルは任せます。</code></pre>
 <pre><code>Suno で、朝のコーヒーをテーマにした、明るい短い曲を一曲だけつくってください。つくる前に、歌詞の案を見せてください。</code></pre>
 <p>二つ目の例のように「つくる前に案を見せてください」と添えると、クレジットを使う前に内容を確かめられる可能性がある。これは作成者の工夫であり、公式資料の記述ではない。日本語の歌詞に対応しているかは、資料で確認できなかった。思いどおりにならないときは、依頼文を変えて試す。</p>
-<p><strong>うまくいったとき</strong><br>Claude が Suno に依頼し、結果を知らせると想定される(作成者の解釈。未確認)。つくった曲は、 Suno のライブラリに自動で保存される。 <sup id="fnref-3-8"><a href="#ref-3">[3]</a></sup> 「一曲だけ」と頼んだときに、 Suno が実際に何曲つくり、クレジットをいくつ消費するかは、資料で確認できなかった(要確認)。</p>
+<p><strong>うまくいったとき</strong><br>Claude が Suno に依頼し、結果を知らせると想定される（作成者の解釈。未確認）。つくった曲は、 Suno のライブラリに自動で保存される。 <sup id="fnref-3-8"><a href="#ref-3">[3]</a></sup> 「一曲だけ」と頼んだときに、 Suno が実際に何曲つくり、クレジットをいくつ消費するかは、資料で確認できなかった（要確認）。</p>
 <p><strong>うまくいかないとき</strong><br>途中で止まるときは、許可を求める画面が出ていないかを見る。エラーが出るときは、第 8 章の対処を確かめる。</p>
 
 <h3 id="sec7-2">7.2 許可を求められたとき</h3>
 <p><strong>何のために</strong><br>Claude が道具(ここでは Suno)を使う前に、利用者が内容を確かめるため。</p>
-<p><strong>操作</strong><br>Claude アプリでは、道具の使用の承認を求められることがある。内容を読んでから許可する。「 Allow always 」は、信頼できるサーバーとツールにだけ使う。 <sup id="fnref-7-16"><a href="#ref-7">[7]</a></sup> Code タブの Manual モードでは、ファイルの編集やコマンドの実行の前に、 Claude が確認を求める。 <sup id="fnref-9-12"><a href="#ref-9">[9]</a></sup> ターミナルの Claude Code のモードの名前が同じかは、資料で確認できなかった(要確認)。</p>
-<p><strong>うまくいったとき</strong><br>依頼の内容(曲の数など)と一致する操作だけを許可できると想定される(作成者の解釈。未確認)。</p>
+<p><strong>操作</strong><br>Claude アプリでは、道具の使用の承認を求められることがある。内容を読んでから許可する。「 Allow always 」は、信頼できるサーバーとツールにだけ使う。 <sup id="fnref-7-16"><a href="#ref-7">[7]</a></sup> Code タブの Manual モードでは、ファイルの編集やコマンドの実行の前に、 Claude が確認を求める。 <sup id="fnref-9-12"><a href="#ref-9">[9]</a></sup> ターミナルの Claude Code のモードの名前が同じかは、資料で確認できなかった（要確認）。</p>
+<p><strong>うまくいったとき</strong><br>依頼の内容（曲の数など）と一致する操作だけを許可できると想定される（作成者の解釈。未確認）。</p>
 <p><strong>うまくいかないとき</strong><br>身に覚えのない操作を求められたら、許可せずに止める。詳しくは第 9 章を読む。</p>
 
 <h3 id="sec7-3">7.3 できた曲を確かめる</h3>
 <p><strong>何のために</strong><br>曲が実際に保存されたことを、 Suno 側で確かめるため。</p>
 <p><strong>操作</strong><br>suno.com にサインインし、ライブラリを開く。 <sup id="fnref-3-9"><a href="#ref-3">[3]</a></sup></p>
-<p><strong>うまくいったとき</strong><br>依頼した曲がライブラリに並ぶと想定される(作成者の解釈。未確認)。 <sup id="fnref-3-10"><a href="#ref-3">[3]</a></sup></p>
+<p><strong>うまくいったとき</strong><br>依頼した曲がライブラリに並ぶと想定される（作成者の解釈。未確認）。 <sup id="fnref-3-10"><a href="#ref-3">[3]</a></sup></p>
 <p><strong>うまくいかないとき</strong><br>曲がないときは、 Claude の会話の返答を読み直す。エラーがなかったかを見る。</p>
 
 <h3 id="sec7-4">7.4 そのほかにできること</h3>
@@ -562,10 +562,10 @@ claude</code></pre>
 <tr><th scope="row">AI アシスタントの一覧に Suno が出てこない</th><td data-label="考えられる原因">Suno は自動では一覧に出ないことがある。 <sup id="fnref-3-11"><a href="#ref-3">[3]</a></sup></td><td data-label="確かめること">使っているアシスタントが、カスタムコネクタに対応しているか。</td><td data-label="対処">カスタムコネクタとして追加する(ステップ A1-2 )。 <sup id="fnref-3-12"><a href="#ref-3">[3]</a></sup></td></tr>
 <tr><th scope="row">Suno がつながらない</th><td data-label="考えられる原因">URL の入力の誤り。サインインや承認が終わっていない。 <sup id="fnref-3-13"><a href="#ref-3">[3]</a></sup></td><td data-label="確かめること">URL が <code>https://api.suno.com/mcp</code> と一字一句同じか。</td><td data-label="対処">URL を直し、サインインと承認をやり直す。 <sup id="fnref-3-14"><a href="#ref-3">[3]</a></sup></td></tr>
 <tr><th scope="row"><code class="term">claude</code> が見つからない</th><td data-label="考えられる原因">インストール先が PATH に入っていない。 <sup id="fnref-8-18"><a href="#ref-8">[8]</a></sup></td><td data-label="確かめること">ターミナルを開き直したか。</td><td data-label="対処">Anthropic の Quickstart の PATH に関する案内に従う。 <sup id="fnref-8-19"><a href="#ref-8">[8]</a></sup></td></tr>
-<tr><th scope="row">インストールのコマンドがエラーになる</th><td data-label="考えられる原因">打った場所(PowerShell か CMD か)と、コマンドの種類が合っていない可能性がある(作成者の推測)。</td><td data-label="確かめること">行頭に <code>PS</code> が付いているか。 <sup id="fnref-8-20"><a href="#ref-8">[8]</a></sup></td><td data-label="対処">自分の場所に合うコマンドを使う(ステップ B2 )。それでも失敗するときは、 Anthropic のインストールの案内を確認する。 <sup id="fnref-8-21"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><th scope="row">インストールのコマンドがエラーになる</th><td data-label="考えられる原因">打った場所(PowerShell か CMD か)と、コマンドの種類が合っていない可能性がある（作成者の推測）。</td><td data-label="確かめること">行頭に <code>PS</code> が付いているか。 <sup id="fnref-8-20"><a href="#ref-8">[8]</a></sup></td><td data-label="対処">自分の場所に合うコマンドを使う(ステップ B2 )。それでも失敗するときは、 Anthropic のインストールの案内を確認する。 <sup id="fnref-8-21"><a href="#ref-8">[8]</a></sup></td></tr>
 <tr><th scope="row">サインインのブラウザが開かない</th><td data-label="考えられる原因">自動でブラウザが開かないことがある。 <sup id="fnref-6-12"><a href="#ref-6">[6]</a></sup></td><td data-label="確かめること">画面に URL が表示されているか。</td><td data-label="対処">表示された URL をコピーして、手でブラウザで開く。 <sup id="fnref-6-13"><a href="#ref-6">[6]</a></sup></td></tr>
 <tr><th scope="row">別のフォルダで <code class="term">claude</code> を起動すると suno が出ない</th><td data-label="考えられる原因">既定の追加先は、追加したフォルダの中だけで有効である。 <sup id="fnref-6-14"><a href="#ref-6">[6]</a></sup></td><td data-label="確かめること">追加したときと同じフォルダか。</td><td data-label="対処">追加したフォルダで起動する。全プロジェクトで使う設定は、公式の資料で確認する。 <sup id="fnref-6-15"><a href="#ref-6">[6]</a></sup></td></tr>
-<tr><th scope="row">Code タブのコネクタの項目が選べない</th><td data-label="考えられる原因">WSL のセッションでは、グレーになる。 <sup id="fnref-9-13"><a href="#ref-9">[9]</a></sup></td><td data-label="確かめること">セッションが WSL か。</td><td data-label="対処">WSL でないセッションで開いてみる(作成者の推奨。資料に対処の記載はない)。 <sup id="fnref-9-14"><a href="#ref-9">[9]</a></sup></td></tr>
+<tr><th scope="row">Code タブのコネクタの項目が選べない</th><td data-label="考えられる原因">WSL のセッションでは、グレーになる。 <sup id="fnref-9-13"><a href="#ref-9">[9]</a></sup></td><td data-label="確かめること">セッションが WSL か。</td><td data-label="対処">WSL でないセッションで開いてみる（作成者の推奨。資料に対処の記載はない）。 <sup id="fnref-9-14"><a href="#ref-9">[9]</a></sup></td></tr>
 <tr><th scope="row">カスタムコネクタを追加できない</th><td data-label="考えられる原因">Free は一つまで。 Team と Enterprise は所有者のみ追加できる。 <sup id="fnref-7-17"><a href="#ref-7">[7]</a></sup></td><td data-label="確かめること">プランと、すでに追加した数。</td><td data-label="対処">不要なコネクタを外すか、所有者に頼む。 <sup id="fnref-7-18"><a href="#ref-7">[7]</a></sup></td></tr>
 </tbody>
 </table>
@@ -580,26 +580,26 @@ claude</code></pre>
 </ul>
 
 <h3 id="sec9-2">9.2 Claude に操作やコマンドを任せるとき</h3>
-<p>プロンプトインジェクションとは、攻撃者が悪意ある文章を紛れ込ませて、 AI の指示を上書きしようとする手口である(この定義は、 Anthropic の資料の説明に基づく作成者の訳である)。 <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> Anthropic の資料は、外部の内容を取りに行くサーバーが、この危険にさらされうると述べている。 <sup id="fnref-6-16"><a href="#ref-6">[6]</a></sup> また、悪意のある MCP サーバーには、 Claude に意図しない行動をさせる隠れた指示が含まれうる。 <sup id="fnref-7-20"><a href="#ref-7">[7]</a></sup></p>
+<p>プロンプトインジェクションとは、攻撃者が悪意ある文章を紛れ込ませて、 AI の指示を上書きしようとする手口である（この定義は、 Anthropic の資料の説明に基づく作成者の訳である）。 <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup> Anthropic の資料は、外部の内容を取りに行くサーバーが、この危険にさらされうると述べている。 <sup id="fnref-6-16"><a href="#ref-6">[6]</a></sup> また、悪意のある MCP サーバーには、 Claude に意図しない行動をさせる隠れた指示が含まれうる。 <sup id="fnref-7-20"><a href="#ref-7">[7]</a></sup></p>
 <ul>
 <li>提案されたコマンドは、内容を読んでから許可する。承認の前に、提案されたコードやコマンドの安全を確かめるのは、利用者の責任だとされている。 <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup></li>
 <li>「 Allow always 」は、信頼できるサーバーとツールにだけ使う。関係のないツールは、無効にしておく。 <sup id="fnref-7-21"><a href="#ref-7">[7]</a></sup></li>
-<li>権限モードは、確認を求める Manual を使うことをおすすめする。 Bypass permissions(名前から、確認を省く設定と解釈される。作成者の解釈)は、使わないほうがよい(作成者の推奨)。 <sup id="fnref-9-15"><a href="#ref-9">[9]</a></sup></li>
-<li><strong>元の投稿の方法を試すとき。</strong> Claude が読もうとしている URL が、 Suno 自身の公式ページか確かめる。実行しようとするコマンドが、本書のステップ B5 のコマンド(<code class="term">claude mcp add --transport http suno https://api.suno.com/mcp</code>)と一致するか確かめる。一致しない、または意味の分からないコマンドは許可しない(作成者の推奨)。</li>
+<li>権限モードは、確認を求める Manual を使うことをおすすめする。 Bypass permissions （名前から、確認を省く設定と解釈される。作成者の解釈）は、使わないほうがよい（作成者の推奨）。 <sup id="fnref-9-15"><a href="#ref-9">[9]</a></sup></li>
+<li><strong>元の投稿の方法を試すとき。</strong> Claude が読もうとしている URL が、 Suno 自身の公式ページか確かめる。実行しようとするコマンドが、本書のステップ B5 のコマンド(<code class="term">claude mcp add --transport http suno https://api.suno.com/mcp</code>)と一致するか確かめる。一致しない、または意味の分からないコマンドは許可しない（作成者の推奨）。</li>
 </ul>
 
 <h3 id="sec9-3">9.3 費用</h3>
 <p>曲をつくるとクレジットを消費する。 <sup id="fnref-1-15"><a href="#ref-1">[1]</a></sup><sup id="fnref-3-15"><a href="#ref-3">[3]</a></sup> クレジットの量・必要数・料金は変わりうるため、 Suno の公式ページで最新の内容を確かめる。取得日は 2026-10-31 である。 Claude 側の料金やプランも、 Anthropic の公式ページで確かめる。</p>
 
 <h3 id="sec9-4">9.4 つくった曲の権利</h3>
-<p>Suno のヘルプ(取得日 2026-10-31 、更新日の記載なし)によれば、曲をつくった時点で Pro か Premier のプランに加入していれば、その曲の所有者とみなされ、加入をやめても商用利用の権利が残る。無料(Free)のプランでつくった曲は Suno が所有権を保持し、非商用でのみ使える。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> プランの名前や条件は変わりうる。公開や販売をする前に、必ず最新のヘルプと規約を確かめてほしい。</p>
+<p>Suno のヘルプ（取得日 2026-10-31 、更新日の記載なし）によれば、曲をつくった時点で Pro か Premier のプランに加入していれば、その曲の所有者とみなされ、加入をやめても商用利用の権利が残る。無料(Free)のプランでつくった曲は Suno が所有権を保持し、非商用でのみ使える。 <sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup> プランの名前や条件は変わりうる。公開や販売をする前に、必ず最新のヘルプと規約を確かめてほしい。</p>
 
 <h3 id="sec9-5">9.5 接続をやめる・取り消す</h3>
 <ul>
-<li><strong>経路 A</strong> : 「 Customize > Connectors 」で、コネクタの「 Remove 」を選ぶ。 <sup id="fnref-7-22"><a href="#ref-7">[7]</a></sup> これで Suno 側の許可も失効するかは、資料で確認できなかった(要確認)。</li>
+<li><strong>経路 A</strong> : 「 Customize > Connectors 」で、コネクタの「 Remove 」を選ぶ。 <sup id="fnref-7-22"><a href="#ref-7">[7]</a></sup> これで Suno 側の許可も失効するかは、資料で確認できなかった（要確認）。</li>
 <li><strong>経路 B</strong> : 次の順に行う。 <sup id="fnref-6-17"><a href="#ref-6">[6]</a></sup>
 <ol>
-<li>ステップ B4 と同じフォルダで(作成者の推奨。追加した場所が local スコープのため)、ターミナルで <code class="term">claude mcp logout &lt;name&gt;</code> を実行する。保存された認証情報を消し、許可の失効を試みる手順である。</li>
+<li>ステップ B4 と同じフォルダで（作成者の推奨。追加した場所が local スコープのため）、ターミナルで <code class="term">claude mcp logout &lt;name&gt;</code> を実行する。保存された認証情報を消し、許可の失効を試みる手順である。</li>
 <li>続けて <code class="term">claude mcp remove &lt;name&gt;</code> を実行し、登録を削除する。</li>
 </ol>
 <code>&lt;name&gt;</code> は、登録した名前(本書では <code>suno</code>)である。順序を逆にすると、削除だけでは、ローカルのトークンは消えても、発行元での失効はされない。 <sup id="fnref-6-18"><a href="#ref-6">[6]</a></sup> Claude Code の中で <code class="term">/mcp</code> を開き、「 Clear authentication 」を選んでもアクセスを取り消せる。 <sup id="fnref-6-19"><a href="#ref-6">[6]</a></sup></li>
@@ -607,8 +607,8 @@ claude</code></pre>
 </ul>
 
 <h3 id="sec9-6">9.6 認証情報の扱い</h3>
-<div class="caution"><p><strong>認証情報(パスワード・キー・トークン)を、チャットの会話、文書、共有ファイルに貼り付けない。</strong> Suno へのサインインは、ブラウザの Suno の画面で行う。 Claude の会話欄にパスワードを書く必要はない。</p></div>
-<p>Anthropic の資料によれば、 Claude Code の API キーやトークン(サインインの証明となる文字列)は、 Mac では、使える場合は Keychain(Mac の認証情報の保管庫)に、 Windows では、利用者のプロファイルのフォルダの権限を引き継ぐファイルに保存される。 <sup id="fnref-10-4"><a href="#ref-10">[10]</a></sup> 共用のパソコンでは、サインインしたままにしないことをおすすめする(作成者の推奨)。</p>
+<div class="caution"><p><strong>認証情報（パスワード・キー・トークン）を、チャットの会話、文書、共有ファイルに貼り付けない。</strong> Suno へのサインインは、ブラウザの Suno の画面で行う。 Claude の会話欄にパスワードを書く必要はない。</p></div>
+<p>Anthropic の資料によれば、 Claude Code の API キーやトークン（サインインの証明となる文字列）は、 Mac では、使える場合は Keychain(Mac の認証情報の保管庫)に、 Windows では、利用者のプロファイルのフォルダの権限を引き継ぐファイルに保存される。 <sup id="fnref-10-4"><a href="#ref-10">[10]</a></sup> 共用のパソコンでは、サインインしたままにしないことをおすすめする（作成者の推奨）。</p>
 
 <h2 id="sec10">10. 用語集・限界</h2>
 <h3 id="sec10-1">10.1 用語集</h3>
@@ -626,16 +626,16 @@ claude</code></pre>
 <tr><th scope="row">設定ファイル</th><td data-label="意味">アプリやコマンドの設定が書かれたファイル。 <sup id="fnref-9-18"><a href="#ref-9">[9]</a></sup></td></tr>
 <tr><th scope="row">HTTP</th><td data-label="意味">インターネットで情報をやり取りするための方式。 <code class="term">--transport http</code> は、この方式で接続することを指す。 <sup id="fnref-6-20"><a href="#ref-6">[6]</a></sup></td></tr>
 <tr><th scope="row">API ・ API キー</th><td data-label="意味">API は、ソフトウェア同士がやり取りするための窓口。 API キーは、その利用者であることを示す文字列。 Suno MCP では、 API キーは要らない。 <sup id="fnref-1-16"><a href="#ref-1">[1]</a></sup></td></tr>
-<tr><th scope="row">トークン</th><td data-label="意味">サインインの証明となる文字列。パスワードと同じく、人に見せないことをおすすめする(作成者の注意)。</td></tr>
+<tr><th scope="row">トークン</th><td data-label="意味">サインインの証明となる文字列。パスワードと同じく、人に見せないことをおすすめする（作成者の注意）。</td></tr>
 <tr><th scope="row">WSL</th><td data-label="意味">Windows の上で Linux を動かす仕組み。 Code タブのコネクタの項目は、 WSL のセッションでグレーになる。 <sup id="fnref-9-19"><a href="#ref-9">[9]</a></sup></td></tr>
-<tr><th scope="row">Claude Console</th><td data-label="意味">事前に支払ったクレジットで API を使う形のアカウント(資料の説明に基づく作成者の補足)。 Claude Code のログインに使える。 <sup id="fnref-8-22"><a href="#ref-8">[8]</a></sup></td></tr>
+<tr><th scope="row">Claude Console</th><td data-label="意味">事前に支払ったクレジットで API を使う形のアカウント（資料の説明に基づく作成者の補足）。 Claude Code のログインに使える。 <sup id="fnref-8-22"><a href="#ref-8">[8]</a></sup></td></tr>
 <tr><th scope="row">Anthropic</th><td data-label="意味">Claude を開発する会社。</td></tr>
 <tr><th scope="row">Suno Voices</th><td data-label="意味">保存しておく Suno の歌声の設定。曲づくりに適用できる。 <sup id="fnref-1-17"><a href="#ref-1">[1]</a></sup></td></tr>
 <tr><th scope="row">カバー・マッシュアップ・延長</th><td data-label="意味">Suno ライブラリの曲を、元にして別の曲にする機能。 <sup id="fnref-1-18"><a href="#ref-1">[1]</a></sup></td></tr>
 <tr><th scope="row">Pro ・ Premier</th><td data-label="意味">Suno の有料プランの名前。 Suno のヘルプが、権利の説明に使っている。 <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup></td></tr>
 <tr><th scope="row">コマンド</th><td data-label="意味">ターミナルに文字で入力する命令。</td></tr>
 <tr><th scope="row">PATH</th><td data-label="意味">コマンドを探す場所の一覧。 <sup id="fnref-8-23"><a href="#ref-8">[8]</a></sup></td></tr>
-<tr><th scope="row">スコープ</th><td data-label="意味">登録した接続が有効になる範囲。 local(現在のプロジェクトだけ)、 project(プロジェクトで共有)、 user(全プロジェクト)がある。 <sup id="fnref-6-21"><a href="#ref-6">[6]</a></sup></td></tr>
+<tr><th scope="row">スコープ</th><td data-label="意味">登録した接続が有効になる範囲。 local （現在のプロジェクトだけ）、 project （プロジェクトで共有）、 user （全プロジェクト）がある。 <sup id="fnref-6-21"><a href="#ref-6">[6]</a></sup></td></tr>
 <tr><th scope="row">クレジット</th><td data-label="意味">Suno で曲をつくるときに使う利用枠。 <sup id="fnref-3-16"><a href="#ref-3">[3]</a></sup></td></tr>
 <tr><th scope="row">ベータ版</th><td data-label="意味">正式版の前の、試験的な提供の段階。仕様が変わりうる。</td></tr>
 <tr><th scope="row">プロンプトインジェクション</th><td data-label="意味">悪意ある文章を紛れ込ませて、 AI の指示を上書きしようとする手口。 <sup id="fnref-10-5"><a href="#ref-10">[10]</a></sup></td></tr>
@@ -648,8 +648,8 @@ claude</code></pre>
 <li><strong>実機では未検証である。</strong> 2026-10-31 の作成時点で、 MCP の追加、 Suno や Claude へのサインイン、曲の生成は、一つも行っていない。ターミナルでは、書式を照合するため、 <code class="term">claude --version</code> (2.1.314 と表示された)と <code class="term">claude mcp add --help</code> の表示だけを確認した。</li>
 <li><strong>投稿の再現は未検証である。</strong>元の投稿の内容は、投稿者の報告として扱った。 <sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup></li>
 <li><strong>ベータ版である。</strong>画面の名前や手順は、変わりうる。</li>
-<li><strong>調べても確認できなかった事項</strong> : MV(映像)づくりの公式な方法／ Code タブを使うのに必要なプラン／デスクトップアプリの Windows での要件／ Suno MCP の生成の上限・ 1 曲あたりのクレジット消費量／残量の問い合わせでクレジットが減るか／ Suno 側で許可を取り消す方法／ Suno MCP が提供する道具の名前と、承認画面の文言／日本語の歌詞への対応／サインイン後の画面の文言と、接続状態の表示／ Claude Code での MCP の道具ごとの許可の設定／ Free プランでのカスタムコネクタの追加手順と、 Claude Code の対応／個別のプラン名ごとのカスタムコネクタの対応／ Code タブでのカスタムコネクタの追加手順と、 Claude アプリで追加したコネクタが Code タブに現れるか／ターミナルの Claude Code の権限モードの名前／「一曲」と頼んだときに実際につくられる曲数とクレジットの消費量。</li>
-<li><strong>範囲外とした事項</strong> : ターミナルや PowerShell 7 の入手・起動の詳しい手順。 MV(映像)づくり。 Suno 以外の AI アシスタントへの接続。</li>
+<li><strong>調べても確認できなかった事項</strong> : MV （映像）づくりの公式な方法／ Code タブを使うのに必要なプラン／デスクトップアプリの Windows での要件／ Suno MCP の生成の上限・ 1 曲あたりのクレジット消費量／残量の問い合わせでクレジットが減るか／ Suno 側で許可を取り消す方法／ Suno MCP が提供する道具の名前と、承認画面の文言／日本語の歌詞への対応／サインイン後の画面の文言と、接続状態の表示／ Claude Code での MCP の道具ごとの許可の設定／ Free プランでのカスタムコネクタの追加手順と、 Claude Code の対応／個別のプラン名ごとのカスタムコネクタの対応／ Code タブでのカスタムコネクタの追加手順と、 Claude アプリで追加したコネクタが Code タブに現れるか／ターミナルの Claude Code の権限モードの名前／「一曲」と頼んだときに実際につくられる曲数とクレジットの消費量。</li>
+<li><strong>範囲外とした事項</strong> : ターミナルや PowerShell 7 の入手・起動の詳しい手順。 MV （映像）づくり。 Suno 以外の AI アシスタントへの接続。</li>
 <li>資料は、 2026-10-31 に取得した。</li>
 </ul>
 <div class="refs">
