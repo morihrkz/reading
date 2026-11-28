@@ -275,7 +275,7 @@
 </div>
 <ul>
 <li>スクリプトの修正などを任せる AI エージェントには、 Claude Code のような、手元の PC でコードを実行できるものを想定します。</li>
-<li>コマンドとパスは、 Mac （ zsh ）を前提に書いています。 Windows では、 Blender の実行ファイルのパスを <code>C:\Program Files\Blender Foundation\Blender 4.2\blender.exe</code> のように読み替え、 PowerShell で実行してください。</li>
+<li>コマンドとパスは、 Mac (zsh) を前提に書いています。 Windows では、 Blender の実行ファイルのパスを <code>C:\Program Files\Blender Foundation\Blender 4.2\blender.exe</code> のように読み替え、 PowerShell で実行してください。</li>
 <li>各サービスの料金、商用利用の可否、生成できる長さは、利用時点の公式ページで確認してください。</li>
 <li>Blender のスクリプトは、 Blender 4.2 LTS または 4.5 LTS の API を前提にしています。 5.0 以降は、コンポジター関連の API が変わっている可能性があります。</li>
 <li>PLATEAU の配布物の構成（フォルダ名、ファイル名）は年度やデータセットで異なります。手引書の記述と違うときは、実物を見て読み替えてください。</li>
@@ -339,7 +339,7 @@
 
 <h3 id="sec4-2">4.2 ダウンロードと展開</h3>
 <ol>
-<li>ブラウザで、国土交通省の PLATEAU の公式サイトを開き、データ配布の案内から、 G 空間情報センターの「 3D 都市モデル（ Project PLATEAU ）東京都 23 区」のページへ進む。</li>
+<li>ブラウザで、国土交通省の PLATEAU の公式サイトを開き、データ配布の案内から、 G 空間情報センターの「 3D 都市モデル (Project PLATEAU) 東京都 23 区」のページへ進む。</li>
 <li>データの一覧から、 OBJ 形式のものを探す。形式の一覧に OBJ が見当たらないときは、 CityGML しかない年度である。その場合は、同じ地域の別のデータセットを探すか、 PLATEAU 公式の変換ツールで OBJ に変換する。</li>
 <li>メッシュ番号が先頭に付いたファイルの中から、 4.1 で決めた番号のものだけを選ぶ。地域全体の zip ファイルは、数 GB になることがあるので避ける。</li>
 <li>ダウンロードしたファイルを、作業フォルダの <code>plateau/</code> に展開する。</li>
@@ -350,7 +350,7 @@
 <h3 id="sec4-3">4.3 利用条件と出典表示</h3>
 <ul>
 <li>PLATEAU のデータは、多くのデータセットで CC BY 4.0 の条件で提供されている。利用するデータセットのページで、実際のライセンス表記を必ず確認する。</li>
-<li>公開するときは、出典を表示する。書き方の例は「 3D 都市モデル（ Project PLATEAU ）を加工して作成」。表記の指定がデータセットのページにあれば、そちらに従う。</li>
+<li>公開するときは、出典を表示する。書き方の例は「 3D 都市モデル (Project PLATEAU) を加工して作成」。表記の指定がデータセットのページにあれば、そちらに従う。</li>
 <li>出典の表示と、元データを加工した旨の明記は、動画の説明欄にも書く。</li>
 </ul>
 
@@ -440,7 +440,7 @@ bpy.ops.wm.save_as_mainfile(filepath=a.out)
 print("saved:", a.out)</code></pre>
 
 <h3 id="sec5-2">5.2 実行方法</h3>
-<p>Blender を GUI を使わずに起動し（ <code class="term">-b</code> ）、スクリプトを渡します（ <code class="term">-P</code> ）。スクリプトへの引数は、 <code class="term">--</code> の後ろに書きます。ターミナル（ zsh ）で、フォルダ <code>shibuya-fpv</code> に移動してから実行します。</p>
+<p>Blender を GUI を使わずに起動し（ <code class="term">-b</code> ）、スクリプトを渡します（ <code class="term">-P</code> ）。スクリプトへの引数は、 <code class="term">--</code> の後ろに書きます。ターミナル (zsh) で、フォルダ <code>shibuya-fpv</code> に移動してから実行します。</p>
 <pre class="term"><code>/Applications/Blender.app/Contents/MacOS/Blender -b -P scripts/build_scene.py -- --obj-dir plateau --out work/city.blend --clay</code></pre>
 <p>最初は <code class="term">--clay</code> を付けてください。粘土色にすると、形が正しいかどうかを確かめやすくなります。実行後、出力に出る「 bbox 」と「 size 」の行を確認します。 size の三つの値のうち、 Z （高さ）が最小であれば、向きは正しい読み込みです。警告が出たときは、 <code class="term">--up Z --forward Y</code> のように変えて、再実行してください。</p>
 
@@ -451,7 +451,7 @@ print("saved:", a.out)</code></pre>
 <ul>
 <li><input type="checkbox" id="c2-1"><label for="c2-1">テンキーの 7 （真上から）で、街が平面図のように見える</label></li>
 <li><input type="checkbox" id="c2-2"><label for="c2-2">横から見て、建物が地面から立ち上がっている（寝ていない、逆さでない）</label></li>
-<li><input type="checkbox" id="c2-3"><label for="c2-3">地形（ dem ）と道路が、建物の足元に合っている。建物が浮いたり、埋まったりしていない</label></li>
+<li><input type="checkbox" id="c2-3"><label for="c2-3">地形 (dem) と道路が、建物の足元に合っている。建物が浮いたり、埋まったりしていない</label></li>
 <li><input type="checkbox" id="c2-4"><label for="c2-4">スクランブル交差点など、目印にする場所が、画面の中心付近にある</label></li>
 <li><input type="checkbox" id="c2-5"><label for="c2-5">端から端までの距離を、メジャーツールで測って、約 1,000m ほどである</label></li>
 </ul>
@@ -505,13 +505,13 @@ print("saved:", a.out)</code></pre>
 <table class="cardrow">
 <thead><tr><th>キー</th><th>意味</th></tr></thead>
 <tbody>
-<tr><th scope="row"><code>lens</code></th><td data-label="意味">焦点距離（ mm ）</td></tr>
+<tr><th scope="row"><code>lens</code></th><td data-label="意味">焦点距離 (mm)</td></tr>
 <tr><th scope="row"><code>fps</code></th><td data-label="意味">フレームレート</td></tr>
 <tr><th scope="row"><code>shake</code></th><td data-label="意味">カメラの揺れの強さ。 0 で揺れなし、 1 で位置が約 5cm 、傾きが約 1.5 度揺れる。 AI に変換させる場合は 0.3 〜 0.5 にとどめる</td></tr>
-<tr><th scope="row"><code>depth_range</code></th><td data-label="意味">深度画像の白から黒までの距離（ m ）。街の幅が約 1km なら 300 前後</td></tr>
+<tr><th scope="row"><code>depth_range</code></th><td data-label="意味">深度画像の白から黒までの距離 (m) 。街の幅が約 1km なら 300 前後</td></tr>
 <tr><th scope="row"><code>t</code></th><td data-label="意味">その通過点を通る時刻（秒）</td></tr>
-<tr><th scope="row"><code>pos</code></th><td data-label="意味">カメラの位置 [X, Y, Z] （ m ）</td></tr>
-<tr><th scope="row"><code>look</code></th><td data-label="意味">その時刻に見ている点 [X, Y, Z] （ m ）</td></tr>
+<tr><th scope="row"><code>pos</code></th><td data-label="意味">カメラの位置 [X, Y, Z] (m)</td></tr>
+<tr><th scope="row"><code>look</code></th><td data-label="意味">その時刻に見ている点 [X, Y, Z] (m)</td></tr>
 <tr><th scope="row"><code>roll</code></th><td data-label="意味">傾き（度）。旋回方向に倒すと、ドローンらしく見える</td></tr>
 </tbody>
 </table>
@@ -659,9 +659,9 @@ print("done:", a.out_dir)</code></pre>
 <h3 id="sec7-2">7.2 試し撮りから本番まで</h3>
 <p>いきなり全フレームを描くと、経路の間違いに気づくまでに時間がかかります。次の三段階で進めます。</p>
 <ol>
-<li><strong>静止画 1 枚</strong><br>最初のフレームだけを、既定の解像度（ 1280 x 720 ）で描く。構図と明るさを確かめる。</li>
+<li><strong>静止画 1 枚</strong><br>最初のフレームだけを、既定の解像度 (1280 x 720) で描く。構図と明るさを確かめる。</li>
 <li><strong>低解像度の全フレーム</strong><br>全体を 1280 x 720 で描き、動画にして、経路と速度感を確かめる。</li>
-<li><strong>本番</strong><br>解像度を上げて（ 1920 x 1080 ）、描き直す。</li>
+<li><strong>本番</strong><br>解像度を上げて (1920 x 1080) 、描き直す。</li>
 </ol>
 <p><strong>手順 1 ：</strong>静止画 1 枚を、深度なしで描きます。</p>
 <pre class="term"><code>/Applications/Blender.app/Contents/MacOS/Blender -b work/city.blend -P scripts/render_path.py -- --path scripts/path.json --out-dir work/render --frame-start 1 --frame-end 1 --no-depth</code></pre>
@@ -676,7 +676,7 @@ print("done:", a.out_dir)</code></pre>
 <li><input type="checkbox" id="c4-2"><label for="c4-2">低解像度の動画で、建物の中を通り抜けていない</label></li>
 <li><input type="checkbox" id="c4-3"><label for="c4-3">速度感が、 FPV らしい（ゆっくりに見えるなら、経路の秒数を縮める）</label></li>
 <li><input type="checkbox" id="c4-4"><label for="c4-4">深度画像が、近い建物ほど白く、遠いほど黒い</label></li>
-<li><input type="checkbox" id="c4-5"><label for="c4-5">最初の静止画（ frame_0001.png ）を、別の場所へコピーして保管した</label></li>
+<li><input type="checkbox" id="c4-5"><label for="c4-5">最初の静止画 (frame_0001.png) を、別の場所へコピーして保管した</label></li>
 </ul>
 </div>
 
@@ -691,7 +691,7 @@ ffmpeg -framerate 24 -i work/render/depth/depth_%04d.png -c:v libx264 -pix_fmt y
 <h3 id="sec8-1">8.1 方式 A 画像から動画</h3>
 <p>最も手軽な方式です。経路は、プロンプトの文章でしか伝わらないため、経路どおりには飛びません。</p>
 <ol>
-<li>工程 4 の <code>frame_0001.png</code> を、動画生成 AI の「画像から動画（ Image to Video ）」に入力する。</li>
+<li>工程 4 の <code>frame_0001.png</code> を、動画生成 AI の「画像から動画 (Image to Video) 」に入力する。</li>
 <li>終点の画像（最終フレーム）を入れられるサービスなら、 <code>frame_0193.png</code> のような最終フレームも入力する。始点と終点を固定すると、建物の位置がずれにくくなる。</li>
 <li>長さを 5 秒（選べないときは最短）にし、 8.3 のプロンプトを入力する。</li>
 <li>4 〜 8 本を生成し、 8.4 の基準で選ぶ。</li>
