@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#3d5a52">
+<title>FPV シミュレーター 3 本の比較―― TRYP FPV ・ Liftoff ・ The Zone を目的から選ぶ</title>
+<style>
+  /* 配色(薄い緑の基調。落ち着いた見た目のまま、読みやすくする)。色はここだけで決め、以降は var() で参照する
+     緑 : 見出し・構造　黄 : マーカーと注意　赤 : 必須・重要 */
+  :root{color-scheme:only light;--bg:#f7f8f6;--text:#242522;--muted:#65695f;--accent:#3d5a52;--line:#868a83;--box:#eceee7;--mark:#ffe27a;--note-bg:#fff6d6;--note:#d9a400;--must-bg:#fde8e6;--must:#c0392b}
+  /* 旧 contrast の色の名前の別名。変換した文書の追加 CSS を、書き換えずに使うためのもの。新しい指定には使わない */
+  :root{--ink:var(--text);--navy:var(--accent);--yellow:var(--mark);--red:var(--must);--link:var(--accent);--gray:var(--box);--rule:var(--line)}
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body { font-size: 1.2rem; line-height: 1.85; color: var(--text); background: var(--bg); margin: 0; }
+  main { padding: 2.5rem clamp(1rem, 4vw, 4rem) 4rem; max-width: none; margin: 0; }
+  a { color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: .2em; }
+  a:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
+  /* 冒頭部(キッカー・タイトル・副題・リード文・メタ情報帯) */
+  .kicker { font-size: 1.05rem; letter-spacing: .1em; color: var(--accent); font-weight: 700; margin: 0 0 .4rem; }
+  h1 { font-size: 1.8rem; line-height: 1.5; color: var(--text); }
+  .subtitle { color: var(--muted); margin: 0 0 1rem; }
+  .lede { border-left: 4px solid var(--accent); padding-left: 1rem; margin: 1rem 0; }
+  .meta { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 1rem 0; margin: 0 0 2.5rem; color: var(--muted); font-size: 1.05rem; line-height: 1.9; }
+  /* 見出し */
+  h1, h2, h3 { overflow-wrap: anywhere; }
+  h2 { font-size: 1.4rem; line-height: 1.6; color: #fff; background: var(--accent); padding: .35rem .8rem; margin-top: 2.6rem; border-radius: 3px; }
+  h3 { font-size: 1.3rem; line-height: 1.6; margin-top: 1.8rem; }
+  /* 段落・箇条書き(font-size は書かず、body から継承) */
+  ul, ol { margin: 0 0 1.2rem; padding-left: 1.4em; }
+  li { margin-bottom: .4em; }
+  mark { background: var(--mark); color: var(--text); padding: 0 .15em; }
+  /* 表。横スクロールを作らないため、見出しも折り返す */
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: 1.2rem; }
+  caption { font-weight: bold; text-align: left; padding: .5rem 0; }
+  th, td { border: 1px solid var(--line); padding: .5rem .7rem; text-align: left; vertical-align: top; overflow-wrap: break-word; }
+  th { background: var(--box); }
+  /* コード。長い行は折り返す */
+  code { background: var(--box); padding: .1rem .35rem; border-radius: 3px; font-size: max(.92em, 1rem); overflow-wrap: anywhere; }
+  pre { overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; background: var(--box); padding: .7rem 1rem; border-radius: 3px; margin: 0 0 20px; }
+  pre code { background: none; padding: 0; }
+  /* ターミナルに打つ文字列は黒地に白文字 */
+  pre.term { background: #000; color: #fff; }
+  pre.term code { color: #fff; }
+  code.term { background: #000; color: #fff; }
+  /* 情報ボックス・注記・印 */
+  .box { background: var(--box); border: 1px solid var(--line); padding: 1rem 1.2rem; margin: 0 0 1.4rem; }
+  .box strong { color: var(--accent); }
+  .note { background: var(--note-bg); border-left: 5px solid var(--note); padding: .7rem 1rem; margin: 1rem 0; }
+  .tag, .yr { display: inline-block; font-size: 1rem; line-height: 1.6; background: var(--accent); color: #fff; padding: 0 .5rem; border-radius: 3px; margin-right: .3rem; }
+  /* 囲み。見出し語は CSS が出す(本文に書かない)。色だけに頼らず、記号と枠の形でも区別する
+     要点 = 緑の左線と枠　留意事項 = 黄の地　必須 = 赤の地　演習 = 緑の破線 */
+  .point, .caution, .must, .try { margin: 1.2rem 0; padding: .7rem 1rem; }
+  .point::before, .caution::before, .must::before, .try::before { display: block; font-weight: bold; letter-spacing: .08em; }
+  .point > p, .caution > p, .must > p, .try > p { margin: .3rem 0 0; }
+  .point { background: var(--box); border: 1px solid var(--line); border-left: 5px solid var(--accent); }
+  .point::before { content: "要点"; color: var(--accent); }
+  .caution { background: var(--note-bg); border-left: 5px solid var(--note); }
+  .caution::before { content: "▲ 留意事項"; }
+  .must { background: var(--must-bg); border-left: 5px solid var(--must); }
+  .must::before { content: "★ 必須"; color: var(--must); }
+  .try { border: 2px dashed var(--accent); }
+  .try::before { content: "▶ 演習"; color: var(--accent); }
+  /* 手順(ol.steps)。番号は緑の縁の丸。最後の項目に li.goal を付けると、緑で塗った ★ になる */
+  ol.steps { list-style: none; counter-reset: n; margin: 1.2rem 0; padding: 0; border-top: 1px solid var(--line); }
+  ol.steps > li { counter-increment: n; position: relative; min-height: 3.8rem; margin: 0; padding: .8rem 0 .8rem 3rem; border-bottom: 1px solid var(--line); }
+  ol.steps > li::before { content: counter(n); position: absolute; left: 0; top: .9rem; width: 2.1rem; height: 2.1rem; border-radius: 50%; background: var(--bg); color: var(--accent); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: bold; line-height: 1; }
+  ol.steps > li > strong:first-child { display: block; }
+  ol.steps > li > p, ol.steps > li > pre, ol.steps > li > figure { margin: .5rem 0; }
+  ol.steps > li.goal::before { content: "★"; background: var(--accent); color: #fff; }
+  /* 要旨・準備物・前提の一覧(dl.spec)。 div.hot の行は赤(最も重要な行) */
+  dl.spec { margin: 1.2rem 0; border: 1px solid var(--line); font-size: 1.1rem; }
+  dl.spec > div { display: grid; grid-template-columns: 7em 1fr; border-bottom: 1px solid var(--line); }
+  dl.spec > div:last-child { border-bottom: 0; }
+  dl.spec dt { padding: .5rem .7rem; background: var(--box); font-weight: bold; }
+  dl.spec dd { margin: 0; padding: .5rem .7rem; overflow-wrap: anywhere; }
+  dl.spec > div.hot dt, dl.spec > div.hot dd { background: var(--must-bg); }
+  dl.spec > div.hot dt { border-left: 5px solid var(--must); color: var(--must); }
+  /* ことば集(dl.words) */
+  dl.words { margin: 1rem 0; }
+  dl.words dt { font-weight: bold; color: var(--accent); margin-top: 1rem; }
+  dl.words dd { margin: .2rem 0 0; padding-left: .8rem; border-left: 3px solid var(--line); }
+  /* 年表(ul.tl)。緑の縦の線と丸印。年は .yr か .tag */
+  ul.tl { list-style: none; margin: 1.2rem 0; padding: 0 0 0 22px; border-left: 6px solid var(--accent); }
+  ul.tl > li { position: relative; margin: 0 0 18px; padding-left: 6px; }
+  ul.tl > li::before { content: ""; position: absolute; left: -34px; top: .45em; width: 18px; height: 18px; border-radius: 50%; background: var(--bg); border: 3px solid var(--accent); }
+  /* クイズ(div.quiz)。開くと答えが出る */
+  .quiz details { border: 1px solid var(--line); border-radius: 3px; margin: .8rem 0; }
+  .quiz summary { cursor: pointer; padding: .6rem 1rem; font-weight: bold; background: var(--box); }
+  .quiz summary:focus-visible { outline: 3px solid var(--text); outline-offset: -3px; }
+  .quiz details[open] summary { border-bottom: 1px solid var(--line); }
+  .quiz details p { margin: 0; padding: .6rem 1rem; }
+  .quiz .ans { font-weight: bold; color: var(--accent); }
+  /* 図(figure + インライン SVG)。 SVG の色と文字は、下のクラスだけで指定する(属性に色や文字サイズを書かない)
+     f-navy ・ s-navy は、旧 contrast の書き方をそのまま使うための別名 */
+  figure { margin: 1.2rem 0; }
+  /* 幅の制限は、下のクラスで描いた図だけにかける。クラスを使わない図(横長の大きな図など)の大きさは変えない */
+  figure svg:has(.t, .nf, [class^="f-"], [class^="s-"]) { display: block; width: min(100%, 480px); height: auto; }
+  figcaption { padding: .5rem 0 0; font-size: 1.05rem; }
+  figcaption .cap { display: block; font-weight: bold; }
+  svg .t { fill: var(--text); font-size: 1.5rem; }
+  svg .t.lg { font-size: 1.75rem; }
+  svg .t.white { fill: #fff; }
+  svg .nf { fill: none; }
+  svg .f-ink { fill: var(--text); }
+  svg .f-accent, svg .f-navy { fill: var(--accent); }
+  svg .f-yellow { fill: var(--mark); }
+  svg .f-red { fill: var(--must); }
+  svg .f-gray { fill: var(--box); }
+  svg .f-bg { fill: var(--bg); }
+  svg .f-white { fill: #fff; }
+  svg .s-ink { stroke: var(--text); stroke-width: 2; }
+  svg .s-accent, svg .s-navy { stroke: var(--accent); stroke-width: 2; }
+  svg .s-red { stroke: var(--must); stroke-width: 2; }
+  svg .s-rule { stroke: var(--line); stroke-width: 2; }
+  svg .s-thick { stroke-width: 3; }
+  /* チェックリスト(div.checklist)。題名(.cl-title)は、内容を区別する必要があるときだけ置く。定型の注意書きは置かない */
+  .checklist { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: .6rem 1.25rem; margin: 1.2rem 0; }
+  .checklist .cl-title { display: block; font-weight: bold; color: var(--accent); margin: .4rem 0 .2rem; }
+  .checklist ul { list-style: none; padding: 0; margin: 0; }
+  .checklist li { margin: 0; padding: .5rem 0 .5rem 2.1rem; position: relative; border-bottom: 1px dashed var(--line); }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist input[type="checkbox"] { position: absolute; left: 0; top: .85rem; width: 1.25rem; height: 1.25rem; margin: 0; accent-color: var(--accent); cursor: pointer; }
+  .checklist label { cursor: pointer; }
+  /* 目次(nav.toc) */
+  .toc{background:var(--box);border:1px solid var(--line);padding:1rem 1.4rem;margin:1.5rem 0}
+  .toc>ol{columns:2;column-gap:2rem;margin:0}
+  .toc-title{font-size:1.05rem;letter-spacing:.1em;color:var(--accent);font-weight:700;margin:0 0 .6rem}
+  .toc li{font-size:1.05rem;margin-bottom:.3rem;break-inside:avoid}
+  .toc li li{color:var(--muted)}
+  .toc a{color:var(--text);text-decoration:none}
+  .toc a:hover{color:var(--accent);text-decoration:underline}
+  @media (max-width:640px){
+    .toc>ol{columns:1}
+    dl.spec > div { grid-template-columns: 5.2em 1fr; }
+  }
+  /* 脚注の参照番号 */
+  sup{font-size:.72em;line-height:0}
+  sup a{text-decoration:none}
+  sup a:hover{text-decoration:underline}
+  /* 参考文献欄(div.refs) */
+  .refs{border-top:1px solid var(--line);margin-top:3rem;padding-top:1rem}
+  .refs h2{margin-top:0}
+  .refs p{font-size:1.05rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs li{font-size:1.05rem;line-height:1.65;overflow-wrap:anywhere;word-break:break-word}
+  .refs em{font-style:italic}
+  .refs li>a:first-child{font-weight:700;text-decoration:none}
+  .refs sup a{font-style:italic;font-weight:700}
+  .refs li:target,sup:target{background:var(--mark)}
+  /* 末尾の注記 */
+  .endnote { font-size: 1.05rem; color: var(--muted); }
+  /* 表のカード化(幅 640px 以下)。 table に cards / cardspan / cardrow のいずれかを付けた表だけが対象 */
+  @media (max-width: 640px) {
+    table.cards, table.cards tbody, table.cards tr, table.cards td { display: block; width: 100%; }
+    table.cards caption, table.cardspan caption, table.cardrow caption { display: block; }
+    table.cards thead, table.cards tr:has(> th) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cards tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cards td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
+    table.cards td:last-child { border-bottom: 0; }
+    table.cards td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cards td:first-child { background: var(--box); font-weight: bold; font-size: 1.3rem; }
+    table.cards td:first-child::before { display: none; }
+    table.cardspan, table.cardspan tbody, table.cardspan tr, table.cardspan td { display: block; width: 100%; }
+    table.cardspan thead, table.cardspan tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardspan tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardspan td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
+    table.cardspan td:last-child { border-bottom: 0; }
+    table.cardspan td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cardspan tr[data-group]::before { content: attr(data-group); display: block; background: var(--box); font-weight: bold; font-size: 1.3rem; padding: .45rem .7rem; border-bottom: 1px solid var(--line); }
+    table.cardspan td[rowspan] { display: none; }
+    table.cardrow, table.cardrow tbody, table.cardrow tr, table.cardrow td, table.cardrow th { display: block; width: 100%; }
+    table.cardrow thead, table.cardrow tr:not(:has(> td)) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; margin: 0; padding: 0; }
+    table.cardrow tr { border: 1px solid var(--line); margin: .7rem 0; background: #fff; border-radius: 4px; overflow: hidden; }
+    table.cardrow td { border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; font-size: 1.2rem; }
+    table.cardrow td:last-child { border-bottom: 0; }
+    table.cardrow td::before { content: attr(data-label); display: block; font-size: 1rem; font-weight: bold; color: var(--accent); }
+    table.cardrow th { background: var(--box); font-size: 1.3rem; border: 0; border-bottom: 1px solid var(--line); padding: .45rem .7rem; text-align: left; }
+  }
+</style>
+</head>
+<body>
+<main>
+<p class="kicker">FPV ドローン・シミュレーター比較</p>
+<h1>FPV シミュレーター 3 本の比較<br>―― TRYP FPV ・ Liftoff ・ The Zone を目的から選ぶ</h1>
+<p class="subtitle">A purpose-oriented comparison of three FPV drone simulators based on official information and user reviews as of November 2026</p>
+<div class="lede">
+<p>FPV は、機体のカメラ映像を見ながらドローンを操縦する方式である。その操縦を練習するシミュレーターは、どれが合うかが目的で変わる。本稿は TRYP FPV 、 Liftoff 、 The Zone の 3 本を同じ 11 項目で調べ、映像・空撮の練習、レース、フリースタイル（障害物の間を自由に曲芸飛行する遊び方）、 Mac で遊ぶという四つの目的ごとに、何が根拠にできて、どこから先は決められないかを示す。</p>
+</div>
+<div class="meta"><strong>【方法と限界】</strong>本稿は、 3 本のソフトを操作しておらず、性能の計測もしていない。内容は、 Steam ストア、開発元の告知と公式サイトなどの公式情報と、利用者レビューや第三者の比較記事に基づく。確認日は 2026 年 11 月 28 日である。利用者レビューは各 15 〜 20 件を読んだにとどまり、全体の傾向を表すとは限らない。主な未確認の項目は、 TRYP FPV の現在のマップ総数と観戦機能、 Liftoff の実在地の再現と動く被写体の有無、 The Zone の現在の本体マップ数と動く被写体の実装、各ソフトの対応する送信機の一覧と、 Apple Silicon （ Apple 製のチップ）で直接動くかどうかである。</div>
+
+<nav class="toc" aria-label="目次">
+<p class="toc-title">目次</p>
+<ol>
+<li><a href="#sec1">シミュレーターを使う理由</a></li>
+<li><a href="#sec2">目的別の候補（結論の先出し）</a></li>
+<li><a href="#sec3">3 本の概要</a>
+<ol>
+<li><a href="#sec3-1">TRYP FPV</a></li>
+<li><a href="#sec3-2">Liftoff</a></li>
+<li><a href="#sec3-3">The Zone</a></li>
+</ol>
+</li>
+<li><a href="#sec4">項目別の比較</a></li>
+<li><a href="#sec5">目的別の選び方</a>
+<ol>
+<li><a href="#sec5-1">映像・空撮の練習</a></li>
+<li><a href="#sec5-2">レース</a></li>
+<li><a href="#sec5-3">フリースタイル</a></li>
+<li><a href="#sec5-4">Mac で遊ぶ</a></li>
+<li><a href="#sec5-5">他の有力な選択肢</a></li>
+</ol>
+</li>
+<li><a href="#sec6">買う前の注意</a></li>
+<li><a href="#sec7">まとめ</a></li>
+</ol>
+</nav>
+
+<h2 id="sec1">1. シミュレーターを使う理由</h2>
+<p>FPV ドローンは、機体のカメラが送る映像を見ながら操縦するドローンである。本稿では、スティックの付いたラジコン用の操縦機を送信機と呼ぶ。シミュレーターは、ドローンの操縦をパソコン上で練習するソフトである。 FPV の解説サイトを運営する Oscar Liang の比較記事は、機体を壊す心配がなく、天候に左右されずに練習できることを利点に挙げる <sup id="fnref-1-1"><a href="#ref-1">[1]</a></sup> 。 Liftoff の利用者レビューにも、実機の修理代をかけずに墜落を繰り返せることを評価する声がある <sup id="fnref-2-1"><a href="#ref-2">[2]</a></sup> 。</p>
+<p>ただし、 The Zone の開発者は、基本操作の習得に約 2 〜 5 時間、ある程度正確に飛べるまでに 10 〜 20 時間かかると説明している <sup id="fnref-3-1"><a href="#ref-3">[3]</a></sup> 。練習を続けるソフトを選ぶ以上、何を練習したいかを先に決めることが重要になると考えられる。</p>
+<p>本稿は練習の目的を三つに分ける。決まった順路で速さを競うレース、障害物の間を自由に曲芸飛行するフリースタイル、映画のような映像表現を狙うシネマティックな飛行である。本稿では最後の目的を映像・空撮の練習と呼び、さらに Mac を使う場合を加えて比べる。</p>
+
+<h2 id="sec2">2. 目的別の候補（結論の先出し）</h2>
+<p>調べた範囲では、すべての目的で 1 本が勝るという結果にはならなかった。目的ごとの結論は次のとおりである。</p>
+<table class="cards">
+<caption>表 1 : 目的別の候補（ 2026 年 11 月 28 日時点の情報による）</caption>
+<thead><tr><th>目的</th><th>結論</th><th>主な根拠</th><th>詳しくは</th></tr></thead>
+<tbody>
+<tr><td data-label="目的">映像・空撮の練習（動く被写体を追う）</td><td data-label="結論">1 本に決められない。追う機能を確認できたのは TRYP FPV だけ</td><td data-label="主な根拠">TRYP FPV は被写体を追うシナリオを確認。 The Zone は予定の扱い、 Liftoff は未確認 <sup id="fnref-3-2"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-1"><a href="#ref-4">[4]</a></sup></td><td data-label="詳しくは"><a href="#sec5-1">5.1</a></td></tr>
+<tr><td data-label="目的">レース</td><td data-label="結論">Liftoff が候補</td><td data-label="主な根拠">配信版に対戦、観戦、コース作成と共有がある <sup id="fnref-5-1"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-1"><a href="#ref-6">[6]</a></sup></td><td data-label="詳しくは"><a href="#sec5-2">5.2</a></td></tr>
+<tr><td data-label="目的">フリースタイル</td><td data-label="結論">1 本に決められない</td><td data-label="主な根拠">飛行の感覚の評価は標本が小さく、更新で変わりうる <sup id="fnref-2-2"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-1"><a href="#ref-7">[7]</a></sup><sup id="fnref-8-1"><a href="#ref-8">[8]</a></sup><sup id="fnref-9-1"><a href="#ref-9">[9]</a></sup></td><td data-label="詳しくは"><a href="#sec5-3">5.3</a></td></tr>
+<tr><td data-label="目的">Mac で遊ぶ</td><td data-label="結論">Apple Silicon 機では決められない。 Intel 製の Mac では、要件に Intel を挙げる Liftoff と The Zone が候補</td><td data-label="主な根拠">3 本とも Mac 対応で、最低要件に Intel を挙げるのは 2 本 <sup id="fnref-10-1"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-1"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-1"><a href="#ref-12">[12]</a></sup></td><td data-label="詳しくは"><a href="#sec5-4">5.4</a></td></tr>
+</tbody>
+</table>
+
+<h2 id="sec3">3. 3 本の概要</h2>
+<p>3 本を、同じ 11 項目の順に見る。価格、レビュー、対応 OS は 2026 年 11 月 28 日の確認値である。レビューの「よく挙がる」論点は、読んだ中の 3 件以上に現れたものを指す。</p>
+
+<h3 id="sec3-1">3.1 TRYP FPV</h3>
+<p>フランスのスタジオ UNDEAD BATTERY が開発する <sup id="fnref-10-2"><a href="#ref-10">[10]</a></sup><sup id="fnref-13-1"><a href="#ref-13">[13]</a></sup> 。早期アクセス（完成前の版を販売しながら開発を続ける方式）の作品である <sup id="fnref-10-3"><a href="#ref-10">[10]</a></sup> 。</p>
+<p><strong>位置づけ</strong><br>開発元は、実写に迫る映像と飛行感覚を掲げる。遠くまで探索する TRYP モード、フリースタイルの CHALLENGE 、カメラを操る SCENARIO 、順位表のある RACE を備える <sup id="fnref-4-2"><a href="#ref-4">[4]</a></sup> 。 Oscar Liang はシネマティックな飛行に最適とし、フリースタイルにも向くとする一方、レースの体験と初心者向けの訓練の仕組みは弱いと評価する <sup id="fnref-1-2"><a href="#ref-1">[1]</a></sup> 。</p>
+<p><strong>物理挙動</strong><br>レート（スティック操作に対する回転の速さの設定）を調整でき、フレーム（機体の骨組み）、プロペラ、充電池、カメラを選んで機体を組める <sup id="fnref-4-3"><a href="#ref-4">[4]</a></sup> 。 2025 年 12 月には、操作の遅れを模擬する任意の設定も加わった <sup id="fnref-14-1"><a href="#ref-14">[14]</a></sup> 。 2026 年 6 月には、充電池の消耗とプロペラ損傷の再現（いずれも切り替え可能）、プロペラの食いつきなどの調整項目が加わった <sup id="fnref-15-1"><a href="#ref-15">[15]</a></sup> 。 11 月 27 日公開のオープンベータ（誰でも試せる試験版）は、作り直した物理エンジン、実機で使われる制御ソフト Betaflight との連携、新しい機体編集画面、超小型機を含む。いずれも試験段階である <sup id="fnref-9-2"><a href="#ref-9">[9]</a></sup> 。</p>
+<p><strong>映像とマップ</strong><br>ストアは、実在の場所をスキャンした地点を特色に挙げ、 5 マップと記す <sup id="fnref-4-4"><a href="#ref-4">[4]</a></sup> 。一方、 2025 年 6 月以降の告知では、実在地のスポットが少なくとも 6 か所追加されている <sup id="fnref-14-2"><a href="#ref-14">[14]</a></sup><sup id="fnref-15-2"><a href="#ref-15">[15]</a></sup><sup id="fnref-16-1"><a href="#ref-16">[16]</a></sup> 。両者は合わず、現在の総数は未確認である。マップエディタ（コースや地形を作る機能）は、 2026 年 6 月の告知で今後の機能とされた <sup id="fnref-15-3"><a href="#ref-15">[15]</a></sup> 。描画に使う開発基盤の Unreal Engine は、 2022 年 10 月に 4.27 から 5.0 へ移行し <sup id="fnref-17-1"><a href="#ref-17">[17]</a></sup> 、 2026 年 6 月の版は 5.7.4 である <sup id="fnref-15-4"><a href="#ref-15">[15]</a></sup> 。バージョン 4 とする記述は今回の調査では確認できなかった。あるとすれば移行前の版に当たると考えられる。映像の美しさは、利用者レビューと Oscar Liang の記事が評価している <sup id="fnref-1-3"><a href="#ref-1">[1]</a></sup><sup id="fnref-7-2"><a href="#ref-7">[7]</a></sup> 。</p>
+<p><strong>操作系</strong><br>必要環境には送信機の使用を推奨すると書かれ、ストアの表示は「部分的コントローラサポート」である <sup id="fnref-10-4"><a href="#ref-10">[10]</a></sup> 。ゲーム用コントローラーだけでどこまで飛べるかは未確認である。 2026 年 6 月には、実機の送信機に近いスイッチ割り当てが加わった <sup id="fnref-15-5"><a href="#ref-15">[15]</a></sup> 。対応する送信機の一覧は確認できなかった。設定のしやすさでは、メニュー操作や機器の認識に苦労したという利用者の声がある <sup id="fnref-7-3"><a href="#ref-7">[7]</a></sup> 。</p>
+<p><strong>対戦とコミュニティ</strong><br>配信版のストア表示はシングルプレイヤーのみである <sup id="fnref-10-5"><a href="#ref-10">[10]</a></sup> 。開発元は 2025 年 12 月と 2026 年 6 月の告知で、すでにマルチプレイのベータに触れていた <sup id="fnref-14-3"><a href="#ref-14">[14]</a></sup><sup id="fnref-15-6"><a href="#ref-15">[15]</a></sup> 。 11 月 27 日のオープンベータもマルチプレイを含み <sup id="fnref-9-3"><a href="#ref-9">[9]</a></sup> 、ストア掲載の告知要約は翌週の配信を予告している <sup id="fnref-4-5"><a href="#ref-4">[4]</a></sup> 。観戦機能は未確認である。公式 Discord （利用者が集まるチャットサービス）の参加者は 18,032 人だった <sup id="fnref-18-1"><a href="#ref-18">[18]</a></sup> 。</p>
+<p><strong>動作環境</strong><br>Windows と macOS に対応し、 Linux には対応していない。 Windows の最低要件は Windows 10 、 GeForce GTX 960 か Radeon RX 460 、メモリー 8GB 、空き容量 25GB で、推奨はストアの表記で GeForce GTX 2060 （ RTX 2060 の誤記の可能性がある）と 16GB である。 Mac の最低要件は macOS Ventura 13.4.1 と M1 、メモリー 8GB 、推奨は M1 Max と 16GB である <sup id="fnref-10-6"><a href="#ref-10">[10]</a></sup> 。開発元は 2025 年 3 月の告知で、 Mac 版でゲーム内の課題（チャレンジ）の最中に起きるクラッシュと、操作機器の認識の問題による更新の遅れを知らせた <sup id="fnref-19-1"><a href="#ref-19">[19]</a></sup> 。現在すべて解消したかは未確認である。</p>
+<p><strong>日本語 UI</strong><br>画面表示は日本語に非対応である。対応言語の表には英語など 7 言語が載り、日本語はない <sup id="fnref-10-7"><a href="#ref-10">[10]</a></sup> 。</p>
+<p><strong>価格</strong><br>通常価格は 1,900 円（ 16.99 ドル）で、確認日には 35% 引きの 1,235 円（ 11.04 ドル）だった。米ドルでも割引率は同じである。割引は 12 月 3 日までと表示され、確認日の購入の選択肢は本体の 1 種だけで、 DLC （追加コンテンツ）の掲載はない <sup id="fnref-10-8"><a href="#ref-10">[10]</a></sup> 。 Oscar Liang の記事（ 2026 年 10 月 27 日更新）には、 14.99 ドルからとある <sup id="fnref-1-4"><a href="#ref-1">[1]</a></sup> 。確認日の通常価格とは異なる。開発元は内容の追加に合わせて段階的に値上げするとしており <sup id="fnref-4-6"><a href="#ref-4">[4]</a></sup> 、以前の価格である可能性がある。</p>
+<p><strong>開発状況</strong><br>2022 年 6 月 30 日に早期アクセスを開始した。ストアには 2025 年を通じて早期アクセスを続けるとの記述が残るが、確認日も早期アクセスである <sup id="fnref-4-7"><a href="#ref-4">[4]</a></sup> 。直近では 2026 年 6 月の大型更新と 11 月 27 日のオープンベータがある <sup id="fnref-9-4"><a href="#ref-9">[9]</a></sup><sup id="fnref-15-7"><a href="#ref-15">[15]</a></sup> 。 6 月の告知は、今後の主な機能としてマルチプレイ、マップエディタ、画面の刷新を挙げた <sup id="fnref-15-8"><a href="#ref-15">[15]</a></sup> 。 Oscar Liang は、数年たっても早期アクセスである点と開発の遅さを弱点に挙げる <sup id="fnref-1-5"><a href="#ref-1">[1]</a></sup> 。</p>
+<p><strong>Steam レビュー</strong><br>日本語版ストアの表示は「非常に好評」で、全 3,227 件の 85% 、直近 30 日は 38 件の 92% が好評である <sup id="fnref-10-9"><a href="#ref-10">[10]</a></sup> 。読んだのは 18 件（好評 8 件、不評 10 件）である <sup id="fnref-7-4"><a href="#ref-7">[7]</a></sup> 。よく挙がる長所は、映像とマップの美しさ、飛行の手応えである。よく挙がる短所は、挙動が浮くように感じるという物理への不満である <sup id="fnref-7-5"><a href="#ref-7">[7]</a></sup> 。この指摘は 5 件で、投稿は 2026 年 1 〜 9 月だった。うち 3 件は 6 月の空力改修より後の投稿である <sup id="fnref-7-6"><a href="#ref-7">[7]</a></sup><sup id="fnref-15-9"><a href="#ref-15">[15]</a></sup> 。現実的と評するレビューもあり <sup id="fnref-7-7"><a href="#ref-7">[7]</a></sup> 、 Oscar Liang はやや重いが比較的正確とする <sup id="fnref-1-6"><a href="#ref-1">[1]</a></sup> 。開発元は 11 月のベータで物理を作り直したが <sup id="fnref-9-5"><a href="#ref-9">[9]</a></sup> 、不満が解消するかは分からない。次の点は一部のレビューの指摘である。操作機器の認識や入力の不具合、メニュー操作の不便さ、性能面の重さである <sup id="fnref-7-8"><a href="#ref-7">[7]</a></sup> 。性能面は Oscar Liang も指摘する <sup id="fnref-1-7"><a href="#ref-1">[1]</a></sup> 。送信機の一機種 (TX15) については、 2025 年 12 月に開発元が不具合を告知した <sup id="fnref-20-1"><a href="#ref-20">[20]</a></sup> 。 2026 年にも認識の不具合を訴える投稿があり <sup id="fnref-7-9"><a href="#ref-7">[7]</a></sup> 、現状は未確認である。クラッシュや判定の誤りなどの報告も 4 件あるが、内容がそれぞれ異なるため一部の指摘とする（投稿は 2025 年 12 月〜 2026 年 9 月）<sup id="fnref-7-10"><a href="#ref-7">[7]</a></sup> 。開発元は 2026 年 6 月にも不具合の修正を告知している <sup id="fnref-21-1"><a href="#ref-21">[21]</a></sup> 。</p>
+<p><strong>映像制作・空撮練習</strong><br>ストアは、ウイングスーツやバイクを追うシナリオを紹介する <sup id="fnref-4-8"><a href="#ref-4">[4]</a></sup> 。 Oscar Liang も、レースカーやスキーヤーなど動く対象を追えると述べる <sup id="fnref-1-8"><a href="#ref-1">[1]</a></sup> 。レンズの見え方を実機のカメラに近づける設定もある <sup id="fnref-15-10"><a href="#ref-15">[15]</a></sup> 。これらから、被写体を追う飛行とライン取り（飛ぶ経路の選び方）の練習に向くと考えられる。</p>
+
+<h3 id="sec3-2">3.2 Liftoff</h3>
+<p>正式名は Liftoff: FPV Drone Racing で、ベルギーの LuGus Studios が開発する <sup id="fnref-11-2"><a href="#ref-11">[11]</a></sup> 。</p>
+<p><strong>位置づけ</strong><br>開発元は、レースとフリースタイルの大きなコミュニティを持つ、初心者と熟練者の双方に向けた作品と説明する <sup id="fnref-5-2"><a href="#ref-5">[5]</a></sup><sup id="fnref-22-1"><a href="#ref-22">[22]</a></sup> 。 Oscar Liang は初心者に最適とし、訓練教材と内容の豊富さを評価する。一方で、挙動がやや浮く感じと、メニューの古さも指摘する <sup id="fnref-1-9"><a href="#ref-1">[1]</a></sup> 。</p>
+<p><strong>物理挙動</strong><br>開発元は、実在のフレーム、モーター、充電池を再現し、機体を細かく組み替えられるとする <sup id="fnref-22-2"><a href="#ref-22">[22]</a></sup> 。 2026 年 2 月の更新 1.7.0 は、物理を Physics 6.0 に改め、空気抵抗とプロペラの空力を見直し、非現実的な部品の組み合わせでは出力を制限するようにした。 1 人で自由に飛ぶモードには、 5 種類の風の設定も加わった <sup id="fnref-23-1"><a href="#ref-23">[23]</a></sup> 。プロペラ損傷の再現は切り替えられる <sup id="fnref-1-10"><a href="#ref-1">[1]</a></sup> 。</p>
+<p><strong>映像とマップ</strong><br>公式ページは 16 の環境（飛行する舞台）を掲げる。掲載日と、追加コンテンツを含むかは分からない <sup id="fnref-22-3"><a href="#ref-22">[22]</a></sup> 。 2026 年 6 月には都市型の Marina Bay が加わった <sup id="fnref-24-1"><a href="#ref-24">[24]</a></sup> 。コースを作る編集機能と、利用者の作品を共有する Steam Workshop がある <sup id="fnref-5-3"><a href="#ref-5">[5]</a></sup><sup id="fnref-11-3"><a href="#ref-11">[11]</a></sup> 。実在地の再現があるかは未確認である。映像には、レンズの効果を選ぶ設定が 2026 年 2 月に加わった <sup id="fnref-23-2"><a href="#ref-23">[23]</a></sup> 。 Oscar Liang は、映像が一部の新しい作品に劣ると評する <sup id="fnref-1-11"><a href="#ref-1">[1]</a></sup> 。</p>
+<p><strong>操作系</strong><br>遊ぶには送信機かゲーム用コントローラーが必要である。ストアはゲームパッド推奨と部分的コントローラサポートを表示し、 PlayStation 系コントローラーへの対応も挙げる <sup id="fnref-11-4"><a href="#ref-11">[11]</a></sup> 。 11 月の更新 1.7.8 は、操縦機器の調整機能を改良し、スティック割り当ての 4 方式（モード 1 〜 4 ）を再び選べるようにした <sup id="fnref-25-1"><a href="#ref-25">[25]</a></sup> 。設定のしやすさについては、送信機が問題なく使えたという声と、操作やメニューに戸惑う声が一部のレビューにある <sup id="fnref-2-3"><a href="#ref-2">[2]</a></sup> 。対応する送信機の一覧は確認できなかった。</p>
+<p><strong>対戦とコミュニティ</strong><br>オンライン対戦に対応する <sup id="fnref-11-5"><a href="#ref-11">[11]</a></sup> 。対戦中の観戦ではレースの時間や周回数が表示され <sup id="fnref-6-2"><a href="#ref-6">[6]</a></sup> 、大会の順位表もある <sup id="fnref-24-2"><a href="#ref-24">[24]</a></sup> 。 Discord の公式サーバーの参加者は 2,956 人だった <sup id="fnref-26-1"><a href="#ref-26">[26]</a></sup> 。</p>
+<p><strong>動作環境</strong><br>Windows 、 macOS 、 Linux に対応する。 Windows の最低要件は Windows 7 （注記付き）、 GeForce RTX 2060 か Radeon RX Vega 56 、メモリー 8GB 、空き容量 25GB で、推奨は Windows 10 以降と 16GB である。 Mac の最低要件は Apple Silicon の M1 か第 8 世代の Intel CPU 、推奨は M1 Pro か第 9 世代である。 Intel 製の Mac には単体のグラフィックス（ CPU とは別の描画用部品）が要る。 Linux は、配布版の一つである Ubuntu の 18.04 以降が最低要件である。どの OS でも、 CPU 内蔵の Intel 製グラフィックスは対象外とされる <sup id="fnref-11-6"><a href="#ref-11">[11]</a></sup> 。</p>
+<p><strong>日本語 UI</strong><br>非対応である。対応言語は英語、フランス語、ウクライナ語、トルコ語である <sup id="fnref-11-7"><a href="#ref-11">[11]</a></sup> 。</p>
+<p><strong>価格</strong><br>2,400 円（ 19.99 ドル）で、確認日に本体の割引はなかった。追加コンテンツは Slipstream が 470 円、 Night Fever が 700 円、 DJI FPV が無料である。本体、別ソフトの Liftoff: Micro Drones 、有料の追加 2 点をまとめた Ultimate Collection は、通常 5,370 円の 10% 引きで 4,833 円だった <sup id="fnref-11-8"><a href="#ref-11">[11]</a></sup> 。</p>
+<p><strong>開発状況</strong><br>2018 年 9 月 13 日発売の正式版である <sup id="fnref-11-9"><a href="#ref-11">[11]</a></sup> 。直近の更新は 11 月 16 日の 1.7.8 である <sup id="fnref-25-2"><a href="#ref-25">[25]</a></sup> 。開発元は、画面デザインとコース編集機能を刷新する 2.0 を 2026 年内に配信する予定で、試験用の版を公開している <sup id="fnref-27-1"><a href="#ref-27">[27]</a></sup> 。</p>
+<p><strong>Steam レビュー</strong><br>表示は「圧倒的に好評」で、全 14,061 件の 95% 、直近 30 日は 177 件の 96% が好評である <sup id="fnref-11-10"><a href="#ref-11">[11]</a></sup> 。読んだのは 20 件（好評 10 件、不評 10 件）である <sup id="fnref-2-4"><a href="#ref-2">[2]</a></sup> 。よく挙がる長所は、実機の練習に役立つことと、上達の手応えである。飛行の感覚や現実性を評価する声は一部にとどまる。短所では、チュートリアル（操作を教える案内）の途中で操作が止まる、省略しにくいといった進め方への不満がよく挙がる <sup id="fnref-2-5"><a href="#ref-2">[2]</a></sup> 。この不満は 2025 年 12 月から 2026 年 6 月の投稿に見られ、 Oscar Liang の高い評価とは食い違う <sup id="fnref-1-12"><a href="#ref-1">[1]</a></sup><sup id="fnref-2-6"><a href="#ref-2">[2]</a></sup> 。その後に直ったかは未確認である。浮くという同氏の指摘は、推薦欄が 2026 年 8 月に更新された記事にあるが、 Physics 6.0 の前後どちらの版に基づくかは分からない <sup id="fnref-1-13"><a href="#ref-1">[1]</a></sup> 。開発元は 6.0 の予告で、浮く感じが減ると説明していた <sup id="fnref-28-1"><a href="#ref-28">[28]</a></sup> 。指摘されたメニューの古さについては、 2.0 で画面デザインを刷新する予定である <sup id="fnref-27-2"><a href="#ref-27">[27]</a></sup> 。メニューや操作設定の分かりにくさは、一部のレビューの指摘である <sup id="fnref-2-7"><a href="#ref-2">[2]</a></sup> 。</p>
+<p><strong>映像制作・空撮練習</strong><br>飛行の録画の再生と、他の操縦者の観戦ができる <sup id="fnref-6-3"><a href="#ref-6">[6]</a></sup><sup id="fnref-24-3"><a href="#ref-24">[24]</a></sup> 。多様な環境とコース編集機能は、ライン取りの練習に使えると考えられる <sup id="fnref-5-4"><a href="#ref-5">[5]</a></sup> 。移動する被写体を追う機能の有無は未確認である。</p>
+
+<h3 id="sec3-3">3.3 The Zone</h3>
+<p>正式名は The Zone - FPV Drone Simulator で、 Nils Vollenbruch が個人で開発する早期アクセス作品である。開発者は自身を、スポンサー契約を持つフリースタイル操縦者と紹介している <sup id="fnref-3-3"><a href="#ref-3">[3]</a></sup> 。</p>
+<p><strong>位置づけ</strong><br>開発者は、気軽なゲームではなく訓練道具だと説明し、物理、実在地を写したマップ、観戦を含むマルチプレイを重視する <sup id="fnref-3-4"><a href="#ref-3">[3]</a></sup> 。 Oscar Liang は、直径 5 インチのプロペラを持つフリースタイル機の現実感に的を絞った作品と紹介し、機種やマップ、機能が老舗より少ないとも述べる。紹介は推量を交えた書き方で、操作に基づく評価かは記事からは分からない <sup id="fnref-1-14"><a href="#ref-1">[1]</a></sup> 。</p>
+<p><strong>物理挙動</strong><br>出力、重量、カメラの角度と画角を調整できる。開発者は自分の 5 インチ機を主に感覚で再現し、実機の映像や飛行記録に近いと説明している <sup id="fnref-3-5"><a href="#ref-3">[3]</a></sup> 。当初の基準は 5 インチ機だったが <sup id="fnref-3-6"><a href="#ref-3">[3]</a></sup> 、その後 2.5 インチ機や、超小型機 (75mm Whoop) などが加わった <sup id="fnref-29-1"><a href="#ref-29">[29]</a></sup><sup id="fnref-30-1"><a href="#ref-30">[30]</a></sup> 。操作などの遅れを模擬する設定もある <sup id="fnref-31-1"><a href="#ref-31">[31]</a></sup> 。風は既定で無効だが、チャット欄の命令で有効にできる <sup id="fnref-32-1"><a href="#ref-32">[32]</a></sup> 。</p>
+<p><strong>映像とマップ</strong><br>ストアの紹介文は現在のマップを一つと記すが、同じページの早期アクセス欄は、実在地を実物大で再現した 3 マップと記す <sup id="fnref-3-7"><a href="#ref-3">[3]</a></sup> 。 2026 年 8 月には小型機向けの Plaza がベータとして追加されており <sup id="fnref-33-1"><a href="#ref-33">[33]</a></sup> 、現在の本体マップ数は未確認である。利用者は 3D 制作ソフト Blender でマップを作り、アップロードして共有できる <sup id="fnref-34-1"><a href="#ref-34">[34]</a></sup> 。ゲーム内のマップエディタは予定として挙がる <sup id="fnref-3-8"><a href="#ref-3">[3]</a></sup> 。映像は簡素だという指摘が利用者レビューにある <sup id="fnref-8-2"><a href="#ref-8">[8]</a></sup> 。開発元は 9 月と 10 月に照明を改良している <sup id="fnref-30-2"><a href="#ref-30">[30]</a></sup><sup id="fnref-35-1"><a href="#ref-35">[35]</a></sup> 。</p>
+<p><strong>操作系</strong><br>ゲーム用コントローラーか送信機が必須で、開発者は送信機を推奨する <sup id="fnref-3-9"><a href="#ref-3">[3]</a></sup> 。 2026 年 6 月に入力の仕組みを改め、調整の選択肢と、頭の向きに視点を合わせる機能を加えた <sup id="fnref-36-1"><a href="#ref-36">[36]</a></sup> 。 9 月には macOS でのコントローラー認識を修正した <sup id="fnref-37-1"><a href="#ref-37">[37]</a></sup> 。調整項目が多くて扱いにくい、必要な設定がないという声は、一部のレビューの指摘である <sup id="fnref-8-3"><a href="#ref-8">[8]</a></sup> 。対応する送信機の一覧は確認できなかった。</p>
+<p><strong>対戦とコミュニティ</strong><br>1 サーバーに最大 32 人が参加でき、自分が飛びながら小窓で他の操縦者を観戦できる <sup id="fnref-3-10"><a href="#ref-3">[3]</a></sup> 。全員をまとめて映す観戦表示も加わった <sup id="fnref-30-3"><a href="#ref-30">[30]</a></sup> 。ストアの機能表示はマルチプレイと協力プレイで、順位を競う対戦形式の有無は確認できなかった <sup id="fnref-12-2"><a href="#ref-12">[12]</a></sup> 。 Discord の参加者は 2,952 人だった <sup id="fnref-38-1"><a href="#ref-38">[38]</a></sup> 。</p>
+<p><strong>動作環境</strong><br>Windows 、 macOS 、 Linux に対応する。 Windows の最低要件は Windows 10 、 Core i5 6500 か Ryzen 1600 、内蔵グラフィックスの Vega 8 か Iris Plus G7 、メモリー 8GB 、空き容量 15GB で、推奨は GeForce GTX 1060 か Radeon RX 580 と空き容量 20GB である。 Mac の最低要件は「 Apple M1 か Intel 」とだけ書かれる。 Linux の要件の記載はない <sup id="fnref-12-3"><a href="#ref-12">[12]</a></sup> 。 Mac 対応には食い違う記述がある。早期アクセス欄には予定の項目として残るが、ストアは対応 OS に macOS を表示し <sup id="fnref-3-11"><a href="#ref-3">[3]</a></sup><sup id="fnref-12-4"><a href="#ref-12">[12]</a></sup> 、 9 月には macOS 向けの操作機器の修正 <sup id="fnref-37-2"><a href="#ref-37">[37]</a></sup> 、 10 月には Mac の高精細画面の表示修正も告知された <sup id="fnref-30-4"><a href="#ref-30">[30]</a></sup> 。本稿は 2026 年 11 月 28 日時点で対応済みと判断する。 Linux は 9 月 12 日に専用版が加わった <sup id="fnref-39-1"><a href="#ref-39">[39]</a></sup> 。</p>
+<p><strong>日本語 UI</strong><br>非対応である。対応言語は英語だけである <sup id="fnref-12-5"><a href="#ref-12">[12]</a></sup> 。</p>
+<p><strong>価格</strong><br>1,600 円（ 13.99 ドル）で、確認日に割引はなく、 DLC の掲載もない。開発者は価格を変える予定はないとしている <sup id="fnref-3-12"><a href="#ref-3">[3]</a></sup><sup id="fnref-12-6"><a href="#ref-12">[12]</a></sup> 。</p>
+<p><strong>開発状況</strong><br>2025 年 3 月 7 日に早期アクセスを開始した。期間の見込みは 3 〜 6 か月と書かれているが、確認日も継続している <sup id="fnref-3-13"><a href="#ref-3">[3]</a></sup> 。直近では 10 月にカメラ機能を刷新し、 11 月 8 日にリプレイ機能を追加した <sup id="fnref-30-5"><a href="#ref-30">[30]</a></sup><sup id="fnref-40-1"><a href="#ref-40">[40]</a></sup> 。ストアの予定表には、ドリフト走行する車、固定翼機、実在地の二つ目のマップなどが並ぶ <sup id="fnref-3-14"><a href="#ref-3">[3]</a></sup> 。この表は更新時期が分からず、実施状況は項目ごとの確認が要る。</p>
+<p><strong>Steam レビュー</strong><br>表示は「非常に好評」で、全 513 件の 97% 、直近 30 日は 49 件の 100% が好評である <sup id="fnref-12-7"><a href="#ref-12">[12]</a></sup> 。読んだのは 15 件（好評 10 件、不評 5 件）である <sup id="fnref-8-4"><a href="#ref-8">[8]</a></sup> 。よく挙がる長所は、物理の現実感である。反対に、物理は他のシミュレーターと大差がなく調整しにくいとする声や、超小型機の挙動が実機と違うとする声も一部にある <sup id="fnref-8-5"><a href="#ref-8">[8]</a></sup> 。開発者の解説やコミュニティの支えを評価する声も一部にある。よく挙がる短所は、映像の簡素さ（好評レビュー内の指摘を含む）と、内容や機能の少なさである <sup id="fnref-8-6"><a href="#ref-8">[8]</a></sup> 。映像のわりに描画の負荷が重いという指摘と、不具合の報告は、一部のレビューにとどまる <sup id="fnref-8-7"><a href="#ref-8">[8]</a></sup> 。内容の不足を挙げた投稿は 2026 年 2 〜 8 月で、その後に機体やリプレイが追加されている <sup id="fnref-30-6"><a href="#ref-30">[30]</a></sup><sup id="fnref-40-2"><a href="#ref-40">[40]</a></sup> 。映像の面では照明の改良がある <sup id="fnref-30-7"><a href="#ref-30">[30]</a></sup><sup id="fnref-35-2"><a href="#ref-35">[35]</a></sup> 。いずれも、不満が解消したかは分からない。</p>
+<p><strong>映像制作・空撮練習</strong><br>10 月の更新で、シャッター速度、光量を抑える ND フィルター、動きのぶれを調整できるようになった <sup id="fnref-30-8"><a href="#ref-30">[30]</a></sup> 。 11 月には直近 10 分の飛行を常に記録するリプレイが加わり、告知の題は動画の書き出しも掲げる <sup id="fnref-40-3"><a href="#ref-40">[40]</a></sup> 。撮った映像の見え方を詰める練習に向くと考えられる。動く被写体は、ストア上では予定の扱いで <sup id="fnref-3-15"><a href="#ref-3">[3]</a></sup> 、実装されたかは未確認である。</p>
+
+<h2 id="sec4">4. 項目別の比較</h2>
+<p>前章の要点を一つの表にまとめる。値は 2026 年 11 月 28 日時点である。</p>
+<table class="cardrow">
+<caption>表 2 : 11 項目の比較（ 2026 年 11 月 28 日確認）</caption>
+<thead><tr><th>項目</th><th>TRYP FPV</th><th>Liftoff</th><th>The Zone</th></tr></thead>
+<tbody>
+<tr><th>1. 位置づけ</th><td data-label="TRYP FPV">映像向きで、フリースタイルにも向くとの第三者評価 <sup id="fnref-1-15"><a href="#ref-1">[1]</a></sup></td><td data-label="Liftoff">開発元はレースとフリースタイル向けと説明。初心者に最適との第三者評価 <sup id="fnref-1-16"><a href="#ref-1">[1]</a></sup><sup id="fnref-5-5"><a href="#ref-5">[5]</a></sup></td><td data-label="The Zone">開発元は訓練向けと説明。 5 インチ機のフリースタイル向けとの第三者の紹介 <sup id="fnref-1-17"><a href="#ref-1">[1]</a></sup><sup id="fnref-3-16"><a href="#ref-3">[3]</a></sup></td></tr>
+<tr><th>2. 物理挙動</th><td data-label="TRYP FPV">部品と各種設定。新物理はベータ <sup id="fnref-4-9"><a href="#ref-4">[4]</a></sup><sup id="fnref-9-6"><a href="#ref-9">[9]</a></sup></td><td data-label="Liftoff">部品構成、 Physics 6.0 、風 <sup id="fnref-22-4"><a href="#ref-22">[22]</a></sup><sup id="fnref-23-3"><a href="#ref-23">[23]</a></sup></td><td data-label="The Zone">出力・重量など。複数サイズの機体 <sup id="fnref-3-17"><a href="#ref-3">[3]</a></sup><sup id="fnref-29-2"><a href="#ref-29">[29]</a></sup></td></tr>
+<tr><th>3. 映像とマップ</th><td data-label="TRYP FPV">マップ数は情報が食い違う。実在地のスキャン（開発元の説明）。マップエディタは予定 <sup id="fnref-4-10"><a href="#ref-4">[4]</a></sup><sup id="fnref-15-11"><a href="#ref-15">[15]</a></sup></td><td data-label="Liftoff">16 環境（掲載日不明）。コース編集あり（地形の編集は未確認）。実在地の再現は未確認 <sup id="fnref-5-6"><a href="#ref-5">[5]</a></sup><sup id="fnref-22-5"><a href="#ref-22">[22]</a></sup></td><td data-label="The Zone">マップ数は情報が食い違う。実在地の再現（開発元の説明）。外部ソフトで自作可 <sup id="fnref-3-18"><a href="#ref-3">[3]</a></sup><sup id="fnref-34-2"><a href="#ref-34">[34]</a></sup></td></tr>
+<tr><th>4. 操作系</th><td data-label="TRYP FPV">送信機推奨。部分的コントローラサポートの表示 <sup id="fnref-10-10"><a href="#ref-10">[10]</a></sup></td><td data-label="Liftoff">送信機かコントローラーが必須。ゲームパッド推奨と部分的コントローラサポートの表示 <sup id="fnref-11-11"><a href="#ref-11">[11]</a></sup></td><td data-label="The Zone">送信機かコントローラーが必須。送信機推奨 <sup id="fnref-12-8"><a href="#ref-12">[12]</a></sup></td></tr>
+<tr><th>5. 対戦とコミュニティ</th><td data-label="TRYP FPV">マルチプレイはベータ。観戦は未確認。 Discord 18,032 人 <sup id="fnref-9-7"><a href="#ref-9">[9]</a></sup><sup id="fnref-18-2"><a href="#ref-18">[18]</a></sup></td><td data-label="Liftoff">対戦・観戦あり。 Discord 2,956 人 <sup id="fnref-6-4"><a href="#ref-6">[6]</a></sup><sup id="fnref-11-12"><a href="#ref-11">[11]</a></sup><sup id="fnref-26-2"><a href="#ref-26">[26]</a></sup></td><td data-label="The Zone">マルチプレイ（最大 32 人）・観戦あり。 Discord 2,952 人 <sup id="fnref-3-19"><a href="#ref-3">[3]</a></sup><sup id="fnref-38-2"><a href="#ref-38">[38]</a></sup></td></tr>
+<tr><th>6. 動作環境</th><td data-label="TRYP FPV">Windows ・ Mac （要件は M1 ）。 Linux 非対応 <sup id="fnref-10-11"><a href="#ref-10">[10]</a></sup></td><td data-label="Liftoff">Windows ・ Mac (M1 か Intel) ・ Linux <sup id="fnref-11-13"><a href="#ref-11">[11]</a></sup></td><td data-label="The Zone">Windows ・ Mac (M1 か Intel) ・ Linux <sup id="fnref-12-9"><a href="#ref-12">[12]</a></sup><sup id="fnref-39-2"><a href="#ref-39">[39]</a></sup></td></tr>
+<tr><th>7. 日本語 UI</th><td data-label="TRYP FPV">非対応 <sup id="fnref-10-12"><a href="#ref-10">[10]</a></sup></td><td data-label="Liftoff">非対応 <sup id="fnref-11-14"><a href="#ref-11">[11]</a></sup></td><td data-label="The Zone">非対応 <sup id="fnref-12-10"><a href="#ref-12">[12]</a></sup></td></tr>
+<tr><th>8. 価格</th><td data-label="TRYP FPV">1,900 円（確認日 1,235 円）。 DLC 掲載なし。 14.99 ドルとする情報もある <sup id="fnref-1-18"><a href="#ref-1">[1]</a></sup><sup id="fnref-10-13"><a href="#ref-10">[10]</a></sup></td><td data-label="Liftoff">2,400 円。有料と無料の DLC あり <sup id="fnref-11-15"><a href="#ref-11">[11]</a></sup></td><td data-label="The Zone">1,600 円。 DLC 掲載なし <sup id="fnref-12-11"><a href="#ref-12">[12]</a></sup></td></tr>
+<tr><th>9. 開発状況</th><td data-label="TRYP FPV">早期アクセス。 11 月 27 日にベータ <sup id="fnref-9-8"><a href="#ref-9">[9]</a></sup><sup id="fnref-10-14"><a href="#ref-10">[10]</a></sup></td><td data-label="Liftoff">正式版。 11 月 16 日更新、 2.0 を予定 <sup id="fnref-25-3"><a href="#ref-25">[25]</a></sup><sup id="fnref-27-3"><a href="#ref-27">[27]</a></sup></td><td data-label="The Zone">早期アクセス。 11 月 8 日更新 <sup id="fnref-12-12"><a href="#ref-12">[12]</a></sup><sup id="fnref-40-4"><a href="#ref-40">[40]</a></sup></td></tr>
+<tr><th>10. Steam レビュー</th><td data-label="TRYP FPV">非常に好評。 3,227 件中 85% <sup id="fnref-10-15"><a href="#ref-10">[10]</a></sup></td><td data-label="Liftoff">圧倒的に好評。 14,061 件中 95% <sup id="fnref-11-16"><a href="#ref-11">[11]</a></sup></td><td data-label="The Zone">非常に好評。 513 件中 97% <sup id="fnref-12-13"><a href="#ref-12">[12]</a></sup></td></tr>
+<tr><th>11. 映像制作・空撮練習</th><td data-label="TRYP FPV">動く被写体の追跡あり <sup id="fnref-1-19"><a href="#ref-1">[1]</a></sup><sup id="fnref-4-11"><a href="#ref-4">[4]</a></sup></td><td data-label="Liftoff">録画再生・観戦。追跡対象は未確認 <sup id="fnref-6-5"><a href="#ref-6">[6]</a></sup><sup id="fnref-24-4"><a href="#ref-24">[24]</a></sup></td><td data-label="The Zone">カメラ調整・リプレイ。追跡対象の実装は未確認 <sup id="fnref-3-20"><a href="#ref-3">[3]</a></sup><sup id="fnref-30-9"><a href="#ref-30">[30]</a></sup><sup id="fnref-40-5"><a href="#ref-40">[40]</a></sup></td></tr>
+</tbody>
+</table>
+<p>選び方にまず響くのは、確認日の配信版で他の人と一緒に飛べるかどうかである。仲間と飛ぶことを重視する場合、オンライン対戦のある Liftoff <sup id="fnref-5-7"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-6"><a href="#ref-6">[6]</a></sup> と、マルチプレイのある The Zone <sup id="fnref-3-21"><a href="#ref-3">[3]</a></sup> はそのまま対象になる。 TRYP FPV は配信版のストア表示がシングルプレイヤーのみで、他の人と飛ぶにはオープンベータへの参加が要る <sup id="fnref-9-9"><a href="#ref-9">[9]</a></sup><sup id="fnref-10-16"><a href="#ref-10">[10]</a></sup> 。開発の段階では Liftoff だけが正式版で、早期アクセスの 2 本は内容が大きく変わる可能性があると考えられる <sup id="fnref-10-17"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-17"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-14"><a href="#ref-12">[12]</a></sup> 。</p>
+<p>通常価格は The Zone 、 TRYP FPV 、 Liftoff の順に安い。確認日の販売価格では TRYP FPV が最も安いが、期限付きの割引である。 Liftoff の追加コンテンツは本体と別料金なので、まとめ売りと比べる際は中身をそろえる必要がある <sup id="fnref-10-18"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-18"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-15"><a href="#ref-12">[12]</a></sup> 。</p>
+<p>コミュニティの大きさは、指標で順位が変わる。レビュー件数は Liftoff が最も多く <sup id="fnref-10-19"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-19"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-16"><a href="#ref-12">[12]</a></sup> 、参照した Discord サーバーの参加者は TRYP FPV が最も多い <sup id="fnref-18-3"><a href="#ref-18">[18]</a></sup><sup id="fnref-26-3"><a href="#ref-26">[26]</a></sup><sup id="fnref-38-3"><a href="#ref-38">[38]</a></sup> 。発売時期は 3 本で異なり、 Discord は各 1 サーバーの値である。大小を一つに決めることはできず、件数の多さは品質の高さを直接には示さない。</p>
+<p>パソコンの性能に不安がある場合は、必要要件の差が手がかりになる。 Windows の最低要件のグラフィックスは、 The Zone が CPU 内蔵型を挙げ、 TRYP FPV と Liftoff は単体型の製品名を挙げる <sup id="fnref-10-20"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-20"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-17"><a href="#ref-12">[12]</a></sup> 。 The Zone は低い要件を掲げるが、快適さを本稿で確かめたわけではない。</p>
+
+<h2 id="sec5">5. 目的別の選び方</h2>
+<p>各目的で関係する項目を先に決め、 3 本の確認結果に根拠のある差が出た場合だけ候補を示す。</p>
+
+<h3 id="sec5-1">5.1 映像・空撮の練習</h3>
+<p>関係するのは、映像制作・空撮練習、映像とマップ、物理挙動、操作系の項目である。本稿はこの目的の候補を 1 本に決めない。動く被写体を追う機能を確認できたのは TRYP FPV だけだが <sup id="fnref-1-20"><a href="#ref-1">[1]</a></sup><sup id="fnref-4-12"><a href="#ref-4">[4]</a></sup> 、 Liftoff は有無が未確認で、 The Zone は予定として挙がり実装が未確認だからである <sup id="fnref-3-22"><a href="#ref-3">[3]</a></sup> 。追う機能が確認できることを条件にするなら、該当するのは確認日の時点で TRYP FPV である。その場合も、性能面の重さや挙動への不満があり <sup id="fnref-1-21"><a href="#ref-1">[1]</a></sup><sup id="fnref-7-11"><a href="#ref-7">[7]</a></sup> 、物理は刷新の途中である <sup id="fnref-9-10"><a href="#ref-9">[9]</a></sup> 。</p>
+<p>追う練習より、撮り方の調整や見返しを重視する場合は事情が異なる。 The Zone はカメラの露出に関わる設定とリプレイを備え <sup id="fnref-30-10"><a href="#ref-30">[30]</a></sup><sup id="fnref-40-6"><a href="#ref-40">[40]</a></sup> 、 Liftoff にも録画の再生とレンズ効果の設定がある <sup id="fnref-23-4"><a href="#ref-23">[23]</a></sup><sup id="fnref-24-5"><a href="#ref-24">[24]</a></sup> 。レンズの設定は TRYP FPV にもある <sup id="fnref-15-12"><a href="#ref-15">[15]</a></sup> 。この点の優劣は、公開情報だけでは決められない。</p>
+
+<h3 id="sec5-2">5.2 レース</h3>
+<p>関係するのは、対戦とコミュニティ、映像とマップ、開発状況、位置づけの項目である。 Liftoff は配信版で、オンライン対戦、観戦、大会の順位表、コース編集と共有がそろう <sup id="fnref-5-8"><a href="#ref-5">[5]</a></sup><sup id="fnref-6-7"><a href="#ref-6">[6]</a></sup><sup id="fnref-24-6"><a href="#ref-24">[24]</a></sup> 。このため候補は Liftoff と考えられる。 11 月に予告されたコース編集機能の刷新は予定であり <sup id="fnref-27-4"><a href="#ref-27">[27]</a></sup> 、現行の機能とは分けて考える必要がある。</p>
+<p>他の 2 本にもレースの要素はある。 TRYP FPV は順位表を持つが、マルチプレイはベータ段階で、マップエディタは予定である <sup id="fnref-4-13"><a href="#ref-4">[4]</a></sup><sup id="fnref-9-11"><a href="#ref-9">[9]</a></sup><sup id="fnref-15-13"><a href="#ref-15">[15]</a></sup> 。 The Zone はマルチプレイに対応する一方、順位を競う対戦形式の有無は未確認で、独自コースの編集機能は 5 月の時点で限定参加の初期試験版だった <sup id="fnref-3-23"><a href="#ref-3">[3]</a></sup><sup id="fnref-41-1"><a href="#ref-41">[41]</a></sup> 。その後の状況は未確認である。</p>
+
+<h3 id="sec5-3">5.3 フリースタイル</h3>
+<p>関係するのは、物理挙動、位置づけ、 Steam レビュー、操作系の項目である。本稿はこの目的の候補を 1 本に決めない。飛行の感覚はソフトを操作せずに比べにくく、根拠にできるのは評価した人の違う少数の意見だからである。</p>
+<p>読んだレビューでは、 The Zone の 15 件中 7 件が物理の現実感を評価した。一方で、他と大差がないとする声や、超小型機は実機と違うとする声もある <sup id="fnref-8-8"><a href="#ref-8">[8]</a></sup> 。 TRYP FPV は 18 件中 5 件が浮く感じを指摘した。うち 3 件は 6 月の空力改修より後で、いずれも 11 月のベータより前の投稿である <sup id="fnref-7-12"><a href="#ref-7">[7]</a></sup><sup id="fnref-9-12"><a href="#ref-9">[9]</a></sup><sup id="fnref-15-14"><a href="#ref-15">[15]</a></sup> 。現実的と評する声もある <sup id="fnref-7-13"><a href="#ref-7">[7]</a></sup> 。 Liftoff にも飛行の感覚を評価する声が一部にある <sup id="fnref-2-8"><a href="#ref-2">[2]</a></sup> 。件数の構成がそろわないため、割合の比較はできない。</p>
+<p>第三者の Oscar Liang は、フリースタイル向けの 1 本には比較対象外の Uncrashed を推す。 3 本については、 Liftoff をフリースタイルとレース向き、 TRYP FPV をフリースタイルと映像向きとし、 The Zone は 5 インチ機の飛行感覚を重視する人に合いそうだと推量で述べる <sup id="fnref-1-22"><a href="#ref-1">[1]</a></sup> 。機体の組み替えは TRYP FPV と Liftoff がともに掲げ <sup id="fnref-4-14"><a href="#ref-4">[4]</a></sup><sup id="fnref-22-6"><a href="#ref-22">[22]</a></sup> 、 The Zone の開発者はフリースタイルの上達を目的に挙げる <sup id="fnref-3-24"><a href="#ref-3">[3]</a></sup> 。どの点を重視するかで選択は分かれると考えられる。</p>
+
+<h3 id="sec5-4">5.4 Mac で遊ぶ</h3>
+<p>中心になるのは動作環境と操作系の項目である。 3 本とも macOS に対応し、 Apple Silicon の M1 を要件に挙げる <sup id="fnref-10-21"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-21"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-18"><a href="#ref-12">[12]</a></sup> 。直接動くか、変換して動くかの明記は確認できなかった。したがって、 Apple Silicon 機で使うという条件だけでは候補を決められない。快適さについては一部のレビューの指摘しかない。 TRYP FPV を M4 Pro の機種で快適とする投稿が 1 件、 The Zone はノート型の Mac で画質が粗いとする投稿が 1 件あり、 Liftoff の読んだ範囲には触れた投稿がない <sup id="fnref-2-9"><a href="#ref-2">[2]</a></sup><sup id="fnref-7-14"><a href="#ref-7">[7]</a></sup><sup id="fnref-8-9"><a href="#ref-8">[8]</a></sup> 。開発元の告知では、 TRYP FPV が 2025 年 3 月に Mac 版の不具合と更新の遅れを知らせ <sup id="fnref-19-2"><a href="#ref-19">[19]</a></sup> 、 The Zone が 2026 年 9 月に macOS 向けの操作機器の修正を知らせている <sup id="fnref-37-3"><a href="#ref-37">[37]</a></sup> 。</p>
+<p>Intel 製の Mac では差がある。最低要件で Intel 製の Mac を対象と確認できるのは Liftoff と The Zone である。 TRYP FPV の要件は M1 で Intel の記載がなく、 Intel 製で動くかは未確認である <sup id="fnref-10-22"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-22"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-19"><a href="#ref-12">[12]</a></sup> 。候補は前の 2 本になる。 Liftoff は単体のグラフィックスを求め <sup id="fnref-11-23"><a href="#ref-11">[11]</a></sup> 、 The Zone は Intel の世代などを示していないため <sup id="fnref-12-20"><a href="#ref-12">[12]</a></sup> 、手元の機種との照合が必要である。</p>
+
+<h3 id="sec5-5">5.5 他の有力な選択肢</h3>
+<p>比較の対象外だが、 VelociDrone は対戦、多数のコース、 40 を超える舞台を公式に掲げ <sup id="fnref-42-1"><a href="#ref-42">[42]</a></sup> 、 Oscar Liang はレース向けの 1 本に推す。 Steam ではなく公式サイトで販売される <sup id="fnref-1-23"><a href="#ref-1">[1]</a></sup> 。 Uncrashed は Windows と Mac に対応する 1,700 円の作品で、日本語には対応しない <sup id="fnref-43-1"><a href="#ref-43">[43]</a></sup> 。同氏はフリースタイル向けに推し、車を追う要素も挙げる一方、高い性能のパソコンが要ることを弱点とする <sup id="fnref-1-24"><a href="#ref-1">[1]</a></sup> 。</p>
+
+<h2 id="sec6">6. 買う前の注意</h2>
+<p><strong>早期アクセスとベータ版</strong><br>早期アクセスは、完成前の版を買って遊びながら、その後の開発を待つ形になる。 TRYP FPV と The Zone はこの方式で、内容や価格の扱いが今後変わりうる。 TRYP FPV は段階的な値上げを予告し、 The Zone の開発者は価格を変える予定はないとする <sup id="fnref-3-25"><a href="#ref-3">[3]</a></sup><sup id="fnref-4-15"><a href="#ref-4">[4]</a></sup> 。予定表の機能は、実装されるまで購入の理由にしないほうが安全と考えられる。ベータ版の機能も、配信版と同じとは限らない <sup id="fnref-9-13"><a href="#ref-9">[9]</a></sup> 。</p>
+<p><strong>送信機とコントローラー</strong><br>送信機がすべての製品で必須というわけではない。 Liftoff と The Zone は送信機かゲーム用コントローラーのどちらかが必須で、 Liftoff はゲームパッド推奨と表示し、 The Zone は送信機を推奨する <sup id="fnref-11-24"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-21"><a href="#ref-12">[12]</a></sup> 。 TRYP FPV は送信機を推奨する。部分的コントローラサポートの表示は TRYP FPV と Liftoff にある <sup id="fnref-10-23"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-25"><a href="#ref-11">[11]</a></sup> 。実機への移行を考える場合について、 Oscar Liang はゲーム機のコントローラーを勧めず、送信機を使うよう助言している <sup id="fnref-1-25"><a href="#ref-1">[1]</a></sup> 。手持ちの送信機が認識されるかは、機種ごとの確認が要る。</p>
+<p><strong>日本語</strong><br>3 本とも画面表示は日本語に対応していない <sup id="fnref-10-24"><a href="#ref-10">[10]</a></sup><sup id="fnref-11-26"><a href="#ref-11">[11]</a></sup><sup id="fnref-12-22"><a href="#ref-12">[12]</a></sup> 。</p>
+<p><strong>価格の変動</strong><br>本稿の価格は 2026 年 11 月 28 日の値である。 TRYP FPV の割引は 12 月 3 日までの表示だった <sup id="fnref-10-25"><a href="#ref-10">[10]</a></sup> 。購入時にはストアの表示と、自分のパソコンが動作環境を満たすかを確かめる必要がある。</p>
+
+<h2 id="sec7">7. まとめ</h2>
+<p>選ぶときは、目的、手元のパソコン、操作機器の順に確かめるのが分かりやすいと考えられる。対戦やコース作りを含むレースでは Liftoff が候補になる。映像・空撮の練習は 1 本に決められないが、動く被写体を追う機能を確認できたのは TRYP FPV だけである。フリースタイルも 1 本に決められず、 Mac は Apple Silicon 機なら決め手がない。 Intel 製の Mac では Liftoff と The Zone が候補である。</p>
+<p>どの結論も公開情報の範囲にとどまる。とくに TRYP FPV の大型更新は試験段階にあり、 Liftoff は 2.0 を予定し、 The Zone は更新を続けている。購入の直前に、目的に関わる機能が配信版にあるかを確かめることが、失敗を減らすと考えられる。</p>
+
+
+<div class="refs">
+<h2>出典</h2>
+<p class="note">※ 各項目の ^ をクリックすると、本文の参照箇所へ戻る。同じ出典を複数箇所で参照している場合は、 ^ の後ろに並ぶ a ・ b などの文字が、それぞれの参照箇所へのリンクである。</p>
+<ol>
+<li id="ref-1">^ <sup><a href="#fnref-1-1">a</a></sup> <sup><a href="#fnref-1-2">b</a></sup> <sup><a href="#fnref-1-3">c</a></sup> <sup><a href="#fnref-1-4">d</a></sup> <sup><a href="#fnref-1-5">e</a></sup> <sup><a href="#fnref-1-6">f</a></sup> <sup><a href="#fnref-1-7">g</a></sup> <sup><a href="#fnref-1-8">h</a></sup> <sup><a href="#fnref-1-9">i</a></sup> <sup><a href="#fnref-1-10">j</a></sup> <sup><a href="#fnref-1-11">k</a></sup> <sup><a href="#fnref-1-12">l</a></sup> <sup><a href="#fnref-1-13">m</a></sup> <sup><a href="#fnref-1-14">n</a></sup> <sup><a href="#fnref-1-15">o</a></sup> <sup><a href="#fnref-1-16">p</a></sup> <sup><a href="#fnref-1-17">q</a></sup> <sup><a href="#fnref-1-18">r</a></sup> <sup><a href="#fnref-1-19">s</a></sup> <sup><a href="#fnref-1-20">t</a></sup> <sup><a href="#fnref-1-21">u</a></sup> <sup><a href="#fnref-1-22">v</a></sup> <sup><a href="#fnref-1-23">w</a></sup> <sup><a href="#fnref-1-24">x</a></sup> <sup><a href="#fnref-1-25">y</a></sup> Oscar Liang 「 The Best FPV Drone Simulators: Complete Round-Up 」（アフィリエイトリンクを含む比較記事）。 2026 年 8 月 29 日掲載、 10 月 27 日更新、 11 月 28 日確認。 <a href="https://oscarliang.com/fpv-simulator/">Oscar Liang の記事</a></li>
+<li id="ref-2">^ <sup><a href="#fnref-2-1">a</a></sup> <sup><a href="#fnref-2-2">b</a></sup> <sup><a href="#fnref-2-3">c</a></sup> <sup><a href="#fnref-2-4">d</a></sup> <sup><a href="#fnref-2-5">e</a></sup> <sup><a href="#fnref-2-6">f</a></sup> <sup><a href="#fnref-2-7">g</a></sup> <sup><a href="#fnref-2-8">h</a></sup> <sup><a href="#fnref-2-9">i</a></sup> Steam コミュニティ「 Liftoff: FPV Drone Racing 」利用者レビュー（直近 1 年で参考にされた順の表示から 20 件。不評のみの表示 1 ページ分を加えたため、好評と不評の比は全体を表さない）。 2026 年 11 月 28 日確認。 <a href="https://steamcommunity.com/app/410340/reviews/?browsefilter=trendyear&amp;filterLanguage=english">Steam レビュー</a> <a href="https://steamcommunity.com/app/410340/negativereviews/?browsefilter=trendyear&amp;filterLanguage=english">不評のみ</a></li>
+<li id="ref-3">^ <sup><a href="#fnref-3-1">a</a></sup> <sup><a href="#fnref-3-2">b</a></sup> <sup><a href="#fnref-3-3">c</a></sup> <sup><a href="#fnref-3-4">d</a></sup> <sup><a href="#fnref-3-5">e</a></sup> <sup><a href="#fnref-3-6">f</a></sup> <sup><a href="#fnref-3-7">g</a></sup> <sup><a href="#fnref-3-8">h</a></sup> <sup><a href="#fnref-3-9">i</a></sup> <sup><a href="#fnref-3-10">j</a></sup> <sup><a href="#fnref-3-11">k</a></sup> <sup><a href="#fnref-3-12">l</a></sup> <sup><a href="#fnref-3-13">m</a></sup> <sup><a href="#fnref-3-14">n</a></sup> <sup><a href="#fnref-3-15">o</a></sup> <sup><a href="#fnref-3-16">p</a></sup> <sup><a href="#fnref-3-17">q</a></sup> <sup><a href="#fnref-3-18">r</a></sup> <sup><a href="#fnref-3-19">s</a></sup> <sup><a href="#fnref-3-20">t</a></sup> <sup><a href="#fnref-3-21">u</a></sup> <sup><a href="#fnref-3-22">v</a></sup> <sup><a href="#fnref-3-23">w</a></sup> <sup><a href="#fnref-3-24">x</a></sup> <sup><a href="#fnref-3-25">y</a></sup> Steam ストア英語版「 The Zone - FPV Drone Simulator 」（紹介文と早期アクセス欄）。 2026 年 11 月 28 日確認。 <a href="https://store.steampowered.com/app/3491280/?l=english">Steam 英語版</a></li>
+<li id="ref-4">^ <sup><a href="#fnref-4-1">a</a></sup> <sup><a href="#fnref-4-2">b</a></sup> <sup><a href="#fnref-4-3">c</a></sup> <sup><a href="#fnref-4-4">d</a></sup> <sup><a href="#fnref-4-5">e</a></sup> <sup><a href="#fnref-4-6">f</a></sup> <sup><a href="#fnref-4-7">g</a></sup> <sup><a href="#fnref-4-8">h</a></sup> <sup><a href="#fnref-4-9">i</a></sup> <sup><a href="#fnref-4-10">j</a></sup> <sup><a href="#fnref-4-11">k</a></sup> <sup><a href="#fnref-4-12">l</a></sup> <sup><a href="#fnref-4-13">m</a></sup> <sup><a href="#fnref-4-14">n</a></sup> <sup><a href="#fnref-4-15">o</a></sup> Steam ストア英語版「 TRYP FPV: Drone Racer Simulator 」（紹介文、早期アクセス欄、掲載告知の要約）。 2026 年 11 月 28 日確認。 <a href="https://store.steampowered.com/app/1881200/?l=english">Steam 英語版</a></li>
+<li id="ref-5">^ <sup><a href="#fnref-5-1">a</a></sup> <sup><a href="#fnref-5-2">b</a></sup> <sup><a href="#fnref-5-3">c</a></sup> <sup><a href="#fnref-5-4">d</a></sup> <sup><a href="#fnref-5-5">e</a></sup> <sup><a href="#fnref-5-6">f</a></sup> <sup><a href="#fnref-5-7">g</a></sup> <sup><a href="#fnref-5-8">h</a></sup> Steam ストア英語版「 Liftoff®: FPV Drone Racing 」（紹介文）。 2026 年 11 月 28 日確認。 <a href="https://store.steampowered.com/app/410340/?l=english">Steam 英語版</a></li>
+<li id="ref-6">^ <sup><a href="#fnref-6-1">a</a></sup> <sup><a href="#fnref-6-2">b</a></sup> <sup><a href="#fnref-6-3">c</a></sup> <sup><a href="#fnref-6-4">d</a></sup> <sup><a href="#fnref-6-5">e</a></sup> <sup><a href="#fnref-6-6">f</a></sup> <sup><a href="#fnref-6-7">g</a></sup> LuGus Studios 「 Update 1.7.7 released! 」。 Steam 告知、 2026 年 10 月 28 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1847920302230231">Steam 告知</a></li>
+<li id="ref-7">^ <sup><a href="#fnref-7-1">a</a></sup> <sup><a href="#fnref-7-2">b</a></sup> <sup><a href="#fnref-7-3">c</a></sup> <sup><a href="#fnref-7-4">d</a></sup> <sup><a href="#fnref-7-5">e</a></sup> <sup><a href="#fnref-7-6">f</a></sup> <sup><a href="#fnref-7-7">g</a></sup> <sup><a href="#fnref-7-8">h</a></sup> <sup><a href="#fnref-7-9">i</a></sup> <sup><a href="#fnref-7-10">j</a></sup> <sup><a href="#fnref-7-11">k</a></sup> <sup><a href="#fnref-7-12">l</a></sup> <sup><a href="#fnref-7-13">m</a></sup> <sup><a href="#fnref-7-14">n</a></sup> Steam コミュニティ「 TRYP FPV 」利用者レビュー（直近 1 年で参考にされた順の表示から 18 件。不評のみの表示 1 ページ分を加えたため、好評と不評の比は全体を表さない）。 2026 年 11 月 28 日確認。 <a href="https://steamcommunity.com/app/1881200/reviews/?browsefilter=trendyear&amp;filterLanguage=english">Steam レビュー</a> <a href="https://steamcommunity.com/app/1881200/negativereviews/?browsefilter=trendyear&amp;filterLanguage=english">不評のみ</a></li>
+<li id="ref-8">^ <sup><a href="#fnref-8-1">a</a></sup> <sup><a href="#fnref-8-2">b</a></sup> <sup><a href="#fnref-8-3">c</a></sup> <sup><a href="#fnref-8-4">d</a></sup> <sup><a href="#fnref-8-5">e</a></sup> <sup><a href="#fnref-8-6">f</a></sup> <sup><a href="#fnref-8-7">g</a></sup> <sup><a href="#fnref-8-8">h</a></sup> <sup><a href="#fnref-8-9">i</a></sup> Steam コミュニティ「 The Zone - FPV Drone Simulator 」利用者レビュー（直近 1 年で参考にされた順の表示から 15 件。不評のみの表示 1 ページ分を加えたため、好評と不評の比は全体を表さない）。 2026 年 11 月 28 日確認。 <a href="https://steamcommunity.com/app/3491280/reviews/?browsefilter=trendyear&amp;filterLanguage=english">Steam レビュー</a> <a href="https://steamcommunity.com/app/3491280/negativereviews/?browsefilter=trendyear&amp;filterLanguage=english">不評のみ</a></li>
+<li id="ref-9">^ <sup><a href="#fnref-9-1">a</a></sup> <sup><a href="#fnref-9-2">b</a></sup> <sup><a href="#fnref-9-3">c</a></sup> <sup><a href="#fnref-9-4">d</a></sup> <sup><a href="#fnref-9-5">e</a></sup> <sup><a href="#fnref-9-6">f</a></sup> <sup><a href="#fnref-9-7">g</a></sup> <sup><a href="#fnref-9-8">h</a></sup> <sup><a href="#fnref-9-9">i</a></sup> <sup><a href="#fnref-9-10">j</a></sup> <sup><a href="#fnref-9-11">k</a></sup> <sup><a href="#fnref-9-12">l</a></sup> <sup><a href="#fnref-9-13">m</a></sup> UNDEAD BATTERY 「 Our biggest update yet is now in Open Beta! 」。 Steam 告知、 2026 年 11 月 27 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1850460852990553">Steam 告知</a></li>
+<li id="ref-10">^ <sup><a href="#fnref-10-1">a</a></sup> <sup><a href="#fnref-10-2">b</a></sup> <sup><a href="#fnref-10-3">c</a></sup> <sup><a href="#fnref-10-4">d</a></sup> <sup><a href="#fnref-10-5">e</a></sup> <sup><a href="#fnref-10-6">f</a></sup> <sup><a href="#fnref-10-7">g</a></sup> <sup><a href="#fnref-10-8">h</a></sup> <sup><a href="#fnref-10-9">i</a></sup> <sup><a href="#fnref-10-10">j</a></sup> <sup><a href="#fnref-10-11">k</a></sup> <sup><a href="#fnref-10-12">l</a></sup> <sup><a href="#fnref-10-13">m</a></sup> <sup><a href="#fnref-10-14">n</a></sup> <sup><a href="#fnref-10-15">o</a></sup> <sup><a href="#fnref-10-16">p</a></sup> <sup><a href="#fnref-10-17">q</a></sup> <sup><a href="#fnref-10-18">r</a></sup> <sup><a href="#fnref-10-19">s</a></sup> <sup><a href="#fnref-10-20">t</a></sup> <sup><a href="#fnref-10-21">u</a></sup> <sup><a href="#fnref-10-22">v</a></sup> <sup><a href="#fnref-10-23">w</a></sup> <sup><a href="#fnref-10-24">x</a></sup> <sup><a href="#fnref-10-25">y</a></sup> Steam ストア日本語版「 TRYP FPV: Drone Racer Simulator 」（価格と割引、追加コンテンツ、対応言語、対応 OS と動作環境、機能の表示、レビュー表示。米ドル価格はストアの公開データによる）。 2026 年 11 月 28 日確認。 <a href="https://store.steampowered.com/app/1881200/?l=japanese">Steam 日本語版</a> <a href="https://store.steampowered.com/api/appdetails?appids=1881200&amp;cc=us&amp;l=english">米ドル価格のデータ</a></li>
+<li id="ref-11">^ <sup><a href="#fnref-11-1">a</a></sup> <sup><a href="#fnref-11-2">b</a></sup> <sup><a href="#fnref-11-3">c</a></sup> <sup><a href="#fnref-11-4">d</a></sup> <sup><a href="#fnref-11-5">e</a></sup> <sup><a href="#fnref-11-6">f</a></sup> <sup><a href="#fnref-11-7">g</a></sup> <sup><a href="#fnref-11-8">h</a></sup> <sup><a href="#fnref-11-9">i</a></sup> <sup><a href="#fnref-11-10">j</a></sup> <sup><a href="#fnref-11-11">k</a></sup> <sup><a href="#fnref-11-12">l</a></sup> <sup><a href="#fnref-11-13">m</a></sup> <sup><a href="#fnref-11-14">n</a></sup> <sup><a href="#fnref-11-15">o</a></sup> <sup><a href="#fnref-11-16">p</a></sup> <sup><a href="#fnref-11-17">q</a></sup> <sup><a href="#fnref-11-18">r</a></sup> <sup><a href="#fnref-11-19">s</a></sup> <sup><a href="#fnref-11-20">t</a></sup> <sup><a href="#fnref-11-21">u</a></sup> <sup><a href="#fnref-11-22">v</a></sup> <sup><a href="#fnref-11-23">w</a></sup> <sup><a href="#fnref-11-24">x</a></sup> <sup><a href="#fnref-11-25">y</a></sup> <sup><a href="#fnref-11-26">z</a></sup> Steam ストア日本語版「 Liftoff®: FPV Drone Racing 」（価格と割引、追加コンテンツ、対応言語、対応 OS と動作環境、機能の表示、レビュー表示。米ドル価格はストアの公開データによる）。 2026 年 11 月 28 日確認。 <a href="https://store.steampowered.com/app/410340/?l=japanese">Steam 日本語版</a> <a href="https://store.steampowered.com/api/appdetails?appids=410340&amp;cc=us&amp;l=english">米ドル価格のデータ</a></li>
+<li id="ref-12">^ <sup><a href="#fnref-12-1">a</a></sup> <sup><a href="#fnref-12-2">b</a></sup> <sup><a href="#fnref-12-3">c</a></sup> <sup><a href="#fnref-12-4">d</a></sup> <sup><a href="#fnref-12-5">e</a></sup> <sup><a href="#fnref-12-6">f</a></sup> <sup><a href="#fnref-12-7">g</a></sup> <sup><a href="#fnref-12-8">h</a></sup> <sup><a href="#fnref-12-9">i</a></sup> <sup><a href="#fnref-12-10">j</a></sup> <sup><a href="#fnref-12-11">k</a></sup> <sup><a href="#fnref-12-12">l</a></sup> <sup><a href="#fnref-12-13">m</a></sup> <sup><a href="#fnref-12-14">n</a></sup> <sup><a href="#fnref-12-15">o</a></sup> <sup><a href="#fnref-12-16">p</a></sup> <sup><a href="#fnref-12-17">q</a></sup> <sup><a href="#fnref-12-18">r</a></sup> <sup><a href="#fnref-12-19">s</a></sup> <sup><a href="#fnref-12-20">t</a></sup> <sup><a href="#fnref-12-21">u</a></sup> <sup><a href="#fnref-12-22">v</a></sup> Steam ストア日本語版「 The Zone - FPV Drone Simulator 」（価格と割引、追加コンテンツ、対応言語、対応 OS と動作環境、機能の表示、レビュー表示。米ドル価格はストアの公開データによる）。 2026 年 11 月 28 日確認。 <a href="https://store.steampowered.com/app/3491280/?l=japanese">Steam 日本語版</a> <a href="https://store.steampowered.com/api/appdetails?appids=3491280&amp;cc=us&amp;l=english">米ドル価格のデータ</a></li>
+<li id="ref-13"><a href="#fnref-13-1">^</a> UNDEAD BATTERY 公式サイト（会社紹介）。公開日不明、 2026 年 11 月 28 日確認。 <a href="https://www.undeadbattery.com/">UNDEAD BATTERY</a></li>
+<li id="ref-14">^ <sup><a href="#fnref-14-1">a</a></sup> <sup><a href="#fnref-14-2">b</a></sup> <sup><a href="#fnref-14-3">c</a></sup> UNDEAD BATTERY 「 MAJOR IMMERSION UPDATE 」。 Steam 告知、 2025 年 12 月 18 日公開、 2026 年 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1819386365090550">Steam 告知</a></li>
+<li id="ref-15">^ <sup><a href="#fnref-15-1">a</a></sup> <sup><a href="#fnref-15-2">b</a></sup> <sup><a href="#fnref-15-3">c</a></sup> <sup><a href="#fnref-15-4">d</a></sup> <sup><a href="#fnref-15-5">e</a></sup> <sup><a href="#fnref-15-6">f</a></sup> <sup><a href="#fnref-15-7">g</a></sup> <sup><a href="#fnref-15-8">h</a></sup> <sup><a href="#fnref-15-9">i</a></sup> <sup><a href="#fnref-15-10">j</a></sup> <sup><a href="#fnref-15-11">k</a></sup> <sup><a href="#fnref-15-12">l</a></sup> <sup><a href="#fnref-15-13">m</a></sup> <sup><a href="#fnref-15-14">n</a></sup> UNDEAD BATTERY 「 MASSIVE UPDATE – New Locations, Battery System, OSD Editor &amp; More 」。 Steam 告知、 2026 年 6 月 2 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1833968530900390">Steam 告知</a></li>
+<li id="ref-16"><a href="#fnref-16-1">^</a> UNDEAD BATTERY 「 New Realspot, New Lightings, New medal system 」。 Steam 告知、 2025 年 6 月 12 日公開、 2026 年 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1802354289565807">Steam 告知</a></li>
+<li id="ref-17"><a href="#fnref-17-1">^</a> UNDEAD BATTERY 「 Migration to Unreal Engine 5 」。 Steam 告知、 2022 年 10 月 30 日公開、 2026 年 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/4706851091184713886">Steam 告知</a></li>
+<li id="ref-18">^ <sup><a href="#fnref-18-1">a</a></sup> <sup><a href="#fnref-18-2">b</a></sup> <sup><a href="#fnref-18-3">c</a></sup> Discord 公開招待画面「 TRYP FPV 」（参加者数）。 2026 年 11 月 28 日確認。 <a href="https://discord.com/invite/H369XSsTnN">Discord 招待画面</a></li>
+<li id="ref-19">^ <sup><a href="#fnref-19-1">a</a></sup> <sup><a href="#fnref-19-2">b</a></sup> UNDEAD BATTERY 「 MEGABANDO 」。 Steam 告知、 2025 年 3 月 28 日公開、 2026 年 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1795283637857097">Steam 告知</a></li>
+<li id="ref-20"><a href="#fnref-20-1">^</a> UNDEAD BATTERY 「 HOTFIX 251219 」。 Steam 告知、 2025 年 12 月 19 日公開、 2026 年 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1819386365096296">Steam 告知</a></li>
+<li id="ref-21"><a href="#fnref-21-1">^</a> UNDEAD BATTERY 「 HOTFIX 260609 」。 Steam 告知、 2026 年 6 月 15 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1835236783570705">Steam 告知</a></li>
+<li id="ref-22">^ <sup><a href="#fnref-22-1">a</a></sup> <sup><a href="#fnref-22-2">b</a></sup> <sup><a href="#fnref-22-3">c</a></sup> <sup><a href="#fnref-22-4">d</a></sup> <sup><a href="#fnref-22-5">e</a></sup> <sup><a href="#fnref-22-6">f</a></sup> LuGus Studios 公式サイト「 Liftoff: FPV Drone Racing 」。掲載日不明、 2026 年 11 月 28 日確認。 <a href="https://www.liftoff-game.com/liftoff-fpv-drone-racing">Liftoff 公式</a></li>
+<li id="ref-23">^ <sup><a href="#fnref-23-1">a</a></sup> <sup><a href="#fnref-23-2">b</a></sup> <sup><a href="#fnref-23-3">c</a></sup> <sup><a href="#fnref-23-4">d</a></sup> LuGus Studios 「 Milestone 1.7.0 released! 」。 Steam 告知、 2026 年 2 月 10 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1823825466508291">Steam 告知</a></li>
+<li id="ref-24">^ <sup><a href="#fnref-24-1">a</a></sup> <sup><a href="#fnref-24-2">b</a></sup> <sup><a href="#fnref-24-3">c</a></sup> <sup><a href="#fnref-24-4">d</a></sup> <sup><a href="#fnref-24-5">e</a></sup> <sup><a href="#fnref-24-6">f</a></sup> LuGus Studios 「 Update 1.7.3 released! 」。 Steam 告知、 2026 年 6 月 15 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1835236783570323">Steam 告知</a></li>
+<li id="ref-25">^ <sup><a href="#fnref-25-1">a</a></sup> <sup><a href="#fnref-25-2">b</a></sup> <sup><a href="#fnref-25-3">c</a></sup> LuGus Studios 「 Update 1.7.8 released 」。 Steam 告知、 2026 年 11 月 16 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1849458702688973">Steam 告知</a></li>
+<li id="ref-26">^ <sup><a href="#fnref-26-1">a</a></sup> <sup><a href="#fnref-26-2">b</a></sup> <sup><a href="#fnref-26-3">c</a></sup> Discord 公開招待画面「 Liftoff Community Official 」（参加者数）。 2026 年 11 月 28 日確認。 <a href="https://discord.com/invite/7UrvPBszTQ">Discord 招待画面</a></li>
+<li id="ref-27">^ <sup><a href="#fnref-27-1">a</a></sup> <sup><a href="#fnref-27-2">b</a></sup> <sup><a href="#fnref-27-3">c</a></sup> <sup><a href="#fnref-27-4">d</a></sup> LuGus Studios 「 The Road to Liftoff 2.0 」。 Steam 告知、 2026 年 11 月 6 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1848664643344570">Steam 告知</a></li>
+<li id="ref-28"><a href="#fnref-28-1">^</a> LuGus Studios 「 Announcing Liftoff Physics 6.0 」。 Steam 告知、 2025 年 11 月 7 日公開、 2026 年 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1815580768288416">Steam 告知</a></li>
+<li id="ref-29">^ <sup><a href="#fnref-29-1">a</a></sup> <sup><a href="#fnref-29-2">b</a></sup> Nils Vollenbruch 「 Added 2.5" Freestyle (Kayoumini) 」。 Steam 告知、 2026 年 6 月 16 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1835236783574153">Steam 告知</a></li>
+<li id="ref-30">^ <sup><a href="#fnref-30-1">a</a></sup> <sup><a href="#fnref-30-2">b</a></sup> <sup><a href="#fnref-30-3">c</a></sup> <sup><a href="#fnref-30-4">d</a></sup> <sup><a href="#fnref-30-5">e</a></sup> <sup><a href="#fnref-30-6">f</a></sup> <sup><a href="#fnref-30-7">g</a></sup> <sup><a href="#fnref-30-8">h</a></sup> <sup><a href="#fnref-30-9">i</a></sup> <sup><a href="#fnref-30-10">j</a></sup> Nils Vollenbruch 「 75mm whoop, updated Plaza map, new camera system, lighting update &amp; more 」。 Steam 告知、 2026 年 10 月 18 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1846651706686948">Steam 告知</a></li>
+<li id="ref-31"><a href="#fnref-31-1">^</a> Nils Vollenbruch 「 Latency simulation and performance improvements 」。 Steam 告知、 2026 年 4 月 7 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1828894815567078">Steam 告知</a></li>
+<li id="ref-32"><a href="#fnref-32-1">^</a> Nils Vollenbruch 「 Fixed wind issues causing tutorial to not work 」。 Steam 告知、 2026 年 5 月 20 日公開、 2026 年 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1833334318567288">Steam 告知</a></li>
+<li id="ref-33"><a href="#fnref-33-1">^</a> Nils Vollenbruch 「 New map: Plaza (beta) 」。 Steam 告知、 2026 年 8 月 17 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1840944183786452">Steam 告知</a></li>
+<li id="ref-34">^ <sup><a href="#fnref-34-1">a</a></sup> <sup><a href="#fnref-34-2">b</a></sup> 「 The Zone Wiki 」（ストアページからリンクされた補足資料。自作マップの手順）。公開日不明、 2026 年 11 月 28 日確認。 <a href="https://wiki.thezonefpv.com/print.html">The Zone Wiki</a></li>
+<li id="ref-35">^ <sup><a href="#fnref-35-1">a</a></sup> <sup><a href="#fnref-35-2">b</a></sup> Nils Vollenbruch 「 Lighting v3 」。 Steam 告知、 2026 年 9 月 9 日公開、 2026 年 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1843481262688695">Steam 告知</a></li>
+<li id="ref-36"><a href="#fnref-36-1">^</a> Nils Vollenbruch 「 New input system + Headtracker feature 」。 Steam 告知、 2026 年 6 月 24 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1836506165546227">Steam 告知</a></li>
+<li id="ref-37">^ <sup><a href="#fnref-37-1">a</a></sup> <sup><a href="#fnref-37-2">b</a></sup> <sup><a href="#fnref-37-3">c</a></sup> Nils Vollenbruch 「 (Hopefully) permanent fix for MacOS 27 Golden gate 」。 Steam 告知、 2026 年 9 月 24 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1844751498221749">Steam 告知</a></li>
+<li id="ref-38">^ <sup><a href="#fnref-38-1">a</a></sup> <sup><a href="#fnref-38-2">b</a></sup> <sup><a href="#fnref-38-3">c</a></sup> Discord 公開招待画面「 The Zone FPV 」（参加者数）。 2026 年 11 月 28 日確認。 <a href="https://discord.com/invite/qQkJwKWUZA">Discord 招待画面</a></li>
+<li id="ref-39">^ <sup><a href="#fnref-39-1">a</a></sup> <sup><a href="#fnref-39-2">b</a></sup> Nils Vollenbruch 「 Linux native 」。 Steam 告知、 2026 年 9 月 12 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1843481262698269">Steam 告知</a></li>
+<li id="ref-40">^ <sup><a href="#fnref-40-1">a</a></sup> <sup><a href="#fnref-40-2">b</a></sup> <sup><a href="#fnref-40-3">c</a></sup> <sup><a href="#fnref-40-4">d</a></sup> <sup><a href="#fnref-40-5">e</a></sup> <sup><a href="#fnref-40-6">f</a></sup> Nils Vollenbruch 「 Replay mode with video export &amp; more 」。 Steam 告知、 2026 年 11 月 8 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1848664643352519">Steam 告知</a></li>
+<li id="ref-41"><a href="#fnref-41-1">^</a> Nils Vollenbruch 「 Closed alpha for custom race editor 」。 Steam 告知、 2026 年 5 月 11 日公開、 11 月 28 日確認。 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1832065502822048">Steam 告知</a></li>
+<li id="ref-42"><a href="#fnref-42-1">^</a> VelociDrone 公式サイト。公開日不明、 2026 年 11 月 28 日確認。 <a href="https://www.velocidrone.com/">VelociDrone 公式</a></li>
+<li id="ref-43"><a href="#fnref-43-1">^</a> Steam ストア日本語版「 Uncrashed : FPV Drone Simulator 」。 2026 年 11 月 28 日確認。 <a href="https://store.steampowered.com/app/1682970/?l=japanese">Steam 日本語版</a></li>
+</ol>
+<p class="endnote">本稿は公開情報を整理したもので、各製品の開発元や販売元とは関係がない。製品名は各権利者の商標または登録商標である場合がある。</p>
+</div>
+</main>
+</body>
+</html>
